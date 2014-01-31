@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = '1.0'
+sourceCompatibility = 1.7
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile project(':common')
+	testCompile 'junit:junit:4.11'
+	testCompile 'org.mockito:mockito-all:1.9.5'
+}
