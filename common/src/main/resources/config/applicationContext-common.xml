@@ -38,7 +38,7 @@
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
 			pointcut="execution(* cherry.springapp..(..))
-				&&
+				and
 				!execution(* cherry.springapp.common.log..(..))" />
 	</aop:config>
 
