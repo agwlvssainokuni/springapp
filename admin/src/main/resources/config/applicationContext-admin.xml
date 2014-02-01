@@ -53,21 +53,15 @@
 	</security:http>
 
 	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/secure/**" />
-			<bean
-				class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/secure/**" />
-			<bean
-				class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
-		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<bean
+			class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean
+			class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 	</mvc:interceptors>
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
 			<bean
 				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
@@ -77,7 +71,7 @@
 	<mvc:default-servlet-handler />
 
 	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles.xml</value>

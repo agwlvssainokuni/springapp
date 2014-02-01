@@ -25,28 +25,12 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		">
 
-	<context:property-placeholder location="classpath:common.properties"
-		ignore-unresolvable="true" />
-
-	<context:component-scan base-package="cherry.springapp.common" />
-
-	<bean id="traceInterceptor" class="cherry.springapp.common.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="0" />
-		<property name="objectLengthLimit" value="0" />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
-
-	<aop:config>
-		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry.springapp..*.*(..))
-				and
-				!execution(* cherry.springapp.common.log..*.*(..))" />
-	</aop:config>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<tx:annotation-driven />
 
 </beans>
