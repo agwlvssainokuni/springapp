@@ -9,7 +9,7 @@
 	<context:property-placeholder location="classpath:env.properties"
 		ignore-unresolvable="true" />
 
-	<import resource="applicationContext-common.xml" />
-	<import resource="applicationContext-admin.xml" />
+	<import resource="classpath:config/applicationContext-common.xml" />
+	<import resource="classpath:config/applicationContext-admin.xml" />
 
 </beans>
