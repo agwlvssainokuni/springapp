@@ -16,21 +16,22 @@
 
 package cherry.springapp.common.log;
 
+import java.util.Properties;
+
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.MessageSource;
 
 public class LogInitializer implements InitializingBean {
 
-	private MessageSource messageSource;
+	private Properties messageDef;
 
-	public void setMessageSource(MessageSource messageSource) {
-		this.messageSource = messageSource;
+	public void setMessageDef(Properties messageDef) {
+		this.messageDef = messageDef;
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		assert messageSource != null : "messageSource must not be null";
-		Log.setMessageSource(messageSource);
+		assert messageDef != null : "messageDef must not be null";
+		Log.setMessageDef(messageDef);
 	}
 
 }

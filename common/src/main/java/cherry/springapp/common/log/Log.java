@@ -17,19 +17,18 @@
 package cherry.springapp.common.log;
 
 import java.text.MessageFormat;
-import java.util.Locale;
+import java.util.Properties;
 
 import org.slf4j.Logger;
-import org.springframework.context.MessageSource;
 
 public class Log {
 
-	private static MessageSource messageSource;
+	private static Properties messageDef;
 
 	private final Logger logger;
 
-	public static void setMessageSource(MessageSource msgSrc) {
-		messageSource = msgSrc;
+	public static void setMessageDef(Properties msgDef) {
+		messageDef = msgDef;
 	}
 
 	Log(Logger logger) {
@@ -115,7 +114,8 @@ public class Log {
 	}
 
 	private String createMessage(ILogId id, Object... args) {
-		return messageSource.getMessage(id.getId(), args, Locale.getDefault());
+		String msg = messageDef.getProperty(id.getId());
+		return MessageFormat.format(msg, args);
 	}
 
 }

@@ -21,6 +21,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
+	<context:property-placeholder location="classpath:common.properties"
+		ignore-unresolvable="true" />
+
 	<context:component-scan base-package="cherry.springapp.common" />
 
 	<bean id="traceInterceptor" class="cherry.springapp.common.log.trace.TraceInterceptor">
@@ -34,5 +37,12 @@
 				&&
 				!execution(* cherry.springapp.common.log..(..))" />
 	</aop:config>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven />
 
 </beans>
