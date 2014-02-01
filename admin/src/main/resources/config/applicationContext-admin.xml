@@ -30,10 +30,14 @@
 
 	<context:component-scan base-package="cherry.springapp.admin" />
 
-	<mvc:annotation-driven />
-	<mvc:default-servlet-handler />
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider>
+			<security:user-service properties="classpath:user.properties" />
+		</security:authentication-provider>
+	</security:authentication-manager>
 
-	<security:http auto-config="false">
+	<security:http auto-config="false"
+		authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/secure/**"
 			access="IS_AUTHENTICATED_FULLY" />
 		<security:form-login login-page="/login"
@@ -47,6 +51,29 @@
 			session-authentication-error-url="/login?err=session" />
 		<security:csrf />
 	</security:http>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/secure/**" />
+			<bean
+				class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/secure/**" />
+			<bean
+				class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+			<bean
+				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
 
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
