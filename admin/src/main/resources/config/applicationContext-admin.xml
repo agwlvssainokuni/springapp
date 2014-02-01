@@ -67,6 +67,7 @@
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
+			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
 			<bean
 				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
