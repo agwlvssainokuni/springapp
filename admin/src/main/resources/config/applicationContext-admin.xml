@@ -33,6 +33,21 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
+	<security:http auto-config="false">
+		<security:intercept-url pattern="/secure/**"
+			access="IS_AUTHENTICATED_FULLY" />
+		<security:form-login login-page="/login"
+			login-processing-url="/login/req" authentication-failure-url="/login?err=login"
+			default-target-url="/secure/" always-use-default-target="false"
+			username-parameter="loginId" password-parameter="password" />
+		<security:logout logout-url="/logout"
+			logout-success-url="/login?ok=logout" invalidate-session="true" />
+		<security:session-management
+			invalid-session-url="/login?err=session"
+			session-authentication-error-url="/login?err=session" />
+		<security:csrf />
+	</security:http>
+
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
