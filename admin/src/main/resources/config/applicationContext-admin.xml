@@ -25,28 +25,62 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		">
 
-	<context:property-placeholder location="classpath:common.properties"
+	<context:property-placeholder location="classpath:admin.properties"
 		ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.springapp.common" />
+	<context:component-scan base-package="cherry.springapp.admin" />
 
-	<bean id="traceInterceptor" class="cherry.springapp.common.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="0" />
-		<property name="objectLengthLimit" value="0" />
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
 	</bean>
 
-	<aop:config>
-		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry.springapp..(..))
-				&&
-				!execution(* cherry.springapp.common.log..(..))" />
-	</aop:config>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<list>
+				<bean
+					class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
+					<constructor-arg>
+						<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+							<property name="viewClass"
+								value="org.springframework.web.servlet.view.tiles2.TilesView" />
+						</bean>
+					</constructor-arg>
+					<property name="mobilePrefix" value="normal/" />
+					<property name="tabletPrefix" value="normal/" />
+					<property name="normalPrefix" value="normal/" />
+				</bean>
+				<bean
+					class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
+					<constructor-arg>
+						<bean
+							class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+							<property name="viewClass"
+								value="org.springframework.web.servlet.view.JstlView" />
+							<property name="prefix" value="/WEB-INF/jsp/" />
+							<property name="suffix" value=".jsp" />
+						</bean>
+					</constructor-arg>
+					<property name="mobilePrefix" value="normal/" />
+					<property name="tabletPrefix" value="normal/" />
+					<property name="normalPrefix" value="normal/" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
 	</bean>
-
-	<tx:annotation-driven />
 
 </beans>
