@@ -7,8 +7,8 @@
 	<context:property-placeholder location="classpath:env.properties"
 		ignore-unresolvable="true" />
 
-	<import resource="applicationContext-common.xml" />
-	<import resource="applicationContext-admin.xml" />
-	<import resource="applicationContext-dataSource.xml" />
+	<import resource="classpath:config/applicationContext-common.xml" />
+	<import resource="classpath:config/applicationContext-site.xml" />
+	<import resource="classpath:config/applicationContext-dataSource.xml" />
 
 </beans>

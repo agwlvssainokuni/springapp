@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="normal/base_unauth" template="/WEB-INF/tiles/normal/base_unauth.jsp" />
+	<definition name="normal/base_auth" template="/WEB-INF/tiles/normal/base_auth.jsp" />
+</tiles-definitions>
