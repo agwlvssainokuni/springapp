@@ -23,4 +23,16 @@
 
 	<context:component-scan base-package="cherry.springapp.common" />
 
+	<bean id="traceInterceptor" class="cherry.springapp.common.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="0" />
+		<property name="objectLengthLimit" value="0" />
+	</bean>
+
+	<aop:config>
+		<aop:advisor advice-ref="traceInterceptor"
+			pointcut="execution(* cherry.springapp..(..))
+				&&
+				!execution(* cherry.springapp.common.log..(..))" />
+	</aop:config>
+
 </beans>
