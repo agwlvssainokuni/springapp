@@ -33,6 +33,7 @@ subprojects {
 		compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
 		compile "ch.qos.logback:logback-core:${versionLogback}"
 		compile "ch.qos.logback:logback-classic:${versionLogback}"
+		compile "org.fluentd:fluent-logger:0.2.11"
 		compile "org.aspectj:aspectjrt:${versionAspectJ}"
 		compile "org.aspectj:aspectjweaver:${versionAspectJ}"
 		compile "aopalliance:aopalliance:1.0"
