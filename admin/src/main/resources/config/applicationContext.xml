@@ -11,4 +11,6 @@
 	<import resource="applicationContext-admin.xml" />
 	<import resource="applicationContext-dataSource.xml" />
 
+	<import resource="applicationContext-commonMigration.xml" />
+
 </beans>

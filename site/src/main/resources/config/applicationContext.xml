@@ -11,4 +11,6 @@
 	<import resource="classpath:config/applicationContext-site.xml" />
 	<import resource="classpath:config/applicationContext-dataSource.xml" />
 
+	<import resource="applicationContext-commonMigration.xml" />
+
 </beans>
