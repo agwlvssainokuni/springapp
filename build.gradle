@@ -60,6 +60,7 @@ subprojects {
 		compile "org.springframework.security:spring-security-ldap:${versionSpringSecurity}"
 		compile "org.springframework.security:spring-security-config:${versionSpringSecurity}"
 		compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
+		compile "com.googlecode.flyway:flyway-core:2.3.1"
 		testCompile "junit:junit:4.11"
 		testCompile "org.mockito:mockito-all:1.9.5"
 	}
