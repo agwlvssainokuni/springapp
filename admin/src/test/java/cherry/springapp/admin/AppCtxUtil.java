@@ -26,7 +26,7 @@ public class AppCtxUtil {
 	public static ApplicationContext getAppCtx() {
 		if (appCtx == null) {
 			appCtx = new ClassPathXmlApplicationContext(
-					"classpath:config/applicationContext.xml");
+					"classpath:config/applicationContext-test.xml");
 		}
 		return appCtx;
 	}

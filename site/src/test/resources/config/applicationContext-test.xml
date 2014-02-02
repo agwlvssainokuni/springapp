@@ -9,7 +9,6 @@
 
 	<import resource="classpath:config/applicationContext-common.xml" />
 	<import resource="classpath:config/applicationContext-site.xml" />
-	<import resource="classpath:config/applicationContext-siteWeb.xml" />
 	<import resource="classpath:config/applicationContext-dataSource.xml" />
 
 	<import resource="applicationContext-commonMigration.xml" />
