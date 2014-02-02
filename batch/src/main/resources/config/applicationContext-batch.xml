@@ -19,4 +19,10 @@
 
 	<context:component-scan base-package="cherry.springapp.admin" />
 
+	<bean class="cherry.springapp.common.log.LogInitializer">
+		<property name="messageDef">
+			<util:properties location="classpath:log.properties" />
+		</property>
+	</bean>
+
 </beans>
