@@ -100,7 +100,11 @@ public class CsvParser implements Closeable {
 			line.append((char) ch);
 		}
 
-		return record.toArray(new String[record.size()]);
+		if (record == null) {
+			return null;
+		} else {
+			return record.toArray(new String[record.size()]);
+		}
 	}
 
 	/**
