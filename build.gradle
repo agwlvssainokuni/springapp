@@ -28,6 +28,7 @@ subprojects {
 	dependencies {
 		compile "com.h2database:h2:${versionH2db}"
 		compile "commons-dbcp:commons-dbcp:1.4"
+		compile "org.apache.commons:commons-lang3:3.2.1"
 		compile "org.slf4j:slf4j-api:${versionSlf4j}"
 		compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
 		compile "ch.qos.logback:logback-core:${versionLogback}"
