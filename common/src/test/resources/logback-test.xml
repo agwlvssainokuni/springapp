@@ -6,8 +6,8 @@
 		</encoder>
 	</appender>
 	<appender name="onmemory"
-		class="cherry.springapp.common.log.trace.OnMemoryAppender" />
-	<logger name="cherry.springapp" level="DEBUG" />
+		class="cherry.spring.common.log.trace.OnMemoryAppender" />
+	<logger name="cherry.spring" level="DEBUG" />
 	<logger name="org.springframework" level="DEBUG" />
 	<logger name="trace" level="TRACE" />
 	<root level="INFO">

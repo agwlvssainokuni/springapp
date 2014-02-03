@@ -10,18 +10,18 @@
 	<context:property-placeholder location="classpath:common.properties"
 		ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.springapp.common" />
+	<context:component-scan base-package="cherry.spring.common" />
 
-	<bean id="traceInterceptor" class="cherry.springapp.common.log.trace.TraceInterceptor">
+	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
 		<property name="arrayLengthLimit" value="0" />
 		<property name="objectLengthLimit" value="0" />
 	</bean>
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry.springapp..*.*(..))
+			pointcut="execution(* cherry.spring..*.*(..))
 				and
-				!execution(* cherry.springapp.common.log..*.*(..))" />
+				!execution(* cherry.spring.common.log..*.*(..))" />
 	</aop:config>
 
 	<bean id="transactionManager"
