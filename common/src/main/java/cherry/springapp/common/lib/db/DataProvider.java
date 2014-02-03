@@ -25,21 +25,28 @@ import java.util.Map;
 public interface DataProvider {
 
 	/**
-	 * 次のデータが存在するか判定する.
+	 * データの取得を開始する.
 	 * 
-	 * @return 次のデータが存在するか否か
 	 * @throws IOException
-	 *             データの取得でエラー
+	 *             データ取得エラー
 	 */
-	boolean hasNext() throws IOException;
+	void begin() throws IOException;
 
 	/**
-	 * データを取得する.
+	 * 1レコードのデータを取得する.
 	 * 
-	 * @return 取得したデータ
+	 * @return 1レコードのデータ. データが存在しない場合はnull.
 	 * @throws IOException
-	 *             データの取得でエラー
+	 *             データ取得エラー
 	 */
-	Map<String, ?> nextData() throws IOException;
+	Map<String, ?> provide() throws IOException;
+
+	/**
+	 * エータの取得を終了する.
+	 * 
+	 * @throws IOException
+	 *             データ取得エラー
+	 */
+	void end() throws IOException;
 
 }

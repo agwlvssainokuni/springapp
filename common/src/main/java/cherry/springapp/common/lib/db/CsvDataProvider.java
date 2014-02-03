@@ -21,6 +21,8 @@ import java.io.Reader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import cherry.springapp.common.lib.csv.CsvParser;
 
 /**
@@ -31,63 +33,97 @@ public class CsvDataProvider implements DataProvider {
 	/** CSVパーサ. */
 	private CsvParser parser;
 
-	private Boolean hasNext = null;
+	/** ヘッダが存在するか否か. */
+	private boolean withHeader;
 
-	private String[] nextRecord = null;
+	/** フィールド名. */
+	private String[] fieldName;
 
 	/**
 	 * CSVデータ取込み機能を生成する.
 	 * 
 	 * @param reader
 	 *            データ読取り元
+	 * @param withHeader
+	 *            ヘッダが存在するか否か
 	 */
-	public CsvDataProvider(Reader reader) {
-		parser = new CsvParser(reader);
+	public CsvDataProvider(Reader reader, boolean withHeader) {
+		this.parser = new CsvParser(reader);
+		this.withHeader = withHeader;
+		this.fieldName = null;
 	}
 
 	/**
-	 * 次のデータが存在するか判定する.
+	 * データの取得を開始する.
 	 * 
-	 * @return 次のデータが存在するか否か
 	 * @throws IOException
-	 *             データの取得でエラー
+	 *             データ取得エラー
 	 */
 	@Override
-	public boolean hasNext() throws IOException {
+	public void begin() throws IOException {
 
-		if (hasNext == null) {
-			nextRecord = parser.read();
-			if (nextRecord == null) {
-				parser.close();
-			}
-			hasNext = (nextRecord != null);
+		if (!withHeader) {
+			return;
 		}
 
-		return hasNext;
+		String[] header = parser.read();
+		if (header == null) {
+			return;
+		}
+
+		String[] fieldName = new String[header.length];
+		for (int i = 0; i < header.length; i++) {
+			boolean first = true;
+			StringBuilder builder = new StringBuilder();
+			for (String part : StringUtils.split(header[i], "_")) {
+				if (first) {
+					builder.append(StringUtils.lowerCase(part));
+				} else {
+					builder.append(StringUtils.capitalize(StringUtils
+							.lowerCase(part)));
+				}
+				first = false;
+			}
+			fieldName[i] = builder.toString();
+		}
 	}
 
 	/**
-	 * データを取得する.
+	 * 1レコードのデータを取得する.
 	 * 
-	 * @return 取得したデータ
+	 * @return 1レコードのデータ. データが存在しない場合はnull.
 	 * @throws IOException
-	 *             データの取得でエラー
+	 *             データ取得エラー
 	 */
 	@Override
-	public Map<String, ?> nextData() throws IOException {
+	public Map<String, ?> provide() throws IOException {
 
-		if (!hasNext()) {
+		String[] record = parser.read();
+		if (record == null) {
 			return null;
 		}
 
-		Map<String, String> nextData = new LinkedHashMap<String, String>(
-				nextRecord.length);
-		for (int i = 0; i < nextRecord.length; i++) {
-			nextData.put("field" + i, nextRecord[i]);
+		Map<String, String> recordData = new LinkedHashMap<String, String>(
+				record.length);
+		for (int i = 0; i < record.length; i++) {
+			if (fieldName == null) {
+				recordData.put("field" + i, record[i]);
+			} else {
+				recordData.put(fieldName[i], record[i]);
+			}
 		}
+		return recordData;
+	}
 
-		hasNext = null;
-		return nextData;
+	/**
+	 * エータの取得を終了する.
+	 * 
+	 * @throws IOException
+	 *             データ取得エラー
+	 */
+	@Override
+	public void end() throws IOException {
+		parser.close();
 	}
 
 }

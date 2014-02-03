@@ -88,12 +88,14 @@ public class DataLoaderImpl extends NamedParameterJdbcDaoSupport implements
 	@Override
 	public Result load(DataProvider provider) throws IOException {
 
+		provider.begin();
+
 		int totalCount = 0;
 		int successCount = 0;
 		int failedCount = 0;
-		while (provider.hasNext()) {
+		Map<String, ?> data;
+		while ((data = provider.provide()) != null) {
 
-			Map<String, ?> data = provider.nextData();
 			totalCount += 1;
 
 			try {
@@ -116,6 +118,8 @@ public class DataLoaderImpl extends NamedParameterJdbcDaoSupport implements
 				break;
 			}
 		}
+
+		provider.end();
 
 		Result result = new Result();
 		result.setTotalCount(totalCount);
