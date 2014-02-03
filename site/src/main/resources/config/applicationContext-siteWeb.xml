@@ -30,6 +30,13 @@
 	</security:http>
 
 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/login/**" />
+			<mvc:mapping path="/logout/**" />
+			<mvc:mapping path="/secure/**" />
+			<bean
+				class="cherry.springapp.common.log.web.OperationLogHandlerInterceptor" />
+		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		<bean
 			class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />

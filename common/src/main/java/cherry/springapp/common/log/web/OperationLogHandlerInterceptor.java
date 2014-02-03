@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.springapp.common.web;
+package cherry.springapp.common.log.web;
 
 import java.util.Map;
 
