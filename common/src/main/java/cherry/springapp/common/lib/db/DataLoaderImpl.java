@@ -21,8 +21,8 @@ import static java.text.MessageFormat.format;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ public class DataLoaderImpl extends NamedParameterJdbcDaoSupport implements
 		DataLoader {
 
 	/** ログ出力. */
-	private final Log log = LogFactory.getLog(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/** 取込み用SQL. */
 	private String sql;
