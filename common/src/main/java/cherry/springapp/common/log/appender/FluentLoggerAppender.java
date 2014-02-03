@@ -1,5 +1,5 @@
 /*
- *   Copyright 2012 Norio Agawa
+ *   Copyright 2012,2014 agwlvssainokuni
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ public class FluentLoggerAppender extends
 		Level level = event.getLevel();
 		long timestamp = event.getTimeStamp();
 
-		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("timestamp", timestamp);
 		data.put("level", level.toString());
 		data.put("thread", event.getThreadName());
@@ -76,7 +76,7 @@ public class FluentLoggerAppender extends
 		data.put("message", event.getFormattedMessage());
 
 		if (outputMdc) {
-			Map<String, String> mdc = new LinkedHashMap<String, String>();
+			Map<String, String> mdc = new LinkedHashMap<>();
 			for (Map.Entry<String, String> entry : event.getMDCPropertyMap()
 					.entrySet()) {
 				mdc.put(entry.getKey().replace(".", "_"), entry.getValue());
@@ -101,11 +101,11 @@ public class FluentLoggerAppender extends
 	 */
 	private Map<String, Object> createThrowableData(IThrowableProxy th) {
 
-		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("className", th.getClassName());
 		data.put("message", th.getMessage());
 
-		List<String> stackTrace = new ArrayList<String>();
+		List<String> stackTrace = new ArrayList<>();
 		for (StackTraceElementProxy ste : th.getStackTraceElementProxyArray()) {
 			stackTrace.add(ste.toString());
 		}
