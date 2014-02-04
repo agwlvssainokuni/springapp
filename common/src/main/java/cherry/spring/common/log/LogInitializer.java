@@ -20,14 +20,27 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.InitializingBean;
 
+/**
+ * ログ文言を初期化する機能を提供する。
+ */
 public class LogInitializer implements InitializingBean {
 
+	/** ログ文言定義を保持する。 */
 	private Properties messageDef;
 
+	/**
+	 * ログ文言定義を設定する。
+	 * 
+	 * @param messageDef
+	 *            ログ文言定義。
+	 */
 	public void setMessageDef(Properties messageDef) {
 		this.messageDef = messageDef;
 	}
 
+	/**
+	 * ログ文言を初期化する。
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		assert messageDef != null : "messageDef must not be null";

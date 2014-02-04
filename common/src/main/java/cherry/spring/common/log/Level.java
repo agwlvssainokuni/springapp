@@ -16,6 +16,14 @@
 
 package cherry.spring.common.log;
 
+/**
+ * ログレベルを表す。
+ */
 public enum Level {
-	INFO, WARN, ERROR
+	/** 通常 */
+	INFO,
+	/** 警告 */
+	WARN,
+	/** 異常 */
+	ERROR
 }

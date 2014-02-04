@@ -16,10 +16,15 @@
 
 package cherry.spring.common.log;
 
+/**
+ * ログIDを表す。
+ */
 public interface ILogId {
 
+	/** ログID (文字列表記)。 */
 	String getId();
 
+	/** ログレベル。 */
 	Level getLevel();
 
 }

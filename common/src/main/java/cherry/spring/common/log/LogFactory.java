@@ -16,6 +16,33 @@
 
 package cherry.spring.common.log;
 
+import org.slf4j.LoggerFactory;
+
+/**
+ * ログ出力機能を生成する機能を提供する。
+ */
 public class LogFactory {
+
+	/**
+	 * ログ出力機能を生成する。
+	 * 
+	 * @param klass
+	 *            ログに紐付けるクラス。
+	 * @return ログ出力機能。
+	 */
+	public static Log getLog(Class<?> klass) {
+		return new Log(LoggerFactory.getLogger(klass));
+	}
+
+	/**
+	 * ログ出力機能を生成する。
+	 * 
+	 * @param name
+	 *            ログに紐付ける名前。
+	 * @return ログ出力機能。
+	 */
+	public static Log getLog(String name) {
+		return new Log(LoggerFactory.getLogger(name));
+	}
 
 }
