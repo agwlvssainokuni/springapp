@@ -48,11 +48,10 @@ public class Launcher {
 				log.info(format("  {0}", arg));
 			}
 
-			ApplicationContext appCtx = new ClassPathXmlApplicationContext(
-					APPCTX);
-			IBatch batch = appCtx.getBean(batchId, IBatch.class);
+			IBatch batch = getBatch(batchId);
 
 			log.info(format("BATCH {0} STARTED", batchId));
+
 			ExitStatus status = batch.execute(args);
 
 			switch (status) {
@@ -82,19 +81,10 @@ public class Launcher {
 		}
 	}
 
-	public static void main(String... args) {
-
-		if (args.length <= 0) {
-			System.exit(ExitStatus.FATAL.getCode());
-		}
-
-		String batchId = args[0];
-		String[] newArgs = new String[args.length - 1];
-		System.arraycopy(args, 1, newArgs, 0, args.length - 1);
-
-		Launcher launcher = new Launcher(batchId);
-		ExitStatus status = launcher.launch(newArgs);
-		System.exit(status.getCode());
+	private IBatch getBatch(String id) {
+		@SuppressWarnings("resource")
+		ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
+		return appCtx.getBean(id, IBatch.class);
 	}
 
 }

@@ -1,3 +1,7 @@
+apply plugin: "application"
+
+mainClassName = "cherry.spring.batch.tools.Main"
+
 dependencies {
 	compile project(":common")
 }
