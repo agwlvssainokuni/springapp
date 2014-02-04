@@ -23,8 +23,6 @@ import java.io.StringWriter;
 
 import org.junit.Test;
 
-import cherry.spring.common.lib.csv.CsvCreator;
-
 /**
  * {@link CsvCreator}によるCSVデータ作成テスト.
  */

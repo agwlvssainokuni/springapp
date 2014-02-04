@@ -16,9 +16,6 @@
 
 package cherry.spring.common.log.trace;
 
-import cherry.spring.common.log.trace.Mask;
-import cherry.spring.common.log.trace.TraceInterceptor;
-
 /**
  * {@link TraceInterceptor} のテスト.
  */

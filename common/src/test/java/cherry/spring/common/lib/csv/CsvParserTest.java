@@ -26,8 +26,6 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-import cherry.spring.common.lib.csv.CsvParser;
-
 /**
  * {@link CsvParser}によるCSVデータ解析テスト。
  */

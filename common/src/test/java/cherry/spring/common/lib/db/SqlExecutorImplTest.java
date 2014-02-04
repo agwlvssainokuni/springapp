@@ -30,9 +30,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 
-import cherry.spring.common.lib.db.SqlExecutor;
-import cherry.spring.common.lib.db.SqlExecutorImpl;
-
 /**
  * {@link SqlExecutorImpl} のテスト.
  */

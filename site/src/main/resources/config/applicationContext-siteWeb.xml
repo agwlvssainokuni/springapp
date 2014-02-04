@@ -34,8 +34,7 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
 			<mvc:mapping path="/secure/**" />
-			<bean
-				class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
+			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		<bean

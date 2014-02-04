@@ -26,7 +26,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import cherry.spring.common.log.trace.TraceInterceptor;
 
 /**
  * {@link TraceInterceptor} のテスト.
@@ -65,8 +64,7 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.spring.common.log.trace.TraceTest0Impl#test0: ()",
+		assertEquals("cherry.spring.common.log.trace.TraceTest0Impl#test0: ()",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
@@ -243,8 +241,7 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.spring.common.log.trace.TraceTest0Impl#test5: ()",
+		assertEquals("cherry.spring.common.log.trace.TraceTest0Impl#test5: ()",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
