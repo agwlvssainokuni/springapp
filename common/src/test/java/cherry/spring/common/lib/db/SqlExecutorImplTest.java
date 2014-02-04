@@ -43,7 +43,7 @@ public class SqlExecutorImplTest {
 	private static ApplicationContext getAppCtx() {
 		if (appCtx == null) {
 			appCtx = new ClassPathXmlApplicationContext(
-					"classpath:cherry/springapp/common/lib/db/applicationContext.xml");
+					"classpath:cherry/spring/common/lib/db/applicationContext.xml");
 		}
 		return appCtx;
 	}
