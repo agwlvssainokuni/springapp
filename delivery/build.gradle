@@ -1,0 +1,30 @@
+task distZip(type: Zip) {
+
+	classifier "dist"
+	def web = ["admin", "site"]
+	def batch = ["batch"]
+
+	for (String dir : web) {
+		into("${dir}/app") {
+			from("${projectDir}/../${dir}/build/libs") {
+				include "*.war"
+			}
+		}
+		into("${dir}/conf") {
+		}
+		into("${dir}/log") {
+		}
+	}
+
+	for (String dir : batch) {
+		into("${dir}") {
+			from("${projectDir}/../${dir}/build/install/${dir}")
+		}
+		into("${dir}/conf") {
+		}
+		into("${dir}/log") {
+		}
+	}
+}
+
+distZip.dependsOn ":admin:war", ":site:war", ":batch:installApp"
