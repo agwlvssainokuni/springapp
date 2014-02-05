@@ -1,1 +1,1 @@
-include 'common', 'admin', 'site', 'batch'
+include 'common', 'admin', 'site', 'batch', 'delivery'
