@@ -8,6 +8,9 @@
 		<encoder>
 			<pattern>${logback.pattern}</pattern>
 		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.debug.threshold}</level>
+		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${logback.dir}/backup/debug.%i.zip
 			</fileNamePattern>
@@ -40,6 +43,9 @@
 		<encoder>
 			<pattern>${logback.pattern}</pattern>
 		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.oper.threshold}</level>
+		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${logback.dir}/backup/oper.%d{yyyyMMdd}.zip
 			</fileNamePattern>
