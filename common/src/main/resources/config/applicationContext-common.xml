@@ -13,8 +13,8 @@
 	<context:component-scan base-package="cherry.spring.common" />
 
 	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="0" />
-		<property name="objectLengthLimit" value="0" />
+		<property name="arrayLengthLimit" value="${common.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${common.trace.objectLengthLimit}" />
 	</bean>
 
 	<aop:config>
