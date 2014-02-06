@@ -18,3 +18,10 @@ dependencies {
 	providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 	providedCompile "javax.servlet:jsp-api:2.0"
 }
+
+task copyWithFilter(type: Copy) {
+	from "src/dist/resources"
+	into sourceSets.main.output.resourcesDir
+}
+
+copyWithFilter.dependsOn "processResources"
