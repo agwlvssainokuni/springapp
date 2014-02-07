@@ -67,6 +67,16 @@ subprojects {
 		testCompile "org.mockito:mockito-all:1.9.5"
 	}
 
+	processResources.doLast {
+		copy {
+			from "src/dist/resources"
+			into sourceSets.main.output.resourcesDir
+			def props = new Properties()
+			file("../delivery/src/dist/resources/filter.properties").withInputStream { props.load(it) }
+			filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
+		}
+	}
+
 	compileJava {
 		options.encoding = "UTF-8"
 	}
