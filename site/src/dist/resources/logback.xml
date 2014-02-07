@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration>
-	<property file="${filter.admin.conf}/logback.properties" />
+	<property file="@filter.site.conf@/logback.properties" />
 	<appender name="debuglog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${logback.dir}/debug.log</file>
