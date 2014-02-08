@@ -10,4 +10,7 @@
 
 	<import resource="applicationContext-commonMigration.xml" />
 
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
 </beans>
