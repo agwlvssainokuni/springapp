@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +47,8 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 	 */
 	@RequestMapping()
 	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}

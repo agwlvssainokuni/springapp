@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,8 +45,8 @@ public interface PwdtoolController {
 	 * ツールの画面を表示する。
 	 */
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+	ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
 	/**
 	 * 平文をエンコードした文字列を返却する。
