@@ -71,7 +71,7 @@
 					<constructor-arg>
 						<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 							<property name="viewClass"
-								value="org.springframework.web.servlet.view.tiles2.TilesView" />
+								value="org.springframework.web.servlet.view.tiles3.TilesView" />
 						</bean>
 					</constructor-arg>
 					<property name="mobilePrefix" value="normal/" />
