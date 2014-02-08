@@ -115,7 +115,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 		StringBuilder builder = new StringBuilder();
 		return builder.append(request.getRemoteAddr()).append(" ")
 				.append(request.getMethod()).append(" ")
-				.append(request.getPathInfo());
+				.append(request.getRequestURI());
 	}
 
 }
