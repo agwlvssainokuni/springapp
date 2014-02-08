@@ -67,20 +67,70 @@ subprojects {
 		testCompile "org.mockito:mockito-all:1.9.5"
 	}
 
-	processResources.doLast {
-		copy {
-			from "src/dist/resources"
-			into sourceSets.main.output.resourcesDir
-			def props = new Properties()
-			file("../delivery/src/dist/resources/filter.properties").withInputStream { props.load(it) }
-			filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
-		}
+	task processDistResources(type: Copy) {
+		from "src/main/distResources"
+		into sourceSets.main.output.resourcesDir
+		def props = new Properties()
+		file("../filter.properties").withInputStream { props.load(it) }
+		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
+		dependsOn processResources
 	}
 
 	compileJava {
 		options.encoding = "UTF-8"
 	}
+
 	compileTestJava {
 		options.encoding = "UTF-8"
 	}
+}
+
+def distSpec = copySpec {
+
+	for (String dir : ["admin", "site"]) {
+		into("${dir}/app") {
+			from("${dir}/build/libs")
+			include "*.war"
+		}
+	}
+
+	for (String dir : ["batch"]) {
+		into("${dir}") {
+			from("${dir}/build/install/${dir}")
+		}
+	}
+
+	for (String dir : ["admin", "site", "batch"]) {
+		into("${dir}/conf") {
+			from("${dir}/build/resources/main") {
+				include "*.properties"
+				exclude "${dir}.properties"
+				exclude "log.properties"
+				rename { it + ".template" }
+			}
+		}
+		into("${dir}/log") {
+		}
+	}
+}
+
+task distZip(type: Zip) {
+	baseName = project.name
+	classifier = "dist"
+	with(distSpec)
+	dependsOn ":admin:processDistResources"
+	dependsOn ":site:processDistResources"
+	dependsOn ":batch:processDistResources"
+	dependsOn ":admin:war", ":site:war", ":batch:installApp"
+}
+
+task distTar(type: Tar) {
+	baseName = project.name
+	classifier = "dist"
+	compression = Compression.GZIP
+	with(distSpec)
+	dependsOn ":admin:processDistResources"
+	dependsOn ":site:processDistResources"
+	dependsOn ":batch:processDistResources"
+	dependsOn ":admin:war", ":site:war", ":batch:installApp"
 }

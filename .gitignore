@@ -6,6 +6,9 @@
 *.ear
 
 *~
+*.swp
+*.zip
+*.tgz
 .DS_Store
 /.gradle
 /gradle-app.setting
