@@ -1,33 +1,20 @@
-task distZip(type: Zip) {
+def distSpec = copySpec {
 
-	baseName = parent.name
-	classifier "dist"
-	def web = ["admin", "site"]
-	def batch = ["batch"]
-
-	for (String dir : web) {
+	for (String dir : ["admin", "site"]) {
 		into("${dir}/app") {
-			from("../${dir}/build/libs") {
-				include "*.war"
-			}
-		}
-		into("${dir}/conf") {
-			from("../${dir}/build/resources/main") {
-				include "*.properties"
-				exclude "${dir}.properties"
-				exclude "log.properties"
-				rename { it + ".template" }
-			}
-		}
-		into("${dir}/log") {
+			from("../${dir}/build/libs")
+			include "*.war"
 		}
 	}
 
-	for (String dir : batch) {
+	for (String dir : ["batch"]) {
 		into("${dir}") {
 			from("../${dir}/build/install/${dir}")
 			exclude "resources/**"
 		}
+	}
+
+	for (String dir : ["admin", "site", "batch"]) {
 		into("${dir}/conf") {
 			from("../${dir}/build/resources/main") {
 				include "*.properties"
@@ -41,4 +28,17 @@ task distZip(type: Zip) {
 	}
 }
 
-distZip.dependsOn ":admin:war", ":site:war", ":batch:installApp"
+task distZip(type: Zip) {
+	baseName = parent.name
+	classifier "dist"
+	with(distSpec)
+	dependsOn ":admin:war", ":site:war", ":batch:installApp"
+}
+
+task distTar(type: Tar) {
+	baseName = parent.name
+	classifier "dist"
+	compression = Compression.GZIP
+	with(distSpec)
+	dependsOn ":admin:war", ":site:war", ":batch:installApp"
+}
