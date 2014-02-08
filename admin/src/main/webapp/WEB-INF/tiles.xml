@@ -3,6 +3,20 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
+
 	<definition name="normal/base_unauth" template="/WEB-INF/tiles/normal/base_unauth.jsp" />
 	<definition name="normal/base_auth" template="/WEB-INF/tiles/normal/base_auth.jsp" />
+
+	<definition name="normal/login/index" extends="normal/base_unauth">
+		<put-attribute name="name" value="login/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/login/index.jsp" />
+	</definition>
+
+	<definition name="normal/home/index" extends="normal/base_auth">
+		<put-attribute name="name" value="home/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/home/index.jsp" />
+	</definition>
+
 </tiles-definitions>
