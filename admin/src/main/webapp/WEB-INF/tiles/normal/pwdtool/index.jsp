@@ -11,21 +11,16 @@
 <h1>
 	<s:message code="pwdtool/index.message.0" />
 </h1>
-<div>
-	<div data-role="fieldcontain">
-		<input id="plainText" type="password">
-	</div>
-	<div data-role="fieldcontain">
-		<button id="encodeButton" onclick="JavaScript:encode();">
-			<s:message code="pwdtool/index.encodeButton" />
-		</button>
-	</div>
-	<div data-role="fieldcontain">
-		<input id="encodedText" type="text">
-	</div>
+<div data-role="fieldcontain">
+	<input id="plainText" type="password">
 </div>
 <div data-role="fieldcontain">
-	<div id="encodedText"></div>
+	<button id="encodeButton" onclick="JavaScript:encode();">
+		<s:message code="pwdtool/index.encodeButton" />
+	</button>
+</div>
+<div data-role="fieldcontain">
+	<input id="encodedText" type="text">
 </div>
 <script type="text/javascript">
 	function encode() {
