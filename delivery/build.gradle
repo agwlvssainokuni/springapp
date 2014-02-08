@@ -1,16 +1,23 @@
 task distZip(type: Zip) {
 
+	baseName = parent.name
 	classifier "dist"
 	def web = ["admin", "site"]
 	def batch = ["batch"]
 
 	for (String dir : web) {
 		into("${dir}/app") {
-			from("${projectDir}/../${dir}/build/libs") {
+			from("../${dir}/build/libs") {
 				include "*.war"
 			}
 		}
 		into("${dir}/conf") {
+			from("../${dir}/build/resources/main") {
+				include "*.properties"
+				exclude "${dir}.properties"
+				exclude "log.properties"
+				rename { it + ".template" }
+			}
 		}
 		into("${dir}/log") {
 		}
@@ -18,9 +25,16 @@ task distZip(type: Zip) {
 
 	for (String dir : batch) {
 		into("${dir}") {
-			from("${projectDir}/../${dir}/build/install/${dir}")
+			from("../${dir}/build/install/${dir}")
+			exclude "resources/**"
 		}
 		into("${dir}/conf") {
+			from("../${dir}/build/resources/main") {
+				include "*.properties"
+				exclude "${dir}.properties"
+				exclude "log.properties"
+				rename { it + ".template" }
+			}
 		}
 		into("${dir}/log") {
 		}
