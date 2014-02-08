@@ -23,9 +23,6 @@
 			username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout"
 			logout-success-url="/login?ok=logout" invalidate-session="true" />
-		<security:session-management
-			invalid-session-url="/login?err=session"
-			session-authentication-error-url="/login?err=session" />
 		<security:csrf />
 	</security:http>
 
