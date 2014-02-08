@@ -1,6 +1,6 @@
 apply plugin: "eclipse-wtp"
 
 dependencies {
-	compile "javax.servlet:javax.servlet-api:3.1.0"
-	compile "javax.servlet:jsp-api:2.0"
+	compile "javax.servlet:javax.servlet-api:3.0.1"
+	compile "javax.servlet.jsp:javax.servlet.jsp-api:2.2.1"
 }
