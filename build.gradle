@@ -1,8 +1,11 @@
+allprojects {
+	version = "1.0"
+}
+
 subprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 
-	version = "1.0"
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
 
@@ -116,6 +119,7 @@ def distSpec = copySpec {
 
 task distZip(type: Zip) {
 	baseName = project.name
+	version = project.version
 	classifier = "dist"
 	with(distSpec)
 	dependsOn ":admin:processDistResources"
@@ -126,6 +130,7 @@ task distZip(type: Zip) {
 
 task distTar(type: Tar) {
 	baseName = project.name
+	version = project.version
 	classifier = "dist"
 	compression = Compression.GZIP
 	with(distSpec)
