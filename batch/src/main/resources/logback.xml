@@ -8,6 +8,7 @@
 	</appender>
 	<logger name="cherry.spring" level="DEBUG" />
 	<logger name="org.springframework" level="DEBUG" />
+	<logger name="com.googlecode.flyway" level="DEBUG" />
 	<logger name="trace" level="TRACE" />
 	<root level="INFO">
 		<appender-ref ref="console" />
