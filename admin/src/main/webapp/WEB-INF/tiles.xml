@@ -25,4 +25,10 @@
 			value="/WEB-INF/tiles/normal/pwdtool/index.jsp" />
 	</definition>
 
+	<definition name="normal/download/index" extends="normal/base_auth">
+		<put-attribute name="name" value="download/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/download/index.jsp" />
+	</definition>
+
 </tiles-definitions>
