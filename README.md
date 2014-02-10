@@ -33,7 +33,7 @@ Spring framework、Gradle、Logbackをどう使っていくかを、プロジェ
 			*	Apache Tiles 3
 			*	Jackson 2
 		*	ハンドラインタセプタ
-			*	操作ログ
+			*	操作ログ (自前)
 	*	Spring Security
 		*	Webアプリへの組込み
 		*	認証プロバイダ
@@ -50,7 +50,7 @@ Spring framework、Gradle、Logbackをどう使っていくかを、プロジェ
 			*	Eclipseに依存プロジェクトとして認識させる
 		*	依存ライブラリの管理
 			*	Eclipseに依存ライブラリを認識させる。
-			*	Eclipse WTPに依存ライブラリを認識させる。
+			*	共通プロジェクトの依存ライブラリをEclipseで伝播させる。
 	*	デリバリ向けビルドスクリプト
 		*	デリバリ向けリソースファイル生成
 		*	バッチ起動スクリプト生成
