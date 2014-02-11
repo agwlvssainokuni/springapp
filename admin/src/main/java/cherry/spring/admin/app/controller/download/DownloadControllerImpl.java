@@ -19,6 +19,7 @@ package cherry.spring.admin.app.controller.download;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class DownloadControllerImpl implements DownloadController {
 	private String contentType;
 
 	@Value("${admin.app.download.charset}")
-	private String charset;
+	private Charset charset;
 
 	@Value("${admin.app.download.headerName}")
 	private String headerName;
@@ -90,7 +91,7 @@ public class DownloadControllerImpl implements DownloadController {
 			HttpServletResponse response) {
 
 		response.setContentType(contentType);
-		response.setCharacterEncoding(charset);
+		response.setCharacterEncoding(charset.name());
 		String fname = MessageFormat.format(filename, new Date());
 		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
 
