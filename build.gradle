@@ -72,14 +72,30 @@ subprojects {
 		testCompile "org.mockito:mockito-all:1.9.5"
 	}
 
-	task processDistResources(type: Copy) {
+	if (parent.hasProperty("appendix")) {
+		project.appendix = parent.appendix
+	}
+
+	task processDistResources(type: Copy, overwrite: true) {
 		from "src/main/distResources"
 		into sourceSets.main.output.resourcesDir
+
 		def props = new Properties()
 		file("../filter.properties").withInputStream { props.load(it) }
+		def appdir = "/opt/" + parent.name
+		if (project.hasProperty("appendix")) {
+			appdir = appdir + "/" + project.appendix
+		}
+		for (String dir : ["admin", "site", "batch"]) {
+			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
+			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/log")
+		}
+
 		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
 		dependsOn processResources
 	}
+
+	classes.mustRunAfter processDistResources
 
 	compileJava {
 		options.encoding = "UTF-8"
@@ -96,6 +112,13 @@ def distSpec = copySpec {
 		into("${dir}/app") {
 			from("${dir}/build/libs")
 			include "*.war"
+			rename {
+				if (project.hasProperty("appendix")) {
+					project.appendix + "#" + it.replace("-${version}", "")
+				} else {
+					it.replace("-${version}", "")
+				}
+			}
 		}
 	}
 
@@ -122,6 +145,9 @@ def distSpec = copySpec {
 task distZip(type: Zip) {
 	baseName = project.name
 	version = project.version
+	if (project.hasProperty("appendix")) {
+		appendix = project.appendix
+	}
 	classifier = "dist"
 	with(distSpec)
 	dependsOn ":admin:processDistResources"
@@ -133,6 +159,9 @@ task distZip(type: Zip) {
 task distTar(type: Tar) {
 	baseName = project.name
 	version = project.version
+	if (project.hasProperty("appendix")) {
+		appendix = project.appendix
+	}
 	classifier = "dist"
 	compression = Compression.GZIP
 	with(distSpec)
