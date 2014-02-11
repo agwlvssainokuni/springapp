@@ -11,3 +11,11 @@
 <h1>
 	<s:message code="home/index.message.0" />
 </h1>
+<ul data-role="listview" data-inset=“true”>
+	<li><a href="<c:url value="/secure/pwdtool" />"><s:message
+				code="home/index.menu.pwdtool" /></a></li>
+	<li><a href="<c:url value="/secure/download" />"><s:message
+				code="home/index.menu.download" /></a></li>
+	<li><a href="<c:url value="/secure/upload" />"><s:message
+				code="home/index.menu.upload" /></a></li>
+</ul>
