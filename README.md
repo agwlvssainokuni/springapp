@@ -32,6 +32,8 @@ Spring framework、Gradle、Logbackをどう使っていくかを、プロジェ
 			*	JSTL
 			*	Apache Tiles 3
 			*	Jackson 2
+		*	ファイルアップロード
+		*	ファイルダウンロード
 		*	ハンドラインタセプタ
 			*	操作ログ (自前)
 	*	Spring Security
