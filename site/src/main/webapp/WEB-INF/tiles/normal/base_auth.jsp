@@ -45,6 +45,13 @@
 			<tiles:insertAttribute name="content" />
 		</div>
 		<div data-role="footer">
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li><a hreF="<c:url value="/secure/" />" data-icon="home">
+							<s:message code="base/auth.menu.home" />
+					</a></li>
+				</ul>
+			</div>
 			<h1>
 				<s:message code="base/common.copyright" />
 			</h1>
