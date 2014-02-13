@@ -12,15 +12,14 @@
 <title><s:message code="base/common.title" /> / <s:message
 		code="${title}" /></title>
 <link rel="stylesheet" media="screen"
-	href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+	href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
 <link rel="stylesheet" media="screen"
 	href="<c:url value="/normal/style/custom.css"/>" />
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/config.js" />"></script>
 <script type="text/javascript"
-	src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	src="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/custom.js" />"></script>
 </head>
