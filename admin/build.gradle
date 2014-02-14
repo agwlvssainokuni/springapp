@@ -18,3 +18,7 @@ dependencies {
 	providedCompile "javax.servlet:javax.servlet-api:3.0.1"
 	providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.2.1'
 }
+
+war {
+	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
+}
