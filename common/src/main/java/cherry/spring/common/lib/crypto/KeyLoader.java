@@ -16,14 +16,18 @@
 
 package cherry.spring.common.lib.crypto;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 
 public interface KeyLoader {
 
-	PublicKey loadPublicKey(InputStream in);
+	PublicKey loadPublicKey(InputStream in) throws IOException,
+			InvalidKeySpecException;
 
-	PrivateKey loadPrivateKey(InputStream in);
+	PrivateKey loadPrivateKey(InputStream in) throws IOException,
+			InvalidKeySpecException;
 
 }

@@ -31,48 +31,35 @@ public class RSAKeyLoader implements KeyLoader {
 
 	private final KeyFactory keyFactory;
 
-	public RSAKeyLoader() throws IllegalStateException {
-		try {
-			keyFactory = KeyFactory.getInstance("RSA");
-		} catch (NoSuchAlgorithmException ex) {
-			throw new IllegalStateException(ex);
-		}
+	public RSAKeyLoader() throws NoSuchAlgorithmException {
+		keyFactory = KeyFactory.getInstance("RSA");
 	}
 
 	@Override
-	public PublicKey loadPublicKey(InputStream in) {
+	public PublicKey loadPublicKey(InputStream in) throws IOException,
+			InvalidKeySpecException {
 		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(loadBytes(in));
-		try {
-			return keyFactory.generatePublic(keySpec);
-		} catch (InvalidKeySpecException ex) {
-			throw new IllegalStateException(ex);
-		}
+		return keyFactory.generatePublic(keySpec);
 	}
 
 	@Override
-	public PrivateKey loadPrivateKey(InputStream in) {
+	public PrivateKey loadPrivateKey(InputStream in) throws IOException,
+			InvalidKeySpecException {
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(loadBytes(in));
-		try {
-			return keyFactory.generatePrivate(keySpec);
-		} catch (InvalidKeySpecException ex) {
-			throw new IllegalStateException(ex);
+		return keyFactory.generatePrivate(keySpec);
+	}
+
+	private byte[] loadBytes(InputStream in) throws IOException {
+		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			byte[] buff = new byte[8192];
+			int len;
+			while ((len = in.read(buff)) >= 0) {
+				out.write(buff, 0, len);
+			}
+			return out.toByteArray();
+		} finally {
+			in.close();
 		}
 	}
 
-	byte[] loadBytes(InputStream in) {
-		try {
-			try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-				byte[] buff = new byte[8192];
-				int len;
-				while ((len = in.read(buff)) >= 0) {
-					out.write(buff, 0, len);
-				}
-				return out.toByteArray();
-			} finally {
-				in.close();
-			}
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
-	}
 }
