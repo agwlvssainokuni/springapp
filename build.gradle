@@ -29,6 +29,7 @@ subprojects {
 	}
 
 	dependencies {
+		compile "com.googlecode.flyway:flyway-core:2.3.1"
 		compile "com.h2database:h2:${versionH2db}"
 		compile "commons-dbcp:commons-dbcp:1.4"
 		compile "org.apache.commons:commons-lang3:3.2.1"
@@ -67,7 +68,6 @@ subprojects {
 		compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
 		compile "javax.validation:validation-api:1.1.0.Final"
 		compile "org.hibernate:hibernate-validator:5.0.2.Final"
-		compile "com.googlecode.flyway:flyway-core:2.3.1"
 		testCompile "junit:junit:4.11"
 		testCompile "org.mockito:mockito-all:1.9.5"
 	}
