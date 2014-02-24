@@ -40,7 +40,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -58,6 +57,9 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 
 	@Value("${admin.app.jfreechart.charset}")
 	private Charset charset;
+
+	@Value("${admin.app.jfreechart.contentType}")
+	private String contentType;
 
 	@Value("${admin.app.jfreechart.xLabel}")
 	private String xLabel;
@@ -94,12 +96,19 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 			return mav;
 		}
 
-		try (OutputStream out = response.getOutputStream()) {
-			CategoryDataset dataset = receiveFile(jFreeChartForm.getFile());
+		response.setContentType(contentType);
+
+		try {
+			CategoryDataset dataset;
+			try (InputStream in = jFreeChartForm.getFile().getInputStream()) {
+				dataset = loadCategoryDataset(in);
+			}
 			JFreeChart chart = ChartFactory.createLineChart(jFreeChartForm
 					.getFile().getOriginalFilename(), xLabel, yLabel, dataset);
-			ChartUtilities
-					.writeChartAsJPEG(out, chart, imageWidth, imageHeight);
+			try (OutputStream out = response.getOutputStream()) {
+				ChartUtilities.writeChartAsPNG(out, chart, imageWidth,
+						imageHeight);
+			}
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -107,33 +116,33 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 		return null;
 	}
 
-	private CategoryDataset receiveFile(MultipartFile file) throws IOException {
+	private CategoryDataset loadCategoryDataset(InputStream in)
+			throws IOException {
+
+		@SuppressWarnings("resource")
+		CsvParser csv = new CsvParser(new InputStreamReader(in, charset));
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		try (InputStream in = file.getInputStream()) {
 
-			@SuppressWarnings("resource")
-			CsvParser csv = new CsvParser(new InputStreamReader(in, charset));
-
-			String[] header = csv.read();
-			if (header == null) {
-				return dataset;
-			}
-
-			NumberFormat format = NumberFormat.getInstance();
-			String[] record;
-			while ((record = csv.read()) != null) {
-				for (int i = 1; i < record.length && i < header.length; i++) {
-					try {
-						dataset.addValue(format.parse(record[i]), header[i],
-								record[0]);
-					} catch (ParseException ex) {
-						log.debug(ex, "Invalid format {0}", record[i]);
-					}
-				}
-			}
-
+		String[] header = csv.read();
+		if (header == null) {
 			return dataset;
 		}
+
+		NumberFormat format = NumberFormat.getInstance();
+		String[] record;
+		while ((record = csv.read()) != null) {
+			for (int i = 1; i < record.length && i < header.length; i++) {
+				try {
+					dataset.addValue(format.parse(record[i]), header[i],
+							record[0]);
+				} catch (ParseException ex) {
+					log.debug(ex, "Invalid format {0}", record[i]);
+				}
+			}
+		}
+
+		return dataset;
 	}
+
 }
