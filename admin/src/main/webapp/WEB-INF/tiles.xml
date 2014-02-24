@@ -42,4 +42,10 @@
 			value="/WEB-INF/tiles/normal/upload/finish.jsp" />
 	</definition>
 
+	<definition name="normal/jfreechart/index" extends="normal/base_auth">
+		<put-attribute name="name" value="jfreechart/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/jfreechart/index.jsp" />
+	</definition>
+
 </tiles-definitions>
