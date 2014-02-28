@@ -5,6 +5,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<import resource="applicationContext-common.xml" />
+	<import resource="applicationContext-commonMapper.xml" />
 	<import resource="applicationContext-site.xml" />
 	<import resource="applicationContext-siteWeb.xml" />
 	<import resource="applicationContext-dataSource.xml" />

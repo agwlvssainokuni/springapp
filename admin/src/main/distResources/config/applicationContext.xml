@@ -10,6 +10,7 @@
 		ignore-unresolvable="true" />
 
 	<import resource="applicationContext-common.xml" />
+	<import resource="applicationContext-commonDao.xml" />
 	<import resource="applicationContext-admin.xml" />
 	<import resource="applicationContext-adminWeb.xml" />
 	<import resource="applicationContext-dataSource.xml" />
