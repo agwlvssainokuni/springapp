@@ -28,11 +28,11 @@ public class MailTemplateDto extends BaseDto {
 	/** メールテンプレートID。 */
 	private Integer id;
 
+	/** メール名。 */
+	private String name;
+
 	/** 差出人。 */
 	private String sender;
-
-	/** 宛先。 */
-	private List<MailTemplateAddressDto> mailAddressList;
 
 	/** ロケール。 */
 	private String locale;
@@ -43,6 +43,9 @@ public class MailTemplateDto extends BaseDto {
 	/** メール本文。 */
 	private String body;
 
+	/** 宛先。 */
+	private List<MailTemplateAddressDto> mailAddressList;
+
 	public Integer getId() {
 		return id;
 	}
@@ -51,20 +54,20 @@ public class MailTemplateDto extends BaseDto {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getSender() {
 		return sender;
 	}
 
 	public void setSender(String sender) {
 		this.sender = sender;
-	}
-
-	public List<MailTemplateAddressDto> getMailAddressList() {
-		return mailAddressList;
-	}
-
-	public void setMailAddressList(List<MailTemplateAddressDto> mailAddressList) {
-		this.mailAddressList = mailAddressList;
 	}
 
 	public String getLocale() {
@@ -89,6 +92,14 @@ public class MailTemplateDto extends BaseDto {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public List<MailTemplateAddressDto> getMailAddressList() {
+		return mailAddressList;
+	}
+
+	public void setMailAddressList(List<MailTemplateAddressDto> mailAddressList) {
+		this.mailAddressList = mailAddressList;
 	}
 
 }

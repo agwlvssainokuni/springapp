@@ -16,10 +16,13 @@
 
 package cherry.spring.common.db.app.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import cherry.spring.common.db.app.dto.MailTemplateDto;
 
 public interface MailTemplateMapper {
 
-	MailTemplateDto findByName(String name, String locale);
+	MailTemplateDto findByName(@Param("name") String name,
+			@Param("locale") String locale);
 
 }

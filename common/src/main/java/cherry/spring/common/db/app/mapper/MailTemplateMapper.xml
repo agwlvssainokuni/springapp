@@ -21,7 +21,7 @@
 		SELECT
 			A.id           AS id,
 			A.name         AS name,
-			A.seneder      AS sender,
+			A.sender       AS sender,
 			B.locale       AS locale,
 			B.subject      AS subject,
 			B.body         AS body,
@@ -34,17 +34,17 @@
 			ON
 				B.mail_template_id = A.id
 				AND
-				B.deleted_flg &lt;&gt; 0
+				B.locale = #{locale,jdbcType=VARCHAR}
+				AND
+				B.deleted_flg = 0
 			LEFT OUTER JOIN mail_template_addresses AS C
 			ON
 				C.mail_template_id = A.id
 				AND
-				C.deleted_flg &lt;&gt; 0
+				C.deleted_flg = 0
 		WHERE
 			A.name = #{name,jdbcType=VARCHAR}
 			AND
-			A.locale = #{locale,jdbcType=VARCHAR}
-			AND
-			A.deleted_flg &lt;&gt; 0
+			A.deleted_flg = 0
 	</select>
 </mapper>
