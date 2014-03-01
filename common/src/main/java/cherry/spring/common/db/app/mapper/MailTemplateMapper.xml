@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cherry.spring.common.db.app.mapper.MailTemplateMapper">
+	<resultMap id="templateMap"
+		type="cherry.spring.common.db.app.dto.MailTemplateDto">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sender" property="sender" jdbcType="VARCHAR" />
+		<result column="locale" property="locale" jdbcType="VARCHAR" />
+		<result column="subject" property="subject" jdbcType="VARCHAR" />
+		<result column="body" property="body" jdbcType="VARCHAR" />
+		<collection property="mailAddressList" resultMap="addressMap" />
+	</resultMap>
+	<resultMap id="addressMap"
+		type="cherry.spring.common.db.app.dto.MailTemplateAddressDto">
+		<id column="address_id" property="addressId" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findByName" resultMap="templateMap">
+		SELECT
+			A.id           AS id,
+			A.name         AS name,
+			A.seneder      AS sender,
+			B.locale       AS locale,
+			B.subject      AS subject,
+			B.body         AS body,
+			C.id           AS address_id,
+			C.type         AS type,
+			C.mail_address AS mail_address
+		FROM
+			mail_templates AS A
+			JOIN mail_template_texts AS B
+			ON
+				B.mail_template_id = A.id
+				AND
+				B.deleted_flg &lt;&gt; 0
+			LEFT OUTER JOIN mail_template_addresses AS C
+			ON
+				C.mail_template_id = A.id
+				AND
+				C.deleted_flg &lt;&gt; 0
+		WHERE
+			A.name = #{name,jdbcType=VARCHAR}
+			AND
+			A.locale = #{locale,jdbcType=VARCHAR}
+			AND
+			A.deleted_flg &lt;&gt; 0
+	</select>
+</mapper>
