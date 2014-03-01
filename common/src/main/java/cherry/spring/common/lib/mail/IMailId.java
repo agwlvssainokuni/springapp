@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mail;
+package cherry.spring.common.lib.mail;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+public interface IMailId {
 
-public class MailModel {
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
+	String templateName();
 
 }
