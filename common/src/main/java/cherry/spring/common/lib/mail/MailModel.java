@@ -19,7 +19,7 @@ package cherry.spring.common.lib.mail;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MailModel {
+public abstract class MailModel {
 
 	@Override
 	public String toString() {

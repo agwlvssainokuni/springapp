@@ -18,8 +18,11 @@ package cherry.spring.common.lib.mail;
 
 import java.util.Locale;
 
-public interface SendMailHelper {
+import org.springframework.mail.MailMessage;
 
-	void send(IMailId mailId, String to, MailModel mailModel, Locale locale);
+public interface MailMessageHelper {
+
+	MailMessage createMailMessage(IMailId mailId, String to,
+			MailModel mailModel, Locale locale);
 
 }
