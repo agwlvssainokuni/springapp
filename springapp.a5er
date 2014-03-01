@@ -77,7 +77,7 @@ PName=mail_template_texts
 LName=メールテンプレート文面
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=1000
 Top=1500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
@@ -90,8 +90,8 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301110025
-Position="Main",1000,1500
+ModifiedDateTime=20140301182645
+Position="MAIN",1000,1500
 
 [Relation]
 Entity1=mail_templates
@@ -118,39 +118,39 @@ PName=mail_template_addresses
 LName=メールテンプレート宛先
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=1000
 Top=1200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="メールテンプレートID","mail_template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
-Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
-Field="宛先区分","type","*区分","NOT NULL",,"","",$FFFFFFFF,"CHECK type IN (\qCC\q, \qBCC\q)"
-Index==1,mail_address,type
-Index==0,mail_template_id
+Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先区分","rcpt_type","*区分","NOT NULL",,"","",$FFFFFFFF,"CHECK rcpt_type IN (\qCC\q, \qBCC\q)"
+Index==1,mail_template_id,mail_addr,rcpt_type
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301110014
-Position="Main",1000,1200
+ModifiedDateTime=20140301185029
+Position="MAIN",1000,1200
 
 [Entity]
 PName=mail_templates
 LName=メールテンプレート
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=300
 Top=1200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="テンプレート名","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
 Field="差出人","sender","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,name
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301105003
-Position="Main",300,1200
+ModifiedDateTime=20140301183357
+Position="MAIN",300,1200
 
 [Entity]
 PName=signup_entries
@@ -161,16 +161,16 @@ Page=MAIN
 Left=300
 Top=700
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="トークン","token","*UUID","NOT NULL",,"","",$FFFFFFFF,""
 Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
-Index==0,mail_address
+Index==0,mail_addr
 Index==1,token
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301102052
+ModifiedDateTime=20140301183335
 Position="MAIN",300,700
 
 [Entity]
@@ -182,15 +182,15 @@ Page=MAIN
 Left=300
 Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="パスワード","password","*パスワード(BCRYPT)","NOT NULL",,"","",$FFFFFFFF,""
 Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 Field="氏名(名)","first_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
 Field="氏名(姓)","last_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,mail_address
+Index==1,mail_addr
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301110206
+ModifiedDateTime=20140301183419
 Position="MAIN",300,200

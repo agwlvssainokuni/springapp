@@ -28,44 +28,44 @@ public class MailTemplateAddressDto extends BaseDto {
 	}
 
 	/** 宛先ID。 */
-	private Integer addressId;
+	private Integer addrId;
 
 	/** 宛先区分。 */
-	private String type;
+	private String rcptType;
 
 	/** メールアドレス。 */
-	private String mailAddress;
+	private String mailAddr;
 
 	public boolean isCc() {
-		return Type.CC.name().equalsIgnoreCase(type);
+		return Type.CC.name().equalsIgnoreCase(rcptType);
 	}
 
 	public boolean isBcc() {
-		return Type.BCC.name().equalsIgnoreCase(type);
+		return Type.BCC.name().equalsIgnoreCase(rcptType);
 	}
 
-	public Integer getAddressId() {
-		return addressId;
+	public Integer getAddrId() {
+		return addrId;
 	}
 
-	public void setAddressId(Integer addressId) {
-		this.addressId = addressId;
+	public void setAddrId(Integer addrId) {
+		this.addrId = addrId;
 	}
 
-	public String getType() {
-		return type;
+	public String getRcptType() {
+		return rcptType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setRcptType(String rcptType) {
+		this.rcptType = rcptType;
 	}
 
-	public String getMailAddress() {
-		return mailAddress;
+	public String getMailAddr() {
+		return mailAddr;
 	}
 
-	public void setMailAddress(String mailAddress) {
-		this.mailAddress = mailAddress;
+	public void setMailAddr(String mailAddr) {
+		this.mailAddr = mailAddr;
 	}
 
 }

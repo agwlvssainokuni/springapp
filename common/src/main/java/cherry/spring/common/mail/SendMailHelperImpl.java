@@ -62,12 +62,12 @@ public class SendMailHelperImpl implements SendMailHelper, InitializingBean {
 
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
-		for (MailTemplateAddressDto addr : template.getMailAddressList()) {
+		for (MailTemplateAddressDto addr : template.getMailAddrList()) {
 			if (addr.isCc()) {
-				cc.add(addr.getMailAddress());
+				cc.add(addr.getMailAddr());
 			}
 			if (addr.isBcc()) {
-				bcc.add(addr.getMailAddress());
+				bcc.add(addr.getMailAddr());
 			}
 		}
 

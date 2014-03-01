@@ -57,13 +57,13 @@ public class MailTemplateMapperTest {
 		assertEquals("メール件名", template.getSubject());
 		assertEquals("メール本文", template.getBody());
 
-		assertEquals(2, template.getMailAddressList().size());
-		assertEquals("cc@test.com", template.getMailAddressList().get(0)
-				.getMailAddress());
-		assertEquals("CC", template.getMailAddressList().get(0).getType());
-		assertEquals("bcc@test.com", template.getMailAddressList().get(1)
-				.getMailAddress());
-		assertEquals("BCC", template.getMailAddressList().get(1).getType());
+		assertEquals(2, template.getMailAddrList().size());
+		assertEquals("cc@test.com", template.getMailAddrList().get(0)
+				.getMailAddr());
+		assertEquals("CC", template.getMailAddrList().get(0).getRcptType());
+		assertEquals("bcc@test.com", template.getMailAddrList().get(1)
+				.getMailAddr());
+		assertEquals("BCC", template.getMailAddrList().get(1).getRcptType());
 	}
 
 	@Test
@@ -78,13 +78,13 @@ public class MailTemplateMapperTest {
 		assertEquals("Mail Subject", template.getSubject());
 		assertEquals("Mail Body", template.getBody());
 
-		assertEquals(2, template.getMailAddressList().size());
-		assertEquals("cc@test.com", template.getMailAddressList().get(0)
-				.getMailAddress());
-		assertEquals("CC", template.getMailAddressList().get(0).getType());
-		assertEquals("bcc@test.com", template.getMailAddressList().get(1)
-				.getMailAddress());
-		assertEquals("BCC", template.getMailAddressList().get(1).getType());
+		assertEquals(2, template.getMailAddrList().size());
+		assertEquals("cc@test.com", template.getMailAddrList().get(0)
+				.getMailAddr());
+		assertEquals("CC", template.getMailAddrList().get(0).getRcptType());
+		assertEquals("bcc@test.com", template.getMailAddrList().get(1)
+				.getMailAddr());
+		assertEquals("BCC", template.getMailAddrList().get(1).getRcptType());
 	}
 
 	@BeforeClass
@@ -106,8 +106,8 @@ public class MailTemplateMapperTest {
 
 		MailTemplateAddresses addressCc = new MailTemplateAddresses();
 		addressCc.setMailTemplateId(1);
-		addressCc.setType("CC");
-		addressCc.setMailAddress("cc@test.com");
+		addressCc.setRcptType("CC");
+		addressCc.setMailAddr("cc@test.com");
 		addressCc.setCreatedAt(date);
 		addressCc.setUpdatedAt(date);
 		addressCc.setDeletedFlg(0);
@@ -115,8 +115,8 @@ public class MailTemplateMapperTest {
 
 		MailTemplateAddresses addressBcc = new MailTemplateAddresses();
 		addressBcc.setMailTemplateId(1);
-		addressBcc.setType("BCC");
-		addressBcc.setMailAddress("bcc@test.com");
+		addressBcc.setRcptType("BCC");
+		addressBcc.setMailAddr("bcc@test.com");
 		addressBcc.setCreatedAt(date);
 		addressBcc.setUpdatedAt(date);
 		addressBcc.setDeletedFlg(0);

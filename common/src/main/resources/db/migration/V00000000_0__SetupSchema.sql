@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/03/01 11:02:14
+-- Date/Time    : 2014/03/01 18:50:39
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -24,8 +24,8 @@ CREATE UNIQUE INDEX mail_template_texts_ix1
 CREATE TABLE mail_template_addresses( 
 	id INTEGER NOT NULL auto_increment, 
 	mail_template_id INTEGER NOT NULL, 
-	mail_address VARCHAR (512) NOT NULL, 
-	type VARCHAR (3) NOT NULL CHECK type IN ('CC', 'BCC'), 
+	mail_addr VARCHAR (512) NOT NULL, 
+	rcpt_type VARCHAR (3) NOT NULL CHECK rcpt_type IN ('CC', 'BCC'), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -33,10 +33,7 @@ CREATE TABLE mail_template_addresses(
 ); 
 
 CREATE UNIQUE INDEX mail_template_addresses_ix1 
-	ON mail_template_addresses(mail_address, type); 
-
-CREATE INDEX mail_template_addresses_ix2 
-	ON mail_template_addresses(mail_template_id); 
+	ON mail_template_addresses(mail_template_id, mail_addr, rcpt_type); 
 
 -- メールテンプレート
 CREATE TABLE mail_templates( 
@@ -49,10 +46,13 @@ CREATE TABLE mail_templates(
 	CONSTRAINT mail_templates_pkc PRIMARY KEY (id)
 ); 
 
+CREATE UNIQUE INDEX mail_templates_ix1 
+	ON mail_templates(name); 
+
 -- 利用申請
 CREATE TABLE signup_entries( 
 	id INTEGER NOT NULL auto_increment, 
-	mail_address VARCHAR (512) NOT NULL, 
+	mail_addr VARCHAR (512) NOT NULL, 
 	token CHAR (36) NOT NULL, 
 	applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
@@ -62,7 +62,7 @@ CREATE TABLE signup_entries(
 ); 
 
 CREATE INDEX signup_entries_ix1 
-	ON signup_entries(mail_address); 
+	ON signup_entries(mail_addr); 
 
 CREATE UNIQUE INDEX signup_entries_ix2 
 	ON signup_entries(token); 
@@ -70,7 +70,7 @@ CREATE UNIQUE INDEX signup_entries_ix2
 -- 利用者
 CREATE TABLE users( 
 	id INTEGER NOT NULL auto_increment, 
-	mail_address VARCHAR (512) NOT NULL, 
+	mail_addr VARCHAR (512) NOT NULL, 
 	password CHAR (60) NOT NULL, 
 	applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	first_name VARCHAR (64) NOT NULL, 
@@ -82,7 +82,7 @@ CREATE TABLE users(
 ); 
 
 CREATE UNIQUE INDEX users_ix1 
-	ON users(mail_address); 
+	ON users(mail_addr); 
 
 COMMENT 
 	ON TABLE mail_template_texts IS 'メールテンプレート文面'; 
@@ -121,10 +121,10 @@ COMMENT
 	ON COLUMN mail_template_addresses.mail_template_id IS 'メールテンプレートID'; 
 
 COMMENT 
-	ON COLUMN mail_template_addresses.mail_address IS 'メールアドレス'; 
+	ON COLUMN mail_template_addresses.mail_addr IS 'メールアドレス'; 
 
 COMMENT 
-	ON COLUMN mail_template_addresses.type IS '宛先区分'; 
+	ON COLUMN mail_template_addresses.rcpt_type IS '宛先区分'; 
 
 COMMENT 
 	ON COLUMN mail_template_addresses.updated_at IS '更新日時'; 
@@ -163,7 +163,7 @@ COMMENT
 	ON COLUMN signup_entries.id IS 'ID'; 
 
 COMMENT 
-	ON COLUMN signup_entries.mail_address IS 'メールアドレス'; 
+	ON COLUMN signup_entries.mail_addr IS 'メールアドレス'; 
 
 COMMENT 
 	ON COLUMN signup_entries.token IS 'トークン'; 
@@ -187,7 +187,7 @@ COMMENT
 	ON COLUMN users.id IS 'ID'; 
 
 COMMENT 
-	ON COLUMN users.mail_address IS 'メールアドレス'; 
+	ON COLUMN users.mail_addr IS 'メールアドレス'; 
 
 COMMENT 
 	ON COLUMN users.password IS 'パスワード'; 

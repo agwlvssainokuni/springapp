@@ -44,7 +44,7 @@ public class MailTemplateDto extends BaseDto {
 	private String body;
 
 	/** 宛先。 */
-	private List<MailTemplateAddressDto> mailAddressList;
+	private List<MailTemplateAddressDto> mailAddrList;
 
 	public Integer getId() {
 		return id;
@@ -94,12 +94,12 @@ public class MailTemplateDto extends BaseDto {
 		this.body = body;
 	}
 
-	public List<MailTemplateAddressDto> getMailAddressList() {
-		return mailAddressList;
+	public List<MailTemplateAddressDto> getMailAddrList() {
+		return mailAddrList;
 	}
 
-	public void setMailAddressList(List<MailTemplateAddressDto> mailAddressList) {
-		this.mailAddressList = mailAddressList;
+	public void setMailAddrList(List<MailTemplateAddressDto> mailAddrList) {
+		this.mailAddrList = mailAddrList;
 	}
 
 }

@@ -9,25 +9,25 @@
 		<result column="locale" property="locale" jdbcType="VARCHAR" />
 		<result column="subject" property="subject" jdbcType="VARCHAR" />
 		<result column="body" property="body" jdbcType="VARCHAR" />
-		<collection property="mailAddressList" resultMap="addressMap" />
+		<collection property="mailAddrList" resultMap="addressMap" />
 	</resultMap>
 	<resultMap id="addressMap"
 		type="cherry.spring.common.db.app.dto.MailTemplateAddressDto">
-		<id column="address_id" property="addressId" jdbcType="INTEGER" />
-		<result column="type" property="type" jdbcType="VARCHAR" />
-		<result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+		<id column="addr_id" property="addrId" jdbcType="INTEGER" />
+		<result column="rcpt_type" property="rcptType" jdbcType="VARCHAR" />
+		<result column="mail_addr" property="mailAddr" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="findByName" resultMap="templateMap">
 		SELECT
-			A.id           AS id,
-			A.name         AS name,
-			A.sender       AS sender,
-			B.locale       AS locale,
-			B.subject      AS subject,
-			B.body         AS body,
-			C.id           AS address_id,
-			C.type         AS type,
-			C.mail_address AS mail_address
+			A.id        AS id,
+			A.name      AS name,
+			A.sender    AS sender,
+			B.locale    AS locale,
+			B.subject   AS subject,
+			B.body      AS body,
+			C.id        AS addr_id,
+			C.rcpt_type AS rcpt_type,
+			C.mail_addr AS mail_addr
 		FROM
 			mail_templates AS A
 			JOIN mail_template_texts AS B
@@ -46,5 +46,7 @@
 			A.name = #{name,jdbcType=VARCHAR}
 			AND
 			A.deleted_flg = 0
+		ORDER BY
+			C.id
 	</select>
 </mapper>
