@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="common" targetRuntime="MyBatis3Simple">
+		<jdbcConnection driverClass="org.h2.Driver"
+			connectionURL="jdbc:h2:common/build/mbgenerator" userId="sa" />
+		<javaModelGenerator targetPackage="cherry.spring.common.db.gen.dto"
+			targetProject="common/src/main/java">
+			<property name="rootClass" value="cherry.spring.common.db.BaseDto" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="cherry.spring.common.db.gen.mapper"
+			targetProject="common/src/main/java" />
+		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
+			type="XMLMAPPER" targetProject="common/src/main/java" />
+		<table tableName="schema_version" />
+	</context>
+</generatorConfiguration>
