@@ -1,0 +1,91 @@
+﻿# A5:ER FORMAT:08
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=SpringApp
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",2,"A3Landscape"
+Domain=ID=@INT
+Domain=メールアドレス=@VARCHAR(512)
+Domain=パスワード(BCRYPT)=@CHAR(60)
+Domain=UUID=@CHAR(36)
+Domain=日付=@DATE
+Domain=日時=@DATETIME
+Domain=フラグ=@INT
+Domain=名前=@VARCHAR(32)
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="削除フラグ","deleted_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+
+[Entity]
+PName=signup_entries
+LName=利用申請
+Comment=
+TableOption=
+Page=Main
+Left=300
+Top=700
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="トークン","token","*UUID","NOT NULL",,"","",$FFFFFFFF,""
+Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Index==0,mail_address
+Index==1,token
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140301102052
+Position="Main",300,700
+
+[Entity]
+PName=users
+LName=利用者
+Comment=
+TableOption=
+Page=Main
+Left=300
+Top=200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","password","*パスワード(BCRYPT)","NOT NULL",,"","",$FFFFFFFF,""
+Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="氏名(名)","first_name","*名前","NOT NULL",,"","",$FFFFFFFF,""
+Field="氏名(姓)","last_name","*名前","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,mail_address
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140301102822
+Position="Main",300,200

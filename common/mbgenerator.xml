@@ -14,6 +14,7 @@
 			targetProject="common/src/main/java" />
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
 			type="XMLMAPPER" targetProject="common/src/main/java" />
-		<table tableName="schema_version" />
+		<table tableName="users" />
+		<table tableName="signup_entries" />
 	</context>
 </generatorConfiguration>
