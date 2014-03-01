@@ -15,10 +15,15 @@ Domain=ID=@INT
 Domain=メールアドレス=@VARCHAR(512)
 Domain=パスワード(BCRYPT)=@CHAR(60)
 Domain=UUID=@CHAR(36)
+Domain=識別名=@VARCHAR(32)
+Domain=表示名=@VARCHAR(64)
 Domain=日付=@DATE
 Domain=日時=@DATETIME
+Domain=ロケール=@VARCHAR(5)
+Domain=メール件名=@VARCHAR(1024)
+Domain=メール本文=@VARCHAR(4098)
+Domain=区分=@VARCHAR(3)
 Domain=フラグ=@INT
-Domain=名前=@VARCHAR(32)
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -47,12 +52,112 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 
+[Relation]
+Entity1=mail_templates
+Entity2=mail_template_texts
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=mail_template_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4378,5622,4584,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=438
+Bar2=562
+Bar3=458
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=mail_template_texts
+LName=メールテンプレート文面
+Comment=
+TableOption=
+Page=Main
+Left=1000
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールテンプレートID","mail_template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="ロケール","locale","*ロケール","NOT NULL",,"","",$FFFFFFFF,""
+Field="件名","subject","*メール件名","NOT NULL",,"","",$FFFFFFFF,""
+Field="本文","body","*メール本文","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,mail_template_id,locale
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140301110025
+Position="Main",1000,1500
+
+[Relation]
+Entity1=mail_templates
+Entity2=mail_template_addresses
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=mail_template_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,956,9044,1284,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=96
+Bar2=904
+Bar3=128
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=mail_template_addresses
+LName=メールテンプレート宛先
+Comment=
+TableOption=
+Page=Main
+Left=1000
+Top=1200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールテンプレートID","mail_template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先区分","type","*区分","NOT NULL",,"","",$FFFFFFFF,"CHECK type IN (\qCC\q, \qBCC\q)"
+Index==1,mail_address,type
+Index==0,mail_template_id
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140301110014
+Position="Main",1000,1200
+
+[Entity]
+PName=mail_templates
+LName=メールテンプレート
+Comment=
+TableOption=
+Page=Main
+Left=300
+Top=1200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="テンプレート名","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="差出人","sender","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140301105003
+Position="Main",300,1200
+
 [Entity]
 PName=signup_entries
 LName=利用申請
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=300
 Top=700
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
@@ -66,26 +171,26 @@ Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140301102052
-Position="Main",300,700
+Position="MAIN",300,700
 
 [Entity]
 PName=users
 LName=利用者
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=300
 Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="メールアドレス","mail_address","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="パスワード","password","*パスワード(BCRYPT)","NOT NULL",,"","",$FFFFFFFF,""
 Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
-Field="氏名(名)","first_name","*名前","NOT NULL",,"","",$FFFFFFFF,""
-Field="氏名(姓)","last_name","*名前","NOT NULL",,"","",$FFFFFFFF,""
+Field="氏名(名)","first_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="氏名(姓)","last_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
 Index==1,mail_address
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301102822
-Position="Main",300,200
+ModifiedDateTime=20140301110206
+Position="MAIN",300,200
