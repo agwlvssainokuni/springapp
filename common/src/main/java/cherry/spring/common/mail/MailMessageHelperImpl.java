@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.mail;
+package cherry.spring.common.mail;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -27,11 +27,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Component;
 
 import cherry.spring.common.db.app.dto.MailTemplateAddressDto;
 import cherry.spring.common.db.app.dto.MailTemplateDto;
 import cherry.spring.common.db.app.mapper.MailTemplateMapper;
 
+@Component
 public class MailMessageHelperImpl implements MailMessageHelper,
 		InitializingBean {
 

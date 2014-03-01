@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.mail;
+package cherry.spring.common.mail;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

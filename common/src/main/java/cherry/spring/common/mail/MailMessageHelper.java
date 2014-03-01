@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.mail;
+package cherry.spring.common.mail;
 
-public interface IMailId {
+import java.util.Locale;
 
-	String templateName();
+import org.springframework.mail.MailMessage;
+
+public interface MailMessageHelper {
+
+	MailMessage createMailMessage(IMailId mailId, String to,
+			MailModel mailModel, Locale locale);
 
 }
