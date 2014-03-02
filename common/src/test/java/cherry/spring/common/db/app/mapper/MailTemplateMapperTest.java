@@ -105,7 +105,7 @@ public class MailTemplateMapperTest {
 		templateMapper.insert(template);
 
 		MailTemplateAddresses addressCc = new MailTemplateAddresses();
-		addressCc.setMailTemplateId(1);
+		addressCc.setMailTemplateId(3);
 		addressCc.setRcptType("CC");
 		addressCc.setMailAddr("cc@test.com");
 		addressCc.setCreatedAt(date);
@@ -114,7 +114,7 @@ public class MailTemplateMapperTest {
 		addressMapper.insert(addressCc);
 
 		MailTemplateAddresses addressBcc = new MailTemplateAddresses();
-		addressBcc.setMailTemplateId(1);
+		addressBcc.setMailTemplateId(3);
 		addressBcc.setRcptType("BCC");
 		addressBcc.setMailAddr("bcc@test.com");
 		addressBcc.setCreatedAt(date);
@@ -123,7 +123,7 @@ public class MailTemplateMapperTest {
 		addressMapper.insert(addressBcc);
 
 		MailTemplateTexts textJa = new MailTemplateTexts();
-		textJa.setMailTemplateId(1);
+		textJa.setMailTemplateId(3);
 		textJa.setLocale("ja_JP");
 		textJa.setSubject("メール件名");
 		textJa.setBody("メール本文");
@@ -133,7 +133,7 @@ public class MailTemplateMapperTest {
 		textMapper.insert(textJa);
 
 		MailTemplateTexts textEn = new MailTemplateTexts();
-		textEn.setMailTemplateId(1);
+		textEn.setMailTemplateId(3);
 		textEn.setLocale("en_US");
 		textEn.setSubject("Mail Subject");
 		textEn.setBody("Mail Body");
