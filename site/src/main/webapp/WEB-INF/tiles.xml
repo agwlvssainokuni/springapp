@@ -13,6 +13,30 @@
 			value="/WEB-INF/tiles/normal/login/index.jsp" />
 	</definition>
 
+	<definition name="normal/signup/entry/index" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/entry/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/signup/entry/index.jsp" />
+	</definition>
+
+	<definition name="normal/signup/entry/finish" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/entry/finish" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/signup/entry/finish.jsp" />
+	</definition>
+
+	<definition name="normal/signup/register/index" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/register/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/signup/register/index.jsp" />
+	</definition>
+
+	<definition name="normal/signup/register/finish" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/register/finish" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/signup/register/finish.jsp" />
+	</definition>
+
 	<definition name="normal/home/index" extends="normal/base_auth">
 		<put-attribute name="name" value="home/index" />
 		<put-attribute name="content"
