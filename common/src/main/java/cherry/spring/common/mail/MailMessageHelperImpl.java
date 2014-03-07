@@ -25,7 +25,6 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +48,7 @@ public class MailMessageHelperImpl implements MailMessageHelper,
 	}
 
 	@Override
-	public MailMessage createMailMessage(IMailId mailId, String to,
+	public SimpleMailMessage createMailMessage(IMailId mailId, String to,
 			MailModel mailModel, Locale locale) {
 
 		VelocityContext context = new VelocityContext();
@@ -57,6 +56,10 @@ public class MailMessageHelperImpl implements MailMessageHelper,
 
 		MailTemplateDto template = mailTemplateMapper.findByName(
 				mailId.templateName(), locale.toString());
+		if (template == null) {
+			template = mailTemplateMapper.findByName(mailId.templateName(),
+					Locale.getDefault().toString());
+		}
 
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();

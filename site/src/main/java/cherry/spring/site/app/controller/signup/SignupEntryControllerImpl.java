@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.site.app.service.signup.SignupEntryService;
+
 @Controller
 @RequestMapping(SignupEntryController.URI_PATH)
 public class SignupEntryControllerImpl implements SignupEntryController {
@@ -35,6 +38,9 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	public static final String VIEW_PATH = "signup/entry/index";
 
 	public static final String VIEW_PATH_FIN = "signup/entry/finish";
+
+	@Autowired
+	private SignupEntryService signupEntryService;
 
 	@RequestMapping()
 	@Override
@@ -57,6 +63,9 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 			mav.addObject(signupEntryForm);
 			return mav;
 		}
+
+		signupEntryService.createSignupRequest(signupEntryForm.getEmail(),
+				request, locale);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));

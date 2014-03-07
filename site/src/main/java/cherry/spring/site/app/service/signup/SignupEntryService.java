@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mail;
+package cherry.spring.site.app.service.signup;
 
 import java.util.Locale;
 
-import org.springframework.mail.SimpleMailMessage;
+import javax.servlet.http.HttpServletRequest;
 
-public interface MailMessageHelper {
+public interface SignupEntryService {
 
-	SimpleMailMessage createMailMessage(IMailId mailId, String to,
-			MailModel mailModel, Locale locale);
+	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
+			Locale locale);
 
 }
