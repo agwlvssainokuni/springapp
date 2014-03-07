@@ -42,38 +42,38 @@ public class SignupRequestMapperTest {
 	}
 
 	@Test
-	public void testCanAccept00() {
+	public void testValidate00() {
 		String mailAddr = "addr00@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.canAccept(mailAddr, 0, 5, 5));
+		assertFalse(mapper.validate(mailAddr, 0, 5, 5));
 	}
 
 	@Test
-	public void testCanAccept01() {
+	public void testValidate01() {
 		String mailAddr = "addr01@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.canAccept(mailAddr, 0, 1, 1));
+		assertTrue(mapper.validate(mailAddr, 0, 1, 1));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.canAccept(mailAddr, 0, 1, 1));
+		assertFalse(mapper.validate(mailAddr, 0, 1, 1));
 	}
 
 	@Test
-	public void testCanAccept10() {
+	public void testValidate10() {
 		String mailAddr = "addr10@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.canAccept(mailAddr, 1, 5, 5));
+		assertTrue(mapper.validate(mailAddr, 1, 5, 5));
 		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.canAccept(mailAddr, 1, 5, 5));
+		assertFalse(mapper.validate(mailAddr, 1, 5, 5));
 	}
 
 	private SignupRequests newEntity(String mailAddr) {

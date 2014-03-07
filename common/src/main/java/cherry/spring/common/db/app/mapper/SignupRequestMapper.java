@@ -22,7 +22,7 @@ import cherry.spring.common.db.gen.dto.SignupRequests;
 
 public interface SignupRequestMapper {
 
-	boolean canAccept(@Param("mailAddr") String mailAddr,
+	boolean validate(@Param("mailAddr") String mailAddr,
 			@Param("intervalInSec") int intervalInSec,
 			@Param("rangeInSec") int rangeInSec, @Param("numOfReq") int numOfReq);
 

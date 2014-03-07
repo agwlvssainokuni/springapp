@@ -68,7 +68,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	public boolean createSignupRequest(String mailAddr,
 			HttpServletRequest request, Locale locale) {
 
-		if (!signupRequestMapper.canAccept(mailAddr, intervalInSec, rangeInSec,
+		if (!signupRequestMapper.validate(mailAddr, intervalInSec, rangeInSec,
 				numOfReq)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
@@ -88,12 +88,12 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		if (log.isDebugEnabled()) {
 			log.debug(
 					"signup_requests is created, id={0}, mailAddr={1}, token={2}",
-					entity.getId(), mailAddr, token.toString());
+					entity.getId(), mailAddr, token);
 		}
 
 		Model model = new Model();
 		model.setMailAddr(mailAddr);
-		model.setSignupUri(createSignupUri(token.toString(), request));
+		model.setSignupUri(buildSignupUri(token, request));
 
 		SimpleMailMessage message = mailMessageHelper.createMailMessage(
 				MailId.SIGNUP_ENTRY, mailAddr, model, locale);
@@ -102,9 +102,9 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		return true;
 	}
 
-	private String createSignupUri(String token, HttpServletRequest request) {
+	private String buildSignupUri(UUID token, HttpServletRequest request) {
 		Map<String, String> paramMap = new HashMap<>();
-		paramMap.put(SignupRegisterController.PATH_VAR, token);
+		paramMap.put(SignupRegisterController.PATH_VAR, token.toString());
 		return UriComponentsBuilder.newInstance().scheme(request.getScheme())
 				.host(request.getServerName()).port(request.getServerPort())
 				.path(request.getContextPath())
