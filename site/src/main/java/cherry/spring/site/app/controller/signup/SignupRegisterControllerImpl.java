@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.site.app.service.signup.SignupRegisterService;
+
 @Controller
 @RequestMapping(SignupRegisterController.URI_PATH)
 public class SignupRegisterControllerImpl implements SignupRegisterController {
@@ -36,6 +39,9 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	public static final String VIEW_PATH = "signup/register/index";
 
 	public static final String VIEW_PATH_FIN = "signup/register/finish";
+
+	@Autowired
+	private SignupRegisterService signupRegisterService;
 
 	@RequestMapping()
 	@Override
@@ -61,6 +67,10 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 			mav.addObject(PATH_VAR, token);
 			return mav;
 		}
+
+		signupRegisterService.createUser(signupRegisterForm.getEmail(), token,
+				signupRegisterForm.getFirstName(),
+				signupRegisterForm.getLastName(), locale);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));
