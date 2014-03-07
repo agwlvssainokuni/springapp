@@ -153,7 +153,7 @@ ModifiedDateTime=20140301183357
 Position="MAIN",300,1200
 
 [Entity]
-PName=signup_entries
+PName=signup_requests
 LName=利用申請
 Comment=
 TableOption=
@@ -170,7 +170,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301183335
+ModifiedDateTime=20140307225156
 Position="MAIN",300,700
 
 [Entity]
