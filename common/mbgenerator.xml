@@ -18,7 +18,7 @@
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
 			type="XMLMAPPER" targetProject="common/src/main/java" />
 		<table tableName="users" />
-		<table tableName="signup_entries" />
+		<table tableName="signup_requests" />
 		<table tableName="mail_templates" />
 		<table tableName="mail_template_addresses" />
 		<table tableName="mail_template_texts" />

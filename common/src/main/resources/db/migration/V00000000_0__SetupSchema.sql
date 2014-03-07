@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/03/01 18:50:39
+-- Date/Time    : 2014/03/07 22:52:17
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -50,7 +50,7 @@ CREATE UNIQUE INDEX mail_templates_ix1
 	ON mail_templates(name); 
 
 -- 利用申請
-CREATE TABLE signup_entries( 
+CREATE TABLE signup_requests( 
 	id INTEGER NOT NULL auto_increment, 
 	mail_addr VARCHAR (512) NOT NULL, 
 	token CHAR (36) NOT NULL, 
@@ -58,14 +58,14 @@ CREATE TABLE signup_entries(
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
-	CONSTRAINT signup_entries_pkc PRIMARY KEY (id)
+	CONSTRAINT signup_requests_pkc PRIMARY KEY (id)
 ); 
 
-CREATE INDEX signup_entries_ix1 
-	ON signup_entries(mail_addr); 
+CREATE INDEX signup_requests_ix1 
+	ON signup_requests(mail_addr); 
 
-CREATE UNIQUE INDEX signup_entries_ix2 
-	ON signup_entries(token); 
+CREATE UNIQUE INDEX signup_requests_ix2 
+	ON signup_requests(token); 
 
 -- 利用者
 CREATE TABLE users( 
@@ -157,28 +157,28 @@ COMMENT
 	ON COLUMN mail_templates.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
-	ON TABLE signup_entries IS '利用申請'; 
+	ON TABLE signup_requests IS '利用申請'; 
 
 COMMENT 
-	ON COLUMN signup_entries.id IS 'ID'; 
+	ON COLUMN signup_requests.id IS 'ID'; 
 
 COMMENT 
-	ON COLUMN signup_entries.mail_addr IS 'メールアドレス'; 
+	ON COLUMN signup_requests.mail_addr IS 'メールアドレス'; 
 
 COMMENT 
-	ON COLUMN signup_entries.token IS 'トークン'; 
+	ON COLUMN signup_requests.token IS 'トークン'; 
 
 COMMENT 
-	ON COLUMN signup_entries.applied_at IS '申請日時'; 
+	ON COLUMN signup_requests.applied_at IS '申請日時'; 
 
 COMMENT 
-	ON COLUMN signup_entries.updated_at IS '更新日時'; 
+	ON COLUMN signup_requests.updated_at IS '更新日時'; 
 
 COMMENT 
-	ON COLUMN signup_entries.created_at IS '作成日時'; 
+	ON COLUMN signup_requests.created_at IS '作成日時'; 
 
 COMMENT 
-	ON COLUMN signup_entries.deleted_flg IS '削除フラグ'; 
+	ON COLUMN signup_requests.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
 	ON TABLE users IS '利用者'; 
