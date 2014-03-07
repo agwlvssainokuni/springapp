@@ -28,58 +28,150 @@ import java.util.UUID;
 import org.junit.Test;
 
 import cherry.spring.common.db.gen.dto.SignupRequests;
+import cherry.spring.common.db.gen.dto.Users;
+import cherry.spring.common.db.gen.mapper.SignupRequestsMapper;
+import cherry.spring.common.db.gen.mapper.UsersMapper;
 
 public class SignupRequestMapperTest {
 
 	@Test
-	public void testCreate00() {
+	public void testCreateSignupRequest00() {
 		String mailAddr = "addr@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		SignupRequests record = newEntity(mailAddr);
-		assertNull(record.getId());
-		assertEquals(1, mapper.create(record));
-		assertNotNull(record.getId());
+		SignupRequests entity = newRequest(mailAddr);
+		assertNull(entity.getId());
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertNotNull(entity.getId());
+
+		assertNotNull(getBean(SignupRequestsMapper.class).selectByPrimaryKey(
+				entity.getId()));
 	}
 
 	@Test
-	public void testValidate00() {
+	public void testValidateMailAddr00() {
 		String mailAddr = "addr00@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertTrue(mapper.validate(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.validate(mailAddr, 0, 5, 5));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertFalse(mapper.validateMailAddr(mailAddr, 0, 5, 5));
 	}
 
 	@Test
-	public void testValidate01() {
+	public void testValidateMailAddr01() {
 		String mailAddr = "addr01@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.validate(mailAddr, 0, 1, 1));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.validate(mailAddr, 0, 1, 1));
+		assertTrue(mapper.validateMailAddr(mailAddr, 0, 1, 1));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertFalse(mapper.validateMailAddr(mailAddr, 0, 1, 1));
 	}
 
 	@Test
-	public void testValidate10() {
+	public void testValidateMailAddr10() {
 		String mailAddr = "addr10@example.com";
 		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		assertTrue(mapper.validate(mailAddr, 1, 5, 5));
-		assertEquals(1, mapper.create(newEntity(mailAddr)));
-		assertFalse(mapper.validate(mailAddr, 1, 5, 5));
+		assertTrue(mapper.validateMailAddr(mailAddr, 1, 5, 5));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertFalse(mapper.validateMailAddr(mailAddr, 1, 5, 5));
 	}
 
-	private SignupRequests newEntity(String mailAddr) {
+	@Test
+	public void testCreateUser00() {
+		String mailAddr = "user00@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		Users entity = newUser(mailAddr, "password", "firstName", "lastName");
+		assertNull(entity.getId());
+		assertEquals(1, mapper.createUser(entity));
+		assertNotNull(entity.getId());
+
+		assertNotNull(getBean(UsersMapper.class).selectByPrimaryKey(
+				entity.getId()));
+	}
+
+	@Test
+	public void testValidateToken00() {
+		String mailAddr = "token00@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
+	}
+
+	@Test
+	public void testValidateToken01() {
+		String mailAddr = "token00@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
+		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 0));
+	}
+
+	@Test
+	public void testValidateToken02() {
+		String mailAddr = "token02@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
+		assertFalse(mapper.validateToken(mailAddr,
+				UUID.randomUUID().toString(), 5));
+	}
+
+	@Test
+	public void testValidateToken10() {
+		String mailAddr = "token10@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
+	}
+
+	@Test
+	public void testValidateToken11() {
+		String mailAddr = "token11@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 5));
+	}
+
+	@Test
+	public void testValidateToken12() {
+		String mailAddr = "token12@example.com";
+		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
+		SignupRequests entity = newRequest(mailAddr);
+		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 5));
+	}
+
+	private SignupRequests newRequest(String mailAddr) {
 		SignupRequests entity = new SignupRequests();
 		entity.setMailAddr(mailAddr);
 		entity.setToken(UUID.randomUUID().toString());
+		return entity;
+	}
+
+	private Users newUser(String mailAddr, String password, String firstName,
+			String lastName) {
+		Users entity = new Users();
+		entity.setMailAddr(mailAddr);
+		entity.setPassword(password);
+		entity.setFirstName(firstName);
+		entity.setLastName(lastName);
 		return entity;
 	}
 

@@ -68,8 +68,8 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	public boolean createSignupRequest(String mailAddr,
 			HttpServletRequest request, Locale locale) {
 
-		if (!signupRequestMapper.validate(mailAddr, intervalInSec, rangeInSec,
-				numOfReq)) {
+		if (!signupRequestMapper.validateMailAddr(mailAddr, intervalInSec,
+				rangeInSec, numOfReq)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
 						"Not accepted: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}",
@@ -83,7 +83,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		SignupRequests entity = new SignupRequests();
 		entity.setMailAddr(mailAddr);
 		entity.setToken(token.toString());
-		int count = signupRequestMapper.create(entity);
+		int count = signupRequestMapper.createSignupRequest(entity);
 		assert count == 1;
 		if (log.isDebugEnabled()) {
 			log.debug(
@@ -133,7 +133,6 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		public void setSignupUri(String signupUri) {
 			this.signupUri = signupUri;
 		}
-
 	}
 
 }

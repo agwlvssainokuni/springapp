@@ -19,13 +19,19 @@ package cherry.spring.common.db.app.mapper;
 import org.apache.ibatis.annotations.Param;
 
 import cherry.spring.common.db.gen.dto.SignupRequests;
+import cherry.spring.common.db.gen.dto.Users;
 
 public interface SignupRequestMapper {
 
-	boolean validate(@Param("mailAddr") String mailAddr,
+	boolean validateMailAddr(@Param("mailAddr") String mailAddr,
 			@Param("intervalInSec") int intervalInSec,
 			@Param("rangeInSec") int rangeInSec, @Param("numOfReq") int numOfReq);
 
-	int create(SignupRequests entity);
+	int createSignupRequest(SignupRequests entity);
+
+	boolean validateToken(@Param("mailAddr") String mailAddr,
+			@Param("token") String token, @Param("validInSec") int validInSec);
+
+	int createUser(Users entity);
 
 }
