@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.site.LogicError;
 import cherry.spring.site.app.service.signup.SignupRegisterService;
 
 @Controller
@@ -68,9 +69,15 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 			return mav;
 		}
 
-		signupRegisterService.createUser(signupRegisterForm.getEmail(), token,
-				signupRegisterForm.getFirstName(),
-				signupRegisterForm.getLastName(), locale);
+		if (!signupRegisterService.createUser(signupRegisterForm.getEmail(),
+				token, signupRegisterForm.getFirstName(),
+				signupRegisterForm.getLastName(), locale)) {
+			rejectOnSignupEntryUnmatch(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(signupRegisterForm);
+			mav.addObject(PATH_VAR, token);
+			return mav;
+		}
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));
@@ -85,6 +92,11 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(PATH_VAR, token);
 		return mav;
+	}
+
+	private void rejectOnSignupEntryUnmatch(BindingResult binding) {
+		binding.reject(LogicError.SignupEntryUnmatch.name(), new Object[] {},
+				LogicError.SignupEntryUnmatch.name());
 	}
 
 }

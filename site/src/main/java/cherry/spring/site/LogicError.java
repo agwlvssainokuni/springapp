@@ -17,6 +17,10 @@
 package cherry.spring.site;
 
 public enum LogicError {
+	/** サインアップ：回数制限超過 */
+	SignupTooManyRequest,
+	/** サインアップ：エントリが不適合 */
+	SignupEntryUnmatch,
 	/** パスワード変更：新パスワードの入力値が不適合 */
 	NewPasswordUnmatch,
 	/** パスワード変更：現行パスワードが不適切 */

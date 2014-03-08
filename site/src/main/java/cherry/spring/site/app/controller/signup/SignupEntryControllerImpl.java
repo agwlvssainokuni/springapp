@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.site.LogicError;
 import cherry.spring.site.app.service.signup.SignupEntryService;
 
 @Controller
@@ -64,8 +65,13 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 			return mav;
 		}
 
-		signupEntryService.createSignupRequest(signupEntryForm.getEmail(),
-				request, locale);
+		if (!signupEntryService.createSignupRequest(signupEntryForm.getEmail(),
+				request, locale)) {
+			rejectOnSignupEntryUnmatch(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(signupEntryForm);
+			return mav;
+		}
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));
@@ -80,6 +86,11 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(new SignupEntryForm());
 		return mav;
+	}
+
+	private void rejectOnSignupEntryUnmatch(BindingResult binding) {
+		binding.reject(LogicError.SignupEntryUnmatch.name(), new Object[] {},
+				LogicError.SignupEntryUnmatch.name());
 	}
 
 }
