@@ -74,7 +74,6 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));
-		mav.addObject(PATH_VAR, token);
 		return mav;
 	}
 
