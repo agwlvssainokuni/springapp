@@ -67,7 +67,7 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 
 		if (!signupEntryService.createSignupRequest(signupEntryForm.getEmail(),
 				request, locale)) {
-			rejectOnSignupEntryUnmatch(binding);
+			rejectOnSignupTooManyRequest(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(signupEntryForm);
 			return mav;
@@ -88,9 +88,9 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 		return mav;
 	}
 
-	private void rejectOnSignupEntryUnmatch(BindingResult binding) {
-		binding.reject(LogicError.SignupEntryUnmatch.name(), new Object[] {},
-				LogicError.SignupEntryUnmatch.name());
+	private void rejectOnSignupTooManyRequest(BindingResult binding) {
+		binding.reject(LogicError.SignupTooManyRequest.name(), new Object[] {},
+				LogicError.SignupTooManyRequest.name());
 	}
 
 }
