@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,16 +40,18 @@ public interface PasswdController {
 	public static final String URI_PATH_FIN = "fin";
 
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+	ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Valid PasswdForm passwdForm, BindingResult binding,
-			RedirectAttributes redirectAttributes, Locale locale,
+			RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(RedirectAttributes redirectAttributes, Locale locale,
+	ModelAndView finish(RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 }

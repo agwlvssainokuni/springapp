@@ -19,14 +19,23 @@ package cherry.spring.site.app.controller.passwd;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
+import cherry.spring.site.LogicError;
 
 @Component
 @RequestMapping(PasswdController.URI_PATH)
@@ -36,10 +45,13 @@ public class PasswdControllerImpl implements PasswdController {
 
 	public static final String VIEW_PATH_FIN = "passwd/finish";
 
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
 	@RequestMapping()
 	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(new PasswdForm());
 		return mav;
@@ -47,11 +59,32 @@ public class PasswdControllerImpl implements PasswdController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(PasswdForm passwdForm, BindingResult binding,
-			RedirectAttributes redirectAttributes, Locale locale,
+	public ModelAndView request(@Valid PasswdForm passwdForm,
+			BindingResult binding, RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(passwdForm);
+			return mav;
+		}
+
+		if (!passwdForm.getNewPassword()
+				.equals(passwdForm.getNewPasswordConf())) {
+			rejectOnNewPasswordUnmatch(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(passwdForm);
+			return mav;
+		}
+
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				authentication.getPrincipal(), passwdForm.getPassword());
+		try {
+			Authentication auth = authenticationManager.authenticate(token);
+			assert auth != null;
+		} catch (AuthenticationException ex) {
+			rejectOnCurPasswordInvalid(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(passwdForm);
 			return mav;
@@ -65,11 +98,24 @@ public class PasswdControllerImpl implements PasswdController {
 	@RequestMapping(URI_PATH_FIN)
 	@Override
 	public ModelAndView finish(RedirectAttributes redirectAttributes,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addObject(new PasswdForm());
 		return mav;
+	}
+
+	private void rejectOnNewPasswordUnmatch(BindingResult binding) {
+		binding.reject(LogicError.NewPasswordUnmatch.name(),
+				new Object[] { new DefaultMessageSourceResolvable(
+						PasswdForm.PREFIX + PasswdForm.NEW_PASSWORD) },
+				LogicError.NewPasswordUnmatch.name());
+	}
+
+	private void rejectOnCurPasswordInvalid(BindingResult binding) {
+		binding.reject(LogicError.CurPasswordInvalid.name(),
+				new Object[] { new DefaultMessageSourceResolvable(
+						PasswdForm.PREFIX + PasswdForm.PASSWORD) },
+				LogicError.CurPasswordInvalid.name());
 	}
 
 }
