@@ -1,5 +1,5 @@
 #,name,locale,subject,body
-1,signup/entry,en_US,Signup entry,"${model.mailAddr}, Go to ${model.signupUri}"
-2,signup/entry,ja_JP,サインアップエントリ,"${model.mailAddr}, ${model.signupUri} で登録してください。"
-3,signup/register,en_US,Signup register,"${model.mailAddr}, Accepted."
-4,signup/register,ja_JP,サインアップ登録,"${model.mailAddr}, 受け付けました。"
+1,signup/entry,en_US,Signup entry,"${model.mailAddr}, Signup URI: ${model.signupUri}"
+2,signup/entry,ja_JP,サインアップエントリ,"${model.mailAddr}, サインアップURI: ${model.signupUri}"
+3,signup/register,en_US,Signup register,"${model.mailAddr}, Password: ${model.password}"
+4,signup/register,ja_JP,サインアップ登録,"${model.mailAddr}, パスワード: ${model.password}"
