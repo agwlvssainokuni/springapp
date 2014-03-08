@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.service.signup;
+package cherry.spring.site.app.service.passwd;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface SignupEntryService {
+import cherry.spring.common.db.app.mapper.UserMapper;
+
+@Component
+public class PasswdServiceImpl implements PasswdService {
+
+	@Autowired
+	private UserMapper userMapper;
 
 	@Transactional
-	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
-			Locale locale);
+	@Override
+	public boolean updatePassword(String mailAddr, String password) {
+		int count = userMapper.updatePassword(mailAddr, password);
+		return count > 0;
+	}
 
 }

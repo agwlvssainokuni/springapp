@@ -28,6 +28,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.log.Log;
+import cherry.spring.common.log.LogFactory;
 import cherry.spring.site.LogicError;
+import cherry.spring.site.app.service.passwd.PasswdService;
 
 @Component
 @RequestMapping(PasswdController.URI_PATH)
@@ -44,6 +48,14 @@ public class PasswdControllerImpl implements PasswdController {
 	public static final String VIEW_PATH = "passwd/index";
 
 	public static final String VIEW_PATH_FIN = "passwd/finish";
+
+	private final Log log = LogFactory.getLog(getClass());
+
+	@Autowired
+	private PasswdService passwdService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -79,7 +91,7 @@ public class PasswdControllerImpl implements PasswdController {
 		}
 
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				authentication.getPrincipal(), passwdForm.getPassword());
+				authentication.getName(), passwdForm.getPassword());
 		try {
 			Authentication auth = authenticationManager.authenticate(token);
 			assert auth != null;
@@ -88,6 +100,16 @@ public class PasswdControllerImpl implements PasswdController {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(passwdForm);
 			return mav;
+		}
+
+		String password = passwordEncoder.encode(passwdForm.getNewPassword());
+		if (!passwdService.updatePassword(authentication.getName(), password)) {
+			if (log.isDebugEnabled()) {
+				log.debug(
+						"Password has not been updated: mailAddr={0}, password={1}",
+						authentication.getName(), password);
+			}
+			throw new IllegalStateException("");
 		}
 
 		ModelAndView mav = new ModelAndView();

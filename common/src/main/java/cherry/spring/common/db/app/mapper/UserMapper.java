@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.service.signup;
+package cherry.spring.common.db.app.mapper;
 
-import java.util.Locale;
+import org.apache.ibatis.annotations.Param;
 
-import javax.servlet.http.HttpServletRequest;
+public interface UserMapper {
 
-import org.springframework.transaction.annotation.Transactional;
-
-public interface SignupEntryService {
-
-	@Transactional
-	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
-			Locale locale);
+	int updatePassword(@Param("mailAddr") String mailAddr,
+			@Param("password") String password);
 
 }

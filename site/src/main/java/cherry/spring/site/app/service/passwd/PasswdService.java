@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.service.signup;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+package cherry.spring.site.app.service.passwd;
 
 import org.springframework.transaction.annotation.Transactional;
 
-public interface SignupEntryService {
+public interface PasswdService {
 
 	@Transactional
-	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
-			Locale locale);
+	boolean updatePassword(String mailAddr, String password);
 
 }
