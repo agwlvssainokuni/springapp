@@ -49,6 +49,9 @@
 					<li><a hreF="<c:url value="/secure/" />" data-icon="home">
 							<s:message code="base/auth.menu.home" />
 					</a></li>
+					<li><a hreF="<c:url value="/secure/passwd" />"
+						data-icon="gear"> <s:message code="base/auth.menu.passwd" />
+					</a></li>
 				</ul>
 			</div>
 			<h1>

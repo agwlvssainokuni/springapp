@@ -37,6 +37,18 @@
 			value="/WEB-INF/tiles/normal/signup/register/finish.jsp" />
 	</definition>
 
+	<definition name="normal/passwd/index" extends="normal/base_auth">
+		<put-attribute name="name" value="passwd/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/passwd/index.jsp" />
+	</definition>
+
+	<definition name="normal/passwd/finish" extends="normal/base_auth">
+		<put-attribute name="name" value="passwd/finish" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/passwd/finish.jsp" />
+	</definition>
+
 	<definition name="normal/home/index" extends="normal/base_auth">
 		<put-attribute name="name" value="home/index" />
 		<put-attribute name="content"
