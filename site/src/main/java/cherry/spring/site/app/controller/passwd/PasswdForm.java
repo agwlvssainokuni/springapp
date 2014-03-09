@@ -60,7 +60,11 @@ public class PasswdForm extends BaseForm {
 	 */
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(new PasswdForm(),
+		PasswdForm masked = new PasswdForm();
+		masked.setPassword("<MASKED>");
+		masked.setNewPassword("<MASKED>");
+		masked.setNewPasswordConf("<MASKED>");
+		return ToStringBuilder.reflectionToString(masked,
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
