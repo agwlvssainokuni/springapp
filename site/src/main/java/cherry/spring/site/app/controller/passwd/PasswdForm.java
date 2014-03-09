@@ -19,6 +19,9 @@ package cherry.spring.site.app.controller.passwd;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import cherry.spring.site.app.controller.BaseForm;
 
 public class PasswdForm extends BaseForm {
@@ -51,6 +54,15 @@ public class PasswdForm extends BaseForm {
 	@NotNull
 	@Size(min = NEW_PASSWORD_CONF_MIN_LENGTH, max = NEW_PASSWORD_CONF_MAX_LENGTH)
 	private String newPasswordConf;
+
+	/**
+	 * フォームの文字列表記。
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(new PasswdForm(),
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public String getPassword() {
 		return password;

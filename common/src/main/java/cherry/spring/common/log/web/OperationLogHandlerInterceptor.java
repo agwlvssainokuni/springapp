@@ -63,6 +63,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 			if (!first) {
 				builder.append(", ");
 			}
+			first = false;
 			builder.append(entry.getKey()).append(": ");
 			if (entry.getKey().toLowerCase().contains("password")) {
 				builder.append("<MASKED>");
