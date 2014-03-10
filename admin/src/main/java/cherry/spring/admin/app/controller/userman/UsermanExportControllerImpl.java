@@ -27,6 +27,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -70,7 +71,7 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(UsermanExportForm usermanExportForm,
+	public ModelAndView request(@Valid UsermanExportForm usermanExportForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request, HttpServletResponse response) {

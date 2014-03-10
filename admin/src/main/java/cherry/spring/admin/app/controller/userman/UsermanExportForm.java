@@ -17,9 +17,9 @@
 package cherry.spring.admin.app.controller.userman;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import cherry.spring.admin.app.controller.BaseForm;
+import cherry.spring.common.validator.DateTime;
 
 public class UsermanExportForm extends BaseForm {
 
@@ -29,17 +29,15 @@ public class UsermanExportForm extends BaseForm {
 	public static final String PREFIX = NAME + ".";
 
 	public static final String APPLIED_FROM = "appliedFrom";
-	public static final String APPLIED_FROM_REGEX = "";
 
 	public static final String APPLIED_TO = "appliedTo";
-	public static final String APPLIED_TO_REGEX = "";
 
 	@NotNull
-	@Pattern(regexp = APPLIED_FROM_REGEX)
+	@DateTime
 	private String appliedFrom;
 
 	@NotNull
-	@Pattern(regexp = APPLIED_TO_REGEX)
+	@DateTime
 	private String appliedTo;
 
 	public String getAppliedFrom() {
