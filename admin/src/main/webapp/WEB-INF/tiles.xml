@@ -25,6 +25,24 @@
 			value="/WEB-INF/tiles/normal/pwdtool/index.jsp" />
 	</definition>
 
+	<definition name="normal/userman/export/index" extends="normal/base_auth">
+		<put-attribute name="name" value="userman/export/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/userman/export/index.jsp" />
+	</definition>
+
+	<definition name="normal/userman/import/index" extends="normal/base_auth">
+		<put-attribute name="name" value="userman/import/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/userman/import/index.jsp" />
+	</definition>
+
+	<definition name="normal/userman/import/finish" extends="normal/base_auth">
+		<put-attribute name="name" value="userman/import/finish" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/userman/import/finish.jsp" />
+	</definition>
+
 	<definition name="normal/download/index" extends="normal/base_auth">
 		<put-attribute name="name" value="download/index" />
 		<put-attribute name="content"
