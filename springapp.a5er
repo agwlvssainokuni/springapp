@@ -1,4 +1,4 @@
-﻿# A5:ER FORMAT:08
+﻿# A5:ER FORMAT:09
 # A5:ER ENCODING:UTF8
 # A5:ER Mk-1 Copyright (C)2007 m.matsubara
 # A5:SQL Mk-2 Copyright (C)1997 m.matsubara
@@ -10,7 +10,7 @@ Author=agwlvssainokuni
 MaxEntityRowShow=1000
 ReadOnlyRecommend=0
 Page=Main
-PageInfo="Main",2,"A3Landscape"
+PageInfo="Main",2,"A3Landscape",$FFFFFF
 Domain=ID=@INT
 Domain=メールアドレス=@VARCHAR(512)
 Domain=パスワード(BCRYPT)=@CHAR(60)
@@ -51,6 +51,7 @@ DefaultIndexName=%0:s_IX%1:d
 DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
+ShowCommonAttributes=0
 
 [Relation]
 Entity1=mail_templates
