@@ -185,7 +185,7 @@ Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="パスワード","password","*パスワード(BCRYPT)","NOT NULL",,"","",$FFFFFFFF,""
-Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 Field="氏名(名)","first_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
 Field="氏名(姓)","last_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
 Index==1,mail_addr
@@ -193,5 +193,5 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140301183419
+ModifiedDateTime=20140313221700
 Position="MAIN",300,200
