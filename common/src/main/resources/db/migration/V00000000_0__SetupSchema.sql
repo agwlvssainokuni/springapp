@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/03/07 22:52:17
+-- Date/Time    : 2014/03/13 22:17:11
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -72,7 +72,7 @@ CREATE TABLE users(
 	id INTEGER NOT NULL auto_increment, 
 	mail_addr VARCHAR (512) NOT NULL, 
 	password CHAR (60) NOT NULL, 
-	applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	first_name VARCHAR (64) NOT NULL, 
 	last_name VARCHAR (64) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
@@ -193,7 +193,7 @@ COMMENT
 	ON COLUMN users.password IS 'パスワード'; 
 
 COMMENT 
-	ON COLUMN users.applied_at IS '申請日時'; 
+	ON COLUMN users.registered_at IS '登録日時'; 
 
 COMMENT 
 	ON COLUMN users.first_name IS '氏名(名)'; 
