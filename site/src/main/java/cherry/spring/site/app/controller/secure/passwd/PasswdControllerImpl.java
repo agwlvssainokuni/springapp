@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.controller.passwd;
+package cherry.spring.site.app.controller.secure.passwd;
 
 import java.util.Locale;
 
@@ -39,15 +39,15 @@ import org.springframework.web.servlet.view.RedirectView;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.site.LogicError;
-import cherry.spring.site.app.service.passwd.PasswdService;
+import cherry.spring.site.app.service.secure.passwd.PasswdService;
 
 @Component
 @RequestMapping(PasswdController.URI_PATH)
 public class PasswdControllerImpl implements PasswdController {
 
-	public static final String VIEW_PATH = "passwd/index";
+	public static final String VIEW_PATH = "secure/passwd/index";
 
-	public static final String VIEW_PATH_FIN = "passwd/finish";
+	public static final String VIEW_PATH_FIN = "secure/passwd/finish";
 
 	private final Log log = LogFactory.getLog(getClass());
 

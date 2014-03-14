@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.service.passwd;
+package cherry.spring.site.app.service.secure.passwd;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface PasswdService {
+import cherry.spring.common.db.app.mapper.UserMapper;
+
+@Component
+public class PasswdServiceImpl implements PasswdService {
+
+	@Autowired
+	private UserMapper userMapper;
 
 	@Transactional
-	boolean updatePassword(String mailAddr, String password);
+	@Override
+	public boolean updatePassword(String mailAddr, String password) {
+		int count = userMapper.updatePassword(mailAddr, password);
+		return count > 0;
+	}
 
 }

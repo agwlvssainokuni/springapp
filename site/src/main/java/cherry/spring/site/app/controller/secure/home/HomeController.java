@@ -14,44 +14,26 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.controller.passwd;
+package cherry.spring.site.app.controller.secure.home;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Component
-@RequestMapping(PasswdController.URI_PATH)
-public interface PasswdController {
+@Controller
+@RequestMapping(HomeController.URI_PATH)
+public interface HomeController {
 
-	public static final String URI_PATH = "/secure/passwd";
+	public static final String URI_PATH = "/secure";
 
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_FIN = "fin";
-
-	@RequestMapping()
+	@RequestMapping
 	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid PasswdForm passwdForm, BindingResult binding,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 }

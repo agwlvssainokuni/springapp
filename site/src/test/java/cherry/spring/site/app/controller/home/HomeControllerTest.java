@@ -25,6 +25,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.site.app.controller.secure.home.HomeController;
+import cherry.spring.site.app.controller.secure.home.HomeControllerImpl;
+
 public class HomeControllerTest {
 
 	private HomeController homeController = getBean(HomeController.class);

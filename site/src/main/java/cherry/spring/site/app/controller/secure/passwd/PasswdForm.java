@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.controller.passwd;
+package cherry.spring.site.app.controller.secure.passwd;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
