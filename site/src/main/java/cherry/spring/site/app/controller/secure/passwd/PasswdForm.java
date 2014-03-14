@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.Email;
 
 import cherry.spring.site.app.controller.BaseForm;
 
@@ -30,6 +31,8 @@ public class PasswdForm extends BaseForm {
 
 	public static final String NAME = "passwdForm";
 	public static final String PREFIX = NAME + ".";
+
+	public static final String LOGIN_ID = "loginId";
 
 	public static final String PASSWORD = "password";
 	public static final int PASSWORD_MIN_LENGTH = 8;
@@ -42,6 +45,10 @@ public class PasswdForm extends BaseForm {
 	public static final String NEW_PASSWORD_CONF = "newPasswordConf";
 	public static final int NEW_PASSWORD_CONF_MIN_LENGTH = 8;
 	public static final int NEW_PASSWORD_CONF_MAX_LENGTH = 16;
+
+	@NotNull
+	@Email
+	private String loginId;
 
 	@NotNull
 	@Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
@@ -61,11 +68,20 @@ public class PasswdForm extends BaseForm {
 	@Override
 	public String toString() {
 		PasswdForm masked = new PasswdForm();
+		masked.setLoginId(loginId);
 		masked.setPassword("<MASKED>");
 		masked.setNewPassword("<MASKED>");
 		masked.setNewPasswordConf("<MASKED>");
 		return ToStringBuilder.reflectionToString(masked,
 				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 
 	public String getPassword() {

@@ -14,6 +14,7 @@
 <s:hasBindErrors name="passwdForm">
 	<div class="error">
 		<f:errors path="passwdForm" element="div" />
+		<f:errors path="passwdForm.loginId" element="div" />
 		<f:errors path="passwdForm.password" element="div" />
 		<f:errors path="passwdForm.newPassword" element="div" />
 		<f:errors path="passwdForm.newPasswordConf" element="div" />
@@ -21,6 +22,10 @@
 </s:hasBindErrors>
 <f:form servletRelativeAction="/secure/passwd/req" method="POST"
 	modelAttribute="passwdForm">
+	<div data-role="fieldcontain">
+		<label for="loginId"><s:message code="passwdForm.loginId" /></label>
+		<f:input path="loginId" cssErrorClass="error" />
+	</div>
 	<div data-role="fieldcontain">
 		<label for="password"><s:message code="passwdForm.password" /></label>
 		<f:password path="password" cssErrorClass="error" />

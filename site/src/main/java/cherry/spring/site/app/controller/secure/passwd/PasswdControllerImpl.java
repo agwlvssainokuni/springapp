@@ -90,13 +90,20 @@ public class PasswdControllerImpl implements PasswdController {
 			return mav;
 		}
 
+		if (!authentication.getName().equals(passwdForm.getLoginId())) {
+			rejectOnCurAuthFailed(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(passwdForm);
+			return mav;
+		}
+
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				authentication.getName(), passwdForm.getPassword());
 		try {
 			Authentication auth = authenticationManager.authenticate(token);
 			assert auth != null;
 		} catch (AuthenticationException ex) {
-			rejectOnCurPasswordInvalid(binding);
+			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(passwdForm);
 			return mav;
@@ -133,11 +140,13 @@ public class PasswdControllerImpl implements PasswdController {
 				LogicError.NewPasswordUnmatch.name());
 	}
 
-	private void rejectOnCurPasswordInvalid(BindingResult binding) {
-		binding.reject(LogicError.CurPasswordInvalid.name(),
-				new Object[] { new DefaultMessageSourceResolvable(
-						PasswdForm.PREFIX + PasswdForm.PASSWORD) },
-				LogicError.CurPasswordInvalid.name());
+	private void rejectOnCurAuthFailed(BindingResult binding) {
+		binding.reject(LogicError.CurAuthFailed.name(), new Object[] {
+				new DefaultMessageSourceResolvable(PasswdForm.PREFIX
+						+ PasswdForm.LOGIN_ID),
+				new DefaultMessageSourceResolvable(PasswdForm.PREFIX
+						+ PasswdForm.PASSWORD) },
+				LogicError.CurAuthFailed.name());
 	}
 
 }

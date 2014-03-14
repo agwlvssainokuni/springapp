@@ -23,8 +23,8 @@ public enum LogicError {
 	SignupEntryUnmatch,
 	/** パスワード変更：新パスワードの入力値が不適合 */
 	NewPasswordUnmatch,
-	/** パスワード変更：現行パスワードが不適切 */
-	CurPasswordInvalid,
+	/** パスワード変更：現行ログインIDまたはパスワードが不適切 */
+	CurAuthFailed,
 	// ダミー
 	DUMMY
 }
