@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.upload;
+package cherry.spring.admin.app.controller.secure.upload;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,9 +42,9 @@ import cherry.spring.common.lib.csv.CsvParser;
 @RequestMapping(UploadController.URI_PATH)
 public class UploadControllerImpl implements UploadController {
 
-	public static final String VIEW_PATH = "upload/index";
+	public static final String VIEW_PATH = "secure/upload/index";
 
-	public static final String VIEW_PATH_FIN = "upload/finish";
+	public static final String VIEW_PATH_FIN = "secure/upload/finish";
 
 	@Value("${admin.app.upload.charset}")
 	private Charset charset;

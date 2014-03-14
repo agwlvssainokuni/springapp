@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.download;
+package cherry.spring.admin.app.controller.secure.download;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,7 +42,7 @@ import cherry.spring.common.lib.csv.CsvCreator;
 @RequestMapping(DownloadController.URI_PATH)
 public class DownloadControllerImpl implements DownloadController {
 
-	public static final String VIEW_PATH = "download/index";
+	public static final String VIEW_PATH = "secure/download/index";
 
 	@Value("${admin.app.download.contentType}")
 	private String contentType;

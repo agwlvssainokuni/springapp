@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.jfreechart;
+package cherry.spring.admin.app.controller.secure.userman;
 
 import java.util.Locale;
 
@@ -28,13 +28,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping(JFreeChartController.URI_PATH)
-public interface JFreeChartController {
+@RequestMapping(UsermanExportController.URI_PATH)
+public interface UsermanExportController {
 
-	public static final String URI_PATH = "/secure/jfreechart";
+	public static final String URI_PATH = "/secure/userman/export";
 
 	public static final String URI_PATH_REQ = "req";
 
@@ -43,10 +42,9 @@ public interface JFreeChartController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid JFreeChartForm jFreeChartForm,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			HttpServletResponse response);
+	ModelAndView request(@Valid UsermanExportForm usermanExportForm,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, HttpServletResponse response);
 
 }

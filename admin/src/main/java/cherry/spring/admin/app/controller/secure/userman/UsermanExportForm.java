@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.userman;
+package cherry.spring.admin.app.controller.secure.userman;
 
 import javax.validation.constraints.NotNull;
 

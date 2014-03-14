@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.pwdtool;
+package cherry.spring.admin.app.controller.secure.home;
 
 import java.util.Locale;
 
@@ -24,35 +24,20 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * パスワードエンコーダツール。
- */
 @Controller
-@RequestMapping(PwdtoolController.URI_PATH)
-public interface PwdtoolController {
+@RequestMapping(HomeController.URI_PATH)
+public class HomeControllerImpl implements HomeController {
 
-	public static final String URI_PATH = "/secure/pwdtool";
+	public static final String VIEW_PATH = "secure/home/index";
 
-	public static final String URI_PATH_ENCODE = "encode";
-
-	public static final String PARAM_PLAIN_TEXT = "plainText";
-
-	/**
-	 * ツールの画面を表示する。
-	 */
-	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	/**
-	 * 平文をエンコードした文字列を返却する。
-	 */
-	@RequestMapping(URI_PATH_ENCODE)
-	@ResponseBody
-	String encode(@RequestParam(PARAM_PLAIN_TEXT) String plainText);
+	@RequestMapping
+	@Override
+	public ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		return mav;
+	}
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.download;
+package cherry.spring.admin.app.controller.secure.download;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

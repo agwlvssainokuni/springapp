@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.pwdtool;
+package cherry.spring.admin.app.controller.secure.pwdtool;
 
 import java.util.Locale;
 
@@ -37,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(PwdtoolController.URI_PATH)
 public class PwdtoolControllerImpl implements PwdtoolController {
 
-	public static final String VIEW_PATH = "pwdtool/index";
+	public static final String VIEW_PATH = "secure/pwdtool/index";
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;

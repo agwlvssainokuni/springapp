@@ -14,26 +14,39 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.home;
+package cherry.spring.admin.app.controller.secure.jfreechart;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping(HomeController.URI_PATH)
-public interface HomeController {
+@RequestMapping(JFreeChartController.URI_PATH)
+public interface JFreeChartController {
 
-	public static final String URI_PATH = "/secure";
+	public static final String URI_PATH = "/secure/jfreechart";
 
-	@RequestMapping
+	public static final String URI_PATH_REQ = "req";
+
+	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_REQ)
+	ModelAndView request(@Valid JFreeChartForm jFreeChartForm,
+			BindingResult binding, RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request,
+			HttpServletResponse response);
 
 }

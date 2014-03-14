@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.upload;
+package cherry.spring.admin.app.controller.secure.upload;
 
-import cherry.spring.admin.app.controller.BaseDto;
+import javax.validation.constraints.NotNull;
 
-public class UploadInfo extends BaseDto {
+import org.springframework.web.multipart.MultipartFile;
+
+import cherry.spring.admin.app.controller.BaseForm;
+
+public class UploadForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	private String columnName;
+	public static final String NAME = "uploadForm";
+	public static final String PREFIX = NAME + ".";
 
-	private int rowCount;
+	public static final String FILE = "file";
 
-	public String getColumnName() {
-		return columnName;
+	@NotNull
+	private MultipartFile file;
+
+	public MultipartFile getFile() {
+		return file;
 	}
 
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
-
-	public int getRowCount() {
-		return rowCount;
-	}
-
-	public void setRowCount(int rowCount) {
-		this.rowCount = rowCount;
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 }

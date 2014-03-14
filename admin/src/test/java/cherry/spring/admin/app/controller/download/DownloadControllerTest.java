@@ -26,6 +26,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.secure.download.DownloadController;
+import cherry.spring.admin.app.controller.secure.download.DownloadControllerImpl;
+import cherry.spring.admin.app.controller.secure.download.DownloadForm;
+
 public class DownloadControllerTest {
 
 	private DownloadController downloadController = getBean(DownloadController.class);

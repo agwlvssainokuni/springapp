@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.upload;
+package cherry.spring.admin.app.controller.secure.jfreechart;
 
 import javax.validation.constraints.NotNull;
 
@@ -22,11 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.admin.app.controller.BaseForm;
 
-public class UploadForm extends BaseForm {
+public class JFreeChartForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "uploadForm";
+	public static final String NAME = "jFreeChartForm";
 	public static final String PREFIX = NAME + ".";
 
 	public static final String FILE = "file";

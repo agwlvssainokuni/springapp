@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.jfreechart;
+package cherry.spring.admin.app.controller.secure.upload;
 
-import javax.validation.constraints.NotNull;
+import cherry.spring.admin.app.controller.BaseDto;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import cherry.spring.admin.app.controller.BaseForm;
-
-public class JFreeChartForm extends BaseForm {
+public class UploadInfo extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "jFreeChartForm";
-	public static final String PREFIX = NAME + ".";
+	private String columnName;
 
-	public static final String FILE = "file";
+	private int rowCount;
 
-	@NotNull
-	private MultipartFile file;
-
-	public MultipartFile getFile() {
-		return file;
+	public String getColumnName() {
+		return columnName;
 	}
 
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
 	}
 
 }

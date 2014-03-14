@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.userman;
+package cherry.spring.admin.app.controller.secure.userman;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,7 +43,7 @@ import cherry.spring.common.lib.csv.CsvCreator;
 @RequestMapping(UsermanExportController.URI_PATH)
 public class UsermanExportControllerImpl implements UsermanExportController {
 
-	public static final String VIEW_PATH = "userman/export/index";
+	public static final String VIEW_PATH = "secure/userman/export/index";
 
 	@Value("${admin.app.userman.export.contentType}")
 	private String contentType;

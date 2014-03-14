@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.home;
+package cherry.spring.admin.app.controller.secure.home;
 
 import java.util.Locale;
 
@@ -28,16 +28,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(HomeController.URI_PATH)
-public class HomeControllerImpl implements HomeController {
+public interface HomeController {
 
-	public static final String VIEW_PATH = "home/index";
+	public static final String URI_PATH = "/secure";
 
 	@RequestMapping
-	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		return mav;
-	}
+	ModelAndView index(Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.userman;
+package cherry.spring.admin.app.controller.secure.download;
 
 import java.util.Locale;
 
@@ -30,10 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(UsermanExportController.URI_PATH)
-public interface UsermanExportController {
+@RequestMapping(DownloadController.URI_PATH)
+public interface DownloadController {
 
-	public static final String URI_PATH = "/secure/userman/export";
+	public static final String URI_PATH = "/secure/download";
 
 	public static final String URI_PATH_REQ = "req";
 
@@ -42,7 +42,7 @@ public interface UsermanExportController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid UsermanExportForm usermanExportForm,
+	ModelAndView request(@Valid DownloadForm downloadForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request, HttpServletResponse response);

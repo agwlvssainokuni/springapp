@@ -13,57 +13,57 @@
 			value="/WEB-INF/tiles/normal/login/index.jsp" />
 	</definition>
 
-	<definition name="normal/home/index" extends="normal/base_auth">
+	<definition name="normal/secure/home/index" extends="normal/base_auth">
 		<put-attribute name="name" value="home/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/home/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/home/index.jsp" />
 	</definition>
 
-	<definition name="normal/pwdtool/index" extends="normal/base_auth">
+	<definition name="normal/secure/pwdtool/index" extends="normal/base_auth">
 		<put-attribute name="name" value="pwdtool/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/pwdtool/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/pwdtool/index.jsp" />
 	</definition>
 
-	<definition name="normal/userman/export/index" extends="normal/base_auth">
+	<definition name="normal/secure/userman/export/index" extends="normal/base_auth">
 		<put-attribute name="name" value="userman/export/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/userman/export/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/userman/export/index.jsp" />
 	</definition>
 
-	<definition name="normal/userman/import/index" extends="normal/base_auth">
+	<definition name="normal/secure/userman/import/index" extends="normal/base_auth">
 		<put-attribute name="name" value="userman/import/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/userman/import/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/userman/import/index.jsp" />
 	</definition>
 
-	<definition name="normal/userman/import/finish" extends="normal/base_auth">
+	<definition name="normal/secure/userman/import/finish" extends="normal/base_auth">
 		<put-attribute name="name" value="userman/import/finish" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/userman/import/finish.jsp" />
+			value="/WEB-INF/tiles/normal/secure/userman/import/finish.jsp" />
 	</definition>
 
-	<definition name="normal/download/index" extends="normal/base_auth">
+	<definition name="normal/secure/download/index" extends="normal/base_auth">
 		<put-attribute name="name" value="download/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/download/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/download/index.jsp" />
 	</definition>
 
-	<definition name="normal/upload/index" extends="normal/base_auth">
+	<definition name="normal/secure/upload/index" extends="normal/base_auth">
 		<put-attribute name="name" value="upload/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/upload/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/upload/index.jsp" />
 	</definition>
-	<definition name="normal/upload/finish" extends="normal/base_auth">
+	<definition name="normal/secure/upload/finish" extends="normal/base_auth">
 		<put-attribute name="name" value="upload/finish" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/upload/finish.jsp" />
+			value="/WEB-INF/tiles/normal/secure/upload/finish.jsp" />
 	</definition>
 
-	<definition name="normal/jfreechart/index" extends="normal/base_auth">
+	<definition name="normal/secure/jfreechart/index" extends="normal/base_auth">
 		<put-attribute name="name" value="jfreechart/index" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/jfreechart/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/jfreechart/index.jsp" />
 	</definition>
 
 </tiles-definitions>

@@ -14,44 +14,45 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.upload;
+package cherry.spring.admin.app.controller.secure.pwdtool;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * パスワードエンコーダツール。
+ */
 @Controller
-@RequestMapping(UploadController.URI_PATH)
-public interface UploadController {
+@RequestMapping(PwdtoolController.URI_PATH)
+public interface PwdtoolController {
 
-	public static final String URI_PATH = "/secure/upload";
+	public static final String URI_PATH = "/secure/pwdtool";
 
-	public static final String URI_PATH_REQ = "req";
+	public static final String URI_PATH_ENCODE = "encode";
 
-	public static final String URI_PATH_FIN = "fin";
+	public static final String PARAM_PLAIN_TEXT = "plainText";
 
+	/**
+	 * ツールの画面を表示する。
+	 */
 	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid UploadForm uploadForm, BindingResult binding,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	/**
+	 * 平文をエンコードした文字列を返却する。
+	 */
+	@RequestMapping(URI_PATH_ENCODE)
+	@ResponseBody
+	String encode(@RequestParam(PARAM_PLAIN_TEXT) String plainText);
 
 }

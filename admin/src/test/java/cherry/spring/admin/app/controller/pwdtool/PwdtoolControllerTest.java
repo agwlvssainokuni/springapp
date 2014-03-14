@@ -28,6 +28,9 @@ import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolController;
+import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolControllerImpl;
+
 public class PwdtoolControllerTest {
 
 	private PwdtoolController pwdtoolController = getBean(PwdtoolController.class);

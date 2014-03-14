@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.download;
+package cherry.spring.admin.app.controller.secure.upload;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
@@ -28,23 +27,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping(DownloadController.URI_PATH)
-public interface DownloadController {
+@RequestMapping(UploadController.URI_PATH)
+public interface UploadController {
 
-	public static final String URI_PATH = "/secure/download";
+	public static final String URI_PATH = "/secure/upload";
 
 	public static final String URI_PATH_REQ = "req";
+
+	public static final String URI_PATH_FIN = "fin";
 
 	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid DownloadForm downloadForm,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response);
+	ModelAndView request(@Valid UploadForm uploadForm, BindingResult binding,
+			RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_FIN)
+	ModelAndView finish(RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
 }

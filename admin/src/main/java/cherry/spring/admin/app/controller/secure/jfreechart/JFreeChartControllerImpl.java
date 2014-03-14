@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.jfreechart;
+package cherry.spring.admin.app.controller.secure.jfreechart;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ import cherry.spring.common.log.LogFactory;
 @RequestMapping(JFreeChartController.URI_PATH)
 public class JFreeChartControllerImpl implements JFreeChartController {
 
-	public static final String VIEW_PATH = "jfreechart/index";
+	public static final String VIEW_PATH = "secure/jfreechart/index";
 
 	private Log log = LogFactory.getLog(getClass());
 
