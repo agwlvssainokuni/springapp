@@ -35,6 +35,7 @@ subprojects {
 		compile "com.h2database:h2:${versionH2db}"
 		compile "com.googlecode.flyway:flyway-core:2.3.1"
 		compile "commons-dbcp:commons-dbcp:1.4"
+		compile "joda-time:joda-time:2.3"
 		compile "org.apache.commons:commons-lang3:3.2.1"
 		compile "org.apache.velocity:velocity:1.7"
 		compile "org.fluentd:fluent-logger:0.2.11"
