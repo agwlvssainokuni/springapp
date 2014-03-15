@@ -19,7 +19,7 @@ package cherry.spring.admin.app.controller.secure.userman;
 import javax.validation.constraints.NotNull;
 
 import cherry.spring.admin.app.controller.BaseForm;
-import cherry.spring.common.validator.DateTime;
+import cherry.spring.common.validator.DateTimeOpt;
 
 public class UsermanExportForm extends BaseForm {
 
@@ -33,11 +33,11 @@ public class UsermanExportForm extends BaseForm {
 	public static final String APPLIED_TO = "appliedTo";
 
 	@NotNull
-	@DateTime
+	@DateTimeOpt
 	private String appliedFrom;
 
 	@NotNull
-	@DateTime
+	@DateTimeOpt
 	private String appliedTo;
 
 	public String getAppliedFrom() {

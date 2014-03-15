@@ -28,21 +28,23 @@ import javax.validation.Payload;
 
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = DateTimeValidator.class)
-public @interface DateTime {
+@Constraint(validatedBy = DateTimeOptValidator.class)
+public @interface DateTimeOpt {
 
-	String message() default "{cherry.spring.common.validator.DateTime.message}";
+	String message() default "{cherry.spring.common.validator.DateTimeOpt.message}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
-	String pattern() default "yyyy/MM/dd HH:mm:ss";
+	String datePattern() default "yyyy/MM/dd";
+
+	String timePattern() default " HH:mm:ss";
 
 	@Target({ METHOD, FIELD })
 	@Retention(RUNTIME)
 	public @interface List {
-		DateTime[] value();
+		DateTimeOpt[] value();
 	}
 
 }
