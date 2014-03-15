@@ -23,12 +23,13 @@ import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -37,7 +38,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.spring.common.lib.csv.CsvCreator;
+import cherry.spring.admin.app.service.secure.userman.UsermanExportService;
+import cherry.spring.common.helper.DateTimeHelper;
 
 @Controller
 @RequestMapping(UsermanExportController.URI_PATH)
@@ -59,6 +61,12 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 
 	@Value("${admin.app.userman.export.filename}")
 	private String filename;
+
+	@Autowired
+	private UsermanExportService usermanExportService;
+
+	@Autowired
+	private DateTimeHelper dateTimeHelper;
 
 	@RequestMapping()
 	@Override
@@ -82,13 +90,13 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 			return mav;
 		}
 
-		sendFile(usermanExportForm.getAppliedFrom(),
-				usermanExportForm.getAppliedTo(), response);
+		sendFile(usermanExportForm.getRegisteredFrom(),
+				usermanExportForm.getRegisteredTo(), response);
 
 		return null;
 	}
 
-	private void sendFile(String appliedFrom, String appliedTo,
+	private long sendFile(String registeredFrom, String registeredTo,
 			HttpServletResponse response) {
 
 		response.setContentType(contentType);
@@ -96,19 +104,25 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 		String fname = MessageFormat.format(filename, new Date());
 		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
 
+		Date from;
+		if (StringUtils.isEmpty(registeredFrom)) {
+			from = new Date(0L);
+		} else {
+			from = dateTimeHelper.parseFrom(registeredFrom).toDate();
+		}
+
+		Date to;
+		if (StringUtils.isEmpty(registeredTo)) {
+			to = new Date(Long.MAX_VALUE);
+		} else {
+			to = dateTimeHelper.parseTo(registeredTo).toDate();
+		}
+
 		try (OutputStream out = response.getOutputStream()) {
-			@SuppressWarnings("resource")
-			CsvCreator csv = new CsvCreator(
-					new OutputStreamWriter(out, charset), "\r\n");
-			csv.write(new String[] { "#", "DUMMY" });
-			for (int row = 1; row <= 10; row++) {
-				csv.write(new String[] { String.valueOf(row),
-						UUID.randomUUID().toString() });
-			}
-			csv.flush();
+			return usermanExportService.exportUsers(new OutputStreamWriter(out,
+					charset), from, to);
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
-
 }

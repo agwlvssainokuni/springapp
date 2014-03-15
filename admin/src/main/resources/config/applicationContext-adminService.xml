@@ -4,13 +4,25 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<import resource="applicationContext-common.xml" />
-	<import resource="applicationContext-commonMapper.xml" />
-	<import resource="applicationContext-admin.xml" />
-	<import resource="applicationContext-adminWeb.xml" />
-	<import resource="applicationContext-adminService.xml" />
-	<import resource="applicationContext-dataSource.xml" />
-
-	<import resource="applicationContext-commonMigration.xml" />
+	<bean id="usersExtractor" class="cherry.spring.common.lib.db.DataExtractorImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql">
+			<value><![CDATA[
+				SELECT
+					A.id,
+					A.mail_addr,
+					A.password,
+					A.registered_at
+				FROM
+					users A
+				WHERE
+					A.registered_at BETWEEN :registeredFrom AND :registeredTo
+					AND
+					A.deleted_flg = 0
+				ORDER BY
+					A.id
+			]]></value>
+		</property>
+	</bean>
 
 </beans>

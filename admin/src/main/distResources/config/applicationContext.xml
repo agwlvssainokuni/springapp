@@ -13,6 +13,7 @@
 	<import resource="applicationContext-commonDao.xml" />
 	<import resource="applicationContext-admin.xml" />
 	<import resource="applicationContext-adminWeb.xml" />
+	<import resource="applicationContext-adminService.xml" />
 	<import resource="applicationContext-dataSource.xml" />
 
 </beans>

@@ -28,32 +28,32 @@ public class UsermanExportForm extends BaseForm {
 	public static final String NAME = "usermanExportForm";
 	public static final String PREFIX = NAME + ".";
 
-	public static final String APPLIED_FROM = "appliedFrom";
+	public static final String REGISTERED_FROM = "registeredFrom";
 
-	public static final String APPLIED_TO = "appliedTo";
-
-	@NotNull
-	@DateTimeOpt
-	private String appliedFrom;
+	public static final String REGISTERED_TO = "registeredTo";
 
 	@NotNull
 	@DateTimeOpt
-	private String appliedTo;
+	private String registeredFrom;
 
-	public String getAppliedFrom() {
-		return appliedFrom;
+	@NotNull
+	@DateTimeOpt
+	private String registeredTo;
+
+	public String getRegisteredFrom() {
+		return registeredFrom;
 	}
 
-	public void setAppliedFrom(String appliedFrom) {
-		this.appliedFrom = appliedFrom;
+	public void setRegisteredFrom(String registeredFrom) {
+		this.registeredFrom = registeredFrom;
 	}
 
-	public String getAppliedTo() {
-		return appliedTo;
+	public String getRegisteredTo() {
+		return registeredTo;
 	}
 
-	public void setAppliedTo(String appliedTo) {
-		this.appliedTo = appliedTo;
+	public void setRegisteredTo(String registeredTo) {
+		this.registeredTo = registeredTo;
 	}
 
 }
