@@ -26,4 +26,23 @@
 		</property>
 	</bean>
 
+	<bean id="usersLoader" class="cherry.spring.common.lib.db.DataLoaderImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql">
+			<value><![CDATA[
+				INSERT INTO users (
+					mail_addr,
+					password,
+					first_name,
+					last_name
+				) VALUES (
+					:mailAddr,
+					:password,
+					:firstName,
+					:lastName
+				)
+			]]></value>
+		</property>
+	</bean>
+
 </beans>

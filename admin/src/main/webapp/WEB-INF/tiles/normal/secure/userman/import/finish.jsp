@@ -13,5 +13,5 @@
 </h1>
 <div>
 	<s:message code="userman/import/finish.message.1"
-		arguments="${usermanImportInfo.createdCount},${usermanImportInfo.updatedCount},${usermanImportInfo.deletedCount}" />
+		arguments="${result.totalCount},${result.successCount},${result.failedCount}" />
 </div>
