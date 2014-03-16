@@ -9,9 +9,10 @@
 		<property name="sql">
 			<value><![CDATA[
 				SELECT
-					A.id,
 					A.mail_addr,
 					A.password,
+					A.first_name,
+					A.last_name,
 					A.registered_at
 				FROM
 					users A

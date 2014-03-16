@@ -14,21 +14,21 @@
 <s:hasBindErrors name="usermanExportForm">
 	<div class="error">
 		<f:errors path="usermanExportForm" element="div" />
-		<f:errors path="usermanExportForm.appliedFrom" element="div" />
-		<f:errors path="usermanExportForm.appliedTo" element="div" />
+		<f:errors path="usermanExportForm.registeredFrom" element="div" />
+		<f:errors path="usermanExportForm.registeredTo" element="div" />
 	</div>
 </s:hasBindErrors>
 <f:form servletRelativeAction="/secure/userman/export/req" method="POST"
 	modelAttribute="usermanExportForm">
 	<div data-role="fieldcontain">
-		<label for="appliedFrom"><s:message
-				code="usermanExportForm.appliedFrom" /></label>
-		<f:input path="appliedFrom" cssErrorClass="error" />
+		<label for="registeredFrom"><s:message
+				code="usermanExportForm.registeredFrom" /></label>
+		<f:input path="registeredFrom" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="appliedTo"><s:message
-				code="usermanExportForm.appliedTo" /></label>
-		<f:input path="appliedTo" cssErrorClass="error" />
+		<label for="registeredTo"><s:message
+				code="usermanExportForm.registeredTo" /></label>
+		<f:input path="registeredTo" cssErrorClass="error" />
 	</div>
 	<input type="submit" name="submit"
 		value="<s:message code="userman/export/index.exportButton" />" />

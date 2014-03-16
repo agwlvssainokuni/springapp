@@ -30,7 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * データ抽出機能.
  */
-public class DataExtractorImpl extends NamedParameterJdbcDaoSupport {
+public class DataExtractorImpl extends NamedParameterJdbcDaoSupport implements
+		DataExtractor {
 
 	/** 抽出用SQL. */
 	private String sql;
@@ -57,6 +58,7 @@ public class DataExtractorImpl extends NamedParameterJdbcDaoSupport {
 	 *             データ格納エラー
 	 */
 	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
+	@Override
 	public long extract(final DataConsumer consumer, Map<String, ?> paramMap)
 			throws IOException {
 
