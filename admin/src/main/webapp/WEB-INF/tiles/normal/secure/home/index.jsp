@@ -26,10 +26,6 @@
 						code="home/index.menu.userman.import" /></a></li>
 		</ul>
 	</li>
-	<li><a href="<c:url value="/secure/download" />"><s:message
-				code="home/index.menu.download" /></a></li>
-	<li><a href="<c:url value="/secure/upload" />"><s:message
-				code="home/index.menu.upload" /></a></li>
 	<li><a href="<c:url value="/secure/jfreechart" />"><s:message
 				code="home/index.menu.jfreechart" /></a></li>
 </ul>
