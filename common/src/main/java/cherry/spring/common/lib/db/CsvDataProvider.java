@@ -71,7 +71,7 @@ public class CsvDataProvider implements DataProvider {
 			return;
 		}
 
-		String[] fieldName = new String[header.length];
+		fieldName = new String[header.length];
 		for (int i = 0; i < header.length; i++) {
 			boolean first = true;
 			StringBuilder builder = new StringBuilder();
