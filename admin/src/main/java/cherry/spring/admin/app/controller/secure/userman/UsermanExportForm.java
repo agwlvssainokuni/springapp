@@ -16,10 +16,8 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
-import javax.validation.constraints.NotNull;
-
 import cherry.spring.admin.app.controller.BaseForm;
-import cherry.spring.common.validator.DateTimeOpt;
+import cherry.spring.common.validator.DateTimeOptPattern;
 
 public class UsermanExportForm extends BaseForm {
 
@@ -32,12 +30,10 @@ public class UsermanExportForm extends BaseForm {
 
 	public static final String REGISTERED_TO = "registeredTo";
 
-	@NotNull
-	@DateTimeOpt
+	@DateTimeOptPattern
 	private String registeredFrom;
 
-	@NotNull
-	@DateTimeOpt
+	@DateTimeOptPattern
 	private String registeredTo;
 
 	public String getRegisteredFrom() {

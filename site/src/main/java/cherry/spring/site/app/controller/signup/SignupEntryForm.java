@@ -19,6 +19,7 @@ package cherry.spring.site.app.controller.signup;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import cherry.spring.common.validator.MailAddrSize;
 import cherry.spring.site.app.controller.BaseForm;
 
 public class SignupEntryForm extends BaseForm {
@@ -32,6 +33,7 @@ public class SignupEntryForm extends BaseForm {
 	public static final String EMAIL = "email";
 
 	@NotEmpty
+	@MailAddrSize
 	@Email
 	private String email;
 

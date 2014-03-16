@@ -23,19 +23,14 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 
-public class DateTimeOptValidator implements
-		ConstraintValidator<DateTimeOpt, String> {
+public class DateTimePatternValidator implements ConstraintValidator<DateTimePattern, String> {
 
 	private DateTimeFormatter formatter;
 
 	@Override
-	public void initialize(DateTimeOpt annon) {
-		formatter = new DateTimeFormatterBuilder()
-				.append(forPattern(annon.datePattern()))
-				.appendOptional(forPattern(annon.timePattern()).getParser())
-				.toFormatter();
+	public void initialize(DateTimePattern annon) {
+		formatter = forPattern(annon.pattern());
 	}
 
 	@Override

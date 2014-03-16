@@ -25,24 +25,26 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
+import javax.validation.constraints.Size;
 
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = DateTimeValidator.class)
-public @interface DateTime {
+@Constraint(validatedBy = {})
+@Size(max = 32)
+@ReportAsSingleViolation
+public @interface DisplayNameSize {
 
-	String message() default "{cherry.spring.common.validator.DateTime.message}";
+	String message() default "{cherry.spring.common.validator.DisplayNameSize.message}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
-	String pattern() default "yyyy/MM/dd HH:mm:ss";
-
 	@Target({ METHOD, FIELD })
 	@Retention(RUNTIME)
 	public @interface List {
-		DateTime[] value();
+		DisplayNameSize[] value();
 	}
 
 }

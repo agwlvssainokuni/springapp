@@ -16,12 +16,11 @@
 
 package cherry.spring.site.app.controller.signup;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import cherry.spring.common.validator.DisplayNameSize;
+import cherry.spring.common.validator.MailAddrSize;
 import cherry.spring.site.app.controller.BaseForm;
 
 public class SignupRegisterForm extends BaseForm {
@@ -33,27 +32,21 @@ public class SignupRegisterForm extends BaseForm {
 	public static final String PREFIX = NAME + ".";
 
 	public static final String EMAIL = "email";
-
 	public static final String FIRST_NAME = "firstName";
-	public static final int FIRST_NAME_MIN_LENGTH = 1;
-	public static final int FIRST_NAME_MAX_LENGTH = 32;
-
 	public static final String LAST_NAME = "lastName";
-	public static final int LAST_NAME_MIN_LENGTH = 1;
-	public static final int LAST_NAME_MAX_LENGTH = 32;
-
 	public static final String AGREE = "agree";
 
 	@NotEmpty
+	@MailAddrSize
 	@Email
 	private String email;
 
-	@NotNull
-	@Size(min = FIRST_NAME_MIN_LENGTH, max = FIRST_NAME_MAX_LENGTH)
+	@NotEmpty
+	@DisplayNameSize
 	private String firstName;
 
-	@NotNull
-	@Size(min = LAST_NAME_MIN_LENGTH, max = LAST_NAME_MAX_LENGTH)
+	@NotEmpty
+	@DisplayNameSize
 	private String lastName;
 
 	private boolean agree;

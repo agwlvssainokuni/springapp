@@ -17,12 +17,14 @@
 package cherry.spring.site.app.controller.secure.passwd;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import cherry.spring.common.validator.MailAddrSize;
+import cherry.spring.common.validator.PasswordSize;
 import cherry.spring.site.app.controller.BaseForm;
 
 public class PasswdForm extends BaseForm {
@@ -33,33 +35,25 @@ public class PasswdForm extends BaseForm {
 	public static final String PREFIX = NAME + ".";
 
 	public static final String LOGIN_ID = "loginId";
-
 	public static final String PASSWORD = "password";
-	public static final int PASSWORD_MIN_LENGTH = 8;
-	public static final int PASSWORD_MAX_LENGTH = 16;
-
 	public static final String NEW_PASSWORD = "newPassword";
-	public static final int NEW_PASSWORD_MIN_LENGTH = 8;
-	public static final int NEW_PASSWORD_MAX_LENGTH = 16;
-
 	public static final String NEW_PASSWORD_CONF = "newPasswordConf";
-	public static final int NEW_PASSWORD_CONF_MIN_LENGTH = 8;
-	public static final int NEW_PASSWORD_CONF_MAX_LENGTH = 16;
 
-	@NotNull
+	@NotEmpty
+	@MailAddrSize
 	@Email
 	private String loginId;
 
 	@NotNull
-	@Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
+	@PasswordSize
 	private String password;
 
 	@NotNull
-	@Size(min = NEW_PASSWORD_MIN_LENGTH, max = NEW_PASSWORD_MAX_LENGTH)
+	@PasswordSize
 	private String newPassword;
 
 	@NotNull
-	@Size(min = NEW_PASSWORD_CONF_MIN_LENGTH, max = NEW_PASSWORD_CONF_MAX_LENGTH)
+	@PasswordSize
 	private String newPasswordConf;
 
 	/**
