@@ -37,8 +37,12 @@
 			<h1>
 				<s:message code="base/common.title" />
 			</h1>
-			<a href="<c:url value="/logout" />" class="ui-btn-right"><s:message
-					code="base/auth.logout" /></a>
+			<form action="<c:url value="/logout" />" method="POST"
+				class="ui-btn-right">
+				<input type="submit" value="<s:message code="base/auth.logout" />">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}">
+			</form>
 		</div>
 		<div data-role="content">
 			<tiles:insertAttribute name="content" />
