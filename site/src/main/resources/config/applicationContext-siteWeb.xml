@@ -37,6 +37,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
+			<mvc:mapping path="/signup/**" />
 			<mvc:mapping path="/secure/**" />
 			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
