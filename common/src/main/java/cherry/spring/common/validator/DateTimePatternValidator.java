@@ -22,9 +22,11 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 
-public class DateTimePatternValidator implements ConstraintValidator<DateTimePattern, String> {
+public class DateTimePatternValidator implements
+		ConstraintValidator<DateTimePattern, String> {
 
 	private DateTimeFormatter formatter;
 
@@ -41,7 +43,7 @@ public class DateTimePatternValidator implements ConstraintValidator<DateTimePat
 		}
 
 		try {
-			org.joda.time.DateTime.parse(value, formatter);
+			DateTime.parse(value, formatter);
 			return true;
 		} catch (IllegalArgumentException ex) {
 			return false;

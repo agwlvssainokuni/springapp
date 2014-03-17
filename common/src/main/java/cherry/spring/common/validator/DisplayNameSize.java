@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@Size(max = 32)
+@Size(max = 64)
 @ReportAsSingleViolation
 public @interface DisplayNameSize {
 
