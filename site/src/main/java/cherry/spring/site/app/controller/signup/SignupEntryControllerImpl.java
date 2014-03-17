@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,22 +55,22 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(SignupEntryForm signupEntryForm,
+	public ModelAndView request(@Validated SignupEntryForm form,
 			BindingResult binding, RedirectAttributes redirectAttributes,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(signupEntryForm);
+			mav.addObject(form);
 			return mav;
 		}
 
-		if (!signupEntryService.createSignupRequest(signupEntryForm.getEmail(),
-				request, locale)) {
+		if (!signupEntryService.createSignupRequest(form.getEmail(), request,
+				locale)) {
 			rejectOnSignupTooManyRequest(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(signupEntryForm);
+			mav.addObject(form);
 			return mav;
 		}
 

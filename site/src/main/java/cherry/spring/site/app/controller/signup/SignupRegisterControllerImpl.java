@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,23 +59,22 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	@RequestMapping(URI_PATH_REQ)
 	@Override
 	public ModelAndView request(@PathVariable(PATH_VAR) String token,
-			SignupRegisterForm signupRegisterForm, BindingResult binding,
+			@Validated SignupRegisterForm form, BindingResult binding,
 			RedirectAttributes redirectAttributes, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(signupRegisterForm);
+			mav.addObject(form);
 			mav.addObject(PATH_VAR, token);
 			return mav;
 		}
 
-		if (!signupRegisterService.createUser(signupRegisterForm.getEmail(),
-				token, signupRegisterForm.getFirstName(),
-				signupRegisterForm.getLastName(), locale)) {
+		if (!signupRegisterService.createUser(form.getEmail(), token,
+				form.getFirstName(), form.getLastName(), locale)) {
 			rejectOnSignupEntryUnmatch(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(signupRegisterForm);
+			mav.addObject(form);
 			mav.addObject(PATH_VAR, token);
 			return mav;
 		}

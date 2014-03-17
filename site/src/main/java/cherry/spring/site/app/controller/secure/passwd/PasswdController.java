@@ -19,12 +19,12 @@ package cherry.spring.site.app.controller.secure.passwd;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,7 +44,7 @@ public interface PasswdController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid PasswdForm passwdForm, BindingResult binding,
+	ModelAndView request(@Validated PasswdForm form, BindingResult binding,
 			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);

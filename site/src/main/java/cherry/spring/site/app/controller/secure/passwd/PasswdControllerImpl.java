@@ -19,7 +19,6 @@ package cherry.spring.site.app.controller.secure.passwd;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -31,6 +30,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -71,45 +71,44 @@ public class PasswdControllerImpl implements PasswdController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Valid PasswdForm passwdForm,
+	public ModelAndView request(@Validated PasswdForm form,
 			BindingResult binding, RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(passwdForm);
+			mav.addObject(form);
 			return mav;
 		}
 
-		if (!passwdForm.getNewPassword()
-				.equals(passwdForm.getNewPasswordConf())) {
+		if (!form.getNewPassword().equals(form.getNewPasswordConf())) {
 			rejectOnNewPasswordUnmatch(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(passwdForm);
+			mav.addObject(form);
 			return mav;
 		}
 
-		if (!authentication.getName().equals(passwdForm.getLoginId())) {
+		if (!authentication.getName().equals(form.getLoginId())) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(passwdForm);
+			mav.addObject(form);
 			return mav;
 		}
 
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				authentication.getName(), passwdForm.getPassword());
+				authentication.getName(), form.getPassword());
 		try {
 			Authentication auth = authenticationManager.authenticate(token);
 			assert auth != null;
 		} catch (AuthenticationException ex) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(passwdForm);
+			mav.addObject(form);
 			return mav;
 		}
 
-		String password = passwordEncoder.encode(passwdForm.getNewPassword());
+		String password = passwordEncoder.encode(form.getNewPassword());
 		if (!passwdService.updatePassword(authentication.getName(), password)) {
 			if (log.isDebugEnabled()) {
 				log.debug(

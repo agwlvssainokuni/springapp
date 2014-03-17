@@ -19,11 +19,11 @@ package cherry.spring.site.app.controller.signup;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -43,7 +43,7 @@ public interface SignupEntryController {
 			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid SignupEntryForm signupEntryForm,
+	ModelAndView request(@Validated SignupEntryForm form,
 			BindingResult binding, RedirectAttributes redirectAttributes,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request);
