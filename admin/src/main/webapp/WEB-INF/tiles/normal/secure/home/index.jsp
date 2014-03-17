@@ -20,6 +20,8 @@
 			<s:message code="home/index.menu.userman" />
 		</h2>
 		<ul data-role="listview">
+			<li><a href="<c:url value="/secure/userman/search" />"><s:message
+						code="home/index.menu.userman.search" /></a></li>
 			<li><a href="<c:url value="/secure/userman/export" />"><s:message
 						code="home/index.menu.userman.export" /></a></li>
 			<li><a href="<c:url value="/secure/userman/import" />"><s:message

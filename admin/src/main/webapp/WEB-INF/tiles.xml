@@ -25,6 +25,12 @@
 			value="/WEB-INF/tiles/normal/secure/pwdtool/index.jsp" />
 	</definition>
 
+	<definition name="normal/secure/userman/search/index" extends="normal/base_auth">
+		<put-attribute name="name" value="userman/search/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/secure/userman/search/index.jsp" />
+	</definition>
+
 	<definition name="normal/secure/userman/export/index" extends="normal/base_auth">
 		<put-attribute name="name" value="userman/export/index" />
 		<put-attribute name="content"
@@ -41,23 +47,6 @@
 		<put-attribute name="name" value="userman/import/finish" />
 		<put-attribute name="content"
 			value="/WEB-INF/tiles/normal/secure/userman/import/finish.jsp" />
-	</definition>
-
-	<definition name="normal/secure/download/index" extends="normal/base_auth">
-		<put-attribute name="name" value="download/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/download/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/upload/index" extends="normal/base_auth">
-		<put-attribute name="name" value="upload/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/upload/index.jsp" />
-	</definition>
-	<definition name="normal/secure/upload/finish" extends="normal/base_auth">
-		<put-attribute name="name" value="upload/finish" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/upload/finish.jsp" />
 	</definition>
 
 	<definition name="normal/secure/jfreechart/index" extends="normal/base_auth">
