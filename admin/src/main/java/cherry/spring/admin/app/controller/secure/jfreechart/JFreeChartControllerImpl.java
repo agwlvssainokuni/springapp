@@ -27,7 +27,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -39,9 +38,9 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.spring.common.lib.csv.CsvParser;
 import cherry.spring.common.log.Log;
@@ -84,15 +83,14 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Valid JFreeChartForm jFreeChartForm,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView request(@Validated JFreeChartForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(jFreeChartForm);
+			mav.addObject(form);
 			return mav;
 		}
 
@@ -100,11 +98,11 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 
 		try {
 			CategoryDataset dataset;
-			try (InputStream in = jFreeChartForm.getFile().getInputStream()) {
+			try (InputStream in = form.getFile().getInputStream()) {
 				dataset = loadCategoryDataset(in);
 			}
-			JFreeChart chart = ChartFactory.createLineChart(jFreeChartForm
-					.getFile().getOriginalFilename(), xLabel, yLabel, dataset);
+			JFreeChart chart = ChartFactory.createLineChart(form.getFile()
+					.getOriginalFilename(), xLabel, yLabel, dataset);
 			try (OutputStream out = response.getOutputStream()) {
 				ChartUtilities.writeChartAsPNG(out, chart, imageWidth,
 						imageHeight);

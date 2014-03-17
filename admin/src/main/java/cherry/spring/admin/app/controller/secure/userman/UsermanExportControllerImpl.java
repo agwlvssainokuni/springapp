@@ -26,7 +26,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,19 +79,18 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 
 	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Valid UsermanExportForm usermanExportForm,
+	public ModelAndView request(@Validated UsermanExportForm form,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(usermanExportForm);
+			mav.addObject(form);
 			return mav;
 		}
 
-		sendFile(usermanExportForm.getRegisteredFrom(),
-				usermanExportForm.getRegisteredTo(), response);
+		sendFile(form.getRegisteredFrom(), form.getRegisteredTo(), response);
 
 		return null;
 	}

@@ -19,12 +19,12 @@ package cherry.spring.admin.app.controller.secure.userman;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,7 +44,7 @@ public interface UsermanImportController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Valid UsermanImportForm usermanImportForm,
+	ModelAndView request(@Validated UsermanImportForm form,
 			BindingResult binding, RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
