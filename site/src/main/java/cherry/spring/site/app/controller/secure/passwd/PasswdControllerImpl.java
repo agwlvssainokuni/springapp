@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -60,12 +61,17 @@ public class PasswdControllerImpl implements PasswdController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@ModelAttribute(PasswdForm.NAME)
+	@Override
+	public PasswdForm getForm() {
+		return new PasswdForm();
+	}
+
 	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(new PasswdForm());
 		return mav;
 	}
 
@@ -78,21 +84,18 @@ public class PasswdControllerImpl implements PasswdController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 
 		if (!form.getNewPassword().equals(form.getNewPasswordConf())) {
 			rejectOnNewPasswordUnmatch(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 
 		if (!authentication.getName().equals(form.getLoginId())) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 
@@ -104,7 +107,6 @@ public class PasswdControllerImpl implements PasswdController {
 		} catch (AuthenticationException ex) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 

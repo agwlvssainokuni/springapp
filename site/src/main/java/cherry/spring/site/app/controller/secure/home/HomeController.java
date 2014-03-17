@@ -32,7 +32,7 @@ public interface HomeController {
 
 	public static final String URI_PATH = "/secure";
 
-	@RequestMapping
+	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

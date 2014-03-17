@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,6 +39,9 @@ public interface PasswdController {
 	public static final String URI_PATH_REQ = "req";
 
 	public static final String URI_PATH_FIN = "fin";
+
+	@ModelAttribute(PasswdForm.NAME)
+	PasswdForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,

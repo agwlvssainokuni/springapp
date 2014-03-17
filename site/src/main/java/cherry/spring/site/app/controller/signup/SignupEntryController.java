@@ -24,6 +24,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,6 +38,9 @@ public interface SignupEntryController {
 	public static final String URI_PATH_REQ = "req";
 
 	public static final String URI_PATH_FIN = "fin";
+
+	@ModelAttribute(SignupEntryForm.NAME)
+	SignupEntryForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(Locale locale, SitePreference sitePreference,

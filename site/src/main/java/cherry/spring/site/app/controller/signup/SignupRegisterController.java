@@ -24,6 +24,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +41,9 @@ public interface SignupRegisterController {
 	public static final String URI_PATH_FIN = "fin";
 
 	public static final String PATH_VAR = "token";
+
+	@ModelAttribute(SignupRegisterForm.NAME)
+	SignupRegisterForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(@PathVariable(PATH_VAR) String token, Locale locale,

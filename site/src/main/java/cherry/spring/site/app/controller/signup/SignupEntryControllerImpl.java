@@ -25,6 +25,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,12 +45,17 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	@Autowired
 	private SignupEntryService signupEntryService;
 
+	@ModelAttribute(SignupEntryForm.NAME)
+	@Override
+	public SignupEntryForm getForm() {
+		return new SignupEntryForm();
+	}
+
 	@RequestMapping()
 	@Override
 	public ModelAndView index(Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(new SignupEntryForm());
 		return mav;
 	}
 
@@ -62,7 +68,6 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 
@@ -70,7 +75,6 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 				locale)) {
 			rejectOnSignupTooManyRequest(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 
@@ -85,7 +89,6 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addObject(new SignupEntryForm());
 		return mav;
 	}
 
