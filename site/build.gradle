@@ -18,7 +18,7 @@ dependencies {
 	compile "org.apache.tiles:tiles-el:${versionTiles}"
 	compile "javax.servlet:jstl:${versionJstl}"
 	providedCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
-	providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}'
+	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 }
 
 war {
