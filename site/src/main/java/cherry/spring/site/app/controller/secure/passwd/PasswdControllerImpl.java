@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +31,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,10 +65,20 @@ public class PasswdControllerImpl implements PasswdController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	@Qualifier("passwdFormValidator")
+	private Validator passwdFormValidator;
+
 	@ModelAttribute(PasswdForm.NAME)
 	@Override
 	public PasswdForm getForm() {
 		return new PasswdForm();
+	}
+
+	@InitBinder(PasswdForm.NAME)
+	@Override
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(passwdFormValidator);
 	}
 
 	@RequestMapping()
@@ -83,12 +97,6 @@ public class PasswdControllerImpl implements PasswdController {
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			return mav;
-		}
-
-		if (!form.getNewPassword().equals(form.getNewPasswordConf())) {
-			rejectOnNewPasswordUnmatch(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
@@ -132,13 +140,6 @@ public class PasswdControllerImpl implements PasswdController {
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		return mav;
-	}
-
-	private void rejectOnNewPasswordUnmatch(BindingResult binding) {
-		binding.reject(LogicError.NewPasswordUnmatch.name(),
-				new Object[] { new DefaultMessageSourceResolvable(
-						PasswdForm.PREFIX + PasswdForm.NEW_PASSWORD) },
-				LogicError.NewPasswordUnmatch.name());
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
