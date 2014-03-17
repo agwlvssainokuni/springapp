@@ -39,6 +39,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -72,12 +73,17 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 	@Value("${admin.app.jfreechart.imageHeight}")
 	private Integer imageHeight;
 
+	@ModelAttribute(JFreeChartForm.NAME)
+	@Override
+	public JFreeChartForm getForm() {
+		return new JFreeChartForm();
+	}
+
 	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(new JFreeChartForm());
 		return mav;
 	}
 
@@ -90,7 +96,6 @@ public class JFreeChartControllerImpl implements JFreeChartController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 

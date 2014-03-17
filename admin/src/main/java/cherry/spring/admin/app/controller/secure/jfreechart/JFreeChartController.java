@@ -26,6 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +37,9 @@ public interface JFreeChartController {
 	public static final String URI_PATH = "/secure/jfreechart";
 
 	public static final String URI_PATH_REQ = "req";
+
+	@ModelAttribute(JFreeChartForm.NAME)
+	JFreeChartForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,

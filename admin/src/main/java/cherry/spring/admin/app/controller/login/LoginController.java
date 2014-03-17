@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +32,10 @@ public interface LoginController {
 
 	public static final String URI_PATH = "/login";
 
-	@RequestMapping
+	@ModelAttribute(LoginForm.NAME)
+	LoginForm getForm();
+
+	@RequestMapping()
 	ModelAndView index(Locale locale, SitePreference sitePreference,
 			HttpServletRequest request);
 

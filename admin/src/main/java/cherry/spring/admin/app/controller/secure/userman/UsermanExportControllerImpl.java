@@ -35,6 +35,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,12 +69,17 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 	@Autowired
 	private DateTimeHelper dateTimeHelper;
 
+	@ModelAttribute(UsermanExportForm.NAME)
+	@Override
+	public UsermanExportForm getForm() {
+		return new UsermanExportForm();
+	}
+
 	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(new UsermanExportForm());
 		return mav;
 	}
 
@@ -86,7 +92,6 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(form);
 			return mav;
 		}
 

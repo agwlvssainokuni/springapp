@@ -32,7 +32,7 @@ public class HomeControllerImpl implements HomeController {
 
 	public static final String VIEW_PATH = "secure/home/index";
 
-	@RequestMapping
+	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
