@@ -31,9 +31,6 @@
 
 	<tx:annotation-driven />
 
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${common.mail.host}" />
 		<property name="port" value="${common.mail.port}" />

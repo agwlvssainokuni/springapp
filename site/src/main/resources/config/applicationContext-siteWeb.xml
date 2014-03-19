@@ -48,6 +48,9 @@
 			class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 	</mvc:interceptors>
 
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
