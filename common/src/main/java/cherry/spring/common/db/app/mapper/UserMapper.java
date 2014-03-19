@@ -16,9 +16,15 @@
 
 package cherry.spring.common.db.app.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import cherry.spring.common.db.gen.dto.Users;
+
 public interface UserMapper {
+
+	List<Users> searchUsers(UserCondition userCondition);
 
 	int updatePassword(@Param("mailAddr") String mailAddr,
 			@Param("password") String password);

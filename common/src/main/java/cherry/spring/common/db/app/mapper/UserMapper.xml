@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cherry.spring.common.db.app.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.Users">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="MAIL_ADDR" jdbcType="VARCHAR" property="mailAddr" />
+		<result column="PASSWORD" jdbcType="CHAR" property="password" />
+		<result column="REGISTERED_AT" jdbcType="TIMESTAMP" property="registeredAt" />
+		<result column="FIRST_NAME" jdbcType="VARCHAR" property="firstName" />
+		<result column="LAST_NAME" jdbcType="VARCHAR" property="lastName" />
+		<result column="UPDATED_AT" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="DELETED_FLG" jdbcType="INTEGER" property="deletedFlg" />
+	</resultMap>
+	<select id="searchUsers" parameterType="cherry.spring.common.db.app.mapper.UserCondition"
+		resultMap="BaseResultMap">
+		SELECT
+			A.id,
+			A.mail_addr,
+			A.registered_at,
+			A.first_name,
+			A.last_name
+		FROM
+			users AS A
+		WHERE
+		<if test="mailAddr != null">
+			A.mail_addr LIKE #{mailAddr} {escape '\'} AND
+		</if>
+		<if test="registeredFrom != null">
+			A.registered_at &gt;= #{registeredFrom} AND
+		</if>
+		<if test="registeredTo != null">
+			A.registered_at &lt; #{registeredTo} AND
+		</if>
+		<if test="firstName != null">
+			A.first_name LIKE #{firstName} {escape '\'} AND
+		</if>
+		<if test="lastName != null">
+			A.last_name LIKE #{lastName} {escape '\'} AND
+		</if>
+		A.deleted_flg = 0
+	</select>
 	<update id="updatePassword">
 		UPDATE users
 		SET
