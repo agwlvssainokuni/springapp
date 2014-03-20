@@ -51,3 +51,29 @@
 	<input type="submit" name="submit"
 		value="<s:message code="userman/search/index.searchButton" />" />
 </f:form>
+<c:if test="${result != null}">
+	<table id="usermanSearchList" data-role="table"
+		class="ui-body-d ui-shadow table-stripe ui-responsive">
+		<thead>
+			<tr class="ui-bar-d">
+				<th>#</th>
+				<th><s:message code="userman/search/index.column.mailAddr" /></th>
+				<th><s:message code="userman/search/index.column.lastName" /></th>
+				<th><s:message code="userman/search/index.column.firstName" /></th>
+				<th><s:message code="userman/search/index.column.registeredAt" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="item" items="${result.usersList}" varStatus="status">
+				<tr>
+					<td><c:out
+							value="${result.pageSet.current.from + status.count}" /></td>
+					<td><c:out value="${item.mailAddr}" /></td>
+					<td><c:out value="${item.lastName}" /></td>
+					<td><c:out value="${item.firstName}" /></td>
+					<td><c:out value="${item.registeredAt}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</c:if>

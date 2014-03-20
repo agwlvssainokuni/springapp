@@ -74,7 +74,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		if (StringUtils.isBlank(string)) {
 			return null;
 		}
-		return string.replaceAll("([%_\\])", "\\$1") + "%";
+		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
 	}
 
 	private Date dateFromCond(String string) {

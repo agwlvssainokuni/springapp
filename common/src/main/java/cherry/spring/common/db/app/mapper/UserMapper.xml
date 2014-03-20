@@ -58,7 +58,7 @@
 			AND
 			deleted_flg = 0
 	</update>
-	<select id="countUsers">
+	<select id="countUsers" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
