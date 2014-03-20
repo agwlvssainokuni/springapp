@@ -111,7 +111,7 @@ public class UserMapperTest {
 
 			UserMapper mapper = getBean(UserMapper.class);
 			UserCondition cond = new UserCondition();
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
@@ -136,7 +136,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -167,7 +167,7 @@ public class UserMapperTest {
 			cond.setRegisteredTo(DateTime.now().toDate());
 			cond.setFirstName("%");
 			cond.setLastName("%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -194,7 +194,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setMailAddr("user%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -221,7 +221,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setMailAddr("user1%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
@@ -248,7 +248,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setMailAddr("users%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
@@ -274,7 +274,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredFrom(DateTime.now().minusMinutes(1).toDate());
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -301,7 +301,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredFrom(DateTime.now().plusMinutes(1).toDate());
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
@@ -327,7 +327,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredTo(DateTime.now().plusMinutes(1).toDate());
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -354,7 +354,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredTo(DateTime.now().minusMinutes(1).toDate());
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
@@ -380,7 +380,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("first%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -407,7 +407,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("first1%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
@@ -434,7 +434,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("firsts%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
@@ -460,7 +460,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("last%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
@@ -487,7 +487,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("last1%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
@@ -514,7 +514,7 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("lasts%");
-			List<Users> list = mapper.searchUsers(cond);
+			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 

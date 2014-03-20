@@ -24,9 +24,9 @@ import cherry.spring.common.db.gen.dto.Users;
 
 public interface UserMapper {
 
-	int createUser(Users entity);
+	int createUser(@Param("ent") Users entity);
 
-	int updateUser(@Param("id") Integer id, Users entity);
+	int updateUser(@Param("id") Integer id, @Param("ent") Users entity);
 
 	int updatePassword(@Param("id") Integer id,
 			@Param("password") String password);
@@ -34,6 +34,9 @@ public interface UserMapper {
 	int changePassword(@Param("mailAddr") String mailAddr,
 			@Param("password") String password);
 
-	List<Users> searchUsers(UserCondition userCondition);
+	long countUsers(@Param("cond") UserCondition userCondition);
+
+	List<Users> searchUsers(@Param("cond") UserCondition userCondition,
+			@Param("limit") Integer limit, @Param("offset") Integer offset);
 
 }

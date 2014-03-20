@@ -13,7 +13,7 @@
 		<result column="DELETED_FLG" jdbcType="INTEGER" property="deletedFlg" />
 	</resultMap>
 	<insert id="createUser" useGeneratedKeys="true" keyColumn="id"
-		keyProperty="id">
+		keyProperty="ent.id">
 		INSERT INTO users (
 			mail_addr,
 			password,
@@ -21,17 +21,17 @@
 			last_name
 		)
 		VALUES (
-			#{mailAddr,jdbcType=VARCHAR},
-			#{password,jdbcType=VARCHAR},
-			#{firstName,jdbcType=VARCHAR},
-			#{lastName,jdbcType=VARCHAR}
+			#{ent.mailAddr,jdbcType=VARCHAR},
+			#{ent.password,jdbcType=VARCHAR},
+			#{ent.firstName,jdbcType=VARCHAR},
+			#{ent.lastName,jdbcType=VARCHAR}
 		)
 	</insert>
 	<update id="updateUser">
 		UPDATE users
 		SET
-			first_name = #{firstName,jdbcType=VARCHAR},
-			last_name = #{lastName,jdbcType=VARCHAR},
+			first_name = #{ent.firstName,jdbcType=VARCHAR},
+			last_name = #{ent.lastName,jdbcType=VARCHAR},
 			updated_at = CURRENT_TIMESTAMP
 		WHERE
 			id = #{id,jdbcType=INTEGER}
@@ -58,8 +58,30 @@
 			AND
 			deleted_flg = 0
 	</update>
-	<select id="searchUsers" parameterType="cherry.spring.common.db.app.mapper.UserCondition"
-		resultMap="BaseResultMap">
+	<select id="countUsers">
+		SELECT
+			COUNT(*)
+		FROM
+			users AS A
+		WHERE
+		<if test="cond.mailAddr != null">
+			A.mail_addr LIKE #{cond.mailAddr} {escape '\'} AND
+		</if>
+		<if test="cond.registeredFrom != null">
+			A.registered_at &gt;= #{cond.registeredFrom} AND
+		</if>
+		<if test="cond.registeredTo != null">
+			A.registered_at &lt; #{cond.registeredTo} AND
+		</if>
+		<if test="cond.firstName != null">
+			A.first_name LIKE #{cond.firstName} {escape '\'} AND
+		</if>
+		<if test="cond.lastName != null">
+			A.last_name LIKE #{cond.lastName} {escape '\'} AND
+		</if>
+		A.deleted_flg = 0
+	</select>
+	<select id="searchUsers" resultMap="BaseResultMap">
 		SELECT
 			A.id,
 			A.mail_addr,
@@ -69,21 +91,22 @@
 		FROM
 			users AS A
 		WHERE
-		<if test="mailAddr != null">
-			A.mail_addr LIKE #{mailAddr} {escape '\'} AND
+		<if test="cond.mailAddr != null">
+			A.mail_addr LIKE #{cond.mailAddr} {escape '\'} AND
 		</if>
-		<if test="registeredFrom != null">
-			A.registered_at &gt;= #{registeredFrom} AND
+		<if test="cond.registeredFrom != null">
+			A.registered_at &gt;= #{cond.registeredFrom} AND
 		</if>
-		<if test="registeredTo != null">
-			A.registered_at &lt; #{registeredTo} AND
+		<if test="cond.registeredTo != null">
+			A.registered_at &lt; #{cond.registeredTo} AND
 		</if>
-		<if test="firstName != null">
-			A.first_name LIKE #{firstName} {escape '\'} AND
+		<if test="cond.firstName != null">
+			A.first_name LIKE #{cond.firstName} {escape '\'} AND
 		</if>
-		<if test="lastName != null">
-			A.last_name LIKE #{lastName} {escape '\'} AND
+		<if test="cond.lastName != null">
+			A.last_name LIKE #{cond.lastName} {escape '\'} AND
 		</if>
 		A.deleted_flg = 0
+		LIMIT #{limit,jdbcType=INTEGER} OFFSET #{offset,jdbcType=INTEGER}
 	</select>
 </mapper>
