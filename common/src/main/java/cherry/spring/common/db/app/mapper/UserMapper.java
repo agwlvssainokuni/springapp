@@ -26,6 +26,11 @@ public interface UserMapper {
 
 	int createUser(Users entity);
 
+	int updateUser(@Param("id") Integer id, Users entity);
+
+	int updatePassword(@Param("id") Integer id,
+			@Param("password") String password);
+
 	int changePassword(@Param("mailAddr") String mailAddr,
 			@Param("password") String password);
 

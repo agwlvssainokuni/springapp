@@ -12,7 +12,8 @@
 		<result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt" />
 		<result column="DELETED_FLG" jdbcType="INTEGER" property="deletedFlg" />
 	</resultMap>
-	<insert id="createUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+	<insert id="createUser" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id">
 		INSERT INTO users (
 			mail_addr,
 			password,
@@ -26,10 +27,32 @@
 			#{lastName,jdbcType=VARCHAR}
 		)
 	</insert>
+	<update id="updateUser">
+		UPDATE users
+		SET
+			first_name = #{firstName,jdbcType=VARCHAR},
+			last_name = #{lastName,jdbcType=VARCHAR},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+			AND
+			deleted_flg = 0
+	</update>
+	<update id="updatePassword">
+		UPDATE users
+		SET
+			password = #{password,jdbcType=VARCHAR},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+			AND
+			deleted_flg = 0
+	</update>
 	<update id="changePassword">
 		UPDATE users
 		SET
-			password = #{password,jdbcType=VARCHAR}
+			password = #{password,jdbcType=VARCHAR},
+			updated_at = CURRENT_TIMESTAMP
 		WHERE
 			mail_addr = #{mailAddr,jdbcType=VARCHAR}
 			AND
