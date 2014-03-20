@@ -30,8 +30,8 @@ public class PasswdServiceImpl implements PasswdService {
 
 	@Transactional
 	@Override
-	public boolean updatePassword(String mailAddr, String password) {
-		int count = userMapper.updatePassword(mailAddr, password);
+	public boolean changePassword(String mailAddr, String password) {
+		int count = userMapper.changePassword(mailAddr, password);
 		return count > 0;
 	}
 

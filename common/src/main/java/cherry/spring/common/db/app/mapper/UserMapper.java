@@ -26,7 +26,7 @@ public interface UserMapper {
 
 	int createUser(Users entity);
 
-	int updatePassword(@Param("mailAddr") String mailAddr,
+	int changePassword(@Param("mailAddr") String mailAddr,
 			@Param("password") String password);
 
 	List<Users> searchUsers(UserCondition userCondition);

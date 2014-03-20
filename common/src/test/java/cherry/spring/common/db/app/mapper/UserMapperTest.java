@@ -60,7 +60,7 @@ public class UserMapperTest {
 	}
 
 	@Test
-	public void testUpdatePassword00() {
+	public void testChangePassword00() {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
@@ -68,7 +68,7 @@ public class UserMapperTest {
 			UserMapper mapper = getBean(UserMapper.class);
 
 			assertEquals(0,
-					mapper.updatePassword(mailAddr, encode("newPassword")));
+					mapper.changePassword(mailAddr, encode("newPassword")));
 
 		} finally {
 			for (Integer id : ids) {
@@ -78,7 +78,7 @@ public class UserMapperTest {
 	}
 
 	@Test
-	public void testUpdatePassword01() {
+	public void testChangePassword01() {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
@@ -90,7 +90,7 @@ public class UserMapperTest {
 			ids.add(entity.getId());
 
 			assertEquals(1,
-					mapper.updatePassword(mailAddr, encode("newPassword")));
+					mapper.changePassword(mailAddr, encode("newPassword")));
 
 			Users user = getBean(UsersMapper.class).selectByPrimaryKey(
 					entity.getId());

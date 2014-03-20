@@ -119,7 +119,7 @@ public class PasswdControllerImpl implements PasswdController {
 		}
 
 		String password = passwordEncoder.encode(form.getNewPassword());
-		if (!passwdService.updatePassword(authentication.getName(), password)) {
+		if (!passwdService.changePassword(authentication.getName(), password)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
 						"Password has not been updated: mailAddr={0}, password={1}",

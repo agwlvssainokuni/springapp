@@ -26,7 +26,7 @@
 			#{lastName,jdbcType=VARCHAR}
 		)
 	</insert>
-	<update id="updatePassword">
+	<update id="changePassword">
 		UPDATE users
 		SET
 			password = #{password,jdbcType=VARCHAR}
