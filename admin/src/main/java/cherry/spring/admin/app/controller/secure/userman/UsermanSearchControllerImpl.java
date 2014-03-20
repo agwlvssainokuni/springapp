@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.spring.common.lib.pager.Paginator;
+import cherry.spring.admin.app.service.secure.userman.UsermanSearchService;
 
 @Controller
 @RequestMapping(UsermanSearchController.URI_PATH)
@@ -44,7 +44,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	private int defaultPageSize;
 
 	@Autowired
-	private Paginator paginator;
+	private UsermanSearchService usermanSearchService;
 
 	@ModelAttribute(UsermanSearchForm.NAME)
 	@Override
@@ -75,10 +75,11 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 			return mav;
 		}
 
-		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
+		UsermanSearchService.Result result = usermanSearchService.searchUsers(
+				form, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(result);
 		return mav;
 	}
-
 }

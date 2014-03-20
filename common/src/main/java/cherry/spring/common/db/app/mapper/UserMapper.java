@@ -34,7 +34,7 @@ public interface UserMapper {
 	int changePassword(@Param("mailAddr") String mailAddr,
 			@Param("password") String password);
 
-	long countUsers(@Param("cond") UserCondition userCondition);
+	int countUsers(@Param("cond") UserCondition userCondition);
 
 	List<Users> searchUsers(@Param("cond") UserCondition userCondition,
 			@Param("limit") Integer limit, @Param("offset") Integer offset);
