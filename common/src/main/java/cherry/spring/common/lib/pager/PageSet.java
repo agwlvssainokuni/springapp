@@ -19,6 +19,9 @@ package cherry.spring.common.lib.pager;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * ページネーション機能において、画面上に表示するページリンクの全体を表す。
  */
@@ -44,6 +47,12 @@ public class PageSet implements Serializable {
 
 	/** 画面上に表示するページリンク。 */
 	private List<Page> range = null;
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public Page getCurrent() {
 		return current;

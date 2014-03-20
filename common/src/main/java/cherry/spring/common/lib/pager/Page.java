@@ -18,6 +18,9 @@ package cherry.spring.common.lib.pager;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * ページネーション機能において、個々のページの情報を表す。
  */
@@ -37,6 +40,12 @@ public class Page implements Serializable {
 
 	/** 当該ページの終了項目番号。 */
 	private int to = 0;
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public int getNo() {
 		return no;
