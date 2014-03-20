@@ -28,9 +28,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import cherry.spring.common.db.gen.dto.SignupRequests;
-import cherry.spring.common.db.gen.dto.Users;
 import cherry.spring.common.db.gen.mapper.SignupRequestsMapper;
-import cherry.spring.common.db.gen.mapper.UsersMapper;
 
 public class SignupRequestMapperTest {
 
@@ -80,19 +78,6 @@ public class SignupRequestMapperTest {
 		assertTrue(mapper.validateMailAddr(mailAddr, 1, 5, 5));
 		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
 		assertFalse(mapper.validateMailAddr(mailAddr, 1, 5, 5));
-	}
-
-	@Test
-	public void testCreateUser00() {
-		String mailAddr = "user00@example.com";
-		SignupRequestMapper mapper = getBean(SignupRequestMapper.class);
-		Users entity = newUser(mailAddr, "password", "firstName", "lastName");
-		assertNull(entity.getId());
-		assertEquals(1, mapper.createUser(entity));
-		assertNotNull(entity.getId());
-
-		assertNotNull(getBean(UsersMapper.class).selectByPrimaryKey(
-				entity.getId()));
 	}
 
 	@Test
@@ -162,16 +147,6 @@ public class SignupRequestMapperTest {
 		SignupRequests entity = new SignupRequests();
 		entity.setMailAddr(mailAddr);
 		entity.setToken(UUID.randomUUID().toString());
-		return entity;
-	}
-
-	private Users newUser(String mailAddr, String password, String firstName,
-			String lastName) {
-		Users entity = new Users();
-		entity.setMailAddr(mailAddr);
-		entity.setPassword(password);
-		entity.setFirstName(firstName);
-		entity.setLastName(lastName);
 		return entity;
 	}
 

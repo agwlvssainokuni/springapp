@@ -52,18 +52,4 @@
 					B.deleted_flg = 0
 			)
 	</select>
-	<insert id="createUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		INSERT INTO users (
-			mail_addr,
-			password,
-			first_name,
-			last_name
-		)
-		VALUES (
-			#{mailAddr,jdbcType=VARCHAR},
-			#{password,jdbcType=VARCHAR},
-			#{firstName,jdbcType=VARCHAR},
-			#{lastName,jdbcType=VARCHAR}
-		)
-	</insert>
 </mapper>

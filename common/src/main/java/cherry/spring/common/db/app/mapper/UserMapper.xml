@@ -12,6 +12,29 @@
 		<result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt" />
 		<result column="DELETED_FLG" jdbcType="INTEGER" property="deletedFlg" />
 	</resultMap>
+	<insert id="createUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO users (
+			mail_addr,
+			password,
+			first_name,
+			last_name
+		)
+		VALUES (
+			#{mailAddr,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{firstName,jdbcType=VARCHAR},
+			#{lastName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="updatePassword">
+		UPDATE users
+		SET
+			password = #{password,jdbcType=VARCHAR}
+		WHERE
+			mail_addr = #{mailAddr,jdbcType=VARCHAR}
+			AND
+			deleted_flg = 0
+	</update>
 	<select id="searchUsers" parameterType="cherry.spring.common.db.app.mapper.UserCondition"
 		resultMap="BaseResultMap">
 		SELECT
@@ -40,13 +63,4 @@
 		</if>
 		A.deleted_flg = 0
 	</select>
-	<update id="updatePassword">
-		UPDATE users
-		SET
-			password = #{password,jdbcType=VARCHAR}
-		WHERE
-			mail_addr = #{mailAddr,jdbcType=VARCHAR}
-			AND
-			deleted_flg = 0
-	</update>
 </mapper>

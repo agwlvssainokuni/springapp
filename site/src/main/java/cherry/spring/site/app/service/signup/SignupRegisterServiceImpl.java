@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
 import cherry.spring.common.db.app.mapper.SignupRequestMapper;
+import cherry.spring.common.db.app.mapper.UserMapper;
 import cherry.spring.common.db.gen.dto.Users;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
@@ -41,6 +42,9 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 	@Autowired
 	private SignupRequestMapper signupRequestMapper;
+
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -81,7 +85,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		entity.setPassword(password);
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
-		int count = signupRequestMapper.createUser(entity);
+		int count = userMapper.createUser(entity);
 		assert count == 1;
 		if (log.isDebugEnabled()) {
 			log.debug(
