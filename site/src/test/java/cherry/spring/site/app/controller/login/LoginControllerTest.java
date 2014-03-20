@@ -18,7 +18,6 @@ package cherry.spring.site.app.controller.login;
 
 import static cherry.spring.site.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -36,10 +35,8 @@ public class LoginControllerTest {
 		assertNotNull(mav);
 		assertEquals(LoginControllerImpl.VIEW_PATH, mav.getViewName());
 		assertNull(mav.getView());
-		assertFalse(mav.getModelMap().isEmpty());
-		Object form = mav.getModelMap().get("loginForm");
-		assertNotNull(form);
-		assertTrue(form instanceof LoginForm);
+		assertTrue(mav.getModelMap().isEmpty());
+		assertNotNull(loginController.getForm());
 	}
 
 }

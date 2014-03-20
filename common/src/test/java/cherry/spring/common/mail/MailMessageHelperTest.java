@@ -44,7 +44,8 @@ public class MailMessageHelperTest {
 		assertEquals("cc@test.com", msg.getCc()[0]);
 		assertEquals("bcc@test.com", msg.getBcc()[0]);
 		assertEquals("Signup entry", msg.getSubject());
-		assertEquals("to@test.com, Go to http://site.test.com/signup/token",
+		assertEquals(
+				"to@test.com, Signup URI: http://site.test.com/signup/token",
 				msg.getText());
 	}
 
@@ -60,7 +61,7 @@ public class MailMessageHelperTest {
 		assertEquals("cc@test.com", msg.getCc()[0]);
 		assertEquals("bcc@test.com", msg.getBcc()[0]);
 		assertEquals("サインアップ登録", msg.getSubject());
-		assertEquals("to@test.com, 受け付けました。", msg.getText());
+		assertEquals("to@test.com, パスワード: ${model.password}", msg.getText());
 	}
 
 	public static class TestModel extends MailModel {
