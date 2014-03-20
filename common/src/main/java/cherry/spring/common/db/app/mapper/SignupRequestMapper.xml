@@ -18,14 +18,15 @@
 			AND
 			A.deleted_flg = 0
 	</select>
-	<insert id="createSignupRequest" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+	<insert id="createSignupRequest" useGeneratedKeys="true"
+		keyColumn="id" keyProperty="ent.id">
 		INSERT INTO signup_requests (
 			mail_addr,
 			token
 		)
 		VALUES (
-			#{mailAddr,jdbcType=VARCHAR},
-			#{token,jdbcType=VARCHAR}
+			#{ent.mailAddr,jdbcType=VARCHAR},
+			#{ent.token,jdbcType=VARCHAR}
 		)
 	</insert>
 	<select id="validateToken" resultType="boolean">

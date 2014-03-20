@@ -26,7 +26,7 @@ public interface SignupRequestMapper {
 			@Param("intervalInSec") int intervalInSec,
 			@Param("rangeInSec") int rangeInSec, @Param("numOfReq") int numOfReq);
 
-	int createSignupRequest(SignupRequests entity);
+	int createSignupRequest(@Param("ent") SignupRequests entity);
 
 	boolean validateToken(@Param("mailAddr") String mailAddr,
 			@Param("token") String token, @Param("validInSec") int validInSec);
