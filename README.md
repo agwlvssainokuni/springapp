@@ -3,7 +3,7 @@ SpringApp
 
 プロジェクト概要
 ----------------
-Spring framework、Gradle、Logbackをどう使っていくかを、プロジェクトのテンプレートの形でまとめます。
+Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、プロジェクトのテンプレートの形でまとめます。
 
 検証課題
 --------
@@ -25,13 +25,20 @@ Spring framework、Gradle、Logbackをどう使っていくかを、プロジェ
 		*	ロケール受渡し
 	*	Spring MVC
 		*	実装パターン
-			*	@Controller, @RequestMapping
+			*	@Controller, @RequestMapping, @ModelAttribute
 			*	URI、ビュー名の定数定義
 			*	アクションのメソッドの引数の典型的実装パターン
+			*	ページネーション
 		*	ビュー
 			*	JSTL
 			*	Apache Tiles 3
 			*	Jackson 2
+		*	バリデーション
+			*	Spring Validator
+				*	@InitBinder
+			*	Bean Validation (JSR-303)
+				*	カスタムバリデーション
+				*	@ReportAsSingleViolation
 		*	ファイルアップロード
 		*	ファイルダウンロード
 		*	ハンドラインタセプタ
@@ -57,6 +64,15 @@ Spring framework、Gradle、Logbackをどう使っていくかを、プロジェ
 		*	デリバリ向けリソースファイル生成
 		*	バッチ起動スクリプト生成
 		*	デリバリ向けアーカイブ作成
+*	MyBatis
+	*	SqlMapper (XML)
+		*	ダイナミックSQL
+	*	Spring framework統合
+		*	org.mybatis.spring.SqlSessionFactoryBean
+	*	MyBatis Generator
+		*	ANTタスクをGradleから呼び出し
+			*	org.mybatis.generator.ant.GeneratorAntTask
+		*	DBをFlywayでセットアップ
 *	Logback
 	*	コンソール出力
 	*	ファイル出力
