@@ -77,18 +77,13 @@
 		<c:otherwise>
 			<div data-role="navbar">
 				<ul>
-					<li><a
-						<c:if test="${result.pageSet.current == result.pageSet.prev}">class="ui-disabled"</c:if>
-						href="#"
-						onclick="JavaScript:searchUsers(${result.pageSet.prev.no})"> <s:message
-								code="userman/search/index.paginate.prev" />
-					</a></li>
-					<li><a
-						<c:if test="${result.pageSet.current == result.pageSet.next}">class="ui-disabled"</c:if>
-						href="#"
-						onclick="JavaScript:searchUsers(${result.pageSet.next.no})"> <s:message
-								code="userman/search/index.paginate.next" />
-					</a></li>
+					<c:set var="prevUiDisabled">
+						<c:if test="${result.pageSet.current == result.pageSet.prev}">ui-disabled</c:if>
+					</c:set>
+					<li><a href="#"
+						class="ui-icon-arrow-u ui-btn-icon-top ${prevUiDisabled}"
+						onclick="JavaScript:searchUsers(${result.pageSet.prev.no})"><s:message
+								code="userman/search/index.paginate.prev" /></a></li>
 				</ul>
 			</div>
 			<table id="usermanSearchList" data-role="table"
@@ -117,6 +112,17 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<div data-role="navbar">
+				<ul>
+					<c:set var="nextUiDisabled">
+						<c:if test="${result.pageSet.current == result.pageSet.next}">ui-disabled</c:if>
+					</c:set>
+					<li><a href="#"
+						class="ui-icon-arrow-d ui-btn-icon-top ${nextUiDisabled}"
+						onclick="JavaScript:searchUsers(${result.pageSet.next.no})"><s:message
+								code="userman/search/index.paginate.next" /></a></li>
+				</ul>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </c:if>
