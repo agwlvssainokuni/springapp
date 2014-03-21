@@ -45,6 +45,9 @@ public class TraceInterceptor implements MethodInterceptor {
 	/** 引数・返却値をログ出力する際の文字列長上限. */
 	private int objectLengthLimit;
 
+	/** トレースログに出力するクラス名 (インタフェース名) を抽出する条件. */
+	private String[] packagePrefix;
+
 	/**
 	 * 配列をログ出力する際のサイズ上限 を設定する.
 	 * 
@@ -63,6 +66,16 @@ public class TraceInterceptor implements MethodInterceptor {
 	 */
 	public void setObjectLengthLimit(int objectLengthLimit) {
 		this.objectLengthLimit = objectLengthLimit;
+	}
+
+	/**
+	 * トレースログに出力するクラス名 (インタフェース名) を抽出する条件 を設定する.
+	 * 
+	 * @param packagePrefix
+	 *            トレースログに出力するクラス名 (インタフェース名) を抽出する条件
+	 */
+	public void setPackagePrefix(String... packagePrefix) {
+		this.packagePrefix = packagePrefix;
 	}
 
 	/**
@@ -207,9 +220,35 @@ public class TraceInterceptor implements MethodInterceptor {
 	 *            メソッド呼出
 	 */
 	private void appendMethodName(StringBuilder builder, MethodInvocation inv) {
-		builder.append(inv.getThis().getClass().getName());
+		Class<?> klass = inv.getThis().getClass();
+		String name = getClassName(klass, packagePrefix);
+		builder.append(name == null ? klass.getName() : name);
 		builder.append("#");
 		builder.append(inv.getMethod().getName());
+	}
+
+	/**
+	 * トレースログに出力するクラス名 (インタフェース名) を決定する。
+	 * 
+	 * @param klass
+	 *            クラスオブジェクト。
+	 * @param packagePrefix
+	 *            抽出条件 (パッケージ名)。
+	 * @return クラス名 (インタフェース名)。
+	 */
+	private String getClassName(Class<?> klass, String[] packagePrefix) {
+		for (String pref : packagePrefix) {
+			if (klass.getName().startsWith(pref)) {
+				return klass.getName();
+			}
+		}
+		for (Class<?> iface : klass.getInterfaces()) {
+			String name = getClassName(iface, packagePrefix);
+			if (name != null) {
+				return name;
+			}
+		}
+		return null;
 	}
 
 	/**
