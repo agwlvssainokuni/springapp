@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="userman/import/index.message.0" />
+	<s:message code="secure/userman/import/index.message.0" />
 </h1>
 <s:hasBindErrors name="usermanImportForm">
 	<div class="error">
@@ -24,5 +24,5 @@
 		<input id="file" name="file" type="file">
 	</div>
 	<input type="submit" name="submit"
-		value="<s:message code="userman/import/index.importButton" />" />
+		value="<s:message code="secure/userman/import/index.importButton" />" />
 </f:form>

@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="userman/search/index.message.0" />
+	<s:message code="secure/userman/search/index.message.0" />
 </h1>
 <s:hasBindErrors name="usermanSearchForm">
 	<div class="error">
@@ -23,7 +23,7 @@
 </s:hasBindErrors>
 <c:if test="${result != null && result.usersList.isEmpty()}">
 	<div class="error">
-		<s:message code="userman/search/index.message.2" />
+		<s:message code="secure/userman/search/index.message.2" />
 	</div>
 </c:if>
 <c:set var="resultIsNotEmpty">
@@ -35,7 +35,7 @@
 </c:set>
 <div data-role="collapsible" data-collapsed="${resultIsNotEmpty}">
 	<h4>
-		<s:message code="userman/search/index.message.1" />
+		<s:message code="secure/userman/search/index.message.1" />
 	</h4>
 	<f:form servletRelativeAction="/secure/userman/search/req"
 		method="POST" modelAttribute="usermanSearchForm">
@@ -66,7 +66,7 @@
 		</div>
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
 		<input type="submit" name="submit"
-			value="<s:message code="userman/search/index.searchButton" />" />
+			value="<s:message code="secure/userman/search/index.searchButton" />" />
 	</f:form>
 </div>
 <c:if test="${resultIsNotEmpty}">
@@ -97,7 +97,7 @@
 			<li><a href="#"
 				class="ui-icon-arrow-u ui-btn-icon-top ${prevUiDisabled}"
 				onclick="JavaScript:searchUsers(${result.pageSet.prev.no});"><s:message
-						code="userman/search/index.paginate.prev" /></a></li>
+						code="secure/userman/search/index.paginate.prev" /></a></li>
 		</ul>
 	</div>
 	<table id="usermanSearchList" data-role="table"
@@ -105,10 +105,14 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th><s:message code="userman/search/index.column.mailAddr" /></th>
-				<th><s:message code="userman/search/index.column.lastName" /></th>
-				<th><s:message code="userman/search/index.column.firstName" /></th>
-				<th><s:message code="userman/search/index.column.registeredAt" /></th>
+				<th><s:message
+						code="secure/userman/search/index.column.mailAddr" /></th>
+				<th><s:message
+						code="secure/userman/search/index.column.lastName" /></th>
+				<th><s:message
+						code="secure/userman/search/index.column.firstName" /></th>
+				<th><s:message
+						code="secure/userman/search/index.column.registeredAt" /></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -132,7 +136,7 @@
 			<li><a href="#"
 				class="ui-icon-arrow-d ui-btn-icon-top ${nextUiDisabled}"
 				onclick="JavaScript:searchUsers(${result.pageSet.next.no});"><s:message
-						code="userman/search/index.paginate.next" /></a></li>
+						code="secure/userman/search/index.paginate.next" /></a></li>
 		</ul>
 	</div>
 </c:if>

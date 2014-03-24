@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="userman/export/index.message.0" />
+	<s:message code="secure/userman/export/index.message.0" />
 </h1>
 <s:hasBindErrors name="usermanExportForm">
 	<div class="error">
@@ -31,5 +31,5 @@
 		<f:input path="registeredTo" cssErrorClass="error" />
 	</div>
 	<input type="submit" name="submit"
-		value="<s:message code="userman/export/index.exportButton" />" />
+		value="<s:message code="secure/userman/export/index.exportButton" />" />
 </f:form>

@@ -13,46 +13,10 @@
 			value="/WEB-INF/tiles/normal/login/index.jsp" />
 	</definition>
 
-	<definition name="normal/secure/home/index" extends="normal/base_auth">
-		<put-attribute name="name" value="home/index" />
+	<definition name="normal/secure/**" extends="normal/base_auth">
+		<put-attribute name="name" value="secure/{1}" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/home/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/pwdtool/index" extends="normal/base_auth">
-		<put-attribute name="name" value="pwdtool/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/pwdtool/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/userman/search/index" extends="normal/base_auth">
-		<put-attribute name="name" value="userman/search/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/userman/search/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/userman/export/index" extends="normal/base_auth">
-		<put-attribute name="name" value="userman/export/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/userman/export/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/userman/import/index" extends="normal/base_auth">
-		<put-attribute name="name" value="userman/import/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/userman/import/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/userman/import/finish" extends="normal/base_auth">
-		<put-attribute name="name" value="userman/import/finish" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/userman/import/finish.jsp" />
-	</definition>
-
-	<definition name="normal/secure/jfreechart/index" extends="normal/base_auth">
-		<put-attribute name="name" value="jfreechart/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/jfreechart/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>
