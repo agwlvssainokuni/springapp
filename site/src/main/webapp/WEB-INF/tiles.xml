@@ -13,46 +13,16 @@
 			value="/WEB-INF/tiles/normal/login/index.jsp" />
 	</definition>
 
-	<definition name="normal/signup/entry/index" extends="normal/base_unauth">
-		<put-attribute name="name" value="signup/entry/index" />
+	<definition name="normal/signup/**" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/{1}" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/signup/entry/index.jsp" />
+			value="/WEB-INF/tiles/normal/signup/{1}.jsp" />
 	</definition>
 
-	<definition name="normal/signup/entry/finish" extends="normal/base_unauth">
-		<put-attribute name="name" value="signup/entry/finish" />
+	<definition name="normal/secure/**" extends="normal/base_auth">
+		<put-attribute name="name" value="secure/{1}" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/signup/entry/finish.jsp" />
-	</definition>
-
-	<definition name="normal/signup/register/index" extends="normal/base_unauth">
-		<put-attribute name="name" value="signup/register/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/signup/register/index.jsp" />
-	</definition>
-
-	<definition name="normal/signup/register/finish" extends="normal/base_unauth">
-		<put-attribute name="name" value="signup/register/finish" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/signup/register/finish.jsp" />
-	</definition>
-
-	<definition name="normal/secure/passwd/index" extends="normal/base_auth">
-		<put-attribute name="name" value="passwd/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/passwd/index.jsp" />
-	</definition>
-
-	<definition name="normal/secure/passwd/finish" extends="normal/base_auth">
-		<put-attribute name="name" value="passwd/finish" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/passwd/finish.jsp" />
-	</definition>
-
-	<definition name="normal/secure/home/index" extends="normal/base_auth">
-		<put-attribute name="name" value="home/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/secure/home/index.jsp" />
+			value="/WEB-INF/tiles/normal/secure/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>

@@ -9,8 +9,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="passwd/finish.message.0" />
+	<s:message code="secure/passwd/finish.message.0" />
 </h1>
 <div>
-	<s:message code="passwd/finish.message.1" />
+	<s:message code="secure/passwd/finish.message.1" />
 </div>

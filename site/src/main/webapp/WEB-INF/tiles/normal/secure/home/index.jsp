@@ -9,5 +9,5 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="home/index.message.0" />
+	<s:message code="secure/home/index.message.0" />
 </h1>
