@@ -56,8 +56,20 @@ button.ui-button-text-only .ui-button-text {
 }
 
 /*
+ * 入力フォーム。
+ */
+.app-fullwidth {
+	width: 100%;
+}
+
+/*
  * テーブル書式。
  */
+.app-table thead tr {
+	color: white;
+	background: teal;
+}
+
 .app-table td {
 	padding: 2px 5px;
 }
