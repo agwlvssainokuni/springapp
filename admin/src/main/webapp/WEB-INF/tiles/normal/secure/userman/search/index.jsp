@@ -91,18 +91,6 @@
 		<input type="hidden" id="no" name="no">
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
 	</f:form>
-	<script type="text/javascript">
-		$(function() {
-			var cur = $(".app-pager span.app-current").attr("title");
-			var pager = $(".app-pager span.app-page[title != '" + cur + "']");
-			pager.wrap("<a href='#'></a>").click(function() {
-				var form = $(".app-pager-form");
-				form.children("input[name='no']").val(this.title - 1);
-				form.submit();
-				return false;
-			});
-		});
-	</script>
 	<div class="ui-widget">
 		<div>
 			<s:message code="common/pager.message.0"
