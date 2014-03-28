@@ -20,31 +20,37 @@
 <title><s:message code="base/common.title" /> / <s:message
 		code="${title}" /></title>
 <link rel="stylesheet" media="screen"
-	href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+	href="//code.jquery.com/ui/1.10.4/themes/redmond/jquery-ui.css" />
 <link rel="stylesheet" media="screen"
 	href="<c:url value="/normal/style/custom.css"/>" />
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/config.js" />"></script>
 <script type="text/javascript"
-	src="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/custom.js" />"></script>
 </head>
 <body>
-	<div data-role="page">
-		<div data-role="header">
-			<h1>
-				<s:message code="base/common.title" />
-			</h1>
+	<div id="Page">
+		<div id="PageHeader">
+			<div id="Header">
+				<h1>
+					<s:message code="base/common.title" />
+				</h1>
+			</div>
 		</div>
-		<div data-role="content">
-			<tiles:insertAttribute name="content" />
+		<div id="PageContent">
+			<div id="Content">
+				<tiles:insertAttribute name="content" />
+			</div>
 		</div>
-		<div data-role="footer">
-			<h1>
-				<s:message code="base/common.copyright" />
-			</h1>
+		<div id="PageFooter">
+			<div id="Footer">
+				<h4>
+					<s:message code="base/common.copyright" />
+				</h4>
+			</div>
 		</div>
 	</div>
 </body>

@@ -8,26 +8,24 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h1 class="ui-widget-header">
 	<s:message code="secure/home/index.message.0" />
 </h1>
-<ul data-role="listview" data-inset=“true” class="ui-listview-outer">
-	<li><a href="<c:url value="/secure/pwdtool" />"><s:message
-				code="secure/home/index.menu.pwdtool" /></a></li>
-	<li data-role="collapsible" data-iconpos="right" data-shadow="false"
-		data-corners="false">
-		<h2>
-			<s:message code="secure/home/index.menu.userman" />
-		</h2>
-		<ul data-role="listview">
-			<li><a href="<c:url value="/secure/userman/search" />"><s:message
-						code="secure/home/index.menu.userman.search" /></a></li>
-			<li><a href="<c:url value="/secure/userman/export" />"><s:message
-						code="secure/home/index.menu.userman.export" /></a></li>
-			<li><a href="<c:url value="/secure/userman/import" />"><s:message
-						code="secure/home/index.menu.userman.import" /></a></li>
-		</ul>
-	</li>
-	<li><a href="<c:url value="/secure/jfreechart" />"><s:message
-				code="secure/home/index.menu.jfreechart" /></a></li>
-</ul>
+<div class="ui-widget">
+	<ul class="app-menu">
+		<li><a href="<c:url value="/secure/pwdtool" />"><s:message
+					code="secure/home/index.menu.pwdtool" /></a></li>
+		<li><a href="#"><s:message
+					code="secure/home/index.menu.userman" /></a>
+			<ul>
+				<li><a href="<c:url value="/secure/userman/search" />"><s:message
+							code="secure/home/index.menu.userman.search" /></a></li>
+				<li><a href="<c:url value="/secure/userman/export" />"><s:message
+							code="secure/home/index.menu.userman.export" /></a></li>
+				<li><a href="<c:url value="/secure/userman/import" />"><s:message
+							code="secure/home/index.menu.userman.import" /></a></li>
+			</ul></li>
+		<li><a href="<c:url value="/secure/jfreechart" />"><s:message
+					code="secure/home/index.menu.jfreechart" /></a></li>
+	</ul>
+</div>
