@@ -8,10 +8,10 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h1 class="ui-widget-header">
 	<s:message code="secure/userman/import/finish.message.0" />
 </h1>
-<div>
+<div class="ui-state-highlight">
 	<s:message code="secure/userman/import/finish.message.1"
 		arguments="${result.totalCount},${result.successCount},${result.failedCount}" />
 </div>

@@ -8,21 +8,30 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h1 class="ui-widget-header">
 	<s:message code="secure/userman/import/index.message.0" />
 </h1>
 <s:hasBindErrors name="usermanImportForm">
-	<div class="error">
+	<div class="ui-state-error">
 		<f:errors path="usermanImportForm" element="div" />
 		<f:errors path="usermanImportForm.file" element="div" />
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/secure/userman/import/req" method="POST"
-	modelAttribute="usermanImportForm" enctype="multipart/form-data">
-	<div data-role="fieldcontain">
-		<label for="file"><s:message code="usermanImportForm.file" /></label>
-		<input id="file" name="file" type="file">
-	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/userman/import/index.importButton" />" />
-</f:form>
+<div class="ui-widget">
+	<f:form servletRelativeAction="/secure/userman/import/req"
+		method="POST" modelAttribute="usermanImportForm"
+		enctype="multipart/form-data">
+		<table>
+			<tbody>
+				<tr>
+					<td><label for="file"><s:message
+								code="usermanImportForm.file" /></label></td>
+					<td><input id="file" name="file" type="file"></td>
+				</tr>
+			</tbody>
+		</table>
+		<button type="submit" class="app-button">
+			<s:message code="secure/userman/import/index.importButton" />
+		</button>
+	</f:form>
+</div>
