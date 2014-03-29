@@ -8,28 +8,37 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h1 class="ui-widget-header">
 	<s:message code="secure/userman/export/index.message.0" />
 </h1>
 <s:hasBindErrors name="usermanExportForm">
-	<div class="error">
+	<div class="ui-state-error">
 		<f:errors path="usermanExportForm" element="div" />
 		<f:errors path="usermanExportForm.registeredFrom" element="div" />
 		<f:errors path="usermanExportForm.registeredTo" element="div" />
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/secure/userman/export/req" method="POST"
-	modelAttribute="usermanExportForm">
-	<div data-role="fieldcontain">
-		<label for="registeredFrom"><s:message
-				code="usermanExportForm.registeredFrom" /></label>
-		<f:input path="registeredFrom" cssErrorClass="error" />
-	</div>
-	<div data-role="fieldcontain">
-		<label for="registeredTo"><s:message
-				code="usermanExportForm.registeredTo" /></label>
-		<f:input path="registeredTo" cssErrorClass="error" />
-	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/userman/export/index.exportButton" />" />
-</f:form>
+<div class="ui-widget">
+	<f:form servletRelativeAction="/secure/userman/export/req"
+		method="POST" modelAttribute="usermanExportForm">
+		<table>
+			<tbody>
+				<tr>
+					<td><label for="registeredFrom"><s:message
+								code="usermanExportForm.registeredFrom" /></label></td>
+					<td><f:input path="registeredFrom"
+							cssErrorClass="ui-state-error" /></td>
+				</tr>
+				<tr>
+					<td><label for="registeredTo"><s:message
+								code="usermanExportForm.registeredTo" /></label></td>
+					<td><f:input path="registeredTo"
+							cssErrorClass="ui-state-error" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<button type="submit" class="app-button">
+			<s:message code="secure/userman/export/index.exportButton" />
+		</button>
+	</f:form>
+</div>
