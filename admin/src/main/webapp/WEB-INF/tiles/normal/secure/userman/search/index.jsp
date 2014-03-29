@@ -138,13 +138,13 @@
 	<div class="ui-widget">
 		<div class="app-pager">
 			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
-			<span class="app-page" title="${result.pageSet.first.no+1}">&lt;&lt;</span>
 			<span class="app-page" title="${result.pageSet.prev.no+1}">&lt;</span>
+			<span class="app-page" title="${result.pageSet.first.no+1}">${result.pageSet.first.no+1}</span>
 			<c:forEach var="page" items="${result.pageSet.range}">
 				<span class="app-page" title="${page.no+1}">${page.no+1}</span>
 			</c:forEach>
+			<span class="app-page" title="${result.pageSet.last.no+1}">${result.pageSet.last.no+1}</span>
 			<span class="app-page" title="${result.pageSet.next.no+1}">&gt;</span>
-			<span class="app-page" title="${result.pageSet.last.no+1}">&gt;&gt;</span>
 		</div>
 	</div>
 </c:if>

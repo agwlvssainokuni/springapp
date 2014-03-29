@@ -40,19 +40,17 @@ public class TotalCount2Paginator extends Paginator {
 	@Override
 	protected Range calcRange(int pageNo, int pageCount) {
 		int from = pageNo - (totalCount - 1) / 2;
-		if (from < 0) {
-			from = 0;
+		if (from < 1) {
+			from = 1;
 		}
-		int to = from + totalCount - 1;
-		if (to >= pageCount) {
-			to = pageCount - 1;
-			from = to - totalCount + 1;
-			if (from < 0) {
-				from = 0;
+		int to = from + totalCount - 3;
+		if (to >= pageCount - 2) {
+			to = pageCount - 2;
+			from = to - totalCount + 3;
+			if (from < 1) {
+				from = 1;
 			}
 		}
-		int from2 = (from <= 0 ? from + 1 : from);
-		int to2 = (to >= pageCount - 1 ? to - 1 : to);
-		return new Range(from2, to2);
+		return new Range(from, to);
 	}
 }
