@@ -98,13 +98,21 @@
 		</div>
 		<div class="app-pager">
 			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
-			<span class="app-page" title="${result.pageSet.first.no+1}">&lt;&lt;</span>
 			<span class="app-page" title="${result.pageSet.prev.no+1}">&lt;</span>
+			<span class="app-page" title="${result.pageSet.first.no+1}">${result.pageSet.first.no+1}</span>
+			<c:if
+				test="${result.pageSet.range[0].no > result.pageSet.first.no+1}">
+				<span class="app-page-spacer">...</span>
+			</c:if>
 			<c:forEach var="page" items="${result.pageSet.range}">
 				<span class="app-page" title="${page.no+1}">${page.no+1}</span>
 			</c:forEach>
+			<c:if
+				test="${result.pageSet.range[fn:length(result.pageSet.range)-1].no <  result.pageSet.last.no-1}">
+				<span class="app-page-spacer">...</span>
+			</c:if>
+			<span class="app-page" title="${result.pageSet.last.no+1}">${result.pageSet.last.no+1}</span>
 			<span class="app-page" title="${result.pageSet.next.no+1}">&gt;</span>
-			<span class="app-page" title="${result.pageSet.last.no+1}">&gt;&gt;</span>
 		</div>
 	</div>
 	<table id="usermanSearchList"
@@ -140,9 +148,17 @@
 			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
 			<span class="app-page" title="${result.pageSet.prev.no+1}">&lt;</span>
 			<span class="app-page" title="${result.pageSet.first.no+1}">${result.pageSet.first.no+1}</span>
+			<c:if
+				test="${result.pageSet.range[0].no > result.pageSet.first.no+1}">
+				<span class="app-page-spacer">...</span>
+			</c:if>
 			<c:forEach var="page" items="${result.pageSet.range}">
 				<span class="app-page" title="${page.no+1}">${page.no+1}</span>
 			</c:forEach>
+			<c:if
+				test="${result.pageSet.range[fn:length(result.pageSet.range)-1].no <  result.pageSet.last.no-1}">
+				<span class="app-page-spacer">...</span>
+			</c:if>
 			<span class="app-page" title="${result.pageSet.last.no+1}">${result.pageSet.last.no+1}</span>
 			<span class="app-page" title="${result.pageSet.next.no+1}">&gt;</span>
 		</div>
