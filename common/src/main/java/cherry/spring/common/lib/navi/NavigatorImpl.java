@@ -55,18 +55,16 @@ public class NavigatorImpl implements Navigator, InitializingBean {
 	@Override
 	public List<Node> navigate(String name) {
 		List<Node> list = new ArrayList<>();
-		NaviNode node = nodeMap.get(name);
-		if (node != null) {
-			do {
-				Node nd = new Node();
-				nd.setName(node.getName());
-				nd.setUri(node.getUri());
-				nd.setLast(false);
-				list.add(nd);
-			} while (node.getParent() == null);
-			list.get(0).setLast(true);
-			Collections.reverse(list);
+		boolean flag = true;
+		for (NaviNode nd = nodeMap.get(name); nd != null; nd = nd.getParent()) {
+			Node node = new Node();
+			node.setName(nd.getName());
+			node.setUri(nd.getUri());
+			node.setLast(flag);
+			list.add(node);
+			flag = false;
 		}
+		Collections.reverse(list);
 		return list;
 	}
 
