@@ -55,14 +55,14 @@
 					<li><s:message code="base/auth.navigation" /></li>
 					<%@ page
 						import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+					<%@ page import="cherry.spring.common.lib.navi.Navigator"%>
 					<%
-						pageContext.setAttribute("appCtx", WebApplicationContextUtils
-								.getRequiredWebApplicationContext(application));
+						pageContext.setAttribute("navigator",
+								WebApplicationContextUtils
+										.getRequiredWebApplicationContext(application)
+										.getBean(Navigator.class));
 					%>
-					<s:eval var="navigatorClass"
-						expression="T(cherry.spring.common.lib.navi.Navigator)" />
-					<c:forEach var="node"
-						items="${appCtx.getBean(navigatorClass).navigate(name)}">
+					<c:forEach var="node" items="${navigator.navigate(name)}">
 						<li>&gt; <a href="<c:url value="${node.uri}" />"><s:message
 									code="${node.name}.title" /></a></li>
 					</c:forEach>
