@@ -8,6 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="common" uri="urn:springapp:common"%>
 <c:set var="name">
 	<tiles:getAsString name="name" />
 </c:set>
@@ -53,18 +54,11 @@
 			<div id="Navi">
 				<ul>
 					<li><s:message code="base/auth.navigation" /></li>
-					<%@ page
-						import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-					<%@ page import="cherry.spring.common.lib.navi.Navigator"%>
-					<%
-						pageContext.setAttribute("navigator",
-								WebApplicationContextUtils
-										.getRequiredWebApplicationContext(application)
-										.getBean(Navigator.class));
-					%>
-					<c:forEach var="node" items="${navigator.navigate(name)}">
-						<li>&gt; <a href="<c:url value="${node.uri}" />"><s:message
-									code="${node.name}.title" /></a></li>
+					<c:set var="sc" value="<%=application%>" />
+					<c:forEach var="node"
+						items="${common:appCtx(sc).getBean('navigator').navigate(name)}">
+						<li><a href="<c:url value="${node.uri}" />"><s:message
+									code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
 					</c:forEach>
 				</ul>
 			</div>

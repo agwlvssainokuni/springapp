@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>SpringApp Common Tag Library</description>
+	<display-name>SpringApp Common Tag Library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>common</short-name>
+	<uri>urn:springapp:common</uri>
+
+	<function>
+		<description>Get Spring WebApplicationContext</description>
+		<name>appCtx</name>
+		<function-class>org.springframework.web.context.support.WebApplicationContextUtils</function-class>
+		<function-signature>
+			org.springframework.web.context.WebApplicationContext getRequiredWebApplicationContext(javax.servlet.ServletContext)
+		</function-signature>
+	</function>
+
+</taglib>
