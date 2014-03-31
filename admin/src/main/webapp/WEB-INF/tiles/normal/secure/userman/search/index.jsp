@@ -11,6 +11,9 @@
 <h1 class="ui-widget-header">
 	<s:message code="secure/userman/search/index.message.0" />
 </h1>
+<h4 class="ui-widget-header">
+	<s:message code="secure/userman/search/index.message.1" />
+</h4>
 <s:hasBindErrors name="usermanSearchForm">
 	<div class="ui-state-error">
 		<f:errors path="usermanSearchForm" element="div" />
@@ -34,9 +37,6 @@
 	</c:choose>
 </c:set>
 <div class="ui-widget">
-	<h4 class="ui-widget-header">
-		<s:message code="secure/userman/search/index.message.1" />
-	</h4>
 	<f:form servletRelativeAction="/secure/userman/search/req"
 		method="POST" modelAttribute="usermanSearchForm">
 		<table>
@@ -71,12 +71,15 @@
 					<td><f:input path="firstName" cssClass="app-fullwidth"
 							cssErrorClass="ui-state-error" /></td>
 				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><input type="hidden" id="sz" name="sz" value="${param.sz}">
+						<button type="submit" name="submit" class="app-button">
+							<s:message code="secure/userman/search/index.searchButton" />
+						</button></td>
+				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" id="sz" name="sz" value="${param.sz}">
-		<button type="submit" name="submit" class="app-button">
-			<s:message code="secure/userman/search/index.searchButton" />
-		</button>
 	</f:form>
 </div>
 <c:if test="${resultIsNotEmpty}">

@@ -3,7 +3,7 @@
 /*
  * 基本デザイン。
  */
-* {
+body,h1,h2,h3,h4,h5,h6,ul,ol,form {
 	margin: 0px;
 	padding: 0px;
 }
@@ -44,7 +44,7 @@ body {
  * jQuery UI 部品調整
  */
 .ui-button-text-only .ui-button-text {
-	padding: 0ex 1ex;
+	padding: 0.5ex 1ex;
 }
 
 button.ui-button-text-only .ui-button-text {
