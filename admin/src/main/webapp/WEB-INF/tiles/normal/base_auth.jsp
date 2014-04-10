@@ -55,8 +55,10 @@
 				<ul>
 					<li><s:message code="base/auth.navigation" /></li>
 					<c:set var="sc" value="<%=application%>" />
+					<s:eval var="naviClass"
+						expression="T(cherry.spring.common.lib.navi.Navigator)" />
 					<c:forEach var="node"
-						items="${common:appCtx(sc).getBean('navigator').navigate(name)}">
+						items="${common:getBean(sc, 'navigator', naviClass).navigate(name)}">
 						<li><a href="<c:url value="${node.uri}" />"><s:message
 									code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
 					</c:forEach>
