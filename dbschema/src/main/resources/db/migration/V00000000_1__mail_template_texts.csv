@@ -1,0 +1,5 @@
+#,name,locale,subject,body
+1,signup/entry,en_US,Signup entry,"${model.mailAddr}, Signup URI: ${model.signupUri}"
+2,signup/entry,ja_JP,サインアップエントリ,"${model.mailAddr}, サインアップURI: ${model.signupUri}"
+3,signup/register,en_US,Signup register,"${model.mailAddr}, Password: ${model.password}"
+4,signup/register,ja_JP,サインアップ登録,"${model.mailAddr}, パスワード: ${model.password}"
