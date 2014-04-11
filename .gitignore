@@ -12,3 +12,4 @@
 .DS_Store
 /.gradle
 /gradle-app.setting
+/gradle.properties
