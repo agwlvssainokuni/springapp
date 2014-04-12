@@ -1,5 +1,85 @@
 @CHARSET "UTF-8";
 
+/* 基本レイアウト */
+body {
+	font-size: 12pt;
+}
+
+body,ul,ol,form {
+	margin: 0px;
+	padding: 0px;
+}
+
+td,th {
+	padding: 5px 5px;
+}
+
+.appSubject {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.appPortion {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	margin-left: 10px;
+	margin-right: 0px;
+}
+
+ul.appFlatLink {
+	list-style: none;
+}
+
+ul.appFlatLink>li {
+	display: inline;
+	margin-right: 1ex;
+}
+
+.appPager {
+	text-align: right;
+}
+
+.appWidthFull {
+	width: 100%;
+}
+
+.appWidth10 {
+	width: 160px;
+}
+
+.appWidth15 {
+	width: 240px;
+}
+
+.appWidth20 {
+	width: 320px;
+}
+
+.appWidth30 {
+	width: 480px;
+}
+
+.appWidth50 {
+	width: 800px;
+}
+
+.appHeight3 {
+	height: 54px;
+}
+
+.appHeight5 {
+	height: 90px;
+}
+
+/* 領域レイアウト */
+#Header,#Navi,#Content,#Footer {
+	/* width: 1280px; */
+	margin-left: auto;
+	margin-right: auto;
+}
+
 /*
  * 基本デザイン。
  */
@@ -25,12 +105,6 @@ body {
 	border-top: thick solid navy;
 }
 
-#Header,#Navi,#Content,#Footer {
-	width: 1280px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 #Navi ul {
 	list-style-type: none;
 }
@@ -43,65 +117,6 @@ body {
 /*
  * jQuery UI 部品調整
  */
-.ui-button-text-only .ui-button-text {
-	padding: 0.5ex 1ex;
-}
-
-button.ui-button-text-only .ui-button-text {
-	width: 6em;
-}
-
-.ui-menu {
-	width: 15em;
-}
-
-/*
- * 入力フォーム。
- */
-.app-fullwidth {
-	width: 100%;
-}
-
-.app-text-10 {
-	width: 160px;
-}
-
-.app-text-15 {
-	width: 230px;
-}
-
-.app-text-20 {
-	width: 310px;
-}
-
-.app-text-30 {
-	width: 460px;
-}
-
-.app-text-50 {
-	width: 750px;
-}
-
-/* テキストエリア */
-.app-textarea-w20 {
-	width: 310px;
-}
-
-.app-textarea-w30 {
-	width: 460px;
-}
-
-.app-textarea-w50 {
-	width: 760px;
-}
-
-.app-textarea-h3 {
-	height: 51px;
-}
-
-.app-textarea-h5 {
-	height: 85px;
-}
 
 /*
  * テーブル書式。
