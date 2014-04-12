@@ -23,12 +23,14 @@
 <link rel="stylesheet" media="screen"
 	href="//code.jquery.com/ui/1.10.4/themes/redmond/jquery-ui.css" />
 <link rel="stylesheet" media="screen"
+	href="<c:url value="/normal/style/general.css"/>" />
+<link rel="stylesheet" media="screen"
 	href="<c:url value="/normal/style/custom.css"/>" />
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript"
-	src="<c:url value="/normal/script/config.js" />"></script>
-<script type="text/javascript"
 	src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="<c:url value="/normal/script/general.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/custom.js" />"></script>
 </head>
