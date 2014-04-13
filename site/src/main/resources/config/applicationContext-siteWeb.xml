@@ -82,9 +82,9 @@
 								value="org.springframework.web.servlet.view.tiles3.TilesView" />
 						</bean>
 					</constructor-arg>
-					<property name="mobilePrefix" value="normal/" />
-					<property name="tabletPrefix" value="normal/" />
-					<property name="normalPrefix" value="normal/" />
+					<property name="mobilePrefix" value="mobile/" />
+					<property name="tabletPrefix" value="mobile/" />
+					<property name="normalPrefix" value="mobile/" />
 				</bean>
 				<bean
 					class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
@@ -97,9 +97,9 @@
 							<property name="suffix" value=".jsp" />
 						</bean>
 					</constructor-arg>
-					<property name="mobilePrefix" value="normal/" />
-					<property name="tabletPrefix" value="normal/" />
-					<property name="normalPrefix" value="normal/" />
+					<property name="mobilePrefix" value="mobile/" />
+					<property name="tabletPrefix" value="mobile/" />
+					<property name="normalPrefix" value="mobile/" />
 				</bean>
 			</list>
 		</property>

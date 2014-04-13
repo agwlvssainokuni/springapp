@@ -23,14 +23,14 @@
 <link rel="stylesheet" media="screen"
 	href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
 <link rel="stylesheet" media="screen"
-	href="<c:url value="/normal/style/custom.css"/>" />
+	href="<c:url value="/mobile/style/custom.css"/>" />
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript"
-	src="<c:url value="/normal/script/config.js" />"></script>
+	src="<c:url value="/mobile/script/config.js" />"></script>
 <script type="text/javascript"
 	src="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
 <script type="text/javascript"
-	src="<c:url value="/normal/script/custom.js" />"></script>
+	src="<c:url value="/mobile/script/custom.js" />"></script>
 </head>
 <body>
 	<div data-role="page">
