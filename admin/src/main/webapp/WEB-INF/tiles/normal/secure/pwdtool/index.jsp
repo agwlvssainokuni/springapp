@@ -8,21 +8,21 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="ui-widget-header">
+<h1 class="app-subject">
 	<s:message code="secure/pwdtool/index.message.0" />
 </h1>
-<div class="ui-widget">
+<div class="app-portion">
 	<div>
-		<input id="plainText" type="password" class="app-fullwidth">
+		<input id="plainText" type="password" class="app-width50">
 	</div>
 	<div>
 		<button id="encodeButton" onclick="JavaScript:encode();"
-			class="app-button">
+			class="app-button app-width50">
 			<s:message code="secure/pwdtool/index.encodeButton" />
 		</button>
 	</div>
 	<div>
-		<input id="encodedText" type="text" class="app-fullwidth">
+		<input id="encodedText" type="text" class="app-width50">
 	</div>
 </div>
 <script type="text/javascript">

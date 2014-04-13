@@ -9,6 +9,14 @@ body {
 	font-size: 12pt;
 }
 
+input {
+	font-size: 12pt;
+}
+
+textarea {
+	font-size: 12pt;
+}
+
 body,ul,ol,form {
 	margin: 0px;
 	padding: 0px;
