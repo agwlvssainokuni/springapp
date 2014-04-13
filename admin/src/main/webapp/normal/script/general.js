@@ -3,10 +3,10 @@ $(function() {
 	$(".app-menu").menu();
 	$(".app-button").button();
 	$(".app-buttonset").buttonset();
-	$("table.app-table-stripe tbody tr:even").addClass("app-row-even");
-	$("table.app-table-stripe tbody tr:odd").addClass("app-row-odd");
+	$("table.app-stripe>tbody>tr:even").addClass("app-even");
+	$("table.app-stripe>tbody>tr:odd").addClass("app-odd");
 
-	$(".app-pager").each(function(index) {
+	$(".app-pager-link").each(function(index) {
 		var current = $(this).children(".app-current").attr("title");
 		var pages = $(this).children(".app-page[title != '" + current + "']");
 		pages.wrap("<a href='#'></a>").click(function() {

@@ -24,12 +24,14 @@
 				<tr>
 					<td><label for="loginId"><s:message
 								code="loginForm.loginId" /></label></td>
-					<td><f:input path="loginId" cssErrorClass="ui-state-error" /></td>
+					<td><f:input path="loginId" cssClass="app-width20"
+							cssErrorClass="app-width20 ui-state-error" /></td>
 				</tr>
 				<tr>
 					<td><label for="password"><s:message
 								code="loginForm.password" /></label></td>
-					<td><f:password path="password" cssErrorClass="ui-state-error" /></td>
+					<td><f:password path="password" cssClass="app-width20"
+							cssErrorClass="app-width20 ui-state-error" /></td>
 				</tr>
 			</tbody>
 			<tfoot class="app-transparent">

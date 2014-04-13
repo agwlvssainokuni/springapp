@@ -8,11 +8,11 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="ui-widget-header">
+<h1 class="app-subject">
 	<s:message code="secure/userman/index.message.0" />
 </h1>
-<div class="ui-widget">
-	<ul class="app-menu">
+<div class="app-portion">
+	<ul>
 		<li><a href="<c:url value="/secure/userman/search" />"><s:message
 					code="secure/home/index.menu.userman.search" /></a></li>
 		<li><a href="<c:url value="/secure/userman/export" />"><s:message
