@@ -36,3 +36,9 @@ task h2start(dependsOn: "classes", type: JavaExec) {
 	classpath = buildscript.configurations.classpath + sourceSets.main.runtimeClasspath
 	args "-tcp", "-tcpPort", "9092"
 }
+
+task h2stop(type: JavaExec) {
+	main = "org.h2.tools.Server"
+	classpath = buildscript.configurations.classpath
+	args "-tcpShutdown", "tcp://localhost:9092"
+}
