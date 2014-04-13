@@ -35,25 +35,19 @@
 	src="<c:url value="/normal/script/custom.js" />"></script>
 </head>
 <body>
-	<div id="Page">
-		<div id="PageHeader">
-			<div id="Header">
-				<h1>
-					<s:message code="base/common.title" />
-				</h1>
-			</div>
+	<div id="PageHeader">
+		<div id="Header">
+			<s:message code="base/common.title" />
 		</div>
-		<div id="PageContent">
-			<div id="Content">
-				<tiles:insertAttribute name="content" />
-			</div>
+	</div>
+	<div id="PageContent">
+		<div id="Content">
+			<tiles:insertAttribute name="content" />
 		</div>
-		<div id="PageFooter">
-			<div id="Footer">
-				<h4>
-					<s:message code="base/common.copyright" />
-				</h4>
-			</div>
+	</div>
+	<div id="PageFooter">
+		<div id="Footer">
+			<s:message code="base/common.copyright" />
 		</div>
 	</div>
 </body>

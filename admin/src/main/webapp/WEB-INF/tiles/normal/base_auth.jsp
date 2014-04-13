@@ -35,49 +35,43 @@
 	src="<c:url value="/normal/script/custom.js" />"></script>
 </head>
 <body>
-	<div id="Page">
-		<div id="PageHeader">
-			<div id="Header">
-				<div class="ui-widget" style="float: right;">
-					<form action="<c:url value="/logout" />" method="POST">
-						<button type="submit" class="app-button">
-							<s:message code="base/auth.logout" />
-						</button>
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}">
-					</form>
-				</div>
-				<h1>
-					<s:message code="base/common.title" />
-				</h1>
+	<div id="PageHeader">
+		<div id="Header" class="ui-helper-clearfix">
+			<div class="ui-widget" style="float: right;">
+				<form action="<c:url value="/logout" />" method="POST">
+					<button type="submit" class="app-button">
+						<s:message code="base/auth.logout" />
+					</button>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}">
+				</form>
 			</div>
+			<s:message code="base/common.title" />
 		</div>
-		<div id="PageNavi">
-			<div id="Navi">
-				<ul>
-					<li><s:message code="base/auth.navigation" /></li>
-					<c:set var="sc" value="<%=application%>" />
-					<s:eval var="naviClass"
-						expression="T(cherry.spring.common.lib.navi.Navigator)" />
-					<c:forEach var="node"
-						items="${common:getBean(sc, 'navigator', naviClass).navigate(name)}">
-						<li><a href="<c:url value="${node.uri}" />"><s:message
-									code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
-					</c:forEach>
-				</ul>
-			</div>
+	</div>
+	<div id="PageNavi">
+		<div id="Navi">
+			<ul class="app-flat">
+				<li><s:message code="base/auth.navigation" /></li>
+				<c:set var="sc" value="<%=application%>" />
+				<s:eval var="naviClass"
+					expression="T(cherry.spring.common.lib.navi.Navigator)" />
+				<c:forEach var="node"
+					items="${common:getBean(sc, 'navigator', naviClass).navigate(name)}">
+					<li><a href="<c:url value="${node.uri}" />"><s:message
+								code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
+				</c:forEach>
+			</ul>
 		</div>
-		<div id="PageContent">
-			<div id="Content">
-				<tiles:insertAttribute name="content" />
-			</div>
+	</div>
+	<div id="PageContent">
+		<div id="Content">
+			<tiles:insertAttribute name="content" />
 		</div>
-		<div id="PageFooter">
-			<div id="Footer">
-				<h4>
-					<s:message code="base/common.copyright" />
-				</h4>
-			</div>
+	</div>
+	<div id="PageFooter">
+		<div id="Footer">
+			<s:message code="base/common.copyright" />
 		</div>
 	</div>
 </body>

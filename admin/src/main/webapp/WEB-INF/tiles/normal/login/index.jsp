@@ -8,21 +8,19 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="ui-widget-header">
+<h1 class="app-subject">
 	<s:message code="login/index.message.0" />
 </h1>
 <c:if test="${param.err == 'login'}">
-	<div class="ui-state-error">
-		<div>
-			<s:message code="login/index.message.1" />
-		</div>
+	<div class="app-portion ui-state-error">
+		<s:message code="login/index.message.1" />
 	</div>
 </c:if>
-<div class="ui-widget">
+<div>
 	<f:form servletRelativeAction="/login/req" method="POST"
 		modelAttribute="loginForm">
 		<table>
-			<tbody>
+			<tbody class="app-transparent">
 				<tr>
 					<td><label for="loginId"><s:message
 								code="loginForm.loginId" /></label></td>
@@ -34,9 +32,16 @@
 					<td><f:password path="password" cssErrorClass="ui-state-error" /></td>
 				</tr>
 			</tbody>
+			<tfoot class="app-transparent">
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit" name="submit" class="app-button">
+							<s:message code="login/index.loginButton" />
+						</button>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
-		<button type="submit" name="submit" class="app-button">
-			<s:message code="login/index.loginButton" />
-		</button>
 	</f:form>
 </div>

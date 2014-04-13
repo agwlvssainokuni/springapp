@@ -19,10 +19,7 @@ td,th {
 }
 
 .app-subject {
-	margin-top: 10px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	margin-right: 0px;
+	margin: 10px 0px;
 }
 
 h1.app-subject {
@@ -42,10 +39,7 @@ h4.app-subject {
 }
 
 .app-portion {
-	margin-top: 10px;
-	margin-bottom: 0px;
-	margin-left: 10px;
-	margin-right: 0px;
+	margin: 10px 0px 10px 10px;
 }
 
 ul.app-flat {
@@ -102,6 +96,10 @@ ul.app-flat>li {
 	/* width: 1280px; */
 	margin-left: auto;
 	margin-right: auto;
+}
+
+#PageContent {
+	padding: 1px 0px;
 }
 
 /*
