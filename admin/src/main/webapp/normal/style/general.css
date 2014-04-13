@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+/*
+ * レイアウト
+ */
+
 /* 基本レイアウト */
 body {
 	font-size: 12pt;
@@ -14,62 +18,82 @@ td,th {
 	padding: 5px 5px;
 }
 
-.appSubject {
+.app-subject {
 	margin-top: 10px;
 	margin-bottom: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
 }
 
-.appPortion {
+h1.app-subject {
+	font-size: 16pt;
+}
+
+h2.app-subject {
+	font-size: 14pt;
+}
+
+h3.app-subject {
+	font-size: 12pt;
+}
+
+h4.app-subject {
+	font-size: 12pt;
+}
+
+.app-portion {
 	margin-top: 10px;
 	margin-bottom: 0px;
 	margin-left: 10px;
 	margin-right: 0px;
 }
 
-ul.appFlatLink {
+ul.app-flat {
 	list-style: none;
 }
 
-ul.appFlatLink>li {
+ul.app-flat>li {
 	display: inline;
-	margin-right: 1ex;
+	margin-right: 10px;
 }
 
-.appPager {
+.app-pager {
 	text-align: right;
 }
 
-.appWidthFull {
+.app-pager-desc .app-number {
+	font-weight: bold;
+}
+
+.app-width-full {
 	width: 100%;
 }
 
-.appWidth10 {
+.app-width10 {
 	width: 160px;
 }
 
-.appWidth15 {
+.app-width15 {
 	width: 240px;
 }
 
-.appWidth20 {
+.app-width20 {
 	width: 320px;
 }
 
-.appWidth30 {
+.app-width30 {
 	width: 480px;
 }
 
-.appWidth50 {
+.app-width50 {
 	width: 800px;
 }
 
-.appHeight3 {
+.app-height3 {
 	height: 54px;
 }
 
-.appHeight5 {
+.app-height5 {
 	height: 90px;
 }
 
@@ -81,59 +105,80 @@ ul.appFlatLink>li {
 }
 
 /*
- * 基本デザイン。
+ * 配色
  */
-body,h1,h2,h3,h4,h5,h6,ul,ol,form {
-	margin: 0px;
-	padding: 0px;
-}
 
+/* 基本配色 */
 body {
-	background-color: #ded;
+	color: black;
+	background-color: royalblue;
 }
 
-#PageHeader {
+a:link {
+	color: black;
+}
+
+a:visited {
+	color: black;
+}
+
+a:hover {
+	color: black;
+	background-color: lavendar;
+}
+
+a:active {
+	color: black;
+	background-color: lavendar;
+}
+
+/* 領域配色 */
+#PageHeader,#PageFooter {
 	color: white;
-	background: navy;
+	background-color: royalblue;
 }
 
 #PageNavi {
-	border-bottom: thick solid navy;
+	color: black;
+	background-color: paleturquoise;
 }
 
-#PageFooter {
-	border-top: thick solid navy;
+#PageContent {
+	color: black;
+	background-color: lightcyan;
 }
 
-#Navi ul {
-	list-style-type: none;
-}
-
-#Navi ul li {
-	display: inline;
-	margin-right: 1ex;
-}
-
-/*
- * jQuery UI 部品調整
- */
-
-/*
- * テーブル書式。
- */
-.app-table thead tr {
+/* 表配色 */
+/* 通常表 */
+table>thead,tfoot>tr {
 	color: white;
-	background: teal;
+	background-color: royalblue;
 }
 
-.app-table td {
-	padding: 2px 5px;
+table>tbody>tr {
+	color: black;
+	background-color: lightblue;
 }
 
-.app-row-even {
-	background: #eff;
+table>.app-transparent>tr {
+	color: black;
+	background-color: transparent;
 }
 
-.app-row-odd {
-	background: #cdf;
+/* ストライプ表 */
+table.app-stripe>tbody>tr.app-even {
+	color: black;
+	background-color: lightblue;
+}
+
+table.app-stripe>tbody>tr.app-odd {
+	color: black;
+	background-color: skyblue;
+}
+
+/* 列見出し表 */
+table.app-collabel>tbody>tr>th {
+	color: white;
+	background-color: royalblue;
+	text-align: left;
 }
