@@ -30,3 +30,9 @@ task mbgenerator << {
 	}
 }
 mbgenerator.dependsOn flywayMigrate
+
+task h2start(dependsOn: "classes", type: JavaExec) {
+	main = "org.h2.tools.Server"
+	classpath = buildscript.configurations.classpath + sourceSets.main.runtimeClasspath
+	args "-tcp", "-tcpPort", "9092"
+}
