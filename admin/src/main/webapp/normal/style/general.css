@@ -117,26 +117,18 @@ ul.app-flat>li {
 
 /* 基本配色 */
 body {
-	color: black;
+	color: midnightblue;
 	background-color: royalblue;
 }
 
-a:link {
-	color: black;
+a:link,a:visited {
+	color: midnightblue;
+	background-color: transparent;
 }
 
-a:visited {
-	color: black;
-}
-
-a:hover {
-	color: black;
-	background-color: lavendar;
-}
-
-a:active {
-	color: black;
-	background-color: lavendar;
+a:hover,a:active {
+	color: midnightblue;
+	background-color: lavender;
 }
 
 /* 領域配色 */
@@ -146,12 +138,12 @@ a:active {
 }
 
 #PageNavi {
-	color: black;
-	background-color: paleturquoise;
+	color: midnightblue;
+	background-color: lightskyblue;
 }
 
 #PageContent {
-	color: black;
+	color: midnightblue;
 	background-color: azure;
 }
 
@@ -163,23 +155,23 @@ table>thead,tfoot>tr {
 }
 
 table>tbody>tr {
-	color: black;
+	color: midnightblue;
 	background-color: lightblue;
 }
 
 table>.app-transparent>tr {
-	color: black;
+	color: midnightblue;
 	background-color: transparent;
 }
 
 /* ストライプ表 */
 table.app-stripe>tbody>tr.app-even {
-	color: black;
+	color: midnightblue;
 	background-color: lightblue;
 }
 
 table.app-stripe>tbody>tr.app-odd {
-	color: black;
+	color: midnightblue;
 	background-color: skyblue;
 }
 
