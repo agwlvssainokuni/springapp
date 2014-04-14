@@ -1,7 +1,7 @@
 apply plugin: "eclipse-wtp"
 
 ext {
-	versionH2db = "1.3.175"
+	versionH2db = "1.4.177"
 	versionFlyway = "2.3.1"
 	versionJodaTime = "2.3"
 	versionCommonsDbcp = "1.4"
