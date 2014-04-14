@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<context id="common" targetRuntime="MyBatis3Simple">
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
 		</commentGenerator>
