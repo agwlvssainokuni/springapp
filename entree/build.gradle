@@ -22,12 +22,9 @@ dependencies {
 	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 }
 
-eclipse {
-	wtp {
-		facet {
-			facet name: "jst.web", version: "3.0"
-		}
-	}
+eclipse.wtp.facet {
+	facet name: "java", version: "1.7"
+	facet name: "jst.web", version: "3.0"
 }
 
 war {
