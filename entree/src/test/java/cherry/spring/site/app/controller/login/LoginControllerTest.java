@@ -25,6 +25,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.entree.app.controller.login.LoginController;
+import cherry.spring.entree.app.controller.login.LoginControllerImpl;
+
 public class LoginControllerTest {
 
 	private LoginController loginController = getBean(LoginController.class);

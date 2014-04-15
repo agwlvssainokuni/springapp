@@ -6,8 +6,8 @@
 
 	<import resource="applicationContext-common.xml" />
 	<import resource="applicationContext-commonMapper.xml" />
-	<import resource="applicationContext-site.xml" />
-	<import resource="applicationContext-siteWeb.xml" />
+	<import resource="applicationContext-entree.xml" />
+	<import resource="applicationContext-entreeWeb.xml" />
 	<import resource="applicationContext-dataSource.xml" />
 
 	<import resource="applicationContext-commonMigration.xml" />

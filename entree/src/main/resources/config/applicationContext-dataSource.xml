@@ -6,10 +6,10 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${site.jdbc.driverClassName}" />
-		<property name="url" value="${site.jdbc.url}" />
-		<property name="username" value="${site.jdbc.username}" />
-		<property name="password" value="${site.jdbc.password}" />
+		<property name="driverClassName" value="${entree.jdbc.driverClassName}" />
+		<property name="url" value="${entree.jdbc.url}" />
+		<property name="username" value="${entree.jdbc.username}" />
+		<property name="password" value="${entree.jdbc.password}" />
 	</bean>
 
 </beans>
