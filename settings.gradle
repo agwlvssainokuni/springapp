@@ -1,1 +1,1 @@
-include "dbschema", "common", "admin", "site", "batch"
+include "dbschema", "common", "admin", "entree", "batch"

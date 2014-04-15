@@ -31,7 +31,7 @@ subprojects {
 		if (project.hasProperty("appendix")) {
 			appdir = appdir + "/" + project.appendix
 		}
-		for (String dir : ["admin", "site", "batch"]) {
+		for (String dir : ["admin", "entree", "batch"]) {
 			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
 			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/log")
 		}
@@ -53,7 +53,7 @@ subprojects {
 
 def distSpec = copySpec {
 
-	for (String dir : ["admin", "site"]) {
+	for (String dir : ["admin", "entree"]) {
 		into("${dir}/app") {
 			from("${dir}/build/libs")
 			include "*.war"
@@ -73,7 +73,7 @@ def distSpec = copySpec {
 		}
 	}
 
-	for (String dir : ["admin", "site", "batch"]) {
+	for (String dir : ["admin", "entree", "batch"]) {
 		into("${dir}/conf") {
 			from("${dir}/build/resources/main") {
 				include "*.properties"
@@ -96,9 +96,9 @@ task distZip(type: Zip) {
 	classifier = "dist"
 	with(distSpec)
 	dependsOn ":admin:processDistResources"
-	dependsOn ":site:processDistResources"
+	dependsOn ":entree:processDistResources"
 	dependsOn ":batch:processDistResources"
-	dependsOn ":admin:war", ":site:war", ":batch:installApp"
+	dependsOn ":admin:war", ":entree:war", ":batch:installApp"
 }
 
 task distTar(type: Tar) {
@@ -111,7 +111,7 @@ task distTar(type: Tar) {
 	compression = Compression.GZIP
 	with(distSpec)
 	dependsOn ":admin:processDistResources"
-	dependsOn ":site:processDistResources"
+	dependsOn ":entree:processDistResources"
 	dependsOn ":batch:processDistResources"
-	dependsOn ":admin:war", ":site:war", ":batch:installApp"
+	dependsOn ":admin:war", ":entree:war", ":batch:installApp"
 }
