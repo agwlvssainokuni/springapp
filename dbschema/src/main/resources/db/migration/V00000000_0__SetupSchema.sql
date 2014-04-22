@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/04/23 1:03:19
+-- Date/Time    : 2014/04/23 1:11:04
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -8,7 +8,7 @@
 CREATE TABLE async_procs( 
 	id INTEGER NOT NULL auto_increment, 
 	name VARCHAR (32) NOT NULL, 
-	status VARCHAR (32) NOT NULL status IN ( 
+	status VARCHAR (32) NOT NULL CHECK status IN ( 
 		'PREPARING', 
 		'INVOKED', 
 		'PROCESSING', 

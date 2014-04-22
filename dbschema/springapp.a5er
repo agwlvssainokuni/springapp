@@ -64,7 +64,7 @@ Left=1550
 Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
-Field="状況","status","*識別名","NOT NULL",,"","",$FFFFFFFF,"status IN (\qPREPARING\q,\qINVOKED\q,\qPROCESSING\q,\qSUCCESS\q,\qERROR\q)"
+Field="状況","status","*識別名","NOT NULL",,"","",$FFFFFFFF,"CHECK status IN (\qPREPARING\q,\qINVOKED\q,\qPROCESSING\q,\qSUCCESS\q,\qERROR\q)"
 Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 Field="投入日時","invoked_at","*日時",,,"","",$FFFFFFFF,""
 Field="開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
@@ -74,7 +74,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140423010212
+ModifiedDateTime=20140423011055
 Position="Main",1550,200
 
 [Relation]
