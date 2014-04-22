@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cherry.spring.common.db.app.mapper.AsyncProcMapper">
+	<insert id="createAsyncProc" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id">
+		INSERT INTO async_procs (
+			name,
+			status,
+			registered_at
+		)
+		VALUES (
+			:name,
+			'PREPARING',
+			CURRENT_TIMESTAMP
+		)
+	</insert>
+	<update id="invokeAsyncProc">
+		UPDATE async_procs
+		SET
+			status = 'INVOKED',
+			invoked_at = CURRENT_TIMESTAMP
+		WHERE
+			id = :id
+			AND
+			deleted_flg = 0
+	</update>
+	<update id="startAsyncProc">
+		UPDATE async_procs
+		SET
+			status = 'PROCESSING',
+			started_at = CURRENT_TIMESTAMP
+		WHERE
+			id = :id
+			AND
+			deleted_flg = 0
+	</update>
+	<update id="successAsyncProc">
+		UPDATE async_procs
+		SET
+			status = 'SUCCESS',
+			finished_at = CURRENT_TIMESTAMP,
+			result = :result
+		WHERE
+			id = :id
+			AND
+			deleted_flg = 0
+	</update>
+	<update id="errorAsyncProc">
+		UPDATE async_procs
+		SET
+			status = 'ERROR',
+			finished_at = CURRENT_TIMESTAMP,
+			result = :result
+		WHERE
+			id = :id
+			AND
+			deleted_flg = 0
+	</update>
+</mapper>
