@@ -33,6 +33,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import cherry.spring.common.db.service.AsyncProcService;
+import cherry.spring.common.helper.JsonHelper;
 import cherry.spring.common.lib.db.CsvDataProvider;
 import cherry.spring.common.lib.db.DataLoader;
 import cherry.spring.common.lib.db.DataLoader.Result;
@@ -40,7 +42,7 @@ import cherry.spring.common.lib.db.DataLoader.Result;
 @Component
 public class UsermanImportServiceImpl implements UsermanImportService {
 
-	public static final String STATUS_ID = "statusId";
+	public static final String PROC_ID = "procId";
 
 	public static final String TEMP_FILE = "tempFile";
 
@@ -55,6 +57,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	@Value("${admin.app.userman.import.charset}")
 	private Charset charset;
+
+	@Autowired
+	private AsyncProcService asyncProcService;
+
+	@Autowired
+	private JsonHelper jsonHelper;
 
 	@Autowired
 	@Qualifier("usersLoader")
@@ -75,22 +83,23 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Transactional
 	@Override
 	public Map<String, String> launchImportUsers(MultipartFile file) {
+		String name = UsermanImportService.class.getName();
+		Integer procId = asyncProcService.createAsyncProc(name);
 		try {
-			// TODO 非同期処理状況のレコードを作成する。[準備中:PREPARING]
-			Integer statusId = 1;
 			File tempFile = createFile(file);
 
 			Map<String, String> message = new HashMap<>();
-			message.put(STATUS_ID, statusId.toString());
+			message.put(PROC_ID, procId.toString());
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
 
 			// TODO JMSでメッセージ送信。
 
-			// TODO 非同期処理状況のレコードを更新。[非同期呼出:INVOKED]
+			asyncProcService.invokeAsyncProc(procId);
 
 			return message;
 		} catch (IOException ex) {
-			// TODO 非同期処理状況のレコードを更新。[非同期処理異常終了:ERROR]
+			asyncProcService.errorAsyncProc(procId,
+					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -98,14 +107,22 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Transactional
 	@Override
 	public void handleImportUsers(Map<String, String> message) {
-		Integer statusId = Integer.parseInt(message.get(STATUS_ID));
+		Integer procId = Integer.parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			// TODO 非同期処理状況のレコードを更新。[非同期処理中:PROCESSING]
+			asyncProcService.startAsyncProc(procId);
+
 			Result result = loadFile(tempFile);
-			// TODO 非同期処理状況のレコードを更新。[非同期処理正常終了:SUCCESS]
+
+			Map<String, Integer> map = new HashMap<>();
+			map.put("total", result.getTotalCount());
+			map.put("success", result.getSuccessCount());
+			map.put("failed", result.getFailedCount());
+			asyncProcService.successAsyncProc(procId, jsonHelper.fromMap(map));
+
 		} catch (IOException ex) {
-			// TODO 非同期処理状況のレコードを更新。[非同期処理異常終了:ERROR]
+			asyncProcService.errorAsyncProc(procId,
+					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		}
 	}
