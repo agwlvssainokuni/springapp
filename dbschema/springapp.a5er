@@ -21,9 +21,10 @@ Domain=日付=@DATE
 Domain=日時=@DATETIME
 Domain=ロケール=@VARCHAR(5)
 Domain=メール件名=@VARCHAR(1024)
-Domain=メール本文=@VARCHAR(4098)
+Domain=メール本文=@VARCHAR(4096)
 Domain=区分=@VARCHAR(3)
 Domain=フラグ=@INT
+Domain=JSON=@VARCHAR(4096)
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -52,6 +53,29 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=async_procs
+LName=非同期処理
+Comment=
+TableOption=
+Page=Main
+Left=1550
+Top=200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="状況","status","*識別名","NOT NULL",,"","",$FFFFFFFF,"status IN (\qPREPARING\q,\qINVOKED\q,\qPROCESSING\q,\qSUCCESS\q,\qERROR\q)"
+Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="投入日時","invoked_at","*日時",,,"","",$FFFFFFFF,""
+Field="開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
+Field="終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
+Field="結果情報","result","*JSON",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140423010212
+Position="Main",1550,200
 
 [Relation]
 Entity1=mail_templates
