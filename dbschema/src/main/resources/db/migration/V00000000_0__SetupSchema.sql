@@ -1,8 +1,30 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/03/13 22:17:11
+-- Date/Time    : 2014/04/23 1:03:19
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- 非同期処理
+CREATE TABLE async_procs( 
+	id INTEGER NOT NULL auto_increment, 
+	name VARCHAR (32) NOT NULL, 
+	status VARCHAR (32) NOT NULL status IN ( 
+		'PREPARING', 
+		'INVOKED', 
+		'PROCESSING', 
+		'SUCCESS', 
+		'ERROR'
+	) , 
+	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	invoked_at TIMESTAMP, 
+	started_at TIMESTAMP, 
+	finished_at TIMESTAMP, 
+	RESULT VARCHAR (4096), 
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
+	CONSTRAINT async_procs_pkc PRIMARY KEY (id)
+); 
 
 -- メールテンプレート文面
 CREATE TABLE mail_template_texts( 
@@ -10,7 +32,7 @@ CREATE TABLE mail_template_texts(
 	mail_template_id INTEGER NOT NULL, 
 	locale VARCHAR (5) NOT NULL, 
 	subject VARCHAR (1024) NOT NULL, 
-	body VARCHAR (4098) NOT NULL, 
+	body VARCHAR (4096) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -83,6 +105,42 @@ CREATE TABLE users(
 
 CREATE UNIQUE INDEX users_ix1 
 	ON users(mail_addr); 
+
+COMMENT 
+	ON TABLE async_procs IS '非同期処理'; 
+
+COMMENT 
+	ON COLUMN async_procs.id IS 'ID'; 
+
+COMMENT 
+	ON COLUMN async_procs.name IS '処理名称'; 
+
+COMMENT 
+	ON COLUMN async_procs.status IS '状況'; 
+
+COMMENT 
+	ON COLUMN async_procs.registered_at IS '登録日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.invoked_at IS '投入日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.started_at IS '開始日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.finished_at IS '終了日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.RESULT IS '結果情報'; 
+
+COMMENT 
+	ON COLUMN async_procs.updated_at IS '更新日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN async_procs.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
 	ON TABLE mail_template_texts IS 'メールテンプレート文面'; 

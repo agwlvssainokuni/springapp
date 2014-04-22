@@ -24,5 +24,6 @@
 		<table tableName="mail_templates" />
 		<table tableName="mail_template_addresses" />
 		<table tableName="mail_template_texts" />
+		<table tableName="async_procs" />
 	</context>
 </generatorConfiguration>
