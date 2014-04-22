@@ -16,15 +16,22 @@
 
 package cherry.spring.admin.app.service.secure.userman;
 
-import java.io.Reader;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.lib.db.DataLoader.Result;
 
 public interface UsermanImportService {
 
 	@Transactional
-	Result importUsers(Reader reader);
+	Result importUsers(MultipartFile file);
+
+	@Transactional
+	Map<String, String> launchImportUsers(MultipartFile file);
+
+	@Transactional
+	void handleImportUsers(Map<String, String> message);
 
 }

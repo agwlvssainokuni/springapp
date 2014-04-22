@@ -16,16 +16,11 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -33,7 +28,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -48,9 +42,6 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	public static final String VIEW_PATH = "secure/userman/import/index";
 
 	public static final String VIEW_PATH_FIN = "secure/userman/import/finish";
-
-	@Value("${admin.app.userman.import.charset}")
-	private Charset charset;
 
 	@Autowired
 	private UsermanImportService usermanImportService;
@@ -81,7 +72,7 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 			return mav;
 		}
 
-		Result result = receiveFile(form.getFile());
+		Result result = usermanImportService.importUsers(form.getFile());
 		redirectAttributes.addFlashAttribute(result);
 
 		ModelAndView mav = new ModelAndView();
@@ -97,15 +88,6 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
-	}
-
-	private Result receiveFile(MultipartFile file) {
-		try (InputStream in = file.getInputStream()) {
-			return usermanImportService.importUsers(new InputStreamReader(in,
-					charset));
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
 	}
 
 }
