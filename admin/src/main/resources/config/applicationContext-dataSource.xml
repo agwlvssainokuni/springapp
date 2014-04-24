@@ -13,8 +13,11 @@
 	</bean>
 
 	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="userTransactionName" value="${admin.jta.userTransaction}" />
+		<property name="transactionManagerName" value="${admin.jta.transactionManager}" />
+		<property name="transactionSynchronizationRegistryName"
+			value="${admin.jta.transactionSynchronizationRegistry}" />
 	</bean>
 
 </beans>
