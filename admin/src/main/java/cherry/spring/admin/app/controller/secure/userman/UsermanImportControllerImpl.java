@@ -33,7 +33,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanImportService;
-import cherry.spring.common.lib.db.DataLoader.Result;
 
 @Controller
 @RequestMapping(UsermanImportController.URI_PATH)
@@ -72,8 +71,10 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 			return mav;
 		}
 
-		Result result = usermanImportService.importUsers(form.getFile());
-		redirectAttributes.addFlashAttribute(result);
+		usermanImportService.launchImportUsers(form.getFile());
+
+		// Result result = usermanImportService.importUsers(form.getFile());
+		// redirectAttributes.addFlashAttribute(result);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));

@@ -41,6 +41,4 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
-	<jee:jndi-lookup id="connectionFactory" jndi-name="${admin.jms.connectionFactory}" />
-
 </beans>

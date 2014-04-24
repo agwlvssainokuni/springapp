@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<bean id="paginator" class="cherry.spring.common.lib.pager.TotalCount2Paginator">
@@ -46,6 +48,28 @@
 					:lastName
 				)
 			]]></value>
+		</property>
+	</bean>
+
+	<jee:jndi-lookup id="connectionFactory" jndi-name="${admin.jms.connectionFactory}" />
+
+	<jee:jndi-lookup id="usersImportQueue" jndi-name="${admin.app.userman.import.queue}" />
+
+	<bean id="usersJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="usersImportQueue" />
+	</bean>
+
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="usersImportQueue" />
+		<property name="messageListener">
+			<bean
+				class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+				<property name="delegate" ref="usermanImportServiceImpl" />
+				<property name="defaultListenerMethod" value="handleImportUsers" />
+			</bean>
 		</property>
 	</bean>
 

@@ -23,21 +23,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.text.MessageFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import cherry.spring.common.db.service.AsyncProcService;
 import cherry.spring.common.helper.JsonHelper;
 import cherry.spring.common.lib.db.CsvDataProvider;
 import cherry.spring.common.lib.db.DataLoader;
 import cherry.spring.common.lib.db.DataLoader.Result;
+import cherry.spring.common.log.Log;
+import cherry.spring.common.log.LogFactory;
+import cherry.spring.common.service.AsyncProcService;
 
 @Component
 public class UsermanImportServiceImpl implements UsermanImportService {
@@ -46,13 +51,15 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	public static final String TEMP_FILE = "tempFile";
 
-	@Value("${admin.app.userman.import.tempDir")
+	private final Log log = LogFactory.getLog(getClass());
+
+	@Value("${admin.app.userman.import.tempDir}")
 	private File tempDir;
 
-	@Value("${admin.app.userman.import.tempPrefix")
+	@Value("${admin.app.userman.import.tempPrefix}")
 	private String prefix;
 
-	@Value("${admin.app.userman.import.tempSuffix")
+	@Value("${admin.app.userman.import.tempSuffix}")
 	private String suffix;
 
 	@Value("${admin.app.userman.import.charset}")
@@ -67,6 +74,10 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Autowired
 	@Qualifier("usersLoader")
 	private DataLoader usersLoader;
+
+	@Autowired
+	@Qualifier("usersJmsTemplate")
+	private JmsTemplate usersJmsTemplate;
 
 	@Transactional
 	@Override
@@ -83,7 +94,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Transactional
 	@Override
 	public Map<String, String> launchImportUsers(MultipartFile file) {
-		String name = UsermanImportService.class.getName();
+		String name = UsermanImportService.class.getSimpleName();
 		Integer procId = asyncProcService.createAsyncProc(name);
 		try {
 			File tempFile = createFile(file);
@@ -91,8 +102,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			Map<String, String> message = new HashMap<>();
 			message.put(PROC_ID, procId.toString());
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
-
-			// TODO JMSでメッセージ送信。
+			usersJmsTemplate.convertAndSend(message);
 
 			asyncProcService.invokeAsyncProc(procId);
 
@@ -124,16 +134,25 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			asyncProcService.errorAsyncProc(procId,
 					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
+		} finally {
+			if (!tempFile.delete()) {
+				log.debug("failed to delete a temporary file: {0}",
+						tempFile.getAbsolutePath());
+			}
 		}
 	}
 
 	private File createFile(MultipartFile file) throws IOException {
-		File tempFile = File.createTempFile(prefix, suffix, tempDir);
+		File tempFile = File.createTempFile(
+				MessageFormat.format(prefix, new Date()), suffix, tempDir);
 		try {
 			file.transferTo(tempFile);
 			return tempFile;
 		} catch (IOException ex) {
-			tempFile.delete();
+			if (!tempFile.delete()) {
+				log.debug("failed to delete a temporary file: {0}",
+						tempFile.getAbsolutePath());
+			}
 			throw ex;
 		}
 	}
