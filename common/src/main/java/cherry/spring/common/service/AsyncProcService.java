@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.service;
+package cherry.spring.common.service;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
