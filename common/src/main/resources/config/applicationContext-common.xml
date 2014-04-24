@@ -12,6 +12,8 @@
 
 	<context:component-scan base-package="cherry.spring.common" />
 
+	<tx:annotation-driven />
+
 	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
 		<property name="arrayLengthLimit" value="${common.trace.arrayLengthLimit}" />
 		<property name="objectLengthLimit" value="${common.trace.objectLengthLimit}" />
@@ -28,13 +30,6 @@
 				and
 				!execution(* cherry.spring.common.log..*.*(..))" />
 	</aop:config>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<tx:annotation-driven />
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${common.mail.host}" />
