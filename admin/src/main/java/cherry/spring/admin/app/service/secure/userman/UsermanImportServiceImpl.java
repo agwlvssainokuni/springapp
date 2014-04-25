@@ -67,6 +67,9 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Value("${admin.app.userman.import.charset}")
 	private Charset charset;
 
+	@Value("${admin.app.userman.import.queue}")
+	private String queue;
+
 	@Autowired
 	private AsyncProcService asyncProcService;
 
@@ -78,8 +81,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private DataLoader usersLoader;
 
 	@Autowired
-	@Qualifier("usersJmsTemplate")
-	private JmsTemplate usersJmsTemplate;
+	private JmsTemplate jmsTemplate;
 
 	@Transactional
 	@Override
@@ -104,7 +106,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			Map<String, String> message = new HashMap<>();
 			message.put(PROC_ID, procId.toString());
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
-			usersJmsTemplate.convertAndSend(message);
+			jmsTemplate.convertAndSend(queue, message);
 
 			asyncProcService.invokeAsyncProc(procId);
 
