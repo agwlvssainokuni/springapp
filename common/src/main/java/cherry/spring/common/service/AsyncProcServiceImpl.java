@@ -104,7 +104,7 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 	@Transactional
 	public Result searchAsyncProc(int pageNo, int pageSz) {
 
-		int count = asyncProcMapper.countAsyncProcs();
+		int count = asyncProcMapper.countAsyncProc();
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
 		List<AsyncProcs> list = asyncProcMapper.searchAsyncProc(pageSz, offset);

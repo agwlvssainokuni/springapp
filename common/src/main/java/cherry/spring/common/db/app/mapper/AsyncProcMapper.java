@@ -34,7 +34,7 @@ public interface AsyncProcMapper {
 
 	int errorAsyncProc(AsyncProcs entity);
 
-	int countAsyncProcs();
+	int countAsyncProc();
 
 	List<AsyncProcs> searchAsyncProc(@Param("limit") Integer limit,
 			@Param("offset") Integer offset);
