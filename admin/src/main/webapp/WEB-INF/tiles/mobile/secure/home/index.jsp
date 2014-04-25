@@ -14,6 +14,8 @@
 <ul data-role="listview" data-inset=“true” class="ui-listview-outer">
 	<li><a href="<c:url value="/secure/pwdtool" />"><s:message
 				code="secure/home/index.menu.pwdtool" /></a></li>
+	<li><a href="<c:url value="/secure/asyncproc" />"><s:message
+				code="secure/home/index.menu.asyncproc" /></a></li>
 	<li data-role="collapsible" data-iconpos="right" data-shadow="false"
 		data-corners="false">
 		<h2>
