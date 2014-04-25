@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cherry.spring.common.db.app.mapper.AsyncProcMapper">
+	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.AsyncProcs">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="REGISTERED_AT" property="registeredAt" jdbcType="TIMESTAMP" />
+		<result column="INVOKED_AT" property="invokedAt" jdbcType="TIMESTAMP" />
+		<result column="STARTED_AT" property="startedAt" jdbcType="TIMESTAMP" />
+		<result column="FINISHED_AT" property="finishedAt" jdbcType="TIMESTAMP" />
+		<result column="RESULT" property="result" jdbcType="VARCHAR" />
+		<result column="UPDATED_AT" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="CREATED_AT" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="DELETED_FLG" property="deletedFlg" jdbcType="INTEGER" />
+	</resultMap>
 	<insert id="createAsyncProc" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
 		INSERT INTO async_procs (
@@ -60,4 +73,33 @@
 			AND
 			deleted_flg = 0
 	</update>
+	<select id="countAsyncProc" resultType="int">
+		SELECT
+			COUNT(A.id)
+		FROM
+			async_procs A
+		WHERE
+			A.deleted_flg = 0
+	</select>
+	<select id="searchAsyncProc" resultMap="BaseResultMap">
+		SELECT
+			A.id,
+			A.name,
+			A.status,
+			A.registered_at,
+			A.invoked_at,
+			A.started_at,
+			A.finished_at,
+			A.result,
+			A.updated_at,
+			A.created_at,
+			A.deleted_flg
+		FROM
+			async_procs A
+		WHERE
+			A.deleted_flg = 0
+		ORDER BY
+			A.registered_at DESC
+		LIMIT #{limit,jdbcType=INTEGER} OFFSET #{offset,jdbcType=INTEGER}
+	</select>
 </mapper>

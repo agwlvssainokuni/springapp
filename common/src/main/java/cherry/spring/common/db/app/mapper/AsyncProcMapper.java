@@ -16,6 +16,10 @@
 
 package cherry.spring.common.db.app.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cherry.spring.common.db.gen.dto.AsyncProcs;
 
 public interface AsyncProcMapper {
@@ -29,5 +33,10 @@ public interface AsyncProcMapper {
 	int successAsyncProc(AsyncProcs entity);
 
 	int errorAsyncProc(AsyncProcs entity);
+
+	int countAsyncProcs();
+
+	List<AsyncProcs> searchAsyncProc(@Param("limit") Integer limit,
+			@Param("offset") Integer offset);
 
 }
