@@ -21,6 +21,14 @@ subprojects {
 		project.appendix = parent.appendix
 	}
 
+	sourceSets {
+		main {
+			resources {
+				srcDir "src/main/java"
+			}
+		}
+	}
+
 	task processDistResources(type: Copy, overwrite: true) {
 		from "src/main/distResources"
 		into sourceSets.main.output.resourcesDir
