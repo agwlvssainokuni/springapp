@@ -92,7 +92,7 @@
 	<div data-role="navbar">
 		<ul>
 			<c:set var="prevUiDisabled">
-				<c:if test="${result.pageSet.current == result.pageSet.prev}">ui-disabled</c:if>
+				<c:if test="${result.pageSet.current.no == result.pageSet.prev.no}">ui-disabled</c:if>
 			</c:set>
 			<li><a href="#"
 				class="ui-icon-arrow-u ui-btn-icon-top ${prevUiDisabled}"
@@ -131,7 +131,7 @@
 	<div data-role="navbar">
 		<ul>
 			<c:set var="nextUiDisabled">
-				<c:if test="${result.pageSet.current == result.pageSet.next}">ui-disabled</c:if>
+				<c:if test="${result.pageSet.current.no == result.pageSet.next.no}">ui-disabled</c:if>
 			</c:set>
 			<li><a href="#"
 				class="ui-icon-arrow-d ui-btn-icon-top ${nextUiDisabled}"
