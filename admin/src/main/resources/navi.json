@@ -7,6 +7,10 @@
 			"uri": "/secure/pwdtool"
 		},
 		{
+			"name": "secure/asyncproc/index",
+			"uri": "/secure/asyncproc"
+		},
+		{
 			"name": "secure/userman/index",
 			"uri": "/secure/userman",
 			"children": [
