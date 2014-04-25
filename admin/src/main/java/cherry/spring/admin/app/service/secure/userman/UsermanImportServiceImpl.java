@@ -18,9 +18,11 @@ package cherry.spring.admin.app.service.secure.userman;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
@@ -145,8 +147,14 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private File createFile(MultipartFile file) throws IOException {
 		File tempFile = File.createTempFile(
 				MessageFormat.format(prefix, new Date()), suffix, tempDir);
-		try {
-			file.transferTo(tempFile);
+		try (InputStream in = file.getInputStream()) {
+			try (OutputStream out = new FileOutputStream(tempFile)) {
+				byte[] buff = new byte[4096];
+				int size;
+				while ((size = in.read(buff, 0, buff.length)) >= 0) {
+					out.write(buff, 0, size);
+				}
+			}
 			return tempFile;
 		} catch (IOException ex) {
 			if (!tempFile.delete()) {
