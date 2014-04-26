@@ -57,7 +57,7 @@
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
 	</bean>

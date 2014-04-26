@@ -33,7 +33,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.JmsOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,7 +81,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private DataLoader usersLoader;
 
 	@Autowired
-	private JmsTemplate jmsTemplate;
+	private JmsOperations jmsOperations;
 
 	@Transactional
 	@Override
@@ -106,7 +106,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			Map<String, String> message = new HashMap<>();
 			message.put(PROC_ID, procId.toString());
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
-			jmsTemplate.convertAndSend(queue, message);
+			jmsOperations.convertAndSend(queue, message);
 
 			asyncProcService.invokeAsyncProc(procId);
 
