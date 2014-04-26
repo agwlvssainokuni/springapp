@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,6 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class JsonHelperImpl implements JsonHelper {
+
+	@Value("${common.jsonHelper.throwable.maxlength}")
+	private Integer throwableMaxlength;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -42,7 +46,8 @@ public class JsonHelperImpl implements JsonHelper {
 
 	@Override
 	public String fromThrowable(Throwable th) {
-		return fromMap(createThrowableData(th));
+		return fromMap(createThrowableData(th))
+				.substring(0, throwableMaxlength);
 	}
 
 	private Map<String, Object> createThrowableData(Throwable th) {
