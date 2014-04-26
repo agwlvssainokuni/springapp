@@ -17,6 +17,7 @@
 package cherry.spring.admin.app.controller.secure.userman;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,6 +42,8 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	public static final String VIEW_PATH = "secure/userman/import/index";
 
 	public static final String VIEW_PATH_FIN = "secure/userman/import/finish";
+
+	public static final String ASYNC_PARAM = "asyncParam";
 
 	@Autowired
 	private UsermanImportService usermanImportService;
@@ -71,10 +74,9 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 			return mav;
 		}
 
-		usermanImportService.launchImportUsers(form.getFile());
-
-		// Result result = usermanImportService.importUsers(form.getFile());
-		// redirectAttributes.addFlashAttribute(result);
+		Map<String, String> asyncParam = usermanImportService
+				.launchImportUsers(form.getFile());
+		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_FIN, true));

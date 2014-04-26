@@ -12,6 +12,12 @@
 	<s:message code="secure/userman/import/finish.message.0" />
 </h1>
 <div class="app-portion ui-state-highlight">
-	<s:message code="secure/userman/import/finish.message.1"
-		arguments="${result.totalCount},${result.successCount},${result.failedCount}" />
+	<div>
+		<s:message code="secure/userman/import/finish.message.1"
+			arguments="${asyncParam.procId}" />
+	</div>
+	<div>
+		<a href="<c:url value="/secure/asyncproc" />"><s:message
+				code="secure/userman/import/finish.message.2" /></a>
+	</div>
 </div>

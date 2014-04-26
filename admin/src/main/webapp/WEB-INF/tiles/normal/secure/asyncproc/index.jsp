@@ -34,7 +34,7 @@
 				<div class="app-pager">
 					<div class="app-pager-desc">
 						<s:message code="common/pager.message.0"
-							arguments="${result.pageSet.last.to+1},${result.pageSet.current.no+1},${result.pageSet.last.no+1}" />
+							arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
 					</div>
 					<div class="app-pager-link">
 						<span class="app-current" title="${result.pageSet.current.no+1}"></span>
