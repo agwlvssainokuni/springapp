@@ -72,7 +72,7 @@
 <c:if test="${resultIsNotEmpty}">
 	<f:form servletRelativeAction="/secure/userman/search/req"
 		method="POST" modelAttribute="usermanSearchForm"
-		id="usermanSearchWithPage">
+		id="usermanSearchFormHidden" cssClass="app-pager-form">
 		<f:hidden path="mailAddr" id="mailAddr2" />
 		<f:hidden path="registeredFrom" id="registeredFrom2" />
 		<f:hidden path="registeredTo" id="registeredTo2" />
@@ -81,22 +81,12 @@
 		<input type="hidden" id="no" name="no">
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
 	</f:form>
-	<script type="text/javascript">
-		function searchUsers(pageNo) {
-			var form = $("#usermanSearchWithPage");
-			form.children("input[name='no']").val(pageNo);
-			form.submit();
-			return false;
-		}
-	</script>
-	<div data-role="navbar">
+	<div data-role="navbar" class="app-pager-link">
+		<span class="app-current" title="${result.pageSet.current.no+1}"></span>
 		<ul>
-			<c:set var="prevUiDisabled">
-				<c:if test="${result.pageSet.current.no == result.pageSet.prev.no}">ui-disabled</c:if>
-			</c:set>
 			<li><a href="#"
-				class="ui-icon-arrow-u ui-btn-icon-top ${prevUiDisabled}"
-				onclick="JavaScript:searchUsers(${result.pageSet.prev.no});"><s:message
+				class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
+				title="${result.pageSet.prev.no+1}"><s:message
 						code="secure/userman/search/index.paginate.prev" /></a></li>
 		</ul>
 	</div>
@@ -128,14 +118,12 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<div data-role="navbar">
+	<div data-role="navbar" class="app-pager-link">
+		<span class="app-current" title="${result.pageSet.current.no+1}"></span>
 		<ul>
-			<c:set var="nextUiDisabled">
-				<c:if test="${result.pageSet.current.no == result.pageSet.next.no}">ui-disabled</c:if>
-			</c:set>
 			<li><a href="#"
-				class="ui-icon-arrow-d ui-btn-icon-top ${nextUiDisabled}"
-				onclick="JavaScript:searchUsers(${result.pageSet.next.no});"><s:message
+				class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
+				title="${result.pageSet.next.no+1}"><s:message
 						code="secure/userman/search/index.paginate.next" /></a></li>
 		</ul>
 	</div>
