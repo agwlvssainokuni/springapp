@@ -7,11 +7,11 @@ $(function() {
 	$("table.app-stripe>tbody>tr:odd").addClass("app-odd");
 
 	$(".app-pager-link").each(function(index) {
-		var current = $(this).children(".app-current").attr("title");
-		var pages = $(this).children(".app-page[title != '" + current + "']");
+		var current = $(".app-current", this).attr("title");
+		var pages = $(".app-page[title != '" + current + "']", this);
 		pages.wrap("<a href='#'></a>").click(function() {
 			var form = $(".app-pager-form");
-			form.children("input[name='no']").val(this.title - 1);
+			$("input[name='no']", form).val(this.title - 1);
 			form.submit();
 			return false;
 		});
