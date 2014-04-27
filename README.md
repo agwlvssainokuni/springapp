@@ -18,6 +18,19 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 			*	カーソル制御を想定したDBアクセスの典型的実装パターン
 		*	トランザクション制御
 			*	annotation-driven
+	*	JMS
+		*	ConnectionFactory
+			*	jee:jndi-lookup
+		*	JndiDestinationResolver
+		*	実行系
+			*	キューに入れる
+				*	JmsTemplate (JmsOperations)
+			*	キューから受け取って実行
+				*	MDP (Message-Driven POJOs)
+				*	jms:listener-container
+				*	jms:listener
+		*	非同期実行の状態管理
+			*	キュー処理と状態管理のトランザクションを分ける
 	*	メッセージ定義
 		*	MessageSourceの初期化
 	*	ロケール解決
@@ -28,7 +41,6 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 			*	@Controller, @RequestMapping, @ModelAttribute
 			*	URI、ビュー名の定数定義
 			*	アクションのメソッドの引数の典型的実装パターン
-			*	ページネーション
 		*	ビュー
 			*	JSTL
 			*	Apache Tiles 3
@@ -39,6 +51,9 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 			*	Bean Validation (JSR-303)
 				*	カスタムバリデーション
 				*	@ReportAsSingleViolation
+		*	ページネーション
+			*	リンクの生成
+			*	クリック処理&ON/OFFをJavaScriptで組込み
 		*	ファイルアップロード
 		*	ファイルダウンロード
 		*	ハンドラインタセプタ
