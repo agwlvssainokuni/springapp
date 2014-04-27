@@ -29,22 +29,12 @@
 				id="sz" name="sz" value="${param.sz}"> <input type="hidden"
 				name="${_csrf.parameterName}" value="${_csrf.token}">
 		</form>
-		<script type="text/javascript">
-			function searchAsyncProcs(pageNo) {
-				var form = $(".app-pager-form");
-				form.children("input[name='no']").val(pageNo);
-				form.submit();
-				return false;
-			}
-		</script>
-		<div data-role="navbar">
+		<div data-role="navbar" class="app-pager-link">
+			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
 			<ul>
-				<c:set var="prevUiDisabled">
-					<c:if test="${result.pageSet.current.no == result.pageSet.prev.no}">ui-disabled</c:if>
-				</c:set>
 				<li><a href="#"
-					class="ui-icon-arrow-u ui-btn-icon-top ${prevUiDisabled}"
-					onclick="JavaScript:searchAsyncProcs(${result.pageSet.prev.no});"><s:message
+					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
+					title="${result.pageSet.prev.no+1}"><s:message
 							code="secure/asyncproc/index.paginate.prev" /></a></li>
 			</ul>
 		</div>
@@ -65,7 +55,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="item" items="${result.asyncProcList}" varStatus="status">
+				<c:forEach var="item" items="${result.asyncProcList}"
+					varStatus="status">
 					<tr>
 						<td><c:out
 								value="${result.pageSet.current.from + status.count}" /></td>
@@ -81,14 +72,12 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div data-role="navbar">
+		<div data-role="navbar" class="app-pager-link">
+			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
 			<ul>
-				<c:set var="nextUiDisabled">
-					<c:if test="${result.pageSet.current.no == result.pageSet.next.no}">ui-disabled</c:if>
-				</c:set>
 				<li><a href="#"
-					class="ui-icon-arrow-d ui-btn-icon-top ${nextUiDisabled}"
-					onclick="JavaScript:searchAsyncProcs(${result.pageSet.next.no});"><s:message
+					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
+					title="${result.pageSet.next.no+1}"><s:message
 							code="secure/asyncproc/index.paginate.next" /></a></li>
 			</ul>
 		</div>
