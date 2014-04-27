@@ -52,19 +52,4 @@
 		</property>
 	</bean>
 
-	<jee:jndi-lookup id="connectionFactory" jndi-name="${admin.jms.connectionFactory}" />
-
-	<bean id="destinationResolver"
-		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
-
-	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="destinationResolver" ref="destinationResolver" />
-	</bean>
-
-	<jms:listener-container destination-resolver="destinationResolver">
-		<jms:listener destination="${admin.app.userman.import.queue}"
-			ref="usermanImportServiceImpl" method="handleImportUsers" />
-	</jms:listener-container>
-
 </beans>
