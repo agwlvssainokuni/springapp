@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,17 +78,32 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
 	}
 
-	private Date dateFromCond(String string) {
-		if (StringUtils.isBlank(string)) {
+	// private Date dateFromCond(String string) {
+	// if (StringUtils.isBlank(string)) {
+	// return null;
+	// }
+	// return dateTimeHelper.parseFrom(string).toDate();
+	// }
+	//
+	// private Date dateToCond(String string) {
+	// if (StringUtils.isBlank(string)) {
+	// return null;
+	// }
+	// return dateTimeHelper.parseTo(string).toDate();
+	// }
+
+	private Date dateFromCond(LocalDateTime dt) {
+		if (dt == null) {
 			return null;
 		}
-		return dateTimeHelper.parseFrom(string).toDate();
+		return dt.toDate();
 	}
 
-	private Date dateToCond(String string) {
-		if (StringUtils.isBlank(string)) {
+	private Date dateToCond(LocalDateTime dt) {
+		if (dt == null) {
 			return null;
 		}
-		return dateTimeHelper.parseTo(string).toDate();
+		return dt.toDate();
 	}
+
 }
