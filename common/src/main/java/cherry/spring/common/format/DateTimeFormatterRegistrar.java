@@ -75,6 +75,14 @@ public class DateTimeFormatterRegistrar implements FormatterRegistrar {
 				.appendOptional(delimiterParse.append(timeParse.toParser())
 						.toParser());
 
+		DateTimeFormatterBuilder timeHmParse = builder(timeToParseHm);
+		DateTimeFormatterBuilder timeHmsParse = timeHmParse.append(builder(
+				timeToParseS).toParser());
+		DateTimeFormatterBuilder dateTimeHmParse = dateParse.append(
+				delimiterParse.toParser()).append(timeHmParse.toParser());
+		DateTimeFormatterBuilder dateTimeHmsParse = dateParse.append(
+				delimiterParse.toParser()).append(timeHmsParse.toParser());
+
 		registry.addFormatterForFieldType(LocalDate.class,
 				new ReadablePartialPrinter(datePrint.toFormatter()),
 				new LocalDateParser(dateParse.toFormatter()));
@@ -91,6 +99,29 @@ public class DateTimeFormatterRegistrar implements FormatterRegistrar {
 				new ReadableInstantPrinter(dateTimePrint.toFormatter()),
 				new DateTimeParser(dateTimeParse.toFormatter()));
 
+		registry.addFormatterForFieldType(LocalDateTo.class,
+				new ReadablePartialToPrinter(datePrint.toFormatter()),
+				new LocalDateToParser(dateParse.toFormatter()));
+
+		registry.addFormatterForFieldType(
+				LocalTimeTo.class,
+				new ReadablePartialToPrinter(timePrint.toFormatter()),
+				new LocalTimeToParser(timeHmParse.toFormatter(), timeHmsParse
+						.toFormatter()));
+
+		registry.addFormatterForFieldType(
+				LocalDateTimeTo.class,
+				new ReadablePartialToPrinter(dateTimePrint.toFormatter()),
+				new LocalDateTimeToParser(dateParse.toFormatter(),
+						dateTimeHmParse.toFormatter(), dateTimeHmsParse
+								.toFormatter()));
+
+		registry.addFormatterForFieldType(
+				ReadableInstantTo.class,
+				new ReadablePartialToPrinter(dateTimePrint.toFormatter()),
+				new DateTimeToParser(dateParse.toFormatter(), dateTimeHmParse
+						.toFormatter(), dateTimeHmsParse.toFormatter()));
+
 		registry.addFormatterForFieldType(Date.class,
 				new ReadableInstantPrinter(dateTimePrint.toFormatter()),
 				new DateTimeParser(dateTimeParse.toFormatter()));
@@ -100,13 +131,6 @@ public class DateTimeFormatterRegistrar implements FormatterRegistrar {
 				new DateTimeParser(dateTimeParse.toFormatter()));
 
 		registry.addFormatterForFieldAnnotation(new JodaDateTimeFormatAnnotationFormatterFactory());
-
-		// TODO 検討
-		// 日時範囲の終端(TO)の指定方法。
-		// yyyy/M/d => +1日「より前」
-		// yyyy/M/d H:m => +1分「より前」
-		// yyyy/M/d H:m:s => +1秒「より前」
-
 	}
 
 	private DateTimeFormatterBuilder builder(String pattern) {
