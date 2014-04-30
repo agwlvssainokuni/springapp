@@ -105,9 +105,9 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		} else if (fieldType == LocalTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
+					DateTimeFormatterBuilder hm = builder(timeToParseHm);
 					DateTimeFormatterBuilder hms = builder(timeToParseHm)
 							.appendPattern(timeToParseS);
-					DateTimeFormatterBuilder hm = builder(timeToParseHm);
 					return new LocalTimeToParser2(hm.toFormatter(),
 							hms.toFormatter());
 				} else {
@@ -123,14 +123,14 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		} else if (fieldType == LocalDateTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
+					DateTimeFormatterBuilder ymd = builder(dateToParse);
+					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
+							.appendPattern(delimiterToParse).appendPattern(
+									timeToParseHm);
 					DateTimeFormatterBuilder ymdhms = builder(dateToParse)
 							.appendPattern(delimiterToParse)
 							.appendPattern(timeToParseHm)
 							.appendPattern(timeToParseS);
-					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
-							.appendPattern(delimiterToParse).appendPattern(
-									timeToParseHm);
-					DateTimeFormatterBuilder ymd = builder(dateToParse);
 					return new LocalDateTimeToParser2(ymd.toFormatter(),
 							ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {
@@ -154,14 +154,14 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		} else if (fieldType == DateTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
+					DateTimeFormatterBuilder ymd = builder(dateToParse);
+					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
+							.appendPattern(delimiterToParse).appendPattern(
+									timeToParseHm);
 					DateTimeFormatterBuilder ymdhms = builder(dateToParse)
 							.appendPattern(delimiterToParse)
 							.appendPattern(timeToParseHm)
 							.appendPattern(timeToParseS);
-					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
-							.appendPattern(delimiterToParse).appendPattern(
-									timeToParseHm);
-					DateTimeFormatterBuilder ymd = builder(dateToParse);
 					return new DateTimeToParser2(ymd.toFormatter(),
 							ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {

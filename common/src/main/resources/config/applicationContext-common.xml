@@ -28,7 +28,10 @@
 		<aop:advisor advice-ref="traceInterceptor"
 			pointcut="execution(* cherry.spring..*.*(..))
 				and
-				!execution(* cherry.spring.common.log..*.*(..))" />
+				!execution(* cherry.spring.common.log..*.*(..))
+				and
+				!execution(* cherry.spring.common.format..*.*(..))
+				" />
 	</aop:config>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -45,11 +48,8 @@
 			<set>
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
-			</set>
-		</property>
-		<property name="formatterRegistrars">
-			<set>
-				<bean class="cherry.spring.common.format.DateTimeFormatterRegistrar" />
+				<bean
+					class="cherry.spring.common.format.CustomDateTimeFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 	</bean>

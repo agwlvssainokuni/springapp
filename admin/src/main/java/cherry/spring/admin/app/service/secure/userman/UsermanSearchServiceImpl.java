@@ -29,7 +29,6 @@ import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.app.mapper.UserCondition;
 import cherry.spring.common.db.app.mapper.UserMapper;
 import cherry.spring.common.db.gen.dto.Users;
-import cherry.spring.common.format.LocalDateTimeTo;
 import cherry.spring.common.lib.pager.PageSet;
 import cherry.spring.common.lib.pager.Paginator;
 
@@ -82,11 +81,11 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		return dt.toDate();
 	}
 
-	private Date dateToCond(LocalDateTimeTo dt) {
+	private Date dateToCond(LocalDateTime dt) {
 		if (dt == null) {
 			return null;
 		}
-		return dt.getAdjusted().plusSeconds(1).toDate();
+		return dt.plusSeconds(1).toDate();
 	}
 
 }
