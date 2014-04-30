@@ -56,7 +56,10 @@ ul.app-flat {
 
 ul.app-flat>li {
 	display: inline;
-	margin-right: 10px;
+}
+
+ul.app-flat>li+li {
+	margin-left: 5px;
 }
 
 .app-pager {
