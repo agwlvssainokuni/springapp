@@ -24,16 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.app.mapper.AsyncProcMapper;
 import cherry.spring.common.db.gen.dto.AsyncProcs;
-import cherry.spring.common.lib.pager.Paginator;
 
 @Component
 public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 
 	@Autowired
 	private AsyncProcMapper asyncProcMapper;
-
-	@Autowired
-	private Paginator paginator;
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
