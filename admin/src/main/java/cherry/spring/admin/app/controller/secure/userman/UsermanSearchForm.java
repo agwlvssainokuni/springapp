@@ -19,6 +19,7 @@ package cherry.spring.admin.app.controller.secure.userman;
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.admin.app.controller.BaseForm;
+import cherry.spring.common.format.LocalDateTimeTo;
 import cherry.spring.common.validator.DisplayNameSize;
 import cherry.spring.common.validator.MailAddrSize;
 
@@ -40,7 +41,7 @@ public class UsermanSearchForm extends BaseForm {
 
 	private LocalDateTime registeredFrom;
 
-	private LocalDateTime registeredTo;
+	private LocalDateTimeTo registeredTo;
 
 	@DisplayNameSize
 	private String firstName;
@@ -64,11 +65,11 @@ public class UsermanSearchForm extends BaseForm {
 		this.registeredFrom = registeredFrom;
 	}
 
-	public LocalDateTime getRegisteredTo() {
+	public LocalDateTimeTo getRegisteredTo() {
 		return registeredTo;
 	}
 
-	public void setRegisteredTo(LocalDateTime registeredTo) {
+	public void setRegisteredTo(LocalDateTimeTo registeredTo) {
 		this.registeredTo = registeredTo;
 	}
 
