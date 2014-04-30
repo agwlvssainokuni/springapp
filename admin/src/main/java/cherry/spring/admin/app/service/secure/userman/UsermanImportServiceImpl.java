@@ -45,7 +45,7 @@ import cherry.spring.common.lib.db.DataLoader;
 import cherry.spring.common.lib.db.DataLoader.Result;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.spring.common.service.AsyncProcService;
+import cherry.spring.common.service.AsyncProcStatusService;
 
 @Component
 public class UsermanImportServiceImpl implements UsermanImportService {
@@ -72,7 +72,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private String queue;
 
 	@Autowired
-	private AsyncProcService asyncProcService;
+	private AsyncProcStatusService asyncProcStatusService;
 
 	@Autowired
 	private JsonHelper jsonHelper;
@@ -100,7 +100,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Override
 	public Map<String, String> launchImportUsers(MultipartFile file) {
 		String name = UsermanImportService.class.getSimpleName();
-		Integer procId = asyncProcService.createAsyncProc(name);
+		Integer procId = asyncProcStatusService.createAsyncProc(name);
 		try {
 			File tempFile = createFile(file);
 
@@ -109,11 +109,11 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
 			jmsOperations.convertAndSend(queue, message);
 
-			asyncProcService.invokeAsyncProc(procId);
+			asyncProcStatusService.invokeAsyncProc(procId);
 
 			return message;
 		} catch (IOException ex) {
-			asyncProcService.errorAsyncProc(procId,
+			asyncProcStatusService.errorAsyncProc(procId,
 					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		}
@@ -125,7 +125,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		Integer procId = Integer.parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			asyncProcService.startAsyncProc(procId);
+			asyncProcStatusService.startAsyncProc(procId);
 
 			Result result = loadFile(tempFile);
 
@@ -133,14 +133,15 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			map.put("total", result.getTotalCount());
 			map.put("success", result.getSuccessCount());
 			map.put("failed", result.getFailedCount());
-			asyncProcService.successAsyncProc(procId, jsonHelper.fromMap(map));
+			asyncProcStatusService.successAsyncProc(procId,
+					jsonHelper.fromMap(map));
 
 		} catch (DataAccessException ex) {
-			asyncProcService.errorAsyncProc(procId,
+			asyncProcStatusService.errorAsyncProc(procId,
 					jsonHelper.fromThrowable(ex));
 			throw ex;
 		} catch (IOException ex) {
-			asyncProcService.errorAsyncProc(procId,
+			asyncProcStatusService.errorAsyncProc(procId,
 					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		} finally {

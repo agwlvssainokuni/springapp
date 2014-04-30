@@ -18,17 +18,11 @@ package cherry.spring.common.service;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.BaseDto;
-import cherry.spring.common.db.gen.dto.AsyncProcs;
-import cherry.spring.common.lib.pager.PageSet;
-
 @Component
-public interface AsyncProcService {
+public interface AsyncProcStatusService {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	int createAsyncProc(String name);
@@ -44,33 +38,5 @@ public interface AsyncProcService {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	void errorAsyncProc(int id, String json);
-
-	@Transactional
-	Result searchAsyncProc(int pageNo, int pageSz);
-
-	public static class Result extends BaseDto {
-
-		private static final long serialVersionUID = 1L;
-
-		private PageSet pageSet;
-
-		private List<AsyncProcs> asyncProcList;
-
-		public PageSet getPageSet() {
-			return pageSet;
-		}
-
-		public void setPageSet(PageSet pageSet) {
-			this.pageSet = pageSet;
-		}
-
-		public List<AsyncProcs> getAsyncProcList() {
-			return asyncProcList;
-		}
-
-		public void setAsyncProcList(List<AsyncProcs> asyncProcList) {
-			this.asyncProcList = asyncProcList;
-		}
-	}
 
 }

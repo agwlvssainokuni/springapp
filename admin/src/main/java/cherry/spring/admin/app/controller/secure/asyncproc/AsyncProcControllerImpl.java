@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.spring.common.service.AsyncProcService;
+import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService;
 
 @Controller
 @RequestMapping(AsyncProcController.URI_PATH)

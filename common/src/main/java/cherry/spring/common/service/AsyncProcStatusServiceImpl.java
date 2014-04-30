@@ -18,19 +18,16 @@ package cherry.spring.common.service;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.app.mapper.AsyncProcMapper;
 import cherry.spring.common.db.gen.dto.AsyncProcs;
-import cherry.spring.common.lib.pager.PageSet;
 import cherry.spring.common.lib.pager.Paginator;
 
 @Component
-public class AsyncProcServiceImpl implements AsyncProcService {
+public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 
 	@Autowired
 	private AsyncProcMapper asyncProcMapper;
@@ -99,20 +96,6 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 			throw new IllegalStateException(
 					"async_procs is not updated (error) for id=" + id);
 		}
-	}
-
-	@Transactional
-	public Result searchAsyncProc(int pageNo, int pageSz) {
-
-		int count = asyncProcMapper.countAsyncProc();
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
-		int offset = pageSet.getCurrent().getFrom();
-		List<AsyncProcs> list = asyncProcMapper.searchAsyncProc(pageSz, offset);
-
-		Result result = new Result();
-		result.setPageSet(pageSet);
-		result.setAsyncProcList(list);
-		return result;
 	}
 
 }
