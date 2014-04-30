@@ -40,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanExportService;
-import cherry.spring.common.format.alt.LocalDateTimeTo;
 
 @Controller
 @RequestMapping(UsermanExportController.URI_PATH)
@@ -98,7 +97,7 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 	}
 
 	private long sendFile(LocalDateTime registeredFrom,
-			LocalDateTimeTo registeredTo, HttpServletResponse response) {
+			LocalDateTime registeredTo, HttpServletResponse response) {
 
 		response.setContentType(contentType);
 		response.setCharacterEncoding(charset.name());
@@ -116,7 +115,7 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 		if (registeredTo == null) {
 			to = new Date(Long.MAX_VALUE);
 		} else {
-			to = registeredTo.getAdjusted().plusSeconds(1).toDate();
+			to = registeredTo.plusSeconds(1).toDate();
 		}
 
 		try (OutputStream out = response.getOutputStream()) {
