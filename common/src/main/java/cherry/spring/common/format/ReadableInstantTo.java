@@ -16,6 +16,8 @@
 
 package cherry.spring.common.format;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.ReadableInstant;
 import org.joda.time.ReadablePeriod;
 
@@ -39,6 +41,12 @@ public abstract class ReadableInstantTo<T extends ReadableInstant> implements
 	@Override
 	public ReadablePeriod getOffset() {
 		return offset;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }
