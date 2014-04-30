@@ -57,6 +57,7 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 				*	@ReportAsSingleViolation
 		*	ページネーション
 			*	リンクの生成
+				*	JSPタグでページネーションリンクを生成。
 			*	クリック処理&ON/OFFをJavaScriptで組込み
 		*	ファイルアップロード
 		*	ファイルダウンロード
