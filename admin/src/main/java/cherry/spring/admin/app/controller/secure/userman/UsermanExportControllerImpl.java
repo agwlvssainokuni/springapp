@@ -27,7 +27,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanExportService;
-import cherry.spring.common.helper.DateTimeHelper;
+import cherry.spring.common.format.LocalDateTimeTo;
 
 @Controller
 @RequestMapping(UsermanExportController.URI_PATH)
@@ -65,9 +65,6 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 
 	@Autowired
 	private UsermanExportService usermanExportService;
-
-	@Autowired
-	private DateTimeHelper dateTimeHelper;
 
 	@ModelAttribute(UsermanExportForm.NAME)
 	@Override
@@ -100,8 +97,8 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 		return null;
 	}
 
-	private long sendFile(String registeredFrom, String registeredTo,
-			HttpServletResponse response) {
+	private long sendFile(LocalDateTime registeredFrom,
+			LocalDateTimeTo registeredTo, HttpServletResponse response) {
 
 		response.setContentType(contentType);
 		response.setCharacterEncoding(charset.name());
@@ -109,17 +106,17 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
 
 		Date from;
-		if (StringUtils.isEmpty(registeredFrom)) {
+		if (registeredFrom == null) {
 			from = new Date(0L);
 		} else {
-			from = dateTimeHelper.parseFrom(registeredFrom).toDate();
+			from = registeredFrom.toDate();
 		}
 
 		Date to;
-		if (StringUtils.isEmpty(registeredTo)) {
+		if (registeredTo == null) {
 			to = new Date(Long.MAX_VALUE);
 		} else {
-			to = dateTimeHelper.parseTo(registeredTo).toDate();
+			to = registeredTo.getAdjusted().plusSeconds(1).toDate();
 		}
 
 		try (OutputStream out = response.getOutputStream()) {
@@ -129,4 +126,5 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 			throw new IllegalStateException(ex);
 		}
 	}
+
 }

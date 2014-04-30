@@ -16,8 +16,10 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
+import org.joda.time.LocalDateTime;
+
 import cherry.spring.admin.app.controller.BaseForm;
-import cherry.spring.common.validator.DateTimeOptPattern;
+import cherry.spring.common.format.LocalDateTimeTo;
 
 public class UsermanExportForm extends BaseForm {
 
@@ -30,25 +32,23 @@ public class UsermanExportForm extends BaseForm {
 
 	public static final String REGISTERED_TO = "registeredTo";
 
-	@DateTimeOptPattern
-	private String registeredFrom;
+	private LocalDateTime registeredFrom;
 
-	@DateTimeOptPattern
-	private String registeredTo;
+	private LocalDateTimeTo registeredTo;
 
-	public String getRegisteredFrom() {
+	public LocalDateTime getRegisteredFrom() {
 		return registeredFrom;
 	}
 
-	public void setRegisteredFrom(String registeredFrom) {
+	public void setRegisteredFrom(LocalDateTime registeredFrom) {
 		this.registeredFrom = registeredFrom;
 	}
 
-	public String getRegisteredTo() {
+	public LocalDateTimeTo getRegisteredTo() {
 		return registeredTo;
 	}
 
-	public void setRegisteredTo(String registeredTo) {
+	public void setRegisteredTo(LocalDateTimeTo registeredTo) {
 		this.registeredTo = registeredTo;
 	}
 

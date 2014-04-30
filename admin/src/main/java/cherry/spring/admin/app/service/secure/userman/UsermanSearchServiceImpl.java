@@ -30,7 +30,6 @@ import cherry.spring.common.db.app.mapper.UserCondition;
 import cherry.spring.common.db.app.mapper.UserMapper;
 import cherry.spring.common.db.gen.dto.Users;
 import cherry.spring.common.format.LocalDateTimeTo;
-import cherry.spring.common.helper.DateTimeHelper;
 import cherry.spring.common.lib.pager.PageSet;
 import cherry.spring.common.lib.pager.Paginator;
 
@@ -39,9 +38,6 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Autowired
 	private UserMapper userMapper;
-
-	@Autowired
-	private DateTimeHelper dateTimeHelper;
 
 	@Autowired
 	private Paginator paginator;
@@ -79,20 +75,6 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
 	}
 
-	// private Date dateFromCond(String string) {
-	// if (StringUtils.isBlank(string)) {
-	// return null;
-	// }
-	// return dateTimeHelper.parseFrom(string).toDate();
-	// }
-	//
-	// private Date dateToCond(String string) {
-	// if (StringUtils.isBlank(string)) {
-	// return null;
-	// }
-	// return dateTimeHelper.parseTo(string).toDate();
-	// }
-
 	private Date dateFromCond(LocalDateTime dt) {
 		if (dt == null) {
 			return null;
@@ -104,7 +86,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		if (dt == null) {
 			return null;
 		}
-		return dt.getAdjusted().toDate();
+		return dt.getAdjusted().plusSeconds(1).toDate();
 	}
 
 }

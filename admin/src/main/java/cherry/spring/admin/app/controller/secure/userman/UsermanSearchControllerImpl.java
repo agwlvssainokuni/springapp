@@ -82,4 +82,5 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 		mav.addObject(result);
 		return mav;
 	}
+
 }
