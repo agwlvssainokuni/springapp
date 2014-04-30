@@ -62,26 +62,28 @@ public class DateTimeFormatterRegistrar implements FormatterRegistrar {
 	public void registerFormatters(FormatterRegistry registry) {
 
 		DateTimeFormatterBuilder datePrint = builder(dateToPrint);
-		DateTimeFormatterBuilder dateParse = builder(dateToParse);
 		DateTimeFormatterBuilder timePrint = builder(timeToPrint);
+		DateTimeFormatterBuilder dateTimePrint = builder(dateToPrint)
+				.appendPattern(delimiterToPrint).appendPattern(timeToPrint);
+
+		DateTimeFormatterBuilder dateParse = builder(dateToParse);
 		DateTimeFormatterBuilder timeParse = builder(timeToParseHm)
 				.appendOptional(builder(timeToParseS).toParser());
-		DateTimeFormatterBuilder delimiterPrint = builder(delimiterToPrint);
-		DateTimeFormatterBuilder delimiterParse = builder(delimiterToParse);
-		DateTimeFormatterBuilder dateTimePrint = datePrint
-				.append(delimiterPrint.append(timePrint.toPrinter())
-						.toPrinter());
-		DateTimeFormatterBuilder dateTimeParse = dateParse
-				.appendOptional(delimiterParse.append(timeParse.toParser())
-						.toParser());
+		DateTimeFormatterBuilder dateTimeParse = builder(dateToParse)
+				.appendOptional(
+						builder(delimiterToParse).append(
+								builder(timeToParseHm).appendOptional(
+										builder(timeToParseS).toParser())
+										.toParser()).toParser());
 
 		DateTimeFormatterBuilder timeHmParse = builder(timeToParseHm);
-		DateTimeFormatterBuilder timeHmsParse = timeHmParse.append(builder(
-				timeToParseS).toParser());
-		DateTimeFormatterBuilder dateTimeHmParse = dateParse.append(
-				delimiterParse.toParser()).append(timeHmParse.toParser());
-		DateTimeFormatterBuilder dateTimeHmsParse = dateParse.append(
-				delimiterParse.toParser()).append(timeHmsParse.toParser());
+		DateTimeFormatterBuilder timeHmsParse = builder(timeToParseHm)
+				.appendPattern(timeToParseS);
+		DateTimeFormatterBuilder dateTimeHmParse = builder(dateToParse)
+				.appendPattern(delimiterToParse).appendPattern(timeToParseHm);
+		DateTimeFormatterBuilder dateTimeHmsParse = builder(dateToParse)
+				.appendPattern(delimiterToParse).appendPattern(timeToParseHm)
+				.appendPattern(timeToParseS);
 
 		registry.addFormatterForFieldType(LocalDate.class,
 				new ReadablePartialPrinter(datePrint.toFormatter()),

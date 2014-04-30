@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.LocalDateTimeParser;
 
@@ -46,11 +45,11 @@ public class LocalDateTimeToParser implements Parser<LocalDateTimeTo> {
 		try {
 			return new LocalDateTimeTo(parserYmdHms.parse(text, locale),
 					Period.ZERO);
-		} catch (ParseException | ConversionFailedException ex) {
+		} catch (IllegalArgumentException ex) {
 			try {
 				return new LocalDateTimeTo(parserYmdHm.parse(text, locale),
 						Period.minutes(1).withSeconds(-1));
-			} catch (ParseException | ConversionFailedException ex2) {
+			} catch (IllegalArgumentException ex2) {
 				return new LocalDateTimeTo(parserYmd.parse(text, locale),
 						Period.days(1).withSeconds(-1));
 			}
