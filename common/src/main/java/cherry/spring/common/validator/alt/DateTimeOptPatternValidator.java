@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.validator;
+package cherry.spring.common.validator.alt;
 
 import static org.joda.time.format.DateTimeFormat.forPattern;
 

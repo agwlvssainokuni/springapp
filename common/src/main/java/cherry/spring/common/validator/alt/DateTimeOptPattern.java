@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.validator;
+package cherry.spring.common.validator.alt;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -28,21 +28,23 @@ import javax.validation.Payload;
 
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = DateTimePatternValidator.class)
-public @interface DateTimePattern {
+@Constraint(validatedBy = DateTimeOptPatternValidator.class)
+public @interface DateTimeOptPattern {
 
-	String message() default "{cherry.spring.common.validator.DateTimePattern.message}";
+	String message() default "{cherry.spring.common.validator.DateTimeOptPattern.message}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
-	String pattern() default "yyyy/MM/dd HH:mm:ss";
+	String datePattern() default "yyyy/MM/dd";
+
+	String timePattern() default " HH:mm:ss";
 
 	@Target({ METHOD, FIELD })
 	@Retention(RUNTIME)
 	public @interface List {
-		DateTimePattern[] value();
+		DateTimeOptPattern[] value();
 	}
 
 }
