@@ -15,4 +15,8 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<bean class="cherry.spring.common.lib.pager.TotalCount2Paginator">
+		<property name="totalCount" value="9" />
+	</bean>
+
 </beans>

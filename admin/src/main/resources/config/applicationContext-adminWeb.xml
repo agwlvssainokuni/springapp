@@ -106,20 +106,4 @@
 		</property>
 	</bean>
 
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="registerDefaultFormatters" value="false" />
-		<property name="formatters">
-			<set>
-				<bean
-					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
-			</set>
-		</property>
-		<property name="formatterRegistrars">
-			<set>
-				<bean class="cherry.spring.common.format.DateTimeFormatterRegistrar" />
-			</set>
-		</property>
-	</bean>
-
 </beans>
