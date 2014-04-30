@@ -49,7 +49,15 @@
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean
+					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
+				<bean
 					class="cherry.spring.common.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+			</set>
+		</property>
+		<property name="formatterRegistrars">
+			<set>
+				<bean
+					class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar" />
 			</set>
 		</property>
 	</bean>
