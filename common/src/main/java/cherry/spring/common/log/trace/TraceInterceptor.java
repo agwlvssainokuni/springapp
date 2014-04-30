@@ -46,7 +46,7 @@ public class TraceInterceptor implements MethodInterceptor {
 	private int objectLengthLimit;
 
 	/** トレースログに出力するクラス名 (インタフェース名) を抽出する条件. */
-	private String[] packagePrefix;
+	private String[] packagePrefix = new String[0];
 
 	/**
 	 * 配列をログ出力する際のサイズ上限 を設定する.
