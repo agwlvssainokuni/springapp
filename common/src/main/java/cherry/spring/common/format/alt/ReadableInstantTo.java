@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joda.time.ReadablePartial;
+import org.joda.time.ReadableInstant;
 import org.joda.time.ReadablePeriod;
 
-public abstract class ReadablePartialTo<T extends ReadablePartial> implements
+public abstract class ReadableInstantTo<T extends ReadableInstant> implements
 		RangeTo<T> {
 
 	private final T original;
 
 	private final ReadablePeriod offset;
 
-	public ReadablePartialTo(T original, ReadablePeriod offset) {
+	public ReadableInstantTo(T original, ReadablePeriod offset) {
 		this.original = original;
 		this.offset = offset;
 	}

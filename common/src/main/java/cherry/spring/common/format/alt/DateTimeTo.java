@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import org.joda.time.DateTime;
 import org.joda.time.ReadablePeriod;

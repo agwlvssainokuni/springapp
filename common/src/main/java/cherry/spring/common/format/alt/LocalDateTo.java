@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
-public class LocalTimeTo extends ReadablePartialTo<LocalTime> {
+public class LocalDateTo extends ReadablePartialTo<LocalDate> {
 
-	public LocalTimeTo(LocalTime original, ReadablePeriod offset) {
+	public LocalDateTo(LocalDate original, ReadablePeriod offset) {
 		super(original, offset);
 	}
 
 	@Override
-	public LocalTime getAdjusted() {
+	public LocalDate getAdjusted() {
 		return getOriginal().plus(getOffset());
 	}
 

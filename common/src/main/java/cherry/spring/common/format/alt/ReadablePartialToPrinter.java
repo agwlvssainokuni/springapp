@@ -1,4 +1,4 @@
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import java.util.Locale;
 

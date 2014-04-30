@@ -19,12 +19,12 @@ package cherry.spring.common.format;
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.Period;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.DateTimeParser;
 
-public class DateTimeToParser implements Parser<DateTimeTo> {
+public class DateTimeToParser implements Parser<DateTime> {
 
 	private final DateTimeParser parserYmd;
 
@@ -40,16 +40,16 @@ public class DateTimeToParser implements Parser<DateTimeTo> {
 	}
 
 	@Override
-	public DateTimeTo parse(String text, Locale locale) throws ParseException {
+	public DateTime parse(String text, Locale locale) throws ParseException {
 		try {
-			return new DateTimeTo(parserYmdHms.parse(text, locale), Period.ZERO);
+			return parserYmdHms.parse(text, locale);
 		} catch (IllegalArgumentException ex) {
 			try {
-				return new DateTimeTo(parserYmdHm.parse(text, locale), Period
-						.minutes(1).withSeconds(-1));
+				return parserYmdHm.parse(text, locale).plusMinutes(1)
+						.minusSeconds(1);
 			} catch (IllegalArgumentException ex2) {
-				return new DateTimeTo(parserYmd.parse(text, locale), Period
-						.days(1).withSeconds(-1));
+				return parserYmd.parse(text, locale).plusDays(1)
+						.minusSeconds(1);
 			}
 		}
 	}

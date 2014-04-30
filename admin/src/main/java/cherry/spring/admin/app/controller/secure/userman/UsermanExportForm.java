@@ -19,7 +19,7 @@ package cherry.spring.admin.app.controller.secure.userman;
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.admin.app.controller.BaseForm;
-import cherry.spring.common.format.LocalDateTimeTo;
+import cherry.spring.common.format.alt.LocalDateTimeTo;
 
 public class UsermanExportForm extends BaseForm {
 

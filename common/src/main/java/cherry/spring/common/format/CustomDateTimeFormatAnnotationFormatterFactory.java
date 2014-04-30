@@ -108,7 +108,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 					DateTimeFormatterBuilder hm = builder(timeToParseHm);
 					DateTimeFormatterBuilder hms = builder(timeToParseHm)
 							.appendPattern(timeToParseS);
-					return new LocalTimeToParser2(hm.toFormatter(),
+					return new LocalTimeToParser(hm.toFormatter(),
 							hms.toFormatter());
 				} else {
 					DateTimeFormatterBuilder toParse = builder(timeToParseHm)
@@ -131,7 +131,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 							.appendPattern(delimiterToParse)
 							.appendPattern(timeToParseHm)
 							.appendPattern(timeToParseS);
-					return new LocalDateTimeToParser2(ymd.toFormatter(),
+					return new LocalDateTimeToParser(ymd.toFormatter(),
 							ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {
 					DateTimeFormatterBuilder toParse = builder(dateToParse)
@@ -162,7 +162,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 							.appendPattern(delimiterToParse)
 							.appendPattern(timeToParseHm)
 							.appendPattern(timeToParseS);
-					return new DateTimeToParser2(ymd.toFormatter(),
+					return new DateTimeToParser(ymd.toFormatter(),
 							ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {
 					DateTimeFormatterBuilder toParse = builder(dateToParse)

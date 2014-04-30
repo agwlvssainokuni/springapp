@@ -19,12 +19,12 @@ package cherry.spring.common.format;
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.Period;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.LocalDateParser;
 
-public class LocalDateToParser implements Parser<LocalDateTo> {
+public class LocalDateToParser implements Parser<LocalDate> {
 
 	private final LocalDateParser parser;
 
@@ -33,8 +33,8 @@ public class LocalDateToParser implements Parser<LocalDateTo> {
 	}
 
 	@Override
-	public LocalDateTo parse(String text, Locale locale) throws ParseException {
-		return new LocalDateTo(parser.parse(text, locale), Period.ZERO);
+	public LocalDate parse(String text, Locale locale) throws ParseException {
+		return parser.parse(text, locale);
 	}
 
 }

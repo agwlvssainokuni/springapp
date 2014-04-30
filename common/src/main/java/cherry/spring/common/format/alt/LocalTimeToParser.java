@@ -14,34 +14,35 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.LocalTime;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.LocalTimeParser;
 
-public class LocalTimeToParser2 implements Parser<LocalTime> {
+public class LocalTimeToParser implements Parser<LocalTimeTo> {
 
 	private final LocalTimeParser parserHm;
 
 	private final LocalTimeParser parserHms;
 
-	public LocalTimeToParser2(DateTimeFormatter formatterHm,
+	public LocalTimeToParser(DateTimeFormatter formatterHm,
 			DateTimeFormatter formatterHms) {
 		parserHm = new LocalTimeParser(formatterHm);
 		parserHms = new LocalTimeParser(formatterHms);
 	}
 
 	@Override
-	public LocalTime parse(String text, Locale locale) throws ParseException {
+	public LocalTimeTo parse(String text, Locale locale) throws ParseException {
 		try {
-			return parserHms.parse(text, locale);
+			return new LocalTimeTo(parserHms.parse(text, locale), Period.ZERO);
 		} catch (IllegalArgumentException ex) {
-			return parserHm.parse(text, locale).plusMillis(1).minusSeconds(1);
+			return new LocalTimeTo(parserHm.parse(text, locale),
+					Period.seconds(59));
 		}
 	}
 

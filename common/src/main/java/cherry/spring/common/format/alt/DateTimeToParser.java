@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.DateTimeParser;
 
-public class DateTimeToParser2 implements Parser<DateTime> {
+public class DateTimeToParser implements Parser<DateTimeTo> {
 
 	private final DateTimeParser parserYmd;
 
@@ -32,7 +32,7 @@ public class DateTimeToParser2 implements Parser<DateTime> {
 
 	private final DateTimeParser parserYmdHms;
 
-	public DateTimeToParser2(DateTimeFormatter formatterYmd,
+	public DateTimeToParser(DateTimeFormatter formatterYmd,
 			DateTimeFormatter formatterYmdHm, DateTimeFormatter formatterYmdHms) {
 		parserYmd = new DateTimeParser(formatterYmd);
 		parserYmdHm = new DateTimeParser(formatterYmdHm);
@@ -40,16 +40,16 @@ public class DateTimeToParser2 implements Parser<DateTime> {
 	}
 
 	@Override
-	public DateTime parse(String text, Locale locale) throws ParseException {
+	public DateTimeTo parse(String text, Locale locale) throws ParseException {
 		try {
-			return parserYmdHms.parse(text, locale);
+			return new DateTimeTo(parserYmdHms.parse(text, locale), Period.ZERO);
 		} catch (IllegalArgumentException ex) {
 			try {
-				return parserYmdHm.parse(text, locale).plusMinutes(1)
-						.minusSeconds(1);
+				return new DateTimeTo(parserYmdHm.parse(text, locale), Period
+						.minutes(1).withSeconds(-1));
 			} catch (IllegalArgumentException ex2) {
-				return parserYmd.parse(text, locale).plusDays(1)
-						.minusSeconds(1);
+				return new DateTimeTo(parserYmd.parse(text, locale), Period
+						.days(1).withSeconds(-1));
 			}
 		}
 	}

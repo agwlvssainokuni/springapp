@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.format.alt;
 
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
 import org.springframework.format.datetime.joda.LocalDateTimeParser;
 
-public class LocalDateTimeToParser2 implements Parser<LocalDateTime> {
+public class LocalDateTimeToParser implements Parser<LocalDateTimeTo> {
 
 	private final LocalDateTimeParser parserYmd;
 
@@ -32,7 +32,7 @@ public class LocalDateTimeToParser2 implements Parser<LocalDateTime> {
 
 	private final LocalDateTimeParser parserYmdHms;
 
-	public LocalDateTimeToParser2(DateTimeFormatter formatterYmd,
+	public LocalDateTimeToParser(DateTimeFormatter formatterYmd,
 			DateTimeFormatter formatterYmdHm, DateTimeFormatter formatterYmdHms) {
 		parserYmd = new LocalDateTimeParser(formatterYmd);
 		parserYmdHm = new LocalDateTimeParser(formatterYmdHm);
@@ -40,17 +40,18 @@ public class LocalDateTimeToParser2 implements Parser<LocalDateTime> {
 	}
 
 	@Override
-	public LocalDateTime parse(String text, Locale locale)
+	public LocalDateTimeTo parse(String text, Locale locale)
 			throws ParseException {
 		try {
-			return parserYmdHms.parse(text, locale);
+			return new LocalDateTimeTo(parserYmdHms.parse(text, locale),
+					Period.ZERO);
 		} catch (IllegalArgumentException ex) {
 			try {
-				return parserYmdHm.parse(text, locale).plusMinutes(1)
-						.minusSeconds(1);
+				return new LocalDateTimeTo(parserYmdHm.parse(text, locale),
+						Period.minutes(1).withSeconds(-1));
 			} catch (IllegalArgumentException ex2) {
-				return parserYmd.parse(text, locale).plusDays(1)
-						.minusSeconds(1);
+				return new LocalDateTimeTo(parserYmd.parse(text, locale),
+						Period.days(1).withSeconds(-1));
 			}
 		}
 	}

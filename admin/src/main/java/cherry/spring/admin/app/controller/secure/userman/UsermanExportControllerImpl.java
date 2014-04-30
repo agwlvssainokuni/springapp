@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanExportService;
-import cherry.spring.common.format.LocalDateTimeTo;
+import cherry.spring.common.format.alt.LocalDateTimeTo;
 
 @Controller
 @RequestMapping(UsermanExportController.URI_PATH)
