@@ -45,6 +45,10 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 			*	JSTL
 			*	Apache Tiles 3
 			*	Jackson 2
+		*	データバインディング
+			*	型変換のカスタマイズ
+				*	Parser
+				*	Printer
 		*	バリデーション
 			*	Spring Validator
 				*	@InitBinder
