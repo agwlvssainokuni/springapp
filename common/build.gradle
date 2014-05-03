@@ -1,8 +1,8 @@
 apply plugin: "eclipse-wtp"
 
 ext {
-	versionH2db = "1.4.177"
-	versionFlyway = "2.3.1"
+	versionH2db = "1.4.178"
+	versionFlyway = "3.0"
 	versionJodaTime = "2.3"
 	versionCommonsDbcp = "1.4"
 	versionCommonsLang3 = "3.3"
@@ -11,12 +11,12 @@ ext {
 	versionFluentLogger = "0.2.11"
 	versionSlf4j = "1.7.7"
 	versionLogback = "1.1.2"
-	versionMyBatis = "3.2.6"
+	versionMyBatis = "3.2.7"
 	versionMyBatisSpring = "1.2.2"
 	versionJackson = "2.3.2"
 	versionAspectJ = "1.7.4"
 	versionAopalliance = "1.0"
-	versionSpring = "4.0.3.RELEASE"
+	versionSpring = "4.0.4.RELEASE"
 	versionSpringLdap = "2.0.1.RELEASE"
 	versionSpringSecurity = "3.2.3.RELEASE"
 	versionSpringMobile = "1.1.1.RELEASE"
@@ -34,7 +34,7 @@ ext {
 dependencies {
 	compile project(":dbschema")
 	compile "com.h2database:h2:${versionH2db}"
-	compile "com.googlecode.flyway:flyway-core:${versionFlyway}"
+	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "joda-time:joda-time:${versionJodaTime}"
 	compile "commons-dbcp:commons-dbcp:${versionCommonsDbcp}"
 	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
