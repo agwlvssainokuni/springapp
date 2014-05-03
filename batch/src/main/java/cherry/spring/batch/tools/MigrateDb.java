@@ -18,14 +18,13 @@ package cherry.spring.batch.tools;
 
 import javax.sql.DataSource;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import cherry.spring.batch.ExitStatus;
 import cherry.spring.batch.IBatch;
-
-import com.googlecode.flyway.core.Flyway;
 
 /**
  * マイグレーションツール。
