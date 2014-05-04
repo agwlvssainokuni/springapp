@@ -56,8 +56,7 @@
 		</property>
 		<property name="formatterRegistrars">
 			<set>
-				<bean
-					class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar" />
+				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
 			</set>
 		</property>
 	</bean>
