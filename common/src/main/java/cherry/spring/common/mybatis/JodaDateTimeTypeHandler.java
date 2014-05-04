@@ -24,11 +24,9 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.DateTime;
 
-@MappedJdbcTypes(JdbcType.TIMESTAMP)
 @MappedTypes(DateTime.class)
 public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 

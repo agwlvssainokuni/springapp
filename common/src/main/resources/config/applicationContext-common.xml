@@ -31,6 +31,8 @@
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
 				!execution(* cherry.spring.common.format..*.*(..))
+				and
+				!execution(* cherry.spring.common.mybatis..*.*(..))
 				" />
 	</aop:config>
 

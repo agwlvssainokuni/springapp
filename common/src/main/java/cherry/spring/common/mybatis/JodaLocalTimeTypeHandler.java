@@ -24,11 +24,9 @@ import java.sql.Time;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.LocalTime;
 
-@MappedJdbcTypes(JdbcType.TIME)
 @MappedTypes(LocalTime.class)
 public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 
