@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -163,8 +163,8 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setMailAddr("%");
-			cond.setRegisteredFrom(DateTime.now().minusMinutes(1).toDate());
-			cond.setRegisteredTo(DateTime.now().toDate());
+			cond.setRegisteredFrom(LocalDateTime.now().minusMinutes(1));
+			cond.setRegisteredTo(LocalDateTime.now());
 			cond.setFirstName("%");
 			cond.setLastName("%");
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
@@ -273,7 +273,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setRegisteredFrom(DateTime.now().minusMinutes(1).toDate());
+			cond.setRegisteredFrom(LocalDateTime.now().minusMinutes(1));
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
@@ -300,7 +300,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setRegisteredFrom(DateTime.now().plusMinutes(1).toDate());
+			cond.setRegisteredFrom(LocalDateTime.now().plusMinutes(1));
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
@@ -326,7 +326,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setRegisteredTo(DateTime.now().plusMinutes(1).toDate());
+			cond.setRegisteredTo(LocalDateTime.now().plusMinutes(1));
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
@@ -353,7 +353,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setRegisteredTo(DateTime.now().minusMinutes(1).toDate());
+			cond.setRegisteredTo(LocalDateTime.now().minusMinutes(1));
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());

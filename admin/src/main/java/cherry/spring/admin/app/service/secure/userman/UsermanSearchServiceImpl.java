@@ -16,7 +16,6 @@
 
 package cherry.spring.admin.app.service.secure.userman;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -74,18 +73,18 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
 	}
 
-	private Date dateFromCond(LocalDateTime dt) {
+	private LocalDateTime dateFromCond(LocalDateTime dt) {
 		if (dt == null) {
 			return null;
 		}
-		return dt.toDate();
+		return dt;
 	}
 
-	private Date dateToCond(LocalDateTime dt) {
+	private LocalDateTime dateToCond(LocalDateTime dt) {
 		if (dt == null) {
 			return null;
 		}
-		return dt.plusSeconds(1).toDate();
+		return dt.plusSeconds(1);
 	}
 
 }

@@ -16,7 +16,7 @@
 
 package cherry.spring.common.db.app.mapper;
 
-import java.util.Date;
+import org.joda.time.LocalDateTime;
 
 import cherry.spring.common.db.BaseDto;
 
@@ -26,9 +26,9 @@ public class UserCondition extends BaseDto {
 
 	private String mailAddr;
 
-	private Date registeredFrom;
+	private LocalDateTime registeredFrom;
 
-	private Date registeredTo;
+	private LocalDateTime registeredTo;
 
 	private String firstName;
 
@@ -42,19 +42,19 @@ public class UserCondition extends BaseDto {
 		this.mailAddr = mailAddr;
 	}
 
-	public Date getRegisteredFrom() {
+	public LocalDateTime getRegisteredFrom() {
 		return registeredFrom;
 	}
 
-	public void setRegisteredFrom(Date registeredFrom) {
+	public void setRegisteredFrom(LocalDateTime registeredFrom) {
 		this.registeredFrom = registeredFrom;
 	}
 
-	public Date getRegisteredTo() {
+	public LocalDateTime getRegisteredTo() {
 		return registeredTo;
 	}
 
-	public void setRegisteredTo(Date registeredTo) {
+	public void setRegisteredTo(LocalDateTime registeredTo) {
 		this.registeredTo = registeredTo;
 	}
 
