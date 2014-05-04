@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.custom.format;
 
 import java.text.ParseException;
 import java.util.Locale;

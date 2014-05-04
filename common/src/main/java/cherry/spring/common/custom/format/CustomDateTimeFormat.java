@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format.alt;
+package cherry.spring.common.custom.format;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.ReadablePeriod;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class LocalDateTimeTo extends ReadablePartialTo<LocalDateTime> {
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER,
+		ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CustomDateTimeFormat {
 
-	public LocalDateTimeTo(LocalDateTime original, ReadablePeriod offset) {
-		super(original, offset);
+	Range value() default Range.NONE;
+
+	boolean optional() default true;
+
+	public enum Range {
+		FROM, TO, NONE
 	}
-
-	@Override
-	public LocalDateTime getAdjusted() {
-		return getOriginal().plus(getOffset());
-	}
-
 }

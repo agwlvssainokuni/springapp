@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format.alt;
+package cherry.spring.common.custom.format.alt;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -22,36 +22,34 @@ import java.util.Locale;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
-import org.springframework.format.datetime.joda.LocalDateTimeParser;
+import org.springframework.format.datetime.joda.DateTimeParser;
 
-public class LocalDateTimeToParser implements Parser<LocalDateTimeTo> {
+public class DateTimeToParser implements Parser<DateTimeTo> {
 
-	private final LocalDateTimeParser parserYmd;
+	private final DateTimeParser parserYmd;
 
-	private final LocalDateTimeParser parserYmdHm;
+	private final DateTimeParser parserYmdHm;
 
-	private final LocalDateTimeParser parserYmdHms;
+	private final DateTimeParser parserYmdHms;
 
-	public LocalDateTimeToParser(DateTimeFormatter formatterYmd,
+	public DateTimeToParser(DateTimeFormatter formatterYmd,
 			DateTimeFormatter formatterYmdHm, DateTimeFormatter formatterYmdHms) {
-		parserYmd = new LocalDateTimeParser(formatterYmd);
-		parserYmdHm = new LocalDateTimeParser(formatterYmdHm);
-		parserYmdHms = new LocalDateTimeParser(formatterYmdHms);
+		parserYmd = new DateTimeParser(formatterYmd);
+		parserYmdHm = new DateTimeParser(formatterYmdHm);
+		parserYmdHms = new DateTimeParser(formatterYmdHms);
 	}
 
 	@Override
-	public LocalDateTimeTo parse(String text, Locale locale)
-			throws ParseException {
+	public DateTimeTo parse(String text, Locale locale) throws ParseException {
 		try {
-			return new LocalDateTimeTo(parserYmdHms.parse(text, locale),
-					Period.ZERO);
+			return new DateTimeTo(parserYmdHms.parse(text, locale), Period.ZERO);
 		} catch (IllegalArgumentException ex) {
 			try {
-				return new LocalDateTimeTo(parserYmdHm.parse(text, locale),
-						Period.minutes(1).withSeconds(-1));
+				return new DateTimeTo(parserYmdHm.parse(text, locale), Period
+						.minutes(1).withSeconds(-1));
 			} catch (IllegalArgumentException ex2) {
-				return new LocalDateTimeTo(parserYmd.parse(text, locale),
-						Period.days(1).withSeconds(-1));
+				return new DateTimeTo(parserYmd.parse(text, locale), Period
+						.days(1).withSeconds(-1));
 			}
 		}
 	}

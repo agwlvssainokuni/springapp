@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.custom.format;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ import org.springframework.format.datetime.joda.LocalTimeParser;
 import org.springframework.format.datetime.joda.ReadableInstantPrinter;
 import org.springframework.format.datetime.joda.ReadablePartialPrinter;
 
-import cherry.spring.common.format.CustomDateTimeFormat.Range;
+import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 
 public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<CustomDateTimeFormat> {

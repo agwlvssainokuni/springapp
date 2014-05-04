@@ -14,42 +14,44 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.format;
+package cherry.spring.common.custom.format.alt;
 
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.Parser;
-import org.springframework.format.datetime.joda.DateTimeParser;
+import org.springframework.format.datetime.joda.LocalDateTimeParser;
 
-public class DateTimeToParser implements Parser<DateTime> {
+public class LocalDateTimeToParser implements Parser<LocalDateTimeTo> {
 
-	private final DateTimeParser parserYmd;
+	private final LocalDateTimeParser parserYmd;
 
-	private final DateTimeParser parserYmdHm;
+	private final LocalDateTimeParser parserYmdHm;
 
-	private final DateTimeParser parserYmdHms;
+	private final LocalDateTimeParser parserYmdHms;
 
-	public DateTimeToParser(DateTimeFormatter formatterYmd,
+	public LocalDateTimeToParser(DateTimeFormatter formatterYmd,
 			DateTimeFormatter formatterYmdHm, DateTimeFormatter formatterYmdHms) {
-		parserYmd = new DateTimeParser(formatterYmd);
-		parserYmdHm = new DateTimeParser(formatterYmdHm);
-		parserYmdHms = new DateTimeParser(formatterYmdHms);
+		parserYmd = new LocalDateTimeParser(formatterYmd);
+		parserYmdHm = new LocalDateTimeParser(formatterYmdHm);
+		parserYmdHms = new LocalDateTimeParser(formatterYmdHms);
 	}
 
 	@Override
-	public DateTime parse(String text, Locale locale) throws ParseException {
+	public LocalDateTimeTo parse(String text, Locale locale)
+			throws ParseException {
 		try {
-			return parserYmdHms.parse(text, locale);
+			return new LocalDateTimeTo(parserYmdHms.parse(text, locale),
+					Period.ZERO);
 		} catch (IllegalArgumentException ex) {
 			try {
-				return parserYmdHm.parse(text, locale).plusMinutes(1)
-						.minusSeconds(1);
+				return new LocalDateTimeTo(parserYmdHm.parse(text, locale),
+						Period.minutes(1).withSeconds(-1));
 			} catch (IllegalArgumentException ex2) {
-				return parserYmd.parse(text, locale).plusDays(1)
-						.minusSeconds(1);
+				return new LocalDateTimeTo(parserYmd.parse(text, locale),
+						Period.days(1).withSeconds(-1));
 			}
 		}
 	}

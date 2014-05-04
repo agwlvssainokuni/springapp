@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mybatis;
+package cherry.spring.common.custom.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.Date;

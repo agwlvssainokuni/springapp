@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mybatis;
+package cherry.spring.common.custom.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -25,46 +25,46 @@ import java.sql.Timestamp;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
 
-@MappedTypes(LocalDateTime.class)
-public class JodaLocalDateTimeTypeHandler extends
-		BaseTypeHandler<LocalDateTime> {
+@MappedTypes(DateTime.class)
+public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i,
-			LocalDateTime parameter, JdbcType jdbcType) throws SQLException {
-		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()));
+			DateTime parameter, JdbcType jdbcType) throws SQLException {
+		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()),
+				parameter.toCalendar(null));
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(ResultSet rs, String columnName)
+	public DateTime getNullableResult(ResultSet rs, String columnName)
 			throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnName);
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return new DateTime(timestamp.getTime());
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(ResultSet rs, int columnIndex)
+	public DateTime getNullableResult(ResultSet rs, int columnIndex)
 			throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return new DateTime(timestamp.getTime());
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(CallableStatement cs, int columnIndex)
+	public DateTime getNullableResult(CallableStatement cs, int columnIndex)
 			throws SQLException {
 		Timestamp timestamp = cs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return new DateTime(timestamp.getTime());
 	}
 
 }

@@ -30,9 +30,7 @@
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
-				!execution(* cherry.spring.common.format..*.*(..))
-				and
-				!execution(* cherry.spring.common.mybatis..*.*(..))
+				!execution(* cherry.spring.common.custom..*.*(..))
 				" />
 	</aop:config>
 
@@ -53,7 +51,7 @@
 				<bean
 					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
 				<bean
-					class="cherry.spring.common.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+					class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
