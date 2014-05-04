@@ -87,6 +87,9 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 *	MyBatis
 	*	SqlMapper (XML)
 		*	ダイナミックSQL
+	*	カスタマイズ設定
+		*	Joda-Timeライブラリ対応
+			*	TypeHandler
 	*	Spring framework統合
 		*	org.mybatis.spring.SqlSessionFactoryBean
 	*	MyBatis Generator
