@@ -54,6 +54,8 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	public static final String TEMP_FILE = "tempFile";
 
+	public static final String LAUNCHER_ID = "launcherId";
+
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Value("${admin.app.userman.import.tempDir}")
@@ -98,15 +100,18 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	@Transactional
 	@Override
-	public Map<String, String> launchImportUsers(MultipartFile file) {
+	public Map<String, String> launchImportUsers(MultipartFile file,
+			String launcherId) {
 		String name = UsermanImportService.class.getSimpleName();
-		Integer procId = asyncProcStatusService.createAsyncProc(name);
+		Integer procId = asyncProcStatusService.createAsyncProc(name,
+				launcherId);
 		try {
 			File tempFile = createFile(file);
 
 			Map<String, String> message = new HashMap<>();
 			message.put(PROC_ID, procId.toString());
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
+			message.put(LAUNCHER_ID, launcherId);
 			jmsOperations.convertAndSend(queue, message);
 
 			asyncProcStatusService.invokeAsyncProc(procId);

@@ -19,7 +19,7 @@
 	<s:hasBindErrors name="usermanSearchForm">
 		<div class="app-portion ui-state-error">
 			<f:errors path="usermanSearchForm" element="div" />
-			<f:errors path="usermanSearchForm.mailAddr" element="div" />
+			<f:errors path="usermanSearchForm.loginId" element="div" />
 			<f:errors path="usermanSearchForm.registeredFrom" element="div" />
 			<f:errors path="usermanSearchForm.registeredTo" element="div" />
 			<f:errors path="usermanSearchForm.lastName" element="div" />
@@ -44,9 +44,9 @@
 			<table>
 				<tbody class="app-transparent">
 					<tr>
-						<td><label for="mailAddr"><s:message
-									code="usermanSearchForm.mailAddr" /></label></td>
-						<td><f:input path="mailAddr" cssClass="app-width30"
+						<td><label for="loginId"><s:message
+									code="usermanSearchForm.loginId" /></label></td>
+						<td><f:input path="loginId" cssClass="app-width30"
 								cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 					<tr>
@@ -91,7 +91,7 @@
 		<f:form servletRelativeAction="/secure/userman/search/req"
 			method="POST" modelAttribute="usermanSearchForm"
 			id="usermanSearchWithPage" class="app-pager-form">
-			<f:hidden path="mailAddr" id="mailAddr2" />
+			<f:hidden path="loginId" id="loginId2" />
 			<f:hidden path="registeredFrom" id="registeredFrom2" />
 			<f:hidden path="registeredTo" id="registeredTo2" />
 			<f:hidden path="lastName" id="lastName2" />
@@ -112,7 +112,7 @@
 					<tr>
 						<th>#</th>
 						<th><s:message
-								code="secure/userman/search/index.column.mailAddr" /></th>
+								code="secure/userman/search/index.column.loginId" /></th>
 						<th><s:message
 								code="secure/userman/search/index.column.lastName" /></th>
 						<th><s:message
@@ -127,7 +127,7 @@
 						<tr>
 							<td><c:out
 									value="${result.pageSet.current.from + status.count}" /></td>
-							<td><c:out value="${item.mailAddr}" /></td>
+							<td><c:out value="${item.loginId}" /></td>
 							<td><c:out value="${item.lastName}" /></td>
 							<td><c:out value="${item.firstName}" /></td>
 							<td><c:out value="${item.registeredAt}" /></td>

@@ -29,7 +29,7 @@ public interface UsermanImportService {
 	Result importUsers(MultipartFile file);
 
 	@Transactional
-	Map<String, String> launchImportUsers(MultipartFile file);
+	Map<String, String> launchImportUsers(MultipartFile file, String launcherId);
 
 	@Transactional
 	void handleImportUsers(Map<String, String> message);

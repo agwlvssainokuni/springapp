@@ -18,11 +18,13 @@
 		keyProperty="id">
 		INSERT INTO async_procs (
 			name,
+			launcher_id,
 			status,
 			registered_at
 		)
 		VALUES (
 			#{name,jdbcType=VARCHAR},
+			#{launcherId,jdbcType=VARCHAR},
 			'PREPARING',
 			CURRENT_TIMESTAMP
 		)

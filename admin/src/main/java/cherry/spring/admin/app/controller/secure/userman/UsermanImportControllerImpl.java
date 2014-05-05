@@ -75,7 +75,7 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		}
 
 		Map<String, String> asyncParam = usermanImportService
-				.launchImportUsers(form.getFile());
+				.launchImportUsers(form.getFile(), authentication.getName());
 		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
 
 		ModelAndView mav = new ModelAndView();

@@ -33,9 +33,10 @@ public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public int createAsyncProc(String name) {
+	public int createAsyncProc(String name, String launcherId) {
 		AsyncProcs entity = new AsyncProcs();
 		entity.setName(name);
+		entity.setLauncherId(launcherId);
 		int count = asyncProcMapper.createAsyncProc(entity);
 		if (count != 1) {
 			throw new IllegalStateException(

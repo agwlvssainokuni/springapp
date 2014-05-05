@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AsyncProcStatusService {
 
 	@Transactional(propagation = REQUIRES_NEW)
-	int createAsyncProc(String name);
+	int createAsyncProc(String name, String launcherId);
 
 	@Transactional(propagation = REQUIRES_NEW)
 	void invokeAsyncProc(int id);
