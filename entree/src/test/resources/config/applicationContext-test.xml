@@ -21,7 +21,7 @@
 			<!-- <security:user-service properties="${site.userfile}" /> -->
 			<security:jdbc-user-service
 				data-source-ref="dataSource"
-				users-by-username-query="SELECT mail_addr, password, 1 FROM users WHERE mail_addr=? AND deleted_flg=0"
+				users-by-username-query="SELECT login_id, password, 1 FROM users WHERE login_id=? AND deleted_flg=0"
 				authorities-by-username-query="SELECT ?, 'ROLE_USER' FROM dual" />
 		</security:authentication-provider>
 	</security:authentication-manager>

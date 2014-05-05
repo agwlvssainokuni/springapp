@@ -122,7 +122,7 @@ public class PasswdControllerImpl implements PasswdController {
 		if (!passwdService.changePassword(authentication.getName(), password)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
-						"Password has not been updated: mailAddr={0}, password={1}",
+						"Password has not been updated: loginId={0}, password={1}",
 						authentication.getName(), password);
 			}
 			throw new IllegalStateException("");

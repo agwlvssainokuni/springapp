@@ -21,6 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PasswdService {
 
 	@Transactional
-	boolean changePassword(String mailAddr, String password);
+	boolean changePassword(String loginId, String password);
 
 }
