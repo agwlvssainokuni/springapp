@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.AsyncProcs">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="LAUNCHER_ID" jdbcType="VARCHAR" property="launcherId" />
 		<result column="STATUS" property="status" jdbcType="VARCHAR" />
 		<result column="REGISTERED_AT" property="registeredAt" jdbcType="TIMESTAMP" />
 		<result column="INVOKED_AT" property="invokedAt" jdbcType="TIMESTAMP" />
@@ -87,6 +88,7 @@
 		SELECT
 			A.id,
 			A.name,
+			A.launcher_id,
 			A.status,
 			A.registered_at,
 			A.invoked_at,
