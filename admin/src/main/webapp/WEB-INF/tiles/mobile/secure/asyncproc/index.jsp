@@ -45,6 +45,7 @@
 					<th>#</th>
 					<th><s:message code="secure/asyncproc/index.column.id" /></th>
 					<th><s:message code="secure/asyncproc/index.column.name" /></th>
+					<th><s:message code="secure/asyncproc/index.column.launcherId" /></th>
 					<th><s:message code="secure/asyncproc/index.column.status" /></th>
 					<th><s:message
 							code="secure/asyncproc/index.column.registeredAt" /></th>
@@ -62,6 +63,7 @@
 								value="${result.pageSet.current.from + status.count}" /></td>
 						<td><c:out value="${item.id}" /></td>
 						<td><c:out value="${item.name}" /></td>
+						<td><c:out value="${item.launcherId}" /></td>
 						<td><c:out value="${item.status}" /></td>
 						<td><c:out value="${item.registeredAt}" /></td>
 						<td><c:out value="${item.invokedAt}" /></td>
