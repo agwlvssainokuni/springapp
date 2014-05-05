@@ -12,6 +12,7 @@ ReadOnlyRecommend=0
 Page=Main
 PageInfo="Main",2,"A3Landscape",$FFFFFF
 Domain=ID=@INT
+Domain=ログインID=@VARCHAR(512)
 Domain=メールアドレス=@VARCHAR(512)
 Domain=パスワード(BCRYPT)=@CHAR(60)
 Domain=UUID=@CHAR(36)
@@ -59,10 +60,11 @@ PName=async_procs
 LName=非同期処理
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=1550
 Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="起動者ID","launcher_id","*ログインID","NOT NULL",,"","",$FFFFFFFF,""
 Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
 Field="状況","status","*識別名","NOT NULL",,"","",$FFFFFFFF,"CHECK status IN (\qPREPARING\q,\qINVOKED\q,\qPROCESSING\q,\qSUCCESS\q,\qERROR\q)"
 Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
@@ -70,12 +72,13 @@ Field="投入日時","invoked_at","*日時",,,"","",$FFFFFFFF,""
 Field="開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
 Field="終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
 Field="結果情報","result","*JSON",,,"","",$FFFFFFFF,""
+Index==0,launcher_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140423011055
-Position="Main",1550,200
+ModifiedDateTime=20140506060424
+Position="MAIN",1550,200
 
 [Relation]
 Entity1=mail_templates
@@ -207,15 +210,15 @@ Page=MAIN
 Left=300
 Top=200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="ログインID","login_id","*ログインID","NOT NULL",,"","",$FFFFFFFF,""
 Field="パスワード","password","*パスワード(BCRYPT)","NOT NULL",,"","",$FFFFFFFF,""
 Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 Field="氏名(名)","first_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
 Field="氏名(姓)","last_name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,mail_addr
+Index==1,login_id
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140313221700
+ModifiedDateTime=20140506060140
 Position="MAIN",300,200

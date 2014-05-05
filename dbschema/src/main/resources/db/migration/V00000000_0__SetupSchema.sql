@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/04/23 1:11:04
+-- Date/Time    : 2014/05/06 6:05:51
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -7,6 +7,7 @@
 -- 非同期処理
 CREATE TABLE async_procs( 
 	id INTEGER NOT NULL auto_increment, 
+	launcher_id VARCHAR (512) NOT NULL, 
 	name VARCHAR (32) NOT NULL, 
 	status VARCHAR (32) NOT NULL CHECK status IN ( 
 		'PREPARING', 
@@ -25,6 +26,9 @@ CREATE TABLE async_procs(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT async_procs_pkc PRIMARY KEY (id)
 ); 
+
+CREATE INDEX async_procs_ix1 
+	ON async_procs(launcher_id); 
 
 -- メールテンプレート文面
 CREATE TABLE mail_template_texts( 
@@ -92,7 +96,7 @@ CREATE UNIQUE INDEX signup_requests_ix2
 -- 利用者
 CREATE TABLE users( 
 	id INTEGER NOT NULL auto_increment, 
-	mail_addr VARCHAR (512) NOT NULL, 
+	login_id VARCHAR (512) NOT NULL, 
 	password CHAR (60) NOT NULL, 
 	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	first_name VARCHAR (64) NOT NULL, 
@@ -104,13 +108,16 @@ CREATE TABLE users(
 ); 
 
 CREATE UNIQUE INDEX users_ix1 
-	ON users(mail_addr); 
+	ON users(login_id); 
 
 COMMENT 
 	ON TABLE async_procs IS '非同期処理'; 
 
 COMMENT 
 	ON COLUMN async_procs.id IS 'ID'; 
+
+COMMENT 
+	ON COLUMN async_procs.launcher_id IS '起動者ID'; 
 
 COMMENT 
 	ON COLUMN async_procs.name IS '処理名称'; 
@@ -245,7 +252,7 @@ COMMENT
 	ON COLUMN users.id IS 'ID'; 
 
 COMMENT 
-	ON COLUMN users.mail_addr IS 'メールアドレス'; 
+	ON COLUMN users.login_id IS 'ログインID'; 
 
 COMMENT 
 	ON COLUMN users.password IS 'パスワード'; 
