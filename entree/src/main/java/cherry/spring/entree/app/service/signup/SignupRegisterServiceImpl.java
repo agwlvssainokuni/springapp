@@ -81,7 +81,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		String password = passwordEncoder.encode(rawPassword);
 
 		Users entity = new Users();
-		entity.setMailAddr(mailAddr);
+		entity.setLoginId(mailAddr);
 		entity.setPassword(password);
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);

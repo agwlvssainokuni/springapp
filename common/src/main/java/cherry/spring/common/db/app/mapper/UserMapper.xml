@@ -3,7 +3,7 @@
 <mapper namespace="cherry.spring.common.db.app.mapper.UserMapper">
 	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.Users">
 		<id column="ID" jdbcType="INTEGER" property="id" />
-		<result column="MAIL_ADDR" jdbcType="VARCHAR" property="mailAddr" />
+		<result column="LOGIN_ID" jdbcType="VARCHAR" property="loginId" />
 		<result column="PASSWORD" jdbcType="CHAR" property="password" />
 		<result column="REGISTERED_AT" jdbcType="TIMESTAMP" property="registeredAt" />
 		<result column="FIRST_NAME" jdbcType="VARCHAR" property="firstName" />
@@ -15,13 +15,13 @@
 	<insert id="createUser" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="ent.id">
 		INSERT INTO users (
-			mail_addr,
+			login_id,
 			password,
 			first_name,
 			last_name
 		)
 		VALUES (
-			#{ent.mailAddr,jdbcType=VARCHAR},
+			#{ent.loginId,jdbcType=VARCHAR},
 			#{ent.password,jdbcType=VARCHAR},
 			#{ent.firstName,jdbcType=VARCHAR},
 			#{ent.lastName,jdbcType=VARCHAR}
@@ -54,7 +54,7 @@
 			password = #{password,jdbcType=VARCHAR},
 			updated_at = CURRENT_TIMESTAMP
 		WHERE
-			mail_addr = #{mailAddr,jdbcType=VARCHAR}
+			login_id = #{loginId,jdbcType=VARCHAR}
 			AND
 			deleted_flg = 0
 	</update>
@@ -64,8 +64,8 @@
 		FROM
 			users AS A
 		WHERE
-		<if test="cond.mailAddr != null">
-			A.mail_addr LIKE #{cond.mailAddr} {escape '\'} AND
+		<if test="cond.loginId != null">
+			A.login_id LIKE #{cond.loginId} {escape '\'} AND
 		</if>
 		<if test="cond.registeredFrom != null">
 			A.registered_at &gt;= #{cond.registeredFrom} AND
@@ -84,15 +84,15 @@
 	<select id="searchUsers" resultMap="BaseResultMap">
 		SELECT
 			A.id,
-			A.mail_addr,
+			A.login_id,
 			A.registered_at,
 			A.first_name,
 			A.last_name
 		FROM
 			users AS A
 		WHERE
-		<if test="cond.mailAddr != null">
-			A.mail_addr LIKE #{cond.mailAddr} {escape '\'} AND
+		<if test="cond.loginId != null">
+			A.login_id LIKE #{cond.loginId} {escape '\'} AND
 		</if>
 		<if test="cond.registeredFrom != null">
 			A.registered_at &gt;= #{cond.registeredFrom} AND

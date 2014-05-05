@@ -40,9 +40,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			String mailAddr = "user00@example.com";
+			String loginId = "user00@example.com";
 			UserMapper mapper = getBean(UserMapper.class);
-			Users entity = newUser(mailAddr, encode("password"), "firstName",
+			Users entity = newUser(loginId, encode("password"), "firstName",
 					"lastName");
 			assertNull(entity.getId());
 			assertEquals(1, mapper.createUser(entity));
@@ -64,11 +64,11 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			String mailAddr = "user00@example.com";
+			String loginId = "user00@example.com";
 			UserMapper mapper = getBean(UserMapper.class);
 
 			assertEquals(0,
-					mapper.changePassword(mailAddr, encode("newPassword")));
+					mapper.changePassword(loginId, encode("newPassword")));
 
 		} finally {
 			for (Integer id : ids) {
@@ -82,15 +82,15 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			String mailAddr = "user00@example.com";
+			String loginId = "user00@example.com";
 			UserMapper mapper = getBean(UserMapper.class);
-			Users entity = newUser(mailAddr, encode("oldPasswor"), "firstName",
+			Users entity = newUser(loginId, encode("oldPasswor"), "firstName",
 					"lastName");
 			assertEquals(1, mapper.createUser(entity));
 			ids.add(entity.getId());
 
 			assertEquals(1,
-					mapper.changePassword(mailAddr, encode("newPassword")));
+					mapper.changePassword(loginId, encode("newPassword")));
 
 			Users user = getBean(UsersMapper.class).selectByPrimaryKey(
 					entity.getId());
@@ -162,7 +162,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setMailAddr("%");
+			cond.setLoginId("%");
 			cond.setRegisteredFrom(LocalDateTime.now().minusMinutes(1));
 			cond.setRegisteredTo(LocalDateTime.now());
 			cond.setFirstName("%");
@@ -193,7 +193,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setMailAddr("user%");
+			cond.setLoginId("user%");
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
@@ -220,7 +220,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setMailAddr("user1%");
+			cond.setLoginId("user1%");
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
@@ -247,7 +247,7 @@ public class UserMapperTest {
 			}
 
 			UserCondition cond = new UserCondition();
-			cond.setMailAddr("users%");
+			cond.setLoginId("users%");
 			List<Users> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
@@ -529,10 +529,10 @@ public class UserMapperTest {
 		return getBean(PasswordEncoder.class).encode(rawPassword);
 	}
 
-	private Users newUser(String mailAddr, String password, String firstName,
+	private Users newUser(String loginId, String password, String firstName,
 			String lastName) {
 		Users entity = new Users();
-		entity.setMailAddr(mailAddr);
+		entity.setLoginId(loginId);
 		entity.setPassword(password);
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);

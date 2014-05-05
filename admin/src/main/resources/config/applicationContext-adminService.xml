@@ -16,7 +16,7 @@
 		<property name="sql">
 			<value><![CDATA[
 				SELECT
-					A.mail_addr,
+					A.login_id,
 					A.password,
 					A.first_name,
 					A.last_name,
@@ -38,12 +38,12 @@
 		<property name="sql">
 			<value><![CDATA[
 				INSERT INTO users (
-					mail_addr,
+					login_id,
 					password,
 					first_name,
 					last_name
 				) VALUES (
-					:mailAddr,
+					:loginId,
 					:password,
 					:firstName,
 					:lastName

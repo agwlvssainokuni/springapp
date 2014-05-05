@@ -24,7 +24,7 @@ public class UserCondition extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String mailAddr;
+	private String loginId;
 
 	private LocalDateTime registeredFrom;
 
@@ -34,12 +34,12 @@ public class UserCondition extends BaseDto {
 
 	private String lastName;
 
-	public String getMailAddr() {
-		return mailAddr;
+	public String getLoginId() {
+		return loginId;
 	}
 
-	public void setMailAddr(String mailAddr) {
-		this.mailAddr = mailAddr;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 
 	public LocalDateTime getRegisteredFrom() {

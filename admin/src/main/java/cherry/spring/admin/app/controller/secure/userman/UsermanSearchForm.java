@@ -31,14 +31,14 @@ public class UsermanSearchForm extends BaseForm {
 	public static final String NAME = "usermanSearchForm";
 	public static final String PREFIX = NAME + ".";
 
-	public static final String MAIL_ADDR = "mailAddr";
+	public static final String LOGIN_ID = "loginId";
 	public static final String REGISTERED_FROM = "registeredFrom";
 	public static final String REGISTERED_TO = "registeredTo";
 	public static final String FIRST_NAME = "firstName";
 	public static final String LAST_NAME = "lastName";
 
 	@MailAddrSize
-	private String mailAddr;
+	private String loginId;
 
 	@CustomDateTimeFormat(Range.FROM)
 	private LocalDateTime registeredFrom;
@@ -52,12 +52,12 @@ public class UsermanSearchForm extends BaseForm {
 	@DisplayNameSize
 	private String lastName;
 
-	public String getMailAddr() {
-		return mailAddr;
+	public String getLoginId() {
+		return loginId;
 	}
 
-	public void setMailAddr(String mailAddr) {
-		this.mailAddr = mailAddr;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 
 	public LocalDateTime getRegisteredFrom() {

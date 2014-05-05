@@ -31,7 +31,7 @@ public interface UserMapper {
 	int updatePassword(@Param("id") Integer id,
 			@Param("password") String password);
 
-	int changePassword(@Param("mailAddr") String mailAddr,
+	int changePassword(@Param("loginId") String loginId,
 			@Param("password") String password);
 
 	int countUsers(@Param("cond") UserCondition userCondition);

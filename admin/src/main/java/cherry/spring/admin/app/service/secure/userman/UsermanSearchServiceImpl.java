@@ -58,7 +58,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	private UserCondition createUserCondition(UsermanSearchForm form) {
 		UserCondition cond = new UserCondition();
-		cond.setMailAddr(stringCond(form.getMailAddr()));
+		cond.setLoginId(stringCond(form.getLoginId()));
 		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
 		cond.setRegisteredTo(dateToCond(form.getRegisteredTo()));
 		cond.setFirstName(stringCond(form.getFirstName()));
