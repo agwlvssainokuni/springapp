@@ -23,14 +23,18 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
 /**
  * SQL実行機能.
  */
-public class SqlExecutorImpl extends NamedParameterJdbcDaoSupport implements
-		SqlExecutor {
+public class SqlExecutorImpl implements SqlExecutor {
+
+	/** SQL実行. */
+	@Autowired
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	/**
 	 * SQLを実行する.
@@ -59,7 +63,7 @@ public class SqlExecutorImpl extends NamedParameterJdbcDaoSupport implements
 			}
 
 			try {
-				getNamedParameterJdbcTemplate().update(sql, paramMap);
+				namedParameterJdbcOperations.update(sql, paramMap);
 			} catch (DataAccessException ex) {
 				if (!continueOnError) {
 					throw ex;
@@ -67,4 +71,5 @@ public class SqlExecutorImpl extends NamedParameterJdbcDaoSupport implements
 			}
 		}
 	}
+
 }

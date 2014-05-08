@@ -23,18 +23,22 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * データ取込み機能.
  */
-public class DataLoaderImpl extends NamedParameterJdbcDaoSupport implements
-		DataLoader {
+public class DataLoaderImpl implements DataLoader {
 
 	/** ログ出力. */
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	/** SQL実行. */
+	@Autowired
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	/** 取込み用SQL. */
 	private String sql;
@@ -99,7 +103,7 @@ public class DataLoaderImpl extends NamedParameterJdbcDaoSupport implements
 			totalCount += 1;
 
 			try {
-				getNamedParameterJdbcTemplate().update(sql, data);
+				namedParameterJdbcOperations.update(sql, data);
 				successCount += 1;
 			} catch (DataAccessException ex) {
 				if (allowedFailCount <= 0) {

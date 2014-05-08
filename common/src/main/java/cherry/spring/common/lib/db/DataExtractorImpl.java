@@ -22,16 +22,20 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * データ抽出機能.
  */
-public class DataExtractorImpl extends NamedParameterJdbcDaoSupport implements
-		DataExtractor {
+public class DataExtractorImpl implements DataExtractor {
+
+	/** SQL実行. */
+	@Autowired
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	/** 抽出用SQL. */
 	private String sql;
@@ -99,10 +103,10 @@ public class DataExtractorImpl extends NamedParameterJdbcDaoSupport implements
 		};
 
 		try {
-			return getNamedParameterJdbcTemplate().query(sql, paramMap,
-					extractor);
+			return namedParameterJdbcOperations.query(sql, paramMap, extractor);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
 		}
 	}
+
 }
