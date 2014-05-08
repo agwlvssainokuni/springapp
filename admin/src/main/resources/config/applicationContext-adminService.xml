@@ -11,8 +11,12 @@
 		<property name="totalCount" value="${admin.app.paginator.totalCount}" />
 	</bean>
 
+	<bean id="namedParameterJdbcOperations"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
 	<bean id="usersExtractor" class="cherry.spring.common.lib.db.DataExtractorImpl">
-		<property name="dataSource" ref="dataSource" />
 		<property name="sql">
 			<value><![CDATA[
 				SELECT
@@ -34,7 +38,6 @@
 	</bean>
 
 	<bean id="usersLoader" class="cherry.spring.common.lib.db.DataLoaderImpl">
-		<property name="dataSource" ref="dataSource" />
 		<property name="sql">
 			<value><![CDATA[
 				INSERT INTO users (
