@@ -28,6 +28,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.db.limiter.Limiter;
+import cherry.spring.common.lib.db.limiter.LimiterException;
+import cherry.spring.common.lib.db.limiter.NoneLimiter;
+
 /**
  * データ取込み機能.
  */
@@ -91,45 +95,72 @@ public class DataLoaderImpl implements DataLoader {
 	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
 	@Override
 	public Result load(DataProvider provider) throws IOException {
+		return load(provider, new NoneLimiter());
+	}
 
-		provider.begin();
+	/**
+	 * データを取込む.
+	 * 
+	 * @param provider
+	 *            データの取得元
+	 * @return 取込みの結果
+	 * @throws LimiterException
+	 *             データ取込み制限超過
+	 * @throws IOException
+	 *             データ取得でエラー
+	 */
+	@Transactional(rollbackFor = { DataAccessException.class,
+			LimiterException.class, IOException.class })
+	@Override
+	public Result load(DataProvider provider, Limiter limiter)
+			throws LimiterException, IOException {
+		limiter.start();
+		try {
 
-		int totalCount = 0;
-		int successCount = 0;
-		int failedCount = 0;
-		Map<String, ?> data;
-		while ((data = provider.provide()) != null) {
+			provider.begin();
 
-			totalCount += 1;
+			int totalCount = 0;
+			int successCount = 0;
+			int failedCount = 0;
+			Map<String, ?> data;
+			while ((data = provider.provide()) != null) {
 
-			try {
-				namedParameterJdbcOperations.update(sql, data);
-				successCount += 1;
-			} catch (DataAccessException ex) {
-				if (allowedFailCount <= 0) {
-					throw ex;
+				totalCount += 1;
+
+				try {
+					namedParameterJdbcOperations.update(sql, data);
+					successCount += 1;
+				} catch (DataAccessException ex) {
+					if (allowedFailCount <= 0) {
+						throw ex;
+					}
+
+					failedCount += 1;
+					log.warn(format("SQL failed: count={0}, message={1}",
+							failedCount, ex.getMessage()));
+					if (allowedFailCount < failedCount) {
+						throw ex;
+					}
 				}
 
-				failedCount += 1;
-				log.warn(format("SQL failed: count={0}, message={1}",
-						failedCount, ex.getMessage()));
-				if (allowedFailCount < failedCount) {
-					throw ex;
+				if (batchCount > 0 && batchCount <= totalCount) {
+					break;
 				}
+
+				limiter.tick();
 			}
 
-			if (batchCount > 0 && batchCount <= totalCount) {
-				break;
-			}
+			provider.end();
+
+			Result result = new Result();
+			result.setTotalCount(totalCount);
+			result.setSuccessCount(successCount);
+			result.setFailedCount(failedCount);
+			return result;
+
+		} finally {
+			limiter.stop();
 		}
-
-		provider.end();
-
-		Result result = new Result();
-		result.setTotalCount(totalCount);
-		result.setSuccessCount(successCount);
-		result.setFailedCount(failedCount);
-		return result;
 	}
 
 }

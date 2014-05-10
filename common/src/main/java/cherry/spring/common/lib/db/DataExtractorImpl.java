@@ -28,6 +28,10 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.db.limiter.Limiter;
+import cherry.spring.common.lib.db.limiter.LimiterException;
+import cherry.spring.common.lib.db.limiter.NoneLimiter;
+
 /**
  * データ抽出機能.
  */
@@ -65,6 +69,27 @@ public class DataExtractorImpl implements DataExtractor {
 	@Override
 	public long extract(final DataConsumer consumer, Map<String, ?> paramMap)
 			throws IOException {
+		return extract(consumer, paramMap, new NoneLimiter());
+	}
+
+	/**
+	 * データを抽出する.
+	 * 
+	 * @param consumer
+	 *            データの格納先
+	 * @param paramMap
+	 *            データ抽出時のパラメタ
+	 * @return 格納したデータの件数
+	 * @throws LimiterException
+	 *             データ抽出制限超過
+	 * @throws IOException
+	 *             データ格納エラー
+	 */
+	@Transactional(rollbackFor = { DataAccessException.class,
+			LimiterException.class, IOException.class })
+	@Override
+	public long extract(final DataConsumer consumer, Map<String, ?> paramMap,
+			final Limiter limiter) throws LimiterException, IOException {
 
 		ResultSetExtractor<Long> extractor = new ResultSetExtractor<Long>() {
 			@Override
@@ -91,6 +116,7 @@ public class DataExtractorImpl implements DataExtractor {
 						}
 
 						consumer.consume(record);
+						limiter.tick();
 					}
 
 					consumer.end();
@@ -102,10 +128,13 @@ public class DataExtractorImpl implements DataExtractor {
 			}
 		};
 
+		limiter.start();
 		try {
 			return namedParameterJdbcOperations.query(sql, paramMap, extractor);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
+		} finally {
+			limiter.stop();
 		}
 	}
 

@@ -23,6 +23,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.db.limiter.Limiter;
+import cherry.spring.common.lib.db.limiter.LimiterException;
+
 /**
  * データ取込み機能.
  */
@@ -39,6 +42,24 @@ public interface DataLoader {
 	 */
 	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
 	Result load(DataProvider provider) throws IOException;
+
+	/**
+	 * データを取込む.
+	 * 
+	 * @param provider
+	 *            データの取得元
+	 * @param limit
+	 *            データ取込み制限
+	 * @return 取込みの結果
+	 * @throws LimiterException
+	 *             データ取込み制限超過
+	 * @throws IOException
+	 *             データ取得でエラー
+	 */
+	@Transactional(rollbackFor = { DataAccessException.class,
+			LimiterException.class, IOException.class })
+	Result load(DataProvider provider, Limiter limiter)
+			throws LimiterException, IOException;
 
 	/**
 	 * データ取込みの結果を保持する.
