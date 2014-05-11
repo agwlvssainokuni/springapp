@@ -45,7 +45,7 @@ public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 		return entity.getId();
 	}
 
-	@Transactional(propagation = REQUIRES_NEW)
+	@Transactional
 	@Override
 	public void invokeAsyncProc(int id) {
 		AsyncProcs entity = new AsyncProcs();

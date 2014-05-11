@@ -27,7 +27,7 @@ public interface AsyncProcStatusService {
 	@Transactional(propagation = REQUIRES_NEW)
 	int createAsyncProc(String name, String launcherId);
 
-	@Transactional(propagation = REQUIRES_NEW)
+	@Transactional
 	void invokeAsyncProc(int id);
 
 	@Transactional(propagation = REQUIRES_NEW)
