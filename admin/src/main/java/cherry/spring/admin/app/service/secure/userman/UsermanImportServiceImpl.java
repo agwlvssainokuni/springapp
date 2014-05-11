@@ -43,6 +43,7 @@ import cherry.spring.common.helper.JsonHelper;
 import cherry.spring.common.lib.db.CsvDataProvider;
 import cherry.spring.common.lib.db.DataLoader;
 import cherry.spring.common.lib.db.DataLoader.Result;
+import cherry.spring.common.lib.db.limiter.LimiterException;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.common.service.AsyncProcStatusService;
@@ -141,7 +142,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			asyncProcStatusService.successAsyncProc(procId,
 					jsonHelper.fromMap(map));
 
-		} catch (DataAccessException ex) {
+		} catch (DataAccessException | LimiterException ex) {
 			asyncProcStatusService.errorAsyncProc(procId,
 					jsonHelper.fromThrowable(ex));
 			throw ex;
