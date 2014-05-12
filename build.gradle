@@ -11,6 +11,9 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+		maven {
+			url "http://repository.jboss.org/nexus/content/repositories/public/"
+		}
 	}
 
 	configurations {
