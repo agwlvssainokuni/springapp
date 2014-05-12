@@ -31,10 +31,6 @@
 					"uri": "/secure/userman/import"
 				}
 			]
-		},
-		{
-			"name": "secure/jfreechart/index",
-			"uri": "/secure/jfreechart"
 		}
 	]
 }

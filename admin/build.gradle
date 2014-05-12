@@ -13,7 +13,6 @@ ext {
 
 dependencies {
 	compile project(":common")
-	compile "org.jfree:jfreechart:1.0.17"
 	compile "org.apache.tiles:tiles-core:${versionTiles}"
 	compile "org.apache.tiles:tiles-api:${versionTiles}"
 	compile "org.apache.tiles:tiles-servlet:${versionTiles}"

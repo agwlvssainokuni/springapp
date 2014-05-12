@@ -19,7 +19,5 @@
 					code="secure/home/index.menu.asyncproc" /></a></li>
 		<li><a href="<c:url value="/secure/userman" />"><s:message
 					code="secure/home/index.menu.userman" /></a></li>
-		<li><a href="<c:url value="/secure/jfreechart" />"><s:message
-					code="secure/home/index.menu.jfreechart" /></a></li>
 	</ul>
 </div>
