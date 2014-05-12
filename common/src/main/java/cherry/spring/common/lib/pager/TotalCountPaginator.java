@@ -44,7 +44,7 @@ public class TotalCountPaginator extends Paginator {
 			from = 0;
 		}
 		int to = from + totalCount - 1;
-		if (to >= pageCount) {
+		if (to > pageCount - 1) {
 			to = pageCount - 1;
 			from = to - totalCount + 1;
 			if (from < 0) {

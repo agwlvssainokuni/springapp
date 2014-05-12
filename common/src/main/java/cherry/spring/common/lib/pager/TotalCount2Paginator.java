@@ -43,14 +43,15 @@ public class TotalCount2Paginator extends Paginator {
 		if (from < 1) {
 			from = 1;
 		}
-		int to = from + totalCount - 3;
-		if (to >= pageCount - 2) {
+		int to = from + totalCount - 1;
+		if (to > pageCount - 2) {
 			to = pageCount - 2;
-			from = to - totalCount + 3;
+			from = to - totalCount + 1;
 			if (from < 1) {
 				from = 1;
 			}
 		}
 		return new Range(from, to);
 	}
+
 }
