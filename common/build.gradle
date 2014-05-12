@@ -83,7 +83,7 @@ dependencies {
 	compile "org.springframework.data:spring-data-rest-webmvc:${versionSpringDataRest}"
 	compile "org.springframework.ws:spring-xml:${versionSpringWs}"
 	compile "org.springframework.ws:spring-ws-core:${versionSpringWs}"
-	compile "org.springframework.ws:spring-ws-security:${versionSpringWs}"
+//	compile "org.springframework.ws:spring-ws-security:${versionSpringWs}"
 	compile "org.springframework.ws:spring-ws-support:${versionSpringWs}"
 	compile "org.hibernate:hibernate-validator:${versionHibernateValidator}"
 	compile "javax.mail:mail:${versionJavaMail}"
