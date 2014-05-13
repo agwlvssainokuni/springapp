@@ -52,9 +52,24 @@
 			<maxHistory>${logback.oper.maxHistory}</maxHistory>
 		</rollingPolicy>
 	</appender>
+	<appender name="commonApplog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logback.dir.common}/app.log</file>
+		<encoder>
+			<pattern>${logback.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.app.threshold}</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logback.dir.common}/backup/app.%d{yyyyMMdd}.zip
+			</fileNamePattern>
+			<maxHistory>${logback.app.maxHistory}</maxHistory>
+		</rollingPolicy>
+	</appender>
 	<logger name="cherry.spring" level="${logback.level.app}" />
 	<logger name="org.springframework" level="${logback.level.framework}" />
-	<logger name="com.googlecode.flyway" level="${logback.level.framework}" />
+	<logger name="org.flywaydb" level="${logback.level.framework}" />
 	<logger name="trace" level="TRACE" />
 	<logger name="operation" level="INFO">
 		<appender-ref ref="operlog" />
@@ -62,5 +77,6 @@
 	<root level="INFO">
 		<appender-ref ref="applog" />
 		<appender-ref ref="debuglog" />
+		<appender-ref ref="commonApplog" />
 	</root>
 </configuration>

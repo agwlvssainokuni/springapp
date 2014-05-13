@@ -38,9 +38,14 @@ subprojects {
 		if (project.hasProperty("appendix")) {
 			appdir = appdir + "/" + project.appendix
 		}
-		for (String dir : ["admin", "entree", "batch"]) {
+		for (String dir : ["admin", "entree"]) {
 			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
 			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/log")
+		}
+		for (String dir : ["batch"]) {
+			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
+			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/job/\${jobId}/log")
+			props.setProperty("filter.${dir}.log.dir.common", "${appdir}/${dir}/log")
 		}
 
 		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
