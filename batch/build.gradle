@@ -4,4 +4,5 @@ mainClassName = "cherry.spring.batch.tools.Main"
 
 dependencies {
 	compile project(":common")
+	compile "commons-cli:commons-cli:1.2"
 }

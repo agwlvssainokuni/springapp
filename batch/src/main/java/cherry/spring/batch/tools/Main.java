@@ -16,12 +16,30 @@
 
 package cherry.spring.batch.tools;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import cherry.spring.batch.ExitStatus;
 
 public class Main {
 
-	public static void main(String... args) {
+	public static void main(String... origArgs) {
 
+		Options options = new Options();
+		options.addOption("j", "jobid", true, "Job Id");
+		options.addOption("h", "help", false, "Help");
+
+		CommandLine cmdline = parse(options, origArgs);
+		if (cmdline.hasOption("h")) {
+			printHelp(options);
+			System.exit(ExitStatus.NORMAL.getCode());
+		}
+
+		String[] args = cmdline.getArgs();
 		if (args.length <= 0) {
 			System.exit(ExitStatus.FATAL.getCode());
 		}
@@ -30,9 +48,32 @@ public class Main {
 		String[] newArgs = new String[args.length - 1];
 		System.arraycopy(args, 1, newArgs, 0, args.length - 1);
 
+		if (cmdline.hasOption("j")) {
+			System.setProperty("jobId", cmdline.getOptionValue("j"));
+		} else {
+			System.setProperty("jobId", batchId);
+		}
+
 		Launcher launcher = new Launcher(batchId);
 		ExitStatus status = launcher.launch(newArgs);
 		System.exit(status.getCode());
+	}
+
+	private static CommandLine parse(Options options, String... args) {
+		try {
+			CommandLineParser parser = new GnuParser();
+			return parser.parse(options, args);
+		} catch (ParseException ex) {
+			printHelp(options);
+			System.exit(ExitStatus.FATAL.getCode());
+			return null;
+		}
+	}
+
+	private static void printHelp(Options options) {
+		HelpFormatter help = new HelpFormatter();
+		help.printHelp(Main.class.getName() + " [OPTIONS] batchId [args...]",
+				options);
 	}
 
 }
