@@ -28,7 +28,7 @@ public interface RangeStrategy {
 	 *            ページ番号。
 	 * @param pageCount
 	 *            ページ数。
-	 * @return ページ番号の版に。
+	 * @return ページ番号の範囲。
 	 */
 	Range calcRange(int pageNo, int pageCount);
 
