@@ -25,16 +25,12 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * パスワードエンコーダツール。
  */
 @Controller
-@RequestMapping(PwdtoolController.URI_PATH)
 public class PwdtoolControllerImpl implements PwdtoolController {
 
 	public static final String VIEW_PATH = "secure/pwdtool/index";
@@ -45,7 +41,6 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 	/**
 	 * ツールの画面を表示する。
 	 */
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -56,10 +51,8 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 	/**
 	 * 平文をエンコードした文字列を返却する。
 	 */
-	@RequestMapping(URI_PATH_ENCODE)
-	@ResponseBody
 	@Override
-	public String encode(@RequestParam(PARAM_PLAIN_TEXT) String plainText) {
+	public String encode(String plainText) {
 		return passwordEncoder.encode(plainText);
 	}
 
