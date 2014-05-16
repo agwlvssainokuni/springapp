@@ -18,8 +18,6 @@ package cherry.spring.admin.app.service.secure.userman;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.BaseDto;
 import cherry.spring.common.db.gen.dto.Users;
@@ -27,7 +25,6 @@ import cherry.spring.common.lib.paginate.PageSet;
 
 public interface UsermanSearchService {
 
-	@Transactional
 	Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz);
 
 	public static class Result extends BaseDto {

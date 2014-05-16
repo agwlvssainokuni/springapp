@@ -19,11 +19,8 @@ package cherry.spring.admin.app.service.secure.userman;
 import java.io.Writer;
 import java.util.Date;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public interface UsermanExportService {
 
-	@Transactional
 	long exportUsers(Writer writer, Date registeredFrom, Date registeredTo);
 
 }

@@ -18,15 +18,12 @@ package cherry.spring.admin.app.service.secure.asyncproc;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import cherry.spring.common.db.BaseDto;
 import cherry.spring.common.db.gen.dto.AsyncProcs;
 import cherry.spring.common.lib.paginate.PageSet;
 
 public interface AsyncProcService {
 
-	@Transactional
 	Result searchAsyncProc(int pageNo, int pageSz);
 
 	public static class Result extends BaseDto {
