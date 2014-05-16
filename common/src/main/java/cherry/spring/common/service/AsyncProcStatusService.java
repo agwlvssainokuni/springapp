@@ -16,27 +16,16 @@
 
 package cherry.spring.common.service;
 
-import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-@Component
 public interface AsyncProcStatusService {
 
-	@Transactional(propagation = REQUIRES_NEW)
 	int createAsyncProc(String name, String launcherId);
 
-	@Transactional
 	void invokeAsyncProc(int id);
 
-	@Transactional(propagation = REQUIRES_NEW)
 	void startAsyncProc(int id);
 
-	@Transactional(propagation = REQUIRES_NEW)
 	void successAsyncProc(int id, String json);
 
-	@Transactional(propagation = REQUIRES_NEW)
 	void errorAsyncProc(int id, String json);
 
 }
