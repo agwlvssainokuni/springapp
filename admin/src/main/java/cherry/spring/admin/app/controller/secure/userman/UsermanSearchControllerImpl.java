@@ -26,16 +26,11 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanSearchService;
 
 @Controller
-@RequestMapping(UsermanSearchController.URI_PATH)
 public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 	public static final String VIEW_PATH = "secure/userman/search/index";
@@ -46,13 +41,11 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	@Autowired
 	private UsermanSearchService usermanSearchService;
 
-	@ModelAttribute(UsermanSearchForm.NAME)
 	@Override
 	public UsermanSearchForm getForm() {
 		return new UsermanSearchForm();
 	}
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -60,15 +53,11 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(
-			@Validated UsermanSearchForm form,
-			BindingResult binding,
-			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView request(UsermanSearchForm form, BindingResult binding,
+			int pageNo, int pageSz, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
