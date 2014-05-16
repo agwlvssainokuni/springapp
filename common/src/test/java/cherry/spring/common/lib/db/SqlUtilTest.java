@@ -25,6 +25,8 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
+import cherry.spring.common.lib.data.SqlUtil;
+
 /**
  * {@link SqlUtil} のテスト.
  */

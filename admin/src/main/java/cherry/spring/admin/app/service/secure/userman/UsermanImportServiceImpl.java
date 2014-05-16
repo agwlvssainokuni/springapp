@@ -40,10 +40,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.helper.JsonHelper;
-import cherry.spring.common.lib.db.CsvDataProvider;
-import cherry.spring.common.lib.db.DataLoader;
-import cherry.spring.common.lib.db.DataLoader.Result;
-import cherry.spring.common.lib.db.limiter.LimiterException;
+import cherry.spring.common.lib.data.CsvDataProvider;
+import cherry.spring.common.lib.data.DataLoader;
+import cherry.spring.common.lib.data.DataLoader.Result;
+import cherry.spring.common.lib.data.limiter.LimiterException;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.common.service.AsyncProcStatusService;

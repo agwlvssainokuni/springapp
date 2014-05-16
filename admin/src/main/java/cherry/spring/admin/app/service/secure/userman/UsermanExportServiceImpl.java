@@ -27,9 +27,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.lib.db.CsvDataConsumer;
-import cherry.spring.common.lib.db.DataConsumer;
-import cherry.spring.common.lib.db.DataExtractor;
+import cherry.spring.common.lib.data.CsvDataConsumer;
+import cherry.spring.common.lib.data.DataConsumer;
+import cherry.spring.common.lib.data.DataExtractor;
 
 @Component
 public class UsermanExportServiceImpl implements UsermanExportService {

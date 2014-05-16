@@ -14,39 +14,34 @@
  *   limitations under the License.
  */
 
-package cherry.spring.common.lib.db;
+package cherry.spring.common.lib.data;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Map;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
- * データ取込み機能におけるデータ取得元.
+ * SQL実行機能.
  */
-public interface DataProvider {
+public interface SqlExecutor {
 
 	/**
-	 * データの取得を開始する.
-	 * 
+	 * SQLを実行する.
+	 *
+	 * @param reader
+	 *            SQL文の読込み元
+	 * @param paramMap
+	 *            SQLに受渡すパラメタ
+	 * @param continueOnError
+	 *            SQL実行エラーで継続するか否か
 	 * @throws IOException
-	 *             データ取得エラー
+	 *             SQL文の読込みでエラー
 	 */
-	void begin() throws IOException;
-
-	/**
-	 * 1レコードのデータを取得する.
-	 * 
-	 * @return 1レコードのデータ. データが存在しない場合はnull.
-	 * @throws IOException
-	 *             データ取得エラー
-	 */
-	Map<String, ?> provide() throws IOException;
-
-	/**
-	 * エータの取得を終了する.
-	 * 
-	 * @throws IOException
-	 *             データ取得エラー
-	 */
-	void end() throws IOException;
+	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
+	void execute(Reader reader, Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException;
 
 }

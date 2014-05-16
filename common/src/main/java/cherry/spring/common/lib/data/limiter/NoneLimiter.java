@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.db.limiter;
+package cherry.spring.common.lib.data.limiter;
 
-public class LimiterException extends RuntimeException {
+public class NoneLimiter implements Limiter {
 
-	private static final long serialVersionUID = 1L;
-
-	public LimiterException() {
-		super();
+	@Override
+	public void start() {
+		// NOTHING TO DO
 	}
 
-	public LimiterException(String message) {
-		super(message);
+	@Override
+	public void tick() {
+		// NOTHING TO DO
 	}
 
-	public LimiterException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public LimiterException(Throwable cause) {
-		super(cause);
+	@Override
+	public void stop() {
+		// NOTHING TO DO
 	}
 
 }

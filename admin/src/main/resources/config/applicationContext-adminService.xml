@@ -20,7 +20,7 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="usersExtractor" class="cherry.spring.common.lib.db.DataExtractorImpl">
+	<bean id="usersExtractor" class="cherry.spring.common.lib.data.DataExtractorImpl">
 		<property name="sql">
 			<value><![CDATA[
 				SELECT
@@ -41,7 +41,7 @@
 		</property>
 	</bean>
 
-	<bean id="usersLoader" class="cherry.spring.common.lib.db.DataLoaderImpl">
+	<bean id="usersLoader" class="cherry.spring.common.lib.data.DataLoaderImpl">
 		<property name="sql">
 			<value><![CDATA[
 				INSERT INTO users (

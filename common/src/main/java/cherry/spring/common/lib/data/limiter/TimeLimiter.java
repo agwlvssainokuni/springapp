@@ -14,14 +14,33 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.db.limiter;
+package cherry.spring.common.lib.data.limiter;
 
-public interface Limiter {
+public class TimeLimiter implements Limiter {
 
-	void start();
+	private final long timeLimit;
 
-	void tick() throws LimiterException;
+	private long limitedTo;
 
-	void stop();
+	public TimeLimiter(long timeLimit) {
+		this.timeLimit = timeLimit;
+	}
+
+	@Override
+	public void start() {
+		limitedTo = System.currentTimeMillis() + timeLimit;
+	}
+
+	@Override
+	public void tick() throws LimiterException {
+		if (System.currentTimeMillis() > limitedTo) {
+			throw new LimiterException();
+		}
+	}
+
+	@Override
+	public void stop() {
+		limitedTo = 0L;
+	}
 
 }

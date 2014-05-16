@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package cherry.spring.common.lib.db;
+package cherry.spring.common.lib.data;
 
 import java.io.IOException;
 
@@ -23,8 +23,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.lib.db.limiter.Limiter;
-import cherry.spring.common.lib.db.limiter.LimiterException;
+import cherry.spring.common.lib.data.limiter.Limiter;
+import cherry.spring.common.lib.data.limiter.LimiterException;
 
 /**
  * データ取込み機能.

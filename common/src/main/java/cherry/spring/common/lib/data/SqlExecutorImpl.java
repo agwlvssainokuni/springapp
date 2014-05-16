@@ -14,9 +14,9 @@
  *   limitations under the License.
  */
 
-package cherry.spring.common.lib.db;
+package cherry.spring.common.lib.data;
 
-import static cherry.spring.common.lib.db.SqlUtil.nextSql;
+import static cherry.spring.common.lib.data.SqlUtil.nextSql;
 
 import java.io.IOException;
 import java.io.Reader;

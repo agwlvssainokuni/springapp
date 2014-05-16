@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.db.limiter;
+package cherry.spring.common.lib.data.limiter;
 
-public class TimeLimiter implements Limiter {
+public class LimiterException extends RuntimeException {
 
-	private final long timeLimit;
+	private static final long serialVersionUID = 1L;
 
-	private long limitedTo;
-
-	public TimeLimiter(long timeLimit) {
-		this.timeLimit = timeLimit;
+	public LimiterException() {
+		super();
 	}
 
-	@Override
-	public void start() {
-		limitedTo = System.currentTimeMillis() + timeLimit;
+	public LimiterException(String message) {
+		super(message);
 	}
 
-	@Override
-	public void tick() throws LimiterException {
-		if (System.currentTimeMillis() > limitedTo) {
-			throw new LimiterException();
-		}
+	public LimiterException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	@Override
-	public void stop() {
-		limitedTo = 0L;
+	public LimiterException(Throwable cause) {
+		super(cause);
 	}
 
 }

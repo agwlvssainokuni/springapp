@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package cherry.spring.common.lib.db;
+package cherry.spring.common.lib.data;
 
 import java.io.IOException;
 import java.io.Reader;

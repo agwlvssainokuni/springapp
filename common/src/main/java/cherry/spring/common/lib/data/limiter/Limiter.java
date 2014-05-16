@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.db.limiter;
+package cherry.spring.common.lib.data.limiter;
 
-public class NoneLimiter implements Limiter {
+public interface Limiter {
 
-	@Override
-	public void start() {
-		// NOTHING TO DO
-	}
+	void start();
 
-	@Override
-	public void tick() {
-		// NOTHING TO DO
-	}
+	void tick() throws LimiterException;
 
-	@Override
-	public void stop() {
-		// NOTHING TO DO
-	}
+	void stop();
 
 }
