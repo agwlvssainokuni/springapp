@@ -26,9 +26,6 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -36,7 +33,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import cherry.spring.admin.app.service.secure.userman.UsermanImportService;
 
 @Controller
-@RequestMapping(UsermanImportController.URI_PATH)
 public class UsermanImportControllerImpl implements UsermanImportController {
 
 	public static final String VIEW_PATH = "secure/userman/import/index";
@@ -48,13 +44,11 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	@Autowired
 	private UsermanImportService usermanImportService;
 
-	@ModelAttribute(UsermanImportForm.NAME)
 	@Override
 	public UsermanImportForm getForm() {
 		return new UsermanImportForm();
 	}
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -62,10 +56,9 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Validated UsermanImportForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
+	public ModelAndView request(UsermanImportForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -83,7 +76,6 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_FIN)
 	@Override
 	public ModelAndView finish(RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,

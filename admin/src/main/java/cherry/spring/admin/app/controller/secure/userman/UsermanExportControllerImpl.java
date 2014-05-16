@@ -34,15 +34,11 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanExportService;
 
 @Controller
-@RequestMapping(UsermanExportController.URI_PATH)
 public class UsermanExportControllerImpl implements UsermanExportController {
 
 	public static final String VIEW_PATH = "secure/userman/export/index";
@@ -65,13 +61,11 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 	@Autowired
 	private UsermanExportService usermanExportService;
 
-	@ModelAttribute(UsermanExportForm.NAME)
 	@Override
 	public UsermanExportForm getForm() {
 		return new UsermanExportForm();
 	}
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -79,12 +73,11 @@ public class UsermanExportControllerImpl implements UsermanExportController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Validated UsermanExportForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView request(UsermanExportForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
