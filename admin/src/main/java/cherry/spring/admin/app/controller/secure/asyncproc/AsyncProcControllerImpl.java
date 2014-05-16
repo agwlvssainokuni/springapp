@@ -25,14 +25,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService;
 
 @Controller
-@RequestMapping(AsyncProcController.URI_PATH)
 public class AsyncProcControllerImpl implements AsyncProcController {
 
 	public static final String VIEW_PATH = "secure/asyncproc/index";
@@ -43,11 +40,8 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	@Autowired
 	private AsyncProcService asyncProcService;
 
-	@RequestMapping()
 	@Override
-	public ModelAndView index(
-			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
+	public ModelAndView index(int pageNo, int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
