@@ -29,21 +29,11 @@ import org.junit.Test;
 public class RangeTest {
 
 	@Test
-	public void testRangeNewOk() {
+	public void testRangeNew() {
 		try {
 			assertNotNull(new Range(1, 0));
 		} catch (IllegalStateException ex) {
 			fail("Exception must not be thrown");
-		}
-	}
-
-	@Test
-	public void testRangeNewFail() {
-		try {
-			new Range(1, 0);
-			fail("Exception must be thrown");
-		} catch (AssertionError ex) {
-			// OK
 		}
 	}
 
@@ -77,6 +67,16 @@ public class RangeTest {
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
 			// OK
+		}
+	}
+
+	@Test
+	public void testIteratorRemove() {
+		Iterator<Integer> iter = (new Range(1, 1)).iterator();
+		try {
+			iter.remove();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
 		}
 	}
 

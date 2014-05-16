@@ -30,7 +30,6 @@ public class Range implements Iterable<Integer> {
 	private final int to;
 
 	public Range(int from, int to) {
-		assert from <= to;
 		this.from = from;
 		this.to = to;
 	}
