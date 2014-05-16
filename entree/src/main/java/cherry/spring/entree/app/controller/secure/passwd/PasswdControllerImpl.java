@@ -29,14 +29,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -46,8 +42,7 @@ import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicError;
 import cherry.spring.entree.app.service.secure.passwd.PasswdService;
 
-@Component
-@RequestMapping(PasswdController.URI_PATH)
+@Controller
 public class PasswdControllerImpl implements PasswdController {
 
 	public static final String VIEW_PATH = "secure/passwd/index";
@@ -69,19 +64,16 @@ public class PasswdControllerImpl implements PasswdController {
 	@Qualifier("passwdFormValidator")
 	private Validator passwdFormValidator;
 
-	@ModelAttribute(PasswdForm.NAME)
 	@Override
 	public PasswdForm getForm() {
 		return new PasswdForm();
 	}
 
-	@InitBinder(PasswdForm.NAME)
 	@Override
 	public void initBinder(WebDataBinder binder) {
 		binder.addValidators(passwdFormValidator);
 	}
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -89,10 +81,9 @@ public class PasswdControllerImpl implements PasswdController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Validated PasswdForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
+	public ModelAndView request(PasswdForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -133,7 +124,6 @@ public class PasswdControllerImpl implements PasswdController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_FIN)
 	@Override
 	public ModelAndView finish(RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,

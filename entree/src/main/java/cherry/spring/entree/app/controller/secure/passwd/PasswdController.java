@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -32,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Component
 @RequestMapping(PasswdController.URI_PATH)
 public interface PasswdController {
 
