@@ -25,16 +25,16 @@ import java.util.List;
 public class Paginator implements IPaginator {
 
 	/** ページネーションリンクとして並べるページ番号の範囲の算出方法を定義する。 */
-	private PageNumberStrategy rangeStrategy;
+	private PageNumberStrategy pageNumberStrategy;
 
 	/**
 	 * ページネーションリンクとして並べるページ番号の範囲の算出方法を設定する。
 	 * 
-	 * @param rangeStrategy
+	 * @param pageNumberStrategy
 	 *            ページネーションリンクとして並べるページ番号の範囲の算出方法。
 	 */
-	public void setRangeStrategy(PageNumberStrategy rangeStrategy) {
-		this.rangeStrategy = rangeStrategy;
+	public void setPageNumberStrategy(PageNumberStrategy pageNumberStrategy) {
+		this.pageNumberStrategy = pageNumberStrategy;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class Paginator implements IPaginator {
 
 		PageSet pageSet = new PageSet();
 		List<Page> list = new ArrayList<>();
-		for (Integer no : rangeStrategy.calculate(curNo, pageCount)) {
+		for (Integer no : pageNumberStrategy.calculate(curNo, pageCount)) {
 
 			Page page = createPage(no, pageCount, itemCount, pageSize);
 			list.add(page);
