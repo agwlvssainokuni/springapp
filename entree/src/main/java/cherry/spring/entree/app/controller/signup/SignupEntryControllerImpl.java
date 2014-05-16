@@ -24,9 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -35,7 +32,6 @@ import cherry.spring.entree.LogicError;
 import cherry.spring.entree.app.service.signup.SignupEntryService;
 
 @Controller
-@RequestMapping(SignupEntryController.URI_PATH)
 public class SignupEntryControllerImpl implements SignupEntryController {
 
 	public static final String VIEW_PATH = "signup/entry/index";
@@ -45,13 +41,11 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	@Autowired
 	private SignupEntryService signupEntryService;
 
-	@ModelAttribute(SignupEntryForm.NAME)
 	@Override
 	public SignupEntryForm getForm() {
 		return new SignupEntryForm();
 	}
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
@@ -59,12 +53,10 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@Validated SignupEntryForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView request(SignupEntryForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -83,7 +75,6 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_FIN)
 	@Override
 	public ModelAndView finish(RedirectAttributes redirectAttributes,
 			Locale locale, SitePreference sitePreference,

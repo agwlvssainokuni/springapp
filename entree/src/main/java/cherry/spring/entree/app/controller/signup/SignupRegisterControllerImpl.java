@@ -24,10 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -36,7 +32,6 @@ import cherry.spring.entree.LogicError;
 import cherry.spring.entree.app.service.signup.SignupRegisterService;
 
 @Controller
-@RequestMapping(SignupRegisterController.URI_PATH)
 public class SignupRegisterControllerImpl implements SignupRegisterController {
 
 	public static final String VIEW_PATH = "signup/register/index";
@@ -46,28 +41,24 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	@Autowired
 	private SignupRegisterService signupRegisterService;
 
-	@ModelAttribute(SignupRegisterForm.NAME)
 	@Override
 	public SignupRegisterForm getForm() {
 		return new SignupRegisterForm();
 	}
 
-	@RequestMapping()
 	@Override
-	public ModelAndView index(@PathVariable(PATH_VAR) String token,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(String token, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, token);
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_REQ)
 	@Override
-	public ModelAndView request(@PathVariable(PATH_VAR) String token,
-			@Validated SignupRegisterForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView request(String token, SignupRegisterForm form,
+			BindingResult binding, RedirectAttributes redirectAttributes,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -88,9 +79,8 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 		return mav;
 	}
 
-	@RequestMapping(URI_PATH_FIN)
 	@Override
-	public ModelAndView finish(@PathVariable(PATH_VAR) String token,
+	public ModelAndView finish(String token,
 			RedirectAttributes redirectAttributes, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
