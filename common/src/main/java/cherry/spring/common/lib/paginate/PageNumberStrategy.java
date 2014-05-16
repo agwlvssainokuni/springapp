@@ -19,7 +19,7 @@ package cherry.spring.common.lib.paginate;
 /**
  * ページネーションリンクとして並べるページ番号の範囲を算出する。
  */
-public interface RangeStrategy {
+public interface PageNumberStrategy {
 
 	/**
 	 * ページネーションリンクとして並べるページ番号の範囲を算出する。
@@ -30,6 +30,6 @@ public interface RangeStrategy {
 	 *            ページ数。
 	 * @return ページ番号の範囲。
 	 */
-	Range calcRange(int pageNo, int pageCount);
+	Iterable<Integer> calculate(int pageNo, int pageCount);
 
 }

@@ -16,9 +16,50 @@
 
 package cherry.spring.common.lib.paginate;
 
+import java.util.Iterator;
+
 /**
- * ページネーションリンクとして並べるページ番号の範囲。
+ * ページネーションリンクとして並べるページ番号の範囲。連続したページ番号を持つ。
  */
-public interface Range extends Iterable<Integer> {
+public class Range implements Iterable<Integer> {
+
+	/** 開始ページ番号。 */
+	private final int from;
+
+	/** 終了ページ番号。 */
+	private final int to;
+
+	public Range(int from, int to) {
+		assert from <= to;
+		this.from = from;
+		this.to = to;
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return new Iterator<Integer>() {
+
+			private int current = from - 1;
+
+			@Override
+			public boolean hasNext() {
+				return current < to;
+			}
+
+			@Override
+			public Integer next() {
+				if (current >= to) {
+					throw new IllegalStateException();
+				}
+				current += 1;
+				return current;
+			}
+
+			@Override
+			public void remove() {
+				// 何もしない。
+			}
+		};
+	}
 
 }

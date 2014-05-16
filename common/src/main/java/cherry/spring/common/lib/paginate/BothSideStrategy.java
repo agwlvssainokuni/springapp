@@ -16,12 +16,10 @@
 
 package cherry.spring.common.lib.paginate;
 
-import cherry.spring.common.lib.paginate.range.ContinuousRange;
-
 /**
  * ページネーションリンクとして並べるページ番号の範囲を算出する。現在のページの前後それぞれにできるだけ表示範囲を広げる。
  */
-public class BothSideStrategy implements RangeStrategy {
+public class BothSideStrategy implements PageNumberStrategy {
 
 	/** 前に表示するページ数を保持する。 */
 	private int smallerSide;
@@ -47,7 +45,7 @@ public class BothSideStrategy implements RangeStrategy {
 	 * @return ページ番号の範囲。
 	 */
 	@Override
-	public Range calcRange(int pageNo, int pageCount) {
+	public Iterable<Integer> calculate(int pageNo, int pageCount) {
 		int from = pageNo - smallerSide;
 		if (from < 0) {
 			from = 0;
@@ -56,7 +54,7 @@ public class BothSideStrategy implements RangeStrategy {
 		if (to >= pageCount) {
 			to = pageCount - 1;
 		}
-		return new ContinuousRange(from, to);
+		return new Range(from, to);
 	}
 
 }
