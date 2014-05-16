@@ -16,9 +16,6 @@
 
 package cherry.spring.common.lib.paginate;
 
-import cherry.spring.common.lib.pager.Page;
-import cherry.spring.common.lib.pager.PageSet;
-
 /**
  * ページネーション機能。
  */
