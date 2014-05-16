@@ -80,4 +80,10 @@ public class RangeTest {
 		}
 	}
 
+	@Test
+	public void testToString() {
+		Range range = new Range(1, 10);
+		assertEquals("Range[from=1,to=10]", range.toString());
+	}
+
 }

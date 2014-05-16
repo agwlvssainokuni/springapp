@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.BaseDto;
 import cherry.spring.common.db.gen.dto.Users;
-import cherry.spring.common.lib.pager.PageSet;
+import cherry.spring.common.lib.paginate.PageSet;
 
 public interface UsermanSearchService {
 

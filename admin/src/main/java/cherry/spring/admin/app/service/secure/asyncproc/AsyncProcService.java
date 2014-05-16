@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.BaseDto;
 import cherry.spring.common.db.gen.dto.AsyncProcs;
-import cherry.spring.common.lib.pager.PageSet;
+import cherry.spring.common.lib.paginate.PageSet;
 
 public interface AsyncProcService {
 

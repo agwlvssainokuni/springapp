@@ -7,8 +7,12 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<bean id="paginator" class="cherry.spring.common.lib.pager.TotalCount2Paginator">
-		<property name="totalCount" value="${admin.app.paginator.totalCount}" />
+	<bean id="paginator" class="cherry.spring.common.lib.paginate.Paginator">
+		<property name="pageNumberStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountNoEdgeStrategy">
+				<property name="totalCount" value="${admin.app.paginator.totalCount}" />
+			</bean>
+		</property>
 	</bean>
 
 	<bean id="namedParameterJdbcOperations"

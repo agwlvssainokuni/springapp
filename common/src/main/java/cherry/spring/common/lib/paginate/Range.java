@@ -18,6 +18,9 @@ package cherry.spring.common.lib.paginate;
 
 import java.util.Iterator;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * ページネーションリンクとして並べるページ番号の範囲。連続したページ番号を持つ。
  */
@@ -59,6 +62,12 @@ public class Range implements Iterable<Integer> {
 				// 何もしない。
 			}
 		};
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }
