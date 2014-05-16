@@ -20,11 +20,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public interface SignupEntryService {
 
-	@Transactional
 	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
 			Locale locale);
 

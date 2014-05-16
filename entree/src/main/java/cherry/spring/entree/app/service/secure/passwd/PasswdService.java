@@ -16,11 +16,8 @@
 
 package cherry.spring.entree.app.service.secure.passwd;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public interface PasswdService {
 
-	@Transactional
 	boolean changePassword(String loginId, String password);
 
 }

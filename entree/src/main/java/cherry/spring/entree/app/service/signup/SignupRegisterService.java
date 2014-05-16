@@ -18,11 +18,8 @@ package cherry.spring.entree.app.service.signup;
 
 import java.util.Locale;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public interface SignupRegisterService {
 
-	@Transactional
 	boolean createUser(String mailAddr, String token, String firstName,
 			String lastName, Locale locale);
 
