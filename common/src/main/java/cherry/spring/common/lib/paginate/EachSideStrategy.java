@@ -19,20 +19,20 @@ package cherry.spring.common.lib.paginate;
 /**
  * ページネーションリンクとして並べるページ番号の範囲を算出する。現在のページの前後それぞれにできるだけ表示範囲を広げる。
  */
-public class BothSideStrategy implements PageNumberStrategy {
+public class EachSideStrategy implements PageNumberStrategy {
 
-	/** 前に表示するページ数を保持する。 */
-	private int smallerSide;
+	/** 下位に表示するページ数を保持する。 */
+	private int lowerSide;
 
-	/** 後に表示するページ数を保持する。 */
-	private int biggerSide;
+	/** 上位に表示するページ数を保持する。 */
+	private int upperSide;
 
-	public void setSmallerSide(int smallerSide) {
-		this.smallerSide = smallerSide;
+	public void setLowerSide(int lowerSide) {
+		this.lowerSide = lowerSide;
 	}
 
-	public void setBiggerSide(int biggerSide) {
-		this.biggerSide = biggerSide;
+	public void setUpperSide(int upperSide) {
+		this.upperSide = upperSide;
 	}
 
 	/**
@@ -46,11 +46,11 @@ public class BothSideStrategy implements PageNumberStrategy {
 	 */
 	@Override
 	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - smallerSide;
+		int from = pageNo - lowerSide;
 		if (from < 0) {
 			from = 0;
 		}
-		int to = pageNo + biggerSide;
+		int to = pageNo + upperSide;
 		if (to >= pageCount) {
 			to = pageCount - 1;
 		}
