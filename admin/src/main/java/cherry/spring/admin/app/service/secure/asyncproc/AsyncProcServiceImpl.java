@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.app.mapper.AsyncProcMapper;
 import cherry.spring.common.db.gen.dto.AsyncProcs;
-import cherry.spring.common.lib.paginate.IPaginator;
+import cherry.spring.common.lib.paginate.Paginator;
 import cherry.spring.common.lib.paginate.PageSet;
 
 @Component
@@ -34,7 +34,7 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 	private AsyncProcMapper asyncProcMapper;
 
 	@Autowired
-	private IPaginator paginator;
+	private Paginator paginator;
 
 	@Transactional
 	@Override

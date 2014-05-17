@@ -23,8 +23,8 @@ import org.junit.Test;
 
 public class PaginatorTest {
 
-	private IPaginator create() {
-		IPaginator p = new Paginator();
+	private Paginator create() {
+		Paginator p = new PaginatorImpl();
 		return p;
 	}
 
@@ -35,7 +35,7 @@ public class PaginatorTest {
 
 	@Test
 	public void testGetPageCount() {
-		IPaginator paginator = create();
+		Paginator paginator = create();
 		assertEquals(0, paginator.getPageCount(0, 10));
 		assertEquals(1, paginator.getPageCount(10, 10));
 		assertEquals(2, paginator.getPageCount(11, 10));
@@ -47,7 +47,7 @@ public class PaginatorTest {
 	public void testGetPage() {
 
 		Page page;
-		IPaginator paginator = create();
+		Paginator paginator = create();
 
 		page = paginator.getPage(0, 0, 10);
 		assertEquals(0, page.getNo());

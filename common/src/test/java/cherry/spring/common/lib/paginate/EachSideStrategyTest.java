@@ -22,11 +22,11 @@ import org.junit.Test;
 
 public class EachSideStrategyTest {
 
-	private IPaginator create(int lowerSide, int upperSide) {
+	private Paginator create(int lowerSide, int upperSide) {
 		EachSideStrategy strategy = new EachSideStrategy();
 		strategy.setLowerSide(lowerSide);
 		strategy.setUpperSide(upperSide);
-		Paginator p = new Paginator();
+		PaginatorImpl p = new PaginatorImpl();
 		p.setPageNumberStrategy(strategy);
 		return p;
 	}
@@ -36,7 +36,7 @@ public class EachSideStrategyTest {
 
 		Page page;
 		PageSet pageSet;
-		IPaginator paginator = create(5, 5);
+		Paginator paginator = create(5, 5);
 
 		pageSet = paginator.paginate(0, 101, 10);
 		assertEquals(0, pageSet.getCurrent().getNo());

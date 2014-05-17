@@ -22,10 +22,10 @@ import org.junit.Test;
 
 public class TotalCountNoEdgeStrategyTest {
 
-	private IPaginator create(int totalCount) {
+	private Paginator create(int totalCount) {
 		TotalCountNoEdgeStrategy strategy = new TotalCountNoEdgeStrategy();
 		strategy.setTotalCount(totalCount);
-		Paginator p = new Paginator();
+		PaginatorImpl p = new PaginatorImpl();
 		p.setPageNumberStrategy(strategy);
 		return p;
 	}
@@ -35,7 +35,7 @@ public class TotalCountNoEdgeStrategyTest {
 
 		Page page;
 		PageSet pageSet;
-		IPaginator paginator = create(8);
+		Paginator paginator = create(8);
 
 		pageSet = paginator.paginate(0, 101, 10);
 		assertEquals(0, pageSet.getCurrent().getNo());

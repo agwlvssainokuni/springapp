@@ -28,7 +28,7 @@ import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.app.mapper.UserCondition;
 import cherry.spring.common.db.app.mapper.UserMapper;
 import cherry.spring.common.db.gen.dto.Users;
-import cherry.spring.common.lib.paginate.IPaginator;
+import cherry.spring.common.lib.paginate.Paginator;
 import cherry.spring.common.lib.paginate.PageSet;
 
 @Component
@@ -38,7 +38,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	private UserMapper userMapper;
 
 	@Autowired
-	private IPaginator paginator;
+	private Paginator paginator;
 
 	@Transactional
 	@Override
