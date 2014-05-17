@@ -27,7 +27,7 @@ public class EachSideStrategyTest {
 		strategy.setLowerSide(lowerSide);
 		strategy.setUpperSide(upperSide);
 		PaginatorImpl p = new PaginatorImpl();
-		p.setPageNumberStrategy(strategy);
+		p.setPaginateStrategy(strategy);
 		return p;
 	}
 

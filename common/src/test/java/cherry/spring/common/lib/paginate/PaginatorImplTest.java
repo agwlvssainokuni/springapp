@@ -21,10 +21,10 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-public class PaginatorTest {
+public class PaginatorImplTest {
 
 	private Paginator create() {
-		Paginator p = new PaginatorImpl();
+		PaginatorImpl p = new PaginatorImpl();
 		return p;
 	}
 
