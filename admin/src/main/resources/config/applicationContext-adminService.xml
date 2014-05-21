@@ -9,8 +9,11 @@
 
 	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
-			<bean class="cherry.spring.common.lib.paginate.TotalCountNoEdgeStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
 				<property name="totalCount" value="${admin.app.paginator.totalCount}" />
+				<property name="lowerHint" value="${admin.app.paginator.lowerHint}" />
+				<property name="lowerLimit" value="1" />
+				<property name="upperLimit" value="1" />
 			</bean>
 		</property>
 	</bean>
