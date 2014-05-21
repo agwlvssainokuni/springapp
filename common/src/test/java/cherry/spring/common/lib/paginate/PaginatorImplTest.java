@@ -28,9 +28,9 @@ public class PaginatorImplTest {
 	private Paginator create() {
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(5);
-		strategy.setLowerHint(2);
-		strategy.setLowerLimit(0);
-		strategy.setUpperLimit(0);
+		strategy.setLowerSideHint(2);
+		strategy.setLowerTrim(0);
+		strategy.setUpperTrim(0);
 		PaginatorImpl p = new PaginatorImpl();
 		p.setPaginateStrategy(strategy);
 		return p;

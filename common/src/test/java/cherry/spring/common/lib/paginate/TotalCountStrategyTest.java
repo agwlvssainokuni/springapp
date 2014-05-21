@@ -29,9 +29,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
-		strategy.setLowerHint(1);
-		strategy.setLowerLimit(0);
-		strategy.setUpperLimit(0);
+		strategy.setLowerSideHint(1);
+		strategy.setLowerTrim(0);
+		strategy.setUpperTrim(0);
 
 		check(new Range(0, 3), strategy.calculate(0, 10));
 		check(new Range(0, 3), strategy.calculate(1, 10));
@@ -50,9 +50,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
-		strategy.setLowerHint(2);
-		strategy.setLowerLimit(0);
-		strategy.setUpperLimit(0);
+		strategy.setLowerSideHint(2);
+		strategy.setLowerTrim(0);
+		strategy.setUpperTrim(0);
 
 		check(new Range(0, 3), strategy.calculate(0, 10));
 		check(new Range(0, 3), strategy.calculate(1, 10));
@@ -71,9 +71,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(5);
-		strategy.setLowerHint(2);
-		strategy.setLowerLimit(0);
-		strategy.setUpperLimit(0);
+		strategy.setLowerSideHint(2);
+		strategy.setLowerTrim(0);
+		strategy.setUpperTrim(0);
 
 		check(new Range(0, 4), strategy.calculate(0, 10));
 		check(new Range(0, 4), strategy.calculate(1, 10));
@@ -92,9 +92,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
-		strategy.setLowerHint(1);
-		strategy.setLowerLimit(1);
-		strategy.setUpperLimit(1);
+		strategy.setLowerSideHint(1);
+		strategy.setLowerTrim(1);
+		strategy.setUpperTrim(1);
 
 		check(new Range(1, 4), strategy.calculate(0, 10));
 		check(new Range(1, 4), strategy.calculate(1, 10));
@@ -113,9 +113,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
-		strategy.setLowerHint(2);
-		strategy.setLowerLimit(1);
-		strategy.setUpperLimit(1);
+		strategy.setLowerSideHint(2);
+		strategy.setLowerTrim(1);
+		strategy.setUpperTrim(1);
 
 		check(new Range(1, 4), strategy.calculate(0, 10));
 		check(new Range(1, 4), strategy.calculate(1, 10));
@@ -134,9 +134,9 @@ public class TotalCountStrategyTest {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(5);
-		strategy.setLowerHint(2);
-		strategy.setLowerLimit(1);
-		strategy.setUpperLimit(1);
+		strategy.setLowerSideHint(2);
+		strategy.setLowerTrim(1);
+		strategy.setUpperTrim(1);
 
 		check(new Range(1, 5), strategy.calculate(0, 10));
 		check(new Range(1, 5), strategy.calculate(1, 10));
