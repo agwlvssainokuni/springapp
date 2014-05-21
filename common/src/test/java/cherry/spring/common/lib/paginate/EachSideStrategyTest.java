@@ -18,76 +18,43 @@ package cherry.spring.common.lib.paginate;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 public class EachSideStrategyTest {
 
-	private Paginator create(int lowerSide, int upperSide) {
+	@Test
+	public void testCalculate() {
+
 		EachSideStrategy strategy = new EachSideStrategy();
-		strategy.setLowerSide(lowerSide);
-		strategy.setUpperSide(upperSide);
-		PaginatorImpl p = new PaginatorImpl();
-		p.setPaginateStrategy(strategy);
-		return p;
+		strategy.setLowerSide(2);
+		strategy.setUpperSide(2);
+
+		check(new Range(0, 2), strategy.calculate(0, 10));
+		check(new Range(0, 3), strategy.calculate(1, 10));
+		check(new Range(0, 4), strategy.calculate(2, 10));
+		check(new Range(1, 5), strategy.calculate(3, 10));
+		check(new Range(2, 6), strategy.calculate(4, 10));
+		check(new Range(3, 7), strategy.calculate(5, 10));
+		check(new Range(4, 8), strategy.calculate(6, 10));
+		check(new Range(5, 9), strategy.calculate(7, 10));
+		check(new Range(6, 9), strategy.calculate(8, 10));
+		check(new Range(7, 9), strategy.calculate(9, 10));
 	}
 
-	@Test
-	public void testPaginate() {
-
-		Page page;
-		PageSet pageSet;
-		Paginator paginator = create(5, 5);
-
-		pageSet = paginator.paginate(0, 101, 10);
-		assertEquals(0, pageSet.getCurrent().getNo());
-		assertEquals(10, pageSet.getCurrent().getCount());
-		assertEquals(0, pageSet.getCurrent().getFrom());
-		assertEquals(9, pageSet.getCurrent().getTo());
-		assertEquals(1, pageSet.getNext().getNo());
-		assertEquals(10, pageSet.getNext().getCount());
-		assertEquals(10, pageSet.getNext().getFrom());
-		assertEquals(19, pageSet.getNext().getTo());
-		assertEquals(6, pageSet.getRange().size());
-		assertEquals(pageSet.getCurrent(), pageSet.getRange().get(0));
-		assertEquals(pageSet.getPrev(), pageSet.getRange().get(0));
-		assertEquals(pageSet.getNext(), pageSet.getRange().get(1));
-		page = pageSet.getRange().get(5);
-		assertEquals(5, page.getNo());
-		assertEquals(10, page.getCount());
-		assertEquals(50, page.getFrom());
-		assertEquals(59, page.getTo());
-
-		pageSet = paginator.paginate(5, 101, 10);
-		assertEquals(5, pageSet.getCurrent().getNo());
-		assertEquals(4, pageSet.getPrev().getNo());
-		assertEquals(6, pageSet.getNext().getNo());
-		assertEquals(11, pageSet.getRange().size());
-		assertEquals(pageSet.getCurrent(), pageSet.getRange().get(5));
-		assertEquals(pageSet.getPrev(), pageSet.getRange().get(4));
-		assertEquals(pageSet.getNext(), pageSet.getRange().get(6));
-		page = pageSet.getRange().get(0);
-		assertEquals(0, page.getNo());
-		page = pageSet.getRange().get(10);
-		assertEquals(10, page.getNo());
-
-		pageSet = paginator.paginate(10, 101, 10);
-		assertEquals(10, pageSet.getCurrent().getNo());
-		assertEquals(1, pageSet.getCurrent().getCount());
-		assertEquals(100, pageSet.getCurrent().getFrom());
-		assertEquals(100, pageSet.getCurrent().getTo());
-		assertEquals(9, pageSet.getPrev().getNo());
-		assertEquals(10, pageSet.getPrev().getCount());
-		assertEquals(90, pageSet.getPrev().getFrom());
-		assertEquals(99, pageSet.getPrev().getTo());
-		assertEquals(6, pageSet.getRange().size());
-		assertEquals(pageSet.getCurrent(), pageSet.getRange().get(5));
-		assertEquals(pageSet.getPrev(), pageSet.getRange().get(4));
-		assertEquals(pageSet.getNext(), pageSet.getRange().get(5));
-		page = pageSet.getRange().get(0);
-		assertEquals(5, page.getNo());
-		assertEquals(10, page.getCount());
-		assertEquals(50, page.getFrom());
-		assertEquals(59, page.getTo());
+	private void check(Iterable<Integer> a, Iterable<Integer> b) {
+		Iterator<Integer> ia = a.iterator();
+		Iterator<Integer> ib = b.iterator();
+		while (ia.hasNext() && ib.hasNext()) {
+			assertEquals(ia.next(), ib.next());
+		}
+		if (ia.hasNext()) {
+			assertEquals(ia.next(), null);
+		}
+		if (ib.hasNext()) {
+			assertEquals(null, ia.next());
+		}
 	}
 
 }
