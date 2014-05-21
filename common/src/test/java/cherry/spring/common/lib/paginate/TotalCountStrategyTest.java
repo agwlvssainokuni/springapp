@@ -27,7 +27,7 @@ public class TotalCountStrategyTest {
 	private Paginator create(int totalCount) {
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(totalCount);
-		strategy.setAdjust(true);
+		strategy.setLowerHint((totalCount - 1) / 2);
 		PaginatorImpl p = new PaginatorImpl();
 		p.setPaginateStrategy(strategy);
 		return p;
@@ -112,30 +112,11 @@ public class TotalCountStrategyTest {
 	}
 
 	@Test
-	public void testCaclulate40() {
-
-		TotalCountStrategy strategy = new TotalCountStrategy();
-		strategy.setTotalCount(4);
-		strategy.setAdjust(false);
-
-		check(new Range(0, 3), strategy.calculate(0, 10));
-		check(new Range(0, 3), strategy.calculate(1, 10));
-		check(new Range(0, 3), strategy.calculate(2, 10));
-		check(new Range(1, 4), strategy.calculate(3, 10));
-		check(new Range(2, 5), strategy.calculate(4, 10));
-		check(new Range(3, 6), strategy.calculate(5, 10));
-		check(new Range(4, 7), strategy.calculate(6, 10));
-		check(new Range(5, 8), strategy.calculate(7, 10));
-		check(new Range(6, 9), strategy.calculate(8, 10));
-		check(new Range(6, 9), strategy.calculate(9, 10));
-	}
-
-	@Test
 	public void testCaclulate41() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
-		strategy.setAdjust(true);
+		strategy.setLowerHint(1);
 
 		check(new Range(0, 3), strategy.calculate(0, 10));
 		check(new Range(0, 3), strategy.calculate(1, 10));
@@ -150,30 +131,30 @@ public class TotalCountStrategyTest {
 	}
 
 	@Test
-	public void testCaclulate50() {
+	public void testCaclulate42() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
-		strategy.setTotalCount(5);
-		strategy.setAdjust(false);
+		strategy.setTotalCount(4);
+		strategy.setLowerHint(2);
 
-		check(new Range(0, 4), strategy.calculate(0, 10));
-		check(new Range(0, 4), strategy.calculate(1, 10));
-		check(new Range(0, 4), strategy.calculate(2, 10));
-		check(new Range(1, 5), strategy.calculate(3, 10));
-		check(new Range(2, 6), strategy.calculate(4, 10));
-		check(new Range(3, 7), strategy.calculate(5, 10));
-		check(new Range(4, 8), strategy.calculate(6, 10));
-		check(new Range(5, 9), strategy.calculate(7, 10));
-		check(new Range(5, 9), strategy.calculate(8, 10));
-		check(new Range(5, 9), strategy.calculate(9, 10));
+		check(new Range(0, 3), strategy.calculate(0, 10));
+		check(new Range(0, 3), strategy.calculate(1, 10));
+		check(new Range(0, 3), strategy.calculate(2, 10));
+		check(new Range(1, 4), strategy.calculate(3, 10));
+		check(new Range(2, 5), strategy.calculate(4, 10));
+		check(new Range(3, 6), strategy.calculate(5, 10));
+		check(new Range(4, 7), strategy.calculate(6, 10));
+		check(new Range(5, 8), strategy.calculate(7, 10));
+		check(new Range(6, 9), strategy.calculate(8, 10));
+		check(new Range(6, 9), strategy.calculate(9, 10));
 	}
 
 	@Test
-	public void testCaclulate51() {
+	public void testCaclulate52() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(5);
-		strategy.setAdjust(true);
+		strategy.setLowerHint(2);
 
 		check(new Range(0, 4), strategy.calculate(0, 10));
 		check(new Range(0, 4), strategy.calculate(1, 10));

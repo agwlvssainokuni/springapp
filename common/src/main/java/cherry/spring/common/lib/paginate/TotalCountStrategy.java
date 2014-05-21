@@ -24,15 +24,29 @@ public class TotalCountStrategy implements PaginateStrategy {
 	/** ページ番号の総数を保持する。 */
 	private int totalCount;
 
-	/** ページ番号の総数が偶数の場合の「中央」の算出の調整有無。true: 下側、false: 上側。デフォルトはfalse。 */
-	private boolean adjust = false;
+	/** 下位に表示するページ数のヒントを保持する。 */
+	private int lowerHint;
+
+	/** ページ番号の下限設定を保持する。「0 + 設定値」以上に調整する */
+	private int lowerLimit = 0;
+
+	/** ページ番号の上限設定を保持する。「最終ページ番号 - 設定値」以下に調整する。 */
+	private int upperLimit = 0;
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
 
-	public void setAdjust(boolean adjust) {
-		this.adjust = adjust;
+	public void setLowerHint(int lowerHint) {
+		this.lowerHint = lowerHint;
+	}
+
+	public void setLowerLimit(int lowerLimit) {
+		this.lowerLimit = lowerLimit;
+	}
+
+	public void setUpperLimit(int upperLimit) {
+		this.upperLimit = upperLimit;
 	}
 
 	/**
@@ -46,16 +60,16 @@ public class TotalCountStrategy implements PaginateStrategy {
 	 */
 	@Override
 	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - (totalCount - (adjust ? 1 : 0)) / 2;
-		if (from < 0) {
-			from = 0;
+		int from = pageNo - lowerHint;
+		if (from <= lowerLimit) {
+			from = lowerLimit;
 		}
-		int to = from + totalCount - 1;
-		if (to > pageCount - 1) {
-			to = pageCount - 1;
-			from = to - totalCount + 1;
-			if (from < 0) {
-				from = 0;
+		int to = from + (totalCount - 1);
+		if (to >= (pageCount - 1) - upperLimit) {
+			to = (pageCount - 1) - upperLimit;
+			from = to - (totalCount - 1);
+			if (from <= lowerLimit) {
+				from = lowerLimit;
 			}
 		}
 		return new Range(from, to);
