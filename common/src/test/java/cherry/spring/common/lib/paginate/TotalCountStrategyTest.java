@@ -88,7 +88,7 @@ public class TotalCountStrategyTest {
 	}
 
 	@Test
-	public void testCaclulate41NoEdge() {
+	public void testCaclulate41Trimmed() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
@@ -109,7 +109,7 @@ public class TotalCountStrategyTest {
 	}
 
 	@Test
-	public void testCaclulate42NoEdge() {
+	public void testCaclulate42Trimmed() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(4);
@@ -130,7 +130,7 @@ public class TotalCountStrategyTest {
 	}
 
 	@Test
-	public void testCaclulate52NoEdge() {
+	public void testCaclulate52Trimmed() {
 
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(5);
