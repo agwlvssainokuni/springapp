@@ -25,6 +25,7 @@ public class TotalCountNoEdgeStrategyTest {
 	private Paginator create(int totalCount) {
 		TotalCountNoEdgeStrategy strategy = new TotalCountNoEdgeStrategy();
 		strategy.setTotalCount(totalCount);
+		strategy.setAdjust(true);
 		PaginatorImpl p = new PaginatorImpl();
 		p.setPaginateStrategy(strategy);
 		return p;

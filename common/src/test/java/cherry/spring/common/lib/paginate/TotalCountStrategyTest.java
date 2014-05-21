@@ -25,6 +25,7 @@ public class TotalCountStrategyTest {
 	private Paginator create(int totalCount) {
 		TotalCountStrategy strategy = new TotalCountStrategy();
 		strategy.setTotalCount(totalCount);
+		strategy.setAdjust(true);
 		PaginatorImpl p = new PaginatorImpl();
 		p.setPaginateStrategy(strategy);
 		return p;

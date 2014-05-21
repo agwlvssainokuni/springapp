@@ -25,8 +25,15 @@ public class TotalCountNoEdgeStrategy implements PaginateStrategy {
 	/** ページ番号の総数を保持する。 */
 	private int totalCount;
 
+	/** ページ番号の総数が偶数の場合の「中央」の算出の調整有無。true: 下側、false: 上側。デフォルトはfalse。 */
+	private boolean adjust = false;
+
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
+	}
+
+	public void setAdjust(boolean adjust) {
+		this.adjust = adjust;
 	}
 
 	/**
@@ -41,7 +48,7 @@ public class TotalCountNoEdgeStrategy implements PaginateStrategy {
 	 */
 	@Override
 	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - (totalCount - 1) / 2;
+		int from = pageNo - (totalCount - (adjust ? 1 : 0)) / 2;
 		if (from < 1) {
 			from = 1;
 		}
