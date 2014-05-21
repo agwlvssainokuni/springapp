@@ -18,6 +18,8 @@ package cherry.spring.common.lib.paginate;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 public class TotalCountStrategyTest {
@@ -107,6 +109,96 @@ public class TotalCountStrategyTest {
 		assertEquals(10, page.getCount());
 		assertEquals(0, page.getFrom());
 		assertEquals(9, page.getTo());
+	}
+
+	@Test
+	public void testCaclulate40() {
+
+		TotalCountStrategy strategy = new TotalCountStrategy();
+		strategy.setTotalCount(4);
+		strategy.setAdjust(false);
+
+		check(new Range(0, 3), strategy.calculate(0, 10));
+		check(new Range(0, 3), strategy.calculate(1, 10));
+		check(new Range(0, 3), strategy.calculate(2, 10));
+		check(new Range(1, 4), strategy.calculate(3, 10));
+		check(new Range(2, 5), strategy.calculate(4, 10));
+		check(new Range(3, 6), strategy.calculate(5, 10));
+		check(new Range(4, 7), strategy.calculate(6, 10));
+		check(new Range(5, 8), strategy.calculate(7, 10));
+		check(new Range(6, 9), strategy.calculate(8, 10));
+		check(new Range(6, 9), strategy.calculate(9, 10));
+	}
+
+	@Test
+	public void testCaclulate41() {
+
+		TotalCountStrategy strategy = new TotalCountStrategy();
+		strategy.setTotalCount(4);
+		strategy.setAdjust(true);
+
+		check(new Range(0, 3), strategy.calculate(0, 10));
+		check(new Range(0, 3), strategy.calculate(1, 10));
+		check(new Range(1, 4), strategy.calculate(2, 10));
+		check(new Range(2, 5), strategy.calculate(3, 10));
+		check(new Range(3, 6), strategy.calculate(4, 10));
+		check(new Range(4, 7), strategy.calculate(5, 10));
+		check(new Range(5, 8), strategy.calculate(6, 10));
+		check(new Range(6, 9), strategy.calculate(7, 10));
+		check(new Range(6, 9), strategy.calculate(8, 10));
+		check(new Range(6, 9), strategy.calculate(9, 10));
+	}
+
+	@Test
+	public void testCaclulate50() {
+
+		TotalCountStrategy strategy = new TotalCountStrategy();
+		strategy.setTotalCount(5);
+		strategy.setAdjust(false);
+
+		check(new Range(0, 4), strategy.calculate(0, 10));
+		check(new Range(0, 4), strategy.calculate(1, 10));
+		check(new Range(0, 4), strategy.calculate(2, 10));
+		check(new Range(1, 5), strategy.calculate(3, 10));
+		check(new Range(2, 6), strategy.calculate(4, 10));
+		check(new Range(3, 7), strategy.calculate(5, 10));
+		check(new Range(4, 8), strategy.calculate(6, 10));
+		check(new Range(5, 9), strategy.calculate(7, 10));
+		check(new Range(5, 9), strategy.calculate(8, 10));
+		check(new Range(5, 9), strategy.calculate(9, 10));
+	}
+
+	@Test
+	public void testCaclulate51() {
+
+		TotalCountStrategy strategy = new TotalCountStrategy();
+		strategy.setTotalCount(5);
+		strategy.setAdjust(true);
+
+		check(new Range(0, 4), strategy.calculate(0, 10));
+		check(new Range(0, 4), strategy.calculate(1, 10));
+		check(new Range(0, 4), strategy.calculate(2, 10));
+		check(new Range(1, 5), strategy.calculate(3, 10));
+		check(new Range(2, 6), strategy.calculate(4, 10));
+		check(new Range(3, 7), strategy.calculate(5, 10));
+		check(new Range(4, 8), strategy.calculate(6, 10));
+		check(new Range(5, 9), strategy.calculate(7, 10));
+		check(new Range(5, 9), strategy.calculate(8, 10));
+		check(new Range(5, 9), strategy.calculate(9, 10));
+	}
+
+	private void check(Iterable<Integer> a, Iterable<Integer> b) {
+		Iterator<Integer> ia = a.iterator();
+		Iterator<Integer> ib = b.iterator();
+		while (ia.hasNext() && ib.hasNext()) {
+			assertEquals(ia.next(), ib.next());
+		}
+		if (ia.hasNext()) {
+			assertEquals(ia.next(), null);
+		}
+		if (ib.hasNext()) {
+			assertEquals(null, ia.next());
+		}
 	}
 
 }
