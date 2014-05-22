@@ -16,13 +16,15 @@
 
 package cherry.spring.batch.tools;
 
-import static java.text.MessageFormat.format;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 import cherry.spring.batch.ExitStatus;
 import cherry.spring.batch.IBatch;
@@ -41,42 +43,44 @@ public class Launcher {
 	}
 
 	public ExitStatus launch(String... args) {
+		Msg msg = new Msg();
 		try {
 
-			log.info(format("BATCH {0} STARTING", batchId));
+			log.info(msg.resolve("BATCH {0} STARTING", batchId));
 			for (String arg : args) {
-				log.info(format("  {0}", arg));
+				log.info(msg.resolve("{0}", arg));
 			}
 
 			IBatch batch = getBatch(batchId);
 
-			log.info(format("BATCH {0} STARTED", batchId));
+			log.info(msg.resolve("BATCH {0} STARTED", batchId));
 
 			ExitStatus status = batch.execute(args);
 
 			switch (status) {
 			case NORMAL:
-				log.info(format("BATCH {0} ENDED WITH {1}", batchId,
-						status.name()));
+				log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
+						status));
 				break;
 			case WARN:
-				log.warn(format("BATCH {0} ENDED WITH {1}", batchId,
-						status.name()));
+				log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
+						status));
 				break;
 			case ERROR:
-				log.error(format("BATCH {0} ENDED WITH {1}", batchId,
-						status.name()));
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
+						status));
 				break;
 			default:
-				log.error(format("BATCH {0} ENDED WITH {1}", batchId,
-						status.name()));
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
+						status));
 				break;
 			}
 
 			return status;
 
 		} catch (Exception ex) {
-			log.error(format("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
+			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId),
+					ex);
 			return ExitStatus.FATAL;
 		}
 	}
@@ -85,6 +89,37 @@ public class Launcher {
 		@SuppressWarnings("resource")
 		ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
 		return appCtx.getBean(id, IBatch.class);
+	}
+
+	private class Msg {
+
+		private MessageSource msgSrc = createMessageSource();
+
+		public String resolve(String code, String batchId) {
+			MessageSourceResolvable name = getResolvable(batchId);
+			MessageSourceResolvable msg = getResolvable(code, name);
+			return msgSrc.getMessage(msg, null);
+		}
+
+		public String resolve(String code, String batchId, ExitStatus status) {
+			MessageSourceResolvable name = getResolvable(batchId, batchId);
+			MessageSourceResolvable msg = getResolvable(code, name,
+					status.name());
+			return msgSrc.getMessage(msg, null);
+		}
+
+		private MessageSourceResolvable getResolvable(String code,
+				Object... args) {
+			return new DefaultMessageSourceResolvable(new String[] { code },
+					args);
+		}
+
+		private MessageSource createMessageSource() {
+			ResourceBundleMessageSource msgSrc = new ResourceBundleMessageSource();
+			msgSrc.setBasenames("message/launcher", "message/batchId");
+			msgSrc.setUseCodeAsDefaultMessage(true);
+			return msgSrc;
+		}
 	}
 
 }
