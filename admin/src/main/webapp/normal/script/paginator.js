@@ -65,8 +65,9 @@ function paginator(strategy) {
 
 		var pageSet = {};
 		pageSet.range = [];
-		for ( var no in strategy(curNo, pageCount)) {
-
+		var nos = strategy(curNo, pageCount);
+		for (var i = 0; i < nos.length; i++) {
+			var no = nos[i];
 			var page = createPage(no, pageCount, itemCount, pageSize);
 			pageSet.range.push(page);
 
