@@ -25,8 +25,8 @@
 		</property>
 	</bean>
 
-	<bean class="cherry.spring.common.log.LogInitializer">
-		<property name="messageDef" value="log" />
+	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
+		<constructor-arg value="log" />
 	</bean>
 
 </beans>

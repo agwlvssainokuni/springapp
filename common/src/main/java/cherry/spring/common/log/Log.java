@@ -35,9 +35,11 @@ public class Log {
 	 * 
 	 * @param msgDef
 	 *            ログ文言定義。
+	 * @return ログ文言定義 (引数に指定されたものをそのまま返却する)。
 	 */
-	public static void setMessageDef(ResourceBundle msgDef) {
+	public static ResourceBundle setMessageDef(ResourceBundle msgDef) {
 		messageDef = msgDef;
+		return messageDef;
 	}
 
 	/** ログ出力の実態 (SLF4J) を保持する。 */
