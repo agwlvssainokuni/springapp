@@ -16,7 +16,7 @@
 
 package cherry.spring.common.log;
 
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.InitializingBean;
 
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.InitializingBean;
 public class LogInitializer implements InitializingBean {
 
 	/** ログ文言定義を保持する。 */
-	private Properties messageDef;
+	private ResourceBundle messageDef;
 
 	/**
 	 * ログ文言定義を設定する。
@@ -34,7 +34,7 @@ public class LogInitializer implements InitializingBean {
 	 * @param messageDef
 	 *            ログ文言定義。
 	 */
-	public void setMessageDef(Properties messageDef) {
+	public void setMessageDef(ResourceBundle messageDef) {
 		this.messageDef = messageDef;
 	}
 

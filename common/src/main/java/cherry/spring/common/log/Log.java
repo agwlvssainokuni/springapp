@@ -17,7 +17,7 @@
 package cherry.spring.common.log;
 
 import java.text.MessageFormat;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class Log {
 
 	/** ログ文言定義を保持する。 */
-	private static Properties messageDef;
+	private static ResourceBundle messageDef;
 
 	/**
 	 * ログ文言定義を設定する。
@@ -36,7 +36,7 @@ public class Log {
 	 * @param msgDef
 	 *            ログ文言定義。
 	 */
-	public static void setMessageDef(Properties msgDef) {
+	public static void setMessageDef(ResourceBundle msgDef) {
 		messageDef = msgDef;
 	}
 
@@ -208,7 +208,7 @@ public class Log {
 	 * @return ログ文言。
 	 */
 	private String createMessage(ILogId id, Object... args) {
-		String msg = messageDef.getProperty(id.getId());
+		String msg = messageDef.getString(id.getId());
 		return MessageFormat.format(msg, args);
 	}
 

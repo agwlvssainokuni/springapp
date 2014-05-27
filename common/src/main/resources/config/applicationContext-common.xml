@@ -41,6 +41,15 @@
 		<property name="defaultEncoding" value="${common.mail.encoding}" />
 	</bean>
 
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.ResourceBundle"
+					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+			</map>
+		</property>
+	</bean>
+
 	<bean id="conversionService"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="registerDefaultFormatters" value="false" />

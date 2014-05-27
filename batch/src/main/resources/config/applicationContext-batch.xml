@@ -16,9 +16,7 @@
 	<context:component-scan base-package="cherry.spring.batch" />
 
 	<bean class="cherry.spring.common.log.LogInitializer">
-		<property name="messageDef">
-			<util:properties location="classpath:log.properties" />
-		</property>
+		<property name="messageDef" value="log" />
 	</bean>
 
 </beans>
