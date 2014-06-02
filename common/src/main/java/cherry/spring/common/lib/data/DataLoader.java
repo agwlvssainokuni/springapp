@@ -18,9 +18,6 @@ package cherry.spring.common.lib.data;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import cherry.spring.common.lib.data.limiter.Limiter;
 import cherry.spring.common.lib.data.limiter.LimiterException;
 
@@ -38,7 +35,7 @@ public interface DataLoader {
 	 * @throws IOException
 	 *             データ取得でエラー
 	 */
-	Result load(DataProvider provider) throws IOException;
+	LoadResult load(DataProvider provider) throws IOException;
 
 	/**
 	 * データを取込む.
@@ -53,90 +50,7 @@ public interface DataLoader {
 	 * @throws IOException
 	 *             データ取得でエラー
 	 */
-	Result load(DataProvider provider, Limiter limiter)
+	LoadResult load(DataProvider provider, Limiter limiter)
 			throws LimiterException, IOException;
-
-	/**
-	 * データ取込みの結果を保持する.
-	 */
-	public static class Result {
-
-		/** 読込んだデータの件数. */
-		private int totalCount;
-
-		/** 取込みに成功したデータの件数. */
-		private int successCount;
-
-		/** 取込みに失敗したデータの件数. */
-		private int failedCount;
-
-		/**
-		 * 読込んだデータの件数 を取得する.
-		 * 
-		 * @return 読込んだデータの件数
-		 */
-		public int getTotalCount() {
-			return totalCount;
-		}
-
-		/**
-		 * 読込んだデータの件数 を設定する.
-		 * 
-		 * @param totalCount
-		 *            読込んだデータの件数
-		 */
-		public void setTotalCount(int totalCount) {
-			this.totalCount = totalCount;
-		}
-
-		/**
-		 * 取込みに成功したデータの件数 を取得する.
-		 * 
-		 * @return 取込みに成功したデータの件数
-		 */
-		public int getSuccessCount() {
-			return successCount;
-		}
-
-		/**
-		 * 取込みに成功したデータの件数 を設定する.
-		 * 
-		 * @param successCount
-		 *            取込みに成功したデータの件数
-		 */
-		public void setSuccessCount(int successCount) {
-			this.successCount = successCount;
-		}
-
-		/**
-		 * 取込みに失敗したデータの件数 を取得する.
-		 * 
-		 * @return 取込みに失敗したデータの件数
-		 */
-		public int getFailedCount() {
-			return failedCount;
-		}
-
-		/**
-		 * 取込みに失敗したデータの件数 を設定する.
-		 * 
-		 * @param failedCount
-		 *            取込みに失敗したデータの件数
-		 */
-		public void setFailedCount(int failedCount) {
-			this.failedCount = failedCount;
-		}
-
-		/**
-		 * 文字列表現を取得する.
-		 * 
-		 * @return 文字列表現
-		 */
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this,
-					ToStringStyle.SHORT_PREFIX_STYLE);
-		}
-	}
 
 }

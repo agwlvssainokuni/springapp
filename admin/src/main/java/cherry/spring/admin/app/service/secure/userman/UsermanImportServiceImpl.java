@@ -42,7 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cherry.spring.common.helper.JsonHelper;
 import cherry.spring.common.lib.data.CsvDataProvider;
 import cherry.spring.common.lib.data.DataLoader;
-import cherry.spring.common.lib.data.DataLoader.Result;
+import cherry.spring.common.lib.data.LoadResult;
 import cherry.spring.common.lib.data.limiter.LimiterException;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
@@ -89,7 +89,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	@Transactional
 	@Override
-	public Result importUsers(MultipartFile file) {
+	public LoadResult importUsers(MultipartFile file) {
 		try (InputStream in = file.getInputStream()) {
 			Reader reader = new InputStreamReader(in, charset);
 			CsvDataProvider provider = new CsvDataProvider(reader, true);
@@ -133,12 +133,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		try {
 			asyncProcStatusService.startAsyncProc(procId);
 
-			Result result = loadFile(tempFile);
+			LoadResult loadResult = loadFile(tempFile);
 
 			Map<String, Integer> map = new HashMap<>();
-			map.put("total", result.getTotalCount());
-			map.put("success", result.getSuccessCount());
-			map.put("failed", result.getFailedCount());
+			map.put("total", loadResult.getTotalCount());
+			map.put("success", loadResult.getSuccessCount());
+			map.put("failed", loadResult.getFailedCount());
 			asyncProcStatusService.successAsyncProc(procId,
 					jsonHelper.fromMap(map));
 
@@ -179,7 +179,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		}
 	}
 
-	private Result loadFile(File file) throws IOException {
+	private LoadResult loadFile(File file) throws IOException {
 		try (InputStream in = new FileInputStream(file)) {
 			Reader reader = new InputStreamReader(in, charset);
 			return usersLoader.load(new CsvDataProvider(reader, true));

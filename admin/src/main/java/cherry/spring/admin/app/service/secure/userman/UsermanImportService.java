@@ -20,11 +20,11 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import cherry.spring.common.lib.data.DataLoader.Result;
+import cherry.spring.common.lib.data.LoadResult;
 
 public interface UsermanImportService {
 
-	Result importUsers(MultipartFile file);
+	LoadResult importUsers(MultipartFile file);
 
 	Map<String, String> launchImportUsers(MultipartFile file, String launcherId);
 

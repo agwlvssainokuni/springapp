@@ -94,7 +94,7 @@ public class DataLoaderImpl implements DataLoader {
 	 */
 	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
 	@Override
-	public Result load(DataProvider provider) throws IOException {
+	public LoadResult load(DataProvider provider) throws IOException {
 		return load(provider, new NoneLimiter());
 	}
 
@@ -112,7 +112,7 @@ public class DataLoaderImpl implements DataLoader {
 	@Transactional(rollbackFor = { DataAccessException.class,
 			LimiterException.class, IOException.class })
 	@Override
-	public Result load(DataProvider provider, Limiter limiter)
+	public LoadResult load(DataProvider provider, Limiter limiter)
 			throws LimiterException, IOException {
 		limiter.start();
 		try {
@@ -152,7 +152,7 @@ public class DataLoaderImpl implements DataLoader {
 
 			provider.end();
 
-			Result result = new Result();
+			LoadResult result = new LoadResult();
 			result.setTotalCount(totalCount);
 			result.setSuccessCount(successCount);
 			result.setFailedCount(failedCount);
