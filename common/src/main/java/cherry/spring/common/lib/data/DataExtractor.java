@@ -19,9 +19,6 @@ package cherry.spring.common.lib.data;
 import java.io.IOException;
 import java.util.Map;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.transaction.annotation.Transactional;
-
 import cherry.spring.common.lib.data.limiter.Limiter;
 import cherry.spring.common.lib.data.limiter.LimiterException;
 
@@ -41,7 +38,6 @@ public interface DataExtractor {
 	 * @throws IOException
 	 *             データ格納エラー
 	 */
-	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
 	long extract(DataConsumer consumer, Map<String, ?> paramMap)
 			throws IOException;
 
@@ -60,8 +56,6 @@ public interface DataExtractor {
 	 * @throws IOException
 	 *             データ格納エラー
 	 */
-	@Transactional(rollbackFor = { DataAccessException.class,
-			LimiterException.class, IOException.class })
 	long extract(DataConsumer consumer, Map<String, ?> paramMap, Limiter limiter)
 			throws LimiterException, IOException;
 

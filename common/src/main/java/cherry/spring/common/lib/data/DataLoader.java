@@ -20,8 +20,6 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.dao.DataAccessException;
-import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.data.limiter.Limiter;
 import cherry.spring.common.lib.data.limiter.LimiterException;
@@ -40,7 +38,6 @@ public interface DataLoader {
 	 * @throws IOException
 	 *             データ取得でエラー
 	 */
-	@Transactional(rollbackFor = { DataAccessException.class, IOException.class })
 	Result load(DataProvider provider) throws IOException;
 
 	/**
@@ -56,8 +53,6 @@ public interface DataLoader {
 	 * @throws IOException
 	 *             データ取得でエラー
 	 */
-	@Transactional(rollbackFor = { DataAccessException.class,
-			LimiterException.class, IOException.class })
 	Result load(DataProvider provider, Limiter limiter)
 			throws LimiterException, IOException;
 
