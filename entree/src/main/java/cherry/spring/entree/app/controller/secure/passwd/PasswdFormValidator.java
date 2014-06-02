@@ -42,8 +42,8 @@ public class PasswdFormValidator implements Validator {
 		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
 			return;
 		}
-		errors.rejectValue(PasswdForm.NEW_PASSWORD_CONF,
-				"PasswdFormValidator.confirm", "password confirmation failed.");
+		errors.rejectValue("newPasswordConf", "PasswdFormValidator.confirm",
+				"password confirmation failed.");
 	}
 
 }

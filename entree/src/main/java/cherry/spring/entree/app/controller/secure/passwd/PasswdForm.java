@@ -31,14 +31,6 @@ public class PasswdForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "passwdForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String LOGIN_ID = "loginId";
-	public static final String PASSWORD = "password";
-	public static final String NEW_PASSWORD = "newPassword";
-	public static final String NEW_PASSWORD_CONF = "newPasswordConf";
-
 	@NotEmpty
 	@MailAddrSize
 	@Email

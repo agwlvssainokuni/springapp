@@ -40,7 +40,7 @@ public interface SignupRegisterController {
 
 	public static final String PATH_VAR = "token";
 
-	@ModelAttribute(SignupRegisterForm.NAME)
+	@ModelAttribute("signupRegisterForm")
 	SignupRegisterForm getForm();
 
 	@RequestMapping()

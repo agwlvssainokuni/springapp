@@ -28,14 +28,6 @@ public class SignupRegisterForm extends BaseForm {
 	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "signupRegisterForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String EMAIL = "email";
-	public static final String FIRST_NAME = "firstName";
-	public static final String LAST_NAME = "lastName";
-	public static final String AGREE = "agree";
-
 	@NotEmpty
 	@MailAddrSize
 	@Email

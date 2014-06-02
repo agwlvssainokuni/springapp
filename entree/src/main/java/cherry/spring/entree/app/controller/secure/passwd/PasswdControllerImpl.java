@@ -134,10 +134,8 @@ public class PasswdControllerImpl implements PasswdController {
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
 		binding.reject(LogicError.CurAuthFailed.name(), new Object[] {
-				new DefaultMessageSourceResolvable(PasswdForm.PREFIX
-						+ PasswdForm.LOGIN_ID),
-				new DefaultMessageSourceResolvable(PasswdForm.PREFIX
-						+ PasswdForm.PASSWORD) },
+				new DefaultMessageSourceResolvable("passwdForm.loginId"),
+				new DefaultMessageSourceResolvable("passwdForm.password") },
 				LogicError.CurAuthFailed.name());
 	}
 

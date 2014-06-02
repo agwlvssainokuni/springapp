@@ -40,10 +40,10 @@ public interface PasswdController {
 
 	public static final String URI_PATH_FIN = "fin";
 
-	@ModelAttribute(PasswdForm.NAME)
+	@ModelAttribute("passwdForm")
 	PasswdForm getForm();
 
-	@InitBinder(PasswdForm.NAME)
+	@InitBinder("passwdForm")
 	void initBinder(WebDataBinder binder);
 
 	@RequestMapping()

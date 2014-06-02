@@ -27,11 +27,6 @@ public class SignupEntryForm extends BaseForm {
 	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "signupEntryForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String EMAIL = "email";
-
 	@NotEmpty
 	@MailAddrSize
 	@Email

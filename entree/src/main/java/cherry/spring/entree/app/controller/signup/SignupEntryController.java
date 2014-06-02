@@ -37,7 +37,7 @@ public interface SignupEntryController {
 
 	public static final String URI_PATH_FIN = "fin";
 
-	@ModelAttribute(SignupEntryForm.NAME)
+	@ModelAttribute("signupEntryForm")
 	SignupEntryForm getForm();
 
 	@RequestMapping()
