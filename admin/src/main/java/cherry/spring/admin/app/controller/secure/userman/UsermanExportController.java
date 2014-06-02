@@ -36,7 +36,7 @@ public interface UsermanExportController {
 
 	public static final String URI_PATH_REQ = "req";
 
-	@ModelAttribute(UsermanExportForm.NAME)
+	@ModelAttribute("usermanExportForm")
 	UsermanExportForm getForm();
 
 	@RequestMapping()

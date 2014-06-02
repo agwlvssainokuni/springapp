@@ -38,7 +38,7 @@ public interface UsermanImportController {
 
 	public static final String URI_PATH_FIN = "fin";
 
-	@ModelAttribute(UsermanImportForm.NAME)
+	@ModelAttribute("usermanImportForm")
 	UsermanImportForm getForm();
 
 	@RequestMapping()

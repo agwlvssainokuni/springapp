@@ -26,11 +26,6 @@ public class UsermanImportForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "usermanImportForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String FILE = "file";
-
 	@NotNull
 	private MultipartFile file;
 

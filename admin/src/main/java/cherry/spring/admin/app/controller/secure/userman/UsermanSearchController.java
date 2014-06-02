@@ -40,7 +40,7 @@ public interface UsermanSearchController {
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute(UsermanSearchForm.NAME)
+	@ModelAttribute("usermanSearchForm")
 	UsermanSearchForm getForm();
 
 	@RequestMapping()

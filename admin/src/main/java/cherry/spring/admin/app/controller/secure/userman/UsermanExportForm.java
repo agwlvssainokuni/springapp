@@ -26,13 +26,6 @@ public class UsermanExportForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "usermanExportForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String REGISTERED_FROM = "registeredFrom";
-
-	public static final String REGISTERED_TO = "registeredTo";
-
 	@CustomDateTimeFormat(Range.FROM)
 	private LocalDateTime registeredFrom;
 

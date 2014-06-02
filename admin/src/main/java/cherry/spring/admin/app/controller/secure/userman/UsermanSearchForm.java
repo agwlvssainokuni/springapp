@@ -28,15 +28,6 @@ public class UsermanSearchForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "usermanSearchForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String LOGIN_ID = "loginId";
-	public static final String REGISTERED_FROM = "registeredFrom";
-	public static final String REGISTERED_TO = "registeredTo";
-	public static final String FIRST_NAME = "firstName";
-	public static final String LAST_NAME = "lastName";
-
 	@MailAddrSize
 	private String loginId;
 
