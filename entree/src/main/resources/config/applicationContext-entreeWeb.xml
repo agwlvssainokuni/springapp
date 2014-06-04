@@ -51,7 +51,7 @@
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
-	<mvc:annotation-driven>
+	<mvc:annotation-driven conversion-service="conversionService">
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
 			<bean
@@ -110,5 +110,8 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
 </beans>
