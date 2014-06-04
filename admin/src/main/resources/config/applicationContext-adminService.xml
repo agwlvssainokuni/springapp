@@ -18,11 +18,6 @@
 		</property>
 	</bean>
 
-	<bean id="namedParameterJdbcOperations"
-		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg ref="dataSource" />
-	</bean>
-
 	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
 	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
 

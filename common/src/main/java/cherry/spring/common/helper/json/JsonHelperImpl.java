@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper;
+package cherry.spring.common.helper.json;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class JsonHelperImpl implements JsonHelper {
 
-	@Value("${common.jsonHelper.throwable.maxlength}")
+	@Value("${common.helper.json.throwableMaxLength}")
 	private Integer throwableMaxlength;
 
 	private ObjectMapper mapper = new ObjectMapper();

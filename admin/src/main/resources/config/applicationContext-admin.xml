@@ -17,9 +17,6 @@
 
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
-		<property name="objectMapper">
-			<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
-		</property>
 	</bean>
 
 	<bean id="messageSource"

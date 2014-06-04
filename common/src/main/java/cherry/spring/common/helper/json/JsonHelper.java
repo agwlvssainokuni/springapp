@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper;
+package cherry.spring.common.helper.json;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public interface JsonHelper {
 
 	String fromMap(Map<?, ?> map);

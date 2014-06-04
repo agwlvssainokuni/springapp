@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import cherry.spring.common.helper.JsonHelper;
+import cherry.spring.common.helper.json.JsonHelper;
 import cherry.spring.common.lib.etl.CsvProvider;
 import cherry.spring.common.lib.etl.LimiterException;
 import cherry.spring.common.lib.etl.LoadResult;
