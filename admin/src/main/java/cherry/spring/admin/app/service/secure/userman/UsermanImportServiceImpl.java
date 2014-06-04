@@ -91,7 +91,6 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private DataSource dataSource;
 
 	@Autowired
-	@Qualifier("usersLoader")
 	private Loader loader;
 
 	@Autowired
