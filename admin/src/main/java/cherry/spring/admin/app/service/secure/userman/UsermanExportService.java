@@ -21,6 +21,6 @@ import java.util.Date;
 
 public interface UsermanExportService {
 
-	long exportUsers(Writer writer, Date registeredFrom, Date registeredTo);
+	int exportUsers(Writer writer, Date registeredFrom, Date registeredTo);
 
 }

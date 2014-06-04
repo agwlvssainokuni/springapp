@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,10 +42,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.helper.JsonHelper;
-import cherry.spring.common.lib.data.CsvDataProvider;
-import cherry.spring.common.lib.data.DataLoader;
-import cherry.spring.common.lib.data.LoadResult;
-import cherry.spring.common.lib.data.limiter.LimiterException;
+import cherry.spring.common.lib.etl.CsvProvider;
+import cherry.spring.common.lib.etl.LimiterException;
+import cherry.spring.common.lib.etl.LoadResult;
+import cherry.spring.common.lib.etl.Loader;
+import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.common.service.AsyncProcStatusService;
@@ -81,8 +84,15 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private JsonHelper jsonHelper;
 
 	@Autowired
+	@Qualifier("usermanImportSql")
+	private String usermanImportSql;
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
 	@Qualifier("usersLoader")
-	private DataLoader usersLoader;
+	private Loader loader;
 
 	@Autowired
 	private JmsOperations jmsOperations;
@@ -92,8 +102,9 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	public LoadResult importUsers(MultipartFile file) {
 		try (InputStream in = file.getInputStream()) {
 			Reader reader = new InputStreamReader(in, charset);
-			CsvDataProvider provider = new CsvDataProvider(reader, true);
-			return usersLoader.load(provider);
+			CsvProvider provider = new CsvProvider(reader, true);
+			return loader.load(dataSource, usermanImportSql, provider,
+					new NoneLimiter());
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -182,7 +193,8 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private LoadResult loadFile(File file) throws IOException {
 		try (InputStream in = new FileInputStream(file)) {
 			Reader reader = new InputStreamReader(in, charset);
-			return usersLoader.load(new CsvDataProvider(reader, true));
+			return loader.load(dataSource, usermanImportSql, new CsvProvider(
+					reader, true), new NoneLimiter());
 		}
 	}
 

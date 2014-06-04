@@ -22,14 +22,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.lib.data.CsvDataConsumer;
-import cherry.spring.common.lib.data.DataConsumer;
-import cherry.spring.common.lib.data.DataExtractor;
+import cherry.spring.common.lib.etl.Consumer;
+import cherry.spring.common.lib.etl.CsvConsumer;
+import cherry.spring.common.lib.etl.Extractor;
+import cherry.spring.common.lib.etl.NoneLimiter;
 
 @Component
 public class UsermanExportServiceImpl implements UsermanExportService {
@@ -39,19 +42,25 @@ public class UsermanExportServiceImpl implements UsermanExportService {
 	public static final String REGISTERED_TO = "registeredTo";
 
 	@Autowired
-	@Qualifier("usersExtractor")
-	private DataExtractor usersExtractor;
+	@Qualifier("usermanExportSql")
+	private String usermanExportSql;
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
+	private Extractor extractor;
 
 	@Transactional
 	@Override
-	public long exportUsers(Writer writer, Date registeredFrom,
-			Date registeredTo) {
+	public int exportUsers(Writer writer, Date registeredFrom, Date registeredTo) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put(REGISTERED_FROM, registeredFrom);
 		paramMap.put(REGISTERED_TO, registeredTo);
 		try {
-			DataConsumer consumer = new CsvDataConsumer(writer, "\r\n", true);
-			return usersExtractor.extract(consumer, paramMap);
+			Consumer consumer = new CsvConsumer(writer, "\r\n", true);
+			return extractor.extract(dataSource, usermanExportSql, paramMap,
+					consumer, new NoneLimiter());
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
