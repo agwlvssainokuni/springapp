@@ -16,7 +16,7 @@
 
 package cherry.spring.common;
 
-import cherry.spring.common.mail.IMailId;
+import cherry.spring.common.helper.mail.IMailId;
 
 public enum MailId implements IMailId {
 	/** サインアップ(エントリ) */

@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mail;
+package cherry.spring.common.helper.crypto;
 
-import java.util.Locale;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 
-import org.springframework.mail.SimpleMailMessage;
+public interface KeyLoader {
 
-public interface MailMessageHelper {
+	PublicKey loadPublicKey(InputStream in) throws IOException,
+			InvalidKeySpecException;
 
-	SimpleMailMessage createMailMessage(IMailId mailId, String to,
-			MailModel mailModel, Locale locale);
+	PrivateKey loadPrivateKey(InputStream in) throws IOException,
+			InvalidKeySpecException;
 
 }

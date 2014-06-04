@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.mail;
+package cherry.spring.common.helper.mail;
 
 import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;

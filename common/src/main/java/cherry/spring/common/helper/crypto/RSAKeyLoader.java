@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.crypto;
+package cherry.spring.common.helper.crypto;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

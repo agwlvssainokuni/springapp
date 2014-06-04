@@ -34,10 +34,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import cherry.spring.common.MailId;
 import cherry.spring.common.db.app.mapper.SignupRequestMapper;
 import cherry.spring.common.db.gen.dto.SignupRequests;
+import cherry.spring.common.helper.mail.MailMessageHelper;
+import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.spring.common.mail.MailMessageHelper;
-import cherry.spring.common.mail.MailModel;
 import cherry.spring.entree.app.controller.signup.SignupRegisterController;
 
 @Component

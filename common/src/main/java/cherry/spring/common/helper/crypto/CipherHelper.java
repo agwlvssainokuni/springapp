@@ -14,24 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.navi;
+package cherry.spring.common.helper.crypto;
 
-import static cherry.spring.common.lib.tag.AppCtxTag.getBeanByClass;
+public interface CipherHelper {
 
-import java.util.List;
+	byte[] encrypt(byte[] in);
 
-import javax.servlet.ServletContext;
-
-import cherry.spring.common.lib.navi.Navigator.Node;
-
-public class NavigatorTag {
-
-	public static Navigator getNavigator(ServletContext sc) {
-		return getBeanByClass(sc, Navigator.class);
-	}
-
-	public static List<Node> navigate(ServletContext sc, String name) {
-		return getNavigator(sc).navigate(name);
-	}
+	byte[] decrypt(byte[] in);
 
 }

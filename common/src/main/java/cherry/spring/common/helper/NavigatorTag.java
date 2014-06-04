@@ -14,20 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.crypto;
+package cherry.spring.common.helper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
+import static cherry.spring.common.helper.AppCtxTag.getBeanByClass;
 
-public interface KeyLoader {
+import java.util.List;
 
-	PublicKey loadPublicKey(InputStream in) throws IOException,
-			InvalidKeySpecException;
+import javax.servlet.ServletContext;
 
-	PrivateKey loadPrivateKey(InputStream in) throws IOException,
-			InvalidKeySpecException;
+import cherry.spring.common.helper.navi.Navigator;
+import cherry.spring.common.helper.navi.Navigator.Node;
+
+public class NavigatorTag {
+
+	public static Navigator getNavigator(ServletContext sc) {
+		return getBeanByClass(sc, Navigator.class);
+	}
+
+	public static List<Node> navigate(ServletContext sc, String name) {
+		return getNavigator(sc).navigate(name);
+	}
 
 }

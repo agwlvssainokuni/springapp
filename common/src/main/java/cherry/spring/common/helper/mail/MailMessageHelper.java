@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.crypto;
+package cherry.spring.common.helper.mail;
 
-public interface CipherHelper {
+import java.util.Locale;
 
-	byte[] encrypt(byte[] in);
+import org.springframework.mail.SimpleMailMessage;
 
-	byte[] decrypt(byte[] in);
+public interface MailMessageHelper {
+
+	SimpleMailMessage createMailMessage(IMailId mailId, String to,
+			MailModel mailModel, Locale locale);
 
 }
