@@ -15,22 +15,22 @@
 --
 
 -- スキーマ作成
-DROP TABLE member;
-CREATE TABLE member (
+DROP TABLE test_member;
+CREATE TABLE test_member (
 	id		DECIMAL(10) NOT NULL,
 	login	VARCHAR(32) NOT NULL,
 	passwd	VARCHAR(64) NOT NULL,
 	name	VARCHAR(255),
 	del_flg	CHAR(1)	DEFAULT '0'
 );
-ALTER TABLE member ADD PRIMARY KEY (id);
+ALTER TABLE test_member ADD PRIMARY KEY (id);
 
 -- 初期データ投入
-INSERT INTO member (id, login, passwd, name, del_flg) VALUES (1, 'user1', 'user1', NULL, '0');
-INSERT INTO member (id, login, passwd, name, del_flg) VALUES (2, 'user2', 'user2', NULL, '0');
-INSERT INTO member (id, login, passwd, name, del_flg) VALUES (3, 'user3', 'user3', NULL, '0');
-INSERT INTO member (id, login, passwd, name, del_flg) VALUES (4, 'user4', 'user4', NULL, '0');
-INSERT INTO member (id, login, passwd, name, del_flg) VALUES (5, 'user5', 'user5', NULL, '0');
+INSERT INTO test_member (id, login, passwd, name, del_flg) VALUES (1, 'user1', 'user1', NULL, '0');
+INSERT INTO test_member (id, login, passwd, name, del_flg) VALUES (2, 'user2', 'user2', NULL, '0');
+INSERT INTO test_member (id, login, passwd, name, del_flg) VALUES (3, 'user3', 'user3', NULL, '0');
+INSERT INTO test_member (id, login, passwd, name, del_flg) VALUES (4, 'user4', 'user4', NULL, '0');
+INSERT INTO test_member (id, login, passwd, name, del_flg) VALUES (5, 'user5', 'user5', NULL, '0');
 
 -- データ更新
-UPDATE member SET name = login;
+UPDATE test_member SET name = login;
