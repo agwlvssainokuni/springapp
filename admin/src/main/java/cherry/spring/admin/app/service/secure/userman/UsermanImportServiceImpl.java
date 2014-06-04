@@ -100,8 +100,8 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Transactional
 	@Override
 	public LoadResult importUsers(MultipartFile file) {
-		try (InputStream in = file.getInputStream()) {
-			Reader reader = new InputStreamReader(in, charset);
+		try (InputStream in = file.getInputStream();
+				Reader reader = new InputStreamReader(in, charset)) {
 			CsvProvider provider = new CsvProvider(reader, true);
 			return loader.load(dataSource, usermanImportSql, provider,
 					new NoneLimiter());
@@ -172,13 +172,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private File createFile(MultipartFile file) throws IOException {
 		File tempFile = File.createTempFile(
 				MessageFormat.format(prefix, new Date()), suffix, tempDir);
-		try (InputStream in = file.getInputStream()) {
-			try (OutputStream out = new FileOutputStream(tempFile)) {
-				byte[] buff = new byte[4096];
-				int size;
-				while ((size = in.read(buff, 0, buff.length)) >= 0) {
-					out.write(buff, 0, size);
-				}
+		try (InputStream in = file.getInputStream();
+				OutputStream out = new FileOutputStream(tempFile)) {
+			byte[] buff = new byte[4096];
+			int size;
+			while ((size = in.read(buff, 0, buff.length)) >= 0) {
+				out.write(buff, 0, size);
 			}
 			return tempFile;
 		} catch (IOException ex) {
@@ -191,10 +190,11 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	}
 
 	private LoadResult loadFile(File file) throws IOException {
-		try (InputStream in = new FileInputStream(file)) {
-			Reader reader = new InputStreamReader(in, charset);
-			return loader.load(dataSource, usermanImportSql, new CsvProvider(
-					reader, true), new NoneLimiter());
+		try (InputStream in = new FileInputStream(file);
+				Reader reader = new InputStreamReader(in, charset)) {
+			CsvProvider provider = new CsvProvider(reader, true);
+			return loader.load(dataSource, usermanImportSql, provider,
+					new NoneLimiter());
 		}
 	}
 
