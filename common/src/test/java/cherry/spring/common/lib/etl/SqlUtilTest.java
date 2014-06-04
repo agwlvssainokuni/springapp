@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.data;
+package cherry.spring.common.lib.etl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
