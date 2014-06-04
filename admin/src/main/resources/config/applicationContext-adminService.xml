@@ -23,8 +23,11 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="usersExtractor" class="cherry.spring.common.lib.data.DataExtractorImpl">
-		<property name="sql">
+	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
+	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
+
+	<bean id="usermanExportSql" class="java.lang.String">
+		<constructor-arg type="java.lang.String">
 			<value><![CDATA[
 				SELECT
 					A.login_id,
@@ -41,11 +44,11 @@
 				ORDER BY
 					A.id
 			]]></value>
-		</property>
+		</constructor-arg>
 	</bean>
 
-	<bean id="usersLoader" class="cherry.spring.common.lib.data.DataLoaderImpl">
-		<property name="sql">
+	<bean id="usermanImportSql" class="java.lang.String">
+		<constructor-arg type="java.lang.String">
 			<value><![CDATA[
 				INSERT INTO users (
 					login_id,
@@ -59,7 +62,7 @@
 					:lastName
 				)
 			]]></value>
-		</property>
+		</constructor-arg>
 	</bean>
 
 </beans>
