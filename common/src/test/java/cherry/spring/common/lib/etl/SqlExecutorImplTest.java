@@ -16,7 +16,7 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.lib.etl.AppCtxUtil.getBean;
+import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -49,6 +49,8 @@ public class SqlExecutorImplTest {
 			ex.printStackTrace();
 			fail("例外が発生するのはNG");
 		} finally {
+			executor.execute(dataSource, new StringReader(
+					"DROP TABLE etl_user_test"), null, true);
 			reader.close();
 		}
 	}

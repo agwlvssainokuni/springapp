@@ -16,7 +16,7 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.lib.etl.AppCtxUtil.getBean;
+import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -46,7 +46,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
 					.load(getBean(DataSource.class),
-							"INSERT INTO member (name, address) VALUES (:name, :address)",
+							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
@@ -75,7 +75,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
 					.load(getBean(DataSource.class),
-							"INSERT INTO member (name, address) VALUES (:name, :address)",
+							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
@@ -104,7 +104,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
 					.load(getBean(DataSource.class),
-							"INSERT INTO member (name, address) VALUES (:name, :address)",
+							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
 			assertEquals(1, loadResult.getTotalCount());
@@ -143,7 +143,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(3);
 			LoadResult loadResult = impl
 					.load(getBean(DataSource.class),
-							"INSERT INTO member (name, address) VALUES (:name, :address)",
+							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
@@ -169,7 +169,7 @@ public class LoaderImplTest {
 			try {
 				impl.load(
 						getBean(DataSource.class),
-						"INSERT INTO member (name, address) VALUES (:name, :address)",
+						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
 			} catch (DataAccessException ex) {
@@ -194,7 +194,7 @@ public class LoaderImplTest {
 			try {
 				impl.load(
 						getBean(DataSource.class),
-						"INSERT INTO member (name, address) VALUES (:name, :address)",
+						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
 			} catch (DataAccessException ex) {
@@ -210,14 +210,14 @@ public class LoaderImplTest {
 		Map<String, String> paramMap = new HashMap<>();
 		paramMap.put("name", name);
 		return template.queryForObject(
-				"SELECT address FROM member WHERE name = :name", paramMap,
-				String.class);
+				"SELECT address FROM etl_extr_ldr_test WHERE name = :name",
+				paramMap, String.class);
 	}
 
 	private void cleanupData() {
 		NamedParameterJdbcTemplate template = getTemplate();
 		Map<String, String> paramMap = new HashMap<>();
-		template.update("DELETE FROM member", paramMap);
+		template.update("DELETE FROM etl_extr_ldr_test", paramMap);
 	}
 
 	private NamedParameterJdbcTemplate getTemplate() {

@@ -16,7 +16,7 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.lib.etl.AppCtxUtil.getBean;
+import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -44,7 +44,7 @@ public class ExtractorImplTest {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
 			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM member ORDER BY id", paramMap,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
 					consumer, new NoneLimiter());
 
 			assertEquals(3, count);
@@ -68,7 +68,7 @@ public class ExtractorImplTest {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
 			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM member ORDER BY id", paramMap,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
 					consumer, new NoneLimiter());
 
 			assertEquals(3, count);
@@ -90,7 +90,7 @@ public class ExtractorImplTest {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
 			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM member ORDER BY id", paramMap,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
 					consumer, new NoneLimiter());
 
 			assertEquals(0, count);
@@ -111,7 +111,7 @@ public class ExtractorImplTest {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
 			impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM member ORDER BY id", paramMap,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
 					consumer, new NoneLimiter());
 			fail("Exception must be thrown");
 		} catch (IOException ex) {
@@ -126,7 +126,7 @@ public class ExtractorImplTest {
 			paramMap.put("name", "name_" + i);
 			paramMap.put("address", "address_" + i);
 			template.update(
-					"INSERT INTO member (name, address) VALUES (:name, :address)",
+					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 					paramMap);
 		}
 	}
@@ -134,7 +134,7 @@ public class ExtractorImplTest {
 	private void cleanupData() {
 		NamedParameterJdbcTemplate template = getTemplate();
 		Map<String, String> paramMap = new HashMap<>();
-		template.update("DELETE FROM member", paramMap);
+		template.update("DELETE FROM etl_extr_ldr_test", paramMap);
 	}
 
 	private NamedParameterJdbcTemplate getTemplate() {
