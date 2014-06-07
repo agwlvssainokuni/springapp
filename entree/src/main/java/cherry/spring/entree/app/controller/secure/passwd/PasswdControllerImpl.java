@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +31,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,10 +61,6 @@ public class PasswdControllerImpl implements PasswdController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@Autowired
-	@Qualifier("passwdFormValidator")
-	private Validator passwdFormValidator;
-
 	@Override
 	public PasswdForm getForm() {
 		return new PasswdForm();
@@ -71,7 +68,18 @@ public class PasswdControllerImpl implements PasswdController {
 
 	@Override
 	public void initBinder(WebDataBinder binder) {
-		binder.addValidators(passwdFormValidator);
+		binder.addValidators(new Validator() {
+
+			@Override
+			public boolean supports(Class<?> clazz) {
+				return PasswdForm.class.isAssignableFrom(clazz);
+			}
+
+			@Override
+			public void validate(Object target, Errors errors) {
+				validateForm((PasswdForm) target, errors);
+			}
+		});
 	}
 
 	@Override
@@ -130,6 +138,18 @@ public class PasswdControllerImpl implements PasswdController {
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		return mav;
+	}
+
+	private void validateForm(PasswdForm form, Errors errors) {
+		if (StringUtils.isEmpty(form.getNewPassword())) {
+			return;
+		}
+		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
+			return;
+		}
+		errors.rejectValue("newPasswordConf",
+				LogicError.PasswdConfirmFailed.name(),
+				LogicError.PasswdConfirmFailed.name());
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {

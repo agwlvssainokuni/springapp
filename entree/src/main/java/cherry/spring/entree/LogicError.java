@@ -21,6 +21,8 @@ public enum LogicError {
 	SignupTooManyRequest,
 	/** サインアップ：エントリが不適合 */
 	SignupEntryUnmatch,
+	/** パスワード変更：新パスワードの確認入力が不一致 */
+	PasswdConfirmFailed,
 	/** パスワード変更：現行ログインIDまたはパスワードが不適切 */
 	CurAuthFailed,
 	// ダミー
