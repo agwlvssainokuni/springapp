@@ -21,9 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.Calendar;
-import java.util.Date;
-
+import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -94,7 +92,7 @@ public class MailTemplateMapperTest {
 		MailTemplateAddressesMapper addressMapper = getBean(MailTemplateAddressesMapper.class);
 		MailTemplateTextsMapper textMapper = getBean(MailTemplateTextsMapper.class);
 
-		Date date = Calendar.getInstance().getTime();
+		LocalDateTime date = LocalDateTime.now();
 
 		MailTemplates template = new MailTemplates();
 		template.setName("test");
