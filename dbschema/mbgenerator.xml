@@ -19,11 +19,35 @@
 			targetProject="common/src/main/java" />
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
 			type="XMLMAPPER" targetProject="common/src/main/java" />
-		<table tableName="users" />
-		<table tableName="signup_requests" />
-		<table tableName="mail_templates" />
-		<table tableName="mail_template_addresses" />
-		<table tableName="mail_template_texts" />
-		<table tableName="async_procs" />
+		<table tableName="users" schema="public">
+			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
+		<table tableName="signup_requests">
+			<columnOverride column="applied_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
+		<table tableName="mail_templates">
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
+		<table tableName="mail_template_addresses">
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
+		<table tableName="mail_template_texts">
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
+		<table tableName="async_procs">
+			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="invoked_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="started_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="finished_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
 	</context>
 </generatorConfiguration>
