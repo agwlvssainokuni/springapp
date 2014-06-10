@@ -9,6 +9,22 @@ subprojects {
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
 
+	compileJava {
+		options.encoding = "UTF-8"
+	}
+
+	compileTestJava {
+		options.encoding = "UTF-8"
+	}
+
+	sourceSets. main.resources {
+		srcDir "src/main/java"
+	}
+
+	if (parent.hasProperty("appendix")) {
+		project.appendix = parent.appendix
+	}
+
 	repositories {
 		mavenCentral()
 		maven {
@@ -18,14 +34,6 @@ subprojects {
 
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
-	}
-
-	if (parent.hasProperty("appendix")) {
-		project.appendix = parent.appendix
-	}
-
-	sourceSets. main.resources {
-		srcDir "src/main/java"
 	}
 
 	task processDistResources(type: Copy, overwrite: true) {
@@ -53,14 +61,6 @@ subprojects {
 	}
 
 	classes.mustRunAfter processDistResources
-
-	compileJava {
-		options.encoding = "UTF-8"
-	}
-
-	compileTestJava {
-		options.encoding = "UTF-8"
-	}
 }
 
 def distSpec = copySpec {
