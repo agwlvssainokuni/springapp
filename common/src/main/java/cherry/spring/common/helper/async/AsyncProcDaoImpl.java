@@ -33,25 +33,27 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
 
-	@Value("cherry/spring/common/helper/async/AsyncProcDaoImpl_createAsyncProc.sql")
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_createAsyncProc.sql")
 	private Resource resourceCreateAsyncProc;
 
-	@Value("cherry/spring/common/helper/async/AsyncProcDaoImpl_invokeAsyncProc.sql")
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_invokeAsyncProc.sql")
 	private Resource resourceInvokeAsyncProc;
 
-	@Value("cherry/spring/common/helper/async/AsyncProcDaoImpl_startAsyncProc.sql")
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_startAsyncProc.sql")
 	private Resource resourceStartAsyncProc;
 
-	@Value("cherry/spring/common/helper/async/AsyncProcDaoImpl_successAsyncProc.sql")
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_successAsyncProc.sql")
 	private Resource resourceSuccessAsyncProc;
 
-	@Value("cherry/spring/common/helper/async/AsyncProcDaoImpl_errorAsyncProc.sql")
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_errorAsyncProc.sql")
 	private Resource resourceErrorAsyncProc;
 
 	@Value("UTF-8")
@@ -84,7 +86,7 @@ public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(sqlCreateAsyncProc,
 				new MapSqlParameterSource(paramMap), keyHolder);
-		if (count != 0) {
+		if (count != 1) {
 			return null;
 		}
 		return keyHolder.getKey().intValue();

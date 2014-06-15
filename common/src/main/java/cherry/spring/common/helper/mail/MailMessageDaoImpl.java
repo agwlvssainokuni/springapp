@@ -41,10 +41,10 @@ public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
 
-	@Value("cherry/spring/common/helper/mail/MailMessageDaoImpl_findTemplate.sql")
+	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl_findTemplate.sql")
 	private Resource resourceFindTemplate;
 
-	@Value("cherry/spring/common/helper/mail/MailMessageDaoImpl_findAddresses.sql")
+	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl_findAddresses.sql")
 	private Resource resourceFindAddresses;
 
 	@Value("UTF-8")
