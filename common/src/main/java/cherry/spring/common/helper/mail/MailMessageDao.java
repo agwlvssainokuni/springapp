@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.app.mapper;
+package cherry.spring.common.helper.mail;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
+import java.util.Locale;
 
-import cherry.spring.common.db.app.dto.MailTemplateDto;
+public interface MailMessageDao {
 
-public interface MailTemplateMapper {
+	MailTemplateDto findTemplate(String name, Locale locale);
 
-	MailTemplateDto findByName(@Param("name") String name,
-			@Param("locale") String locale);
+	List<MailTemplateAddressDto> findAddresses(String name);
 
 }

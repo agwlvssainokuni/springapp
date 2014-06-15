@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.app.mapper;
+package cherry.spring.common.helper.mail;
 
 import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
 
-import cherry.spring.common.db.app.dto.MailTemplateDto;
 import cherry.spring.common.db.gen.dto.MailTemplateAddresses;
 import cherry.spring.common.db.gen.dto.MailTemplateTexts;
 import cherry.spring.common.db.gen.dto.MailTemplates;
@@ -33,56 +35,57 @@ import cherry.spring.common.db.gen.mapper.MailTemplateAddressesMapper;
 import cherry.spring.common.db.gen.mapper.MailTemplateTextsMapper;
 import cherry.spring.common.db.gen.mapper.MailTemplatesMapper;
 
-public class MailTemplateMapperTest {
+public class MailMessageDaoTest {
 
 	@Test
 	public void testFindByName00() {
 
-		MailTemplateMapper mapper = getBean(MailTemplateMapper.class);
-		MailTemplateDto template = mapper.findByName("test2", "ja_JP");
-		assertNull(template);
+		MailMessageDao mapper = getBean(MailMessageDao.class);
+		try {
+			mapper.findTemplate("test2", Locale.JAPAN);
+		} catch (EmptyResultDataAccessException ex) {
+			// NOTHING
+		} catch (Exception ex) {
+			fail("Unexpected exception must not be thrown");
+		}
 	}
 
 	@Test
 	public void testFindByName10() {
 
-		MailTemplateMapper mapper = getBean(MailTemplateMapper.class);
-		MailTemplateDto template = mapper.findByName("test", "ja_JP");
-		assertNotNull(template);
+		MailMessageDao mapper = getBean(MailMessageDao.class);
+		MailTemplateDto template = mapper.findTemplate("test", Locale.JAPAN);
+		List<MailTemplateAddressDto> addrList = mapper.findAddresses("test");
 
 		assertEquals("test", template.getName());
 		assertEquals("ja_JP", template.getLocale());
 		assertEquals("メール件名", template.getSubject());
 		assertEquals("メール本文", template.getBody());
 
-		assertEquals(2, template.getMailAddrList().size());
-		assertEquals("cc@test.com", template.getMailAddrList().get(0)
-				.getMailAddr());
-		assertEquals("CC", template.getMailAddrList().get(0).getRcptType());
-		assertEquals("bcc@test.com", template.getMailAddrList().get(1)
-				.getMailAddr());
-		assertEquals("BCC", template.getMailAddrList().get(1).getRcptType());
+		assertEquals(2, addrList.size());
+		assertEquals("cc@test.com", addrList.get(0).getMailAddr());
+		assertEquals("CC", addrList.get(0).getRcptType());
+		assertEquals("bcc@test.com", addrList.get(1).getMailAddr());
+		assertEquals("BCC", addrList.get(1).getRcptType());
 	}
 
 	@Test
 	public void testFindByName11() {
 
-		MailTemplateMapper mapper = getBean(MailTemplateMapper.class);
-		MailTemplateDto template = mapper.findByName("test", "en_US");
-		assertNotNull(template);
+		MailMessageDao mapper = getBean(MailMessageDao.class);
+		MailTemplateDto template = mapper.findTemplate("test", Locale.US);
+		List<MailTemplateAddressDto> addrList = mapper.findAddresses("test");
 
 		assertEquals("test", template.getName());
 		assertEquals("en_US", template.getLocale());
 		assertEquals("Mail Subject", template.getSubject());
 		assertEquals("Mail Body", template.getBody());
 
-		assertEquals(2, template.getMailAddrList().size());
-		assertEquals("cc@test.com", template.getMailAddrList().get(0)
-				.getMailAddr());
-		assertEquals("CC", template.getMailAddrList().get(0).getRcptType());
-		assertEquals("bcc@test.com", template.getMailAddrList().get(1)
-				.getMailAddr());
-		assertEquals("BCC", template.getMailAddrList().get(1).getRcptType());
+		assertEquals(2, addrList.size());
+		assertEquals("cc@test.com", addrList.get(0).getMailAddr());
+		assertEquals("CC", addrList.get(0).getRcptType());
+		assertEquals("bcc@test.com", addrList.get(1).getMailAddr());
+		assertEquals("BCC", addrList.get(1).getRcptType());
 	}
 
 	@BeforeClass

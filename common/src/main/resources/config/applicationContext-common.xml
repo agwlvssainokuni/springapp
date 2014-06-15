@@ -70,4 +70,9 @@
 		</property>
 	</bean>
 
+	<bean id="namedParameterJdbcOperations"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
 </beans>

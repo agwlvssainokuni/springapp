@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.app.dto;
-
-import java.util.List;
+package cherry.spring.common.helper.mail;
 
 import cherry.spring.common.db.BaseDto;
 
@@ -42,9 +40,6 @@ public class MailTemplateDto extends BaseDto {
 
 	/** メール本文。 */
 	private String body;
-
-	/** 宛先。 */
-	private List<MailTemplateAddressDto> mailAddrList;
 
 	public Integer getId() {
 		return id;
@@ -92,14 +87,6 @@ public class MailTemplateDto extends BaseDto {
 
 	public void setBody(String body) {
 		this.body = body;
-	}
-
-	public List<MailTemplateAddressDto> getMailAddrList() {
-		return mailAddrList;
-	}
-
-	public void setMailAddrList(List<MailTemplateAddressDto> mailAddrList) {
-		this.mailAddrList = mailAddrList;
 	}
 
 }

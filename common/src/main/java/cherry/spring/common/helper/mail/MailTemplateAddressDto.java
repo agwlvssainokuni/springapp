@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.app.dto;
+package cherry.spring.common.helper.mail;
 
 import cherry.spring.common.db.BaseDto;
 
@@ -28,7 +28,7 @@ public class MailTemplateAddressDto extends BaseDto {
 	}
 
 	/** 宛先ID。 */
-	private Integer addrId;
+	private Integer id;
 
 	/** 宛先区分。 */
 	private String rcptType;
@@ -44,12 +44,12 @@ public class MailTemplateAddressDto extends BaseDto {
 		return Type.BCC.name().equalsIgnoreCase(rcptType);
 	}
 
-	public Integer getAddrId() {
-		return addrId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setAddrId(Integer addrId) {
-		this.addrId = addrId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getRcptType() {

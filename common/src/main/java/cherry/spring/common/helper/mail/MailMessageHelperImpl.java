@@ -16,6 +16,7 @@
 
 package cherry.spring.common.helper.mail;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,21 +29,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.common.db.app.dto.MailTemplateAddressDto;
-import cherry.spring.common.db.app.dto.MailTemplateDto;
-import cherry.spring.common.db.app.mapper.MailTemplateMapper;
-
 @Component
 public class MailMessageHelperImpl implements MailMessageHelper,
 		InitializingBean {
 
 	@Autowired
-	private MailTemplateMapper mailTemplateMapper;
+	private MailMessageDao mailMessageDao;
 
 	private VelocityEngine velocityEngine;
 
 	@Override
-	public void afterPropertiesSet() {
+	public void afterPropertiesSet() throws IOException {
 		velocityEngine = new VelocityEngine();
 		velocityEngine.init();
 	}
@@ -54,16 +51,14 @@ public class MailMessageHelperImpl implements MailMessageHelper,
 		VelocityContext context = new VelocityContext();
 		context.put("model", mailModel);
 
-		MailTemplateDto template = mailTemplateMapper.findByName(
-				mailId.templateName(), locale.toString());
-		if (template == null) {
-			template = mailTemplateMapper.findByName(mailId.templateName(),
-					Locale.getDefault().toString());
-		}
+		MailTemplateDto template = mailMessageDao.findTemplate(
+				mailId.templateName(), locale);
+		List<MailTemplateAddressDto> addrList = mailMessageDao
+				.findAddresses(mailId.templateName());
 
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
-		for (MailTemplateAddressDto addr : template.getMailAddrList()) {
+		for (MailTemplateAddressDto addr : addrList) {
 			if (addr.isCc()) {
 				cc.add(addr.getMailAddr());
 			}
@@ -84,12 +79,16 @@ public class MailMessageHelperImpl implements MailMessageHelper,
 	}
 
 	private String evaluate(String template, VelocityContext context) {
-		StringWriter writer = new StringWriter();
-		if (!velocityEngine.evaluate(context, writer, getClass().getName(),
-				template)) {
-			throw new IllegalStateException("Failed to evaluate mail template");
+		try (StringWriter writer = new StringWriter()) {
+			if (!velocityEngine.evaluate(context, writer, getClass().getName(),
+					template)) {
+				throw new IllegalStateException(
+						"Failed to evaluate mail template");
+			}
+			return writer.toString();
+		} catch (IOException ex) {
+			throw new IllegalStateException(ex);
 		}
-		return writer.toString();
 	}
 
 }
