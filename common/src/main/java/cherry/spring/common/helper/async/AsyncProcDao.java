@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.service;
+package cherry.spring.common.helper.async;
 
-public interface AsyncProcStatusService {
+public interface AsyncProcDao {
 
-	int createAsyncProc(String name, String launcherId);
+	Integer createAsyncProc(String name, String launcherId);
 
-	void invokeAsyncProc(int id);
+	int invokeAsyncProc(int id);
 
-	void startAsyncProc(int id);
+	int startAsyncProc(int id);
 
-	void successAsyncProc(int id, String json);
+	int successAsyncProc(int id, String result);
 
-	void errorAsyncProc(int id, String json);
+	int errorAsyncProc(int id, String result);
 
 }

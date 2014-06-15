@@ -41,6 +41,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import cherry.spring.common.helper.async.AsyncProcHelper;
 import cherry.spring.common.helper.json.JsonHelper;
 import cherry.spring.common.lib.etl.CsvProvider;
 import cherry.spring.common.lib.etl.LimiterException;
@@ -49,7 +50,6 @@ import cherry.spring.common.lib.etl.Loader;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.spring.common.service.AsyncProcStatusService;
 
 @Component
 public class UsermanImportServiceImpl implements UsermanImportService {
@@ -78,7 +78,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private String queue;
 
 	@Autowired
-	private AsyncProcStatusService asyncProcStatusService;
+	private AsyncProcHelper asyncProcHelper;
 
 	@Autowired
 	private JsonHelper jsonHelper;
@@ -114,8 +114,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	public Map<String, String> launchImportUsers(MultipartFile file,
 			String launcherId) {
 		String name = UsermanImportService.class.getSimpleName();
-		Integer procId = asyncProcStatusService.createAsyncProc(name,
-				launcherId);
+		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId);
 		try {
 			File tempFile = createFile(file);
 
@@ -125,12 +124,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			message.put(LAUNCHER_ID, launcherId);
 			jmsOperations.convertAndSend(queue, message);
 
-			asyncProcStatusService.invokeAsyncProc(procId);
+			asyncProcHelper.invokeAsyncProc(procId);
 
 			return message;
 		} catch (IOException ex) {
-			asyncProcStatusService.errorAsyncProc(procId,
-					jsonHelper.fromThrowable(ex));
+			asyncProcHelper
+					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -141,7 +140,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		Integer procId = Integer.parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			asyncProcStatusService.startAsyncProc(procId);
+			asyncProcHelper.startAsyncProc(procId);
 
 			LoadResult loadResult = loadFile(tempFile);
 
@@ -149,16 +148,15 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			map.put("total", loadResult.getTotalCount());
 			map.put("success", loadResult.getSuccessCount());
 			map.put("failed", loadResult.getFailedCount());
-			asyncProcStatusService.successAsyncProc(procId,
-					jsonHelper.fromMap(map));
+			asyncProcHelper.successAsyncProc(procId, jsonHelper.fromMap(map));
 
 		} catch (DataAccessException | LimiterException ex) {
-			asyncProcStatusService.errorAsyncProc(procId,
-					jsonHelper.fromThrowable(ex));
+			asyncProcHelper
+					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
 			throw ex;
 		} catch (IOException ex) {
-			asyncProcStatusService.errorAsyncProc(procId,
-					jsonHelper.fromThrowable(ex));
+			asyncProcHelper
+					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		} finally {
 			if (!tempFile.delete()) {

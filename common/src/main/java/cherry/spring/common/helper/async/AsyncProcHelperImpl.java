@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.service;
+package cherry.spring.common.helper.async;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
@@ -22,35 +22,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.app.mapper.AsyncProcMapper;
-import cherry.spring.common.db.gen.dto.AsyncProcs;
-
 @Component
-public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
+public class AsyncProcHelperImpl implements AsyncProcHelper {
 
 	@Autowired
-	private AsyncProcMapper asyncProcMapper;
+	private AsyncProcDao asyncProcDao;
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public int createAsyncProc(String name, String launcherId) {
-		AsyncProcs entity = new AsyncProcs();
-		entity.setName(name);
-		entity.setLauncherId(launcherId);
-		int count = asyncProcMapper.createAsyncProc(entity);
-		if (count != 1) {
+		Integer id = asyncProcDao.createAsyncProc(name, launcherId);
+		if (id == null) {
 			throw new IllegalStateException(
 					"async_procs is not created for name=" + name);
 		}
-		return entity.getId();
+		return id;
 	}
 
 	@Transactional
 	@Override
 	public void invokeAsyncProc(int id) {
-		AsyncProcs entity = new AsyncProcs();
-		entity.setId(id);
-		int count = asyncProcMapper.invokeAsyncProc(entity);
+		int count = asyncProcDao.invokeAsyncProc(id);
 		if (count != 1) {
 			throw new IllegalStateException(
 					"async_procs is not updated (invoke) for id=" + id);
@@ -60,9 +52,7 @@ public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void startAsyncProc(int id) {
-		AsyncProcs entity = new AsyncProcs();
-		entity.setId(id);
-		int count = asyncProcMapper.startAsyncProc(entity);
+		int count = asyncProcDao.startAsyncProc(id);
 		if (count != 1) {
 			throw new IllegalStateException(
 					"async_procs is not updated (start) for id=" + id);
@@ -71,11 +61,8 @@ public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void successAsyncProc(int id, String json) {
-		AsyncProcs entity = new AsyncProcs();
-		entity.setId(id);
-		entity.setResult(json);
-		int count = asyncProcMapper.successAsyncProc(entity);
+	public void successAsyncProc(int id, String result) {
+		int count = asyncProcDao.successAsyncProc(id, result);
 		if (count != 1) {
 			throw new IllegalStateException(
 					"async_procs is not updated (success) for id=" + id);
@@ -84,11 +71,8 @@ public class AsyncProcStatusServiceImpl implements AsyncProcStatusService {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void errorAsyncProc(int id, String json) {
-		AsyncProcs entity = new AsyncProcs();
-		entity.setId(id);
-		entity.setResult(json);
-		int count = asyncProcMapper.errorAsyncProc(entity);
+	public void errorAsyncProc(int id, String result) {
+		int count = asyncProcDao.errorAsyncProc(id, result);
 		if (count != 1) {
 			throw new IllegalStateException(
 					"async_procs is not updated (error) for id=" + id);
