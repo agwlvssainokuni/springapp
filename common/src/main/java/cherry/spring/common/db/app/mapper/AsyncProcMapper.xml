@@ -15,67 +15,6 @@
 		<result column="CREATED_AT" property="createdAt" jdbcType="TIMESTAMP" />
 		<result column="DELETED_FLG" property="deletedFlg" jdbcType="INTEGER" />
 	</resultMap>
-	<insert id="createAsyncProc" useGeneratedKeys="true" keyColumn="id"
-		keyProperty="id">
-		INSERT INTO async_procs (
-			name,
-			launcher_id,
-			status,
-			registered_at
-		)
-		VALUES (
-			#{name,jdbcType=VARCHAR},
-			#{launcherId,jdbcType=VARCHAR},
-			'PREPARING',
-			CURRENT_TIMESTAMP
-		)
-	</insert>
-	<update id="invokeAsyncProc">
-		UPDATE async_procs
-		SET
-			status = 'INVOKED',
-			invoked_at = CURRENT_TIMESTAMP,
-			updated_at = CURRENT_TIMESTAMP
-		WHERE
-			id = #{id,jdbcType=INTEGER}
-			AND
-			deleted_flg = 0
-	</update>
-	<update id="startAsyncProc">
-		UPDATE async_procs
-		SET
-			status = 'PROCESSING',
-			started_at = CURRENT_TIMESTAMP,
-			updated_at = CURRENT_TIMESTAMP
-		WHERE
-			id = #{id,jdbcType=INTEGER}
-			AND
-			deleted_flg = 0
-	</update>
-	<update id="successAsyncProc">
-		UPDATE async_procs
-		SET
-			status = 'SUCCESS',
-			finished_at = CURRENT_TIMESTAMP,
-			result = #{result,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
-		WHERE
-			id = #{id,jdbcType=INTEGER}
-			AND
-			deleted_flg = 0
-	</update>
-	<update id="errorAsyncProc">
-		UPDATE async_procs
-		SET
-			status = 'ERROR',
-			finished_at = CURRENT_TIMESTAMP,
-			result = #{result,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
-		WHERE
-			id = #{id,jdbcType=INTEGER}
-			AND
-			deleted_flg = 0
-	</update>
 	<select id="countAsyncProc" resultType="int">
 		SELECT
 			COUNT(A.id)

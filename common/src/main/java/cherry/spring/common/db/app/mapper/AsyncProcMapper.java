@@ -24,16 +24,6 @@ import cherry.spring.common.db.gen.dto.AsyncProcs;
 
 public interface AsyncProcMapper {
 
-	int createAsyncProc(AsyncProcs entity);
-
-	int invokeAsyncProc(AsyncProcs entity);
-
-	int startAsyncProc(AsyncProcs entity);
-
-	int successAsyncProc(AsyncProcs entity);
-
-	int errorAsyncProc(AsyncProcs entity);
-
 	int countAsyncProc();
 
 	List<AsyncProcs> searchAsyncProc(@Param("limit") Integer limit,
