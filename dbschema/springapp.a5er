@@ -13,8 +13,8 @@ Page=メールテンプレート
 PageInfo="メールテンプレート",4,"A3Landscape",$FFFFFF
 Page=非同期処理
 PageInfo="非同期処理",4,"A3Landscape",$FFFFFF
-Page=利用者
-PageInfo="利用者",4,"A3Landscape",$FFFFFF
+Page=SpringApp
+PageInfo="SpringApp",4,"A3Landscape",$FFFFFF
 Domain=ID=@INT
 Domain=ログインID=@VARCHAR(512)
 Domain=メールアドレス=@VARCHAR(512)
@@ -64,7 +64,7 @@ PName=users
 LName=利用者
 Comment=
 TableOption=
-Page=利用者
+Page=SPRINGAPP
 Left=500
 Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
@@ -79,14 +79,14 @@ Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140615192704
-Position="利用者",500,500
+Position="SPRINGAPP",500,500
 
 [Entity]
 PName=signup_requests
 LName=利用申請
 Comment=
 TableOption=
-Page=利用者
+Page=SPRINGAPP
 Left=1500
 Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
@@ -100,7 +100,7 @@ Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140615192722
-Position="利用者",1500,500
+Position="SPRINGAPP",1500,500
 
 [Entity]
 PName=async_procs
