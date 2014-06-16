@@ -19,7 +19,7 @@ ext {
 	versionSpring = "4.0.5.RELEASE"
 	versionSpringLdap = "2.0.2.RELEASE"
 	versionSpringSecurity = "3.2.4.RELEASE"
-	versionSpringMobile = "1.1.1.RELEASE"
+	versionSpringMobile = "1.1.2.RELEASE"
 	versionSpringDataCommons = "1.8.0.RELEASE"
 	versionSpringDataRest = "2.1.0.RELEASE"
 	versionSpringWs = "2.2.0.RELEASE"
