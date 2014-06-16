@@ -16,6 +16,10 @@
 
 package cherry.spring.admin.app.service.secure.userman;
 
+import static java.io.File.createTempFile;
+import static java.lang.Integer.parseInt;
+import static java.text.MessageFormat.format;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,13 +29,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.text.MessageFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -137,7 +140,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Transactional
 	@Override
 	public void handleImportUsers(Map<String, String> message) {
-		Integer procId = Integer.parseInt(message.get(PROC_ID));
+		Integer procId = parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
 			asyncProcHelper.startAsyncProc(procId);
@@ -167,16 +170,18 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	}
 
 	private File createFile(MultipartFile file) throws IOException {
-		File tempFile = File.createTempFile(
-				MessageFormat.format(prefix, new Date()), suffix, tempDir);
-		try (InputStream in = file.getInputStream();
-				OutputStream out = new FileOutputStream(tempFile)) {
-			byte[] buff = new byte[4096];
-			int size;
-			while ((size = in.read(buff, 0, buff.length)) >= 0) {
-				out.write(buff, 0, size);
+		File tempFile = createTempFile(
+				format(prefix, LocalDateTime.now().toDate()), suffix, tempDir);
+		try {
+			try (InputStream in = file.getInputStream();
+					OutputStream out = new FileOutputStream(tempFile)) {
+				byte[] buff = new byte[4096];
+				int size;
+				while ((size = in.read(buff, 0, buff.length)) >= 0) {
+					out.write(buff, 0, size);
+				}
+				return tempFile;
 			}
-			return tempFile;
 		} catch (IOException ex) {
 			if (!tempFile.delete()) {
 				log.debug("failed to delete a temporary file: {0}",
