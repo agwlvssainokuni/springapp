@@ -14,16 +14,6 @@
 
 	<tx:annotation-driven />
 
-	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="${common.trace.arrayLengthLimit}" />
-		<property name="objectLengthLimit" value="${common.trace.objectLengthLimit}" />
-		<property name="packagePrefix">
-			<list>
-				<value>cherry.spring</value>
-			</list>
-		</property>
-	</bean>
-
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
 			pointcut="execution(* cherry.spring..*.*(..))
@@ -34,11 +24,14 @@
 				" />
 	</aop:config>
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${common.mail.host}" />
-		<property name="port" value="${common.mail.port}" />
-		<property name="protocol" value="${common.mail.protocol}" />
-		<property name="defaultEncoding" value="${common.mail.encoding}" />
+	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="${common.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${common.trace.objectLengthLimit}" />
+		<property name="packagePrefix">
+			<list>
+				<value>cherry.spring</value>
+			</list>
+		</property>
 	</bean>
 
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
@@ -73,6 +66,13 @@
 	<bean id="namedParameterJdbcOperations"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${common.mail.host}" />
+		<property name="port" value="${common.mail.port}" />
+		<property name="protocol" value="${common.mail.protocol}" />
+		<property name="defaultEncoding" value="${common.mail.encoding}" />
 	</bean>
 
 </beans>
