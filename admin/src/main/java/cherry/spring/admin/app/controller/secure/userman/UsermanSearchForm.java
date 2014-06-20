@@ -16,6 +16,10 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.admin.app.controller.BaseForm;
@@ -24,6 +28,9 @@ import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 import cherry.spring.common.validator.DisplayNameSize;
 import cherry.spring.common.validator.MailAddrSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class UsermanSearchForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -42,45 +49,5 @@ public class UsermanSearchForm extends BaseForm {
 
 	@DisplayNameSize
 	private String lastName;
-
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-
-	public LocalDateTime getRegisteredFrom() {
-		return registeredFrom;
-	}
-
-	public void setRegisteredFrom(LocalDateTime registeredFrom) {
-		this.registeredFrom = registeredFrom;
-	}
-
-	public LocalDateTime getRegisteredTo() {
-		return registeredTo;
-	}
-
-	public void setRegisteredTo(LocalDateTime registeredTo) {
-		this.registeredTo = registeredTo;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 }

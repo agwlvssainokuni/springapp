@@ -16,12 +16,19 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.admin.app.controller.BaseForm;
 import cherry.spring.common.custom.format.CustomDateTimeFormat;
 import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class UsermanExportForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -31,21 +38,5 @@ public class UsermanExportForm extends BaseForm {
 
 	@CustomDateTimeFormat(Range.TO)
 	private LocalDateTime registeredTo;
-
-	public LocalDateTime getRegisteredFrom() {
-		return registeredFrom;
-	}
-
-	public void setRegisteredFrom(LocalDateTime registeredFrom) {
-		this.registeredFrom = registeredFrom;
-	}
-
-	public LocalDateTime getRegisteredTo() {
-		return registeredTo;
-	}
-
-	public void setRegisteredTo(LocalDateTime registeredTo) {
-		this.registeredTo = registeredTo;
-	}
 
 }

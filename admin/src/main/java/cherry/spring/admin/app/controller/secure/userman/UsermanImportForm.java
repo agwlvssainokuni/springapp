@@ -18,23 +18,22 @@ package cherry.spring.admin.app.controller.secure.userman;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.admin.app.controller.BaseForm;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class UsermanImportForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	private MultipartFile file;
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 
 }
