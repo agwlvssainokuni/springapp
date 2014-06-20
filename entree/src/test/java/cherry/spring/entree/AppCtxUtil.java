@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package cherry.spring.site;
+package cherry.spring.entree;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.controller.login;
+package cherry.spring.entree.app.controller.login;
 
-import static cherry.spring.site.AppCtxUtil.getBean;
+import static cherry.spring.entree.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -24,9 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
-
-import cherry.spring.entree.app.controller.login.LoginController;
-import cherry.spring.entree.app.controller.login.LoginControllerImpl;
 
 public class LoginControllerTest {
 

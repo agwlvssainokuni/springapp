@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.spring.site.app.controller.home;
+package cherry.spring.entree.app.controller.home;
 
-import static cherry.spring.site.AppCtxUtil.getBean;
+import static cherry.spring.entree.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

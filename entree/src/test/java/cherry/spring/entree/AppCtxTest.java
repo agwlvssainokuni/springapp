@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package cherry.spring.site;
+package cherry.spring.entree;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
