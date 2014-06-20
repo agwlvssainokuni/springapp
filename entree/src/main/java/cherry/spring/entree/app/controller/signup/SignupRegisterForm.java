@@ -16,6 +16,10 @@
 
 package cherry.spring.entree.app.controller.signup;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,9 +27,11 @@ import cherry.spring.common.validator.DisplayNameSize;
 import cherry.spring.common.validator.MailAddrSize;
 import cherry.spring.entree.app.controller.BaseForm;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SignupRegisterForm extends BaseForm {
 
-	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
@@ -42,37 +48,5 @@ public class SignupRegisterForm extends BaseForm {
 	private String lastName;
 
 	private boolean agree;
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public boolean isAgree() {
-		return agree;
-	}
-
-	public void setAgree(boolean agree) {
-		this.agree = agree;
-	}
 
 }

@@ -16,28 +16,26 @@
 
 package cherry.spring.entree.app.controller.signup;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.spring.common.validator.MailAddrSize;
 import cherry.spring.entree.app.controller.BaseForm;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SignupEntryForm extends BaseForm {
 
-	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
 	@MailAddrSize
 	@Email
 	private String email;
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 }

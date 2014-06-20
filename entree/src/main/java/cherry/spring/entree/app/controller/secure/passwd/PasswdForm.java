@@ -18,6 +18,10 @@ package cherry.spring.entree.app.controller.secure.passwd;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
@@ -27,6 +31,9 @@ import cherry.spring.common.validator.MailAddrSize;
 import cherry.spring.common.validator.PasswordSize;
 import cherry.spring.entree.app.controller.BaseForm;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class PasswdForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -60,38 +67,6 @@ public class PasswdForm extends BaseForm {
 		masked.setNewPasswordConf("<MASKED>");
 		return ToStringBuilder.reflectionToString(masked,
 				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	public String getNewPasswordConf() {
-		return newPasswordConf;
-	}
-
-	public void setNewPasswordConf(String newPasswordConf) {
-		this.newPasswordConf = newPasswordConf;
 	}
 
 }
