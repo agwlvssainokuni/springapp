@@ -34,6 +34,13 @@ subprojects {
 
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
+		provided
+	}
+
+	sourceSets.main.compileClasspath += configurations.provided
+
+	eclipse.classpath {
+		plusConfigurations += configurations.provided 
 	}
 
 	task processDistResources(type: Copy, overwrite: true) {

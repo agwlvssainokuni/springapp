@@ -2,7 +2,12 @@ apply plugin: "application"
 
 mainClassName = "cherry.spring.batch.tools.Main"
 
+ext {
+	versionLombok = "1.14.2"
+}
+
 dependencies {
 	compile project(":common")
 	compile "commons-cli:commons-cli:1.2"
+	provided "org.projectlombok:lombok:${versionLombok}"
 }

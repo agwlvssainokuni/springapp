@@ -25,7 +25,7 @@ dependencies {
 	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
-	providedCompile "org.projectlombok:lombok:${versionLombok}"
+	provided "org.projectlombok:lombok:${versionLombok}"
 }
 
 eclipse.wtp.facet {
