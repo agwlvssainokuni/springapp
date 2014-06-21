@@ -22,6 +22,8 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 		*	ConnectionFactory
 			*	jee:jndi-lookup
 		*	JndiDestinationResolver
+		*	TaskExecutor
+			*	DefaultManagedTaskExecutor
 		*	実行系
 			*	キューに入れる
 				*	JmsTemplate (JmsOperations)
@@ -31,6 +33,10 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 				*	jms:listener
 		*	非同期実行の状態管理
 			*	キュー処理と状態管理のトランザクションを分ける
+		*	テストケース向けJmsOperations解決
+			*	Mockitoで作成するモックをbeanとして定義
+				*	factory-method=mock
+				*	constructor-arg=JmsOperations
 	*	メッセージ定義
 		*	MessageSourceの初期化
 	*	ロケール解決
@@ -113,6 +119,18 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 	*	ログ出力
 		*	ログID定義
 		*	ログ文言定義
+	*	Lombok (http://projectlombok.org)
+		*	build.gradle に組込み
+			*	親プロジェクトでまとめて provided を定義
+				*	コンパイル時のみ組込み
+				*	実行時、パッケージ時は不要
+				*	Eclipse向けには参照ライブラリー (eclipse.classpath の plusConfigurations) に追加
+			*	warプラグインの providedCompile 相当
+				*	ommon, batch は war プラグインを入れないため独自に provided を追加
+				*	動きを合わせるため admin, entree も provided で指定 (providedCompile は使わず)
+		*	IDE (Eclipse) に組込み
+			*	インストーラを実行するだけ (java -jar lombok.jar)
+		*	@Getter, @Setter, @EqualsAndHashCode, @ToString
 
 ライセンス
 ==========
