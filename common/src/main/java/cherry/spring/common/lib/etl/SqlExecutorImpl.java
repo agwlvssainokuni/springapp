@@ -16,8 +16,6 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.lib.etl.SqlUtil.nextSql;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
@@ -31,6 +29,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
  * SQL実行機能。
  */
 public class SqlExecutorImpl implements SqlExecutor {
+
+	private SqlUtil sqlUtil = new SqlUtil();
 
 	/**
 	 * SQLを実行する。
@@ -55,7 +55,7 @@ public class SqlExecutorImpl implements SqlExecutor {
 				dataSource);
 
 		String sql;
-		while ((sql = nextSql(reader)) != null) {
+		while ((sql = sqlUtil.nextSql(reader)) != null) {
 
 			sql = sql.trim();
 			if (sql.isEmpty()) {

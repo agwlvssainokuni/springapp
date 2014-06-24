@@ -38,7 +38,7 @@ public class SqlUtil {
 	 * @throws IOException
 	 *             読込みエラー。
 	 */
-	public static String nextSql(Reader reader) throws IOException {
+	public String nextSql(Reader reader) throws IOException {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -99,7 +99,7 @@ public class SqlUtil {
 	 * @throws IOException
 	 *             読込みエラー。
 	 */
-	public static String nextComment(Reader reader) throws IOException {
+	public String nextComment(Reader reader) throws IOException {
 
 		StringBuilder builder = new StringBuilder();
 
