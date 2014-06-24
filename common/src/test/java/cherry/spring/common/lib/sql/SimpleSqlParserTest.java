@@ -38,7 +38,7 @@ public class SimpleSqlParserTest {
 	 * 1行に1つのSQL (デリミタなし)
 	 */
 	@Test
-	public void testNextSql_00() throws IOException {
+	public void testNextStatement_00() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT * FROM DUAL");
@@ -58,7 +58,7 @@ public class SimpleSqlParserTest {
 	 * 1行に1つのSQL (デリミタあり)
 	 */
 	@Test
-	public void testNextSql_01() throws IOException {
+	public void testNextStatement_01() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT * FROM DUAL;");
@@ -78,7 +78,7 @@ public class SimpleSqlParserTest {
 	 * 2行に2つのSQL (末尾のデリミタなし)
 	 */
 	@Test
-	public void testNextSql_02() throws IOException {
+	public void testNextStatement_02() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader(
@@ -101,7 +101,7 @@ public class SimpleSqlParserTest {
 	 * 2行に2つのSQL (末尾のデリミタあり)
 	 */
 	@Test
-	public void testNextSql_03() throws IOException {
+	public void testNextStatement_03() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader(
@@ -124,7 +124,7 @@ public class SimpleSqlParserTest {
 	 * SQL文中に引用符 (') あり
 	 */
 	@Test
-	public void testNextSql_10() throws IOException {
+	public void testNextStatement_10() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT '111' FROM DUAL;");
@@ -144,7 +144,7 @@ public class SimpleSqlParserTest {
 	 * SQL文中に引用符 (') あり、引用符のエスケープあり
 	 */
 	@Test
-	public void testNextSql_11() throws IOException {
+	public void testNextStatement_11() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT '11''11' FROM DUAL;");
@@ -164,7 +164,7 @@ public class SimpleSqlParserTest {
 	 * SQL文中に引用符 (') あり、引用符中にハイフン (-) あり
 	 */
 	@Test
-	public void testNextSql_12() throws IOException {
+	public void testNextStatement_12() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT '11-11' FROM DUAL;");
@@ -184,7 +184,7 @@ public class SimpleSqlParserTest {
 	 * SQL文中にハイフン (-) あり
 	 */
 	@Test
-	public void testNextSql_20() throws IOException {
+	public void testNextStatement_20() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT 11-11 FROM DUAL;");
@@ -204,7 +204,7 @@ public class SimpleSqlParserTest {
 	 * SQL文中にコメントあり
 	 */
 	@Test
-	public void testNextSql_21() throws IOException {
+	public void testNextStatement_21() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT 11-11 --COMMENT\r\nFROM DUAL;");
@@ -224,7 +224,7 @@ public class SimpleSqlParserTest {
 	 * SQL文の末尾にハイフン (-) あり
 	 */
 	@Test
-	public void testNextSql_22() throws IOException {
+	public void testNextStatement_22() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT * FROM DUAL -");
@@ -244,7 +244,7 @@ public class SimpleSqlParserTest {
 	 * SQL文の末尾にコメント
 	 */
 	@Test
-	public void testNextSql_23() throws IOException {
+	public void testNextStatement_23() throws IOException {
 
 		// 準備
 		Reader reader = new StringReader("SELECT * FROM DUAL --");
