@@ -57,7 +57,7 @@ public class SqlExecutorImpl implements SqlExecutor {
 				dataSource);
 
 		String sql;
-		while ((sql = simpleSqlParser.nextSql(reader)) != null) {
+		while ((sql = simpleSqlParser.nextStatement(reader)) != null) {
 
 			sql = sql.trim();
 			if (sql.isEmpty()) {

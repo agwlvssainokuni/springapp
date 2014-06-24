@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * SQL操作ユーティリティ。
+ * 簡易SQL解析機能 (SQL文、SQLコメントの切り出し)。
  */
 public class SimpleSqlParser {
 
@@ -38,7 +38,7 @@ public class SimpleSqlParser {
 	 * @throws IOException
 	 *             読込みエラー。
 	 */
-	public String nextSql(Reader reader) throws IOException {
+	public String nextStatement(Reader reader) throws IOException {
 
 		StringBuilder builder = new StringBuilder();
 
