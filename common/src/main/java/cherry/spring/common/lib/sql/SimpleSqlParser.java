@@ -22,7 +22,7 @@ import java.io.Reader;
 /**
  * SQL操作ユーティリティ。
  */
-public class SqlUtil {
+public class SimpleSqlParser {
 
 	/** SQL文の切出しで使用する解析状態値。 */
 	enum State {

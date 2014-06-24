@@ -26,14 +26,14 @@ import java.io.StringReader;
 import org.junit.Test;
 
 /**
- * {@link SqlUtil} のテスト.
+ * {@link SimpleSqlParser} のテスト.
  */
-public class SqlUtilTest {
+public class SimpleSqlParserTest {
 
-	private SqlUtil sqlUtil = new SqlUtil();
+	private SimpleSqlParser simpleSqlParser = new SimpleSqlParser();
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行に1つのSQL (デリミタなし)
 	 */
@@ -44,8 +44,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL", sql1);
@@ -53,7 +53,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行に1つのSQL (デリミタあり)
 	 */
@@ -64,8 +64,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL", sql1);
@@ -73,7 +73,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 2行に2つのSQL (末尾のデリミタなし)
 	 */
@@ -85,9 +85,9 @@ public class SqlUtilTest {
 				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
-		String sql3 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
+		String sql3 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT 111 FROM DUAL", sql1);
@@ -96,7 +96,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 2行に2つのSQL (末尾のデリミタあり)
 	 */
@@ -108,9 +108,9 @@ public class SqlUtilTest {
 				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
-		String sql3 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
+		String sql3 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT 111 FROM DUAL", sql1);
@@ -119,7 +119,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文中に引用符 (') あり
 	 */
@@ -130,8 +130,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT '111' FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT '111' FROM DUAL", sql1);
@@ -139,7 +139,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文中に引用符 (') あり、引用符のエスケープあり
 	 */
@@ -150,8 +150,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT '11''11' FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT '11''11' FROM DUAL", sql1);
@@ -159,7 +159,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文中に引用符 (') あり、引用符中にハイフン (-) あり
 	 */
@@ -170,8 +170,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT '11-11' FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT '11-11' FROM DUAL", sql1);
@@ -179,7 +179,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文中にハイフン (-) あり
 	 */
@@ -190,8 +190,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT 11-11 FROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT 11-11 FROM DUAL", sql1);
@@ -199,7 +199,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文中にコメントあり
 	 */
@@ -210,8 +210,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT 11-11 --COMMENT\r\nFROM DUAL;");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT 11-11 \r\nFROM DUAL", sql1);
@@ -219,7 +219,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文の末尾にハイフン (-) あり
 	 */
@@ -230,8 +230,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL -");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL -", sql1);
@@ -239,7 +239,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextSql(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextSql(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL文の末尾にコメント
 	 */
@@ -250,8 +250,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL --");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextSql(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL ", sql1);
@@ -259,7 +259,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行に1つのコメント
 	 */
@@ -270,8 +270,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT", sql1);
@@ -279,7 +279,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行に1つのコメント(改行あり)
 	 */
@@ -290,8 +290,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -299,7 +299,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 2行にコメント
 	 */
@@ -310,9 +310,9 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT1\r\n-- COMMENT2\r\n");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
-		String sql3 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql3 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT1\r\n", sql1);
@@ -321,7 +321,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行目にコメント、2行目にSQL
 	 */
@@ -332,8 +332,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -341,7 +341,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行目にコメント、2行目にSQL
 	 */
@@ -352,9 +352,9 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextSql(reader);
-		String sql3 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextSql(reader);
+		String sql3 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -363,7 +363,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行目にSQL、2行目にコメント
 	 */
@@ -375,8 +375,8 @@ public class SqlUtilTest {
 				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -384,7 +384,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * 1行目にSQL、2行目にコメント
 	 */
@@ -396,9 +396,9 @@ public class SqlUtilTest {
 				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = sqlUtil.nextSql(reader);
-		String sql2 = sqlUtil.nextComment(reader);
-		String sql3 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextSql(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql3 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("SELECT x FROM dual", sql1);
@@ -407,7 +407,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * SQL中にハイフンが一つ、その後ろにコメント
 	 */
@@ -418,8 +418,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("SELECT 1-1 FROM dual;-- COMMENT");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT", sql1);
@@ -427,7 +427,7 @@ public class SqlUtilTest {
 	}
 
 	/**
-	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
 	 * 区分: 正常<br>
 	 * コメントの後ろに、SQL中にハイフンが一つ
 	 */
@@ -438,8 +438,8 @@ public class SqlUtilTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT 1-1 FROM dual;");
 
 		// 実行
-		String sql1 = sqlUtil.nextComment(reader);
-		String sql2 = sqlUtil.nextComment(reader);
+		String sql1 = simpleSqlParser.nextComment(reader);
+		String sql2 = simpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);

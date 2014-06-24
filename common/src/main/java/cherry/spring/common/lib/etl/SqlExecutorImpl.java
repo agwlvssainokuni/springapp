@@ -25,14 +25,14 @@ import javax.sql.DataSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import cherry.spring.common.lib.sql.SqlUtil;
+import cherry.spring.common.lib.sql.SimpleSqlParser;
 
 /**
  * SQL実行機能。
  */
 public class SqlExecutorImpl implements SqlExecutor {
 
-	private SqlUtil sqlUtil = new SqlUtil();
+	private SimpleSqlParser simpleSqlParser = new SimpleSqlParser();
 
 	/**
 	 * SQLを実行する。
@@ -57,7 +57,7 @@ public class SqlExecutorImpl implements SqlExecutor {
 				dataSource);
 
 		String sql;
-		while ((sql = sqlUtil.nextSql(reader)) != null) {
+		while ((sql = simpleSqlParser.nextSql(reader)) != null) {
 
 			sql = sql.trim();
 			if (sql.isEmpty()) {
