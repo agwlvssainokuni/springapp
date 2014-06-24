@@ -25,6 +25,8 @@ import javax.sql.DataSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import cherry.spring.common.lib.sql.SqlUtil;
+
 /**
  * SQL実行機能。
  */

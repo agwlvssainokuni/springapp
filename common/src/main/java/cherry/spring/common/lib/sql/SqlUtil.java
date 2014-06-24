@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.etl;
+package cherry.spring.common.lib.sql;
 
 import java.io.IOException;
 import java.io.Reader;
