@@ -256,4 +256,192 @@ public class SqlUtilTest {
 		assertNull(sql2);
 	}
 
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行に1つのコメント
+	 */
+	@Test
+	public void testNextComment_00() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行に1つのコメント(改行あり)
+	 */
+	@Test
+	public void testNextComment_01() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT\r\n");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT\r\n", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 2行にコメント
+	 */
+	@Test
+	public void testNextComment_10() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT1\r\n-- COMMENT2\r\n");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+		String sql3 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT1\r\n", sql1);
+		assertEquals("-- COMMENT2\r\n", sql2);
+		assertNull(sql3);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行目にコメント、2行目にSQL
+	 */
+	@Test
+	public void testNextComment_11() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT\r\n", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行目にコメント、2行目にSQL
+	 */
+	@Test
+	public void testNextComment_12() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextSql(reader);
+		String sql3 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT\r\n", sql1);
+		assertEquals("SELECT x FROM dual", sql2);
+		assertNull(sql3);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行目にSQL、2行目にコメント
+	 */
+	@Test
+	public void testNextComment_13() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader(
+				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT\r\n", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * 1行目にSQL、2行目にコメント
+	 */
+	@Test
+	public void testNextComment_14() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader(
+				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
+
+		// 実行
+		String sql1 = SqlUtil.nextSql(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+		String sql3 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("SELECT x FROM dual", sql1);
+		assertEquals("-- COMMENT\r\n", sql2);
+		assertNull(sql3);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * SQL中にハイフンが一つ、その後ろにコメント
+	 */
+	@Test
+	public void testNextComment_20() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("SELECT 1-1 FROM dual;-- COMMENT");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SqlUtil#nextComment(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * コメントの後ろに、SQL中にハイフンが一つ
+	 */
+	@Test
+	public void testNextComment_21() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader("-- COMMENT\r\nSELECT 1-1 FROM dual;");
+
+		// 実行
+		String sql1 = SqlUtil.nextComment(reader);
+		String sql2 = SqlUtil.nextComment(reader);
+
+		// 検証
+		assertEquals("-- COMMENT\r\n", sql1);
+		assertNull(sql2);
+	}
+
 }

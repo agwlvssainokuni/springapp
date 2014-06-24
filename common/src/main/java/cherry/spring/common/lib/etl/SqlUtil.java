@@ -36,7 +36,7 @@ public class SqlUtil {
 	 *            SQL文の読込み元。
 	 * @return 切出したSQL文。
 	 * @throws IOException
-	 *             SQL文の読込みエラー。
+	 *             読込みエラー。
 	 */
 	public static String nextSql(Reader reader) throws IOException {
 
@@ -81,6 +81,48 @@ public class SqlUtil {
 
 		if (state == State.HYPHEN) {
 			builder.append('-');
+		}
+
+		if (builder.length() <= 0) {
+			return null;
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * SQLコメントを切出す。
+	 * 
+	 * @param reader
+	 *            SQLコメントの読込み元。
+	 * @return 切出したSQLコメント。
+	 * @throws IOException
+	 *             読込みエラー。
+	 */
+	public static String nextComment(Reader reader) throws IOException {
+
+		StringBuilder builder = new StringBuilder();
+
+		int ch;
+		State state = State.DEFAULT;
+		while ((ch = reader.read()) >= 0) {
+			if (state == State.HYPHEN) {
+				if (ch == (int) '-') {
+					state = State.COMMENT;
+					builder.append('-').append((char) ch);
+				} else {
+					state = State.DEFAULT;
+				}
+			} else if (state == State.COMMENT) {
+				builder.append((char) ch);
+				if (ch == (int) '\n') {
+					break;
+				}
+			} else {
+				if (ch == (int) '-') {
+					state = State.HYPHEN;
+				}
+			}
 		}
 
 		if (builder.length() <= 0) {
