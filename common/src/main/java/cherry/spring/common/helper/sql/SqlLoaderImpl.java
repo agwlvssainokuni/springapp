@@ -77,9 +77,9 @@ public class SqlLoaderImpl implements SqlLoader {
 	private String nextName(Reader reader) throws IOException {
 		String comment;
 		while ((comment = simpleSqlParser.nextComment(reader)) != null) {
-			Matcher matcher = namePattern.matcher(comment);
-			if (matcher.matches()) {
-				return matcher.group(0);
+			Matcher matcher = namePattern.matcher(comment.trim());
+			if (matcher.find()) {
+				return matcher.group(1);
 			}
 		}
 		return null;

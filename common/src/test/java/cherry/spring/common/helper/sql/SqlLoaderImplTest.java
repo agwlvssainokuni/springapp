@@ -16,8 +16,8 @@
 
 package cherry.spring.common.helper.sql;
 
-import static org.junit.Assert.*;
 import static cherry.spring.common.AppCtxUtil.getBean;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.Map;
@@ -34,7 +34,8 @@ public class SqlLoaderImplTest {
 	@Test
 	public void DDLをファイルから読込む() throws IOException {
 		SqlLoader sqlLoader = getBean(SqlLoader.class);
-		Resource resource = new ClassPathResource("SqlLoaderImplTest.sql", getClass());
+		Resource resource = new ClassPathResource("SqlLoaderImplTest.sql",
+				getClass());
 		Map<String, String> sqlmap = sqlLoader.load(resource);
 		assertEquals("SELECT 1 FROM dual", sqlmap.get("TEST01"));
 		assertEquals("SELECT 2 FROM dual", sqlmap.get("TEST02"));
