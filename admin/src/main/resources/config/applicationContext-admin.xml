@@ -9,21 +9,21 @@
 
 	<context:component-scan base-package="cherry.spring.admin" />
 
-	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
-
-	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
-
 	<bean id="asyncProcDao" class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
 
 	<bean id="asyncProcHelper" class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
 
 	<bean id="jsonHelper" class="cherry.spring.common.helper.json.JsonHelperImpl" />
 
-	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
-
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 	</bean>
+
+	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
+
+	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
+
+	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
 
 	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
@@ -35,6 +35,8 @@
 			</bean>
 		</property>
 	</bean>
+
+	<bean id="simpleSqlParser" class="cherry.spring.common.lib.sql.SimpleSqlParser" />
 
 	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
 		<constructor-arg value="log" />
@@ -53,5 +55,7 @@
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
 
 </beans>
