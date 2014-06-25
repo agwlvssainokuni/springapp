@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.etl;
+package cherry.spring.common.helper.sql;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -22,10 +22,17 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import cherry.spring.common.lib.sql.SimpleSqlParser;
+
 /**
  * SQL実行機能。
  */
-public interface SqlExecutor {
+public class SqlExecutorImpl implements SqlExecutor {
+
+	private SimpleSqlParser simpleSqlParser = new SimpleSqlParser();
 
 	/**
 	 * SQLを実行する。
@@ -41,7 +48,30 @@ public interface SqlExecutor {
 	 * @throws IOException
 	 *             SQL文の読込みでエラー。
 	 */
-	void execute(DataSource dataSource, Reader reader, Map<String, ?> paramMap,
-			boolean continueOnError) throws IOException;
+	@Override
+	public void execute(DataSource dataSource, Reader reader,
+			Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException {
+
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
+				dataSource);
+
+		String sql;
+		while ((sql = simpleSqlParser.nextStatement(reader)) != null) {
+
+			sql = sql.trim();
+			if (sql.isEmpty()) {
+				continue;
+			}
+
+			try {
+				template.update(sql, paramMap);
+			} catch (DataAccessException ex) {
+				if (!continueOnError) {
+					throw ex;
+				}
+			}
+		}
+	}
 
 }

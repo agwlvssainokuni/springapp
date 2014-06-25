@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.etl;
+package cherry.spring.common.helper.sql;
 
 import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertTrue;
@@ -30,6 +30,9 @@ import javax.sql.DataSource;
 
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
+
+import cherry.spring.common.helper.sql.SqlExecutor;
+import cherry.spring.common.helper.sql.SqlExecutorImpl;
 
 /**
  * {@link SqlExecutorImpl} のテスト.
