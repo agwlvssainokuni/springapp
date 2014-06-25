@@ -40,8 +40,8 @@ public class SqlExecutorImplTest {
 	public void DDLをファイルから読込んで実行する() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
 		SqlExecutor executor = getBean(SqlExecutor.class);
-		Resource resource = new ClassPathResource(
-				"cherry/spring/common/helper/sql/SqlExecutorImplTest.sql");
+		Resource resource = new ClassPathResource("SqlExecutorImplTest.sql",
+				getClass());
 		try {
 			executor.execute(dataSource, resource, null, true);
 			assertTrue(true);
