@@ -65,6 +65,9 @@ public class SqlLoaderImpl implements SqlLoader {
 		String name;
 		while ((name = nextName(reader)) != null) {
 			String statement = nextStatement(reader);
+			if (statement == null) {
+				break;
+			}
 			sqlmap.put(name, statement);
 		}
 
@@ -83,7 +86,14 @@ public class SqlLoaderImpl implements SqlLoader {
 	}
 
 	private String nextStatement(Reader reader) throws IOException {
-		return simpleSqlParser.nextStatement(reader);
+		String statement;
+		while ((statement = simpleSqlParser.nextStatement(reader)) != null) {
+			String stmt = statement.trim();
+			if (stmt.length() > 0) {
+				return stmt;
+			}
+		}
+		return null;
 	}
 
 }
