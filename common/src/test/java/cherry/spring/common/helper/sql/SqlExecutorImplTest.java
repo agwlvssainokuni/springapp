@@ -21,14 +21,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.charset.Charset;
 
 import javax.sql.DataSource;
 
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -40,10 +40,10 @@ public class SqlExecutorImplTest {
 	public void DDLをファイルから読込んで実行する() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
 		SqlExecutor executor = getBean(SqlExecutor.class);
-		Reader reader = new InputStreamReader(getClass().getResourceAsStream(
-				"SqlExecutorImplTest.sql"), Charset.forName("UTF-8"));
+		Resource resource = new ClassPathResource(
+				"cherry/spring/common/helper/sql/SqlExecutorImplTest.sql");
 		try {
-			executor.execute(dataSource, reader, null, true);
+			executor.execute(dataSource, resource, null, true);
 			assertTrue(true);
 		} catch (DataAccessException ex) {
 			ex.printStackTrace();
@@ -51,7 +51,6 @@ public class SqlExecutorImplTest {
 		} finally {
 			executor.execute(dataSource, new StringReader(
 					"DROP TABLE etl_user_test"), null, true);
-			reader.close();
 		}
 	}
 
@@ -59,15 +58,12 @@ public class SqlExecutorImplTest {
 	public void 不正なSQLを実行する_エラー無視() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
 		SqlExecutor executor = getBean(SqlExecutor.class);
-		Reader reader = new StringReader("DROP TABLE no_table");
-		try {
+		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, true);
 			assertTrue(true);
 		} catch (DataAccessException ex) {
 			ex.printStackTrace();
 			fail("例外が発生するのはNG");
-		} finally {
-			reader.close();
 		}
 	}
 
@@ -75,14 +71,11 @@ public class SqlExecutorImplTest {
 	public void 不正なSQLを実行する_エラー通知() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
 		SqlExecutor executor = getBean(SqlExecutor.class);
-		Reader reader = new StringReader("DROP TABLE no_table");
-		try {
+		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, false);
 			fail("例外が発生しないとNG");
 		} catch (DataAccessException ex) {
 			assertTrue(true);
-		} finally {
-			reader.close();
 		}
 	}
 
