@@ -83,7 +83,7 @@ public class SimpleSqlParser {
 			builder.append('-');
 		}
 
-		if (builder.length() <= 0) {
+		if (builder.length() <= 0 && ch < 0) {
 			return null;
 		}
 
