@@ -27,9 +27,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Component;
 
-@Component
 public class MailMessageHelperImpl implements MailMessageHelper,
 		InitializingBean {
 

@@ -33,9 +33,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
 
-@Component
 public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 
 	@Autowired

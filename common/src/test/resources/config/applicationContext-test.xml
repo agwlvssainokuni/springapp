@@ -15,6 +15,9 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<bean id="mailMessageDao" class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
+	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
+
 	<bean id="simpleSqlParser" class="cherry.spring.common.lib.sql.SimpleSqlParser" />
 	<bean id="sqlExecutor" class="cherry.spring.common.helper.sql.SqlExecutorImpl" />
 	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
