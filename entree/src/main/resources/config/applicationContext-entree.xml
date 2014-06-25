@@ -13,16 +13,13 @@
 
 	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${entree.mail.host}" />
-		<property name="port" value="${entree.mail.port}" />
-		<property name="protocol" value="${entree.mail.protocol}" />
-		<property name="defaultEncoding" value="${entree.mail.encoding}" />
-	</bean>
-
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 	</bean>
+
+	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
+
+	<bean id="simpleSqlParser" class="cherry.spring.common.lib.sql.SimpleSqlParser" />
 
 	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
 		<constructor-arg value="log" />
@@ -41,5 +38,12 @@
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${entree.mail.host}" />
+		<property name="port" value="${entree.mail.port}" />
+		<property name="protocol" value="${entree.mail.protocol}" />
+		<property name="defaultEncoding" value="${entree.mail.encoding}" />
+	</bean>
 
 </beans>
