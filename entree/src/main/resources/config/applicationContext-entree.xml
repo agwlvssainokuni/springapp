@@ -9,6 +9,17 @@
 
 	<context:component-scan base-package="cherry.spring.entree" />
 
+	<bean id="mailMessageDao" class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
+
+	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${entree.mail.host}" />
+		<property name="port" value="${entree.mail.port}" />
+		<property name="protocol" value="${entree.mail.protocol}" />
+		<property name="defaultEncoding" value="${entree.mail.encoding}" />
+	</bean>
+
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 	</bean>

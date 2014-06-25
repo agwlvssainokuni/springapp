@@ -68,11 +68,4 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${common.mail.host}" />
-		<property name="port" value="${common.mail.port}" />
-		<property name="protocol" value="${common.mail.protocol}" />
-		<property name="defaultEncoding" value="${common.mail.encoding}" />
-	</bean>
-
 </beans>
