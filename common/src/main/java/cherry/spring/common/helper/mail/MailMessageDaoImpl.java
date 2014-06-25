@@ -17,11 +17,6 @@
 package cherry.spring.common.helper.mail;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -34,19 +29,18 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import cherry.spring.common.helper.sql.SqlLoader;
+
 public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
 
-	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl_findTemplate.sql")
-	private Resource resourceFindTemplate;
+	@Autowired
+	private SqlLoader sqlLoader;
 
-	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl_findAddresses.sql")
-	private Resource resourceFindAddresses;
-
-	@Value("UTF-8")
-	private Charset charset;
+	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl.sql")
+	private Resource sqlResource;
 
 	private String sqlFindTemplate;
 
@@ -54,8 +48,9 @@ public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
-		sqlFindTemplate = resourceToString(resourceFindTemplate, charset);
-		sqlFindAddresses = resourceToString(resourceFindAddresses, charset);
+		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
+		sqlFindTemplate = sqlmap.get("findTemplate");
+		sqlFindAddresses = sqlmap.get("findAddresses");
 	}
 
 	@Override
@@ -80,20 +75,6 @@ public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 				new BeanPropertyRowMapper<MailTemplateAddressDto>(
 						MailTemplateAddressDto.class));
 
-	}
-
-	private String resourceToString(Resource res, Charset cs)
-			throws IOException {
-		try (StringWriter writer = new StringWriter();
-				InputStream in = res.getInputStream();
-				Reader reader = new InputStreamReader(in, cs)) {
-			int len;
-			char[] buff = new char[4096];
-			while ((len = reader.read(buff, 0, buff.length)) >= 0) {
-				writer.write(buff, 0, len);
-			}
-			return writer.toString();
-		}
 	}
 
 }
