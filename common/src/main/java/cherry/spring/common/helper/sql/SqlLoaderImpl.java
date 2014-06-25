@@ -34,45 +34,41 @@ import cherry.spring.common.lib.sql.SimpleSqlParser;
 
 public class SqlLoaderImpl implements SqlLoader {
 
-	@Value("common.helper.sqlloader.namePattern")
-	private Pattern namePattern;
-
-	@Value("common.helper.sqlloader.charset")
+	@Value("${common.helper.sqlloader.charset}")
 	private Charset charset;
+
+	@Value("${common.helper.sqlloader.namePattern}")
+	private Pattern namePattern;
 
 	@Autowired
 	private SimpleSqlParser simpleSqlParser;
 
 	@Override
-	public Map<String, String> load(Resource resource) {
+	public Map<String, String> load(Resource resource) throws IOException {
 		try (InputStream in = resource.getInputStream()) {
 			return load(in);
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
 		}
 	}
 
 	@Override
-	public Map<String, String> load(InputStream in) {
-		return load(new InputStreamReader(in, charset));
+	public Map<String, String> load(InputStream in) throws IOException {
+		try (Reader reader = new InputStreamReader(in, charset)) {
+			return load(reader);
+		}
 	}
 
 	@Override
-	public Map<String, String> load(Reader reader) {
-		try {
+	public Map<String, String> load(Reader reader) throws IOException {
 
-			Map<String, String> sqlmap = new LinkedHashMap<>();
+		Map<String, String> sqlmap = new LinkedHashMap<>();
 
-			String name;
-			while ((name = nextName(reader)) != null) {
-				String statement = nextStatement(reader);
-				sqlmap.put(name, statement);
-			}
-
-			return sqlmap;
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
+		String name;
+		while ((name = nextName(reader)) != null) {
+			String statement = nextStatement(reader);
+			sqlmap.put(name, statement);
 		}
+
+		return sqlmap;
 	}
 
 	private String nextName(Reader reader) throws IOException {

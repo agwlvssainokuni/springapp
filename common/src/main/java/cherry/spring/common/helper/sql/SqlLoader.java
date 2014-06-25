@@ -16,6 +16,7 @@
 
 package cherry.spring.common.helper.sql;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Map;
@@ -24,10 +25,10 @@ import org.springframework.core.io.Resource;
 
 public interface SqlLoader {
 
-	Map<String, String> load(Resource resource);
+	Map<String, String> load(Resource resource) throws IOException;
 
-	Map<String, String> load(InputStream in);
+	Map<String, String> load(InputStream in) throws IOException;
 
-	Map<String, String> load(Reader reader);
+	Map<String, String> load(Reader reader) throws IOException;
 
 }

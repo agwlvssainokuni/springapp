@@ -17,15 +17,54 @@
 package cherry.spring.common.helper.sql;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.core.io.Resource;
+
 /**
  * SQL実行機能。
  */
 public interface SqlExecutor {
+
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param dataSource
+	 *            データソース。
+	 * @param resource
+	 *            SQL文の読込み元。
+	 * @param paramMap
+	 *            SQLに受渡すパラメタ。
+	 * @param continueOnError
+	 *            SQL実行エラーで継続するか否か。
+	 * @throws IOException
+	 *             SQL文の読込みでエラー。
+	 */
+	void execute(DataSource dataSource, Resource resource,
+			Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException;
+
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param dataSource
+	 *            データソース。
+	 * @param in
+	 *            SQL文の読込み元。
+	 * @param paramMap
+	 *            SQLに受渡すパラメタ。
+	 * @param continueOnError
+	 *            SQL実行エラーで継続するか否か。
+	 * @throws IOException
+	 *             SQL文の読込みでエラー。
+	 */
+	void execute(DataSource dataSource, InputStream in,
+			Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException;
 
 	/**
 	 * SQLを実行する。

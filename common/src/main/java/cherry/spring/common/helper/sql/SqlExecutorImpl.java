@@ -17,11 +17,17 @@
 package cherry.spring.common.helper.sql;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -32,7 +38,57 @@ import cherry.spring.common.lib.sql.SimpleSqlParser;
  */
 public class SqlExecutorImpl implements SqlExecutor {
 
-	private SimpleSqlParser simpleSqlParser = new SimpleSqlParser();
+	@Value("${common.helper.sqlexecutor.charset}")
+	private Charset charset;
+
+	@Autowired
+	private SimpleSqlParser simpleSqlParser;
+
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param dataSource
+	 *            データソース。
+	 * @param resource
+	 *            SQL文の読込み元。
+	 * @param paramMap
+	 *            SQLに受渡すパラメタ。
+	 * @param continueOnError
+	 *            SQL実行エラーで継続するか否か。
+	 * @throws IOException
+	 *             SQL文の読込みでエラー。
+	 */
+	@Override
+	public void execute(DataSource dataSource, Resource resource,
+			Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException {
+		try (InputStream in = resource.getInputStream()) {
+			execute(dataSource, in, paramMap, continueOnError);
+		}
+	}
+
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param dataSource
+	 *            データソース。
+	 * @param in
+	 *            SQL文の読込み元。
+	 * @param paramMap
+	 *            SQLに受渡すパラメタ。
+	 * @param continueOnError
+	 *            SQL実行エラーで継続するか否か。
+	 * @throws IOException
+	 *             SQL文の読込みでエラー。
+	 */
+	@Override
+	public void execute(DataSource dataSource, InputStream in,
+			Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException {
+		try (Reader reader = new InputStreamReader(in, charset)) {
+			execute(dataSource, reader, paramMap, continueOnError);
+		}
+	}
 
 	/**
 	 * SQLを実行する。

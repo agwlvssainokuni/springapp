@@ -31,9 +31,6 @@ import javax.sql.DataSource;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 
-import cherry.spring.common.helper.sql.SqlExecutor;
-import cherry.spring.common.helper.sql.SqlExecutorImpl;
-
 /**
  * {@link SqlExecutorImpl} のテスト.
  */
@@ -42,7 +39,7 @@ public class SqlExecutorImplTest {
 	@Test
 	public void DDLをファイルから読込んで実行する() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = new SqlExecutorImpl();
+		SqlExecutor executor = getBean(SqlExecutor.class);
 		Reader reader = new InputStreamReader(getClass().getResourceAsStream(
 				"SqlExecutorImplTest.sql"), Charset.forName("UTF-8"));
 		try {
@@ -61,7 +58,7 @@ public class SqlExecutorImplTest {
 	@Test
 	public void 不正なSQLを実行する_エラー無視() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = new SqlExecutorImpl();
+		SqlExecutor executor = getBean(SqlExecutor.class);
 		Reader reader = new StringReader("DROP TABLE no_table");
 		try {
 			executor.execute(dataSource, reader, null, true);
@@ -77,7 +74,7 @@ public class SqlExecutorImplTest {
 	@Test
 	public void 不正なSQLを実行する_エラー通知() throws IOException {
 		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = new SqlExecutorImpl();
+		SqlExecutor executor = getBean(SqlExecutor.class);
 		Reader reader = new StringReader("DROP TABLE no_table");
 		try {
 			executor.execute(dataSource, reader, null, false);
