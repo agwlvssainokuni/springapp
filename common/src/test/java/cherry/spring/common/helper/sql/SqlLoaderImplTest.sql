@@ -16,3 +16,5 @@ SELECT 4 FROM dual;
 ;
 -- NAME: TEST05
 SELECT 5 FROM dual;
+
+-- NAME: TEST06

@@ -18,6 +18,7 @@ package cherry.spring.common.helper.sql;
 
 import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class SqlLoaderImplTest {
 		assertEquals("SELECT 3 FROM dual", sqlmap.get("TEST03"));
 		assertEquals("SELECT 4 FROM dual", sqlmap.get("TEST04"));
 		assertEquals("SELECT 5 FROM dual", sqlmap.get("TEST05"));
+		assertNull(sqlmap.get("TEST06"));
 	}
 
 }
