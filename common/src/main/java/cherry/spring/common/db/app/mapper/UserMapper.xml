@@ -32,9 +32,12 @@
 		SET
 			first_name = #{ent.firstName,jdbcType=VARCHAR},
 			last_name = #{ent.lastName,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
+			updated_at = CURRENT_TIMESTAMP,
+			lock_version = lock_version + 1
 		WHERE
 			id = #{id,jdbcType=INTEGER}
+			AND
+			lock_version = #{lockVersion,jdbcType=INTEGER}
 			AND
 			deleted_flg = 0
 	</update>
@@ -42,7 +45,8 @@
 		UPDATE users
 		SET
 			password = #{password,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
+			updated_at = CURRENT_TIMESTAMP,
+			lock_version = lock_version + 1
 		WHERE
 			id = #{id,jdbcType=INTEGER}
 			AND
@@ -52,7 +56,8 @@
 		UPDATE users
 		SET
 			password = #{password,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
+			updated_at = CURRENT_TIMESTAMP,
+			lock_version = lock_version + 1
 		WHERE
 			login_id = #{loginId,jdbcType=VARCHAR}
 			AND

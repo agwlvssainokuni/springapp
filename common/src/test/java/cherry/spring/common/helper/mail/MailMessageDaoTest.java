@@ -102,6 +102,7 @@ public class MailMessageDaoTest {
 		template.setSender("sender@test.com");
 		template.setCreatedAt(date);
 		template.setUpdatedAt(date);
+		template.setLockVersion(1);
 		template.setDeletedFlg(0);
 		templateMapper.insert(template);
 
@@ -111,6 +112,7 @@ public class MailMessageDaoTest {
 		addressCc.setMailAddr("cc@test.com");
 		addressCc.setCreatedAt(date);
 		addressCc.setUpdatedAt(date);
+		addressCc.setLockVersion(1);
 		addressCc.setDeletedFlg(0);
 		addressMapper.insert(addressCc);
 
@@ -120,6 +122,7 @@ public class MailMessageDaoTest {
 		addressBcc.setMailAddr("bcc@test.com");
 		addressBcc.setCreatedAt(date);
 		addressBcc.setUpdatedAt(date);
+		addressBcc.setLockVersion(1);
 		addressBcc.setDeletedFlg(0);
 		addressMapper.insert(addressBcc);
 
@@ -130,6 +133,7 @@ public class MailMessageDaoTest {
 		textJa.setBody("メール本文");
 		textJa.setCreatedAt(date);
 		textJa.setUpdatedAt(date);
+		textJa.setLockVersion(1);
 		textJa.setDeletedFlg(0);
 		textMapper.insert(textJa);
 
@@ -140,6 +144,7 @@ public class MailMessageDaoTest {
 		textEn.setBody("Mail Body");
 		textEn.setCreatedAt(date);
 		textEn.setUpdatedAt(date);
+		textEn.setLockVersion(1);
 		textEn.setDeletedFlg(0);
 		textMapper.insert(textEn);
 	}
