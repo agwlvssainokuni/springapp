@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/06/15 19:38:52
+-- Date/Time    : 2014/06/28 6:40:35
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -14,6 +14,7 @@ CREATE TABLE users(
 	last_name VARCHAR (64) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT users_pkc PRIMARY KEY (id)
 ); 
@@ -29,6 +30,7 @@ CREATE TABLE signup_requests(
 	applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT signup_requests_pkc PRIMARY KEY (id)
 ); 
@@ -67,6 +69,9 @@ COMMENT
 	ON COLUMN users.created_at IS '作成日時'; 
 
 COMMENT 
+	ON COLUMN users.lock_version IS 'ロックバージョン'; 
+
+COMMENT 
 	ON COLUMN users.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
@@ -89,6 +94,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN signup_requests.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN signup_requests.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN signup_requests.deleted_flg IS '削除フラグ'; 

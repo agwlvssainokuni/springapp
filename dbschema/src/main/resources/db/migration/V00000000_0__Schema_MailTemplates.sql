@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/06/15 19:36:17
+-- Date/Time    : 2014/06/28 6:39:12
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -11,6 +11,7 @@ CREATE TABLE mail_templates(
 	sender VARCHAR (512) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT mail_templates_pkc PRIMARY KEY (id)
 ); 
@@ -26,6 +27,7 @@ CREATE TABLE mail_template_addresses(
 	rcpt_type VARCHAR (3) NOT NULL CHECK rcpt_type IN ('CC', 'BCC'), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT mail_template_addresses_pkc PRIMARY KEY (id)
 ); 
@@ -42,6 +44,7 @@ CREATE TABLE mail_template_texts(
 	body VARCHAR (4096) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT mail_template_texts_pkc PRIMARY KEY (id)
 ); 
@@ -68,6 +71,9 @@ COMMENT
 	ON COLUMN mail_templates.created_at IS '作成日時'; 
 
 COMMENT 
+	ON COLUMN mail_templates.lock_version IS 'ロックバージョン'; 
+
+COMMENT 
 	ON COLUMN mail_templates.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
@@ -90,6 +96,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN mail_template_addresses.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN mail_template_addresses.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN mail_template_addresses.deleted_flg IS '削除フラグ'; 
@@ -117,6 +126,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN mail_template_texts.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN mail_template_texts.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN mail_template_texts.deleted_flg IS '削除フラグ'; 
