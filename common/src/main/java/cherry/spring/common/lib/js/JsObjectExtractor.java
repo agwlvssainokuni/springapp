@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.js;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
@@ -72,9 +73,6 @@ import javax.script.ScriptException;
  */
 public class JsObjectExtractor {
 
-	/** 変換処理用JavaScriptスクリプト名. */
-	private static String SCRIPT_FILE = "JsObjectExtractor.js";
-
 	/** JavaScriptコード実行用スクリプトエンジン. */
 	private ScriptEngine engine;
 
@@ -82,21 +80,15 @@ public class JsObjectExtractor {
 	 * 変換機能を初期化する.<br>
 	 */
 	public void initialize() {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		engine = manager.getEngineByName("JavaScript");
-		Reader reader = new InputStreamReader(
-				JsObjectExtractor.class.getResourceAsStream(SCRIPT_FILE),
-				Charset.forName("UTF-8"));
-		try {
+		String scriptname = getClass().getSimpleName() + ".js";
+		try (InputStream in = getClass().getResourceAsStream(scriptname);
+				Reader reader = new InputStreamReader(in,
+						Charset.forName("UTF-8"))) {
+			ScriptEngineManager manager = new ScriptEngineManager();
+			engine = manager.getEngineByName("JavaScript");
 			engine.eval(reader);
-		} catch (ScriptException ex) {
+		} catch (ScriptException | IOException ex) {
 			throw new IllegalStateException(ex);
-		} finally {
-			try {
-				reader.close();
-			} catch (IOException ex) {
-				// IGNORE
-			}
 		}
 	}
 
