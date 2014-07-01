@@ -30,18 +30,18 @@ import javax.script.ScriptException;
 import org.junit.Test;
 
 /**
- * {@link ObjectExtractor} によるJavaScript値変換のテスト.
+ * {@link JsObjectExtractor} によるJavaScript値変換のテスト.
  */
-public class ObjectExtractorTest {
+public class JsObjectExtractorTest {
 
 	/**
-	 * 対象: {@link ObjectExtractor#initialize()}<br>
+	 * 対象: {@link JsObjectExtractor#initialize()}<br>
 	 * 区分: 正常<br>
 	 * 初期化が正常終了すること.<br>
 	 */
 	@Test
 	public void testInitialize_00() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			extractor.initialize();
 		} catch (Exception ex) {
@@ -51,13 +51,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#eval(String)}<br>
+	 * 対象: {@link JsObjectExtractor#eval(String)}<br>
 	 * 区分: 正常<br>
 	 * JavaScriptコードの評価が正常終了すること.<br>
 	 */
 	@Test
 	public void testEval_00() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -75,13 +75,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#eval(String)}<br>
+	 * 対象: {@link JsObjectExtractor#eval(String)}<br>
 	 * 区分: 異常<br>
 	 * JavaScriptコードの評価が異常終了すること.<br>
 	 */
 	@Test
 	public void testEval_10() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -98,13 +98,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「null」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_00() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -122,13 +122,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「undefined」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_01() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -146,13 +146,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「true/false」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_02() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -172,13 +172,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「NaN」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_03() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -196,13 +196,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「数値」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_04() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -228,13 +228,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「文字列」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_05() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -254,13 +254,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「配列」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_06() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -294,13 +294,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「オブジェクト」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_07() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -340,13 +340,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * オブジェクトのリストが変換されること。
 	 */
 	@Test
 	public void testToJavaObject_08() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
@@ -375,13 +375,13 @@ public class ObjectExtractorTest {
 	}
 
 	/**
-	 * 対象: {@link ObjectExtractor#toJavaObject(String)}<br>
+	 * 対象: {@link JsObjectExtractor#toJavaObject(String)}<br>
 	 * 区分: 正常<br>
 	 * 「設定値」が変換されること。
 	 */
 	@Test
 	public void testToJavaObject_09() {
-		ObjectExtractor extractor = new ObjectExtractor();
+		JsObjectExtractor extractor = new JsObjectExtractor();
 		try {
 			// 準備
 			extractor.initialize();
