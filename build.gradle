@@ -37,10 +37,10 @@ subprojects {
 		provided
 	}
 
-	sourceSets.main.compileClasspath += configurations.provided
+	sourceSets.main.compileClasspath += [configurations.provided]
 
 	eclipse.classpath {
-		plusConfigurations += configurations.provided 
+		plusConfigurations += [configurations.provided]
 	}
 
 	task processDistResources(type: Copy, overwrite: true) {
