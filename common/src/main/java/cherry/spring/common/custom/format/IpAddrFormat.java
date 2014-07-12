@@ -28,6 +28,8 @@ public @interface IpAddrFormat {
 
 	Version value() default Version.ANY;
 
+	boolean v6compress() default true;
+
 	public enum Version {
 		ANY, V4, V6
 	}

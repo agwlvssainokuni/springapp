@@ -54,6 +54,8 @@
 					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
 				<bean
 					class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+				<bean
+					class="cherry.spring.common.custom.format.IpAddrFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
@@ -67,5 +69,7 @@
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
+
+	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
 
 </beans>
