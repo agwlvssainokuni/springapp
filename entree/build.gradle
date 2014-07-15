@@ -3,6 +3,7 @@ apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
 
 ext {
+	versionSpring = "4.0.6.RELEASE"
 	versionTiles = "3.0.3"
 	versionJstl = "1.2"
 	versionJavaServlet = "3.0.1"
@@ -28,6 +29,7 @@ dependencies {
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	provided "org.projectlombok:lombok:${versionLombok}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }

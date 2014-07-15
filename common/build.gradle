@@ -70,7 +70,6 @@ dependencies {
 	compile "org.springframework:spring-jms:${versionSpring}"
 	compile "org.springframework:spring-web:${versionSpring}"
 	compile "org.springframework:spring-webmvc:${versionSpring}"
-	testCompile "org.springframework:spring-test:${versionSpring}"
 	compile "org.springframework.ldap:spring-ldap-core:${versionSpringLdap}"
 	compile "org.springframework.ldap:spring-ldap-core-tiger:${versionSpringLdap}"
 	compile "org.springframework.security:spring-security-core:${versionSpringSecurity}"
@@ -95,6 +94,7 @@ dependencies {
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
 	provided "org.projectlombok:lombok:${versionLombok}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
