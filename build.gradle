@@ -9,21 +9,8 @@ subprojects {
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
 
-	compileJava {
-		options.encoding = "UTF-8"
-	}
-
-	compileTestJava {
-		options.encoding = "UTF-8"
-	}
-
-	sourceSets. main.resources {
-		srcDir "src/main/java"
-	}
-
-	if (parent.hasProperty("appendix")) {
-		project.appendix = parent.appendix
-	}
+	compileJava.options.encoding = "UTF-8"
+	compileTestJava.options.encoding = "UTF-8"
 
 	repositories {
 		mavenCentral()
@@ -37,10 +24,15 @@ subprojects {
 		provided
 	}
 
-	sourceSets.main.compileClasspath += [configurations.provided]
+	sourceSets.main {
+		resources.srcDir "src/main/java"
+		compileClasspath += [configurations.provided]
+	}
 
-	eclipse.classpath {
-		plusConfigurations += [configurations.provided]
+	eclipse.classpath.plusConfigurations += [configurations.provided]
+
+	if (parent.hasProperty("appendix")) {
+		project.appendix = parent.appendix
 	}
 
 	task processDistResources(type: Copy, overwrite: true) {
