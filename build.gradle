@@ -12,6 +12,9 @@ subprojects {
 	compileJava.options.encoding = "UTF-8"
 	compileTestJava.options.encoding = "UTF-8"
 
+	sourceSets.main.resources.srcDir "src/main/java"
+	sourceSets.test.resources.srcDir "src/test/java"
+
 	repositories {
 		mavenCentral()
 		maven {
@@ -24,11 +27,7 @@ subprojects {
 		provided
 	}
 
-	sourceSets.main {
-		resources.srcDir "src/main/java"
-		compileClasspath += [configurations.provided]
-	}
-
+	sourceSets.main.compileClasspath += [configurations.provided]
 	eclipse.classpath.plusConfigurations += [configurations.provided]
 
 	if (parent.hasProperty("appendix")) {
