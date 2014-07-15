@@ -4,7 +4,7 @@ apply plugin: 'flyway'
 buildscript {
 	repositories { mavenCentral() }
 	dependencies {
-		classpath "com.h2database:h2:1.4.178"
+		classpath "com.h2database:h2:1.4.180"
 		classpath "org.flywaydb:flyway-gradle-plugin:3.0"
 	}
 }
@@ -19,7 +19,7 @@ flyway {
 task mbgenerator << {
 	configurations { antTask }
 	dependencies {
-		antTask "com.h2database:h2:1.4.178"
+		antTask "com.h2database:h2:1.4.180"
 		antTask "org.mybatis.generator:mybatis-generator-core:1.3.2"
 	}
 	ant {
