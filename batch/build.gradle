@@ -4,10 +4,14 @@ mainClassName = "cherry.spring.batch.tools.Main"
 
 ext {
 	versionLombok = "1.14.2"
+	versionJunit = "4.11"
+	versionMockito = "1.9.5"
 }
 
 dependencies {
 	compile project(":common")
 	compile "commons-cli:commons-cli:1.2"
 	provided "org.projectlombok:lombok:${versionLombok}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
