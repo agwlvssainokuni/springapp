@@ -116,7 +116,7 @@ task deliveryTar(type: Tar) {
 	}
 	classifier = "delivery"
 	compression = Compression.GZIP
-	with(DeliverySpec)
+	with(deliverySpec)
 	dependsOn ":admin:assembleDelivery"
 	dependsOn ":entree:assembleDelivery"
 	dependsOn ":batch:assembleDelivery"
