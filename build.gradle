@@ -7,7 +7,7 @@ apply plugin: "eclipse"
 subprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
-	apply plugin: "distResources"
+	apply plugin: "deliveryResources"
 
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
@@ -37,7 +37,7 @@ subprojects {
 		project.appendix = parent.appendix
 	}
 
-	distResources {
+	deliveryResources {
 		from "src/main/distResources"
 		tokens "../filter.properties"
 		override { props ->
@@ -58,7 +58,7 @@ subprojects {
 	}
 }
 
-def distSpec = copySpec {
+def deliverySpec = copySpec {
 
 	for (String dir : ["admin", "entree"]) {
 		into("${dir}/app") {
@@ -94,31 +94,31 @@ def distSpec = copySpec {
 	}
 }
 
-task distZip(type: Zip) {
+task deliveryZip(type: Zip) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
 		appendix = project.appendix
 	}
-	classifier = "dist"
-	with(distSpec)
-	dependsOn ":admin:assembleDist"
-	dependsOn ":entree:assembleDist"
-	dependsOn ":batch:assembleDist"
+	classifier = "delivery"
+	with(deliverySpec)
+	dependsOn ":admin:assembleDelivery"
+	dependsOn ":entree:assembleDelivery"
+	dependsOn ":batch:assembleDelivery"
 	dependsOn ":batch:installApp"
 }
 
-task distTar(type: Tar) {
+task deliveryTar(type: Tar) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
 		appendix = project.appendix
 	}
-	classifier = "dist"
+	classifier = "delivery"
 	compression = Compression.GZIP
-	with(distSpec)
-	dependsOn ":admin:assembleDist"
-	dependsOn ":entree:assembleDist"
-	dependsOn ":batch:assembleDist"
+	with(DeliverySpec)
+	dependsOn ":admin:assembleDelivery"
+	dependsOn ":entree:assembleDelivery"
+	dependsOn ":batch:assembleDelivery"
 	dependsOn ":batch:installApp"
 }
