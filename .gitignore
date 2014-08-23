@@ -13,3 +13,8 @@
 /.gradle
 /gradle-app.setting
 /gradle.properties
+/bin
+/.classpath
+/.project
+/.settings
+/build

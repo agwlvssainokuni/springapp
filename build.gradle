@@ -2,9 +2,12 @@ allprojects {
 	version = "1.0"
 }
 
+apply plugin: "eclipse"
+
 subprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
+	apply plugin: "distResources"
 
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
@@ -34,31 +37,25 @@ subprojects {
 		project.appendix = parent.appendix
 	}
 
-	task processDistResources(type: Copy, overwrite: true) {
+	distResources {
 		from "src/main/distResources"
-		into sourceSets.main.output.resourcesDir
-
-		def props = new Properties()
-		file("../filter.properties").withInputStream { props.load(it) }
-		def appdir = "/opt/" + parent.name
-		if (project.hasProperty("appendix")) {
-			appdir = appdir + "/" + project.appendix
+		tokens "../filter.properties"
+		override { props ->
+			def appdir = "/opt/" + parent.name
+			if (project.hasProperty("appendix")) {
+				appdir = appdir + "/" + project.appendix
+			}
+			for (String dir : ["admin", "entree"]) {
+				props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
+				props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/log")
+			}
+			for (String dir : ["batch"]) {
+				props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
+				props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/job/\${jobId}/log")
+				props.setProperty("filter.${dir}.log.dir.common", "${appdir}/${dir}/log")
+			}
 		}
-		for (String dir : ["admin", "entree"]) {
-			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
-			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/log")
-		}
-		for (String dir : ["batch"]) {
-			props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
-			props.setProperty("filter.${dir}.log.dir", "${appdir}/${dir}/job/\${jobId}/log")
-			props.setProperty("filter.${dir}.log.dir.common", "${appdir}/${dir}/log")
-		}
-
-		filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
-		dependsOn processResources
 	}
-
-	classes.mustRunAfter processDistResources
 }
 
 def distSpec = copySpec {
@@ -69,7 +66,7 @@ def distSpec = copySpec {
 			include "*.war"
 			rename {
 				if (project.hasProperty("appendix")) {
-					project.appendix + "#" + it.replace("-${version}", "")
+					it.replace("-${version}", project.appendix)
 				} else {
 					it.replace("-${version}", "")
 				}
@@ -105,10 +102,10 @@ task distZip(type: Zip) {
 	}
 	classifier = "dist"
 	with(distSpec)
-	dependsOn ":admin:processDistResources"
-	dependsOn ":entree:processDistResources"
-	dependsOn ":batch:processDistResources"
-	dependsOn ":admin:war", ":entree:war", ":batch:installApp"
+	dependsOn ":admin:assembleDist"
+	dependsOn ":entree:assembleDist"
+	dependsOn ":batch:assembleDist"
+	dependsOn ":batch:installApp"
 }
 
 task distTar(type: Tar) {
@@ -120,8 +117,8 @@ task distTar(type: Tar) {
 	classifier = "dist"
 	compression = Compression.GZIP
 	with(distSpec)
-	dependsOn ":admin:processDistResources"
-	dependsOn ":entree:processDistResources"
-	dependsOn ":batch:processDistResources"
-	dependsOn ":admin:war", ":entree:war", ":batch:installApp"
+	dependsOn ":admin:assembleDist"
+	dependsOn ":entree:assembleDist"
+	dependsOn ":batch:assembleDist"
+	dependsOn ":batch:installApp"
 }
