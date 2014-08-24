@@ -13,7 +13,7 @@
 					A.last_name,
 					A.registered_at
 				FROM
-					users A
+					user A
 				WHERE
 					A.registered_at BETWEEN :registeredFrom AND :registeredTo
 					AND
@@ -27,7 +27,7 @@
 	<bean id="usermanImportSql" class="java.lang.String">
 		<constructor-arg type="java.lang.String">
 			<value><![CDATA[
-				INSERT INTO users (
+				INSERT INTO user (
 					login_id,
 					password,
 					first_name,
