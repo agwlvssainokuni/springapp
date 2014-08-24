@@ -33,17 +33,13 @@ subprojects {
 	sourceSets.main.compileClasspath += [configurations.provided]
 	eclipse.classpath.plusConfigurations += [configurations.provided]
 
-	if (parent.hasProperty("appendix")) {
-		project.appendix = parent.appendix
-	}
-
 	deliveryResources {
 		from "src/main/deliveryResources"
 		tokens "../filter.properties"
 		override { props ->
 			def appdir = "/opt/" + parent.name
-			if (project.hasProperty("appendix")) {
-				appdir = appdir + "/" + project.appendix
+			if (parent.hasProperty("appendix")) {
+				appdir = appdir + "/" + parent.appendix
 			}
 			for (String dir : ["admin", "entree"]) {
 				props.setProperty("filter.${dir}.conf", "${appdir}/${dir}/conf")
