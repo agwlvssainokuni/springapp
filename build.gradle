@@ -38,7 +38,7 @@ subprojects {
 	}
 
 	deliveryResources {
-		from "src/main/distResources"
+		from "src/main/deliveryResources"
 		tokens "../filter.properties"
 		override { props ->
 			def appdir = "/opt/" + parent.name
@@ -58,10 +58,23 @@ subprojects {
 	}
 }
 
-def deliverySpec = copySpec {
+task deliveryZip(type: Zip)
+task deliveryTar(type: Tar) { compression = Compression.GZIP }
+
+[deliveryZip, deliveryTar].each {
+	it.baseName = project.name
+	it.version = project.version
+	if (project.hasProperty("appendix")) {
+		it.appendix = project.appendix
+	}
+	it.classifier = "delivery"
+	it.dependsOn ":admin:assembleDelivery"
+	it.dependsOn ":entree:assembleDelivery"
+	it.dependsOn ":batch:assembleDelivery"
+	it.dependsOn ":batch:installApp"
 
 	for (String dir : ["admin", "entree"]) {
-		into("${dir}/app") {
+		it.into("${dir}/app") {
 			from("${dir}/build/libs")
 			include "*.war"
 			rename {
@@ -75,13 +88,13 @@ def deliverySpec = copySpec {
 	}
 
 	for (String dir : ["batch"]) {
-		into("${dir}") {
+		it.into("${dir}") {
 			from("${dir}/build/install/${dir}")
 		}
 	}
 
 	for (String dir : ["admin", "entree", "batch"]) {
-		into("${dir}/conf") {
+		it.into("${dir}/conf") {
 			from("${dir}/build/resources/main") {
 				include "*.properties"
 				exclude "${dir}.properties"
@@ -89,36 +102,7 @@ def deliverySpec = copySpec {
 				rename { it + ".template" }
 			}
 		}
-		into("${dir}/log") {
+		it.into("${dir}/log") {
 		}
 	}
-}
-
-task deliveryZip(type: Zip) {
-	baseName = project.name
-	version = project.version
-	if (project.hasProperty("appendix")) {
-		appendix = project.appendix
-	}
-	classifier = "delivery"
-	with(deliverySpec)
-	dependsOn ":admin:assembleDelivery"
-	dependsOn ":entree:assembleDelivery"
-	dependsOn ":batch:assembleDelivery"
-	dependsOn ":batch:installApp"
-}
-
-task deliveryTar(type: Tar) {
-	baseName = project.name
-	version = project.version
-	if (project.hasProperty("appendix")) {
-		appendix = project.appendix
-	}
-	classifier = "delivery"
-	compression = Compression.GZIP
-	with(deliverySpec)
-	dependsOn ":admin:assembleDelivery"
-	dependsOn ":entree:assembleDelivery"
-	dependsOn ":batch:assembleDelivery"
-	dependsOn ":batch:installApp"
 }
