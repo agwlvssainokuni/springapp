@@ -16,27 +16,19 @@
 
 package cherry.spring.common.db.app.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
-import cherry.spring.common.db.gen.dto.Users;
+import cherry.spring.common.db.gen.dto.SignupRequest;
 
-public interface UserMapper {
+public interface SignupRequestMapper2 {
 
-	int createUser(@Param("ent") Users entity);
+	boolean validateMailAddr(@Param("mailAddr") String mailAddr,
+			@Param("intervalInSec") int intervalInSec,
+			@Param("rangeInSec") int rangeInSec, @Param("numOfReq") int numOfReq);
 
-	int updateUser(@Param("id") Integer id, @Param("ent") Users entity);
+	int createSignupRequest(@Param("ent") SignupRequest entity);
 
-	int updatePassword(@Param("id") Integer id,
-			@Param("password") String password);
-
-	int changePassword(@Param("loginId") String loginId,
-			@Param("password") String password);
-
-	int countUsers(@Param("cond") UserCondition userCondition);
-
-	List<Users> searchUsers(@Param("cond") UserCondition userCondition,
-			@Param("limit") Integer limit, @Param("offset") Integer offset);
+	boolean validateToken(@Param("mailAddr") String mailAddr,
+			@Param("token") String token, @Param("validInSec") int validInSec);
 
 }

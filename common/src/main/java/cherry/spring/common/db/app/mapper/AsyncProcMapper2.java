@@ -16,19 +16,17 @@
 
 package cherry.spring.common.db.app.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import cherry.spring.common.db.gen.dto.SignupRequests;
+import cherry.spring.common.db.gen.dto.AsyncProc;
 
-public interface SignupRequestMapper {
+public interface AsyncProcMapper2 {
 
-	boolean validateMailAddr(@Param("mailAddr") String mailAddr,
-			@Param("intervalInSec") int intervalInSec,
-			@Param("rangeInSec") int rangeInSec, @Param("numOfReq") int numOfReq);
+	int countAsyncProc();
 
-	int createSignupRequest(@Param("ent") SignupRequests entity);
-
-	boolean validateToken(@Param("mailAddr") String mailAddr,
-			@Param("token") String token, @Param("validInSec") int validInSec);
+	List<AsyncProc> searchAsyncProc(@Param("limit") Integer limit,
+			@Param("offset") Integer offset);
 
 }

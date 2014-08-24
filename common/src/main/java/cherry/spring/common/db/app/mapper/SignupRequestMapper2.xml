@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cherry.spring.common.db.app.mapper.SignupRequestMapper">
+<mapper namespace="cherry.spring.common.db.app.mapper.SignupRequestMapper2">
 	<select id="validateMailAddr" resultType="boolean">
 		SELECT
 			CASE
@@ -10,7 +10,7 @@
 				ELSE 1
 			END
 		FROM
-			signup_requests AS A
+			signup_request AS A
 		WHERE
 			A.mail_addr = #{mailAddr,jdbcType=VARCHAR}
 			AND
@@ -20,7 +20,7 @@
 	</select>
 	<insert id="createSignupRequest" useGeneratedKeys="true"
 		keyColumn="id" keyProperty="ent.id">
-		INSERT INTO signup_requests (
+		INSERT INTO signup_request (
 			mail_addr,
 			token
 		)
@@ -33,7 +33,7 @@
 		SELECT
 			COUNT(*)
 		FROM
-			signup_requests AS A
+			signup_request AS A
 		WHERE
 			A.mail_addr = #{mailAddr,jdbcType=VARCHAR}
 			AND
@@ -44,7 +44,7 @@
 			A.deleted_flg = 0
 			AND
 			NOT EXISTS (
-				SELECT * FROM signup_requests AS B
+				SELECT * FROM signup_request AS B
 				WHERE
 					B.mail_addr = A.mail_addr
 					AND

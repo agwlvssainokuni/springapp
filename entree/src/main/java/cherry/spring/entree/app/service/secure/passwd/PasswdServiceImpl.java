@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.app.mapper.UserMapper;
+import cherry.spring.common.db.app.mapper.UserMapper2;
 
 @Component
 public class PasswdServiceImpl implements PasswdService {
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserMapper2 userMapper;
 
 	@Transactional
 	@Override

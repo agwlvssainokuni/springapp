@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.app.mapper.UserCondition;
-import cherry.spring.common.db.app.mapper.UserMapper;
-import cherry.spring.common.db.gen.dto.Users;
+import cherry.spring.common.db.app.mapper.UserMapper2;
+import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 
@@ -35,7 +35,7 @@ import cherry.spring.common.lib.paginate.Paginator;
 public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserMapper2 userMapper;
 
 	@Autowired
 	private Paginator paginator;
@@ -48,7 +48,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		int count = userMapper.countUsers(cond);
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
-		List<Users> list = userMapper.searchUsers(cond, pageSz, offset);
+		List<User> list = userMapper.searchUsers(cond, pageSz, offset);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);

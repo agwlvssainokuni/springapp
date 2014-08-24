@@ -28,12 +28,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import cherry.spring.common.db.gen.dto.MailTemplateAddresses;
-import cherry.spring.common.db.gen.dto.MailTemplateTexts;
-import cherry.spring.common.db.gen.dto.MailTemplates;
-import cherry.spring.common.db.gen.mapper.MailTemplateAddressesMapper;
-import cherry.spring.common.db.gen.mapper.MailTemplateTextsMapper;
-import cherry.spring.common.db.gen.mapper.MailTemplatesMapper;
+import cherry.spring.common.db.gen.dto.MailTemplateAddress;
+import cherry.spring.common.db.gen.dto.MailTemplateText;
+import cherry.spring.common.db.gen.dto.MailTemplate;
+import cherry.spring.common.db.gen.mapper.MailTemplateAddressMapper;
+import cherry.spring.common.db.gen.mapper.MailTemplateTextMapper;
+import cherry.spring.common.db.gen.mapper.MailTemplateMapper;
 
 public class MailMessageDaoTest {
 
@@ -91,13 +91,13 @@ public class MailMessageDaoTest {
 	@BeforeClass
 	public static void setup() {
 
-		MailTemplatesMapper templateMapper = getBean(MailTemplatesMapper.class);
-		MailTemplateAddressesMapper addressMapper = getBean(MailTemplateAddressesMapper.class);
-		MailTemplateTextsMapper textMapper = getBean(MailTemplateTextsMapper.class);
+		MailTemplateMapper templateMapper = getBean(MailTemplateMapper.class);
+		MailTemplateAddressMapper addressMapper = getBean(MailTemplateAddressMapper.class);
+		MailTemplateTextMapper textMapper = getBean(MailTemplateTextMapper.class);
 
 		LocalDateTime date = LocalDateTime.now();
 
-		MailTemplates template = new MailTemplates();
+		MailTemplate template = new MailTemplate();
 		template.setName("test");
 		template.setSender("sender@test.com");
 		template.setCreatedAt(date);
@@ -106,7 +106,7 @@ public class MailMessageDaoTest {
 		template.setDeletedFlg(0);
 		templateMapper.insert(template);
 
-		MailTemplateAddresses addressCc = new MailTemplateAddresses();
+		MailTemplateAddress addressCc = new MailTemplateAddress();
 		addressCc.setMailTemplateId(3);
 		addressCc.setRcptType("CC");
 		addressCc.setMailAddr("cc@test.com");
@@ -116,7 +116,7 @@ public class MailMessageDaoTest {
 		addressCc.setDeletedFlg(0);
 		addressMapper.insert(addressCc);
 
-		MailTemplateAddresses addressBcc = new MailTemplateAddresses();
+		MailTemplateAddress addressBcc = new MailTemplateAddress();
 		addressBcc.setMailTemplateId(3);
 		addressBcc.setRcptType("BCC");
 		addressBcc.setMailAddr("bcc@test.com");
@@ -126,7 +126,7 @@ public class MailMessageDaoTest {
 		addressBcc.setDeletedFlg(0);
 		addressMapper.insert(addressBcc);
 
-		MailTemplateTexts textJa = new MailTemplateTexts();
+		MailTemplateText textJa = new MailTemplateText();
 		textJa.setMailTemplateId(3);
 		textJa.setLocale("ja_JP");
 		textJa.setSubject("メール件名");
@@ -137,7 +137,7 @@ public class MailMessageDaoTest {
 		textJa.setDeletedFlg(0);
 		textMapper.insert(textJa);
 
-		MailTemplateTexts textEn = new MailTemplateTexts();
+		MailTemplateText textEn = new MailTemplateText();
 		textEn.setMailTemplateId(3);
 		textEn.setLocale("en_US");
 		textEn.setSubject("Mail Subject");

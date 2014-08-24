@@ -20,7 +20,7 @@ import java.util.List;
 
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.BaseDto;
-import cherry.spring.common.db.gen.dto.Users;
+import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.lib.paginate.PageSet;
 
 public interface UsermanSearchService {
@@ -33,7 +33,7 @@ public interface UsermanSearchService {
 
 		private PageSet pageSet;
 
-		private List<Users> usersList;
+		private List<User> usersList;
 
 		public PageSet getPageSet() {
 			return pageSet;
@@ -43,11 +43,11 @@ public interface UsermanSearchService {
 			this.pageSet = pageSet;
 		}
 
-		public List<Users> getUsersList() {
+		public List<User> getUsersList() {
 			return usersList;
 		}
 
-		public void setUsersList(List<Users> usersList) {
+		public void setUsersList(List<User> usersList) {
 			this.usersList = usersList;
 		}
 	}

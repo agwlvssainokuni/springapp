@@ -20,13 +20,23 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import cherry.spring.common.db.gen.dto.AsyncProcs;
+import cherry.spring.common.db.gen.dto.User;
 
-public interface AsyncProcMapper {
+public interface UserMapper2 {
 
-	int countAsyncProc();
+	int createUser(@Param("ent") User entity);
 
-	List<AsyncProcs> searchAsyncProc(@Param("limit") Integer limit,
-			@Param("offset") Integer offset);
+	int updateUser(@Param("id") Integer id, @Param("ent") User entity);
+
+	int updatePassword(@Param("id") Integer id,
+			@Param("password") String password);
+
+	int changePassword(@Param("loginId") String loginId,
+			@Param("password") String password);
+
+	int countUsers(@Param("cond") UserCondition userCondition);
+
+	List<User> searchUsers(@Param("cond") UserCondition userCondition,
+			@Param("limit") Integer limit, @Param("offset") Integer offset);
 
 }

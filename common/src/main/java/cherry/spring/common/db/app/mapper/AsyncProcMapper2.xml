@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cherry.spring.common.db.app.mapper.AsyncProcMapper">
-	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.AsyncProcs">
+<mapper namespace="cherry.spring.common.db.app.mapper.AsyncProcMapper2">
+	<resultMap id="BaseResultMap" type="cherry.spring.common.db.gen.dto.AsyncProc">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
 		<result column="LAUNCHER_ID" jdbcType="VARCHAR" property="launcherId" />
@@ -19,7 +19,7 @@
 		SELECT
 			COUNT(A.id)
 		FROM
-			async_procs A
+			async_proc A
 		WHERE
 			A.deleted_flg = 0
 	</select>
@@ -38,7 +38,7 @@
 			A.created_at,
 			A.deleted_flg
 		FROM
-			async_procs A
+			async_proc A
 		WHERE
 			A.deleted_flg = 0
 		ORDER BY

@@ -27,9 +27,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
-import cherry.spring.common.db.app.mapper.SignupRequestMapper;
-import cherry.spring.common.db.app.mapper.UserMapper;
-import cherry.spring.common.db.gen.dto.Users;
+import cherry.spring.common.db.app.mapper.SignupRequestMapper2;
+import cherry.spring.common.db.app.mapper.UserMapper2;
+import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.log.Log;
@@ -41,10 +41,10 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private SignupRequestMapper signupRequestMapper;
+	private SignupRequestMapper2 signupRequestMapper;
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserMapper2 userMapper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -80,7 +80,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		String rawPassword = RandomStringUtils.random(pwdLength, pwdChars);
 		String password = passwordEncoder.encode(rawPassword);
 
-		Users entity = new Users();
+		User entity = new User();
 		entity.setLoginId(mailAddr);
 		entity.setPassword(password);
 		entity.setFirstName(firstName);

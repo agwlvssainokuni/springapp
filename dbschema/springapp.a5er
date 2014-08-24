@@ -61,7 +61,7 @@ ShowTag=1
 ShowCommonAttributes=0
 
 [Entity]
-PName=users
+PName=user
 LName=利用者
 Comment=
 TableOption=
@@ -79,11 +79,11 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192704
+ModifiedDateTime=20140824200813
 Position="SPRINGAPP",500,500
 
 [Entity]
-PName=signup_requests
+PName=signup_request
 LName=利用申請
 Comment=
 TableOption=
@@ -100,11 +100,11 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192722
+ModifiedDateTime=20140824200819
 Position="SPRINGAPP",1500,500
 
 [Entity]
-PName=async_procs
+PName=async_proc
 LName=非同期処理
 Comment=
 TableOption=
@@ -125,11 +125,11 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192621
+ModifiedDateTime=20140824200759
 Position="非同期処理",500,500
 
 [Entity]
-PName=mail_templates
+PName=mail_template
 LName=メールテンプレート
 Comment=
 TableOption=
@@ -144,11 +144,11 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192525
+ModifiedDateTime=20140824200714
 Position="メールテンプレート",500,500
 
 [Entity]
-PName=mail_template_addresses
+PName=mail_template_address
 LName=メールテンプレート宛先
 Comment=
 TableOption=
@@ -164,12 +164,12 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192540
+ModifiedDateTime=20140824200721
 Position="メールテンプレート",1500,500
 
 [Relation]
-Entity1=mail_templates
-Entity2=mail_template_addresses
+Entity1=mail_template
+Entity2=mail_template_address
 RelationType1=1
 RelationType2=3
 Fields1=id
@@ -188,7 +188,7 @@ TermPos1=R
 TermPos2=R
 
 [Entity]
-PName=mail_template_texts
+PName=mail_template_text
 LName=メールテンプレート文面
 Comment=
 TableOption=
@@ -205,12 +205,12 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615192551
+ModifiedDateTime=20140824200725
 Position="メールテンプレート",1500,900
 
 [Relation]
-Entity1=mail_templates
-Entity2=mail_template_texts
+Entity1=mail_template
+Entity2=mail_template_text
 RelationType1=1
 RelationType2=3
 Fields1=id

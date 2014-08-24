@@ -19,29 +19,29 @@
 			targetProject="common/src/main/java" />
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
 			type="XMLMAPPER" targetProject="common/src/main/java" />
-		<table tableName="users">
+		<table tableName="user">
 			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="signup_requests">
+		<table tableName="signup_request">
 			<columnOverride column="applied_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="mail_templates">
+		<table tableName="mail_template">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="mail_template_addresses">
+		<table tableName="mail_template_address">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="mail_template_texts">
+		<table tableName="mail_template_text">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="async_procs">
+		<table tableName="async_proc">
 			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="invoked_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="started_at" javaType="org.joda.time.LocalDateTime" />

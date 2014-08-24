@@ -19,7 +19,7 @@ package cherry.spring.admin.app.service.secure.asyncproc;
 import java.util.List;
 
 import cherry.spring.common.db.BaseDto;
-import cherry.spring.common.db.gen.dto.AsyncProcs;
+import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.lib.paginate.PageSet;
 
 public interface AsyncProcService {
@@ -32,7 +32,7 @@ public interface AsyncProcService {
 
 		private PageSet pageSet;
 
-		private List<AsyncProcs> asyncProcList;
+		private List<AsyncProc> asyncProcList;
 
 		public PageSet getPageSet() {
 			return pageSet;
@@ -42,11 +42,11 @@ public interface AsyncProcService {
 			this.pageSet = pageSet;
 		}
 
-		public List<AsyncProcs> getAsyncProcList() {
+		public List<AsyncProc> getAsyncProcList() {
 			return asyncProcList;
 		}
 
-		public void setAsyncProcList(List<AsyncProcs> asyncProcList) {
+		public void setAsyncProcList(List<AsyncProc> asyncProcList) {
 			this.asyncProcList = asyncProcList;
 		}
 	}

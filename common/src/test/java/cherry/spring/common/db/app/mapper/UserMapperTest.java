@@ -30,8 +30,8 @@ import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import cherry.spring.common.db.gen.dto.Users;
-import cherry.spring.common.db.gen.mapper.UsersMapper;
+import cherry.spring.common.db.gen.dto.User;
+import cherry.spring.common.db.gen.mapper.UserMapper;
 
 public class UserMapperTest {
 
@@ -41,20 +41,20 @@ public class UserMapperTest {
 		try {
 
 			String loginId = "user00@example.com";
-			UserMapper mapper = getBean(UserMapper.class);
-			Users entity = newUser(loginId, encode("password"), "firstName",
+			UserMapper2 mapper = getBean(UserMapper2.class);
+			User entity = newUser(loginId, encode("password"), "firstName",
 					"lastName");
 			assertNull(entity.getId());
 			assertEquals(1, mapper.createUser(entity));
 			assertNotNull(entity.getId());
 			ids.add(entity.getId());
 
-			assertNotNull(getBean(UsersMapper.class).selectByPrimaryKey(
+			assertNotNull(getBean(UserMapper.class).selectByPrimaryKey(
 					entity.getId()));
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -65,14 +65,14 @@ public class UserMapperTest {
 		try {
 
 			String loginId = "user00@example.com";
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 
 			assertEquals(0,
 					mapper.changePassword(loginId, encode("newPassword")));
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -83,8 +83,8 @@ public class UserMapperTest {
 		try {
 
 			String loginId = "user00@example.com";
-			UserMapper mapper = getBean(UserMapper.class);
-			Users entity = newUser(loginId, encode("oldPasswor"), "firstName",
+			UserMapper2 mapper = getBean(UserMapper2.class);
+			User entity = newUser(loginId, encode("oldPasswor"), "firstName",
 					"lastName");
 			assertEquals(1, mapper.createUser(entity));
 			ids.add(entity.getId());
@@ -92,14 +92,14 @@ public class UserMapperTest {
 			assertEquals(1,
 					mapper.changePassword(loginId, encode("newPassword")));
 
-			Users user = getBean(UsersMapper.class).selectByPrimaryKey(
+			User user = getBean(UserMapper.class).selectByPrimaryKey(
 					entity.getId());
 			assertTrue(getBean(PasswordEncoder.class).matches("newPassword",
 					user.getPassword()));
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -109,15 +109,15 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			UserCondition cond = new UserCondition();
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -127,23 +127,23 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
 			}
 
 			UserCondition cond = new UserCondition();
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -153,9 +153,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -167,14 +167,14 @@ public class UserMapperTest {
 			cond.setRegisteredTo(LocalDateTime.now());
 			cond.setFirstName("%");
 			cond.setLastName("%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -184,9 +184,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -194,14 +194,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLoginId("user%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -211,9 +211,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -221,14 +221,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLoginId("user1%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -238,9 +238,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -248,13 +248,13 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLoginId("users%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -264,9 +264,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -274,14 +274,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredFrom(LocalDateTime.now().minusMinutes(1));
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -291,9 +291,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -301,13 +301,13 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredFrom(LocalDateTime.now().plusMinutes(1));
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -317,9 +317,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -327,14 +327,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredTo(LocalDateTime.now().plusMinutes(1));
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -344,9 +344,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -354,13 +354,13 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setRegisteredTo(LocalDateTime.now().minusMinutes(1));
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -370,9 +370,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -380,14 +380,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("first%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -397,9 +397,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -407,14 +407,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("first1%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -424,9 +424,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -434,13 +434,13 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setFirstName("firsts%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -450,9 +450,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -460,14 +460,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("last%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(10, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -477,9 +477,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -487,14 +487,14 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("last1%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertFalse(list.isEmpty());
 			assertEquals(1, list.size());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -504,9 +504,9 @@ public class UserMapperTest {
 		List<Integer> ids = new ArrayList<>();
 		try {
 
-			UserMapper mapper = getBean(UserMapper.class);
+			UserMapper2 mapper = getBean(UserMapper2.class);
 			for (int i = 0; i < 10; i++) {
-				Users entity = newUser("user" + i + "@example.com", "password",
+				User entity = newUser("user" + i + "@example.com", "password",
 						"first" + i + "name", "last" + i + "name");
 				mapper.createUser(entity);
 				ids.add(entity.getId());
@@ -514,13 +514,13 @@ public class UserMapperTest {
 
 			UserCondition cond = new UserCondition();
 			cond.setLastName("lasts%");
-			List<Users> list = mapper.searchUsers(cond, 100, 0);
+			List<User> list = mapper.searchUsers(cond, 100, 0);
 			assertNotNull(list);
 			assertTrue(list.isEmpty());
 
 		} finally {
 			for (Integer id : ids) {
-				getBean(UsersMapper.class).deleteByPrimaryKey(id);
+				getBean(UserMapper.class).deleteByPrimaryKey(id);
 			}
 		}
 	}
@@ -529,9 +529,9 @@ public class UserMapperTest {
 		return getBean(PasswordEncoder.class).encode(rawPassword);
 	}
 
-	private Users newUser(String loginId, String password, String firstName,
+	private User newUser(String loginId, String password, String firstName,
 			String lastName) {
-		Users entity = new Users();
+		User entity = new User();
 		entity.setLoginId(loginId);
 		entity.setPassword(password);
 		entity.setFirstName(firstName);

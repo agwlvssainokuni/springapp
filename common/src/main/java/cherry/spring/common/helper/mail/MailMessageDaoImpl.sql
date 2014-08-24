@@ -7,8 +7,8 @@ SELECT
 	B.subject   AS subject,
 	B.body      AS body
 FROM
-	mail_templates AS A
-	JOIN mail_template_texts AS B
+	mail_template AS A
+	JOIN mail_template_text AS B
 	ON
 		B.mail_template_id = A.id
 		AND
@@ -27,8 +27,8 @@ SELECT
 	C.rcpt_type AS rcpt_type,
 	C.mail_addr AS mail_addr
 FROM
-	mail_templates AS A
-	LEFT OUTER JOIN mail_template_addresses AS C
+	mail_template AS A
+	LEFT OUTER JOIN mail_template_address AS C
 	ON
 		C.mail_template_id = A.id
 		AND

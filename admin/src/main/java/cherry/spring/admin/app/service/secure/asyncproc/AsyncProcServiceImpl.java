@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.app.mapper.AsyncProcMapper;
-import cherry.spring.common.db.gen.dto.AsyncProcs;
+import cherry.spring.common.db.app.mapper.AsyncProcMapper2;
+import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 
@@ -31,7 +31,7 @@ import cherry.spring.common.lib.paginate.Paginator;
 public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Autowired
-	private AsyncProcMapper asyncProcMapper;
+	private AsyncProcMapper2 asyncProcMapper;
 
 	@Autowired
 	private Paginator paginator;
@@ -43,7 +43,7 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 		int count = asyncProcMapper.countAsyncProc();
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
-		List<AsyncProcs> list = asyncProcMapper.searchAsyncProc(pageSz, offset);
+		List<AsyncProc> list = asyncProcMapper.searchAsyncProc(pageSz, offset);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
