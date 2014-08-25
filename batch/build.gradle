@@ -4,7 +4,7 @@ mainClassName = "cherry.spring.batch.tools.Main"
 
 ext {
 	versionSpring = "4.0.6.RELEASE"
-	versionLombok = "1.14.2"
+	versionLombok = "1.14.4"
 	versionJunit = "4.11"
 	versionMockito = "1.9.5"
 }
