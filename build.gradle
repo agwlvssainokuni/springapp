@@ -69,36 +69,39 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 	it.dependsOn ":batch:assembleDelivery"
 	it.dependsOn ":batch:installApp"
 
-	for (String dir : ["admin", "entree"]) {
-		it.into("${dir}/app") {
-			from("${dir}/build/libs")
-			include "*.war"
-			rename {
-				if (project.hasProperty("appendix")) {
-					it.replace("-${version}", project.appendix)
-				} else {
-					it.replace("-${version}", "")
+	it.with(copySpec {
+
+		["admin", "entree"].each { dir ->
+			into("${dir}/app") {
+				from("${dir}/build/libs")
+				include "*.war"
+				rename {
+					if (project.hasProperty("appendix")) {
+						it.replace("-${version}", project.appendix)
+					} else {
+						it.replace("-${version}", "")
+					}
 				}
 			}
 		}
-	}
 
-	for (String dir : ["batch"]) {
-		it.into("${dir}") {
-			from("${dir}/build/install/${dir}")
-		}
-	}
-
-	for (String dir : ["admin", "entree", "batch"]) {
-		it.into("${dir}/conf") {
-			from("${dir}/build/resources/main") {
-				include "*.properties"
-				exclude "${dir}.properties"
-				exclude "log.properties"
-				rename { it + ".template" }
+		["batch"].each { dir ->
+			into("${dir}") {
+				from("${dir}/build/install/${dir}")
 			}
 		}
-		it.into("${dir}/log") {
+
+		["admin", "entree", "batch"].each { dir ->
+			into("${dir}/conf") {
+				from("${dir}/build/resources/main") {
+					include "*.properties"
+					exclude "${dir}.properties"
+					exclude "log.properties"
+					rename { it + ".template" }
+				}
+			}
+			into("${dir}/log") {
+			}
 		}
-	}
+	})
 }
