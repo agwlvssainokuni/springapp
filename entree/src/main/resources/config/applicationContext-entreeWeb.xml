@@ -84,7 +84,7 @@
 					</constructor-arg>
 					<property name="mobilePrefix" value="mobile/" />
 					<property name="tabletPrefix" value="mobile/" />
-					<property name="normalPrefix" value="mobile/" />
+					<property name="normalPrefix" value="normal/" />
 				</bean>
 				<bean
 					class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
