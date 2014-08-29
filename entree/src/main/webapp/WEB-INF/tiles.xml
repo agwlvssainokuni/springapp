@@ -25,4 +25,25 @@
 			value="/WEB-INF/tiles/mobile/secure/{1}.jsp" />
 	</definition>
 
+	<definition name="normal/base_unauth" template="/WEB-INF/tiles/normal/base_unauth.jsp" />
+	<definition name="normal/base_auth" template="/WEB-INF/tiles/normal/base_auth.jsp" />
+
+	<definition name="normal/login/index" extends="normal/base_unauth">
+		<put-attribute name="name" value="login/index" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/login/index.jsp" />
+	</definition>
+
+	<definition name="normal/signup/**" extends="normal/base_unauth">
+		<put-attribute name="name" value="signup/{1}" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/signup/{1}.jsp" />
+	</definition>
+
+	<definition name="normal/secure/**" extends="normal/base_auth">
+		<put-attribute name="name" value="secure/{1}" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/normal/secure/{1}.jsp" />
+	</definition>
+
 </tiles-definitions>
