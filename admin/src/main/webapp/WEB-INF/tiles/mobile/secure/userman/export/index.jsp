@@ -30,6 +30,7 @@
 				code="usermanExportForm.registeredTo" /></label>
 		<f:input path="registeredTo" cssErrorClass="error" />
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/userman/export/index.exportButton" />" />
+	<button type="submit">
+		<s:message code="secure/userman/export/index.exportButton" />
+	</button>
 </f:form>

@@ -65,8 +65,9 @@
 			<f:input path="firstName" cssErrorClass="error" />
 		</div>
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
-		<input type="submit" name="submit"
-			value="<s:message code="secure/userman/search/index.searchButton" />" />
+		<button type="submit">
+			<s:message code="secure/userman/search/index.searchButton" />
+		</button>
 	</f:form>
 </div>
 <c:if test="${resultIsNotEmpty}">

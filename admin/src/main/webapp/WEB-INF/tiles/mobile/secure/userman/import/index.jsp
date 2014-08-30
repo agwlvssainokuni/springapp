@@ -23,6 +23,7 @@
 		<label for="file"><s:message code="usermanImportForm.file" /></label>
 		<input id="file" name="file" type="file">
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/userman/import/index.importButton" />" />
+	<button type="submit">
+		<s:message code="secure/userman/import/index.importButton" />
+	</button>
 </f:form>

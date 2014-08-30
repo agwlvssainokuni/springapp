@@ -28,6 +28,7 @@
 		<label for="password"><s:message code="loginForm.password" /></label>
 		<f:password path="password" cssErrorClass="error" />
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="login/index.loginButton" />" />
+	<button type="submit">
+		<s:message code="login/index.loginButton" />
+	</button>
 </f:form>

@@ -15,7 +15,7 @@
 	<input id="plainText" type="password">
 </div>
 <div data-role="fieldcontain">
-	<button id="encodeButton" onclick="JavaScript:encode();">
+	<button id="encodeButton">
 		<s:message code="secure/pwdtool/index.encodeButton" />
 	</button>
 </div>
@@ -23,17 +23,19 @@
 	<input id="encodedText" type="text">
 </div>
 <script type="text/javascript">
-	function encode() {
-		$.ajax("<c:url value="/secure/pwdtool/encode" />", {
-			type : "POST",
-			data : {
-				"plainText" : $("#plainText").val(),
-				"${_csrf.parameterName}" : "${_csrf.token}"
-			},
-			dataType : "text",
-			success : function(data, textStatus, textStatus) {
-				$("#encodedText").val(data);
-			}
+	$(function() {
+		$("#encodeButton").click(function() {
+			$.ajax("<c:url value="/secure/pwdtool/encode" />", {
+				type : "POST",
+				data : {
+					"plainText" : $("#plainText").val(),
+					"${_csrf.parameterName}" : "${_csrf.token}"
+				},
+				dataType : "text",
+				success : function(data, textStatus, textStatus) {
+					$("#encodedText").val(data);
+				}
+			});
 		});
-	}
+	});
 </script>
