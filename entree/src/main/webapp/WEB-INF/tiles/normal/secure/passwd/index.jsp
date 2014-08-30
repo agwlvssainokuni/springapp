@@ -8,38 +8,59 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h2>
 	<s:message code="secure/passwd/index.message.0" />
-</h1>
+</h2>
 <s:hasBindErrors name="passwdForm">
-	<div class="error">
-		<f:errors path="passwdForm" element="div" />
-		<f:errors path="passwdForm.loginId" element="div" />
-		<f:errors path="passwdForm.password" element="div" />
-		<f:errors path="passwdForm.newPassword" element="div" />
-		<f:errors path="passwdForm.newPasswordConf" element="div" />
+	<div class="form-group has-error">
+		<div class="col-sm-9 col-sm-offset-3 help-block bg-danger">
+			<f:errors path="passwdForm" element="div" />
+			<f:errors path="passwdForm.loginId" element="div" />
+			<f:errors path="passwdForm.password" element="div" />
+			<f:errors path="passwdForm.newPassword" element="div" />
+			<f:errors path="passwdForm.newPasswordConf" element="div" />
+		</div>
 	</div>
 </s:hasBindErrors>
 <f:form servletRelativeAction="/secure/passwd/req" method="POST"
-	modelAttribute="passwdForm">
-	<div data-role="fieldcontain">
-		<label for="loginId"><s:message code="passwdForm.loginId" /></label>
-		<f:input path="loginId" cssErrorClass="error" />
+	modelAttribute="passwdForm" role="form" cssClass="form-horizontal">
+	<div class="form-group">
+		<label for="loginId" class="col-sm-3 control-label"><s:message
+				code="passwdForm.loginId" /></label>
+		<div class="col-sm-9">
+			<f:input path="loginId" cssClass="form-control"
+				cssErrorClass="form-control has-error" />
+		</div>
 	</div>
-	<div data-role="fieldcontain">
-		<label for="password"><s:message code="passwdForm.password" /></label>
-		<f:password path="password" cssErrorClass="error" />
+	<div class="form-group">
+		<label for="password" class="col-sm-3 control-label"><s:message
+				code="passwdForm.password" /></label>
+		<div class="col-sm-9">
+			<f:password path="password" cssClass="form-control"
+				cssErrorClass="form-control has-error" />
+		</div>
 	</div>
-	<div data-role="fieldcontain">
-		<label for="newPassword"><s:message
+	<div class="form-group">
+		<label for="newPassword" class="col-sm-3 control-label"><s:message
 				code="passwdForm.newPassword" /></label>
-		<f:password path="newPassword" cssErrorClass="error" />
+		<div class="col-sm-9">
+			<f:password path="newPassword" cssClass="form-control"
+				cssErrorClass="form-control has-error" />
+		</div>
 	</div>
-	<div data-role="fieldcontain">
-		<label for="newPasswordConf"><s:message
+	<div class="form-group">
+		<label for="newPasswordConf" class="col-sm-3 control-label"><s:message
 				code="passwdForm.newPasswordConf" /></label>
-		<f:password path="newPasswordConf" cssErrorClass="error" />
+		<div class="col-sm-9">
+			<f:password path="newPasswordConf" cssClass="form-control"
+				cssErrorClass="form-control has-error" />
+		</div>
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/passwd/index.changeButton" />" />
+	<div class="form-group">
+		<div class="col-sm-9 col-sm-offset-3">
+			<button class="btn btn-default btn-block" type="submit">
+				<s:message code="secure/passwd/index.changeButton" />
+			</button>
+		</div>
+	</div>
 </f:form>
