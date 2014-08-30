@@ -1,20 +1,18 @@
-*.class
+# Gradle
+.gradle
+build/
+gradle.properties
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Eclipse
+bin/
+.classpath
+.project
+.settings/
+.springBeans
 
+# misc
+.DS_Store
 *~
 *.swp
 *.zip
 *.tgz
-.DS_Store
-/.gradle
-/gradle-app.setting
-/gradle.properties
-/bin
-/.classpath
-/.project
-/.settings
-/build
