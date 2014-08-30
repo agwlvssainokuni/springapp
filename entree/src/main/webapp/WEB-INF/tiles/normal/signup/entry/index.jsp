@@ -8,21 +8,32 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
+<h2>
 	<s:message code="signup/entry/index.message.0" />
-</h1>
+</h2>
 <s:hasBindErrors name="signupEntryForm">
-	<div class="error">
-		<f:errors path="signupEntryForm" element="div" />
-		<f:errors path="signupEntryForm.email" element="div" />
+	<div class="form-group has-error">
+		<div class="col-sm-10 col-sm-offset-2 help-block bg-danger">
+			<f:errors path="signupEntryForm" element="div" />
+			<f:errors path="signupEntryForm.email" element="div" />
+		</div>
 	</div>
 </s:hasBindErrors>
 <f:form servletRelativeAction="/signup/req" method="POST"
-	modelAttribute="signupEntryForm">
-	<div data-role="fieldcontain">
-		<label for="email"><s:message code="signupEntryForm.email" /></label>
-		<f:input path="email" cssErrorClass="error" />
+	modelAttribute="signupEntryForm" role="form" cssClass="form-horizontal">
+	<div class="form-group">
+		<label for="email" class="col-sm-2 control-label"><s:message
+				code="signupEntryForm.email" /></label>
+		<div class="col-sm-10">
+			<f:input path="email" cssClass="form-control"
+				cssErrorClass="form-control has-error" />
+		</div>
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="signup/entry/index.entryButton" />" />
+	<div class="form-group">
+		<div class="col-sm-10 col-sm-offset-2">
+			<button class="btn btn-default btn-block" type="submit">
+				<s:message code="signup/entry/index.entryButton" />
+			</button>
+		</div>
+	</div>
 </f:form>
