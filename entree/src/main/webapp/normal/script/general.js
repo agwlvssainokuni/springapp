@@ -12,4 +12,6 @@ $(function() {
 		});
 	});
 
+	$("input.has-error").wrap("<div class='has-error'></div>");
+
 });

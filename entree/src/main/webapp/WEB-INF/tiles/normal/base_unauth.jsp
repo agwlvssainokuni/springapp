@@ -38,21 +38,23 @@
 <script type="text/javascript"
 	src="<c:url value="/normal/script/general.js" />"></script>
 </head>
-<body>
-	<div data-role="page">
-		<div data-role="header">
-			<h1>
-				<s:message code="base/common.title" />
-			</h1>
+<body role="document">
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="nav navbar-header">
+				<div class="navbar-brand">
+					<s:message code="base/common.title" />
+				</div>
+			</div>
 		</div>
-		<div data-role="content">
-			<tiles:insertAttribute name="content" />
-		</div>
-		<div data-role="footer">
-			<h1>
-				<s:message code="base/common.copyright" />
-			</h1>
-		</div>
+	</div>
+	<div class="container" role="main">
+		<tiles:insertAttribute name="content" />
+	</div>
+	<div class="container" role="main">
+		<address class="text-center">
+			<s:message code="base/common.copyright" />
+		</address>
 	</div>
 </body>
 </html>
