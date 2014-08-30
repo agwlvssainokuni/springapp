@@ -23,6 +23,7 @@
 		<label for="email"><s:message code="signupEntryForm.email" /></label>
 		<f:input path="email" cssErrorClass="error" />
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="signup/entry/index.entryButton" />" />
+	<button type="submit">
+		<s:message code="signup/entry/index.entryButton" />
+	</button>
 </f:form>

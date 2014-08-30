@@ -35,6 +35,7 @@
 				code="signupRegisterForm.firstName" /></label>
 		<f:input path="firstName" cssErrorClass="error" />
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="signup/register/index.registerButton" />" />
+	<button type="submit">
+		<s:message code="signup/register/index.registerButton" />
+	</button>
 </f:form>

@@ -40,6 +40,7 @@
 				code="passwdForm.newPasswordConf" /></label>
 		<f:password path="newPasswordConf" cssErrorClass="error" />
 	</div>
-	<input type="submit" name="submit"
-		value="<s:message code="secure/passwd/index.changeButton" />" />
+	<button type="submit">
+		<s:message code="secure/passwd/index.changeButton" />
+	</button>
 </f:form>
