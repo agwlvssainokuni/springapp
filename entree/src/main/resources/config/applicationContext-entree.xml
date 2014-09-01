@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
 	<context:property-placeholder location="classpath:entree.properties"
 		ignore-unresolvable="true" />
@@ -44,6 +46,21 @@
 		<property name="port" value="${entree.mail.port}" />
 		<property name="protocol" value="${entree.mail.protocol}" />
 		<property name="defaultEncoding" value="${entree.mail.encoding}" />
+	</bean>
+
+	<bean id="objectMapper"
+		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="modules">
+			<array>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</array>
+		</property>
+		<property name="featuresToDisable">
+			<array>
+				<util:constant
+					static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+			</array>
+		</property>
 	</bean>
 
 </beans>
