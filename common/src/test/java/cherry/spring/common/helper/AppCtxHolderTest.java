@@ -17,7 +17,7 @@
 package cherry.spring.common.helper;
 
 import static cherry.spring.common.AppCtxUtil.getAppCtx;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;

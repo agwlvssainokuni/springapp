@@ -16,7 +16,7 @@
 
 package cherry.spring.common.helper.crypto;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
