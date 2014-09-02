@@ -66,7 +66,7 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws IOException {
 		assert secretKey != null;
 		secKey = new SecretKeySpec(load(secretKey), keyAlgorithm);
 		if (initVector != null) {
