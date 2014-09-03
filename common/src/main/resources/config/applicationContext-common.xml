@@ -66,6 +66,7 @@
 		<property name="converters">
 			<set>
 				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
+				<bean class="cherry.spring.common.custom.converter.SecureStringConverter" />
 			</set>
 		</property>
 	</bean>
