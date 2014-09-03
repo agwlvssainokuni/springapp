@@ -25,18 +25,20 @@ import java.security.SecureRandom;
 import org.junit.Test;
 
 import cherry.spring.common.helper.crypto.VersioningStrategy.VersionedData;
+import cherry.spring.common.lib.util.RandomUtil;
 
 public class DefaultVersioningStrategyTest {
 
 	private SecureRandom random = new SecureRandom();
 
+	private RandomUtil randomUtil = new RandomUtil();
+
 	@Test
 	public void testEncodeAndDecode() {
 		DefaultVersioningStrategy strategy = new DefaultVersioningStrategy();
-		byte[] plain = new byte[4096];
 		for (int i = 0; i < 1000; i++) {
 			int version = random.nextInt();
-			random.nextBytes(plain);
+			byte[] plain = randomUtil.randomBytes(1024);
 			byte[] encoded = strategy.encode(plain, version);
 			assertThat(plain, is(not(encoded)));
 			VersionedData<byte[], Integer> vd = strategy.decode(encoded);

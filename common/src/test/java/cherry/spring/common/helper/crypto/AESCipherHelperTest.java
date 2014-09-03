@@ -19,29 +19,28 @@ package cherry.spring.common.helper.crypto;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.security.SecureRandom;
-import java.util.UUID;
-
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
+import cherry.spring.common.lib.util.RandomUtil;
+
 public class AESCipherHelperTest {
 
-	private SecureRandom random = new SecureRandom();
+	private RandomUtil randomUtil = new RandomUtil();
 
 	@Test
 	public void testDefault() throws Exception {
 
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			UUID plain = UUID.randomUUID();
-			byte[] enc = helper.encrypt(plain.toString().getBytes());
+			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
-			assertThat(dec, is(plain.toString().getBytes()));
+			assertThat(dec, is(plain));
 		}
 	}
 
@@ -50,15 +49,15 @@ public class AESCipherHelperTest {
 
 		AESCipherHelper helper = new AESCipherHelper();
 		helper.setAlgorithm("AES/CBC/PKCS5Padding");
-		helper.setSecretKey(new InMemoryResource(randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			UUID plain = UUID.randomUUID();
-			byte[] enc = helper.encrypt(plain.toString().getBytes());
+			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
-			assertThat(dec, is(plain.toString().getBytes()));
+			assertThat(dec, is(plain));
 		}
 	}
 
@@ -67,21 +66,15 @@ public class AESCipherHelperTest {
 
 		AESCipherHelper helper = new AESCipherHelper();
 		helper.setAlgorithm("AES/ECB/PKCS5Padding");
-		helper.setSecretKey(new InMemoryResource(randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			UUID plain = UUID.randomUUID();
-			byte[] enc = helper.encrypt(plain.toString().getBytes());
+			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
-			assertThat(dec, is(plain.toString().getBytes()));
+			assertThat(dec, is(plain));
 		}
-	}
-
-	private byte[] randomBytes(int size) {
-		byte[] buff = new byte[size];
-		random.nextBytes(buff);
-		return buff;
 	}
 
 }

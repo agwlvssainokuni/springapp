@@ -22,16 +22,17 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
+import cherry.spring.common.lib.util.RandomUtil;
+
 public class VersionedCipherHelperTest {
 
-	private SecureRandom random = new SecureRandom();
+	private RandomUtil randomUtil = new RandomUtil();
 
 	@Test
 	public void simpleEncryptAndDecrypt() throws Exception {
@@ -44,8 +45,7 @@ public class VersionedCipherHelperTest {
 		helper.setVersioningStrategy(new DefaultVersioningStrategy());
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = new byte[4096];
-			random.nextBytes(plain);
+			byte[] plain = randomUtil.randomBytes(1024);
 			byte[] crypto = helper.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decrypt(crypto), is(plain));
@@ -66,8 +66,7 @@ public class VersionedCipherHelperTest {
 		helper1.setCipherHelperMap(map);
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = new byte[4096];
-			random.nextBytes(plain);
+			byte[] plain = randomUtil.randomBytes(1024);
 			byte[] crypto = helper0.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(crypto, is(not(helper1.encrypt(plain))));
@@ -83,8 +82,7 @@ public class VersionedCipherHelperTest {
 		helper0.setDefaultVersion(1);
 		helper0.setCipherHelperMap(map);
 		try {
-			byte[] plain = new byte[4096];
-			random.nextBytes(plain);
+			byte[] plain = randomUtil.randomBytes(1024);
 			helper0.encrypt(plain);
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
@@ -108,8 +106,7 @@ public class VersionedCipherHelperTest {
 		helper1.setCipherHelperMap(map1);
 
 		try {
-			byte[] plain = new byte[4096];
-			random.nextBytes(plain);
+			byte[] plain = randomUtil.randomBytes(1024);
 			byte[] crypto = helper1.encrypt(plain);
 			assertThat(helper1.decrypt(crypto), is(plain));
 
@@ -130,13 +127,9 @@ public class VersionedCipherHelperTest {
 	}
 
 	private CipherHelper createAESCipherHelper() throws IOException {
-		byte[] key = new byte[16];
-		byte[] iv = new byte[16];
-		random.nextBytes(key);
-		random.nextBytes(iv);
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(key));
-		helper.setInitVector(new InMemoryResource(iv));
+		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 		return helper;
 	}
