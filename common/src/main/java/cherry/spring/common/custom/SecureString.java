@@ -47,7 +47,7 @@ public class SecureString implements Serializable {
 		return encoder;
 	}
 
-	public static SecureString plainValudOf(String s) {
+	public static SecureString plainValueOf(String s) {
 		return new SecureString(s, null);
 	}
 
