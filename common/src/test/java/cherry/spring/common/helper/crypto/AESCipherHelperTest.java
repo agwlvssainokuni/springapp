@@ -77,4 +77,40 @@ public class AESCipherHelperTest {
 		}
 	}
 
+	@Test
+	public void testUsingKeyCipherHelper() throws Exception {
+
+		byte[] key = randomUtil.randomBytes(16);
+		byte[] iv = randomUtil.randomBytes(16);
+
+		AESCipherHelper helper0 = new AESCipherHelper();
+		helper0.setSecretKey(new InMemoryResource(key));
+		helper0.setInitVector(new InMemoryResource(iv));
+		helper0.afterPropertiesSet();
+
+		AESCipherHelper keyCipherHelper = new AESCipherHelper();
+		keyCipherHelper.setSecretKey(new InMemoryResource(randomUtil
+				.randomBytes(16)));
+		keyCipherHelper.setInitVector(new InMemoryResource(randomUtil
+				.randomBytes(16)));
+		keyCipherHelper.afterPropertiesSet();
+
+		AESCipherHelper helper1 = new AESCipherHelper();
+		helper1.setSecretKey(new InMemoryResource(keyCipherHelper.encrypt(key)));
+		helper1.setInitVector(new InMemoryResource(keyCipherHelper.encrypt(iv)));
+		helper1.setKeyCipherHelper(keyCipherHelper);
+		helper1.afterPropertiesSet();
+
+		for (int i = 0; i < 1000; i++) {
+			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] enc0 = helper0.encrypt(plain);
+			byte[] enc1 = helper1.encrypt(plain);
+			assertThat(enc1, is(enc0));
+			byte[] dec0 = helper0.decrypt(enc0);
+			byte[] dec1 = helper1.decrypt(enc1);
+			assertThat(dec0, is(plain));
+			assertThat(dec1, is(plain));
+		}
+	}
+
 }
