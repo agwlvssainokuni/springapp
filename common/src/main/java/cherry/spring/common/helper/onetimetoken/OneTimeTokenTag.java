@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class OneTimeTokenTag {
 
-	public static String newToken(HttpServletRequest request) {
+	public static OneTimeToken newToken(HttpServletRequest request) {
 		return getBeanByClass(OneTimeTokenIssuer.class).newToken(request);
 	}
 

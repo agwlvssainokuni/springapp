@@ -21,7 +21,7 @@
 		<name>onetimetoken</name>
 		<function-class>cherry.spring.common.helper.onetimetoken.OneTimeTokenTag</function-class>
 		<function-signature>
-			java.lang.String newToken(javax.servlet.http.HttpServletRequest)
+			cherry.spring.common.helper.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
 		</function-signature>
 	</function>
 

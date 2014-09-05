@@ -20,6 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface OneTimeTokenIssuer {
 
-	String newToken(HttpServletRequest request);
+	OneTimeToken newToken(HttpServletRequest request);
 
 }

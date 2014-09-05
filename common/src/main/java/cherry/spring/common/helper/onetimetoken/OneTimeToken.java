@@ -16,27 +16,30 @@
 
 package cherry.spring.common.helper.onetimetoken;
 
-import java.util.UUID;
+import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
+public class OneTimeToken implements Serializable {
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+	private static final long serialVersionUID = 1L;
 
-@Component
-public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
-
-	@Value("${common.helper.onetimetoken.name}")
 	private String name;
 
-	@Override
-	public OneTimeToken newToken(HttpServletRequest request) {
-		String value = UUID.randomUUID().toString();
-		request.getSession().setAttribute(name, value);
-		OneTimeToken token = new OneTimeToken();
-		token.setName(name);
-		token.setValue(value);
-		return token;
+	private String value;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }
