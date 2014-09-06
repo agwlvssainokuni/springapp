@@ -21,9 +21,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
 
 	@Value("${common.helper.onetimetoken.name}")

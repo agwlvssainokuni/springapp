@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 public class OneTimeTokenValidatorImpl implements OneTimeTokenValidator {
 
 	@Value("${common.helper.onetimetoken.name}")
