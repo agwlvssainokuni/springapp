@@ -3,7 +3,7 @@ apply plugin: "application"
 mainClassName = "cherry.spring.batch.tools.Main"
 
 ext {
-	versionSpring = "4.0.6.RELEASE"
+	versionSpring = "4.1.0.RELEASE"
 	versionLombok = "1.14.4"
 	versionJunit = "4.11"
 	versionMockito = "1.9.5"
