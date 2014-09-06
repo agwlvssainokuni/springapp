@@ -17,6 +17,12 @@
 					class="cherry.spring.common.custom.mybatis.JodaLocalDateTimeTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.JodaDateTimeTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.SecureStringTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.SecureLongTypeHandler" />
+				<bean
+					class="cherry.spring.common.custom.mybatis.SecureBigIntegerTypeHandler" />
+				<bean
+					class="cherry.spring.common.custom.mybatis.SecureBigDecimalTypeHandler" />
 			</list>
 		</property>
 	</bean>

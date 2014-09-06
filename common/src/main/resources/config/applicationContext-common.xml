@@ -66,7 +66,7 @@
 		<property name="converters">
 			<set>
 				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
-				<bean class="cherry.spring.common.custom.converter.SecureStringConverter" />
+				<bean class="cherry.spring.common.custom.converter.SecureTypeConverter" />
 			</set>
 		</property>
 	</bean>
@@ -83,6 +83,42 @@
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureStringHelper">
 				<property name="charset" value="UTF-8" />
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureInteger"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureIntegerHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureLong"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureLongHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureBigInteger"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureBigIntegerHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureBigDecimal"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureBigDecimalHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
