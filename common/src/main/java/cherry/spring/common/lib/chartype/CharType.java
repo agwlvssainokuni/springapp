@@ -49,14 +49,6 @@ public class CharType {
 		return of(codePoint) == BASIC_LATIN && isLowerCase(codePoint);
 	}
 
-	public static boolean isMinus(int codePoint) {
-		return codePoint == '-';
-	}
-
-	public static boolean isUnderscore(int codePoint) {
-		return codePoint == '_';
-	}
-
 	public static boolean isFullSpace(int codePoint) {
 		return of(codePoint) != BASIC_LATIN && isWhitespace(codePoint);
 	}
@@ -78,17 +70,32 @@ public class CharType {
 	}
 
 	public static boolean isFullHiragana(int codePoint) {
-		return of(codePoint) == HIRAGANA || codePoint == 'ー'
-				|| codePoint == '・';
+		// based on Unicode 3.2
+		return of(codePoint) == HIRAGANA || // \u3040 - \u309F
+				// import from KATAKANA (\u30A0 - \u30FF)
+				codePoint == '\u30A0' || // '゠' from KATAKANA (not in Win31J)
+				codePoint == '\u30FB' || // '・' from KATAKANA
+				codePoint == '\u30FC' || // 'ー' from KATAKANA
+				// \u30FD 'ヽ' and \u30FE 'ヾ' if iteration mark for KATAKANA
+				codePoint == '\u30FF'; // 'ヿ' from KATAKANA (not in Win31J)
 	}
 
 	public static boolean isFullKatakana(int codePoint) {
-		return of(codePoint) == KATAKANA
-				|| of(codePoint) == KATAKANA_PHONETIC_EXTENSIONS;
+		// based on Unicode 3.2
+		return of(codePoint) == KATAKANA || // \u30A0 - \u30FF
+				of(codePoint) == KATAKANA_PHONETIC_EXTENSIONS || // \u31F0-\u31FF
+				// import from HIRAGANA (\u3040 - \u309F)
+				// \u3040, \u3097, \u3098 is reserved
+				codePoint == '\u3099' || // MARK from HIRAGANA (not in Win31J)
+				codePoint == '\u309A' || // MARK from HIRAGANA (not in Win31J)
+				codePoint == '\u309B' || // '゛' from HIRAGANA
+				codePoint == '\u309C' || // '゜' from HIRAGANA
+				// \u309D 'ゝ' and \u309E 'ゞ' is iteration mark for HIRAGANA
+				codePoint == '\u309F'; // 'ゟ' from HIRAGANA (not in Win31J)
 	}
 
-	public static boolean isFullMinus(int codePoint) {
-		return codePoint == '−';
+	public static boolean isHalfKatakana(int codePoint) {
+		return '\uFF61' <= codePoint && codePoint <= '\uFF9F';
 	}
 
 }
