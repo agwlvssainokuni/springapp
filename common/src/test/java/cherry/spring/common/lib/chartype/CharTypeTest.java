@@ -152,8 +152,6 @@ public class CharTypeTest {
 	@Test
 	public void testIsFullAlpha() {
 		for (Entry entry : tableReader.getEntries()) {
-			System.out.print((char)entry.getUnicode());
-			System.out.println(entry.getDescription());
 			int win31j = entry.getWin31j();
 			if (0x8260 <= win31j && 0x8279 >= win31j) {// Ａ-Ｚ
 				assertThat(CharType.isFullAlpha(entry.getUnicode()), is(true));
@@ -185,6 +183,74 @@ public class CharTypeTest {
 				assertThat(CharType.isFullLower(entry.getUnicode()), is(true));
 			} else {
 				assertThat(CharType.isFullLower(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullHiragana() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			if (0x829F <= win31j && 0x82F1 >= win31j) {
+				assertThat(CharType.isFullHiragana(entry.getUnicode()),
+						is(true));
+			} else {
+				switch (win31j) {
+				case 0x8145: // '・'
+				case 0x814A: // '゛'
+				case 0x814B: // '゜'
+				case 0x8154: // 'ゝ'
+				case 0x8155: // 'ゞ'
+				case 0x815B: // 'ー'
+					assertThat(CharType.isFullHiragana(entry.getUnicode()),
+							is(true));
+					break;
+				default:
+					assertThat(CharType.isFullHiragana(entry.getUnicode()),
+							is(false));
+					break;
+				}
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullKatakana() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			if (0x8340 <= win31j && 0x8396 >= win31j) {
+				assertThat(CharType.isFullKatakana(entry.getUnicode()),
+						is(true));
+			} else {
+				switch (win31j) {
+				case 0x8145: // '・'
+				case 0x814A: // '゛'
+				case 0x814B: // '゜'
+				case 0x8152: // 'ヽ'
+				case 0x8153: // 'ヾ'
+				case 0x815B: // 'ー'
+					assertThat(CharType.isFullKatakana(entry.getUnicode()),
+							is(true));
+					break;
+				default:
+					assertThat(CharType.isFullKatakana(entry.getUnicode()),
+							is(false));
+					break;
+				}
+			}
+		}
+	}
+
+	@Test
+	public void testIsHalfKatakana() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			if (0x00A1 <= win31j && 0x00DF >= win31j) {
+				assertThat(CharType.isHalfKatakana(entry.getUnicode()),
+						is(true));
+			} else {
+				assertThat(CharType.isHalfKatakana(entry.getUnicode()),
+						is(false));
 			}
 		}
 	}
