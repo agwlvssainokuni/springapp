@@ -21,7 +21,7 @@ import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 import static java.lang.Character.isWhitespace;
-import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
+import static java.lang.Character.UnicodeBlock.*;
 import static java.lang.Character.UnicodeBlock.HIRAGANA;
 import static java.lang.Character.UnicodeBlock.KATAKANA;
 import static java.lang.Character.UnicodeBlock.KATAKANA_PHONETIC_EXTENSIONS;
@@ -54,19 +54,23 @@ public class CharType {
 	}
 
 	public static boolean isFullNumeric(int codePoint) {
-		return of(codePoint) != BASIC_LATIN && isDigit(codePoint);
+		return of(codePoint) == HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isDigit(codePoint);
 	}
 
 	public static boolean isFullAlpha(int codePoint) {
-		return of(codePoint) != BASIC_LATIN && isAlphabetic(codePoint);
+		return of(codePoint) == HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isAlphabetic(codePoint) && !isHalfKatakana(codePoint);
 	}
 
 	public static boolean isFullUpper(int codePoint) {
-		return of(codePoint) != BASIC_LATIN && isUpperCase(codePoint);
+		return of(codePoint) == HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isUpperCase(codePoint) && !isHalfKatakana(codePoint);
 	}
 
 	public static boolean isFullLower(int codePoint) {
-		return of(codePoint) != BASIC_LATIN && isLowerCase(codePoint);
+		return of(codePoint) == HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isLowerCase(codePoint) && !isHalfKatakana(codePoint);
 	}
 
 	public static boolean isFullHiragana(int codePoint) {

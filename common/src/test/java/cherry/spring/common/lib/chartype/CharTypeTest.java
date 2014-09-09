@@ -125,4 +125,68 @@ public class CharTypeTest {
 		}
 	}
 
+	@Test
+	public void testIsFullNumeric() {
+		for (Entry entry : tableReader.getEntries()) {
+			switch (entry.getWin31j()) {
+			case 0x824F: // FULLWIDTH DIGIT ZERO "０"
+			case 0x8250: // FULLWIDTH DIGIT ZERO "１"
+			case 0x8251: // FULLWIDTH DIGIT ZERO "２"
+			case 0x8252: // FULLWIDTH DIGIT ZERO "３"
+			case 0x8253: // FULLWIDTH DIGIT ZERO "４"
+			case 0x8254: // FULLWIDTH DIGIT ZERO "５"
+			case 0x8255: // FULLWIDTH DIGIT ZERO "６"
+			case 0x8256: // FULLWIDTH DIGIT ZERO "７"
+			case 0x8257: // FULLWIDTH DIGIT ZERO "８"
+			case 0x8258: // FULLWIDTH DIGIT ZERO "９"
+				assertThat(CharType.isFullNumeric(entry.getUnicode()), is(true));
+				break;
+			default:
+				assertThat(CharType.isFullNumeric(entry.getUnicode()),
+						is(false));
+				break;
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullAlpha() {
+		for (Entry entry : tableReader.getEntries()) {
+			System.out.print((char)entry.getUnicode());
+			System.out.println(entry.getDescription());
+			int win31j = entry.getWin31j();
+			if (0x8260 <= win31j && 0x8279 >= win31j) {// Ａ-Ｚ
+				assertThat(CharType.isFullAlpha(entry.getUnicode()), is(true));
+			} else if (0x8281 <= win31j && 0x829A >= win31j) {// ａ-ｚ
+				assertThat(CharType.isFullAlpha(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isFullAlpha(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullUpper() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			if (0x8260 <= win31j && 0x8279 >= win31j) {// Ａ-Ｚ
+				assertThat(CharType.isFullUpper(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isFullUpper(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullLower() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			if (0x8281 <= win31j && 0x829A >= win31j) {// ａ-ｚ
+				assertThat(CharType.isFullLower(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isFullLower(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
 }
