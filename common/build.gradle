@@ -101,6 +101,7 @@ dependencies {
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
 	provided "org.projectlombok:lombok:${versionLombok}"
+	testRuntime "org.glassfish:javax.el:${versionJavaEl}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
