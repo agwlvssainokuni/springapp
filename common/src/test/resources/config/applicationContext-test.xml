@@ -22,4 +22,7 @@
 	<bean id="sqlExecutor" class="cherry.spring.common.helper.sql.SqlExecutorImpl" />
 	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
 
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
 </beans>
