@@ -49,4 +49,63 @@ public class CharTypeTest {
 			}
 		}
 	}
+
+	@Test
+	public void testIsNumeric() {
+		for (Entry entry : tableReader.getEntries()) {
+			switch (entry.getWin31j()) {
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				assertThat(CharType.isNumeric(entry.getUnicode()), is(true));
+				break;
+			default:
+				assertThat(CharType.isNumeric(entry.getUnicode()), is(false));
+				break;
+			}
+		}
+	}
+
+	@Test
+	public void testIsAlpha() {
+		for (Entry entry : tableReader.getEntries()) {
+			if ('A' <= entry.getWin31j() && 'Z' >= entry.getWin31j()) {
+				assertThat(CharType.isAlpha(entry.getUnicode()), is(true));
+			} else if ('a' <= entry.getWin31j() && 'z' >= entry.getWin31j()) {
+				assertThat(CharType.isAlpha(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isAlpha(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsUpper() {
+		for (Entry entry : tableReader.getEntries()) {
+			if ('A' <= entry.getWin31j() && 'Z' >= entry.getWin31j()) {
+				assertThat(CharType.isUpper(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isUpper(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsLower() {
+		for (Entry entry : tableReader.getEntries()) {
+			if ('a' <= entry.getWin31j() && 'z' >= entry.getWin31j()) {
+				assertThat(CharType.isLower(entry.getUnicode()), is(true));
+			} else {
+				assertThat(CharType.isLower(entry.getUnicode()), is(false));
+			}
+		}
+	}
+
 }
