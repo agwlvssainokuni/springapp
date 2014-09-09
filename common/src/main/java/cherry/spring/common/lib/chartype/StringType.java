@@ -29,6 +29,8 @@ import static cherry.spring.common.lib.chartype.CharType.isLower;
 import static cherry.spring.common.lib.chartype.CharType.isNumeric;
 import static cherry.spring.common.lib.chartype.CharType.isSpace;
 import static cherry.spring.common.lib.chartype.CharType.isUpper;
+import static java.lang.Character.codePointAt;
+import static java.lang.Character.isLowSurrogate;
 
 public class StringType {
 
@@ -108,12 +110,28 @@ public class StringType {
 		if (isValid(codePoint, mode)) {
 			return true;
 		}
-		for (int ch : acceptable) {
-			if (codePoint == ch) {
-				return true;
+		if (acceptable != null) {
+			for (int ch : acceptable) {
+				if (codePoint == ch) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	public static StringTypeResult validate(CharSequence seq, int mode,
+			int[] acceptable) {
+		for (int i = 0; i < seq.length(); i++) {
+			if (isLowSurrogate(seq.charAt(i))) {
+				continue;
+			}
+			if (isValid(codePointAt(seq, i), mode, acceptable)) {
+				continue;
+			}
+			return new StringTypeResult(false, i, codePointAt(seq, i));
+		}
+		return new StringTypeResult();
 	}
 
 }
