@@ -76,9 +76,6 @@ public class StringType {
 		if ((mode & LOWER) != 0 && isLower(codePoint)) {
 			return true;
 		}
-		if ((mode & SPACE) != 0 && isSpace(codePoint)) {
-			return true;
-		}
 		if ((mode & FULL_SPACE) != 0 && isFullSpace(codePoint)) {
 			return true;
 		}
