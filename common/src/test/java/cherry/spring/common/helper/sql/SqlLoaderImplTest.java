@@ -16,7 +16,6 @@
 
 package cherry.spring.common.helper.sql;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -24,17 +23,25 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * {@link SqlLoaderImpl} のテスト。
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SqlLoaderImplTest {
+
+	@Autowired
+	private SqlLoader sqlLoader;
 
 	@Test
 	public void DDLをファイルから読込む() throws IOException {
-		SqlLoader sqlLoader = getBean(SqlLoader.class);
 		Resource resource = new ClassPathResource("SqlLoaderImplTest.sql",
 				getClass());
 		Map<String, String> sqlmap = sqlLoader.load(resource);

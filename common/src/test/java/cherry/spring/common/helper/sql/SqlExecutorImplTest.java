@@ -16,7 +16,6 @@
 
 package cherry.spring.common.helper.sql;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -27,19 +26,29 @@ import java.io.StringReader;
 import javax.sql.DataSource;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * {@link SqlExecutorImpl} のテスト.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SqlExecutorImplTest {
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
+	private SqlExecutor executor;
 
 	@Test
 	public void DDLをファイルから読込んで実行する() throws IOException {
-		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = getBean(SqlExecutor.class);
 		Resource resource = new ClassPathResource("SqlExecutorImplTest.sql",
 				getClass());
 		try {
@@ -56,8 +65,6 @@ public class SqlExecutorImplTest {
 
 	@Test
 	public void 不正なSQLを実行する_エラー無視() throws IOException {
-		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = getBean(SqlExecutor.class);
 		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, true);
 			assertTrue(true);
@@ -69,8 +76,6 @@ public class SqlExecutorImplTest {
 
 	@Test
 	public void 不正なSQLを実行する_エラー通知() throws IOException {
-		DataSource dataSource = getBean(DataSource.class);
-		SqlExecutor executor = getBean(SqlExecutor.class);
 		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, false);
 			fail("例外が発生しないとNG");
