@@ -16,17 +16,23 @@
 
 package cherry.spring.common.custom.format;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
@@ -34,7 +40,12 @@ import org.springframework.validation.DataBinder;
 
 import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class DateTimeFormatTest {
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@Test
 	public void testNone() throws BindException {
@@ -184,7 +195,7 @@ public class DateTimeFormatTest {
 
 		Form form = new Form();
 		DataBinder binder = new DataBinder(form, "target");
-		binder.setConversionService(getBean(ConversionService.class));
+		binder.setConversionService(conversionService);
 		binder.bind(new MutablePropertyValues(paramMap));
 
 		BindingResult binding = BindingResultUtils.getBindingResult(
@@ -192,6 +203,8 @@ public class DateTimeFormatTest {
 		return (String) binding.getFieldValue(name);
 	}
 
+	@Getter
+	@Setter
 	public static class Form {
 
 		@CustomDateTimeFormat(value = Range.NONE)
@@ -211,54 +224,6 @@ public class DateTimeFormatTest {
 
 		@CustomDateTimeFormat(value = Range.TO, optional = false)
 		private DateTime attrToReq;
-
-		public DateTime getAttrNone() {
-			return attrNone;
-		}
-
-		public void setAttrNone(DateTime attrNone) {
-			this.attrNone = attrNone;
-		}
-
-		public DateTime getAttrNoneReq() {
-			return attrNoneReq;
-		}
-
-		public void setAttrNoneReq(DateTime attrNoneReq) {
-			this.attrNoneReq = attrNoneReq;
-		}
-
-		public DateTime getAttrFrom() {
-			return attrFrom;
-		}
-
-		public void setAttrFrom(DateTime attrFrom) {
-			this.attrFrom = attrFrom;
-		}
-
-		public DateTime getAttrFromReq() {
-			return attrFromReq;
-		}
-
-		public void setAttrFromReq(DateTime attrFromReq) {
-			this.attrFromReq = attrFromReq;
-		}
-
-		public DateTime getAttrTo() {
-			return attrTo;
-		}
-
-		public void setAttrTo(DateTime attrTo) {
-			this.attrTo = attrTo;
-		}
-
-		public DateTime getAttrToReq() {
-			return attrToReq;
-		}
-
-		public void setAttrToReq(DateTime attrToReq) {
-			this.attrToReq = attrToReq;
-		}
 	}
 
 }

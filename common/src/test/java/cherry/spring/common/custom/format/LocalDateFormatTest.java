@@ -16,16 +16,22 @@
 
 package cherry.spring.common.custom.format;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
@@ -33,7 +39,12 @@ import org.springframework.validation.DataBinder;
 
 import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class LocalDateFormatTest {
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@Test
 	public void testNone() throws BindException {
@@ -84,7 +95,7 @@ public class LocalDateFormatTest {
 
 		Form form = new Form();
 		DataBinder binder = new DataBinder(form, "target");
-		binder.setConversionService(getBean(ConversionService.class));
+		binder.setConversionService(conversionService);
 		binder.bind(new MutablePropertyValues(paramMap));
 
 		BindingResult binding = BindingResultUtils.getBindingResult(
@@ -92,6 +103,8 @@ public class LocalDateFormatTest {
 		return (String) binding.getFieldValue(name);
 	}
 
+	@Getter
+	@Setter
 	public static class Form {
 
 		@CustomDateTimeFormat(value = Range.NONE)
@@ -111,54 +124,6 @@ public class LocalDateFormatTest {
 
 		@CustomDateTimeFormat(value = Range.TO, optional = false)
 		private LocalDate attrToReq;
-
-		public LocalDate getAttrNone() {
-			return attrNone;
-		}
-
-		public void setAttrNone(LocalDate attrNone) {
-			this.attrNone = attrNone;
-		}
-
-		public LocalDate getAttrNoneReq() {
-			return attrNoneReq;
-		}
-
-		public void setAttrNoneReq(LocalDate attrNoneReq) {
-			this.attrNoneReq = attrNoneReq;
-		}
-
-		public LocalDate getAttrFrom() {
-			return attrFrom;
-		}
-
-		public void setAttrFrom(LocalDate attrFrom) {
-			this.attrFrom = attrFrom;
-		}
-
-		public LocalDate getAttrFromReq() {
-			return attrFromReq;
-		}
-
-		public void setAttrFromReq(LocalDate attrFromReq) {
-			this.attrFromReq = attrFromReq;
-		}
-
-		public LocalDate getAttrTo() {
-			return attrTo;
-		}
-
-		public void setAttrTo(LocalDate attrTo) {
-			this.attrTo = attrTo;
-		}
-
-		public LocalDate getAttrToReq() {
-			return attrToReq;
-		}
-
-		public void setAttrToReq(LocalDate attrToReq) {
-			this.attrToReq = attrToReq;
-		}
 	}
 
 }

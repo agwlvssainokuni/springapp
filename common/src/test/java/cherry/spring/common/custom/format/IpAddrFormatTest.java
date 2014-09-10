@@ -16,7 +16,6 @@
 
 package cherry.spring.common.custom.format;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
@@ -31,10 +30,17 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.format.Printer;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -44,7 +50,12 @@ import org.springframework.validation.DataBinder;
 import cherry.spring.common.custom.format.IpAddrFormat.Version;
 import cherry.spring.common.lib.ipaddr.IpAddrUtil;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class IpAddrFormatTest {
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@Test
 	public void testInetAddrComp() throws BindException {
@@ -389,7 +400,7 @@ public class IpAddrFormatTest {
 
 		Form form = new Form();
 		DataBinder binder = new DataBinder(form, "target");
-		binder.setConversionService(getBean(ConversionService.class));
+		binder.setConversionService(conversionService);
 		binder.bind(new MutablePropertyValues(paramMap));
 
 		BindingResult binding = BindingResultUtils.getBindingResult(
@@ -397,6 +408,8 @@ public class IpAddrFormatTest {
 		return (String) binding.getFieldValue(name);
 	}
 
+	@Getter
+	@Setter
 	public static class Form {
 
 		@IpAddrFormat(v6compress = true)
@@ -443,126 +456,6 @@ public class IpAddrFormatTest {
 
 		@IpAddrFormat(value = Version.V6, v6compress = false)
 		private String str6Decomp;
-
-		public InetAddress getInetAddrComp() {
-			return inetAddrComp;
-		}
-
-		public void setInetAddrComp(InetAddress inetAddrComp) {
-			this.inetAddrComp = inetAddrComp;
-		}
-
-		public InetAddress getInetAddrDecomp() {
-			return inetAddrDecomp;
-		}
-
-		public void setInetAddrDecomp(InetAddress inetAddrDecomp) {
-			this.inetAddrDecomp = inetAddrDecomp;
-		}
-
-		public Inet4Address getInet4Addr() {
-			return inet4Addr;
-		}
-
-		public void setInet4Addr(Inet4Address inet4Addr) {
-			this.inet4Addr = inet4Addr;
-		}
-
-		public Inet6Address getInet6AddrComp() {
-			return inet6AddrComp;
-		}
-
-		public void setInet6AddrComp(Inet6Address inet6AddrComp) {
-			this.inet6AddrComp = inet6AddrComp;
-		}
-
-		public Inet6Address getInet6AddrDecomp() {
-			return inet6AddrDecomp;
-		}
-
-		public void setInet6AddrDecomp(Inet6Address inet6AddrDecomp) {
-			this.inet6AddrDecomp = inet6AddrDecomp;
-		}
-
-		public BigInteger getBigIntAnyComp() {
-			return bigIntAnyComp;
-		}
-
-		public void setBigIntAnyComp(BigInteger bigIntAnyComp) {
-			this.bigIntAnyComp = bigIntAnyComp;
-		}
-
-		public BigInteger getBigIntAnyDecomp() {
-			return bigIntAnyDecomp;
-		}
-
-		public void setBigIntAnyDecomp(BigInteger bigIntAnyDecomp) {
-			this.bigIntAnyDecomp = bigIntAnyDecomp;
-		}
-
-		public BigInteger getBigInt4() {
-			return bigInt4;
-		}
-
-		public void setBigInt4(BigInteger bigInt4) {
-			this.bigInt4 = bigInt4;
-		}
-
-		public BigInteger getBigInt6Comp() {
-			return bigInt6Comp;
-		}
-
-		public void setBigInt6Comp(BigInteger bigInt6Comp) {
-			this.bigInt6Comp = bigInt6Comp;
-		}
-
-		public BigInteger getBigInt6Decomp() {
-			return bigInt6Decomp;
-		}
-
-		public void setBigInt6Decomp(BigInteger bigInt6Decomp) {
-			this.bigInt6Decomp = bigInt6Decomp;
-		}
-
-		public String getStrAnyComp() {
-			return strAnyComp;
-		}
-
-		public void setStrAnyComp(String strAnyComp) {
-			this.strAnyComp = strAnyComp;
-		}
-
-		public String getStrAnyDecomp() {
-			return strAnyDecomp;
-		}
-
-		public void setStrAnyDecomp(String strAnyDecomp) {
-			this.strAnyDecomp = strAnyDecomp;
-		}
-
-		public String getStr4() {
-			return str4;
-		}
-
-		public void setStr4(String str4) {
-			this.str4 = str4;
-		}
-
-		public String getStr6Comp() {
-			return str6Comp;
-		}
-
-		public void setStr6Comp(String str6Comp) {
-			this.str6Comp = str6Comp;
-		}
-
-		public String getStr6Decomp() {
-			return str6Decomp;
-		}
-
-		public void setStr6Decomp(String str6Decomp) {
-			this.str6Decomp = str6Decomp;
-		}
 	}
 
 }
