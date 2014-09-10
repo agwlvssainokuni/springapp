@@ -44,7 +44,7 @@ import org.springframework.web.bind.WebDataBinder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class StringTypeValidatorTest {
+public class CharTypeValidatorTest {
 
 	@Autowired
 	private ConversionService conversionService;
