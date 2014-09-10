@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.chartype;
 
 import static cherry.spring.common.lib.chartype.CharType.isAlpha;
+import static cherry.spring.common.lib.chartype.CharType.isBasicLatin;
 import static cherry.spring.common.lib.chartype.CharType.isFullAlpha;
 import static cherry.spring.common.lib.chartype.CharType.isFullHiragana;
 import static cherry.spring.common.lib.chartype.CharType.isFullKatakana;
@@ -24,7 +25,9 @@ import static cherry.spring.common.lib.chartype.CharType.isFullLower;
 import static cherry.spring.common.lib.chartype.CharType.isFullNumeric;
 import static cherry.spring.common.lib.chartype.CharType.isFullSpace;
 import static cherry.spring.common.lib.chartype.CharType.isFullUpper;
+import static cherry.spring.common.lib.chartype.CharType.isFullWidth;
 import static cherry.spring.common.lib.chartype.CharType.isHalfKatakana;
+import static cherry.spring.common.lib.chartype.CharType.isHalfWidth;
 import static cherry.spring.common.lib.chartype.CharType.isLower;
 import static cherry.spring.common.lib.chartype.CharType.isNumeric;
 import static cherry.spring.common.lib.chartype.CharType.isSpace;
@@ -32,35 +35,55 @@ import static cherry.spring.common.lib.chartype.CharType.isUpper;
 import static java.lang.Character.codePointAt;
 import static java.lang.Character.isLowSurrogate;
 
-public class StringType {
+public class CharTypeValidator {
 
-	public static final int SPACE = (1 << 0);
+	public static final int BASIC_LATIN;
+	public static final int HALF_WIDTH;
+	public static final int FULL_WIDTH;
+	public static final int SPACE;
+	public static final int NUMERIC;
+	public static final int ALPHA;
+	public static final int UPPER;
+	public static final int LOWER;
+	public static final int FULL_SPACE;
+	public static final int FULL_NUMERIC;
+	public static final int FULL_ALPHA;
+	public static final int FULL_UPPER;
+	public static final int FULL_LOWER;
+	public static final int FULL_HIRAGANA;
+	public static final int FULL_KATAKANA;
+	public static final int HALF_KATAKANA;
 
-	public static final int NUMERIC = (1 << 1);
-
-	public static final int ALPHA = (1 << 2);
-
-	public static final int UPPER = (1 << 3);
-
-	public static final int LOWER = (1 << 4);
-
-	public static final int FULL_SPACE = (1 << 5);
-
-	public static final int FULL_NUMERIC = (1 << 6);
-
-	public static final int FULL_ALPHA = (1 << 7);
-
-	public static final int FULL_UPPER = (1 << 8);
-
-	public static final int FULL_LOWER = (1 << 9);
-
-	public static final int FULL_HIRAGANA = (1 << 10);
-
-	public static final int FULL_KATAKANA = (1 << 11);
-
-	public static final int HALF_KATAKANA = (1 << 12);
+	static {
+		int shift = 0;
+		BASIC_LATIN = (1 << (shift++));
+		HALF_WIDTH = (1 << (shift++));
+		FULL_WIDTH = (1 << (shift++));
+		SPACE = (1 << (shift++));
+		NUMERIC = (1 << (shift++));
+		ALPHA = (1 << (shift++));
+		UPPER = (1 << (shift++));
+		LOWER = (1 << (shift++));
+		FULL_SPACE = (1 << (shift++));
+		FULL_NUMERIC = (1 << (shift++));
+		FULL_ALPHA = (1 << (shift++));
+		FULL_UPPER = (1 << (shift++));
+		FULL_LOWER = (1 << (shift++));
+		FULL_HIRAGANA = (1 << (shift++));
+		FULL_KATAKANA = (1 << (shift++));
+		HALF_KATAKANA = (1 << (shift++));
+	}
 
 	public static boolean isValid(int codePoint, int mode) {
+		if ((mode & BASIC_LATIN) != 0 && isBasicLatin(codePoint)) {
+			return true;
+		}
+		if ((mode & HALF_WIDTH) != 0 && isHalfWidth(codePoint)) {
+			return true;
+		}
+		if ((mode & FULL_WIDTH) != 0 && isFullWidth(codePoint)) {
+			return true;
+		}
 		if ((mode & SPACE) != 0 && isSpace(codePoint)) {
 			return true;
 		}
@@ -117,7 +140,7 @@ public class StringType {
 		return false;
 	}
 
-	public static StringTypeResult validate(CharSequence seq, int mode,
+	public static CharTypeResult validate(CharSequence seq, int mode,
 			int[] acceptable) {
 		for (int i = 0; i < seq.length(); i++) {
 			if (isLowSurrogate(seq.charAt(i))) {
@@ -126,9 +149,9 @@ public class StringType {
 			if (isValid(codePointAt(seq, i), mode, acceptable)) {
 				continue;
 			}
-			return new StringTypeResult(false, i, codePointAt(seq, i));
+			return new CharTypeResult(false, i, codePointAt(seq, i));
 		}
-		return new StringTypeResult();
+		return new CharTypeResult();
 	}
 
 }

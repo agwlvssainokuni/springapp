@@ -19,7 +19,7 @@ package cherry.spring.common.lib.chartype;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class StringTypeResult {
+public class CharTypeResult {
 
 	private final boolean valid;
 
@@ -27,11 +27,11 @@ public class StringTypeResult {
 
 	private final int codePoint;
 
-	public StringTypeResult() {
+	public CharTypeResult() {
 		this(true, -1, -1);
 	}
 
-	public StringTypeResult(boolean valid, int index, int codePoint) {
+	public CharTypeResult(boolean valid, int index, int codePoint) {
 		this.valid = valid;
 		this.index = index;
 		this.codePoint = codePoint;
