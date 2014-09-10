@@ -28,7 +28,7 @@ dependencies {
 	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
-	provided "org.projectlombok:lombok:${versionLombok}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"

@@ -100,7 +100,7 @@ dependencies {
 	provided "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
-	provided "org.projectlombok:lombok:${versionLombok}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testRuntime "org.glassfish:javax.el:${versionJavaEl}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
