@@ -1,6 +1,4 @@
-allprojects {
-	version = "1.0"
-}
+allprojects { version = "1.0" }
 
 apply plugin: "eclipse"
 
@@ -26,18 +24,21 @@ subprojects {
 
 	repositories {
 		mavenCentral()
-		maven {
-			url "http://repository.jboss.org/nexus/content/repositories/public/"
-		}
+		maven { url "http://repository.jboss.org/nexus/content/repositories/public/" }
 	}
 
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
 		provided
+		compileOnly
 	}
 
 	sourceSets.main.compileClasspath += [configurations.provided]
 	eclipse.classpath.plusConfigurations += [configurations.provided]
+
+	sourceSets.main.compileClasspath += [configurations.compileOnly]
+	sourceSets.test.compileClasspath += [configurations.compileOnly]
+	eclipse.classpath.plusConfigurations += [configurations.compileOnly]
 
 	deliveryResources {
 		from "src/main/deliveryResources"
@@ -92,9 +93,7 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 		}
 
 		["batch"].each { dir ->
-			into("${dir}") {
-				from("${dir}/build/install/${dir}")
-			}
+			into("${dir}") { from("${dir}/build/install/${dir}") }
 		}
 
 		["admin", "entree", "batch"].each { dir ->
