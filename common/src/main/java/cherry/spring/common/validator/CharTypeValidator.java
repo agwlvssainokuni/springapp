@@ -35,7 +35,7 @@ public class CharTypeValidator implements
 
 	@Override
 	public void initialize(CharType annotation) {
-		this.mode = createMode(annotation.mode());
+		this.mode = createMode(annotation.value());
 		this.acceptable = createAcceptable(annotation.acceptable());
 	}
 

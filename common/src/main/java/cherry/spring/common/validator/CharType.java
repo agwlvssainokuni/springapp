@@ -94,7 +94,7 @@ public @interface CharType {
 		}
 	}
 
-	Mode[] mode() default { Mode.BasicLatin };
+	Mode[] value() default { Mode.BasicLatin };
 
 	String acceptable() default "";
 
