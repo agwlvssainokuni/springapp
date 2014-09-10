@@ -16,21 +16,27 @@
 
 package cherry.spring.entree.app.controller.home;
 
-import static cherry.spring.entree.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.entree.app.controller.secure.home.HomeController;
 import cherry.spring.entree.app.controller.secure.home.HomeControllerImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class HomeControllerTest {
 
-	private HomeController homeController = getBean(HomeController.class);
+	@Autowired
+	private HomeController homeController;
 
 	@Test
 	public void index000() {
