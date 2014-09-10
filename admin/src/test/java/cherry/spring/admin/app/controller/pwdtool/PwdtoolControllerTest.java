@@ -16,7 +16,6 @@
 
 package cherry.spring.admin.app.controller.pwdtool;
 
-import static cherry.spring.admin.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -25,17 +24,25 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolController;
 import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolControllerImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class PwdtoolControllerTest {
 
-	private PwdtoolController pwdtoolController = getBean(PwdtoolController.class);
+	@Autowired
+	private PwdtoolController pwdtoolController;
 
-	private PasswordEncoder passwordEncoder = getBean(PasswordEncoder.class);
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Test
 	public void index000() {
