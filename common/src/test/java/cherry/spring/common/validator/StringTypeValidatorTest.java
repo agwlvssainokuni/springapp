@@ -16,6 +16,12 @@
 
 package cherry.spring.common.validator;
 
+import static cherry.spring.common.validator.CharType.Mode.Alpha;
+import static cherry.spring.common.validator.CharType.Mode.Lower;
+import static cherry.spring.common.validator.CharType.Mode.None;
+import static cherry.spring.common.validator.CharType.Mode.Numeric;
+import static cherry.spring.common.validator.CharType.Mode.Space;
+import static cherry.spring.common.validator.CharType.Mode.Upper;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -99,22 +105,22 @@ public class StringTypeValidatorTest {
 	@Setter
 	public static class TestDto {
 
-		@StringType(mode = 0)
+		@CharType(None)
 		private String none;
 
-		@StringType(mode = StringType.SPACE)
+		@CharType(Space)
 		private String space;
 
-		@StringType(mode = StringType.NUMERIC)
+		@CharType(Numeric)
 		private String numeric;
 
-		@StringType(mode = StringType.ALPHA)
+		@CharType(Alpha)
 		private String alpha;
 
-		@StringType(mode = StringType.UPPER)
+		@CharType(Upper)
 		private String upper;
 
-		@StringType(mode = StringType.LOWER)
+		@CharType(Lower)
 		private String lower;
 	}
 
