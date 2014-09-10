@@ -30,6 +30,18 @@ import static java.lang.Character.UnicodeBlock.of;
 
 public class CharType {
 
+	public static boolean isBasicLatin(int codePoint) {
+		return of(codePoint) == BASIC_LATIN;
+	}
+
+	public static boolean isHalfWidth(int codePoint) {
+		return isBasicLatin(codePoint) || isHalfKatakana(codePoint);
+	}
+
+	public static boolean isFullWidth(int codePoint) {
+		return !isHalfWidth(codePoint);
+	}
+
 	public static boolean isSpace(int codePoint) {
 		return of(codePoint) == BASIC_LATIN && isWhitespace(codePoint);
 	}

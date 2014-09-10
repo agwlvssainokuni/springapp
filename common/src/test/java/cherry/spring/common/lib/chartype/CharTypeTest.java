@@ -28,6 +28,51 @@ public class CharTypeTest {
 	private TableReader tableReader = new TableReader();
 
 	@Test
+	public void testIsBasicLatin() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			int unicode = entry.getUnicode();
+			if (win31j <= 0x007F) {
+				assertThat(CharType.isBasicLatin(unicode), is(true));
+			} else {
+				assertThat(CharType.isBasicLatin(unicode), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsHalfWidth() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			int unicode = entry.getUnicode();
+			System.out.println(entry.getDescription());
+			if (win31j <= 0x007F) {
+				assertThat(CharType.isHalfWidth(unicode), is(true));
+			} else if (win31j >= 0x00A1 && win31j <= 0x00DF) {
+				assertThat(CharType.isHalfWidth(unicode), is(true));
+			} else {
+				assertThat(CharType.isHalfWidth(unicode), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsFullWidth() {
+		for (Entry entry : tableReader.getEntries()) {
+			int win31j = entry.getWin31j();
+			int unicode = entry.getUnicode();
+			System.out.println(entry.getDescription());
+			if (win31j <= 0x007F) {
+				assertThat(CharType.isFullWidth(unicode), is(false));
+			} else if (win31j >= 0x00A1 && win31j <= 0x00DF) {
+				assertThat(CharType.isFullWidth(unicode), is(false));
+			} else {
+				assertThat(CharType.isFullWidth(unicode), is(true));
+			}
+		}
+	}
+
+	@Test
 	public void testIsSpace() {
 		for (Entry entry : tableReader.getEntries()) {
 			int win31j = entry.getWin31j();
