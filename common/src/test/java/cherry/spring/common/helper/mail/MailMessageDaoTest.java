@@ -16,33 +16,55 @@
 
 package cherry.spring.common.helper.mail;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.joda.time.LocalDateTime;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.spring.common.db.gen.dto.MailTemplate;
 import cherry.spring.common.db.gen.dto.MailTemplateAddress;
 import cherry.spring.common.db.gen.dto.MailTemplateText;
-import cherry.spring.common.db.gen.dto.MailTemplate;
 import cherry.spring.common.db.gen.mapper.MailTemplateAddressMapper;
-import cherry.spring.common.db.gen.mapper.MailTemplateTextMapper;
 import cherry.spring.common.db.gen.mapper.MailTemplateMapper;
+import cherry.spring.common.db.gen.mapper.MailTemplateTextMapper;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class MailMessageDaoTest {
+
+	@Autowired
+	private MailMessageDao mailMessageDao;
+
+	@Autowired
+	private MailTemplateMapper templateMapper;
+
+	@Autowired
+	private MailTemplateAddressMapper addressMapper;
+
+	@Autowired
+	private MailTemplateTextMapper textMapper;
+
+	@Autowired
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Test
 	public void testFindByName00() {
-
-		MailMessageDao mapper = getBean(MailMessageDao.class);
 		try {
-			mapper.findTemplate("test2", Locale.JAPAN);
+			mailMessageDao.findTemplate("test2", Locale.JAPAN);
 		} catch (EmptyResultDataAccessException ex) {
 			// NOTHING
 		} catch (Exception ex) {
@@ -53,9 +75,10 @@ public class MailMessageDaoTest {
 	@Test
 	public void testFindByName10() {
 
-		MailMessageDao mapper = getBean(MailMessageDao.class);
-		MailTemplateDto template = mapper.findTemplate("test", Locale.JAPAN);
-		List<MailTemplateAddressDto> addrList = mapper.findAddresses("test");
+		MailTemplateDto template = mailMessageDao.findTemplate("test",
+				Locale.JAPAN);
+		List<MailTemplateAddressDto> addrList = mailMessageDao
+				.findAddresses("test");
 
 		assertEquals("test", template.getName());
 		assertEquals("ja_JP", template.getLocale());
@@ -72,9 +95,10 @@ public class MailMessageDaoTest {
 	@Test
 	public void testFindByName11() {
 
-		MailMessageDao mapper = getBean(MailMessageDao.class);
-		MailTemplateDto template = mapper.findTemplate("test", Locale.US);
-		List<MailTemplateAddressDto> addrList = mapper.findAddresses("test");
+		MailTemplateDto template = mailMessageDao.findTemplate("test",
+				Locale.US);
+		List<MailTemplateAddressDto> addrList = mailMessageDao
+				.findAddresses("test");
 
 		assertEquals("test", template.getName());
 		assertEquals("en_US", template.getLocale());
@@ -88,12 +112,8 @@ public class MailMessageDaoTest {
 		assertEquals("BCC", addrList.get(1).getRcptType());
 	}
 
-	@BeforeClass
-	public static void setup() {
-
-		MailTemplateMapper templateMapper = getBean(MailTemplateMapper.class);
-		MailTemplateAddressMapper addressMapper = getBean(MailTemplateAddressMapper.class);
-		MailTemplateTextMapper textMapper = getBean(MailTemplateTextMapper.class);
+	@Before
+	public void setup() {
 
 		LocalDateTime date = LocalDateTime.now();
 
@@ -106,8 +126,12 @@ public class MailMessageDaoTest {
 		template.setDeletedFlg(0);
 		templateMapper.insert(template);
 
+		Integer id = namedParameterJdbcOperations.queryForObject(
+				"SELECT id FROM mail_template WHERE name='test'",
+				new HashMap<String, Object>(), Integer.class);
+
 		MailTemplateAddress addressCc = new MailTemplateAddress();
-		addressCc.setMailTemplateId(3);
+		addressCc.setMailTemplateId(id);
 		addressCc.setRcptType("CC");
 		addressCc.setMailAddr("cc@test.com");
 		addressCc.setCreatedAt(date);
@@ -117,7 +141,7 @@ public class MailMessageDaoTest {
 		addressMapper.insert(addressCc);
 
 		MailTemplateAddress addressBcc = new MailTemplateAddress();
-		addressBcc.setMailTemplateId(3);
+		addressBcc.setMailTemplateId(id);
 		addressBcc.setRcptType("BCC");
 		addressBcc.setMailAddr("bcc@test.com");
 		addressBcc.setCreatedAt(date);
@@ -127,7 +151,7 @@ public class MailMessageDaoTest {
 		addressMapper.insert(addressBcc);
 
 		MailTemplateText textJa = new MailTemplateText();
-		textJa.setMailTemplateId(3);
+		textJa.setMailTemplateId(id);
 		textJa.setLocale("ja_JP");
 		textJa.setSubject("メール件名");
 		textJa.setBody("メール本文");
@@ -138,7 +162,7 @@ public class MailMessageDaoTest {
 		textMapper.insert(textJa);
 
 		MailTemplateText textEn = new MailTemplateText();
-		textEn.setMailTemplateId(3);
+		textEn.setMailTemplateId(id);
 		textEn.setLocale("en_US");
 		textEn.setSubject("Mail Subject");
 		textEn.setBody("Mail Body");
@@ -149,4 +173,18 @@ public class MailMessageDaoTest {
 		textMapper.insert(textEn);
 	}
 
+	@After
+	public void tearDown() {
+		MailTemplateDto dto = mailMessageDao.findTemplate("test", Locale.JAPAN);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", dto.getId());
+		namedParameterJdbcOperations.update(
+				"DELETE FROM mail_template_address WHERE mail_template_id=:id",
+				paramMap);
+		namedParameterJdbcOperations.update(
+				"DELETE FROM mail_template_text WHERE mail_template_id=:id",
+				paramMap);
+		namedParameterJdbcOperations.update(
+				"DELETE FROM mail_template WHERE id=:id", paramMap);
+	}
 }

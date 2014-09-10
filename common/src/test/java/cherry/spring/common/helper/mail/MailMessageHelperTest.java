@@ -16,20 +16,29 @@
 
 package cherry.spring.common.helper.mail;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Locale;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.spring.common.MailId;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class MailMessageHelperTest {
 
-	private MailMessageHelper helper = getBean(MailMessageHelper.class);
+	@Autowired
+	private MailMessageHelper helper;
 
 	@Test
 	public void testSignupEntry() {
@@ -64,27 +73,13 @@ public class MailMessageHelperTest {
 		assertEquals("to@test.com, パスワード: ${model.password}", msg.getText());
 	}
 
+	@Getter
+	@Setter
 	public static class TestModel extends MailModel {
 
 		private String mailAddr;
 
 		private String signupUri;
-
-		public String getMailAddr() {
-			return mailAddr;
-		}
-
-		public void setMailAddr(String mailAddr) {
-			this.mailAddr = mailAddr;
-		}
-
-		public String getSignupUri() {
-			return signupUri;
-		}
-
-		public void setSignupUri(String signupUri) {
-			this.signupUri = signupUri;
-		}
 	}
 
 }
