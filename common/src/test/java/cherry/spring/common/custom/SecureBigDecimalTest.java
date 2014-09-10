@@ -25,12 +25,15 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.AppCtxUtil;
 import cherry.spring.common.lib.util.RandomUtil;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureBigDecimalTest {
 
 	private SecureRandom random = new SecureRandom();
@@ -40,11 +43,6 @@ public class SecureBigDecimalTest {
 	private int loopCount = 1000;
 
 	private int size = 1024;
-
-	@Before
-	public void setup() {
-		AppCtxUtil.getAppCtx();
-	}
 
 	@Test
 	public void testRandomTest() {

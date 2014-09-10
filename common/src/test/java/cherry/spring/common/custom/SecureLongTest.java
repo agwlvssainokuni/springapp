@@ -23,21 +23,18 @@ import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.AppCtxUtil;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureLongTest {
 
 	private SecureRandom random = new SecureRandom();
 
 	private int loopCount = 1000;
-
-	@Before
-	public void setup() {
-		AppCtxUtil.getAppCtx();
-	}
 
 	@Test
 	public void testRandomTest() {

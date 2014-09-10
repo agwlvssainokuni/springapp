@@ -21,12 +21,15 @@ import static cherry.spring.common.custom.SecureString.plainValueOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.AppCtxUtil;
 import cherry.spring.common.lib.util.RandomUtil;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureStringTest {
 
 	private RandomUtil randomUtil = new RandomUtil();
@@ -34,11 +37,6 @@ public class SecureStringTest {
 	private int loopCount = 1000;
 
 	private int size = 1024;
-
-	@Before
-	public void setup() {
-		AppCtxUtil.getAppCtx();
-	}
 
 	@Test
 	public void testRandomTest() {
