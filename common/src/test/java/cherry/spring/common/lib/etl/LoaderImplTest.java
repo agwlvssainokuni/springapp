@@ -16,7 +16,6 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -28,10 +27,19 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class LoaderImplTest {
+
+	@Autowired
+	private DataSource dataSource;
 
 	@Test
 	public void testWithHeaderWithRecord() throws IOException {
@@ -45,7 +53,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
-					.load(getBean(DataSource.class),
+					.load(dataSource,
 							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
@@ -74,7 +82,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(3);
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
-					.load(getBean(DataSource.class),
+					.load(dataSource,
 							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
@@ -103,7 +111,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(1);
 			impl.setAllowedFailCount(0);
 			LoadResult loadResult = impl
-					.load(getBean(DataSource.class),
+					.load(dataSource,
 							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
@@ -142,7 +150,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(3);
 			LoadResult loadResult = impl
-					.load(getBean(DataSource.class),
+					.load(dataSource,
 							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 							provider, new NoneLimiter());
 
@@ -168,7 +176,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(1);
 			try {
 				impl.load(
-						getBean(DataSource.class),
+						dataSource,
 						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
@@ -193,7 +201,7 @@ public class LoaderImplTest {
 			impl.setAllowedFailCount(0);
 			try {
 				impl.load(
-						getBean(DataSource.class),
+						dataSource,
 						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
@@ -221,7 +229,6 @@ public class LoaderImplTest {
 	}
 
 	private NamedParameterJdbcTemplate getTemplate() {
-		DataSource dataSource = getBean(DataSource.class);
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
 

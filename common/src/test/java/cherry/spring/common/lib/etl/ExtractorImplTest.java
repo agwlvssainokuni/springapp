@@ -16,7 +16,6 @@
 
 package cherry.spring.common.lib.etl;
 
-import static cherry.spring.common.AppCtxUtil.getBean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -31,9 +30,18 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class ExtractorImplTest {
+
+	@Autowired
+	private DataSource dataSource;
 
 	@Test
 	public void testWithHeaderWithRecord() throws IOException {
@@ -43,9 +51,9 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
-					consumer, new NoneLimiter());
+			int count = impl.extract(dataSource,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
+					paramMap, consumer, new NoneLimiter());
 
 			assertEquals(3, count);
 
@@ -67,9 +75,9 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
-					consumer, new NoneLimiter());
+			int count = impl.extract(dataSource,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
+					paramMap, consumer, new NoneLimiter());
 
 			assertEquals(3, count);
 
@@ -89,9 +97,9 @@ public class ExtractorImplTest {
 		try {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
-					consumer, new NoneLimiter());
+			int count = impl.extract(dataSource,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
+					paramMap, consumer, new NoneLimiter());
 
 			assertEquals(0, count);
 
@@ -110,9 +118,9 @@ public class ExtractorImplTest {
 			doThrow(exception).when(consumer).begin((Column[]) any());
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			impl.extract(getBean(DataSource.class),
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
-					consumer, new NoneLimiter());
+			impl.extract(dataSource,
+					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
+					paramMap, consumer, new NoneLimiter());
 			fail("Exception must be thrown");
 		} catch (IOException ex) {
 			assertEquals(exception, ex);
@@ -138,7 +146,6 @@ public class ExtractorImplTest {
 	}
 
 	private NamedParameterJdbcTemplate getTemplate() {
-		DataSource dataSource = getBean(DataSource.class);
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
 
