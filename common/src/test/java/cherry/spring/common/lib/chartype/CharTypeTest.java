@@ -45,7 +45,6 @@ public class CharTypeTest {
 		for (Entry entry : tableReader.getEntries()) {
 			int win31j = entry.getWin31j();
 			int unicode = entry.getUnicode();
-			System.out.println(entry.getDescription());
 			if (win31j <= 0x007F) {
 				assertThat(CharType.isHalfWidth(unicode), is(true));
 			} else if (win31j >= 0x00A1 && win31j <= 0x00DF) {
@@ -61,7 +60,6 @@ public class CharTypeTest {
 		for (Entry entry : tableReader.getEntries()) {
 			int win31j = entry.getWin31j();
 			int unicode = entry.getUnicode();
-			System.out.println(entry.getDescription());
 			if (win31j <= 0x007F) {
 				assertThat(CharType.isFullWidth(unicode), is(false));
 			} else if (win31j >= 0x00A1 && win31j <= 0x00DF) {
