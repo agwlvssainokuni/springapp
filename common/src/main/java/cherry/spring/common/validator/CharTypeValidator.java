@@ -16,37 +16,50 @@
 
 package cherry.spring.common.validator;
 
-import static cherry.spring.common.lib.chartype.StringType.validate;
+import static cherry.spring.common.lib.chartype.CharTypeValidator.validate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cherry.spring.common.lib.chartype.StringTypeResult;
+import cherry.spring.common.lib.chartype.CharTypeResult;
+import cherry.spring.common.validator.CharType.Mode;
 
-public class StringTypeValidator implements
-		ConstraintValidator<StringType, String> {
+public class CharTypeValidator implements
+		ConstraintValidator<CharType, String> {
 
 	private int mode;
 
 	private int[] acceptable;
 
 	@Override
-	public void initialize(StringType annotation) {
-		this.mode = annotation.mode();
-		if (annotation.acceptable() == null) {
-			this.acceptable = null;
-		} else {
-			String acc = annotation.acceptable();
-			this.acceptable = new int[acc.codePointCount(0, acc.length())];
-			for (int i = 0, j = 0; i < acc.length(); i++) {
-				if (Character.isLowSurrogate(acc.charAt(i))) {
-					continue;
-				}
-				this.acceptable[j++] = Character.codePointAt(acc, i);
-			}
+	public void initialize(CharType annotation) {
+		this.mode = createMode(annotation.mode());
+		this.acceptable = createAcceptable(annotation.acceptable());
+	}
+
+	private int createMode(Mode[] mode) {
+		int result = 0;
+		for (Mode m : mode) {
+			result |= m.mode();
 		}
+		return result;
+	}
+
+	private int[] createAcceptable(String acceptable) {
+		if (acceptable == null) {
+			return null;
+		}
+		int[] result = new int[acceptable
+				.codePointCount(0, acceptable.length())];
+		for (int i = 0, j = 0; i < acceptable.length(); i++) {
+			if (Character.isLowSurrogate(acceptable.charAt(i))) {
+				continue;
+			}
+			result[j++] = Character.codePointAt(acceptable, i);
+		}
+		return result;
 	}
 
 	@Override
@@ -54,7 +67,7 @@ public class StringTypeValidator implements
 		if (StringUtils.isEmpty(value)) {
 			return true;
 		}
-		StringTypeResult result = validate(value, mode, acceptable);
+		CharTypeResult result = validate(value, mode, acceptable);
 		return result.isValid();
 	}
 
