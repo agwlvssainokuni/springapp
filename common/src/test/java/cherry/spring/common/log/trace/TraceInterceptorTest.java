@@ -21,8 +21,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -30,31 +33,25 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 /**
  * {@link TraceInterceptor} のテスト.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:cherry/spring/common/log/trace/applicationContext.xml")
 public class TraceInterceptorTest {
 
-	private static ApplicationContext appCtx = null;
+	@Autowired
+	private ApplicationContext appCtx;
 
-	private static ApplicationContext getAppCtx() {
-		if (appCtx == null) {
-			appCtx = new ClassPathXmlApplicationContext(
-					"classpath:cherry/spring/common/log/trace/applicationContext.xml");
-		}
-		return appCtx;
-	}
+	@Autowired
+	private TraceTest0 impl0;
 
-	private static <T> T getBean(Class<T> klass) {
-		return getAppCtx().getBean(klass);
-	}
+	@Autowired
+	private TraceTest1 impl1;
 
 	@Test
 	public void 引数と返却値がない() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test0();
+		impl0.test0();
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -77,12 +74,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 引数と返却値がプリミティブ() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test1(12345);
+		impl0.test1(12345);
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -106,12 +100,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 引数と返却値が配列() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test2(new int[] { 12345, 67890 });
+		impl0.test2(new int[] { 12345, 67890 });
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -135,12 +126,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 引数と返却値がnull() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test2(null);
+		impl0.test2(null);
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -164,12 +152,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 引数が複数() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test3("12345", "67890");
+		impl0.test3("12345", "67890");
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -193,12 +178,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 引数が複数でマスクつき() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test4("12345", "67890");
+		impl0.test4("12345", "67890");
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -222,13 +204,10 @@ public class TraceInterceptorTest {
 	@Test
 	public void 例外が発生する() {
 
-		// 準備
-		TraceTest0 impl = getBean(TraceTest0.class);
-
 		// 実行
 		OnMemoryAppender.begin();
 		try {
-			impl.test5();
+			impl0.test5();
 		} catch (Exception ex) {
 			// IGNORE
 		}
@@ -254,12 +233,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 制限あり_配列のサイズOK() {
 
-		// 準備
-		TraceTest1 impl = getBean(TraceTest1.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test(new int[] { 1, 2, 3, 4, 5 });
+		impl1.test(new int[] { 1, 2, 3, 4, 5 });
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -283,12 +259,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 制限あり_配列のサイズ超過() {
 
-		// 準備
-		TraceTest1 impl = getBean(TraceTest1.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test(new int[] { 1, 2, 3, 4, 5, 6 });
+		impl1.test(new int[] { 1, 2, 3, 4, 5, 6 });
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
@@ -312,12 +285,9 @@ public class TraceInterceptorTest {
 	@Test
 	public void 制限あり_文字列長超過() {
 
-		// 準備
-		TraceTest1 impl = getBean(TraceTest1.class);
-
 		// 実行
 		OnMemoryAppender.begin();
-		impl.test(new int[] { 11111, 22222, 33333, 44444, 55555 });
+		impl1.test(new int[] { 11111, 22222, 33333, 44444, 55555 });
 
 		// 検証
 		List<ILoggingEvent> event = OnMemoryAppender.getEvents();
