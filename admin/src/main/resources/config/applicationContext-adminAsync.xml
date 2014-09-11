@@ -6,23 +6,26 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<jee:jndi-lookup id="connectionFactory" jndi-name="${admin.jms.connectionFactory}" />
+	<jms:annotation-driven />
 
-	<jms:listener-container destination-resolver="destinationResolver"
-		task-executor="taskExecutor">
-		<jms:listener destination="${admin.app.userman.import.queue}"
-			ref="usermanImportServiceImpl" method="handleImportUsers" />
-	</jms:listener-container>
+	<jee:jndi-lookup id="connectionFactory" jndi-name="${admin.jms.connectionFactory}" />
 
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
-	<bean id="taskExecutor"
-		class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
-
 	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
+	</bean>
+
+	<bean id="jmsListenerContainerFactory"
+		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationResolver" ref="destinationResolver" />
+		<property name="taskExecutor">
+			<bean
+				class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
+		</property>
 	</bean>
 
 </beans>

@@ -40,6 +40,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -142,6 +143,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		}
 	}
 
+	@JmsListener(destination = "${admin.app.userman.import.queue}")
 	@Transactional
 	@Override
 	public void handleImportUsers(Map<String, String> message) {
