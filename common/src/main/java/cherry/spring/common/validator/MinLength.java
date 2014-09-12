@@ -27,6 +27,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
+import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.Size;
@@ -34,11 +35,14 @@ import javax.validation.constraints.Size;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@Size(max = 512)
+@Size(min = 0, max = Integer.MAX_VALUE)
 @ReportAsSingleViolation
-public @interface MailAddrSize {
+public @interface MinLength {
 
-	String message() default "{cherry.spring.common.validator.MailAddrSize.message}";
+	@OverridesAttribute(constraint = Size.class, name = "min")
+	int value() default 0;
+
+	String message() default "{cherry.spring.common.validator.MinLength.message}";
 
 	Class<?>[] groups() default {};
 
@@ -47,7 +51,7 @@ public @interface MailAddrSize {
 	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 	@Retention(RUNTIME)
 	public @interface List {
-		MailAddrSize[] value();
+		MinLength[] value();
 	}
 
 }

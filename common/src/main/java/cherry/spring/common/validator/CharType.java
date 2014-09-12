@@ -32,8 +32,11 @@ import static cherry.spring.common.lib.chartype.CharTypeValidator.LOWER;
 import static cherry.spring.common.lib.chartype.CharTypeValidator.NUMERIC;
 import static cherry.spring.common.lib.chartype.CharTypeValidator.SPACE;
 import static cherry.spring.common.lib.chartype.CharTypeValidator.UPPER;
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
@@ -42,7 +45,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ METHOD, FIELD })
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = { cherry.spring.common.validator.CharTypeValidator.class })
 public @interface CharType {
@@ -104,7 +107,7 @@ public @interface CharType {
 
 	Class<? extends Payload>[] payload() default {};
 
-	@Target({ METHOD, FIELD })
+	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 	@Retention(RUNTIME)
 	public @interface List {
 		CharType[] value();
