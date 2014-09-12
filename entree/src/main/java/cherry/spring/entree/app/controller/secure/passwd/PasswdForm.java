@@ -17,6 +17,7 @@
 package cherry.spring.entree.app.controller.secure.passwd;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,8 +28,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import cherry.spring.common.validator.MailAddrSize;
-import cherry.spring.common.validator.PasswordSize;
+import cherry.spring.common.validator.MaxLength;
 import cherry.spring.entree.app.controller.BaseForm;
 
 @Getter
@@ -39,20 +39,20 @@ public class PasswdForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
-	@MailAddrSize
+	@MaxLength(512)
 	@Email
 	private String loginId;
 
 	@NotNull
-	@PasswordSize
+	@Size(min = 8, max = 16)
 	private String password;
 
 	@NotNull
-	@PasswordSize
+	@Size(min = 8, max = 16)
 	private String newPassword;
 
 	@NotNull
-	@PasswordSize
+	@Size(min = 8, max = 16)
 	private String newPasswordConf;
 
 	/**

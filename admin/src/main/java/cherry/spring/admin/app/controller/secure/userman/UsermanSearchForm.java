@@ -25,8 +25,7 @@ import org.joda.time.LocalDateTime;
 import cherry.spring.admin.app.controller.BaseForm;
 import cherry.spring.common.custom.format.CustomDateTimeFormat;
 import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
-import cherry.spring.common.validator.DisplayNameSize;
-import cherry.spring.common.validator.MailAddrSize;
+import cherry.spring.common.validator.MaxLength;
 
 @Getter
 @Setter
@@ -35,7 +34,7 @@ public class UsermanSearchForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	@MailAddrSize
+	@MaxLength(512)
 	private String loginId;
 
 	@CustomDateTimeFormat(Range.FROM)
@@ -44,10 +43,10 @@ public class UsermanSearchForm extends BaseForm {
 	@CustomDateTimeFormat(Range.TO)
 	private LocalDateTime registeredTo;
 
-	@DisplayNameSize
+	@MaxLength(64)
 	private String firstName;
 
-	@DisplayNameSize
+	@MaxLength(64)
 	private String lastName;
 
 }

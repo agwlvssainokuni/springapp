@@ -23,7 +23,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import cherry.spring.common.validator.MailAddrSize;
+import cherry.spring.common.validator.MaxLength;
 import cherry.spring.entree.app.controller.BaseForm;
 
 @Getter
@@ -34,7 +34,7 @@ public class SignupEntryForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
-	@MailAddrSize
+	@MaxLength(512)
 	@Email
 	private String email;
 
