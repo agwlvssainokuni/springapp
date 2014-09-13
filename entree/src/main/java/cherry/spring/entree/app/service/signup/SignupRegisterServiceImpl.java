@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
 import cherry.spring.common.db.app.mapper.SignupRequestMapper2;
-import cherry.spring.common.db.app.mapper.UserMapper2;
 import cherry.spring.common.db.gen.dto.User;
+import cherry.spring.common.db.gen.mapper.UserMapper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.log.Log;
@@ -41,10 +41,10 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private SignupRequestMapper2 signupRequestMapper;
+	private SignupRequestMapper2 signupRequestMapper2;
 
 	@Autowired
-	private UserMapper2 userMapper;
+	private UserMapper userMapper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -69,7 +69,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	public boolean createUser(String mailAddr, String token, String firstName,
 			String lastName, Locale locale) {
 
-		if (!signupRequestMapper.validateToken(mailAddr, token, validInSec)) {
+		if (!signupRequestMapper2.validateToken(mailAddr, token, validInSec)) {
 			if (log.isDebugEnabled()) {
 				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}",
 						mailAddr, token, validInSec);
@@ -85,7 +85,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		entity.setPassword(password);
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
-		int count = userMapper.createUser(entity);
+		int count = userMapper.insertSelective(entity);
 		assert count == 1;
 		if (log.isDebugEnabled()) {
 			log.debug(

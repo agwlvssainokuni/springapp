@@ -34,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import cherry.spring.common.MailId;
 import cherry.spring.common.db.app.mapper.SignupRequestMapper2;
 import cherry.spring.common.db.gen.dto.SignupRequest;
+import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.log.Log;
@@ -46,7 +47,10 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private SignupRequestMapper2 signupRequestMapper;
+	private SignupRequestMapper signupRequestMapper;
+
+	@Autowired
+	private SignupRequestMapper2 signupRequestMapper2;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -68,7 +72,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	public boolean createSignupRequest(String mailAddr,
 			HttpServletRequest request, Locale locale) {
 
-		if (!signupRequestMapper.validateMailAddr(mailAddr, intervalInSec,
+		if (!signupRequestMapper2.validateMailAddr(mailAddr, intervalInSec,
 				rangeInSec, numOfReq)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
@@ -83,7 +87,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		SignupRequest entity = new SignupRequest();
 		entity.setMailAddr(mailAddr);
 		entity.setToken(token.toString());
-		int count = signupRequestMapper.createSignupRequest(entity);
+		int count = signupRequestMapper.insertSelective(entity);
 		assert count == 1;
 		if (log.isDebugEnabled()) {
 			log.debug(

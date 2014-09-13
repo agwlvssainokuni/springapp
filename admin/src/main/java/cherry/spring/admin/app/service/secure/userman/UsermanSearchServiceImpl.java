@@ -19,36 +19,40 @@ package cherry.spring.admin.app.service.secure.userman;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
-import cherry.spring.common.db.app.mapper.UserCondition;
-import cherry.spring.common.db.app.mapper.UserMapper2;
 import cherry.spring.common.db.gen.dto.User;
+import cherry.spring.common.db.gen.dto.UserCriteria;
+import cherry.spring.common.db.gen.mapper.UserMapper;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.spring.common.lib.util.SqlUtil;
 
 @Component
 public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Autowired
-	private UserMapper2 userMapper;
+	private UserMapper userMapper;
 
 	@Autowired
 	private Paginator paginator;
+
+	private SqlUtil sqlUtil = new SqlUtil();
 
 	@Transactional
 	@Override
 	public Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz) {
 
-		UserCondition cond = createUserCondition(form);
-		int count = userMapper.countUsers(cond);
+		UserCriteria criteria = createUserCriteria(form);
+		int count = userMapper.countByExample(criteria);
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
-		int offset = pageSet.getCurrent().getFrom();
-		List<User> list = userMapper.searchUsers(cond, pageSz, offset);
+		RowBounds bound = new RowBounds(pageSet.getCurrent().getFrom(), pageSz);
+		List<User> list = userMapper.selectByExampleWithRowbounds(criteria,
+				bound);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
@@ -56,35 +60,26 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		return result;
 	}
 
-	private UserCondition createUserCondition(UsermanSearchForm form) {
-		UserCondition cond = new UserCondition();
-		cond.setLoginId(stringCond(form.getLoginId()));
-		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
-		cond.setRegisteredTo(dateToCond(form.getRegisteredTo()));
-		cond.setFirstName(stringCond(form.getFirstName()));
-		cond.setLastName(stringCond(form.getLastName()));
-		return cond;
-	}
-
-	private String stringCond(String string) {
-		if (StringUtils.isBlank(string)) {
-			return null;
+	private UserCriteria createUserCriteria(UsermanSearchForm form) {
+		UserCriteria uc = new UserCriteria();
+		UserCriteria.Criteria c = uc.createCriteria();
+		if (StringUtils.isNotBlank(form.getLoginId())) {
+			c.andLoginIdLike(sqlUtil.escapeForLike(form.getLoginId()));
 		}
-		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
-	}
-
-	private LocalDateTime dateFromCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
+		if (form.getRegisteredFrom() != null) {
+			c.andRegisteredAtGreaterThanOrEqualTo(form.getRegisteredFrom());
 		}
-		return dt;
-	}
-
-	private LocalDateTime dateToCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
+		if (form.getRegisteredTo() != null) {
+			c.andRegisteredAtLessThan(form.getRegisteredTo().plusSeconds(1));
 		}
-		return dt.plusSeconds(1);
+		if (StringUtils.isNotBlank(form.getFirstName())) {
+			c.andFirstNameLike(sqlUtil.escapeForLike(form.getFirstName()) + "%");
+		}
+		if (StringUtils.isNotBlank(form.getLastName())) {
+			c.andLastNameLike(sqlUtil.escapeForLike(form.getLastName()) + "%");
+		}
+		c.andDeletedFlgEqualTo(0);
+		return uc;
 	}
 
 }

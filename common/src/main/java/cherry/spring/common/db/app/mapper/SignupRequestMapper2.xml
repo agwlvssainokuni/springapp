@@ -18,17 +18,6 @@
 			AND
 			A.deleted_flg = 0
 	</select>
-	<insert id="createSignupRequest" useGeneratedKeys="true"
-		keyColumn="id" keyProperty="ent.id">
-		INSERT INTO signup_request (
-			mail_addr,
-			token
-		)
-		VALUES (
-			#{ent.mailAddr,jdbcType=VARCHAR},
-			#{ent.token,jdbcType=VARCHAR}
-		)
-	</insert>
 	<select id="validateToken" resultType="boolean">
 		SELECT
 			COUNT(*)

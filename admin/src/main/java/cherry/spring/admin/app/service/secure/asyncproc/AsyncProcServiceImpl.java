@@ -18,12 +18,13 @@ package cherry.spring.admin.app.service.secure.asyncproc;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.app.mapper.AsyncProcMapper2;
 import cherry.spring.common.db.gen.dto.AsyncProc;
+import cherry.spring.common.db.gen.mapper.AsyncProcMapper;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 
@@ -31,7 +32,7 @@ import cherry.spring.common.lib.paginate.Paginator;
 public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Autowired
-	private AsyncProcMapper2 asyncProcMapper;
+	private AsyncProcMapper asyncProcMapper;
 
 	@Autowired
 	private Paginator paginator;
@@ -40,15 +41,15 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 	@Override
 	public Result searchAsyncProc(int pageNo, int pageSz) {
 
-		int count = asyncProcMapper.countAsyncProc();
+		int count = asyncProcMapper.countByExample(null);
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
-		int offset = pageSet.getCurrent().getFrom();
-		List<AsyncProc> list = asyncProcMapper.searchAsyncProc(pageSz, offset);
+		RowBounds bound = new RowBounds(pageSet.getCurrent().getFrom(), pageSz);
+		List<AsyncProc> list = asyncProcMapper.selectByExampleWithRowbounds(
+				null, bound);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
 		result.setAsyncProcList(list);
 		return result;
 	}
-
 }

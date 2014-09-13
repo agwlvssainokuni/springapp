@@ -18,8 +18,6 @@ package cherry.spring.common.db.app.mapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.UUID;
@@ -44,29 +42,18 @@ public class SignupRequestMapperTest {
 	private SignupRequestMapper mapper0;
 
 	@Test
-	public void testCreateSignupRequest00() {
-		String mailAddr = "addr@example.com";
-		SignupRequest entity = newRequest(mailAddr);
-		assertNull(entity.getId());
-		assertEquals(1, mapper.createSignupRequest(entity));
-		assertNotNull(entity.getId());
-
-		assertNotNull(mapper0.selectByPrimaryKey(entity.getId()));
-	}
-
-	@Test
 	public void testValidateMailAddr00() {
 		String mailAddr = "addr00@example.com";
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertFalse(mapper.validateMailAddr(mailAddr, 0, 5, 5));
 	}
 
@@ -74,7 +61,7 @@ public class SignupRequestMapperTest {
 	public void testValidateMailAddr01() {
 		String mailAddr = "addr01@example.com";
 		assertTrue(mapper.validateMailAddr(mailAddr, 0, 1, 1));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertFalse(mapper.validateMailAddr(mailAddr, 0, 1, 1));
 	}
 
@@ -82,7 +69,7 @@ public class SignupRequestMapperTest {
 	public void testValidateMailAddr10() {
 		String mailAddr = "addr10@example.com";
 		assertTrue(mapper.validateMailAddr(mailAddr, 1, 5, 5));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertFalse(mapper.validateMailAddr(mailAddr, 1, 5, 5));
 	}
 
@@ -90,7 +77,7 @@ public class SignupRequestMapperTest {
 	public void testValidateToken00() {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper0.insertSelective(entity));
 		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
 	}
 
@@ -98,7 +85,7 @@ public class SignupRequestMapperTest {
 	public void testValidateToken01() {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper0.insertSelective(entity));
 		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
 		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 0));
 	}
@@ -107,7 +94,7 @@ public class SignupRequestMapperTest {
 	public void testValidateToken02() {
 		String mailAddr = "token02@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper0.insertSelective(entity));
 		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
 		assertFalse(mapper.validateToken(mailAddr,
 				UUID.randomUUID().toString(), 5));
@@ -117,9 +104,9 @@ public class SignupRequestMapperTest {
 	public void testValidateToken10() {
 		String mailAddr = "token10@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
-		assertEquals(1, mapper.createSignupRequest(entity));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(entity));
 		assertTrue(mapper.validateToken(mailAddr, entity.getToken(), 5));
 	}
 
@@ -127,9 +114,9 @@ public class SignupRequestMapperTest {
 	public void testValidateToken11() {
 		String mailAddr = "token11@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
-		assertEquals(1, mapper.createSignupRequest(entity));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(entity));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 5));
 	}
 
@@ -137,9 +124,9 @@ public class SignupRequestMapperTest {
 	public void testValidateToken12() {
 		String mailAddr = "token12@example.com";
 		SignupRequest entity = newRequest(mailAddr);
-		assertEquals(1, mapper.createSignupRequest(entity));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
-		assertEquals(1, mapper.createSignupRequest(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(entity));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
+		assertEquals(1, mapper0.insertSelective(newRequest(mailAddr)));
 		assertFalse(mapper.validateToken(mailAddr, entity.getToken(), 5));
 	}
 
