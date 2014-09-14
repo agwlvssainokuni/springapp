@@ -25,6 +25,8 @@ import org.springframework.core.io.Resource;
 
 public interface SqlLoader {
 
+	Map<String, String> load(Class<?> klass) throws IOException;
+
 	Map<String, String> load(Resource resource) throws IOException;
 
 	Map<String, String> load(InputStream in) throws IOException;

@@ -25,8 +25,6 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -42,9 +40,7 @@ public class SqlLoaderImplTest {
 
 	@Test
 	public void DDLをファイルから読込む() throws IOException {
-		Resource resource = new ClassPathResource("SqlLoaderImplTest.sql",
-				getClass());
-		Map<String, String> sqlmap = sqlLoader.load(resource);
+		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		assertEquals("SELECT 1 FROM dual", sqlmap.get("TEST01"));
 		assertEquals("SELECT 2 FROM dual", sqlmap.get("TEST02"));
 		assertEquals("SELECT 3 FROM dual", sqlmap.get("TEST03"));

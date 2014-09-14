@@ -24,8 +24,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -39,16 +37,13 @@ public class MailMessageDaoImpl implements MailMessageDao, InitializingBean {
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	@Value("classpath:cherry/spring/common/helper/mail/MailMessageDaoImpl.sql")
-	private Resource sqlResource;
-
 	private String sqlFindTemplate;
 
 	private String sqlFindAddresses;
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
-		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
+		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		sqlFindTemplate = sqlmap.get("findTemplate");
 		sqlFindAddresses = sqlmap.get("findAddresses");
 	}
