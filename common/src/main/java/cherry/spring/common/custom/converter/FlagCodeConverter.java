@@ -16,17 +16,12 @@
 
 package cherry.spring.common.custom.converter;
 
-import java.sql.Timestamp;
+import cherry.spring.common.custom.FlagCode;
 
-import org.joda.time.LocalDateTime;
-import org.springframework.core.convert.converter.Converter;
+public class FlagCodeConverter extends EnumCodeConverter<Integer, FlagCode> {
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
-
-	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public FlagCodeConverter() {
+		super(FlagCode.class);
 	}
 
 }

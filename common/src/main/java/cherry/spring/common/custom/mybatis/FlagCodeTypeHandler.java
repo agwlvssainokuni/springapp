@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.custom.converter;
+package cherry.spring.common.custom.mybatis;
 
-import java.sql.Timestamp;
+import org.apache.ibatis.type.MappedTypes;
 
-import org.joda.time.LocalDateTime;
-import org.springframework.core.convert.converter.Converter;
+import cherry.spring.common.custom.FlagCode;
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
+@MappedTypes(FlagCode.class)
+public class FlagCodeTypeHandler extends EnumCodeIntegerTypeHandler<FlagCode> {
 
-	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public FlagCodeTypeHandler() {
+		super(FlagCode.class);
 	}
 
 }

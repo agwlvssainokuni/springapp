@@ -16,17 +16,12 @@
 
 package cherry.spring.common.custom;
 
-public enum FlagCode implements CodeEnum<Integer> {
-	// 真偽
-	FALSE(0), TRUE(1),
-	// スイッチ
-	OFF(0), ON(1),
-	// 回答
-	NO(0), YES(1);
+public enum FlagCode implements Code<Integer> {
+	FALSE(0), TRUE(1);
 
-	private Integer code;
+	private int code;
 
-	private FlagCode(Integer code) {
+	private FlagCode(int code) {
 		this.code = code;
 	}
 

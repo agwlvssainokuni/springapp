@@ -16,17 +16,16 @@
 
 package cherry.spring.common.custom.converter;
 
-import java.sql.Timestamp;
-
-import org.joda.time.LocalDateTime;
 import org.springframework.core.convert.converter.Converter;
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
+import cherry.spring.common.custom.SecureBigInteger;
+
+public class SecureBigIntegerConverter implements
+		Converter<String, SecureBigInteger> {
 
 	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public SecureBigInteger convert(String source) {
+		return SecureBigInteger.cryptoValueOf(source);
 	}
 
 }

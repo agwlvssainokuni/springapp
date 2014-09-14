@@ -16,17 +16,15 @@
 
 package cherry.spring.common.custom.converter;
 
-import java.sql.Timestamp;
-
-import org.joda.time.LocalDateTime;
 import org.springframework.core.convert.converter.Converter;
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
+import cherry.spring.common.custom.DeletedFlag;
+
+public class DeletedFlagConverter implements Converter<Integer, DeletedFlag> {
 
 	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public DeletedFlag convert(Integer source) {
+		return new DeletedFlag(source);
 	}
 
 }

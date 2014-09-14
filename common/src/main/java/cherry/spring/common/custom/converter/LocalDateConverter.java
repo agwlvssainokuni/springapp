@@ -16,17 +16,16 @@
 
 package cherry.spring.common.custom.converter;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.core.convert.converter.Converter;
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
+public class LocalDateConverter implements Converter<Date, LocalDate> {
 
 	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public LocalDate convert(Date source) {
+		return new LocalDate(source.getTime());
 	}
 
 }

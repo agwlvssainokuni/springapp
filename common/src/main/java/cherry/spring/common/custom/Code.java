@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.custom.converter;
+package cherry.spring.common.custom;
 
-import java.sql.Timestamp;
+public interface Code<T> {
 
-import org.joda.time.LocalDateTime;
-import org.springframework.core.convert.converter.Converter;
-
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
-
-	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
-	}
+	T code();
 
 }
