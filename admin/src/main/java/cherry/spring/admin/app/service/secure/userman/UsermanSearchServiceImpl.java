@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
+import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.dto.UserCriteria;
 import cherry.spring.common.db.gen.mapper.UserMapper;
@@ -78,7 +79,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		if (StringUtils.isNotBlank(form.getLastName())) {
 			c.andLastNameLike(sqlUtil.escapeForLike(form.getLastName()) + "%");
 		}
-		c.andDeletedFlgEqualTo(0);
+		c.andDeletedFlgEqualTo(DeletedFlag.NOT_DELETED);
 		return uc;
 	}
 

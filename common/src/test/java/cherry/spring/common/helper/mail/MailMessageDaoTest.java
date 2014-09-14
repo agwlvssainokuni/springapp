@@ -35,6 +35,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.MailTemplate;
 import cherry.spring.common.db.gen.dto.MailTemplateAddress;
 import cherry.spring.common.db.gen.dto.MailTemplateText;
@@ -123,7 +124,7 @@ public class MailMessageDaoTest {
 		template.setCreatedAt(date);
 		template.setUpdatedAt(date);
 		template.setLockVersion(1);
-		template.setDeletedFlg(0);
+		template.setDeletedFlg(DeletedFlag.NOT_DELETED);
 		templateMapper.insert(template);
 
 		Integer id = namedParameterJdbcOperations.queryForObject(
@@ -137,7 +138,7 @@ public class MailMessageDaoTest {
 		addressCc.setCreatedAt(date);
 		addressCc.setUpdatedAt(date);
 		addressCc.setLockVersion(1);
-		addressCc.setDeletedFlg(0);
+		addressCc.setDeletedFlg(DeletedFlag.NOT_DELETED);
 		addressMapper.insert(addressCc);
 
 		MailTemplateAddress addressBcc = new MailTemplateAddress();
@@ -147,7 +148,7 @@ public class MailMessageDaoTest {
 		addressBcc.setCreatedAt(date);
 		addressBcc.setUpdatedAt(date);
 		addressBcc.setLockVersion(1);
-		addressBcc.setDeletedFlg(0);
+		addressBcc.setDeletedFlg(DeletedFlag.NOT_DELETED);
 		addressMapper.insert(addressBcc);
 
 		MailTemplateText textJa = new MailTemplateText();
@@ -158,7 +159,7 @@ public class MailMessageDaoTest {
 		textJa.setCreatedAt(date);
 		textJa.setUpdatedAt(date);
 		textJa.setLockVersion(1);
-		textJa.setDeletedFlg(0);
+		textJa.setDeletedFlg(DeletedFlag.NOT_DELETED);
 		textMapper.insert(textJa);
 
 		MailTemplateText textEn = new MailTemplateText();
@@ -169,7 +170,7 @@ public class MailMessageDaoTest {
 		textEn.setCreatedAt(date);
 		textEn.setUpdatedAt(date);
 		textEn.setLockVersion(1);
-		textEn.setDeletedFlg(0);
+		textEn.setDeletedFlg(DeletedFlag.NOT_DELETED);
 		textMapper.insert(textEn);
 	}
 
