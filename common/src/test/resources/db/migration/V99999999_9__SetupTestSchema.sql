@@ -13,3 +13,17 @@ CREATE TABLE etl_extr_ldr_test (
 	address	VARCHAR(64)	NOT NULL,
 	CONSTRAINT etl_extr_ldr_test_pkcs PRIMARY KEY (id)
 );
+
+CREATE TABLE conversion_test (
+	id		INTEGER		NOT NULL	AUTO_INCREMENT,
+	joda_date		DATE,
+	joda_time		TIME,
+	joda_datetime	TIMESTAMP,
+	sec_str		VARCHAR(104),
+	sec_int		VARCHAR(40),
+	sec_long	VARCHAR(40),
+	sec_bigint	VARCHAR(104),
+	sec_bigdec	VARCHAR(104),
+	flag_code	INTEGER,
+	deleted_flg	INTEGER
+);
