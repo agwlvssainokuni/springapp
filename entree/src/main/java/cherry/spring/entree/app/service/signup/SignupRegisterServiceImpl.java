@@ -18,6 +18,7 @@ package cherry.spring.entree.app.service.signup;
 import java.util.Locale;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
@@ -27,11 +28,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
-import cherry.spring.common.db.app.mapper.SignupRequestMapper2;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.mapper.UserMapper;
+import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
+import cherry.spring.common.helper.signup.SignupRequestDao;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
@@ -41,10 +43,13 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private SignupRequestMapper2 signupRequestMapper2;
+	private UserMapper userMapper;
 
 	@Autowired
-	private UserMapper userMapper;
+	private SignupRequestDao signupRequestDao;
+
+	@Autowired
+	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -69,7 +74,10 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	public boolean createUser(String mailAddr, String token, String firstName,
 			String lastName, Locale locale) {
 
-		if (!signupRequestMapper2.validateToken(mailAddr, token, validInSec)) {
+		LocalDateTime now = bizdateHelper.now();
+
+		if (!signupRequestDao.validateToken(mailAddr, token,
+				now.minusSeconds(validInSec))) {
 			if (log.isDebugEnabled()) {
 				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}",
 						mailAddr, token, validInSec);

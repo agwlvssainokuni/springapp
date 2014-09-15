@@ -23,6 +23,11 @@
 
 	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 
+	<bean id="userPasswordDao"
+		class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
+
+	<bean id="signupRequestDao" class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
+
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 		<property name="objectMapper" ref="objectMapper" />

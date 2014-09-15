@@ -20,18 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.app.mapper.UserMapper2;
+import cherry.spring.common.helper.password.UserPasswordDao;
 
 @Component
 public class PasswdServiceImpl implements PasswdService {
 
 	@Autowired
-	private UserMapper2 userMapper;
+	private UserPasswordDao userPasswordDao;
 
 	@Transactional
 	@Override
 	public boolean changePassword(String loginId, String password) {
-		int count = userMapper.changePassword(loginId, password);
+		int count = userPasswordDao.changePassword(loginId, password);
 		return count > 0;
 	}
 

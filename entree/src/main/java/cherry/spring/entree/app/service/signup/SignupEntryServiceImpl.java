@@ -23,6 +23,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
@@ -32,11 +33,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.spring.common.MailId;
-import cherry.spring.common.db.app.mapper.SignupRequestMapper2;
 import cherry.spring.common.db.gen.dto.SignupRequest;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
+import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
+import cherry.spring.common.helper.signup.SignupRequestDao;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.app.controller.signup.SignupRegisterController;
@@ -50,7 +52,10 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	private SignupRequestMapper signupRequestMapper;
 
 	@Autowired
-	private SignupRequestMapper2 signupRequestMapper2;
+	private SignupRequestDao signupRequestDao;
+
+	@Autowired
+	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -72,8 +77,11 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	public boolean createSignupRequest(String mailAddr,
 			HttpServletRequest request, Locale locale) {
 
-		if (!signupRequestMapper2.validateMailAddr(mailAddr, intervalInSec,
-				rangeInSec, numOfReq)) {
+		LocalDateTime now = bizdateHelper.now();
+
+		if (!signupRequestDao.validateMailAddr(mailAddr,
+				now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec),
+				numOfReq)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
 						"Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}",
