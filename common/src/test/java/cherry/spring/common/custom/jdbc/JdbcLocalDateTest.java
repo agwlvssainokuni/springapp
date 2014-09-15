@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.custom.mybatis;
+package cherry.spring.common.custom.jdbc;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -23,27 +23,28 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.spring.common.db.gen.dto.ConversionTest;
-import cherry.spring.common.db.gen.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class JodaLocalDateTimeTypeHandlerTest {
-
-	@Autowired
-	private ConversionTestMapper mapper;
+public class JdbcLocalDateTest {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+	@Autowired
+	private JdbcDao jdbcDao;
 
 	@After
 	public void after() {
@@ -53,34 +54,38 @@ public class JodaLocalDateTimeTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		LocalDateTime orig = LocalDateTime.now();
+		LocalDate orig = LocalDate.now();
 		ConversionTest record = new ConversionTest();
-		record.setJodaDatetime(orig);
+		record.setJodaDate(orig);
 
-		int count = mapper.insert(record);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = jdbcDao.insert(record, keyHolder);
+
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<ConversionTest> list = jdbcDao.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDatetime(), is(orig));
+		assertThat(r.getJodaDate(), is(orig));
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1d() {
-		LocalDateTime orig = LocalDateTime.now().plusDays(1);
+		LocalDate orig = LocalDate.now().plusDays(1);
 		ConversionTest record = new ConversionTest();
-		record.setJodaDatetime(orig);
+		record.setJodaDate(orig);
 
-		int count = mapper.insert(record);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = jdbcDao.insert(record, keyHolder);
+
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<ConversionTest> list = jdbcDao.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDatetime(), is(orig));
+		assertThat(r.getJodaDate(), is(orig));
 	}
 
 }

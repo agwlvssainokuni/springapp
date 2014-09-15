@@ -68,7 +68,7 @@ public class JodaLocalDateTypeHandlerTest {
 	}
 
 	@Test
-	public void testSaveAndLoad_TOMORROW() {
+	public void testSaveAndLoad_plus1d() {
 		LocalDate orig = LocalDate.now().plusDays(1);
 		ConversionTest record = new ConversionTest();
 		record.setJodaDate(orig);
