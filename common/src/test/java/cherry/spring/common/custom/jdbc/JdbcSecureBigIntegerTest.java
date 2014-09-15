@@ -20,6 +20,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,13 +35,12 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.custom.SecureString;
+import cherry.spring.common.custom.SecureBigInteger;
 import cherry.spring.common.db.gen.dto.ConversionTest;
-import cherry.spring.common.lib.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class JdbcSecureStringTest {
+public class JdbcSecureBigIntegerTest {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -53,7 +54,7 @@ public class JdbcSecureStringTest {
 	@Autowired
 	private JdbcSql jdbcSql;
 
-	private RandomUtil random = new RandomUtil();
+	private SecureRandom random = new SecureRandom();
 
 	@After
 	public void after() {
@@ -63,9 +64,9 @@ public class JdbcSecureStringTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		String plain = random.randomString(32);
+		BigInteger plain = BigInteger.valueOf(random.nextLong());
 		ConversionTest record = new ConversionTest();
-		record.setSecStr(SecureString.plainValueOf(plain));
+		record.setSecBigint(SecureBigInteger.plainValueOf(plain));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(jdbcSql.getInsertSql(),
@@ -79,7 +80,7 @@ public class JdbcSecureStringTest {
 				rowMapperCreator.create(ConversionTest.class));
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getSecStr().plain(), is(plain));
+		assertThat(r.getSecBigint().plain(), is(plain));
 	}
 
 }
