@@ -25,7 +25,7 @@ public class FlagCodeTest {
 
 	@Test
 	public void test() {
-		for (int i = -1024 * 1024; i <= 1024 * 1024; i++) {
+		for (int i = -1024; i <= 1024; i++) {
 			FlagCode flag = FlagCode.valueOf(i);
 			if (i == 0) {
 				assertThat(flag, is(FlagCode.FALSE));
