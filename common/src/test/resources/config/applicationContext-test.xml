@@ -15,6 +15,12 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<bean id="asyncProcDao" class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
+	<bean id="asyncProcHelper" class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
+
+	<bean id="bizdateDao" class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
+	<bean id="bizdateHelper" class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
+
 	<bean id="mailMessageDao" class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
 	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 
