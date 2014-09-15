@@ -13,6 +13,8 @@ Page=メールテンプレート
 PageInfo="メールテンプレート",4,"A3Landscape",$FFFFFF
 Page=非同期処理
 PageInfo="非同期処理",4,"A3Landscape",$FFFFFF
+Page=業務日時
+PageInfo="業務日時",4,"A3Landscape",$FFFFFF
 Page=SpringApp
 PageInfo="SpringApp",4,"A3Landscape",$FFFFFF
 Domain=ID=@INT
@@ -59,6 +61,27 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=bizdatetime_master
+LName=業務日時マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="業務日付","bizdate","*日付","NOT NULL",,"CURRENT_DATE","",$FFFFFFFF,""
+Field="オフセット(日)","offset_day","@INT","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(時)","offset_hour","@INT","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(分)","offset_minute","@INT","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(秒)","offset_second","@INT","NOT NULL",,"0","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140915103013
+Position="業務日時",500,500
 
 [Entity]
 PName=user
