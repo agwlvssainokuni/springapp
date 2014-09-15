@@ -17,19 +17,29 @@
 package cherry.spring.common.custom.jdbc;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
-
-import lombok.Getter;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import cherry.spring.common.db.gen.dto.ConversionTest;
 import cherry.spring.common.helper.sql.SqlLoader;
 
 @Component
-@Getter
-public class JdbcSql implements InitializingBean {
+public class JdbcDao implements InitializingBean {
+
+	@Autowired
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+	@Autowired
+	private RowMapperCreator rowMapperCreator;
+
+	@Autowired
+	private SqlParameterSourceCreator sqlParameterSourceCreator;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -43,6 +53,16 @@ public class JdbcSql implements InitializingBean {
 		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		selectAllSql = sqlmap.get("selectAll");
 		insertSql = sqlmap.get("insert");
+	}
+
+	public List<ConversionTest> selectAll() {
+		return namedParameterJdbcOperations.query(selectAllSql,
+				rowMapperCreator.create(ConversionTest.class));
+	}
+
+	public int insert(ConversionTest record, KeyHolder keyHolder) {
+		return namedParameterJdbcOperations.update(insertSql,
+				sqlParameterSourceCreator.create(record), keyHolder);
 	}
 
 }

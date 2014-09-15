@@ -46,13 +46,7 @@ public class JdbcSecureBigDecimalTest {
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
-	private RowMapperCreator rowMapperCreator;
-
-	@Autowired
-	private SqlParameterSourceCreator sqlParameterSourceCreator;
-
-	@Autowired
-	private JdbcSql jdbcSql;
+	private JdbcDao jdbcDao;
 
 	private SecureRandom random = new SecureRandom();
 
@@ -69,15 +63,12 @@ public class JdbcSecureBigDecimalTest {
 		record.setSecBigdec(SecureBigDecimal.plainValueOf(plain));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = namedParameterJdbcOperations.update(jdbcSql.getInsertSql(),
-				sqlParameterSourceCreator.create(record), keyHolder);
+		int count = jdbcDao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = namedParameterJdbcOperations.query(
-				jdbcSql.getSelectAllSql(), new HashMap<String, Object>(),
-				rowMapperCreator.create(ConversionTest.class));
+		List<ConversionTest> list = jdbcDao.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
 		assertThat(r.getSecBigdec().plain(), is(plain));

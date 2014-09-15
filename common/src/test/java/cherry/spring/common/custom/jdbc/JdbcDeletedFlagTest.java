@@ -33,21 +33,18 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.custom.SecureString;
+import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.ConversionTest;
-import cherry.spring.common.lib.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class JdbcSecureStringTest {
+public class JdbcDeletedFlagTest {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
 	private JdbcDao jdbcDao;
-
-	private RandomUtil random = new RandomUtil();
 
 	@After
 	public void after() {
@@ -56,10 +53,9 @@ public class JdbcSecureStringTest {
 	}
 
 	@Test
-	public void testSaveAndLoad() {
-		String plain = random.randomString(32);
+	public void testSaveAndLoad_NOT_DELETED() {
 		ConversionTest record = new ConversionTest();
-		record.setSecStr(SecureString.plainValueOf(plain));
+		record.setDeletedFlg(DeletedFlag.NOT_DELETED);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = jdbcDao.insert(record, keyHolder);
@@ -70,7 +66,41 @@ public class JdbcSecureStringTest {
 		List<ConversionTest> list = jdbcDao.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getSecStr().plain(), is(plain));
+		assertThat(r.getDeletedFlg(), is(DeletedFlag.NOT_DELETED));
+	}
+
+	@Test
+	public void testSaveAndLoad_1() {
+		ConversionTest record = new ConversionTest();
+		record.setDeletedFlg(new DeletedFlag(1));
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = jdbcDao.insert(record, keyHolder);
+
+		assertThat(count, is(1));
+		assertThat(keyHolder.getKey().intValue(), is(not(0)));
+
+		List<ConversionTest> list = jdbcDao.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(1)));
+	}
+
+	@Test
+	public void testSaveAndLoad_100() {
+		ConversionTest record = new ConversionTest();
+		record.setDeletedFlg(new DeletedFlag(100));
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = jdbcDao.insert(record, keyHolder);
+
+		assertThat(count, is(1));
+		assertThat(keyHolder.getKey().intValue(), is(not(0)));
+
+		List<ConversionTest> list = jdbcDao.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(100)));
 	}
 
 }
