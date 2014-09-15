@@ -8,7 +8,7 @@ SELECT
 	offset_second,
 	CURRENT_TIMESTAMP AS current_date_time
 FROM
-	bizdate_master
+	bizdatetime_master
 WHERE
 	deleted_flg = 0;
 ORDER BY
