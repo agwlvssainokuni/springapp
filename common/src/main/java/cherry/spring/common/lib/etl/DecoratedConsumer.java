@@ -16,12 +16,9 @@
 
 package cherry.spring.common.lib.etl;
 
-import java.io.IOException;
 import java.util.Map;
 
-public class DecoratedConsumer implements Consumer {
-
-	private final Consumer delegate;
+public class DecoratedConsumer extends DelegateConsumer {
 
 	private final Map<String, Decorator> decoratorMap;
 
@@ -29,13 +26,13 @@ public class DecoratedConsumer implements Consumer {
 
 	public DecoratedConsumer(Consumer delegate,
 			Map<String, Decorator> decoratorMap) {
-		this.delegate = delegate;
+		super(delegate);
 		this.decoratorMap = decoratorMap;
 		this.decorator = null;
 	}
 
 	@Override
-	public void begin(Column[] col) throws IOException {
+	protected Column[] prepareBegin(Column[] col) {
 
 		decorator = new Decorator[col.length];
 		for (int i = 0; i < col.length; i++) {
@@ -44,12 +41,6 @@ public class DecoratedConsumer implements Consumer {
 				decorator[i] = decoratorMap.get(label);
 			} else {
 				decorator[i] = new Decorator() {
-
-					@Override
-					public String getLabel() {
-						return label;
-					}
-
 					@Override
 					public Object decorate(Object field) {
 						return field;
@@ -58,32 +49,21 @@ public class DecoratedConsumer implements Consumer {
 			}
 		}
 
-		Column[] adjusted = new Column[col.length];
-		for (int i = 0; i < col.length; i++) {
-			adjusted[i] = new Column();
-			if (decorator[i].getLabel() == null) {
-				adjusted[i].setLabel(col[i].getLabel());
-			} else {
-				adjusted[i].setLabel(decorator[i].getLabel());
-			}
-			adjusted[i].setType(col[i].getType());
-		}
-
-		delegate.begin(adjusted);
+		return col;
 	}
 
 	@Override
-	public void consume(Object[] record) throws IOException {
+	protected Object[] prepareConsume(Object[] record) {
 		Object[] adjusted = new Object[record.length];
 		for (int i = 0; i < record.length; i++) {
 			adjusted[i] = decorator[i].decorate(record[i]);
 		}
-		delegate.consume(adjusted);
+		return adjusted;
 	}
 
 	@Override
-	public void end() throws IOException {
-		delegate.end();
+	protected void prepareEnd() {
+		// NOTHING
 	}
 
 }

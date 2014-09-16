@@ -18,8 +18,6 @@ package cherry.spring.common.lib.etl;
 
 public interface Decorator {
 
-	String getLabel();
-
 	Object decorate(Object field);
 
 }

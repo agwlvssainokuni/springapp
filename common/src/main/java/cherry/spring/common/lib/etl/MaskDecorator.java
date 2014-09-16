@@ -18,17 +18,11 @@ package cherry.spring.common.lib.etl;
 
 public class MaskDecorator implements Decorator {
 
-	private String label;
-
 	private int maskBegin = 1;
 
 	private int maskEnd = 0;
 
 	private String maskChar = "X";
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
 
 	public void setMaskBegin(int maskBegin) {
 		this.maskBegin = maskBegin;
@@ -43,25 +37,18 @@ public class MaskDecorator implements Decorator {
 	}
 
 	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
 	public Object decorate(Object field) {
 		if (field == null) {
 			return null;
 		}
 		String s = field.toString();
 		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < maskBegin; i++) {
-			builder.append(s.charAt(i));
-		}
-		for (int i = maskBegin; i < s.length() - maskEnd; i++) {
-			builder.append(maskChar);
-		}
-		for (int i = s.length() - maskEnd; i < s.length(); i++) {
-			builder.append(s.charAt(i));
+		for (int i = 0; i < s.length(); i++) {
+			if (i >= maskBegin && i < s.length() - maskEnd) {
+				builder.append(maskChar);
+			} else {
+				builder.append(s.charAt(i));
+			}
 		}
 		return builder.toString();
 	}
