@@ -31,6 +31,33 @@ task mbgenerator << {
 }
 mbgenerator.dependsOn flywayMigrate
 
+task querydsl << {
+	configurations { antTask }
+	dependencies {
+		antTask "com.h2database:h2:1.4.180"
+		antTask "com.vividsolutions:jts:1.11"
+		antTask "com.mysema.querydsl:querydsl-sql:3.4.3"
+		antTask "com.mysema.querydsl:querydsl-sql-codegen:3.4.3"
+	}
+	ant {
+		taskdef(name: "antMetaDataExporter",
+			classname: "com.mysema.query.sql.ant.AntMetaDataExporter",
+			classpath: configurations.antTask.asPath)
+		antMetaDataExporter(
+			jdbcDriverClass: "org.h2.Driver",
+			dbUrl: "jdbc:h2:./dbschema/build/mbgenerator",
+			dbUserName: "sa",
+			targetPackage: "cherry.spring.common.db.gen.query",
+			beanTargetPackage: "cherry.spring.common.db.gen.query",
+			targetSourceFolder: "common/src/querydsl/java",
+			lowerCase: true,
+			exportBeans: false,
+			sourceEncoding: "UTF-8"
+			)
+	}
+}
+querydsl.dependsOn flywayMigrate
+
 task h2start(dependsOn: "classes", type: JavaExec) {
 	main = "org.h2.tools.Server"
 	classpath = buildscript.configurations.classpath + sourceSets.main.runtimeClasspath

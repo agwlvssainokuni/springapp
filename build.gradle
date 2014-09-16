@@ -15,9 +15,11 @@ subprojects {
 
 	sourceSets.main {
 		java.srcDir "src/generated/java"
+		java.srcDir "src/querydsl/java"
 		resources {
 			srcDir "src/main/java"
 			srcDir "src/generated/java"
+			srcDir "src/querydsl/java"
 		}
 	}
 	sourceSets.test.resources.srcDir "src/test/java"
