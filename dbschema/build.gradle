@@ -2,7 +2,9 @@ apply plugin: "eclipse-wtp"
 apply plugin: 'flyway'
 
 buildscript {
-	repositories { mavenCentral() }
+	repositories {
+		mavenCentral()
+	}
 	dependencies {
 		classpath "com.h2database:h2:1.4.180"
 		classpath "org.flywaydb:flyway-gradle-plugin:3.0"
