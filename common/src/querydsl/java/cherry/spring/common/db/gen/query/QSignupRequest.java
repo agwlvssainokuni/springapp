@@ -24,9 +24,9 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<Sign
 
     public static final QSignupRequest signupRequest = new QSignupRequest("SIGNUP_REQUEST");
 
-    public final DateTimePath<java.sql.Timestamp> appliedAt = createDateTime("appliedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> appliedAt = createDateTime("appliedAt", org.joda.time.LocalDateTime.class);
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
@@ -38,7 +38,7 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<Sign
 
     public final StringPath token = createString("token");
 
-    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
     public final com.mysema.query.sql.PrimaryKey<SignupRequest> signupRequestPkc = createPrimaryKey(id);
 

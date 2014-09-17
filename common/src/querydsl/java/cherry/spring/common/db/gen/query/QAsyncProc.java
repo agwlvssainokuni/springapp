@@ -24,15 +24,15 @@ public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<AsyncPro
 
     public static final QAsyncProc asyncProc = new QAsyncProc("ASYNC_PROC");
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final DateTimePath<java.sql.Timestamp> finishedAt = createDateTime("finishedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> finishedAt = createDateTime("finishedAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
-    public final DateTimePath<java.sql.Timestamp> invokedAt = createDateTime("invokedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> invokedAt = createDateTime("invokedAt", org.joda.time.LocalDateTime.class);
 
     public final StringPath launcherId = createString("launcherId");
 
@@ -40,15 +40,15 @@ public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<AsyncPro
 
     public final StringPath name = createString("name");
 
-    public final DateTimePath<java.sql.Timestamp> registeredAt = createDateTime("registeredAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> registeredAt = createDateTime("registeredAt", org.joda.time.LocalDateTime.class);
 
     public final StringPath result = createString("result");
 
-    public final DateTimePath<java.sql.Timestamp> startedAt = createDateTime("startedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> startedAt = createDateTime("startedAt", org.joda.time.LocalDateTime.class);
 
     public final StringPath status = createString("status");
 
-    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
     public final com.mysema.query.sql.PrimaryKey<AsyncProc> asyncProcPkc = createPrimaryKey(id);
 

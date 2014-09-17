@@ -26,7 +26,7 @@ public class QMailTemplateText extends com.mysema.query.sql.RelationalPathBase<M
 
     public final StringPath body = createString("body");
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
@@ -40,7 +40,7 @@ public class QMailTemplateText extends com.mysema.query.sql.RelationalPathBase<M
 
     public final StringPath subject = createString("subject");
 
-    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
     public final com.mysema.query.sql.PrimaryKey<MailTemplateText> mailTemplateTextPkc = createPrimaryKey(id);
 

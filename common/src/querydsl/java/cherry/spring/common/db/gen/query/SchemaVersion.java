@@ -16,7 +16,7 @@ public class SchemaVersion {
 
     private String installedBy;
 
-    private java.sql.Timestamp installedOn;
+    private org.joda.time.LocalDateTime installedOn;
 
     private Integer installedRank;
 
@@ -62,11 +62,11 @@ public class SchemaVersion {
         this.installedBy = installedBy;
     }
 
-    public java.sql.Timestamp getInstalledOn() {
+    public org.joda.time.LocalDateTime getInstalledOn() {
         return installedOn;
     }
 
-    public void setInstalledOn(java.sql.Timestamp installedOn) {
+    public void setInstalledOn(org.joda.time.LocalDateTime installedOn) {
         this.installedOn = installedOn;
     }
 

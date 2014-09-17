@@ -32,7 +32,7 @@ public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<Sche
 
     public final StringPath installedBy = createString("installedBy");
 
-    public final DateTimePath<java.sql.Timestamp> installedOn = createDateTime("installedOn", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> installedOn = createDateTime("installedOn", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> installedRank = createNumber("installedRank", Integer.class);
 

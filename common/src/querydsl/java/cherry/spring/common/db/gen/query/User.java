@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class User {
 
-    private java.sql.Timestamp createdAt;
+    private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
@@ -24,15 +24,15 @@ public class User {
 
     private String password;
 
-    private java.sql.Timestamp registeredAt;
+    private org.joda.time.LocalDateTime registeredAt;
 
-    private java.sql.Timestamp updatedAt;
+    private org.joda.time.LocalDateTime updatedAt;
 
-    public java.sql.Timestamp getCreatedAt() {
+    public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(java.sql.Timestamp createdAt) {
+    public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -92,19 +92,19 @@ public class User {
         this.password = password;
     }
 
-    public java.sql.Timestamp getRegisteredAt() {
+    public org.joda.time.LocalDateTime getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(java.sql.Timestamp registeredAt) {
+    public void setRegisteredAt(org.joda.time.LocalDateTime registeredAt) {
         this.registeredAt = registeredAt;
     }
 
-    public java.sql.Timestamp getUpdatedAt() {
+    public org.joda.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(java.sql.Timestamp updatedAt) {
+    public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

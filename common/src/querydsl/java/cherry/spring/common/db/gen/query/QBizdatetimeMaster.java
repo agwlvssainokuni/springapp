@@ -24,9 +24,9 @@ public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<
 
     public static final QBizdatetimeMaster bizdatetimeMaster = new QBizdatetimeMaster("BIZDATETIME_MASTER");
 
-    public final DatePath<java.sql.Date> bizdate = createDate("bizdate", java.sql.Date.class);
+    public final DatePath<org.joda.time.LocalDate> bizdate = createDate("bizdate", org.joda.time.LocalDate.class);
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
@@ -42,7 +42,7 @@ public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<
 
     public final NumberPath<Integer> offsetSecond = createNumber("offsetSecond", Integer.class);
 
-    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
     public final com.mysema.query.sql.PrimaryKey<BizdatetimeMaster> bizdatetimeMasterPkc = createPrimaryKey(id);
 

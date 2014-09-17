@@ -10,7 +10,7 @@ public class MailTemplateText {
 
     private String body;
 
-    private java.sql.Timestamp createdAt;
+    private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
@@ -24,7 +24,7 @@ public class MailTemplateText {
 
     private String subject;
 
-    private java.sql.Timestamp updatedAt;
+    private org.joda.time.LocalDateTime updatedAt;
 
     public String getBody() {
         return body;
@@ -34,11 +34,11 @@ public class MailTemplateText {
         this.body = body;
     }
 
-    public java.sql.Timestamp getCreatedAt() {
+    public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(java.sql.Timestamp createdAt) {
+    public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -90,11 +90,11 @@ public class MailTemplateText {
         this.subject = subject;
     }
 
-    public java.sql.Timestamp getUpdatedAt() {
+    public org.joda.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(java.sql.Timestamp updatedAt) {
+    public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

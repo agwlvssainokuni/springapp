@@ -24,7 +24,7 @@ public class QUser extends com.mysema.query.sql.RelationalPathBase<User> {
 
     public static final QUser user = new QUser("USER");
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
@@ -40,9 +40,9 @@ public class QUser extends com.mysema.query.sql.RelationalPathBase<User> {
 
     public final StringPath password = createString("password");
 
-    public final DateTimePath<java.sql.Timestamp> registeredAt = createDateTime("registeredAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> registeredAt = createDateTime("registeredAt", org.joda.time.LocalDateTime.class);
 
-    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+    public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
     public final com.mysema.query.sql.PrimaryKey<User> userPkc = createPrimaryKey(id);
 

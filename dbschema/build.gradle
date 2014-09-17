@@ -1,5 +1,10 @@
 apply plugin: "eclipse-wtp"
-apply plugin: 'flyway'
+apply plugin: "flyway"
+apply plugin: "querydsl"
+
+import com.mysema.query.sql.types.LocalDateTimeType;
+import com.mysema.query.sql.types.LocalDateType;
+import com.mysema.query.sql.types.LocalTimeType;
 
 buildscript {
 	repositories { mavenCentral() }
@@ -31,27 +36,21 @@ task mbgenerator << {
 }
 mbgenerator.dependsOn flywayMigrate
 
-task querydsl << {
-	configurations { antTask }
-	dependencies {
-		antTask "com.h2database:h2:1.4.180"
-		antTask "com.vividsolutions:jts:1.11"
-		antTask "com.mysema.querydsl:querydsl-sql-codegen:3.4.3"
+querydslconfig {
+	jdbcDriverClass = "org.h2.Driver"
+	dbUrl = "jdbc:h2:./dbschema/build/mbgenerator"
+	dbUsername = "sa"
+	exporter {
+		packageName = "cherry.spring.common.db.gen.query"
+		beanPackageName = "cherry.spring.common.db.gen.query"
+		targetFolder = new java.io.File("common/src/querydsl/java")
+		beanSerializer = new com.mysema.query.codegen.BeanSerializer()
+		sourceEncoding = "UTF-8"
 	}
-	ant {
-		taskdef(name: "antMetaDataExporter",
-			classname: "com.mysema.query.sql.ant.AntMetaDataExporter",
-			classpath: configurations.antTask.asPath)
-		antMetaDataExporter(
-				jdbcDriverClass: "org.h2.Driver",
-				dbUrl: "jdbc:h2:./dbschema/build/mbgenerator",
-				dbUserName: "sa",
-				targetPackage: "cherry.spring.common.db.gen.query",
-				beanTargetPackage: "cherry.spring.common.db.gen.query",
-				targetSourceFolder: "common/src/querydsl/java",
-				exportBeans: true,
-				sourceEncoding: "UTF-8"
-				)
+	configuration {
+		register(new LocalDateType());
+		register(new LocalTimeType());
+		register(new LocalDateTimeType());
 	}
 }
 querydsl.dependsOn flywayMigrate

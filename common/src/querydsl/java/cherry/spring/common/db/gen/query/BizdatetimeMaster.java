@@ -8,9 +8,9 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class BizdatetimeMaster {
 
-    private java.sql.Date bizdate;
+    private org.joda.time.LocalDate bizdate;
 
-    private java.sql.Timestamp createdAt;
+    private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
@@ -26,21 +26,21 @@ public class BizdatetimeMaster {
 
     private Integer offsetSecond;
 
-    private java.sql.Timestamp updatedAt;
+    private org.joda.time.LocalDateTime updatedAt;
 
-    public java.sql.Date getBizdate() {
+    public org.joda.time.LocalDate getBizdate() {
         return bizdate;
     }
 
-    public void setBizdate(java.sql.Date bizdate) {
+    public void setBizdate(org.joda.time.LocalDate bizdate) {
         this.bizdate = bizdate;
     }
 
-    public java.sql.Timestamp getCreatedAt() {
+    public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(java.sql.Timestamp createdAt) {
+    public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -100,11 +100,11 @@ public class BizdatetimeMaster {
         this.offsetSecond = offsetSecond;
     }
 
-    public java.sql.Timestamp getUpdatedAt() {
+    public org.joda.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(java.sql.Timestamp updatedAt) {
+    public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -8,15 +8,15 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class AsyncProc {
 
-    private java.sql.Timestamp createdAt;
+    private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
-    private java.sql.Timestamp finishedAt;
+    private org.joda.time.LocalDateTime finishedAt;
 
     private Integer id;
 
-    private java.sql.Timestamp invokedAt;
+    private org.joda.time.LocalDateTime invokedAt;
 
     private String launcherId;
 
@@ -24,21 +24,21 @@ public class AsyncProc {
 
     private String name;
 
-    private java.sql.Timestamp registeredAt;
+    private org.joda.time.LocalDateTime registeredAt;
 
     private String result;
 
-    private java.sql.Timestamp startedAt;
+    private org.joda.time.LocalDateTime startedAt;
 
     private String status;
 
-    private java.sql.Timestamp updatedAt;
+    private org.joda.time.LocalDateTime updatedAt;
 
-    public java.sql.Timestamp getCreatedAt() {
+    public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(java.sql.Timestamp createdAt) {
+    public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -50,11 +50,11 @@ public class AsyncProc {
         this.deletedFlg = deletedFlg;
     }
 
-    public java.sql.Timestamp getFinishedAt() {
+    public org.joda.time.LocalDateTime getFinishedAt() {
         return finishedAt;
     }
 
-    public void setFinishedAt(java.sql.Timestamp finishedAt) {
+    public void setFinishedAt(org.joda.time.LocalDateTime finishedAt) {
         this.finishedAt = finishedAt;
     }
 
@@ -66,11 +66,11 @@ public class AsyncProc {
         this.id = id;
     }
 
-    public java.sql.Timestamp getInvokedAt() {
+    public org.joda.time.LocalDateTime getInvokedAt() {
         return invokedAt;
     }
 
-    public void setInvokedAt(java.sql.Timestamp invokedAt) {
+    public void setInvokedAt(org.joda.time.LocalDateTime invokedAt) {
         this.invokedAt = invokedAt;
     }
 
@@ -98,11 +98,11 @@ public class AsyncProc {
         this.name = name;
     }
 
-    public java.sql.Timestamp getRegisteredAt() {
+    public org.joda.time.LocalDateTime getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(java.sql.Timestamp registeredAt) {
+    public void setRegisteredAt(org.joda.time.LocalDateTime registeredAt) {
         this.registeredAt = registeredAt;
     }
 
@@ -114,11 +114,11 @@ public class AsyncProc {
         this.result = result;
     }
 
-    public java.sql.Timestamp getStartedAt() {
+    public org.joda.time.LocalDateTime getStartedAt() {
         return startedAt;
     }
 
-    public void setStartedAt(java.sql.Timestamp startedAt) {
+    public void setStartedAt(org.joda.time.LocalDateTime startedAt) {
         this.startedAt = startedAt;
     }
 
@@ -130,11 +130,11 @@ public class AsyncProc {
         this.status = status;
     }
 
-    public java.sql.Timestamp getUpdatedAt() {
+    public org.joda.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(java.sql.Timestamp updatedAt) {
+    public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
