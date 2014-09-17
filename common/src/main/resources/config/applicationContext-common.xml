@@ -88,6 +88,11 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
+	<bean id="queryDslJdbcOperations"
+		class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
 	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
 
 	<bean class="cherry.spring.common.custom.SecureString"
