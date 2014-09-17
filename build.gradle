@@ -24,10 +24,7 @@ subprojects {
 	}
 	sourceSets.test.resources.srcDir "src/test/java"
 
-	repositories {
-		mavenCentral()
-		maven { url "http://repository.jboss.org/nexus/content/repositories/public/" }
-	}
+	repositories { mavenCentral() }
 
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
