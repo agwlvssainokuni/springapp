@@ -15,36 +15,77 @@ import java.sql.Types;
 
 
 /**
- * QAsyncProc is a Querydsl query type for QAsyncProc
+ * QAsyncProc is a Querydsl query type for AsyncProc
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<QAsyncProc> {
+public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<AsyncProc> {
 
-    private static final long serialVersionUID = 1169262142;
+    private static final long serialVersionUID = -686189419;
 
-    public static final QAsyncProc asyncProc = new QAsyncProc("async_proc");
+    public static final QAsyncProc asyncProc = new QAsyncProc("ASYNC_PROC");
+
+    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+
+    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
+
+    public final DateTimePath<java.sql.Timestamp> finishedAt = createDateTime("finishedAt", java.sql.Timestamp.class);
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final DateTimePath<java.sql.Timestamp> invokedAt = createDateTime("invokedAt", java.sql.Timestamp.class);
+
+    public final StringPath launcherId = createString("launcherId");
+
+    public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
+
+    public final StringPath name = createString("name");
+
+    public final DateTimePath<java.sql.Timestamp> registeredAt = createDateTime("registeredAt", java.sql.Timestamp.class);
+
+    public final StringPath result = createString("result");
+
+    public final DateTimePath<java.sql.Timestamp> startedAt = createDateTime("startedAt", java.sql.Timestamp.class);
+
+    public final StringPath status = createString("status");
+
+    public final DateTimePath<java.sql.Timestamp> updatedAt = createDateTime("updatedAt", java.sql.Timestamp.class);
+
+    public final com.mysema.query.sql.PrimaryKey<AsyncProc> asyncProcPkc = createPrimaryKey(id);
 
     public QAsyncProc(String variable) {
-        super(QAsyncProc.class, forVariable(variable), "public", "async_proc");
+        super(AsyncProc.class, forVariable(variable), "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 
     public QAsyncProc(String variable, String schema, String table) {
-        super(QAsyncProc.class, forVariable(variable), schema, table);
+        super(AsyncProc.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QAsyncProc(Path<? extends QAsyncProc> path) {
-        super(path.getType(), path.getMetadata(), "public", "async_proc");
+    public QAsyncProc(Path<? extends AsyncProc> path) {
+        super(path.getType(), path.getMetadata(), "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 
     public QAsyncProc(PathMetadata<?> metadata) {
-        super(QAsyncProc.class, metadata, "public", "async_proc");
+        super(AsyncProc.class, metadata, "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 
     public void addMetadata() {
+        addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(11).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(13).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(finishedAt, ColumnMetadata.named("FINISHED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(invokedAt, ColumnMetadata.named("INVOKED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
+        addMetadata(launcherId, ColumnMetadata.named("LAUNCHER_ID").withIndex(2).ofType(Types.VARCHAR).withSize(512).notNull());
+        addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(12).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(name, ColumnMetadata.named("NAME").withIndex(3).ofType(Types.VARCHAR).withSize(32).notNull());
+        addMetadata(registeredAt, ColumnMetadata.named("REGISTERED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(result, ColumnMetadata.named("RESULT").withIndex(9).ofType(Types.VARCHAR).withSize(4096));
+        addMetadata(startedAt, ColumnMetadata.named("STARTED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
+        addMetadata(status, ColumnMetadata.named("STATUS").withIndex(4).ofType(Types.VARCHAR).withSize(32).notNull());
+        addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(10).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 
 }

@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QSchemaVersion is a Querydsl query type for QSchemaVersion
+ * QSchemaVersion is a Querydsl query type for SchemaVersion
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<QSchemaVersion> {
+public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<SchemaVersion> {
 
-    private static final long serialVersionUID = 279583811;
+    private static final long serialVersionUID = 2015700762;
 
     public static final QSchemaVersion schemaVersion = new QSchemaVersion("schema_version");
 
@@ -46,25 +46,25 @@ public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<QSch
 
     public final NumberPath<Integer> versionRank = createNumber("versionRank", Integer.class);
 
-    public final com.mysema.query.sql.PrimaryKey<QSchemaVersion> schemaVersionPk = createPrimaryKey(version);
+    public final com.mysema.query.sql.PrimaryKey<SchemaVersion> schemaVersionPk = createPrimaryKey(version);
 
     public QSchemaVersion(String variable) {
-        super(QSchemaVersion.class, forVariable(variable), "public", "schema_version");
+        super(SchemaVersion.class, forVariable(variable), "PUBLIC", "schema_version");
         addMetadata();
     }
 
     public QSchemaVersion(String variable, String schema, String table) {
-        super(QSchemaVersion.class, forVariable(variable), schema, table);
+        super(SchemaVersion.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QSchemaVersion(Path<? extends QSchemaVersion> path) {
-        super(path.getType(), path.getMetadata(), "public", "schema_version");
+    public QSchemaVersion(Path<? extends SchemaVersion> path) {
+        super(path.getType(), path.getMetadata(), "PUBLIC", "schema_version");
         addMetadata();
     }
 
     public QSchemaVersion(PathMetadata<?> metadata) {
-        super(QSchemaVersion.class, metadata, "public", "schema_version");
+        super(SchemaVersion.class, metadata, "PUBLIC", "schema_version");
         addMetadata();
     }
 
