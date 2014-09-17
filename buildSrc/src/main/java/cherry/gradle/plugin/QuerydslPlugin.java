@@ -30,17 +30,16 @@ public class QuerydslPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		final QuerydslExtension ext = project.getExtensions().create(
-				"querydslconfig", QuerydslExtension.class);
-		project.getTasks().create("querydsl").doLast(new Closure<Void>(this) {
+				"querydsl", QuerydslExtension.class);
+		project.task("querydslgen").doLast(new Closure<Void>(this) {
 			@Override
 			public Void call() {
 				ext.getMetaDataExporter().setConfiguration(
 						ext.getConfiguration());
 				try {
-					Class.forName(ext.getJdbcDriverClass());
+					Class.forName(ext.getDriver());
 					try (Connection c = DriverManager.getConnection(
-							ext.getDbUrl(), ext.getDbUsername(),
-							ext.getDbPassword())) {
+							ext.getUrl(), ext.getUser(), ext.getPassword())) {
 						ext.getMetaDataExporter().export(c.getMetaData());
 					}
 					return null;

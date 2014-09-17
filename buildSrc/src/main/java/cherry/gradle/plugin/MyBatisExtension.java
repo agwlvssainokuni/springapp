@@ -16,13 +16,9 @@
 
 package cherry.gradle.plugin;
 
-import groovy.lang.Closure;
+import java.io.File;
 
-import com.mysema.query.sql.Configuration;
-import com.mysema.query.sql.SQLTemplates;
-import com.mysema.query.sql.codegen.MetaDataExporter;
-
-public class QuerydslExtension {
+public class MyBatisExtension {
 
 	private String driver;
 
@@ -32,20 +28,11 @@ public class QuerydslExtension {
 
 	private String password;
 
-	private final MetaDataExporter metaDataExporter = new MetaDataExporter();
+	private File configFile;
 
-	private final Configuration configuration = new Configuration(
-			SQLTemplates.DEFAULT);
+	private boolean overwrite;
 
-	public <T> T exporter(Closure<T> action) {
-		action.setDelegate(metaDataExporter);
-		return action.call();
-	}
-
-	public <T> T configuration(Closure<T> action) {
-		action.setDelegate(configuration);
-		return action.call();
-	}
+	private boolean verbose;
 
 	public String getDriver() {
 		return driver;
@@ -79,12 +66,28 @@ public class QuerydslExtension {
 		this.password = password;
 	}
 
-	public MetaDataExporter getMetaDataExporter() {
-		return metaDataExporter;
+	public File getConfigFile() {
+		return configFile;
 	}
 
-	public Configuration getConfiguration() {
-		return configuration;
+	public void setConfigFile(File configFile) {
+		this.configFile = configFile;
+	}
+
+	public boolean isOverwrite() {
+		return overwrite;
+	}
+
+	public void setOverwrite(boolean overwrite) {
+		this.overwrite = overwrite;
+	}
+
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
 	}
 
 }
