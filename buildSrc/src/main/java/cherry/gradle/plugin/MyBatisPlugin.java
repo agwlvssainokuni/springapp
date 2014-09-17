@@ -27,8 +27,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
@@ -44,19 +42,11 @@ public class MyBatisPlugin implements Plugin<Project> {
 		project.task("mybatisgen").doLast(new Closure<Void>(this) {
 			@Override
 			public Void call() {
-				JDBCConnectionConfiguration conn = new JDBCConnectionConfiguration();
-				conn.setDriverClass(ext.getDriver());
-				conn.setConnectionURL(ext.getUrl());
-				conn.setUserId(ext.getUser());
-				conn.setPassword(ext.getPassword());
 				try {
 					List<String> warnings = new ArrayList<String>();
 					ConfigurationParser cp = new ConfigurationParser(warnings);
 					Configuration config = cp.parseConfiguration(ext
 							.getConfigFile());
-					for (Context ctx : config.getContexts()) {
-						ctx.setJdbcConnectionConfiguration(conn);
-					}
 					DefaultShellCallback callback = new DefaultShellCallback(
 							ext.isOverwrite());
 					MyBatisGenerator myBatisGenerator = new MyBatisGenerator(
