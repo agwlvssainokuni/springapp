@@ -18,9 +18,11 @@ package cherry.gradle.plugin;
 
 import groovy.lang.Closure;
 
+import com.mysema.query.sql.Configuration;
+import com.mysema.query.sql.SQLTemplates;
 import com.mysema.query.sql.codegen.MetaDataExporter;
 
-public class QuerydslCodegenExtension {
+public class QuerydslExtension {
 
 	private String jdbcDriverClass;
 
@@ -32,8 +34,16 @@ public class QuerydslCodegenExtension {
 
 	private final MetaDataExporter metaDataExporter = new MetaDataExporter();
 
+	private final Configuration configuration = new Configuration(
+			SQLTemplates.DEFAULT);
+
 	public <T> T exporter(Closure<T> action) {
 		action.setDelegate(metaDataExporter);
+		return action.call();
+	}
+
+	public <T> T configuration(Closure<T> action) {
+		action.setDelegate(configuration);
 		return action.call();
 	}
 
@@ -71,6 +81,10 @@ public class QuerydslCodegenExtension {
 
 	public MetaDataExporter getMetaDataExporter() {
 		return metaDataExporter;
+	}
+
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
 }
