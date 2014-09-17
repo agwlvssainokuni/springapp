@@ -1,7 +1,12 @@
 apply plugin: "groovy"
 apply plugin: "eclipse"
 
+repositories { mavenCentral() }
+
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
+	compile "com.h2database:h2:1.4.180"
+	compile "com.vividsolutions:jts:1.11"
+	compile "com.mysema.querydsl:querydsl-sql-codegen:3.4.3"
 }
