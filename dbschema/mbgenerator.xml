@@ -19,11 +19,11 @@
 		<jdbcConnection driverClass="org.h2.Driver"
 			connectionURL="jdbc:h2:./dbschema/build/mbgenerator" userId="sa" />
 		<javaModelGenerator targetPackage="cherry.spring.common.db.gen.dto"
-			targetProject="common/src/generated/java" />
+			targetProject="common/src/mybatis/java" />
 		<sqlMapGenerator targetPackage="cherry.spring.common.db.gen.mapper"
-			targetProject="common/src/generated/java" />
+			targetProject="common/src/mybatis/java" />
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
-			type="ANNOTATEDMAPPER" targetProject="common/src/generated/java" />
+			type="ANNOTATEDMAPPER" targetProject="common/src/mybatis/java" />
 		<table tableName="user">
 			<generatedKey column="id" sqlStatement="JDBC" />
 			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />

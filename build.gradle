@@ -14,11 +14,11 @@ subprojects {
 	compileTestJava.options.encoding = "UTF-8"
 
 	sourceSets.main {
-		java.srcDir "src/generated/java"
+		java.srcDir "src/mybatis/java"
 		java.srcDir "src/querydsl/java"
 		resources {
 			srcDir "src/main/java"
-			srcDir "src/generated/java"
+			srcDir "src/mybatis/java"
 			srcDir "src/querydsl/java"
 		}
 	}
