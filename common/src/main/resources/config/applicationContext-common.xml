@@ -88,9 +88,11 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="queryDslJdbcOperations"
-		class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+	<bean id="sqlQueryOperations" class="cherry.spring.common.lib.querydsl.SQLQueryTemplate">
 		<constructor-arg ref="dataSource" />
+		<constructor-arg>
+			<bean class="com.mysema.query.sql.H2Templates" />
+		</constructor-arg>
 	</bean>
 
 	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
