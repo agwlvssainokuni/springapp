@@ -3,10 +3,6 @@ apply plugin: "flyway"
 apply plugin: "mybatis"
 apply plugin: "querydsl"
 
-import com.mysema.query.sql.types.LocalDateTimeType;
-import com.mysema.query.sql.types.LocalDateType;
-import com.mysema.query.sql.types.LocalTimeType;
-
 buildscript {
 	repositories { mavenCentral() }
 	dependencies {
@@ -42,9 +38,9 @@ querydsl {
 		sourceEncoding = "UTF-8"
 	}
 	configuration {
-		register(new LocalDateType());
-		register(new LocalTimeType());
-		register(new LocalDateTimeType());
+		register(new com.mysema.query.sql.types.LocalDateType());
+		register(new com.mysema.query.sql.types.LocalTimeType());
+		register(new com.mysema.query.sql.types.LocalDateTimeType());
 	}
 }
 
