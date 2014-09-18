@@ -17,9 +17,6 @@
 package cherry.spring.common.lib.etl;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -53,46 +50,13 @@ public class ExtractorImpl implements Extractor {
 	 */
 	@Override
 	public int extract(DataSource dataSource, String sql,
-			Map<String, ?> paramMap, final Consumer consumer,
-			final Limiter limiter) throws LimiterException, IOException {
+			Map<String, ?> paramMap, Consumer consumer, Limiter limiter)
+			throws LimiterException, IOException {
 
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
 				dataSource);
-		ResultSetExtractor<Integer> extractor = new ResultSetExtractor<Integer>() {
-			@Override
-			public Integer extractData(ResultSet rs) throws SQLException {
-				try {
-
-					ResultSetMetaData metaData = rs.getMetaData();
-					Column[] col = new Column[metaData.getColumnCount()];
-					for (int i = 1; i <= col.length; i++) {
-						col[i - 1] = new Column();
-						col[i - 1].setType(metaData.getColumnType(i));
-						col[i - 1].setLabel(metaData.getColumnLabel(i));
-					}
-
-					consumer.begin(col);
-
-					int count;
-					for (count = 0; rs.next(); count++) {
-
-						Object[] record = new Object[col.length];
-						for (int i = 1; i <= record.length; i++) {
-							record[i - 1] = rs.getObject(i);
-						}
-
-						consumer.consume(record);
-						limiter.tick();
-					}
-
-					consumer.end();
-					return count;
-
-				} catch (IOException ex) {
-					throw new IllegalStateException(ex);
-				}
-			}
-		};
+		ResultSetExtractor<Integer> extractor = new ExtractorResultSetExtractor(
+				consumer, limiter);
 
 		limiter.start();
 		try {
