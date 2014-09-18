@@ -14,14 +14,30 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.querydsl;
+package cherry.spring.common.lib.querydsl;
+
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.Expression;
 
-public interface SQLQueryConfigurer {
+public interface SQLQueryOperations {
 
-	SQLQuery configure(SQLQuery query);
+	JdbcOperations getJdbcOperations();
 
-	SQLQuery orderBy(SQLQuery query);
+	SQLQuery createSQLQuery();
+
+	long count(SQLQuery sqlQuery);
+
+	<T> List<T> query(SQLQuery sqlQuery, RowMapper<T> rowMapper,
+			Expression<?>... projection);
+
+	<T> T queryForObject(SQLQuery sqlQuery,
+			ResultSetExtractor<T> resultSetExtractor,
+			Expression<?>... projection);
 
 }

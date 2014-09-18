@@ -17,23 +17,19 @@
 package cherry.spring.common.helper.querydsl;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import cherry.spring.common.lib.etl.Column;
 import cherry.spring.common.lib.etl.Consumer;
+import cherry.spring.common.lib.etl.ExtractorResultSetExtractor;
 import cherry.spring.common.lib.etl.Limiter;
 import cherry.spring.common.lib.etl.LimiterException;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.spring.common.lib.querydsl.SQLQueryOperations;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
@@ -41,7 +37,7 @@ import com.mysema.query.types.Expression;
 public class SQLQueryHelperImpl implements SQLQueryHelper {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryOperations sqlQueryOperations;
 
 	@Autowired
 	private Paginator paginator;
@@ -51,14 +47,15 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 			int pageNo, int pageSz, RowMapper<T> rowMapper,
 			Expression<?>... projection) {
 
-		SQLQuery sqlQuery = queryDslJdbcOperations.newSqlQuery();
-		sqlQuery = configurer.configure(sqlQuery);
+		SQLQuery query = sqlQueryOperations.createSQLQuery();
+		query = configurer.configure(query);
 
-		long count = queryDslJdbcOperations.count(sqlQuery);
+		long count = sqlQueryOperations.count(query);
 		PageSet pageSet = paginator.paginate(pageNo, (int) count, pageSz);
-		sqlQuery.limit(pageSz).offset(pageSet.getCurrent().getFrom());
-		List<T> list = queryDslJdbcOperations.query(sqlQuery, rowMapper,
-				projection);
+		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
+
+		query = configurer.orderBy(query);
+		List<T> list = sqlQueryOperations.query(query, rowMapper, projection);
 
 		SQLQueryResult<T> result = new SQLQueryResult<>();
 		result.setTotalCount((int) count);
@@ -73,50 +70,17 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 			final Limiter limiter, Expression<?>... projection)
 			throws LimiterException, IOException {
 
-		ResultSetExtractor<List<Integer>> extractor = new ResultSetExtractor<List<Integer>>() {
-			@Override
-			public List<Integer> extractData(ResultSet rs) throws SQLException {
-				try {
+		ResultSetExtractor<Integer> extractor = new ExtractorResultSetExtractor(
+				consumer, limiter);
 
-					ResultSetMetaData metaData = rs.getMetaData();
-					Column[] col = new Column[metaData.getColumnCount()];
-					for (int i = 1; i <= col.length; i++) {
-						col[i - 1] = new Column();
-						col[i - 1].setType(metaData.getColumnType(i));
-						col[i - 1].setLabel(metaData.getColumnLabel(i));
-					}
-
-					consumer.begin(col);
-
-					int count;
-					for (count = 0; rs.next(); count++) {
-
-						Object[] record = new Object[col.length];
-						for (int i = 1; i <= record.length; i++) {
-							record[i - 1] = rs.getObject(i);
-						}
-
-						consumer.consume(record);
-						limiter.tick();
-					}
-
-					consumer.end();
-					return Arrays.asList(count);
-
-				} catch (IOException ex) {
-					throw new IllegalStateException(ex);
-				}
-			}
-		};
-
-		SQLQuery sqlQuery = queryDslJdbcOperations.newSqlQuery();
-		sqlQuery = configurer.configure(sqlQuery);
+		SQLQuery query = sqlQueryOperations.createSQLQuery();
+		query = configurer.configure(query);
+		query = configurer.orderBy(query);
 
 		limiter.start();
 		try {
-			List<Integer> count = queryDslJdbcOperations.query(sqlQuery,
-					extractor, projection);
-			return count.get(0);
+			return sqlQueryOperations.queryForObject(query, extractor,
+					projection);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
 		} finally {
