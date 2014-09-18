@@ -24,7 +24,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.jdbc.query.UncategorizedQueryException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -106,7 +105,7 @@ public class SQLQueryTemplate implements SQLQueryOperations {
 			return jdbcTemplate.getExceptionTranslator().translate(task, query,
 					(SQLException) th);
 		}
-		return new UncategorizedQueryException("Error in " + "SQLQuery", ex);
+		return new UncategorizedQueryException("Error in SQLQuery", ex);
 	}
 
 }
