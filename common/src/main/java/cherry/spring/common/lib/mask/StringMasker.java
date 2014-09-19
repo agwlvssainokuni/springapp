@@ -19,19 +19,19 @@ package cherry.spring.common.lib.mask;
 public abstract class StringMasker implements Masker<String> {
 
 	public static StringMasker nullMasker() {
-		return new NullMasker();
+		return new NullMaskerImpl();
 	}
 
-	public static StringMasker tailMasker(int count, String maskChar) {
-		return new TailMasker(count, maskChar);
+	public static StringMasker tailMasker(String maskChar, int count) {
+		return new TailMaskerImpl(maskChar, count);
 	}
 
-	public static StringMasker fixedTailMasker(int count, String maskChar,
+	public static StringMasker fixedTailMasker(String maskChar, int count,
 			int fixedLength) {
-		return new FixedTailMasker(count, maskChar, fixedLength);
+		return new FixedTailMaskerImpl(maskChar, count, fixedLength);
 	}
 
-	static class NullMasker extends StringMasker {
+	static class NullMaskerImpl extends StringMasker {
 
 		@Override
 		public String mask(String value) {
@@ -39,19 +39,22 @@ public abstract class StringMasker implements Masker<String> {
 		}
 	}
 
-	static class TailMasker extends StringMasker {
-
-		private final int count;
+	static class TailMaskerImpl extends StringMasker {
 
 		private final String maskChar;
 
-		public TailMasker(int count, String maskChar) {
-			this.count = count;
+		private final int count;
+
+		public TailMaskerImpl(String maskChar, int count) {
 			this.maskChar = maskChar;
+			this.count = count;
 		}
 
 		@Override
 		public String mask(String value) {
+			if (value == null) {
+				return value;
+			}
 			StringBuilder s = new StringBuilder();
 			for (int i = 0; i < value.length(); i++) {
 				if (i < count) {
@@ -64,22 +67,25 @@ public abstract class StringMasker implements Masker<String> {
 		}
 	}
 
-	static class FixedTailMasker extends StringMasker {
-
-		private final int count;
+	static class FixedTailMaskerImpl extends StringMasker {
 
 		private final String maskChar;
 
+		private final int count;
+
 		private final int fixedLength;
 
-		public FixedTailMasker(int count, String maskChar, int fixedLength) {
-			this.count = count;
+		public FixedTailMaskerImpl(String maskChar, int count, int fixedLength) {
 			this.maskChar = maskChar;
+			this.count = count;
 			this.fixedLength = fixedLength;
 		}
 
 		@Override
 		public String mask(String value) {
+			if (value == null) {
+				return value;
+			}
 			StringBuilder s = new StringBuilder();
 			for (int i = 0; i < fixedLength; i++) {
 				if (i < count && i < value.length()) {

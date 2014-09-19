@@ -20,6 +20,11 @@ import org.joda.time.LocalDate;
 
 public abstract class LocalDateMasker implements Masker<LocalDate> {
 
+	public static LocalDateMasker newMasker(LocalDate mask, boolean year,
+			boolean month, boolean day) {
+		return new MaskerImpl(mask, year, month, day);
+	}
+
 	static class MaskerImpl extends LocalDateMasker {
 
 		private final LocalDate mask;
@@ -40,6 +45,9 @@ public abstract class LocalDateMasker implements Masker<LocalDate> {
 
 		@Override
 		public LocalDate mask(LocalDate value) {
+			if (value == null) {
+				return value;
+			}
 			int year = (this.year ? mask.getYear() : value.getYear());
 			int month = (this.month ? mask.getMonthOfYear() : value
 					.getMonthOfYear());

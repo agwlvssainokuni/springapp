@@ -20,6 +20,11 @@ import org.joda.time.LocalTime;
 
 public abstract class LocalTimeMasker implements Masker<LocalTime> {
 
+	public static LocalTimeMasker newMasker(LocalTime mask, boolean hour,
+			boolean minute, boolean second) {
+		return new MaskerImpl(mask, hour, minute, second);
+	}
+
 	static class MaskerImpl extends LocalTimeMasker {
 
 		private final LocalTime mask;
@@ -40,6 +45,9 @@ public abstract class LocalTimeMasker implements Masker<LocalTime> {
 
 		@Override
 		public LocalTime mask(LocalTime value) {
+			if (value == null) {
+				return value;
+			}
 			int hour = (this.hour ? mask.getHourOfDay() : value.getHourOfDay());
 			int minute = (this.minute ? mask.getMinuteOfHour() : value
 					.getMinuteOfHour());
