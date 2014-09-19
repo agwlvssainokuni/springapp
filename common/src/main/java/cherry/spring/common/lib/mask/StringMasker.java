@@ -18,34 +18,22 @@ package cherry.spring.common.lib.mask;
 
 public abstract class StringMasker implements Masker<String> {
 
-	public static StringMasker nullMasker() {
-		return new NullMaskerImpl();
+	public static StringMasker tail(String maskChar, int count) {
+		return new TailImpl(maskChar, count);
 	}
 
-	public static StringMasker tailMasker(String maskChar, int count) {
-		return new TailMaskerImpl(maskChar, count);
-	}
-
-	public static StringMasker fixedTailMasker(String maskChar, int count,
+	public static StringMasker fixedTail(String maskChar, int count,
 			int fixedLength) {
-		return new FixedTailMaskerImpl(maskChar, count, fixedLength);
+		return new FixedTailImpl(maskChar, count, fixedLength);
 	}
 
-	static class NullMaskerImpl extends StringMasker {
-
-		@Override
-		public String mask(String value) {
-			return value;
-		}
-	}
-
-	static class TailMaskerImpl extends StringMasker {
+	static class TailImpl extends StringMasker {
 
 		private final String maskChar;
 
 		private final int count;
 
-		public TailMaskerImpl(String maskChar, int count) {
+		public TailImpl(String maskChar, int count) {
 			this.maskChar = maskChar;
 			this.count = count;
 		}
@@ -67,7 +55,7 @@ public abstract class StringMasker implements Masker<String> {
 		}
 	}
 
-	static class FixedTailMaskerImpl extends StringMasker {
+	static class FixedTailImpl extends StringMasker {
 
 		private final String maskChar;
 
@@ -75,7 +63,7 @@ public abstract class StringMasker implements Masker<String> {
 
 		private final int fixedLength;
 
-		public FixedTailMaskerImpl(String maskChar, int count, int fixedLength) {
+		public FixedTailImpl(String maskChar, int count, int fixedLength) {
 			this.maskChar = maskChar;
 			this.count = count;
 			this.fixedLength = fixedLength;
