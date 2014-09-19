@@ -47,9 +47,9 @@ public abstract class LongMasker implements Masker<Long> {
 				return value;
 			}
 
-			int digitMask = 1;
-			long v = Math.abs(value);
-			for (int i = 0; v > 0; i++, v /= 10) {
+			long digitMask = 1;
+			long curValue = Math.abs(value);
+			for (int i = 0; curValue > 0; i++, curValue /= 10) {
 				if (i >= count) {
 					digitMask *= 10;
 				}
@@ -84,9 +84,10 @@ public abstract class LongMasker implements Masker<Long> {
 			}
 
 			long maskedValue = 0;
+			long digitMask = 1;
 			long curValue = Math.abs(value);
 			long curMask = mask;
-			for (int i = 0, digitMask = 1;; i++, digitMask *= 10) {
+			for (int i = 0;; i++, digitMask *= 10) {
 				if (i < count) {
 					maskedValue += (curValue % 10) * digitMask;
 				} else {

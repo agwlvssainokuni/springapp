@@ -48,8 +48,8 @@ public abstract class IntegerMasker implements Masker<Integer> {
 			}
 
 			int digitMask = 1;
-			int v = Math.abs(value);
-			for (int i = 0; v > 0; i++, v /= 10) {
+			int curValue = Math.abs(value);
+			for (int i = 0; curValue > 0; i++, curValue /= 10) {
 				if (i >= count) {
 					digitMask *= 10;
 				}
@@ -84,9 +84,10 @@ public abstract class IntegerMasker implements Masker<Integer> {
 			}
 
 			int maskedValue = 0;
+			int digitMask = 1;
 			int curValue = Math.abs(value);
 			int curMask = mask;
-			for (int i = 0, digitMask = 1;; i++, digitMask *= 10) {
+			for (int i = 0;; i++, digitMask *= 10) {
 				if (i < count) {
 					maskedValue += (curValue % 10) * digitMask;
 				} else {
