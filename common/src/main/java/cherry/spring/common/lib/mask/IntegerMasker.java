@@ -18,17 +18,17 @@ package cherry.spring.common.lib.mask;
 
 public abstract class IntegerMasker implements Masker<Integer> {
 
-	public static IntegerMasker lowerDigitMasker(int mask, int count) {
-		return new LowerDigitMaskerImpl(mask, count);
+	public static IntegerMasker upperDigit(int mask, int count) {
+		return new UpperDigitImpl(mask, count);
 	}
 
-	static class LowerDigitMaskerImpl extends IntegerMasker {
+	static class UpperDigitImpl extends IntegerMasker {
 
 		private final int mask;
 
 		private final int count;
 
-		public LowerDigitMaskerImpl(int mask, int count) {
+		public UpperDigitImpl(int mask, int count) {
 			this.mask = mask;
 			this.count = count;
 		}

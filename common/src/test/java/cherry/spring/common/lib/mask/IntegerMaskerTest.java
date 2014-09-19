@@ -26,8 +26,8 @@ import org.junit.Test;
 public class IntegerMaskerTest {
 
 	@Test
-	public void testLowerDigitMasker() {
-		IntegerMasker masker = IntegerMasker.lowerDigitMasker(999999, 2);
+	public void testUpperDigit() {
+		IntegerMasker masker = IntegerMasker.upperDigit(999999, 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(Integer.class)));
 		assertThat(masker.mask(0), is(0));
