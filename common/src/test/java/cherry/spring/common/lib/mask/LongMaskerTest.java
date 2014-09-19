@@ -51,7 +51,7 @@ public class LongMaskerTest {
 
 	@Test
 	public void testUpperDigit() {
-		LongMasker masker = LongMasker.upperDigit(999999, 2);
+		LongMasker masker = LongMasker.upperDigit(999999L, 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(Long.class)));
 		assertThat(masker.mask(0L), is(0L));
@@ -75,7 +75,7 @@ public class LongMaskerTest {
 
 	@Test
 	public void testFixedUpperDigit() {
-		LongMasker masker = LongMasker.fixedUpperDigit(999999, 2);
+		LongMasker masker = LongMasker.fixedUpperDigit(999999L, 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(Long.class)));
 		assertThat(masker.mask(0L), is(999900L));
