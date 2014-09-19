@@ -26,6 +26,30 @@ import org.junit.Test;
 public class IntegerMaskerTest {
 
 	@Test
+	public void testLowerDigit() {
+		IntegerMasker masker = IntegerMasker.lowerDigit(999999, 2);
+		assertThat(masker, is(notNullValue()));
+		assertThat(masker.mask(null), is(nullValue(Integer.class)));
+		assertThat(masker.mask(0), is(0));
+		assertThat(masker.mask(1), is(1));
+		assertThat(masker.mask(12), is(12));
+		assertThat(masker.mask(123), is(129));
+		assertThat(masker.mask(1234), is(1299));
+		assertThat(masker.mask(12345), is(12999));
+		assertThat(masker.mask(123456), is(129999));
+		assertThat(masker.mask(1234567), is(1299999));
+		assertThat(masker.mask(12345678), is(12999999));
+		assertThat(masker.mask(-1), is(-1));
+		assertThat(masker.mask(-12), is(-12));
+		assertThat(masker.mask(-123), is(-129));
+		assertThat(masker.mask(-1234), is(-1299));
+		assertThat(masker.mask(-12345), is(-12999));
+		assertThat(masker.mask(-123456), is(-129999));
+		assertThat(masker.mask(-1234567), is(-1299999));
+		assertThat(masker.mask(-12345678), is(-12999999));
+	}
+
+	@Test
 	public void testUpperDigit() {
 		IntegerMasker masker = IntegerMasker.upperDigit(999999, 2);
 		assertThat(masker, is(notNullValue()));

@@ -18,8 +18,47 @@ package cherry.spring.common.lib.mask;
 
 public abstract class IntegerMasker implements Masker<Integer> {
 
+	public static IntegerMasker lowerDigit(int mask, int count) {
+		return new LowerDigitImpl(mask, count);
+	}
+
 	public static IntegerMasker upperDigit(int mask, int count) {
 		return new UpperDigitImpl(mask, count);
+	}
+
+	static class LowerDigitImpl extends IntegerMasker {
+
+		private final int mask;
+
+		private final int count;
+
+		public LowerDigitImpl(int mask, int count) {
+			this.mask = mask;
+			this.count = count;
+		}
+
+		@Override
+		public Integer mask(Integer value) {
+			if (value == null) {
+				return value;
+			}
+
+			int digitMask = 1;
+			for (int i = 0, v = Math.abs(value); v > 0; i++, v /= 10) {
+				if (i >= count) {
+					digitMask *= 10;
+				}
+			}
+
+			int maskedValue = (Math.abs(value) / digitMask) * digitMask
+					+ (mask % digitMask);
+
+			if (value < 0) {
+				return -maskedValue;
+			} else {
+				return maskedValue;
+			}
+		}
 	}
 
 	static class UpperDigitImpl extends IntegerMasker {
@@ -39,14 +78,14 @@ public abstract class IntegerMasker implements Masker<Integer> {
 				return value;
 			}
 
-			int masked = 0;
+			int maskedValue = 0;
 			int curValue = Math.abs(value);
 			int curMask = mask;
-			for (int i = 0, digit = 1;; i++, digit *= 10) {
+			for (int i = 0, digitMask = 1;; i++, digitMask *= 10) {
 				if (i < count) {
-					masked += (curValue % 10) * digit;
+					maskedValue += (curValue % 10) * digitMask;
 				} else {
-					masked += (curMask % 10) * digit;
+					maskedValue += (curMask % 10) * digitMask;
 				}
 				curValue = curValue / 10;
 				curMask = curMask / 10;
@@ -56,9 +95,9 @@ public abstract class IntegerMasker implements Masker<Integer> {
 			}
 
 			if (value < 0) {
-				return -masked;
+				return -maskedValue;
 			} else {
-				return masked;
+				return maskedValue;
 			}
 		}
 	}
