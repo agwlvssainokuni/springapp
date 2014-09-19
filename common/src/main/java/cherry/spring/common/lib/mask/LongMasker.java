@@ -16,46 +16,46 @@
 
 package cherry.spring.common.lib.mask;
 
-public abstract class IntegerMasker implements Masker<Integer> {
+public abstract class LongMasker implements Masker<Long> {
 
-	public static IntegerMasker lowerDigit(int mask, int count) {
+	public static LongMasker lowerDigit(long mask, int count) {
 		return new LowerDigitImpl(mask, count);
 	}
 
-	public static IntegerMasker upperDigit(int mask, int count) {
+	public static LongMasker upperDigit(long mask, int count) {
 		return new UpperDigitImpl(mask, count);
 	}
 
-	public static IntegerMasker fixedUpperDigit(int mask, int count) {
+	public static LongMasker fixedUpperDigit(long mask, int count) {
 		return new FixedUpperDigitImpl(mask, count);
 	}
 
-	static class LowerDigitImpl extends IntegerMasker {
+	static class LowerDigitImpl extends LongMasker {
 
-		private final int mask;
+		private final long mask;
 
 		private final int count;
 
-		public LowerDigitImpl(int mask, int count) {
+		public LowerDigitImpl(long mask, int count) {
 			this.mask = mask;
 			this.count = count;
 		}
 
 		@Override
-		public Integer mask(Integer value) {
+		public Long mask(Long value) {
 			if (value == null) {
 				return value;
 			}
 
 			int digitMask = 1;
-			int v = Math.abs(value);
+			long v = Math.abs(value);
 			for (int i = 0; v > 0; i++, v /= 10) {
 				if (i >= count) {
 					digitMask *= 10;
 				}
 			}
 
-			int maskedValue = (Math.abs(value) / digitMask) * digitMask
+			long maskedValue = (Math.abs(value) / digitMask) * digitMask
 					+ (mask % digitMask);
 
 			if (value < 0) {
@@ -66,26 +66,26 @@ public abstract class IntegerMasker implements Masker<Integer> {
 		}
 	}
 
-	static class UpperDigitImpl extends IntegerMasker {
+	static class UpperDigitImpl extends LongMasker {
 
-		private final int mask;
+		private final long mask;
 
 		private final int count;
 
-		public UpperDigitImpl(int mask, int count) {
+		public UpperDigitImpl(long mask, int count) {
 			this.mask = mask;
 			this.count = count;
 		}
 
 		@Override
-		public Integer mask(Integer value) {
+		public Long mask(Long value) {
 			if (value == null) {
 				return value;
 			}
 
-			int maskedValue = 0;
-			int curValue = Math.abs(value);
-			int curMask = mask;
+			long maskedValue = 0;
+			long curValue = Math.abs(value);
+			long curMask = mask;
 			for (int i = 0, digitMask = 1;; i++, digitMask *= 10) {
 				if (i < count) {
 					maskedValue += (curValue % 10) * digitMask;
@@ -107,29 +107,29 @@ public abstract class IntegerMasker implements Masker<Integer> {
 		}
 	}
 
-	static class FixedUpperDigitImpl extends IntegerMasker {
+	static class FixedUpperDigitImpl extends LongMasker {
 
-		private final int mask;
+		private final long mask;
 
 		private final int count;
 
-		public FixedUpperDigitImpl(int mask, int count) {
+		public FixedUpperDigitImpl(long mask, int count) {
 			this.mask = mask;
 			this.count = count;
 		}
 
 		@Override
-		public Integer mask(Integer value) {
+		public Long mask(Long value) {
 			if (value == null) {
 				return value;
 			}
 
-			int digitMask = 1;
+			long digitMask = 1;
 			for (int i = 0; i < count; i++) {
 				digitMask *= 10;
 			}
 
-			int maskedValue = (mask / digitMask) * digitMask
+			long maskedValue = (mask / digitMask) * digitMask
 					+ (Math.abs(value) % digitMask);
 
 			if (value < 0) {
