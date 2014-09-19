@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QUser is a Querydsl query type for User
+ * QUser is a Querydsl query type for BUser
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QUser extends com.mysema.query.sql.RelationalPathBase<User> {
+public class QUser extends com.mysema.query.sql.RelationalPathBase<BUser> {
 
-    private static final long serialVersionUID = -759645880;
+    private static final long serialVersionUID = -2092613264;
 
     public static final QUser user = new QUser("USER");
 
@@ -44,25 +44,25 @@ public class QUser extends com.mysema.query.sql.RelationalPathBase<User> {
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<User> userPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BUser> userPkc = createPrimaryKey(id);
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable), "PUBLIC", "USER");
+        super(BUser.class, forVariable(variable), "PUBLIC", "USER");
         addMetadata();
     }
 
     public QUser(String variable, String schema, String table) {
-        super(User.class, forVariable(variable), schema, table);
+        super(BUser.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QUser(Path<? extends User> path) {
+    public QUser(Path<? extends BUser> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "USER");
         addMetadata();
     }
 
     public QUser(PathMetadata<?> metadata) {
-        super(User.class, metadata, "PUBLIC", "USER");
+        super(BUser.class, metadata, "PUBLIC", "USER");
         addMetadata();
     }
 

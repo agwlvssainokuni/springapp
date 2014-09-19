@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QMailTemplateText is a Querydsl query type for MailTemplateText
+ * QMailTemplateText is a Querydsl query type for BMailTemplateText
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QMailTemplateText extends com.mysema.query.sql.RelationalPathBase<MailTemplateText> {
+public class QMailTemplateText extends com.mysema.query.sql.RelationalPathBase<BMailTemplateText> {
 
-    private static final long serialVersionUID = -1521700325;
+    private static final long serialVersionUID = -1010418109;
 
     public static final QMailTemplateText mailTemplateText = new QMailTemplateText("MAIL_TEMPLATE_TEXT");
 
@@ -42,25 +42,25 @@ public class QMailTemplateText extends com.mysema.query.sql.RelationalPathBase<M
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<MailTemplateText> mailTemplateTextPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BMailTemplateText> mailTemplateTextPkc = createPrimaryKey(id);
 
     public QMailTemplateText(String variable) {
-        super(MailTemplateText.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE_TEXT");
+        super(BMailTemplateText.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE_TEXT");
         addMetadata();
     }
 
     public QMailTemplateText(String variable, String schema, String table) {
-        super(MailTemplateText.class, forVariable(variable), schema, table);
+        super(BMailTemplateText.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QMailTemplateText(Path<? extends MailTemplateText> path) {
+    public QMailTemplateText(Path<? extends BMailTemplateText> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "MAIL_TEMPLATE_TEXT");
         addMetadata();
     }
 
     public QMailTemplateText(PathMetadata<?> metadata) {
-        super(MailTemplateText.class, metadata, "PUBLIC", "MAIL_TEMPLATE_TEXT");
+        super(BMailTemplateText.class, metadata, "PUBLIC", "MAIL_TEMPLATE_TEXT");
         addMetadata();
     }
 

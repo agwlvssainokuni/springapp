@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QSignupRequest is a Querydsl query type for SignupRequest
+ * QSignupRequest is a Querydsl query type for BSignupRequest
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<SignupRequest> {
+public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<BSignupRequest> {
 
-    private static final long serialVersionUID = -1934738054;
+    private static final long serialVersionUID = -382442926;
 
     public static final QSignupRequest signupRequest = new QSignupRequest("SIGNUP_REQUEST");
 
@@ -40,25 +40,25 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<Sign
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<SignupRequest> signupRequestPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BSignupRequest> signupRequestPkc = createPrimaryKey(id);
 
     public QSignupRequest(String variable) {
-        super(SignupRequest.class, forVariable(variable), "PUBLIC", "SIGNUP_REQUEST");
+        super(BSignupRequest.class, forVariable(variable), "PUBLIC", "SIGNUP_REQUEST");
         addMetadata();
     }
 
     public QSignupRequest(String variable, String schema, String table) {
-        super(SignupRequest.class, forVariable(variable), schema, table);
+        super(BSignupRequest.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QSignupRequest(Path<? extends SignupRequest> path) {
+    public QSignupRequest(Path<? extends BSignupRequest> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "SIGNUP_REQUEST");
         addMetadata();
     }
 
     public QSignupRequest(PathMetadata<?> metadata) {
-        super(SignupRequest.class, metadata, "PUBLIC", "SIGNUP_REQUEST");
+        super(BSignupRequest.class, metadata, "PUBLIC", "SIGNUP_REQUEST");
         addMetadata();
     }
 

@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QMailTemplateAddress is a Querydsl query type for MailTemplateAddress
+ * QMailTemplateAddress is a Querydsl query type for BMailTemplateAddress
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QMailTemplateAddress extends com.mysema.query.sql.RelationalPathBase<MailTemplateAddress> {
+public class QMailTemplateAddress extends com.mysema.query.sql.RelationalPathBase<BMailTemplateAddress> {
 
-    private static final long serialVersionUID = 675668038;
+    private static final long serialVersionUID = -1964834018;
 
     public static final QMailTemplateAddress mailTemplateAddress = new QMailTemplateAddress("MAIL_TEMPLATE_ADDRESS");
 
@@ -40,25 +40,25 @@ public class QMailTemplateAddress extends com.mysema.query.sql.RelationalPathBas
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<MailTemplateAddress> mailTemplateAddressPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BMailTemplateAddress> mailTemplateAddressPkc = createPrimaryKey(id);
 
     public QMailTemplateAddress(String variable) {
-        super(MailTemplateAddress.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE_ADDRESS");
+        super(BMailTemplateAddress.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE_ADDRESS");
         addMetadata();
     }
 
     public QMailTemplateAddress(String variable, String schema, String table) {
-        super(MailTemplateAddress.class, forVariable(variable), schema, table);
+        super(BMailTemplateAddress.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QMailTemplateAddress(Path<? extends MailTemplateAddress> path) {
+    public QMailTemplateAddress(Path<? extends BMailTemplateAddress> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "MAIL_TEMPLATE_ADDRESS");
         addMetadata();
     }
 
     public QMailTemplateAddress(PathMetadata<?> metadata) {
-        super(MailTemplateAddress.class, metadata, "PUBLIC", "MAIL_TEMPLATE_ADDRESS");
+        super(BMailTemplateAddress.class, metadata, "PUBLIC", "MAIL_TEMPLATE_ADDRESS");
         addMetadata();
     }
 

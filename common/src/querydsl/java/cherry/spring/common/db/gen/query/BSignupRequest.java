@@ -3,10 +3,12 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * MailTemplate is a Querydsl bean type
+ * BSignupRequest is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class MailTemplate {
+public class BSignupRequest {
+
+    private org.joda.time.LocalDateTime appliedAt;
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -16,11 +18,19 @@ public class MailTemplate {
 
     private Integer lockVersion;
 
-    private String name;
+    private String mailAddr;
 
-    private String sender;
+    private String token;
 
     private org.joda.time.LocalDateTime updatedAt;
+
+    public org.joda.time.LocalDateTime getAppliedAt() {
+        return appliedAt;
+    }
+
+    public void setAppliedAt(org.joda.time.LocalDateTime appliedAt) {
+        this.appliedAt = appliedAt;
+    }
 
     public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
@@ -54,20 +64,20 @@ public class MailTemplate {
         this.lockVersion = lockVersion;
     }
 
-    public String getName() {
-        return name;
+    public String getMailAddr() {
+        return mailAddr;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMailAddr(String mailAddr) {
+        this.mailAddr = mailAddr;
     }
 
-    public String getSender() {
-        return sender;
+    public String getToken() {
+        return token;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -76,6 +86,10 @@ public class MailTemplate {
 
     public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString() {
+         return "appliedAt = " + appliedAt + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", token = " + token + ", updatedAt = " + updatedAt;
     }
 
 }

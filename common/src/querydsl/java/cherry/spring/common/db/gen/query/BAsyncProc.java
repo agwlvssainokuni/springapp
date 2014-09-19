@@ -3,10 +3,10 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * AsyncProc is a Querydsl bean type
+ * BAsyncProc is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class AsyncProc {
+public class BAsyncProc {
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -136,6 +136,10 @@ public class AsyncProc {
 
     public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString() {
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", finishedAt = " + finishedAt + ", id = " + id + ", invokedAt = " + invokedAt + ", launcherId = " + launcherId + ", lockVersion = " + lockVersion + ", name = " + name + ", registeredAt = " + registeredAt + ", result = " + result + ", startedAt = " + startedAt + ", status = " + status + ", updatedAt = " + updatedAt;
     }
 
 }

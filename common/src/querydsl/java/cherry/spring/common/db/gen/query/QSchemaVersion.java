@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QSchemaVersion is a Querydsl query type for SchemaVersion
+ * QSchemaVersion is a Querydsl query type for BSchemaVersion
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<SchemaVersion> {
+public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<BSchemaVersion> {
 
-    private static final long serialVersionUID = 2015700762;
+    private static final long serialVersionUID = -726971406;
 
     public static final QSchemaVersion schemaVersion = new QSchemaVersion("schema_version");
 
@@ -46,25 +46,25 @@ public class QSchemaVersion extends com.mysema.query.sql.RelationalPathBase<Sche
 
     public final NumberPath<Integer> versionRank = createNumber("versionRank", Integer.class);
 
-    public final com.mysema.query.sql.PrimaryKey<SchemaVersion> schemaVersionPk = createPrimaryKey(version);
+    public final com.mysema.query.sql.PrimaryKey<BSchemaVersion> schemaVersionPk = createPrimaryKey(version);
 
     public QSchemaVersion(String variable) {
-        super(SchemaVersion.class, forVariable(variable), "PUBLIC", "schema_version");
+        super(BSchemaVersion.class, forVariable(variable), "PUBLIC", "schema_version");
         addMetadata();
     }
 
     public QSchemaVersion(String variable, String schema, String table) {
-        super(SchemaVersion.class, forVariable(variable), schema, table);
+        super(BSchemaVersion.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QSchemaVersion(Path<? extends SchemaVersion> path) {
+    public QSchemaVersion(Path<? extends BSchemaVersion> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "schema_version");
         addMetadata();
     }
 
     public QSchemaVersion(PathMetadata<?> metadata) {
-        super(SchemaVersion.class, metadata, "PUBLIC", "schema_version");
+        super(BSchemaVersion.class, metadata, "PUBLIC", "schema_version");
         addMetadata();
     }
 

@@ -3,10 +3,10 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * MailTemplateText is a Querydsl bean type
+ * BMailTemplateText is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class MailTemplateText {
+public class BMailTemplateText {
 
     private String body;
 
@@ -96,6 +96,10 @@ public class MailTemplateText {
 
     public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString() {
+         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", locale = " + locale + ", lockVersion = " + lockVersion + ", mailTemplateId = " + mailTemplateId + ", subject = " + subject + ", updatedAt = " + updatedAt;
     }
 
 }

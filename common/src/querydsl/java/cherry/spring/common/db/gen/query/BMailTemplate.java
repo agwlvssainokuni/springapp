@@ -3,28 +3,22 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * User is a Querydsl bean type
+ * BMailTemplate is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class User {
+public class BMailTemplate {
 
     private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
-    private String firstName;
-
     private Integer id;
-
-    private String lastName;
 
     private Integer lockVersion;
 
-    private String loginId;
+    private String name;
 
-    private String password;
-
-    private org.joda.time.LocalDateTime registeredAt;
+    private String sender;
 
     private org.joda.time.LocalDateTime updatedAt;
 
@@ -44,28 +38,12 @@ public class User {
         this.deletedFlg = deletedFlg;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Integer getLockVersion() {
@@ -76,28 +54,20 @@ public class User {
         this.lockVersion = lockVersion;
     }
 
-    public String getLoginId() {
-        return loginId;
+    public String getName() {
+        return name;
     }
 
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSender() {
+        return sender;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public org.joda.time.LocalDateTime getRegisteredAt() {
-        return registeredAt;
-    }
-
-    public void setRegisteredAt(org.joda.time.LocalDateTime registeredAt) {
-        this.registeredAt = registeredAt;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -106,6 +76,10 @@ public class User {
 
     public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString() {
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", name = " + name + ", sender = " + sender + ", updatedAt = " + updatedAt;
     }
 
 }

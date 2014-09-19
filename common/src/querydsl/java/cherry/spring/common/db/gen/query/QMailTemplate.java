@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QMailTemplate is a Querydsl query type for MailTemplate
+ * QMailTemplate is a Querydsl query type for BMailTemplate
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<MailTemplate> {
+public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<BMailTemplate> {
 
-    private static final long serialVersionUID = 422416334;
+    private static final long serialVersionUID = 56848374;
 
     public static final QMailTemplate mailTemplate = new QMailTemplate("MAIL_TEMPLATE");
 
@@ -38,25 +38,25 @@ public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<MailT
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<MailTemplate> mailTemplatePkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BMailTemplate> mailTemplatePkc = createPrimaryKey(id);
 
     public QMailTemplate(String variable) {
-        super(MailTemplate.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE");
+        super(BMailTemplate.class, forVariable(variable), "PUBLIC", "MAIL_TEMPLATE");
         addMetadata();
     }
 
     public QMailTemplate(String variable, String schema, String table) {
-        super(MailTemplate.class, forVariable(variable), schema, table);
+        super(BMailTemplate.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QMailTemplate(Path<? extends MailTemplate> path) {
+    public QMailTemplate(Path<? extends BMailTemplate> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "MAIL_TEMPLATE");
         addMetadata();
     }
 
     public QMailTemplate(PathMetadata<?> metadata) {
-        super(MailTemplate.class, metadata, "PUBLIC", "MAIL_TEMPLATE");
+        super(BMailTemplate.class, metadata, "PUBLIC", "MAIL_TEMPLATE");
         addMetadata();
     }
 

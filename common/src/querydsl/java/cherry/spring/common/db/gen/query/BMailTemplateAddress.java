@@ -3,12 +3,10 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BizdatetimeMaster is a Querydsl bean type
+ * BMailTemplateAddress is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BizdatetimeMaster {
-
-    private org.joda.time.LocalDate bizdate;
+public class BMailTemplateAddress {
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -18,23 +16,13 @@ public class BizdatetimeMaster {
 
     private Integer lockVersion;
 
-    private Integer offsetDay;
+    private String mailAddr;
 
-    private Integer offsetHour;
+    private Integer mailTemplateId;
 
-    private Integer offsetMinute;
-
-    private Integer offsetSecond;
+    private String rcptType;
 
     private org.joda.time.LocalDateTime updatedAt;
-
-    public org.joda.time.LocalDate getBizdate() {
-        return bizdate;
-    }
-
-    public void setBizdate(org.joda.time.LocalDate bizdate) {
-        this.bizdate = bizdate;
-    }
 
     public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
@@ -68,36 +56,28 @@ public class BizdatetimeMaster {
         this.lockVersion = lockVersion;
     }
 
-    public Integer getOffsetDay() {
-        return offsetDay;
+    public String getMailAddr() {
+        return mailAddr;
     }
 
-    public void setOffsetDay(Integer offsetDay) {
-        this.offsetDay = offsetDay;
+    public void setMailAddr(String mailAddr) {
+        this.mailAddr = mailAddr;
     }
 
-    public Integer getOffsetHour() {
-        return offsetHour;
+    public Integer getMailTemplateId() {
+        return mailTemplateId;
     }
 
-    public void setOffsetHour(Integer offsetHour) {
-        this.offsetHour = offsetHour;
+    public void setMailTemplateId(Integer mailTemplateId) {
+        this.mailTemplateId = mailTemplateId;
     }
 
-    public Integer getOffsetMinute() {
-        return offsetMinute;
+    public String getRcptType() {
+        return rcptType;
     }
 
-    public void setOffsetMinute(Integer offsetMinute) {
-        this.offsetMinute = offsetMinute;
-    }
-
-    public Integer getOffsetSecond() {
-        return offsetSecond;
-    }
-
-    public void setOffsetSecond(Integer offsetSecond) {
-        this.offsetSecond = offsetSecond;
+    public void setRcptType(String rcptType) {
+        this.rcptType = rcptType;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -106,6 +86,10 @@ public class BizdatetimeMaster {
 
     public void setUpdatedAt(org.joda.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString() {
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", mailTemplateId = " + mailTemplateId + ", rcptType = " + rcptType + ", updatedAt = " + updatedAt;
     }
 
 }

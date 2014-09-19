@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QAsyncProc is a Querydsl query type for AsyncProc
+ * QAsyncProc is a Querydsl query type for BAsyncProc
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<AsyncProc> {
+public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<BAsyncProc> {
 
-    private static final long serialVersionUID = -686189419;
+    private static final long serialVersionUID = -178002579;
 
     public static final QAsyncProc asyncProc = new QAsyncProc("ASYNC_PROC");
 
@@ -50,25 +50,25 @@ public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<AsyncPro
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<AsyncProc> asyncProcPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BAsyncProc> asyncProcPkc = createPrimaryKey(id);
 
     public QAsyncProc(String variable) {
-        super(AsyncProc.class, forVariable(variable), "PUBLIC", "ASYNC_PROC");
+        super(BAsyncProc.class, forVariable(variable), "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 
     public QAsyncProc(String variable, String schema, String table) {
-        super(AsyncProc.class, forVariable(variable), schema, table);
+        super(BAsyncProc.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QAsyncProc(Path<? extends AsyncProc> path) {
+    public QAsyncProc(Path<? extends BAsyncProc> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 
     public QAsyncProc(PathMetadata<?> metadata) {
-        super(AsyncProc.class, metadata, "PUBLIC", "ASYNC_PROC");
+        super(BAsyncProc.class, metadata, "PUBLIC", "ASYNC_PROC");
         addMetadata();
     }
 

@@ -1,7 +1,5 @@
 apply plugin: "eclipse-wtp"
 apply plugin: "flyway"
-apply plugin: "mybatis"
-apply plugin: "querydsl"
 
 buildscript {
 	repositories { mavenCentral() }
@@ -17,34 +15,6 @@ flyway {
 	user = "sa"
 	encoding = "UTF-8"
 }
-
-mybatis {
-	configFile = new java.io.File("dbschema/mbgenerator.xml")
-	overwrite = true
-	verbose = true
-}
-
-mybatisgen.dependsOn flywayMigrate
-
-querydsl {
-	driver = "org.h2.Driver"
-	url = "jdbc:h2:./dbschema/build/mbgenerator"
-	user = "sa"
-	exporter {
-		packageName = "cherry.spring.common.db.gen.query"
-		beanPackageName = "cherry.spring.common.db.gen.query"
-		targetFolder = new java.io.File("common/src/querydsl/java")
-		beanSerializer = new com.mysema.query.codegen.BeanSerializer()
-		sourceEncoding = "UTF-8"
-	}
-	configuration {
-		register(new com.mysema.query.sql.types.LocalDateType());
-		register(new com.mysema.query.sql.types.LocalTimeType());
-		register(new com.mysema.query.sql.types.LocalDateTimeType());
-	}
-}
-
-querydslgen.dependsOn flywayMigrate
 
 task h2start(dependsOn: "classes", type: JavaExec) {
 	main = "org.h2.tools.Server"

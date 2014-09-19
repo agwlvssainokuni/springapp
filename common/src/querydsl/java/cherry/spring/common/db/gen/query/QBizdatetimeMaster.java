@@ -15,12 +15,12 @@ import java.sql.Types;
 
 
 /**
- * QBizdatetimeMaster is a Querydsl query type for BizdatetimeMaster
+ * QBizdatetimeMaster is a Querydsl query type for BBizdatetimeMaster
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<BizdatetimeMaster> {
+public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<BBizdatetimeMaster> {
 
-    private static final long serialVersionUID = 474771251;
+    private static final long serialVersionUID = -855349237;
 
     public static final QBizdatetimeMaster bizdatetimeMaster = new QBizdatetimeMaster("BIZDATETIME_MASTER");
 
@@ -44,25 +44,25 @@ public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<BizdatetimeMaster> bizdatetimeMasterPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BBizdatetimeMaster> bizdatetimeMasterPkc = createPrimaryKey(id);
 
     public QBizdatetimeMaster(String variable) {
-        super(BizdatetimeMaster.class, forVariable(variable), "PUBLIC", "BIZDATETIME_MASTER");
+        super(BBizdatetimeMaster.class, forVariable(variable), "PUBLIC", "BIZDATETIME_MASTER");
         addMetadata();
     }
 
     public QBizdatetimeMaster(String variable, String schema, String table) {
-        super(BizdatetimeMaster.class, forVariable(variable), schema, table);
+        super(BBizdatetimeMaster.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QBizdatetimeMaster(Path<? extends BizdatetimeMaster> path) {
+    public QBizdatetimeMaster(Path<? extends BBizdatetimeMaster> path) {
         super(path.getType(), path.getMetadata(), "PUBLIC", "BIZDATETIME_MASTER");
         addMetadata();
     }
 
     public QBizdatetimeMaster(PathMetadata<?> metadata) {
-        super(BizdatetimeMaster.class, metadata, "PUBLIC", "BIZDATETIME_MASTER");
+        super(BBizdatetimeMaster.class, metadata, "PUBLIC", "BIZDATETIME_MASTER");
         addMetadata();
     }
 

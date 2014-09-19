@@ -3,10 +3,10 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * SchemaVersion is a Querydsl bean type
+ * BSchemaVersion is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class SchemaVersion {
+public class BSchemaVersion {
 
     private Integer checksum;
 
@@ -116,6 +116,10 @@ public class SchemaVersion {
 
     public void setVersionRank(Integer versionRank) {
         this.versionRank = versionRank;
+    }
+
+    public String toString() {
+         return "checksum = " + checksum + ", description = " + description + ", executionTime = " + executionTime + ", installedBy = " + installedBy + ", installedOn = " + installedOn + ", installedRank = " + installedRank + ", script = " + script + ", success = " + success + ", type = " + type + ", version = " + version + ", versionRank = " + versionRank;
     }
 
 }
