@@ -73,4 +73,28 @@ public class IntegerMaskerTest {
 		assertThat(masker.mask(-12345678), is(-999978));
 	}
 
+	@Test
+	public void testFixedUpperDigit() {
+		IntegerMasker masker = IntegerMasker.fixedUpperDigit(999999, 2);
+		assertThat(masker, is(notNullValue()));
+		assertThat(masker.mask(null), is(nullValue(Integer.class)));
+		assertThat(masker.mask(0), is(999900));
+		assertThat(masker.mask(1), is(999901));
+		assertThat(masker.mask(12), is(999912));
+		assertThat(masker.mask(123), is(999923));
+		assertThat(masker.mask(1234), is(999934));
+		assertThat(masker.mask(12345), is(999945));
+		assertThat(masker.mask(123456), is(999956));
+		assertThat(masker.mask(1234567), is(999967));
+		assertThat(masker.mask(12345678), is(999978));
+		assertThat(masker.mask(-1), is(-999901));
+		assertThat(masker.mask(-12), is(-999912));
+		assertThat(masker.mask(-123), is(-999923));
+		assertThat(masker.mask(-1234), is(-999934));
+		assertThat(masker.mask(-12345), is(-999945));
+		assertThat(masker.mask(-123456), is(-999956));
+		assertThat(masker.mask(-1234567), is(-999967));
+		assertThat(masker.mask(-12345678), is(-999978));
+	}
+
 }

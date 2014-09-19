@@ -26,6 +26,10 @@ public abstract class IntegerMasker implements Masker<Integer> {
 		return new UpperDigitImpl(mask, count);
 	}
 
+	public static IntegerMasker fixedUpperDigit(int mask, int count) {
+		return new FixedUpperDigitImpl(mask, count);
+	}
+
 	static class LowerDigitImpl extends IntegerMasker {
 
 		private final int mask;
@@ -93,6 +97,39 @@ public abstract class IntegerMasker implements Masker<Integer> {
 					break;
 				}
 			}
+
+			if (value < 0) {
+				return -maskedValue;
+			} else {
+				return maskedValue;
+			}
+		}
+	}
+
+	static class FixedUpperDigitImpl extends IntegerMasker {
+
+		private final int mask;
+
+		private final int count;
+
+		public FixedUpperDigitImpl(int mask, int count) {
+			this.mask = mask;
+			this.count = count;
+		}
+
+		@Override
+		public Integer mask(Integer value) {
+			if (value == null) {
+				return value;
+			}
+
+			int digitMask = 1;
+			for (int i = 0; i < count; i++) {
+				digitMask *= 10;
+			}
+
+			int maskedValue = (mask / digitMask) * digitMask
+					+ (Math.abs(value) % digitMask);
 
 			if (value < 0) {
 				return -maskedValue;
