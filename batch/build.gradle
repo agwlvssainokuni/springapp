@@ -7,6 +7,7 @@ ext {
 	versionLombok = "1.14.4"
 	versionJunit = "4.11"
 	versionMockito = "1.9.5"
+	versionJavaServlet = "3.0.1"
 }
 
 dependencies {
@@ -16,4 +17,5 @@ dependencies {
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
+	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 }
