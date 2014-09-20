@@ -16,41 +16,21 @@
 
 package cherry.spring.common.lib.etl;
 
-public class MaskDecorator implements Decorator {
+import cherry.spring.common.lib.mask.Masker;
 
-	private int maskBegin = 1;
+public class MaskerDecorator<T> implements Decorator {
 
-	private int maskEnd = 0;
+	private final Masker<T> masker;
 
-	private String maskChar = "X";
-
-	public void setMaskBegin(int maskBegin) {
-		this.maskBegin = maskBegin;
-	}
-
-	public void setMaskEnd(int maskEnd) {
-		this.maskEnd = maskEnd;
-	}
-
-	public void setMaskChar(String maskChar) {
-		this.maskChar = maskChar;
+	public MaskerDecorator(Masker<T> masker) {
+		this.masker = masker;
 	}
 
 	@Override
 	public Object decorate(Object field) {
-		if (field == null) {
-			return null;
-		}
-		String s = field.toString();
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			if (i >= maskBegin && i < s.length() - maskEnd) {
-				builder.append(maskChar);
-			} else {
-				builder.append(s.charAt(i));
-			}
-		}
-		return builder.toString();
+		@SuppressWarnings("unchecked")
+		T value = (T) field;
+		return masker.mask(value);
 	}
 
 }
