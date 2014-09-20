@@ -42,8 +42,6 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	@Autowired
 	private Paginator paginator;
 
-	private SqlUtil sqlUtil = new SqlUtil();
-
 	@Transactional
 	@Override
 	public Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz) {
@@ -65,7 +63,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		UserCriteria uc = new UserCriteria();
 		UserCriteria.Criteria c = uc.createCriteria();
 		if (StringUtils.isNotBlank(form.getLoginId())) {
-			c.andLoginIdLike(sqlUtil.escapeForLike(form.getLoginId()));
+			c.andLoginIdLike(SqlUtil.escapeForLike(form.getLoginId()));
 		}
 		if (form.getRegisteredFrom() != null) {
 			c.andRegisteredAtGreaterThanOrEqualTo(form.getRegisteredFrom());
@@ -74,10 +72,10 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 			c.andRegisteredAtLessThan(form.getRegisteredTo().plusSeconds(1));
 		}
 		if (StringUtils.isNotBlank(form.getFirstName())) {
-			c.andFirstNameLike(sqlUtil.escapeForLike(form.getFirstName()) + "%");
+			c.andFirstNameLike(SqlUtil.escapeForLike(form.getFirstName()) + "%");
 		}
 		if (StringUtils.isNotBlank(form.getLastName())) {
-			c.andLastNameLike(sqlUtil.escapeForLike(form.getLastName()) + "%");
+			c.andLastNameLike(SqlUtil.escapeForLike(form.getLastName()) + "%");
 		}
 		c.andDeletedFlgEqualTo(DeletedFlag.NOT_DELETED);
 		return uc;
