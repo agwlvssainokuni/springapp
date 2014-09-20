@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.mask;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.joda.time.LocalDate;
@@ -29,6 +30,7 @@ public class LocalDateMaskerTest {
 		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
 				1, 1), true, false, false);
 		LocalDate v = LocalDate.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(masker.mask(v),
 				is(new LocalDate(1970, v.getMonthOfYear(), v.getDayOfMonth())));
 	}
@@ -38,6 +40,7 @@ public class LocalDateMaskerTest {
 		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
 				1, 1), false, true, false);
 		LocalDate v = LocalDate.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(masker.mask(v),
 				is(new LocalDate(v.getYear(), 1, v.getDayOfMonth())));
 	}
@@ -47,6 +50,7 @@ public class LocalDateMaskerTest {
 		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
 				1, 1), false, false, true);
 		LocalDate v = LocalDate.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(masker.mask(v),
 				is(new LocalDate(v.getYear(), v.getMonthOfYear(), 1)));
 	}

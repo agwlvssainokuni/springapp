@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.mask;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.joda.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), true, false, false,
 				false, false, false);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(1970, v.getMonthOfYear(), v
@@ -43,6 +45,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, true, false,
 				false, false, false);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(v.getYear(), 1, v.getDayOfMonth(), v
@@ -56,6 +59,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, true,
 				false, false, false);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), 1, v
@@ -69,6 +73,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
 				true, false, false);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v
@@ -82,6 +87,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
 				false, true, false);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v
@@ -95,6 +101,7 @@ public class LocalDateTimeMaskerTest {
 				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
 				false, false, true);
 		LocalDateTime v = LocalDateTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v

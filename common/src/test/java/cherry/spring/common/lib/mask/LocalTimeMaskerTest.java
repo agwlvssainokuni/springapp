@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.mask;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.joda.time.LocalTime;
@@ -29,6 +30,7 @@ public class LocalTimeMaskerTest {
 		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
 				0), true, false, false);
 		LocalTime v = LocalTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
 				is(new LocalTime(0, v.getMinuteOfHour(), v.getSecondOfMinute())));
@@ -39,6 +41,7 @@ public class LocalTimeMaskerTest {
 		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
 				0), false, true, false);
 		LocalTime v = LocalTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(masker.mask(v),
 				is(new LocalTime(v.getHourOfDay(), 0, v.getSecondOfMinute())));
 	}
@@ -48,6 +51,7 @@ public class LocalTimeMaskerTest {
 		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
 				0), false, false, true);
 		LocalTime v = LocalTime.now();
+		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(masker.mask(v),
 				is(new LocalTime(v.getHourOfDay(), v.getMinuteOfHour(), 0)));
 	}
