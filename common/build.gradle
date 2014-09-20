@@ -16,6 +16,7 @@ ext {
 	versionLogback = "1.1.2"
 	versionMyBatis = "3.2.7"
 	versionMyBatisSpring = "1.2.2"
+	versionVividJts = "1.11"
 	versionQuerydsl = "3.4.3"
 	versionJackson = "2.4.2"
 	versionAspectJ = "1.8.2"
@@ -24,7 +25,6 @@ ext {
 	versionSpringLdap = "2.0.2.RELEASE"
 	versionSpringSecurity = "3.2.5.RELEASE"
 	versionSpringMobile = "1.1.2.RELEASE"
-	versionVividJts = "1.11"
 	versionSpringDataCommons = "1.8.2.RELEASE"
 	versionSpringDataRest = "2.1.2.RELEASE"
 	versionSpringWs = "2.2.0.RELEASE"
@@ -60,8 +60,8 @@ dependencies {
 	compile "ch.qos.logback:logback-classic:${versionLogback}"
 	compile "org.mybatis:mybatis:${versionMyBatis}"
 	compile "org.mybatis:mybatis-spring:${versionMyBatisSpring}"
+	compile "com.vividsolutions:jts:${versionVividJts}"
 	compile "com.mysema.querydsl:querydsl-sql:${versionQuerydsl}"
-	compile "com.mysema.querydsl:querydsl-sql-codegen:${versionQuerydsl}"
 	compile "com.fasterxml.jackson.core:jackson-core:${versionJackson}"
 	compile "com.fasterxml.jackson.core:jackson-annotations:${versionJackson}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${versionJackson}"
@@ -91,7 +91,6 @@ dependencies {
 	compile "org.springframework.security:spring-security-ldap:${versionSpringSecurity}"
 	compile "org.springframework.security:spring-security-config:${versionSpringSecurity}"
 	compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
-	compile "com.vividsolutions:jts:${versionVividJts}"
 	compile "org.springframework.data:spring-data-commons:${versionSpringDataCommons}"
 	compile "org.springframework.data:spring-data-rest-core:${versionSpringDataRest}"
 	compile "org.springframework.data:spring-data-rest-webmvc:${versionSpringDataRest}"
@@ -112,6 +111,7 @@ dependencies {
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
+	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 }
 
 eclipse.classpath.file {
