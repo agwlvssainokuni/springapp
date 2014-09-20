@@ -33,8 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.spring.common.MailId;
-import cherry.spring.common.db.gen.dto.SignupRequest;
-import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
@@ -47,9 +45,6 @@ import cherry.spring.entree.app.controller.signup.SignupRegisterController;
 public class SignupEntryServiceImpl implements SignupEntryService {
 
 	private final Log log = LogFactory.getLog(getClass());
-
-	@Autowired
-	private SignupRequestMapper signupRequestMapper;
 
 	@Autowired
 	private SignupRequestDao signupRequestDao;
@@ -92,15 +87,13 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 		UUID token = UUID.randomUUID();
 
-		SignupRequest entity = new SignupRequest();
-		entity.setMailAddr(mailAddr);
-		entity.setToken(token.toString());
-		int count = signupRequestMapper.insertSelective(entity);
-		assert count == 1;
+		Integer id = signupRequestDao.createSignupRequest(mailAddr,
+				token.toString());
+		assert id != null;
 		if (log.isDebugEnabled()) {
 			log.debug(
 					"signup_requests is created, id={0}, mailAddr={1}, token={2}",
-					entity.getId(), mailAddr, token);
+					id, mailAddr, token);
 		}
 
 		Model model = new Model();
