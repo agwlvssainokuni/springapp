@@ -26,6 +26,8 @@
 		<property name="objectMapper" ref="objectMapper" />
 	</bean>
 
+	<bean id="sqlQueryHelper" class="cherry.spring.common.helper.querydsl.SQLQueryHelperImpl" />
+
 	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
 
 	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />

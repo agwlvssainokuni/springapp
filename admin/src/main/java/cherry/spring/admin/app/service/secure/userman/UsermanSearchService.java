@@ -16,10 +16,14 @@
 
 package cherry.spring.admin.app.service.secure.userman;
 
+import java.io.Writer;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
-import cherry.spring.common.db.BaseDto;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.lib.paginate.PageSet;
 
@@ -27,29 +31,17 @@ public interface UsermanSearchService {
 
 	Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz);
 
-	public static class Result extends BaseDto {
+	int exportUsers(Writer writer, UsermanSearchForm form);
 
-		private static final long serialVersionUID = 1L;
+	@Getter
+	@Setter
+	@EqualsAndHashCode
+	@ToString
+	public static class Result {
 
 		private PageSet pageSet;
 
 		private List<User> usersList;
-
-		public PageSet getPageSet() {
-			return pageSet;
-		}
-
-		public void setPageSet(PageSet pageSet) {
-			this.pageSet = pageSet;
-		}
-
-		public List<User> getUsersList() {
-			return usersList;
-		}
-
-		public void setUsersList(List<User> usersList) {
-			this.usersList = usersList;
-		}
 	}
 
 }
