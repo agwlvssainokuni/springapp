@@ -106,6 +106,13 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${common.mail.host}" />
+		<property name="port" value="${common.mail.port}" />
+		<property name="protocol" value="${common.mail.protocol}" />
+		<property name="defaultEncoding" value="${common.mail.encoding}" />
+	</bean>
+
 	<bean id="namedParameterJdbcOperations"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
