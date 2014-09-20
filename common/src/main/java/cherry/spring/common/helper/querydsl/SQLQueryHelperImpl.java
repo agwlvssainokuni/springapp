@@ -49,11 +49,10 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 
 		SQLQuery query = sqlQueryOperations.createSQLQuery();
 		query = configurer.configure(query);
-
 		long count = sqlQueryOperations.count(query);
+
 		PageSet pageSet = paginator.paginate(pageNo, (int) count, pageSz);
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
-
 		query = configurer.orderBy(query);
 		List<T> list = sqlQueryOperations.query(query, rowMapper, projection);
 
@@ -66,19 +65,20 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	}
 
 	@Override
-	public int download(SQLQueryConfigurer configurer, final Consumer consumer,
-			final Limiter limiter, Expression<?>... projection)
+	public int download(SQLQueryConfigurer configurer, Consumer consumer,
+			Limiter limiter, Expression<?>... projection)
 			throws LimiterException, IOException {
 
 		ResultSetExtractor<Integer> extractor = new ExtractorResultSetExtractor(
 				consumer, limiter);
 
-		SQLQuery query = sqlQueryOperations.createSQLQuery();
-		query = configurer.configure(query);
-		query = configurer.orderBy(query);
-
 		limiter.start();
 		try {
+
+			SQLQuery query = sqlQueryOperations.createSQLQuery();
+			query = configurer.configure(query);
+			query = configurer.orderBy(query);
+
 			return sqlQueryOperations.queryForObject(query, extractor,
 					projection);
 		} catch (IllegalStateException ex) {
