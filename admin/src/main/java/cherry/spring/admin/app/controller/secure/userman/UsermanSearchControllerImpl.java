@@ -17,12 +17,7 @@
 package cherry.spring.admin.app.controller.secure.userman;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.text.MessageFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +32,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanSearchService;
+import cherry.spring.common.helper.download.DownloadAction;
+import cherry.spring.common.helper.download.DownloadHelper;
 
 @Controller
 public class UsermanSearchControllerImpl implements UsermanSearchController {
@@ -49,20 +46,14 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	@Value("${admin.app.userman.export.contentType}")
 	private String contentType;
 
-	@Value("${admin.app.userman.export.charset}")
-	private Charset charset;
-
-	@Value("${admin.app.userman.export.headerName}")
-	private String headerName;
-
-	@Value("${admin.app.userman.export.headerValue}")
-	private String headerValue;
-
 	@Value("${admin.app.userman.export.filename}")
 	private String filename;
 
 	@Autowired
 	private UsermanSearchService usermanSearchService;
+
+	@Autowired
+	private DownloadHelper downloadHelper;
 
 	@Override
 	public UsermanSearchForm getForm() {
@@ -96,27 +87,23 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	}
 
 	@Override
-	public ModelAndView export(UsermanSearchForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView export(final UsermanSearchForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
 
-		response.setContentType(contentType);
-		response.setCharacterEncoding(charset.name());
-		String fname = MessageFormat.format(filename, new Date());
-		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
-
-		try (OutputStream out = response.getOutputStream();
-				Writer writer = new OutputStreamWriter(out, charset)) {
-			usermanSearchService.exportUsers(writer, form);
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		DownloadAction action = new DownloadAction() {
+			@Override
+			public void doDownload(Writer writer) throws IOException {
+				usermanSearchService.exportUsers(writer, form);
+			}
+		};
+		downloadHelper.download(response, contentType, filename, action);
 
 		return null;
 	}
