@@ -11,40 +11,18 @@
 
 	<context:component-scan base-package="cherry.spring.batch" />
 
-	<bean id="asyncProcDao" class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
-
-	<bean id="asyncProcHelper" class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
-
-	<bean id="bizdateDao" class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
-
-	<bean id="bizdateHelper" class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
-
-	<bean id="jsonHelper" class="cherry.spring.common.helper.json.JsonHelperImpl" />
-
-	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
-
-	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
-
-	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
-
-	<bean id="simpleSqlParser" class="cherry.spring.common.lib.sql.SimpleSqlParser" />
-
 	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
 		<constructor-arg value="log" />
 	</bean>
 
-	<bean id="objectMapper"
-		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-		<property name="modules">
-			<array>
-				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
-			</array>
-		</property>
-		<property name="featuresToDisable">
-			<array>
-				<util:constant
-					static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
-			</array>
+	<bean class="cherry.spring.common.lib.paginate.PaginatorImpl">
+		<property name="paginateStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
+				<property name="totalCount" value="9" />
+				<property name="lowerSideHint" value="4" />
+				<property name="lowerTrim" value="0" />
+				<property name="upperTrim" value="0" />
+			</bean>
 		</property>
 	</bean>
 
