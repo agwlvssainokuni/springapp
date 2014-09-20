@@ -65,8 +65,11 @@
 			<f:input path="firstName" cssErrorClass="error" />
 		</div>
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
-		<button type="submit">
+		<button type="submit" name="proc" value="search">
 			<s:message code="secure/userman/search/index.searchButton" />
+		</button>
+		<button type="submit" name="proc" value="export">
+			<s:message code="secure/userman/search/index.exportButton" />
 		</button>
 	</f:form>
 </div>
