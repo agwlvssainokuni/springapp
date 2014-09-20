@@ -18,7 +18,7 @@ package cherry.spring.common.lib.util;
 
 public class SqlUtil {
 
-	public String escapeForLike(String text) {
+	public static String escapeForLike(String text) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < text.length(); i++) {
 			char ch = text.charAt(i);

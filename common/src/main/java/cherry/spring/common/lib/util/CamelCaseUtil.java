@@ -18,15 +18,15 @@ package cherry.spring.common.lib.util;
 
 public class CamelCaseUtil {
 
-	public String fromUnderscoreDelimited(String text, boolean capitalize) {
+	public static String fromUnderscoreDelimited(String text, boolean capitalize) {
 		return camelCase(text.split("_"), capitalize);
 	}
 
-	public String fromWhitespaceDelimited(String text, boolean capitalize) {
+	public static String fromWhitespaceDelimited(String text, boolean capitalize) {
 		return camelCase(text.split(" "), capitalize);
 	}
 
-	public String camelCase(String[] text, boolean capitalize) {
+	public static String camelCase(String[] text, boolean capitalize) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < text.length; i++) {
 			for (int j = 0; j < text[i].length(); j++) {
