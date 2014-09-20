@@ -32,6 +32,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanSearchService;
+import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
 import cherry.spring.common.helper.download.DownloadHelper;
 
@@ -51,6 +52,9 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 	@Autowired
 	private UsermanSearchService usermanSearchService;
+
+	@Autowired
+	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private DownloadHelper downloadHelper;
@@ -99,11 +103,12 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public void doDownload(Writer writer) throws IOException {
-				usermanSearchService.exportUsers(writer, form);
+			public int doDownload(Writer writer) throws IOException {
+				return usermanSearchService.exportUsers(writer, form);
 			}
 		};
-		downloadHelper.download(response, contentType, filename, action);
+		downloadHelper.download(response, contentType, filename,
+				bizdateHelper.now(), action);
 
 		return null;
 	}
