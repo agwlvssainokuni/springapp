@@ -36,8 +36,6 @@ public class SecureStringConverterTest {
 	@Autowired
 	private ConversionService cs;
 
-	private RandomUtil random = new RandomUtil();
-
 	@Test
 	public void testCanConvert() {
 		assertThat(cs.canConvert(String.class, SecureString.class), is(true));
@@ -46,7 +44,7 @@ public class SecureStringConverterTest {
 	@Test
 	public void testConvert() {
 		for (int i = 0; i < 1000; i++) {
-			String plain = random.randomString(1024);
+			String plain = RandomUtil.randomString(1024);
 			String crypto = SecureString.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureString.class).plain(),
 					is(plain));

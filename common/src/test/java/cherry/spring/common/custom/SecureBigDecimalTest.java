@@ -38,8 +38,6 @@ public class SecureBigDecimalTest {
 
 	private SecureRandom random = new SecureRandom();
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	private int loopCount = 1000;
 
 	private int size = 1024;
@@ -47,7 +45,7 @@ public class SecureBigDecimalTest {
 	@Test
 	public void testRandomTest() {
 		for (int i = 0; i < loopCount; i++) {
-			BigInteger bi = new BigInteger(randomUtil.randomBytes(size));
+			BigInteger bi = new BigInteger(RandomUtil.randomBytes(size));
 			int scale = random.nextInt();
 			BigDecimal plain = new BigDecimal(bi, scale);
 			SecureBigDecimal sec0 = plainValueOf(plain);

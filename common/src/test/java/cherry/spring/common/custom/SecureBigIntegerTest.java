@@ -34,8 +34,6 @@ import cherry.spring.common.lib.util.RandomUtil;
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureBigIntegerTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	private int loopCount = 1000;
 
 	private int size = 1024;
@@ -43,7 +41,7 @@ public class SecureBigIntegerTest {
 	@Test
 	public void testRandomTest() {
 		for (int i = 0; i < loopCount; i++) {
-			BigInteger plain = new BigInteger(randomUtil.randomBytes(size));
+			BigInteger plain = new BigInteger(RandomUtil.randomBytes(size));
 			SecureBigInteger sec0 = plainValueOf(plain);
 			SecureBigInteger sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));

@@ -31,8 +31,6 @@ import cherry.spring.common.lib.util.RandomUtil;
 
 public class SecureBigDecimalHelperTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	private SecureRandom random = new SecureRandom();
 
 	@Test
@@ -73,8 +71,8 @@ public class SecureBigDecimalHelperTest {
 	private SecureBigDecimalHelper createSecureBigDecimalHelper()
 			throws Exception {
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 		SecureBigDecimalHelper sshelper = new SecureBigDecimalHelper();
 		sshelper.setCipherHelper(helper);

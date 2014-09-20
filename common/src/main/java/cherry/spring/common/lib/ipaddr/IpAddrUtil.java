@@ -93,7 +93,7 @@ public class IpAddrUtil {
 	 *            判定対象の文字列。
 	 * @return IPv4アドレス形式ならばtrue、さもなくばfalse。
 	 */
-	public boolean isIpv4Addr(String addr) {
+	public static boolean isIpv4Addr(String addr) {
 		if (addr == null) {
 			return false;
 		}
@@ -108,7 +108,7 @@ public class IpAddrUtil {
 	 *            判定対象の文字列。
 	 * @return IPv6アドレス形式ならばtrue、さもなくばfalse。
 	 */
-	public boolean isIpv6Addr(String addr) {
+	public static boolean isIpv6Addr(String addr) {
 		if (addr == null) {
 			return false;
 		}
@@ -123,7 +123,7 @@ public class IpAddrUtil {
 	 *            IPv6アドレスの文字列表現。
 	 * @return IPv6アドレスの展開表現。
 	 */
-	public String decompressIpv6Addr(String addr) {
+	public static String decompressIpv6Addr(String addr) {
 
 		Ipv6Fragment ipv6frag = makeIpv6Fragment(addr);
 
@@ -147,7 +147,7 @@ public class IpAddrUtil {
 	 *            IPv6アドレスの文字列表現。
 	 * @return IPv6アドレスの圧縮表現。
 	 */
-	public String compressIpv6Addr(String addr) {
+	public static String compressIpv6Addr(String addr) {
 
 		Ipv6Fragment ipv6frag = makeIpv6Fragment(addr);
 
@@ -174,7 +174,7 @@ public class IpAddrUtil {
 	 *            IPv4アドレスの文字列表現。
 	 * @return IPv4アドレスの数値表現。
 	 */
-	public BigInteger getIpv4AddrAsNumber(String addr) {
+	public static BigInteger getIpv4AddrAsNumber(String addr) {
 
 		BigInteger result = BigInteger.ZERO;
 
@@ -195,7 +195,7 @@ public class IpAddrUtil {
 	 *            IPv6アドレスの文字列表現。
 	 * @return IPv6アドレスの数値表現。
 	 */
-	public BigInteger getIpv6AddrAsNumber(String addr) {
+	public static BigInteger getIpv6AddrAsNumber(String addr) {
 
 		Ipv6Fragment ipv6frag = makeIpv6Fragment(addr);
 
@@ -225,7 +225,7 @@ public class IpAddrUtil {
 	 *            ネットマスク長。0から32の範囲で指定する。
 	 * @return IPv4アドレスのネットマスクの数値表現。
 	 */
-	public BigInteger getIpv4AddrMask(int maskLength) {
+	public static BigInteger getIpv4AddrMask(int maskLength) {
 		if (maskLength > 32) {
 			return getIpAddrMask(32, 32);
 		}
@@ -243,7 +243,7 @@ public class IpAddrUtil {
 	 *            プレフィクス長。0から128の範囲で指定する。
 	 * @return IPv6アドレスのプレフィクスマスクの数値表現。
 	 */
-	public BigInteger getIpv6AddrMask(int prefixLength) {
+	public static BigInteger getIpv6AddrMask(int prefixLength) {
 		if (prefixLength > 128) {
 			return getIpAddrMask(128, 128);
 		}
@@ -263,7 +263,7 @@ public class IpAddrUtil {
 	 *            プレフィクス長。
 	 * @return ビットマスクの数値表現。
 	 */
-	private BigInteger getIpAddrMask(int size, int length) {
+	private static BigInteger getIpAddrMask(int size, int length) {
 		// [考え方]
 		// -------- <---------------(size)---------------->
 		// -------- <-----(length)----> <-(size - length)->
@@ -285,7 +285,7 @@ public class IpAddrUtil {
 	 *            IPv4アドレスの数値表現。
 	 * @return IPv4アドレスの文字列表現。
 	 */
-	public String getIpv4AddrFromNumber(BigInteger addr) {
+	public static String getIpv4AddrFromNumber(BigInteger addr) {
 
 		String[] field = new String[4];
 		BigInteger unit = BigInteger.valueOf(0x100L);
@@ -313,7 +313,7 @@ public class IpAddrUtil {
 	 *            IPv6アドレスの数値表現。
 	 * @return IPv6アドレスの文字列表現。
 	 */
-	public String getIpv6AddrFromNumber(BigInteger addr) {
+	public static String getIpv6AddrFromNumber(BigInteger addr) {
 
 		String[] field = new String[8];
 		BigInteger unit = BigInteger.valueOf(0x10000L);
@@ -338,7 +338,7 @@ public class IpAddrUtil {
 	 *            IPv6アドレスの文字列表現。
 	 * @return 構成要素に分解したIPv6アドレス。
 	 */
-	private Ipv6Fragment makeIpv6Fragment(String addr) {
+	private static Ipv6Fragment makeIpv6Fragment(String addr) {
 
 		Ipv6Fragment result = new Ipv6Fragment();
 
@@ -398,7 +398,7 @@ public class IpAddrUtil {
 	 *            末尾に格納する値を保持する配列。
 	 * @return 生成した配列。
 	 */
-	private String[] padding(int size, String[] prefix, String[] suffix) {
+	private static String[] padding(int size, String[] prefix, String[] suffix) {
 		String[] result = new String[size];
 		for (int i = 0; i < prefix.length; i++) {
 			result[i] = prefix[i];
@@ -420,7 +420,7 @@ public class IpAddrUtil {
 	 *            0値連を調べる対象の配列。
 	 * @return 最長の0値連 (開始添字と終了添字)。
 	 */
-	private Range computeMaxNullRange(String[] field) {
+	private static Range computeMaxNullRange(String[] field) {
 
 		int curBegin = -1;
 		int curEnd = -1;
@@ -464,7 +464,8 @@ public class IpAddrUtil {
 	 * @param field
 	 *            IPv6アドレスの項を分解した文字列配列。
 	 */
-	private void constructDecompressed(StringBuilder builder, String[] field) {
+	private static void constructDecompressed(StringBuilder builder,
+			String[] field) {
 
 		appendDecompressed(builder, field[0]);
 		for (int i = 1; i < field.length; i++) {
@@ -484,8 +485,8 @@ public class IpAddrUtil {
 	 * @param range
 	 *            圧縮表現に結合する際の0値連。
 	 */
-	private void constructCompressed(StringBuilder builder, String[] field,
-			Range range) {
+	private static void constructCompressed(StringBuilder builder,
+			String[] field, Range range) {
 
 		if ((range.begin == -1) || (range.begin == range.end)) {
 			// 省略なし
@@ -537,7 +538,7 @@ public class IpAddrUtil {
 	 * @param text
 	 *            結合するIPv6アドレスの項。
 	 */
-	private void appendDecompressed(StringBuilder builder, String text) {
+	private static void appendDecompressed(StringBuilder builder, String text) {
 		if (isZero(text)) {
 			builder.append("0000");
 		} else {
@@ -557,7 +558,7 @@ public class IpAddrUtil {
 	 * @param text
 	 *            結合するIPv6アドレスの項。
 	 */
-	private void appendCompressed(StringBuilder builder, String text) {
+	private static void appendCompressed(StringBuilder builder, String text) {
 		if (isZero(text)) {
 			builder.append("0");
 		} else {
@@ -581,7 +582,7 @@ public class IpAddrUtil {
 	 *            結合するIPv6アドレスの項。
 	 * @return 項が0値ならtrue、さもなくばfalse。
 	 */
-	private boolean isZero(String text) {
+	private static boolean isZero(String text) {
 		if (text == null) {
 			return true;
 		} else {

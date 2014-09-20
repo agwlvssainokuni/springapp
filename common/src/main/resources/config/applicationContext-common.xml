@@ -2,10 +2,12 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
 
 	<context:property-placeholder location="classpath:common.properties"
 		ignore-unresolvable="true" />
@@ -83,6 +85,27 @@
 		</property>
 	</bean>
 
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<bean id="objectMapper"
+		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="modules">
+			<array>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</array>
+		</property>
+		<property name="featuresToDisable">
+			<array>
+				<util:constant
+					static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+			</array>
+		</property>
+	</bean>
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
 	<bean id="namedParameterJdbcOperations"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
@@ -95,7 +118,26 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
+	<bean class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
+	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
+	<bean class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
+	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
+	<bean class="cherry.spring.common.helper.json.JsonHelperImpl" />
+	<bean class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
+	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
+	<bean class="cherry.spring.common.helper.onetimetoken.OneTimeTokenIssuerImpl" />
+	<bean
+		class="cherry.spring.common.helper.onetimetoken.OneTimeTokenValidatorImpl" />
+	<bean class="cherry.spring.common.helper.querydsl.SQLQueryHelperImpl" />
+	<bean class="cherry.spring.common.helper.sql.SqlExecutorImpl" />
+	<bean class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
+
+	<bean class="cherry.spring.common.lib.sql.SimpleSqlParser" />
+	<bean class="cherry.spring.common.lib.etl.ExtractorImpl" />
+	<bean class="cherry.spring.common.lib.etl.LoaderImpl" />
+
+	<bean class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
+	<bean class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
 
 	<bean class="cherry.spring.common.custom.SecureString"
 		factory-method="setEncoder">

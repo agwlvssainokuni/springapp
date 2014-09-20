@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.Parser;
 import org.springframework.format.Printer;
@@ -40,9 +39,6 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<IpAddrFormat> {
 
 	private Log log = LogFactory.getLog(getClass());
-
-	@Autowired
-	private IpAddrUtil ipAddrUtil;
 
 	private Set<Class<?>> fieldTypes = createFieldTypes();
 
@@ -108,7 +104,7 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		public String print(InetAddress object, Locale locale) {
 			String addr = object.getHostAddress();
 			if (v6compress && object instanceof Inet6Address) {
-				addr = ipAddrUtil.compressIpv6Addr(addr);
+				addr = IpAddrUtil.compressIpv6Addr(addr);
 			}
 			return addr;
 		}
@@ -116,7 +112,7 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		@Override
 		public InetAddress parse(String text, Locale locale)
 				throws ParseException {
-			if (ipAddrUtil.isIpv4Addr(text) || ipAddrUtil.isIpv6Addr(text)) {
+			if (IpAddrUtil.isIpv4Addr(text) || IpAddrUtil.isIpv6Addr(text)) {
 				try {
 					return InetAddress.getByName(text);
 				} catch (UnknownHostException ex) {
@@ -138,7 +134,7 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		@Override
 		public Inet4Address parse(String text, Locale locale)
 				throws ParseException {
-			if (ipAddrUtil.isIpv4Addr(text)) {
+			if (IpAddrUtil.isIpv4Addr(text)) {
 				try {
 					return (Inet4Address) InetAddress.getByName(text);
 				} catch (UnknownHostException ex) {
@@ -162,7 +158,7 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		public String print(Inet6Address object, Locale locale) {
 			String addr = object.getHostAddress();
 			if (v6compress) {
-				addr = ipAddrUtil.compressIpv6Addr(addr);
+				addr = IpAddrUtil.compressIpv6Addr(addr);
 			}
 			return addr;
 		}
@@ -170,7 +166,7 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		@Override
 		public Inet6Address parse(String text, Locale locale)
 				throws ParseException {
-			if (ipAddrUtil.isIpv6Addr(text)) {
+			if (IpAddrUtil.isIpv6Addr(text)) {
 				try {
 					return (Inet6Address) InetAddress.getByName(text);
 				} catch (UnknownHostException ex) {
@@ -196,20 +192,20 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		@Override
 		public String print(BigInteger object, Locale locale) {
 			if (version == IpAddrFormat.Version.V4) {
-				return ipAddrUtil.getIpv4AddrFromNumber(object);
+				return IpAddrUtil.getIpv4AddrFromNumber(object);
 			} else if (version == IpAddrFormat.Version.V6) {
-				String addr = ipAddrUtil.getIpv6AddrFromNumber(object);
+				String addr = IpAddrUtil.getIpv6AddrFromNumber(object);
 				if (v6compress) {
-					addr = ipAddrUtil.compressIpv6Addr(addr);
+					addr = IpAddrUtil.compressIpv6Addr(addr);
 				}
 				return addr;
 			} else {
 				if (object.toByteArray().length == 4) {
-					return ipAddrUtil.getIpv4AddrFromNumber(object);
+					return IpAddrUtil.getIpv4AddrFromNumber(object);
 				} else {
-					String addr = ipAddrUtil.getIpv6AddrFromNumber(object);
+					String addr = IpAddrUtil.getIpv6AddrFromNumber(object);
 					if (v6compress) {
-						addr = ipAddrUtil.compressIpv6Addr(addr);
+						addr = IpAddrUtil.compressIpv6Addr(addr);
 					}
 					return addr;
 				}
@@ -220,21 +216,21 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		public BigInteger parse(String text, Locale locale)
 				throws ParseException {
 			if (version == IpAddrFormat.Version.V4) {
-				if (ipAddrUtil.isIpv4Addr(text)) {
-					return ipAddrUtil.getIpv4AddrAsNumber(text);
+				if (IpAddrUtil.isIpv4Addr(text)) {
+					return IpAddrUtil.getIpv4AddrAsNumber(text);
 				}
 				throw new ParseException("Invlaid IPv4 format: " + text, 0);
 			} else if (version == IpAddrFormat.Version.V6) {
-				if (ipAddrUtil.isIpv6Addr(text)) {
-					return ipAddrUtil.getIpv6AddrAsNumber(text);
+				if (IpAddrUtil.isIpv6Addr(text)) {
+					return IpAddrUtil.getIpv6AddrAsNumber(text);
 				}
 				throw new ParseException("Invlaid IPv6 format: " + text, 0);
 			} else {
-				if (ipAddrUtil.isIpv4Addr(text)) {
-					return ipAddrUtil.getIpv4AddrAsNumber(text);
+				if (IpAddrUtil.isIpv4Addr(text)) {
+					return IpAddrUtil.getIpv4AddrAsNumber(text);
 				}
-				if (ipAddrUtil.isIpv6Addr(text)) {
-					return ipAddrUtil.getIpv6AddrAsNumber(text);
+				if (IpAddrUtil.isIpv6Addr(text)) {
+					return IpAddrUtil.getIpv6AddrAsNumber(text);
 				}
 				throw new ParseException("Invalid IPv4/IPv6 format: " + text, 0);
 			}
@@ -254,14 +250,14 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 
 		@Override
 		public String print(String object, Locale locale) {
-			if (ipAddrUtil.isIpv4Addr(object)) {
-				BigInteger addr = ipAddrUtil.getIpv4AddrAsNumber(object);
-				return ipAddrUtil.getIpv4AddrFromNumber(addr);
-			} else if (ipAddrUtil.isIpv6Addr(object)) {
+			if (IpAddrUtil.isIpv4Addr(object)) {
+				BigInteger addr = IpAddrUtil.getIpv4AddrAsNumber(object);
+				return IpAddrUtil.getIpv4AddrFromNumber(addr);
+			} else if (IpAddrUtil.isIpv6Addr(object)) {
 				if (v6compress) {
-					return ipAddrUtil.compressIpv6Addr(object);
+					return IpAddrUtil.compressIpv6Addr(object);
 				} else {
-					return ipAddrUtil.decompressIpv6Addr(object);
+					return IpAddrUtil.decompressIpv6Addr(object);
 				}
 			} else {
 				throw new IllegalArgumentException("Invalid IPv4/IPv6 format: "
@@ -272,30 +268,30 @@ public class IpAddrFormatAnnotationFormatterFactory implements
 		@Override
 		public String parse(String text, Locale locale) throws ParseException {
 			if (version == IpAddrFormat.Version.V4) {
-				if (ipAddrUtil.isIpv4Addr(text)) {
-					BigInteger addr = ipAddrUtil.getIpv4AddrAsNumber(text);
-					return ipAddrUtil.getIpv4AddrFromNumber(addr);
+				if (IpAddrUtil.isIpv4Addr(text)) {
+					BigInteger addr = IpAddrUtil.getIpv4AddrAsNumber(text);
+					return IpAddrUtil.getIpv4AddrFromNumber(addr);
 				}
 				throw new ParseException("Invlaid IPv4 format: " + text, 0);
 			} else if (version == IpAddrFormat.Version.V6) {
-				if (ipAddrUtil.isIpv6Addr(text)) {
+				if (IpAddrUtil.isIpv6Addr(text)) {
 					if (v6compress) {
-						return ipAddrUtil.compressIpv6Addr(text);
+						return IpAddrUtil.compressIpv6Addr(text);
 					} else {
-						return ipAddrUtil.decompressIpv6Addr(text);
+						return IpAddrUtil.decompressIpv6Addr(text);
 					}
 				}
 				throw new ParseException("Invlaid IPv6 format: " + text, 0);
 			} else {
-				if (ipAddrUtil.isIpv4Addr(text)) {
-					BigInteger addr = ipAddrUtil.getIpv4AddrAsNumber(text);
-					return ipAddrUtil.getIpv4AddrFromNumber(addr);
+				if (IpAddrUtil.isIpv4Addr(text)) {
+					BigInteger addr = IpAddrUtil.getIpv4AddrAsNumber(text);
+					return IpAddrUtil.getIpv4AddrFromNumber(addr);
 				}
-				if (ipAddrUtil.isIpv6Addr(text)) {
+				if (IpAddrUtil.isIpv6Addr(text)) {
 					if (v6compress) {
-						return ipAddrUtil.compressIpv6Addr(text);
+						return IpAddrUtil.compressIpv6Addr(text);
 					} else {
-						return ipAddrUtil.decompressIpv6Addr(text);
+						return IpAddrUtil.decompressIpv6Addr(text);
 					}
 				}
 				throw new ParseException("Invalid IPv4/IPv6 format: " + text, 0);

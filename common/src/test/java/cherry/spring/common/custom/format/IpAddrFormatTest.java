@@ -18,15 +18,11 @@ package cherry.spring.common.custom.format;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,17 +34,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.format.Printer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.DataBinder;
 
 import cherry.spring.common.custom.format.IpAddrFormat.Version;
-import cherry.spring.common.lib.ipaddr.IpAddrUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -338,57 +331,6 @@ public class IpAddrFormatTest {
 			factory.getParser(null, Object.class);
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
-			// OK
-		}
-	}
-
-	@Test
-	public void testUnknownHost() {
-
-		IpAddrUtil ipAddrUtil = mock(IpAddrUtil.class);
-		when(ipAddrUtil.isIpv4Addr(anyString())).thenReturn(true);
-		when(ipAddrUtil.isIpv6Addr(anyString())).thenReturn(true);
-		IpAddrFormatAnnotationFormatterFactory factory = new IpAddrFormatAnnotationFormatterFactory();
-		ReflectionTestUtils.setField(factory, "ipAddrUtil", ipAddrUtil);
-
-		IpAddrFormat annot = mock(IpAddrFormat.class);
-		try {
-			factory.getParser(annot, InetAddress.class).parse("UNKNOWN", null);
-			fail("Exception must be thrown");
-		} catch (ParseException ex) {
-			// OK
-		}
-		try {
-			factory.getParser(annot, Inet4Address.class).parse("UNKNOWN", null);
-			fail("Exception must be thrown");
-		} catch (ParseException ex) {
-			// OK
-		}
-		try {
-			factory.getParser(annot, Inet6Address.class).parse("UNKNOWN", null);
-			fail("Exception must be thrown");
-		} catch (ParseException ex) {
-			// OK
-		}
-	}
-
-	@Test
-	public void testMisc() {
-
-		IpAddrUtil ipAddrUtil = mock(IpAddrUtil.class);
-		when(ipAddrUtil.isIpv4Addr(anyString())).thenReturn(false);
-		when(ipAddrUtil.isIpv6Addr(anyString())).thenReturn(false);
-		IpAddrFormatAnnotationFormatterFactory factory = new IpAddrFormatAnnotationFormatterFactory();
-		ReflectionTestUtils.setField(factory, "ipAddrUtil", ipAddrUtil);
-
-		IpAddrFormat annot = mock(IpAddrFormat.class);
-		try {
-			@SuppressWarnings("unchecked")
-			Printer<String> printer = (Printer<String>) factory.getPrinter(
-					annot, String.class);
-			printer.print("DUMMY", null);
-			fail("Exception must be thrown");
-		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 	}

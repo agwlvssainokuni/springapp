@@ -30,13 +30,11 @@ import cherry.spring.common.lib.util.RandomUtil;
 
 public class SecureStringHelperTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	@Test
 	public void testEncodeDecode() throws Exception {
 		SecureStringHelper helper = createSecureStringHelper();
 		for (int i = 0; i < 1000; i++) {
-			String plain = randomUtil.randomString(1024);
+			String plain = RandomUtil.randomString(1024);
 			String crypto = helper.encode(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decode(crypto), is(plain));
@@ -48,7 +46,7 @@ public class SecureStringHelperTest {
 		SecureString.setEncoder(createSecureStringHelper());
 		for (int i = 0; i < 1000; i++) {
 
-			String plain = randomUtil.randomString(1024);
+			String plain = RandomUtil.randomString(1024);
 			SecureString ss0 = SecureString.plainValueOf(plain);
 			assertThat(ss0.plain(), is(plain));
 			assertThat(ss0.crypto(), is(not(plain)));
@@ -69,8 +67,8 @@ public class SecureStringHelperTest {
 
 	private SecureStringHelper createSecureStringHelper() throws Exception {
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 		SecureStringHelper sshelper = new SecureStringHelper();
 		sshelper.setCharset(Charset.forName("UTF-8"));

@@ -30,8 +30,6 @@ import cherry.spring.common.lib.util.RandomUtil;
 
 public class RSACipherHelperTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	private int loopCount = 1000;
 
 	private int size = 245;
@@ -40,7 +38,7 @@ public class RSACipherHelperTest {
 	public void testEncDec() throws Exception {
 		RSACipherHelper helper = createCipherHelper();
 		for (int i = 0; i < loopCount; i++) {
-			byte[] plain = randomUtil.randomBytes(size);
+			byte[] plain = RandomUtil.randomBytes(size);
 			byte[] crypto = helper.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decrypt(crypto), is(plain));

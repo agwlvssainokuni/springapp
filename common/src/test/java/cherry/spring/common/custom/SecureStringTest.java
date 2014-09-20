@@ -32,8 +32,6 @@ import cherry.spring.common.lib.util.RandomUtil;
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureStringTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	private int loopCount = 1000;
 
 	private int size = 1024;
@@ -41,7 +39,7 @@ public class SecureStringTest {
 	@Test
 	public void testRandomTest() {
 		for (int i = 0; i < loopCount; i++) {
-			String plain = randomUtil.randomString(size);
+			String plain = RandomUtil.randomString(size);
 			SecureString sec0 = plainValueOf(plain);
 			SecureString sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));

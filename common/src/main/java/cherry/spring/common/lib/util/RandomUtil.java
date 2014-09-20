@@ -21,26 +21,22 @@ import java.util.Random;
 
 public class RandomUtil {
 
-	private Random random = new SecureRandom();
+	private static Random random = new SecureRandom();
 
-	private char[] base = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+	private static char[] base = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 			.toCharArray();
 
-	public void setRandom(Random random) {
-		this.random = random;
+	public static void setBase(char[] bs) {
+		base = bs;
 	}
 
-	public void setBase(char[] base) {
-		this.base = base;
-	}
-
-	public byte[] randomBytes(int length) {
+	public static byte[] randomBytes(int length) {
 		byte[] value = new byte[length];
 		random.nextBytes(value);
 		return value;
 	}
 
-	public String randomString(int length) {
+	public static String randomString(int length) {
 		char[] value = new char[length];
 		for (int i = 0; i < length; i++) {
 			value[i] = base[random.nextInt(base.length)];

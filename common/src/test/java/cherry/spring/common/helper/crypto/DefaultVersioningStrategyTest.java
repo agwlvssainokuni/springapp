@@ -31,14 +31,12 @@ public class DefaultVersioningStrategyTest {
 
 	private SecureRandom random = new SecureRandom();
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	@Test
 	public void testEncodeAndDecode() {
 		DefaultVersioningStrategy strategy = new DefaultVersioningStrategy();
 		for (int i = 0; i < 1000; i++) {
 			int version = random.nextInt();
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] encoded = strategy.encode(plain, version);
 			assertThat(plain, is(not(encoded)));
 			VersionedData<byte[], Integer> vd = strategy.decode(encoded);

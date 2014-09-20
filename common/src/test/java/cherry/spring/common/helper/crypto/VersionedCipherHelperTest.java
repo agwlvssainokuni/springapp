@@ -32,8 +32,6 @@ import cherry.spring.common.lib.util.RandomUtil;
 
 public class VersionedCipherHelperTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	@Test
 	public void simpleEncryptAndDecrypt() throws Exception {
 
@@ -45,7 +43,7 @@ public class VersionedCipherHelperTest {
 		helper.setVersioningStrategy(new DefaultVersioningStrategy());
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] crypto = helper.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decrypt(crypto), is(plain));
@@ -66,7 +64,7 @@ public class VersionedCipherHelperTest {
 		helper1.setCipherHelperMap(map);
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] crypto = helper0.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(crypto, is(not(helper1.encrypt(plain))));
@@ -82,7 +80,7 @@ public class VersionedCipherHelperTest {
 		helper0.setDefaultVersion(1);
 		helper0.setCipherHelperMap(map);
 		try {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			helper0.encrypt(plain);
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
@@ -106,7 +104,7 @@ public class VersionedCipherHelperTest {
 		helper1.setCipherHelperMap(map1);
 
 		try {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] crypto = helper1.encrypt(plain);
 			assertThat(helper1.decrypt(crypto), is(plain));
 
@@ -128,8 +126,8 @@ public class VersionedCipherHelperTest {
 
 	private CipherHelper createAESCipherHelper() throws IOException {
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 		return helper;
 	}

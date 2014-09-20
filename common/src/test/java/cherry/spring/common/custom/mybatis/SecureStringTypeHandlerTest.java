@@ -46,8 +46,6 @@ public class SecureStringTypeHandlerTest {
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
-	private RandomUtil random = new RandomUtil();
-
 	@After
 	public void after() {
 		namedParameterJdbcOperations.update("DELETE FROM conversion_test",
@@ -56,7 +54,7 @@ public class SecureStringTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		String plain = random.randomString(32);
+		String plain = RandomUtil.randomString(32);
 		ConversionTest record = new ConversionTest();
 		record.setSecStr(SecureString.plainValueOf(plain));
 

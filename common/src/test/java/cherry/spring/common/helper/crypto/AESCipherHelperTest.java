@@ -26,18 +26,16 @@ import cherry.spring.common.lib.util.RandomUtil;
 
 public class AESCipherHelperTest {
 
-	private RandomUtil randomUtil = new RandomUtil();
-
 	@Test
 	public void testDefault() throws Exception {
 
 		AESCipherHelper helper = new AESCipherHelper();
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -49,12 +47,12 @@ public class AESCipherHelperTest {
 
 		AESCipherHelper helper = new AESCipherHelper();
 		helper.setAlgorithm("AES/CBC/PKCS5Padding");
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
+		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -66,11 +64,11 @@ public class AESCipherHelperTest {
 
 		AESCipherHelper helper = new AESCipherHelper();
 		helper.setAlgorithm("AES/ECB/PKCS5Padding");
-		helper.setSecretKey(new InMemoryResource(randomUtil.randomBytes(16)));
+		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] enc = helper.encrypt(plain);
 			byte[] dec = helper.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -80,8 +78,8 @@ public class AESCipherHelperTest {
 	@Test
 	public void testUsingKeyCipherHelper() throws Exception {
 
-		byte[] key = randomUtil.randomBytes(16);
-		byte[] iv = randomUtil.randomBytes(16);
+		byte[] key = RandomUtil.randomBytes(16);
+		byte[] iv = RandomUtil.randomBytes(16);
 
 		AESCipherHelper helper0 = new AESCipherHelper();
 		helper0.setSecretKey(new InMemoryResource(key));
@@ -89,9 +87,9 @@ public class AESCipherHelperTest {
 		helper0.afterPropertiesSet();
 
 		AESCipherHelper keyCipherHelper = new AESCipherHelper();
-		keyCipherHelper.setSecretKey(new InMemoryResource(randomUtil
+		keyCipherHelper.setSecretKey(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
-		keyCipherHelper.setInitVector(new InMemoryResource(randomUtil
+		keyCipherHelper.setInitVector(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		keyCipherHelper.afterPropertiesSet();
 
@@ -102,7 +100,7 @@ public class AESCipherHelperTest {
 		helper1.afterPropertiesSet();
 
 		for (int i = 0; i < 1000; i++) {
-			byte[] plain = randomUtil.randomBytes(1024);
+			byte[] plain = RandomUtil.randomBytes(1024);
 			byte[] enc0 = helper0.encrypt(plain);
 			byte[] enc1 = helper1.encrypt(plain);
 			assertThat(enc1, is(enc0));
