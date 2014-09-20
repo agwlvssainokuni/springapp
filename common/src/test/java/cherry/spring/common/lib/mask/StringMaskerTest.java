@@ -39,7 +39,7 @@ public class StringMaskerTest {
 
 	@Test
 	public void testFixedTail() {
-		StringMasker masker = StringMasker.fixedTail("*", 2, 5);
+		StringMasker masker = StringMasker.fixedTail("*", 2, 4);
 		assertThat(masker.mask(null), is(nullValue(String.class)));
 		assertThat(masker.mask(""), is("****"));
 		assertThat(masker.mask("a"), is("a***"));
