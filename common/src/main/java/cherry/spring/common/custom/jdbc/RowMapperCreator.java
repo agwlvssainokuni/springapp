@@ -16,10 +16,17 @@
 
 package cherry.spring.common.custom.jdbc;
 
+import java.util.Map;
+
 import org.springframework.jdbc.core.RowMapper;
+
+import cherry.spring.common.lib.mask.Masker;
 
 public interface RowMapperCreator {
 
 	<T> RowMapper<T> create(Class<T> mappedClass);
+
+	<T> RowMapper<T> create(Class<T> mappedClass,
+			Map<String, Masker<?>> maskerMap);
 
 }

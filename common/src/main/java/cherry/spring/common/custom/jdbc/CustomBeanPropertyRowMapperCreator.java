@@ -16,10 +16,14 @@
 
 package cherry.spring.common.custom.jdbc;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
+import cherry.spring.common.lib.mask.Masker;
 
 @Component
 public class CustomBeanPropertyRowMapperCreator implements RowMapperCreator {
@@ -30,7 +34,14 @@ public class CustomBeanPropertyRowMapperCreator implements RowMapperCreator {
 	@Override
 	public <T> RowMapper<T> create(Class<T> mappedClass) {
 		return new CustomBeanPropertyRowMapper<T>(mappedClass,
-				conversionService);
+				conversionService, null);
+	}
+
+	@Override
+	public <T> RowMapper<T> create(Class<T> mappedClass,
+			Map<String, Masker<?>> maskerMap) {
+		return new CustomBeanPropertyRowMapper<T>(mappedClass,
+				conversionService, maskerMap);
 	}
 
 }
