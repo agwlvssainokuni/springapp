@@ -15,8 +15,6 @@
 	<ul>
 		<li><a href="<c:url value="/secure/userman/search" />"><s:message
 					code="secure/home/index.menu.userman.search" /></a></li>
-		<li><a href="<c:url value="/secure/userman/export" />"><s:message
-					code="secure/home/index.menu.userman.export" /></a></li>
 		<li><a href="<c:url value="/secure/userman/import" />"><s:message
 					code="secure/home/index.menu.userman.import" /></a></li>
 	</ul>

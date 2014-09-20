@@ -19,10 +19,6 @@
 					"uri": "/secure/userman/search"
 				},
 				{
-					"name": "secure/userman/export/index",
-					"uri": "/secure/userman/export"
-				},
-				{
 					"name": "secure/userman/import/index",
 					"uri": "/secure/userman/import"
 				},
