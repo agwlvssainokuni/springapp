@@ -24,28 +24,26 @@ public class CamelCaseUtilTest {
 
 	@Test
 	public void testFromUnderscoreDelimited() {
-		CamelCaseUtil camelCaseUtil = new CamelCaseUtil();
 		assertEquals("abcDefGhi",
-				camelCaseUtil.fromUnderscoreDelimited("abc_def_ghi", false));
+				CamelCaseUtil.fromUnderscoreDelimited("abc_def_ghi", false));
 		assertEquals("abcDefGhi",
-				camelCaseUtil.fromUnderscoreDelimited("ABC_DEF_GHI", false));
+				CamelCaseUtil.fromUnderscoreDelimited("ABC_DEF_GHI", false));
 		assertEquals("AbcDefGhi",
-				camelCaseUtil.fromUnderscoreDelimited("abc_def_ghi", true));
+				CamelCaseUtil.fromUnderscoreDelimited("abc_def_ghi", true));
 		assertEquals("AbcDefGhi",
-				camelCaseUtil.fromUnderscoreDelimited("ABC_DEF_GHI", true));
+				CamelCaseUtil.fromUnderscoreDelimited("ABC_DEF_GHI", true));
 	}
 
 	@Test
 	public void testFromWhitespaceDelimited() {
-		CamelCaseUtil camelCaseUtil = new CamelCaseUtil();
 		assertEquals("abcDefGhi",
-				camelCaseUtil.fromWhitespaceDelimited("abc def ghi", false));
+				CamelCaseUtil.fromWhitespaceDelimited("abc def ghi", false));
 		assertEquals("abcDefGhi",
-				camelCaseUtil.fromWhitespaceDelimited("ABC DEF GHI", false));
+				CamelCaseUtil.fromWhitespaceDelimited("ABC DEF GHI", false));
 		assertEquals("AbcDefGhi",
-				camelCaseUtil.fromWhitespaceDelimited("abc def ghi", true));
+				CamelCaseUtil.fromWhitespaceDelimited("abc def ghi", true));
 		assertEquals("AbcDefGhi",
-				camelCaseUtil.fromWhitespaceDelimited("ABC DEF GHI", true));
+				CamelCaseUtil.fromWhitespaceDelimited("ABC DEF GHI", true));
 	}
 
 }

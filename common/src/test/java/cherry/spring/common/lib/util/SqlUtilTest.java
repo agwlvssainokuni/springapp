@@ -24,11 +24,10 @@ public class SqlUtilTest {
 
 	@Test
 	public void testEscapeForLike() {
-		SqlUtil sqlUtil = new SqlUtil();
-		assertEquals("abcd", sqlUtil.escapeForLike("abcd"));
-		assertEquals("ab\\%cd", sqlUtil.escapeForLike("ab%cd"));
-		assertEquals("ab\\_cd", sqlUtil.escapeForLike("ab_cd"));
-		assertEquals("ab\\\\cd", sqlUtil.escapeForLike("ab\\cd"));
+		assertEquals("abcd", SqlUtil.escapeForLike("abcd"));
+		assertEquals("ab\\%cd", SqlUtil.escapeForLike("ab%cd"));
+		assertEquals("ab\\_cd", SqlUtil.escapeForLike("ab_cd"));
+		assertEquals("ab\\\\cd", SqlUtil.escapeForLike("ab\\cd"));
 	}
 
 }
