@@ -2,19 +2,6 @@ apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
 
-ext {
-	versionSpring = "4.1.0.RELEASE"
-	versionTiles = "3.0.4"
-	versionJstl = "1.2"
-	versionJavaServlet = "3.0.1"
-	versionJavaJsp = "2.2.1"
-	versionJavaJms = "1.1-rev-1"
-	versionJavaTransaction = "1.1-rev-1"
-	versionLombok = "1.14.4"
-	versionJunit = "4.11"
-	versionMockito = "1.9.5"
-}
-
 dependencies {
 	compile project(":common")
 	compile "org.apache.tiles:tiles-core:${versionTiles}"
