@@ -55,6 +55,7 @@ public class MaskerUtilTest {
 		assertThat((Integer) map.get("DDD_EEE_FFF").decorate(1234), is(9934));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testPropertyMap() {
 		Map<String, Masker<?>> emptyMap = new LinkedHashMap<>();
