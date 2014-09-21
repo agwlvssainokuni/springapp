@@ -19,8 +19,10 @@ package cherry.spring.common.helper.signup;
 import static org.joda.time.LocalDateTime.now;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.LocalDateTime;
@@ -30,7 +32,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.SignupRequest;
+import cherry.spring.common.db.gen.dto.SignupRequestCriteria;
+import cherry.spring.common.db.gen.dto.SignupRequestCriteria.Criteria;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,6 +47,23 @@ public class SignupRequestDaoTest {
 
 	@Autowired
 	private SignupRequestMapper mapper;
+
+	@Test
+	public void testCreateSignupRequest00() {
+		String mailAddr = "req00@example.com";
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString()));
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString()));
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString()));
+		SignupRequestCriteria crit = new SignupRequestCriteria();
+		Criteria c = crit.createCriteria();
+		c.andMailAddrEqualTo(mailAddr);
+		c.andDeletedFlgEqualTo(DeletedFlag.NOT_DELETED);
+		List<SignupRequest> list = mapper.selectByExample(crit);
+		assertEquals(list.size(), 3);
+	}
 
 	@Test
 	public void testValidateMailAddr00() {
