@@ -20,17 +20,27 @@ import static org.joda.time.LocalDateTime.now;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.UUID;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.SignupRequest;
@@ -51,18 +61,45 @@ public class SignupRequestDaoTest {
 	@Test
 	public void testCreateSignupRequest00() {
 		String mailAddr = "req00@example.com";
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString()));
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString()));
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString()));
+
 		SignupRequestCriteria crit = new SignupRequestCriteria();
 		Criteria c = crit.createCriteria();
 		c.andMailAddrEqualTo(mailAddr);
 		c.andDeletedFlgEqualTo(DeletedFlag.NOT_DELETED);
+		assertEquals(mapper.selectByExample(crit).size(), 0);
+
+		LocalDateTime before = now();
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString(), now()));
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString(), now()));
+		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString(), now()));
+		LocalDateTime after = now();
+
+		Interval interval = new Interval(before.toDate().getTime(), after
+				.toDate().getTime());
 		List<SignupRequest> list = mapper.selectByExample(crit);
 		assertEquals(list.size(), 3);
+		for (SignupRequest r : list) {
+			assertTrue(interval.contains(r.getAppliedAt().toDate().getTime()));
+		}
+	}
+
+	@Test
+	public void testCreateSignupRequest99() {
+		String mailAddr = "req99@example.com";
+
+		NamedParameterJdbcOperations op = mock(NamedParameterJdbcOperations.class);
+		SqlParameterSource paramSource = any(SqlParameterSource.class);
+		KeyHolder keyHolder = any(KeyHolder.class);
+		when(op.update(anyString(), paramSource, keyHolder)).thenReturn(0);
+
+		SignupRequestDaoImpl impl = new SignupRequestDaoImpl();
+		ReflectionTestUtils.setField(impl, "namedParameterJdbcOperations", op);
+
+		assertNull(impl.createSignupRequest(mailAddr, UUID.randomUUID()
+				.toString(), now()));
 	}
 
 	@Test
@@ -172,6 +209,11 @@ public class SignupRequestDaoTest {
 	}
 
 	private SignupRequest newRequest(String mailAddr) {
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException ex) {
+			// NOTHING
+		}
 		SignupRequest entity = new SignupRequest();
 		entity.setMailAddr(mailAddr);
 		entity.setToken(UUID.randomUUID().toString());
