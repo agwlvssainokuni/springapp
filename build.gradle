@@ -52,7 +52,7 @@ subprojects {
 		versionCommonsMath3 = "3.2"
 		versionCommonsCodec = "1.9"
 		versionVelocity = "1.7"
-		versionFluentLogger = "0.2.11"
+		versionFluentLogger = "0.3.0"
 		versionSlf4j = "1.7.7"
 		versionLogback = "1.1.2"
 		versionMyBatis = "3.2.7"
