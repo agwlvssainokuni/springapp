@@ -86,10 +86,19 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		}
 
 		UUID token = UUID.randomUUID();
+		LocalDateTime appliedAt = bizdateHelper.now();
 
 		Integer id = signupRequestDao.createSignupRequest(mailAddr,
-				token.toString());
-		assert id != null;
+				token.toString(), appliedAt);
+		if (id == null) {
+			if (log.isDebugEnabled()) {
+				log.debug(
+						"Failed to create: mailAddr={0}, token={1}, appliedAt={2}",
+						mailAddr, token.toString(), appliedAt);
+			}
+			return false;
+		}
+
 		if (log.isDebugEnabled()) {
 			log.debug(
 					"signup_requests is created, id={0}, mailAddr={1}, token={2}",
