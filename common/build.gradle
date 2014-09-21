@@ -66,9 +66,9 @@ dependencies {
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
-	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	testRuntime "org.glassfish:javax.el:${versionJavaEl}"
 }
