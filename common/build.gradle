@@ -113,9 +113,3 @@ dependencies {
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 }
-
-eclipse.classpath.file {
-	whenMerged { classpath ->
-		classpath.entries.findAll { entry -> entry.kind == "lib" }*.exported = true
-	}
-}
