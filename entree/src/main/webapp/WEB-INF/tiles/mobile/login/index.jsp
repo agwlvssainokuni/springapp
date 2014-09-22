@@ -11,10 +11,17 @@
 <h1>
 	<s:message code="login/index.message.0" />
 </h1>
-<c:if test="${param.err == 'login'}">
+<c:if test="${loginFailed}">
 	<div class="error">
 		<div>
 			<s:message code="login/index.message.1" />
+		</div>
+	</div>
+</c:if>
+<c:if test="${loggedOut}">
+	<div>
+		<div>
+			<s:message code="login/index.message.2" />
 		</div>
 	</div>
 </c:if>
