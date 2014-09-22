@@ -36,6 +36,7 @@ import cherry.spring.common.helper.querydsl.SQLQueryHelper;
 import cherry.spring.common.helper.querydsl.SQLQueryResult;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.etl.NoneLimiter;
+import cherry.spring.common.lib.util.LocalDateTimeUtil;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
@@ -96,11 +97,12 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 					where.add(u.loginId.startsWith(form.getLoginId()));
 				}
 				if (form.getRegisteredFrom() != null) {
-					where.add(u.registeredAt.goe(form.getRegisteredFrom()));
+					where.add(u.registeredAt.goe(LocalDateTimeUtil
+							.rangeFrom(form.getRegisteredFrom())));
 				}
 				if (form.getRegisteredTo() != null) {
-					where.add(u.registeredAt.lt(form.getRegisteredTo()
-							.plusSeconds(1)));
+					where.add(u.registeredAt.lt(LocalDateTimeUtil.rangeTo(form
+							.getRegisteredTo())));
 				}
 				if (StringUtils.isNotBlank(form.getFirstName())) {
 					where.add(u.firstName.startsWith(form.getFirstName()));
