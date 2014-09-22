@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -44,6 +45,11 @@ public class CamelCaseUtilTest {
 				CamelCaseUtil.fromWhitespaceDelimited("abc def ghi", true));
 		assertEquals("AbcDefGhi",
 				CamelCaseUtil.fromWhitespaceDelimited("ABC DEF GHI", true));
+	}
+
+	@Test
+	public void testMisc() {
+		assertNotNull(new CamelCaseUtil());
 	}
 
 }

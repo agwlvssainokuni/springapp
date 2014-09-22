@@ -17,6 +17,7 @@
 package cherry.spring.common.lib.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -28,6 +29,11 @@ public class SqlUtilTest {
 		assertEquals("ab\\%cd", SqlUtil.escapeForLike("ab%cd"));
 		assertEquals("ab\\_cd", SqlUtil.escapeForLike("ab_cd"));
 		assertEquals("ab\\\\cd", SqlUtil.escapeForLike("ab\\cd"));
+	}
+
+	@Test
+	public void testMisc() {
+		assertNotNull(new SqlUtil());
 	}
 
 }
