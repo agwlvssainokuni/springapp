@@ -18,8 +18,6 @@ package cherry.spring.admin.app.service.secure.userman;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +36,9 @@ import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
 
+import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
-import com.mysema.query.types.Predicate;
 
 @Component
 public class UsermanSearchServiceImpl implements UsermanSearchService {
@@ -92,28 +90,28 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-				List<Predicate> where = new LinkedList<>();
+
+				BooleanBuilder where = new BooleanBuilder();
 				if (StringUtils.isNoneBlank(form.getLoginId())) {
-					where.add(u.loginId.startsWith(form.getLoginId()));
+					where.and(u.loginId.startsWith(form.getLoginId()));
 				}
 				if (form.getRegisteredFrom() != null) {
-					where.add(u.registeredAt.goe(LocalDateTimeUtil
+					where.and(u.registeredAt.goe(LocalDateTimeUtil
 							.rangeFrom(form.getRegisteredFrom())));
 				}
 				if (form.getRegisteredTo() != null) {
-					where.add(u.registeredAt.lt(LocalDateTimeUtil.rangeTo(form
+					where.and(u.registeredAt.lt(LocalDateTimeUtil.rangeTo(form
 							.getRegisteredTo())));
 				}
 				if (StringUtils.isNotBlank(form.getFirstName())) {
-					where.add(u.firstName.startsWith(form.getFirstName()));
+					where.and(u.firstName.startsWith(form.getFirstName()));
 				}
 				if (StringUtils.isNotBlank(form.getLastName())) {
-					where.add(u.lastName.startsWith(form.getLastName()));
+					where.and(u.lastName.startsWith(form.getLastName()));
 				}
-				where.add(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				where.and(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-				return query.from(u).where(
-						where.toArray(new Predicate[where.size()]));
+				return query.from(u).where(where);
 			}
 
 			@Override
