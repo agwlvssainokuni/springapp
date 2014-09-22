@@ -154,3 +154,10 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 		}
 	})
 }
+
+task form(type: cherry.gradle.task.CreateFormTask) {
+	definitionFiles = [new java.io.File("def.xls")]
+	outputDir = new java.io.File("todir")
+	basePackageName = "cherry.spring.form"
+	templateName = "template/form.vm"
+}
