@@ -46,7 +46,8 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		AsyncProcService.Result result = asyncProcService.searchAsyncProc(
-				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+				authentication.getName(), pageNo,
+				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(result);

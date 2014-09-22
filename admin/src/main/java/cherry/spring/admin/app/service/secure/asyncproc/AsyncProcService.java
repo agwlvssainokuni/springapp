@@ -24,7 +24,7 @@ import cherry.spring.common.lib.paginate.PageSet;
 
 public interface AsyncProcService {
 
-	Result searchAsyncProc(int pageNo, int pageSz);
+	Result searchAsyncProc(String loginId, int pageNo, int pageSz);
 
 	public static class Result extends BaseDto {
 
