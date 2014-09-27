@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin;
+package cherry.spring.common.helper.logicalerror;
 
-public enum LogicError {
-	// ダミー
-	DUMMY
+public enum LogicalError implements ILogicalError {
+	OptimisticLockError, OneTimeTokenError;
+
+	@Override
+	public String code() {
+		return name();
+	}
 }

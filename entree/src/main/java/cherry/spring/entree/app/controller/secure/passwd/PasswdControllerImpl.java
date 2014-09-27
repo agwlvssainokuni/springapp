@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,18 +32,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.spring.entree.LogicError;
+import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.app.service.secure.passwd.PasswdService;
 
 @Controller
@@ -60,6 +57,9 @@ public class PasswdControllerImpl implements PasswdController {
 	private PasswdService passwdService;
 
 	@Autowired
+	private LogicalErrorHelper logicalErrorHelper;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
@@ -68,22 +68,6 @@ public class PasswdControllerImpl implements PasswdController {
 	@Override
 	public PasswdForm getForm() {
 		return new PasswdForm();
-	}
-
-	@Override
-	public void initBinder(WebDataBinder binder) {
-		binder.addValidators(new Validator() {
-
-			@Override
-			public boolean supports(Class<?> clazz) {
-				return PasswdForm.class.isAssignableFrom(clazz);
-			}
-
-			@Override
-			public void validate(Object target, Errors errors) {
-				validateForm((PasswdForm) target, errors);
-			}
-		});
 	}
 
 	@Override
@@ -99,6 +83,11 @@ public class PasswdControllerImpl implements PasswdController {
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			return mav;
+		}
+
+		if (!validateForm(form, binding)) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
@@ -146,23 +135,22 @@ public class PasswdControllerImpl implements PasswdController {
 		return mav;
 	}
 
-	private void validateForm(PasswdForm form, Errors errors) {
+	private boolean validateForm(PasswdForm form, BindingResult binding) {
 		if (StringUtils.isEmpty(form.getNewPassword())) {
-			return;
+			return true;
 		}
 		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
-			return;
+			return true;
 		}
-		errors.rejectValue("newPasswordConf",
-				LogicError.PasswdConfirmFailed.name(),
-				LogicError.PasswdConfirmFailed.name());
+		logicalErrorHelper.rejectValue(binding, "newPasswordConf",
+				LogicalError.PasswdConfirmFailed);
+		return false;
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
-		binding.reject(LogicError.CurAuthFailed.name(), new Object[] {
-				new DefaultMessageSourceResolvable("passwdForm.loginId"),
-				new DefaultMessageSourceResolvable("passwdForm.password") },
-				LogicError.CurAuthFailed.name());
+		logicalErrorHelper.reject(binding, LogicalError.CurAuthFailed,
+				logicalErrorHelper.resolve("passwdForm.loginId"),
+				logicalErrorHelper.resolve("passwdForm.password"));
 	}
 
 }

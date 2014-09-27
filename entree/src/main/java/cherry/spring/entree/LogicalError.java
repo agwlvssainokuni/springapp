@@ -16,7 +16,9 @@
 
 package cherry.spring.entree;
 
-public enum LogicError {
+import cherry.spring.common.helper.logicalerror.ILogicalError;
+
+public enum LogicalError implements ILogicalError {
 	/** サインアップ：回数制限超過 */
 	SignupTooManyRequest,
 	/** サインアップ：エントリが不適合 */
@@ -26,5 +28,10 @@ public enum LogicError {
 	/** パスワード変更：現行ログインIDまたはパスワードが不適切 */
 	CurAuthFailed,
 	// ダミー
-	DUMMY
+	DUMMY;
+
+	@Override
+	public String code() {
+		return name();
+	}
 }
