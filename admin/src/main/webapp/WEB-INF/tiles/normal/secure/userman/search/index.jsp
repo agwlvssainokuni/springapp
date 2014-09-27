@@ -127,15 +127,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="item" items="${result.usersList}"
-						varStatus="status">
+					<c:forEach var="count" begin="1" end="${result.usersList.size()}">
 						<tr>
-							<td><c:out
-									value="${result.pageSet.current.from + status.count}" /></td>
-							<td><c:out value="${item.loginId}" /></td>
-							<td><c:out value="${item.lastName}" /></td>
-							<td><c:out value="${item.firstName}" /></td>
-							<td><c:out value="${item.registeredAt}" /></td>
+							<td><c:out value="${result.pageSet.current.from + count}" /></td>
+							<s:nestedPath path="result.usersList[${count - 1}]">
+								<td><s:bind path="loginId">${status.value}</s:bind></td>
+								<td><s:bind path="lastName">${status.value}</s:bind></td>
+								<td><s:bind path="firstName">${status.value}</s:bind></td>
+								<td><s:bind path="registeredAt">${status.value}</s:bind></td>
+							</s:nestedPath>
 						</tr>
 					</c:forEach>
 				</tbody>
