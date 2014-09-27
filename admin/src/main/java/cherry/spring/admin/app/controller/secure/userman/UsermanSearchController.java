@@ -56,7 +56,7 @@ public interface UsermanSearchController {
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "proc=export")
+	@RequestMapping(value = URI_PATH_REQ, params = "export")
 	ModelAndView export(@Validated UsermanSearchForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,

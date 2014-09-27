@@ -78,15 +78,12 @@
 					<tr>
 						<td></td>
 						<td><input type="hidden" id="sz" name="sz"
-							value="${param.sz}">
-							<button type="submit" name="proc" value="search"
+							value="${param.sz}"> <f:button type="submit"
 								class="app-button">
 								<s:message code="secure/userman/search/index.searchButton" />
-							</button>
-							<button type="submit" name="proc" value="export"
-								class="app-button">
+							</f:button> <f:button type="submit" name="export" class="app-button">
 								<s:message code="secure/userman/search/index.exportButton" />
-							</button></td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>

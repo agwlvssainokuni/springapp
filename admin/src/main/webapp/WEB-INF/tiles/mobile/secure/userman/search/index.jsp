@@ -40,37 +40,42 @@
 	<f:form servletRelativeAction="/secure/userman/search/req"
 		method="POST" modelAttribute="usermanSearchForm">
 		<div data-role="fieldcontain">
-			<label for="loginId"><s:message
-					code="usermanSearchForm.loginId" /></label>
+			<f:label path="loginId">
+				<s:message code="usermanSearchForm.loginId" />
+			</f:label>
 			<f:input path="loginId" cssErrorClass="error" />
 		</div>
 		<div data-role="fieldcontain">
-			<label for="registeredFrom"><s:message
-					code="usermanSearchForm.registeredFrom" /></label>
+			<f:label path="registeredFrom">
+				<s:message code="usermanSearchForm.registeredFrom" />
+			</f:label>
 			<f:input path="registeredFrom" cssErrorClass="error" />
 		</div>
 		<div data-role="fieldcontain">
-			<label for="registeredTo"><s:message
-					code="usermanSearchForm.registeredTo" /></label>
+			<f:label path="registeredTo">
+				<s:message code="usermanSearchForm.registeredTo" />
+			</f:label>
 			<f:input path="registeredTo" cssErrorClass="error" />
 		</div>
 		<div data-role="fieldcontain">
-			<label for="lastName"><s:message
-					code="usermanSearchForm.lastName" /></label>
+			<f:label path="lastName">
+				<s:message code="usermanSearchForm.lastName" />
+			</f:label>
 			<f:input path="lastName" cssErrorClass="error" />
 		</div>
 		<div data-role="fieldcontain">
-			<label for="firstName"><s:message
-					code="usermanSearchForm.firstName" /></label>
+			<f:label path="firstName">
+				<s:message code="usermanSearchForm.firstName" />
+			</f:label>
 			<f:input path="firstName" cssErrorClass="error" />
 		</div>
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
-		<button type="submit" name="proc" value="search">
+		<f:button type="submit">
 			<s:message code="secure/userman/search/index.searchButton" />
-		</button>
-		<button type="submit" name="proc" value="export">
+		</f:button>
+		<f:button type="submit" name="export">
 			<s:message code="secure/userman/search/index.exportButton" />
-		</button>
+		</f:button>
 	</f:form>
 </div>
 <c:if test="${resultIsNotEmpty}">
@@ -110,14 +115,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${result.usersList}" varStatus="status">
+			<c:forEach var="count" begin="1" end="${result.usersList.size()}">
 				<tr>
-					<td><c:out
-							value="${result.pageSet.current.from + status.count}" /></td>
-					<td><c:out value="${item.loginId}" /></td>
-					<td><c:out value="${item.lastName}" /></td>
-					<td><c:out value="${item.firstName}" /></td>
-					<td><c:out value="${item.registeredAt}" /></td>
+					<td><c:out value="${result.pageSet.current.from + count}" /></td>
+					<s:nestedPath path="result.usersList[${count - 1}]">
+						<td><s:bind path="loginId">${status.value}</s:bind></td>
+						<td><s:bind path="lastName">${status.value}</s:bind></td>
+						<td><s:bind path="firstName">${status.value}</s:bind></td>
+						<td><s:bind path="registeredAt">${status.value}</s:bind></td>
+					</s:nestedPath>
 				</tr>
 			</c:forEach>
 		</tbody>

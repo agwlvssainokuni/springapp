@@ -20,10 +20,12 @@
 <f:form servletRelativeAction="/secure/userman/import/req" method="POST"
 	modelAttribute="usermanImportForm" enctype="multipart/form-data">
 	<div data-role="fieldcontain">
-		<label for="file"><s:message code="usermanImportForm.file" /></label>
-		<input id="file" name="file" type="file">
+		<f:label path="file">
+			<s:message code="usermanImportForm.file" />
+		</f:label>
+		<f:input type="file" path="file" />
 	</div>
-	<button type="submit">
+	<f:button type="submit">
 		<s:message code="secure/userman/import/index.importButton" />
-	</button>
+	</f:button>
 </f:form>

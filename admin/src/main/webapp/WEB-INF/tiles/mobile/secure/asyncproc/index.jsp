@@ -56,20 +56,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="item" items="${result.asyncProcList}"
-					varStatus="status">
+				<c:forEach var="count" begin="1"
+					end="${result.asyncProcList.size()}">
 					<tr>
-						<td><c:out
-								value="${result.pageSet.current.from + status.count}" /></td>
-						<td><c:out value="${item.id}" /></td>
-						<td><c:out value="${item.name}" /></td>
-						<td><c:out value="${item.launcherId}" /></td>
-						<td><c:out value="${item.status}" /></td>
-						<td><c:out value="${item.registeredAt}" /></td>
-						<td><c:out value="${item.invokedAt}" /></td>
-						<td><c:out value="${item.startedAt}" /></td>
-						<td><c:out value="${item.finishedAt}" /></td>
-						<td><c:out value="${item.result}" /></td>
+						<td><c:out value="${result.pageSet.current.from + count}" /></td>
+						<s:nestedPath path="result.asyncProcList[${count - 1}]">
+							<td><s:bind path="id">${status.value}</s:bind></td>
+							<td><s:bind path="name">${status.value}</s:bind></td>
+							<td><s:bind path="launcherId">${status.value}</s:bind></td>
+							<td><s:bind path="status">${status.value}</s:bind></td>
+							<td><s:bind path="registeredAt">${status.value}</s:bind></td>
+							<td><s:bind path="invokedAt">${status.value}</s:bind></td>
+							<td><s:bind path="startedAt">${status.value}</s:bind></td>
+							<td><s:bind path="finishedAt">${status.value}</s:bind></td>
+							<td><s:bind path="result">${status.value}</s:bind></td>
+						</s:nestedPath>
 					</tr>
 				</c:forEach>
 			</tbody>

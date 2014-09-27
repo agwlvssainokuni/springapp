@@ -12,7 +12,7 @@
 	<s:message code="secure/pwdtool/index.message.0" />
 </h1>
 <div data-role="fieldcontain">
-	<input id="plainText" type="password">
+	<input id="plainText" type="password" />
 </div>
 <div data-role="fieldcontain">
 	<button id="encodeButton">
@@ -20,7 +20,7 @@
 	</button>
 </div>
 <div data-role="fieldcontain">
-	<input id="encodedText" type="text">
+	<input id="encodedText" type="text" />
 </div>
 <script type="text/javascript">
 	$(function() {
