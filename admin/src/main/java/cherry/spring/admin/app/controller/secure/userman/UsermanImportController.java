@@ -42,18 +42,17 @@ public interface UsermanImportController {
 	UsermanImportForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated UsermanImportForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr);
 
 	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView finish(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

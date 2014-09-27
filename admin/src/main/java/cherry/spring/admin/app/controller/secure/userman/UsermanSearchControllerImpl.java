@@ -65,17 +65,16 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView request(UsermanSearchForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			int pageNo, int pageSz, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -92,9 +91,9 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 	@Override
 	public ModelAndView export(final UsermanSearchForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);

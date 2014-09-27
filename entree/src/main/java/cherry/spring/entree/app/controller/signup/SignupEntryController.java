@@ -41,17 +41,16 @@ public interface SignupEntryController {
 	SignupEntryForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePreference,
+	ModelAndView index(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SignupEntryForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+			BindingResult binding, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView finish(Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 }

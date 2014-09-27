@@ -16,6 +16,8 @@
 
 package cherry.spring.entree.app.controller.secure.passwd;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +37,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
@@ -83,34 +87,33 @@ public class PasswdControllerImpl implements PasswdController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView request(PasswdForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
 
-		if (!authentication.getName().equals(form.getLoginId())) {
+		if (!auth.getName().equals(form.getLoginId())) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
 
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				authentication.getName(), form.getPassword());
+				auth.getName(), form.getPassword());
 		try {
-			Authentication auth = authenticationManager.authenticate(token);
-			assert auth != null;
+			Authentication a = authenticationManager.authenticate(token);
+			checkNotNull(a, "AuthenticationManager#authenticate(token): null");
 		} catch (AuthenticationException ex) {
 			rejectOnCurAuthFailed(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -118,24 +121,27 @@ public class PasswdControllerImpl implements PasswdController {
 		}
 
 		String password = passwordEncoder.encode(form.getNewPassword());
-		if (!passwdService.changePassword(authentication.getName(), password)) {
+		if (!passwdService.changePassword(auth.getName(), password)) {
 			if (log.isDebugEnabled()) {
 				log.debug(
 						"Password has not been updated: loginId={0}, password={1}",
-						authentication.getName(), password);
+						auth.getName(), password);
 			}
 			throw new IllegalStateException("");
 		}
 
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				PasswdController.class, "finish", auth, locale, sitePref,
+				request).build();
+
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView finish(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		return mav;
 	}

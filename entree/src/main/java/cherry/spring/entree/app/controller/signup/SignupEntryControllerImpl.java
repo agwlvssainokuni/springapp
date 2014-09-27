@@ -25,8 +25,10 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.entree.LogicError;
 import cherry.spring.entree.app.service.signup.SignupEntryService;
@@ -47,7 +49,7 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePreference,
+	public ModelAndView index(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
@@ -55,8 +57,8 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 
 	@Override
 	public ModelAndView request(SignupEntryForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -70,14 +72,17 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 			return mav;
 		}
 
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SignupEntryController.class, "finish", locale, sitePref,
+				request).build();
+
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView finish(RedirectAttributes redirectAttributes,
-			Locale locale, SitePreference sitePreference,
+	public ModelAndView finish(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		return mav;

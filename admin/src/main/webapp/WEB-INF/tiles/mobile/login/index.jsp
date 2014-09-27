@@ -25,17 +25,16 @@
 		</div>
 	</div>
 </c:if>
-<f:form servletRelativeAction="/login/req" method="POST"
-	modelAttribute="loginForm">
+<form id="loginForm" action="<c:url value="/login/req" />" method="POST">
 	<div data-role="fieldcontain">
-		<label for="loginId"><s:message code="loginForm.loginId" /></label>
-		<f:input path="loginId" cssErrorClass="error" />
+		<label for="loginId"><s:message code="loginForm.loginId" /></label> <input
+			type="text" id="loginId" name="loginId" />
 	</div>
 	<div data-role="fieldcontain">
 		<label for="password"><s:message code="loginForm.password" /></label>
-		<f:password path="password" cssErrorClass="error" />
+		<input type="password" id="password" name="password" />
 	</div>
 	<button type="submit">
 		<s:message code="login/index.loginButton" />
 	</button>
-</f:form>
+</form>

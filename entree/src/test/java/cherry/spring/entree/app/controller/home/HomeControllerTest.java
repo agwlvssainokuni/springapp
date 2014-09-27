@@ -26,12 +26,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.entree.app.controller.secure.home.HomeController;
 import cherry.spring.entree.app.controller.secure.home.HomeControllerImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class HomeControllerTest {
 

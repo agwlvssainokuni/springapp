@@ -25,8 +25,10 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.entree.LogicError;
 import cherry.spring.entree.app.service.signup.SignupRegisterService;
@@ -56,9 +58,8 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 
 	@Override
 	public ModelAndView request(String token, SignupRegisterForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			BindingResult binding, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -74,15 +75,18 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 			return mav;
 		}
 
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SignupRegisterController.class, "finish", token, locale,
+				sitePref, request).build();
+
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView finish(String token,
-			RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView finish(String token, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(PATH_VAR, token);
 		return mav;

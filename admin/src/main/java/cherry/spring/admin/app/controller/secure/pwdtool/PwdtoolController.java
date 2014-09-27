@@ -43,8 +43,8 @@ public interface PwdtoolController {
 	 * ツールの画面を表示する。
 	 */
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	/**
 	 * 平文をエンコードした文字列を返却する。

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService;
+import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService.Result;
 
 @Controller
 public class AsyncProcControllerImpl implements AsyncProcController {
@@ -41,13 +42,11 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	private AsyncProcService asyncProcService;
 
 	@Override
-	public ModelAndView index(int pageNo, int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(int pageNo, int pageSz, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
-		AsyncProcService.Result result = asyncProcService.searchAsyncProc(
-				authentication.getName(), pageNo,
-				(pageSz <= 0 ? defaultPageSize : pageSz));
+		Result result = asyncProcService.searchAsyncProc(auth.getName(),
+				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(result);

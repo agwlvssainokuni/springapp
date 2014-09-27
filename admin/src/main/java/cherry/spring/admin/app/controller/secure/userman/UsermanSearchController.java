@@ -45,21 +45,21 @@ public interface UsermanSearchController {
 	UsermanSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated UsermanSearchForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = "proc=export")
 	ModelAndView export(@Validated UsermanSearchForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response);
 
 }

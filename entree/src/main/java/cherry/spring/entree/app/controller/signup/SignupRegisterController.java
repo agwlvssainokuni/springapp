@@ -45,16 +45,16 @@ public interface SignupRegisterController {
 
 	@RequestMapping()
 	ModelAndView index(@PathVariable(PATH_VAR) String token, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@PathVariable(PATH_VAR) String token,
 			@Validated SignupRegisterForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr);
 
 	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(@PathVariable(PATH_VAR) String token,
-			RedirectAttributes redirectAttributes, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView finish(@PathVariable(PATH_VAR) String token, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
+
 }

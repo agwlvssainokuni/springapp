@@ -31,8 +31,8 @@ public class UsermanControllerImpl implements UsermanController {
 	public static final String VIEW_PATH = "secure/userman/index";
 
 	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}

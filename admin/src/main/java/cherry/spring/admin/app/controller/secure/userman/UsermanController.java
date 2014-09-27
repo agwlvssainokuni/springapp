@@ -31,7 +31,7 @@ public interface UsermanController {
 	public static final String URI_PATH = "/secure/userman";
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

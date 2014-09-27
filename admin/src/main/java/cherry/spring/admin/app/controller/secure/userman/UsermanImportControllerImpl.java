@@ -27,8 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.admin.app.service.secure.userman.UsermanImportService;
 
@@ -50,17 +52,16 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView request(UsermanImportForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -68,20 +69,23 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		}
 
 		Map<String, String> asyncParam = usermanImportService
-				.launchImportUsers(form.getFile(), authentication.getName());
-		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
+				.launchImportUsers(form.getFile(), auth.getName());
+
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				UsermanImportController.class, "finish", auth, locale,
+				sitePref, request).build();
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView finish(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 

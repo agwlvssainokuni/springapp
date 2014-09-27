@@ -39,7 +39,7 @@ public interface AsyncProcController {
 	ModelAndView index(
 			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 }
