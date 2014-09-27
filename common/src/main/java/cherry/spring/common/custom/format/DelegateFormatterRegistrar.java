@@ -22,12 +22,7 @@ import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.FormatterRegistrar;
 import org.springframework.format.FormatterRegistry;
 
-import cherry.spring.common.log.Log;
-import cherry.spring.common.log.LogFactory;
-
 public class DelegateFormatterRegistrar implements FormatterRegistrar {
-
-	private final Log log = LogFactory.getLog(getClass());
 
 	private List<?> formatters;
 
@@ -41,13 +36,10 @@ public class DelegateFormatterRegistrar implements FormatterRegistrar {
 			if (f instanceof FormatterRegistrar) {
 				FormatterRegistrar registrar = (FormatterRegistrar) f;
 				registrar.registerFormatters(registry);
-			} else if (f instanceof AnnotationFormatterFactory) {
+			}
+			if (f instanceof AnnotationFormatterFactory) {
 				AnnotationFormatterFactory<?> factory = (AnnotationFormatterFactory<?>) f;
 				registry.addFormatterForFieldAnnotation(factory);
-			} else {
-				if (log.isDebugEnabled()) {
-					log.debug("Unsupported {0}", f);
-				}
 			}
 		}
 	}
