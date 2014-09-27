@@ -88,25 +88,15 @@
 							</bean>
 							<bean
 								class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+							<bean
+								class="cherry.spring.common.custom.converter.JodaTimeSqlConverterRegistrar" />
+							<bean
+								class="cherry.spring.common.custom.converter.SecureTypeSqlConverterRegistrar" />
+							<bean
+								class="cherry.spring.common.custom.converter.CodeSqlConverterRegistrar" />
 						</list>
 					</property>
 				</bean>
-			</set>
-		</property>
-		<property name="converters">
-			<set>
-				<bean class="cherry.spring.common.custom.converter.LocalDateConverter" />
-				<bean class="cherry.spring.common.custom.converter.LocalTimeConverter" />
-				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
-				<bean class="cherry.spring.common.custom.converter.SecureStringConverter" />
-				<bean class="cherry.spring.common.custom.converter.SecureIntegerConverter" />
-				<bean class="cherry.spring.common.custom.converter.SecureLongConverter" />
-				<bean
-					class="cherry.spring.common.custom.converter.SecureBigIntegerConverter" />
-				<bean
-					class="cherry.spring.common.custom.converter.SecureBigDecimalConverter" />
-				<bean class="cherry.spring.common.custom.converter.DeletedFlagConverter" />
-				<bean class="cherry.spring.common.custom.converter.FlagCodeConverter" />
 			</set>
 		</property>
 	</bean>
