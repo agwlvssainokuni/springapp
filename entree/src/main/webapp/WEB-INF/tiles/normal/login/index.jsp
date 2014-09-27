@@ -25,22 +25,21 @@
 		</div>
 	</div>
 </c:if>
-<f:form servletRelativeAction="/login/req" method="POST"
-	modelAttribute="loginForm" role="form" cssClass="form-horizontal">
+<form id="loginForm" action="<c:url value="/login/req" />" method="POST"
+	role="form" class="form-horizontal">
 	<div class="form-group">
 		<label for="loginId" class="col-sm-2 control-label"><s:message
 				code="loginForm.loginId" /></label>
 		<div class="col-sm-10">
-			<f:input path="loginId" cssClass="form-control"
-				cssErrorClass="form-control has-error" />
+			<input type="text" id="loginId" name="loginId" class="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="password" class="col-sm-2 control-label"><s:message
 				code="loginForm.password" /></label>
 		<div class="col-sm-10">
-			<f:password path="password" cssClass="form-control"
-				cssErrorClass="form-control has-error" />
+			<input type="password" id="password" name="password"
+				class="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -50,4 +49,4 @@
 			</button>
 		</div>
 	</div>
-</f:form>
+</form>

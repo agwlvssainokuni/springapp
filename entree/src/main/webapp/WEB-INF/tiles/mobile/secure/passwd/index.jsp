@@ -23,24 +23,30 @@
 <f:form servletRelativeAction="/secure/passwd/req" method="POST"
 	modelAttribute="passwdForm">
 	<div data-role="fieldcontain">
-		<label for="loginId"><s:message code="passwdForm.loginId" /></label>
+		<f:label path="loginId">
+			<s:message code="passwdForm.loginId" />
+		</f:label>
 		<f:input path="loginId" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="password"><s:message code="passwdForm.password" /></label>
+		<f:label path="password">
+			<s:message code="passwdForm.password" />
+		</f:label>
 		<f:password path="password" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="newPassword"><s:message
-				code="passwdForm.newPassword" /></label>
+		<f:label path="newPassword">
+			<s:message code="passwdForm.newPassword" />
+		</f:label>
 		<f:password path="newPassword" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="newPasswordConf"><s:message
-				code="passwdForm.newPasswordConf" /></label>
+		<f:label path="newPasswordConf">
+			<s:message code="passwdForm.newPasswordConf" />
+		</f:label>
 		<f:password path="newPasswordConf" cssErrorClass="error" />
 	</div>
-	<button type="submit">
+	<f:button type="submit">
 		<s:message code="secure/passwd/index.changeButton" />
-	</button>
+	</f:button>
 </f:form>

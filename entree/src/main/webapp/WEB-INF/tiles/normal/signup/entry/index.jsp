@@ -22,8 +22,9 @@
 <f:form servletRelativeAction="/signup/req" method="POST"
 	modelAttribute="signupEntryForm" role="form" cssClass="form-horizontal">
 	<div class="form-group">
-		<label for="email" class="col-sm-2 control-label"><s:message
-				code="signupEntryForm.email" /></label>
+		<f:label path="email" class="col-sm-2 control-label">
+			<s:message code="signupEntryForm.email" />
+		</f:label>
 		<div class="col-sm-10">
 			<f:input path="email" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
@@ -31,9 +32,9 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button class="btn btn-default btn-block" type="submit">
+			<f:button type="submit" class="btn btn-default btn-block">
 				<s:message code="signup/entry/index.entryButton" />
-			</button>
+			</f:button>
 		</div>
 	</div>
 </f:form>

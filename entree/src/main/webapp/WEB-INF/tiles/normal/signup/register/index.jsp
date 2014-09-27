@@ -25,24 +25,27 @@
 	modelAttribute="signupRegisterForm" role="form"
 	cssClass="form-horizontal">
 	<div class="form-group">
-		<label for="email" class="col-sm-2 control-label"><s:message
-				code="signupRegisterForm.email" /></label>
+		<f:label path="email" class="col-sm-2 control-label">
+			<s:message code="signupRegisterForm.email" />
+		</f:label>
 		<div class="col-sm-10">
 			<f:input path="email" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="lastName" class="col-sm-2 control-label"><s:message
-				code="signupRegisterForm.lastName" /></label>
+		<f:label path="lastName" class="col-sm-2 control-label">
+			<s:message code="signupRegisterForm.lastName" />
+		</f:label>
 		<div class="col-sm-10">
 			<f:input path="lastName" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="firstName" class="col-sm-2 control-label"><s:message
-				code="signupRegisterForm.firstName" /></label>
+		<f:label path="firstName" class="col-sm-2 control-label">
+			<s:message code="signupRegisterForm.firstName" />
+		</f:label>
 		<div class="col-sm-10">
 			<f:input path="firstName" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
@@ -50,9 +53,9 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button class="btn btn-default btn-block" type="submit">
+			<f:button type="submit" class="btn btn-default btn-block">
 				<s:message code="signup/register/index.registerButton" />
-			</button>
+			</f:button>
 		</div>
 	</div>
 </f:form>

@@ -22,20 +22,24 @@
 <f:form servletRelativeAction="/signup/${token}/req" method="POST"
 	modelAttribute="signupRegisterForm">
 	<div data-role="fieldcontain">
-		<label for="email"><s:message code="signupRegisterForm.email" /></label>
+		<f:label path="email">
+			<s:message code="signupRegisterForm.email" />
+		</f:label>
 		<f:input path="email" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="lastName"><s:message
-				code="signupRegisterForm.lastName" /></label>
+		<f:label path="lastName">
+			<s:message code="signupRegisterForm.lastName" />
+		</f:label>
 		<f:input path="lastName" cssErrorClass="error" />
 	</div>
 	<div data-role="fieldcontain">
-		<label for="firstName"><s:message
-				code="signupRegisterForm.firstName" /></label>
+		<f:label path="firstName">
+			<s:message code="signupRegisterForm.firstName" />
+		</f:label>
 		<f:input path="firstName" cssErrorClass="error" />
 	</div>
-	<button type="submit">
+	<f:button type="submit">
 		<s:message code="signup/register/index.registerButton" />
-	</button>
+	</f:button>
 </f:form>

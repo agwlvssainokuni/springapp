@@ -20,10 +20,12 @@
 <f:form servletRelativeAction="/signup/req" method="POST"
 	modelAttribute="signupEntryForm">
 	<div data-role="fieldcontain">
-		<label for="email"><s:message code="signupEntryForm.email" /></label>
+		<f:label path="email">
+			<s:message code="signupEntryForm.email" />
+		</f:label>
 		<f:input path="email" cssErrorClass="error" />
 	</div>
-	<button type="submit">
+	<f:button type="submit">
 		<s:message code="signup/entry/index.entryButton" />
-	</button>
+	</f:button>
 </f:form>

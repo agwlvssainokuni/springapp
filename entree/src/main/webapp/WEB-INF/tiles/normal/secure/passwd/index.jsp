@@ -25,32 +25,36 @@
 <f:form servletRelativeAction="/secure/passwd/req" method="POST"
 	modelAttribute="passwdForm" role="form" cssClass="form-horizontal">
 	<div class="form-group">
-		<label for="loginId" class="col-sm-3 control-label"><s:message
-				code="passwdForm.loginId" /></label>
+		<f:label path="loginId" cssClass="col-sm-3 control-label">
+			<s:message code="passwdForm.loginId" />
+		</f:label>
 		<div class="col-sm-9">
 			<f:input path="loginId" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="password" class="col-sm-3 control-label"><s:message
-				code="passwdForm.password" /></label>
+		<f:label path="password" cssClass="col-sm-3 control-label">
+			<s:message code="passwdForm.password" />
+		</f:label>
 		<div class="col-sm-9">
 			<f:password path="password" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="newPassword" class="col-sm-3 control-label"><s:message
-				code="passwdForm.newPassword" /></label>
+		<f:label path="newPassword" cssClass="col-sm-3 control-label">
+			<s:message code="passwdForm.newPassword" />
+		</f:label>
 		<div class="col-sm-9">
 			<f:password path="newPassword" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="newPasswordConf" class="col-sm-3 control-label"><s:message
-				code="passwdForm.newPasswordConf" /></label>
+		<f:label path="newPasswordConf" cssClass="col-sm-3 control-label">
+			<s:message code="passwdForm.newPasswordConf" />
+		</f:label>
 		<div class="col-sm-9">
 			<f:password path="newPasswordConf" cssClass="form-control"
 				cssErrorClass="form-control has-error" />
@@ -58,9 +62,9 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-9 col-sm-offset-3">
-			<button class="btn btn-default btn-block" type="submit">
+			<f:button type="submit" class="btn btn-default btn-block">
 				<s:message code="secure/passwd/index.changeButton" />
-			</button>
+			</f:button>
 		</div>
 	</div>
 </f:form>
