@@ -55,16 +55,42 @@
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean
-					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
-				<bean
-					class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
-				<bean
 					class="cherry.spring.common.custom.format.IpAddrFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
 			<set>
 				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
+				<bean
+					class="cherry.spring.common.custom.format.DelegateFormatterRegistrar">
+					<property name="formatters">
+						<list>
+							<bean
+								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+								<property name="dateFormatter">
+									<bean class="org.joda.time.format.DateTimeFormat"
+										factory-method="forPattern">
+										<constructor-arg value="${common.format.date}" />
+									</bean>
+								</property>
+								<property name="timeFormatter">
+									<bean class="org.joda.time.format.DateTimeFormat"
+										factory-method="forPattern">
+										<constructor-arg value="${common.format.time}" />
+									</bean>
+								</property>
+								<property name="dateTimeFormatter">
+									<bean class="org.joda.time.format.DateTimeFormat"
+										factory-method="forPattern">
+										<constructor-arg value="${common.format.datetime}" />
+									</bean>
+								</property>
+							</bean>
+							<bean
+								class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+						</list>
+					</property>
+				</bean>
 			</set>
 		</property>
 		<property name="converters">
