@@ -1,10 +1,8 @@
 package cherry.spring.common.db.gen.dto;
 
 import cherry.spring.common.type.DeletedFlag;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.joda.time.LocalDateTime;
 
 public class MailTemplateAddressCriteria {
