@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.security;
+package cherry.spring.common.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
