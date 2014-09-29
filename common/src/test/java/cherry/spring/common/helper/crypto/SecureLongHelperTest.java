@@ -25,8 +25,8 @@ import java.security.SecureRandom;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.spring.common.custom.SecureLong;
 import cherry.spring.common.lib.util.RandomUtil;
+import cherry.spring.common.type.SecureLong;
 
 public class SecureLongHelperTest {
 

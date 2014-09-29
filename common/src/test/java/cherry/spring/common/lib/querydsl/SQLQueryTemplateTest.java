@@ -40,11 +40,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.dto.UserCriteria;
 import cherry.spring.common.db.gen.mapper.UserMapper;
 import cherry.spring.common.db.gen.query.QUser;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 import com.mysema.query.QueryException;
 import com.mysema.query.sql.SQLQuery;

@@ -25,13 +25,13 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-import cherry.spring.common.custom.DeletedFlag;
-import cherry.spring.common.custom.FlagCode;
-import cherry.spring.common.custom.SecureBigDecimal;
-import cherry.spring.common.custom.SecureBigInteger;
-import cherry.spring.common.custom.SecureInteger;
-import cherry.spring.common.custom.SecureLong;
-import cherry.spring.common.custom.SecureString;
+import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.common.type.FlagCode;
+import cherry.spring.common.type.SecureBigDecimal;
+import cherry.spring.common.type.SecureBigInteger;
+import cherry.spring.common.type.SecureInteger;
+import cherry.spring.common.type.SecureLong;
+import cherry.spring.common.type.SecureString;
 
 @Getter
 @Setter

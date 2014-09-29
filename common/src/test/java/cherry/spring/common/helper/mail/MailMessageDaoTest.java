@@ -35,13 +35,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.custom.DeletedFlag;
 import cherry.spring.common.db.gen.dto.MailTemplate;
 import cherry.spring.common.db.gen.dto.MailTemplateAddress;
 import cherry.spring.common.db.gen.dto.MailTemplateText;
 import cherry.spring.common.db.gen.mapper.MailTemplateAddressMapper;
 import cherry.spring.common.db.gen.mapper.MailTemplateMapper;
 import cherry.spring.common.db.gen.mapper.MailTemplateTextMapper;
+import cherry.spring.common.type.DeletedFlag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

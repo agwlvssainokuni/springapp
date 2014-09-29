@@ -25,8 +25,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.admin.app.controller.secure.userman.UsermanSearchForm;
-import cherry.spring.common.custom.DeletedFlag;
-import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.query.QUser;
 import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
@@ -35,6 +33,8 @@ import cherry.spring.common.helper.querydsl.SQLQueryResult;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
+import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;

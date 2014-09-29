@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.custom.DeletedFlag;
-import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.db.gen.query.QAsyncProc;
 import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
 import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;

@@ -25,8 +25,8 @@ import java.nio.charset.Charset;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.spring.common.custom.SecureString;
 import cherry.spring.common.lib.util.RandomUtil;
+import cherry.spring.common.type.SecureString;
 
 public class SecureStringHelperTest {
 

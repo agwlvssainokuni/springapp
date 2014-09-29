@@ -1,7 +1,9 @@
 package cherry.spring.common.db.gen.dto;
 
-import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.type.DeletedFlag;
+
 import java.io.Serializable;
+
 import org.joda.time.LocalDateTime;
 
 public class SignupRequest implements Serializable {
