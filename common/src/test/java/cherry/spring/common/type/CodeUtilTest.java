@@ -16,23 +16,52 @@
 
 package cherry.spring.common.type;
 
+import static cherry.spring.common.type.CodeUtil.getCodeMap;
+import static cherry.spring.common.type.CodeUtil.getLabeledCode;
+import static cherry.spring.common.type.CodeUtil.getLabeledCodeList;
+import static cherry.spring.common.type.CodeUtil.getMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import org.junit.Test;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import cherry.spring.common.type.CodeUtil;
-import cherry.spring.common.type.DeletedFlag;
-import cherry.spring.common.type.FlagCode;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import cherry.spring.common.type.CodeUtil.CodeMap;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class CodeUtilTest {
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Before
+	public void before() {
+		CodeUtil.setMessageSource(createMessageSource());
+	}
+
+	@After
+	public void after() {
+		CodeUtil.setMessageSource(messageSource);
+	}
 
 	@Test
 	public void testGetCodeMapNoDefault() {
-		CodeMap<Integer, FlagCode> codeMap = CodeUtil.getCodeMap(
-				FlagCode.class, null);
+		CodeMap<Integer, FlagCode> codeMap = getCodeMap(FlagCode.class, null);
 		for (int i = -1024; i <= 1024; i++) {
 			switch (i) {
 			case 0:
@@ -55,8 +84,8 @@ public class CodeUtilTest {
 
 	@Test
 	public void testGetCodeMapDefaultFALSE() {
-		CodeMap<Integer, FlagCode> codeMap = CodeUtil.getCodeMap(
-				FlagCode.class, FlagCode.FALSE);
+		CodeMap<Integer, FlagCode> codeMap = getCodeMap(FlagCode.class,
+				FlagCode.FALSE);
 		for (int i = -1024; i <= 1024; i++) {
 			switch (i) {
 			case 1:
@@ -70,13 +99,69 @@ public class CodeUtilTest {
 	}
 
 	@Test
+	public void testGetLabeledCode() {
+		assertThat(getLabeledCode(FlagCode.FALSE).getCode(), is(FlagCode.FALSE));
+		assertThat(getLabeledCode(FlagCode.FALSE).getCodeValue(), is(0));
+		assertThat(getLabeledCode(FlagCode.FALSE).getCodeLabel(),
+				is("FLAG_CODE_FALSE"));
+		assertThat(getLabeledCode(FlagCode.TRUE).getCode(), is(FlagCode.TRUE));
+		assertThat(getLabeledCode(FlagCode.TRUE).getCodeValue(), is(1));
+		assertThat(getLabeledCode(FlagCode.TRUE).getCodeLabel(),
+				is("FLAG_CODE_TRUE"));
+	}
+
+	@Test
+	public void testGetLabeledCodeList() {
+		List<LabeledCode<Integer, FlagCode>> list = getLabeledCodeList(FlagCode.class);
+		assertThat(list.size(), is(2));
+		assertThat(list.get(0).getCode(), is(FlagCode.FALSE));
+		assertThat(list.get(1).getCode(), is(FlagCode.TRUE));
+	}
+
+	@Test
 	public void testGetMapThrowsException() {
 		try {
-			CodeUtil.getMap(DeletedFlag.class);
+			getMap(DeletedFlag.class);
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
+	}
+
+	@Test
+	public void testGetLabeledCodeListThrowsException() {
+		try {
+			getLabeledCodeList(DeletedFlag.class);
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			// OK
+		}
+	}
+
+	private MessageSource createMessageSource() {
+		final Map<String, String> map = new HashMap<>();
+		map.put("cherry.spring.common.type.FlagCode.0", "FLAG_CODE_FALSE");
+		map.put("cherry.spring.common.type.FlagCode.1", "FLAG_CODE_TRUE");
+		return new MessageSource() {
+
+			@Override
+			public String getMessage(String code, Object[] args,
+					String defaultMessage, Locale locale) {
+				return null;
+			}
+
+			@Override
+			public String getMessage(String code, Object[] args, Locale locale)
+					throws NoSuchMessageException {
+				return map.get(code);
+			}
+
+			@Override
+			public String getMessage(MessageSourceResolvable resolvable,
+					Locale locale) throws NoSuchMessageException {
+				return null;
+			}
+		};
 	}
 
 }
