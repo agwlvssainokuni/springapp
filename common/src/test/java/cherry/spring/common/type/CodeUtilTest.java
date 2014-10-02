@@ -119,6 +119,15 @@ public class CodeUtilTest {
 	}
 
 	@Test
+	public void testGetLabeledCodeListForString() {
+		List<LabeledCode<Integer, FlagCode>> list = getLabeledCodeList(FlagCode.class
+				.getName());
+		assertThat(list.size(), is(2));
+		assertThat(list.get(0).getCode(), is(FlagCode.FALSE));
+		assertThat(list.get(1).getCode(), is(FlagCode.TRUE));
+	}
+
+	@Test
 	public void testGetMapThrowsException() {
 		try {
 			getMap(DeletedFlag.class);
@@ -132,6 +141,16 @@ public class CodeUtilTest {
 	public void testGetLabeledCodeListThrowsException() {
 		try {
 			getLabeledCodeList(DeletedFlag.class);
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			// OK
+		}
+	}
+
+	@Test
+	public void testGetLabeledCodeListForStringThrowsException() {
+		try {
+			getLabeledCodeList("NOTEXIST");
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK

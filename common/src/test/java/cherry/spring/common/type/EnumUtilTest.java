@@ -20,6 +20,7 @@ import static cherry.spring.common.type.EnumUtil.getLabeledEnum;
 import static cherry.spring.common.type.EnumUtil.getLabeledEnumList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,25 @@ public class EnumUtilTest {
 		assertThat(list.size(), is(2));
 		assertThat(list.get(0).getEnum(), is(FlagCode.FALSE));
 		assertThat(list.get(1).getEnum(), is(FlagCode.TRUE));
+	}
+
+	@Test
+	public void testGetLabeledEnumListForString() {
+		List<LabeledEnum<FlagCode>> list = getLabeledEnumList(FlagCode.class
+				.getName());
+		assertThat(list.size(), is(2));
+		assertThat(list.get(0).getEnum(), is(FlagCode.FALSE));
+		assertThat(list.get(1).getEnum(), is(FlagCode.TRUE));
+	}
+
+	@Test
+	public void testGetLabeledEnumListForStringThrowsException() {
+		try {
+			getLabeledEnumList("NOTEXIST");
+			fail("Exception must be thrown.");
+		} catch (IllegalArgumentException ex) {
+			// OK
+		}
 	}
 
 	private MessageSource createMessageSource() {
