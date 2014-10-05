@@ -21,8 +21,6 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import cherry.spring.common.type.FlagCode;
-
 public class FlagCodeTest {
 
 	@Test
@@ -32,11 +30,11 @@ public class FlagCodeTest {
 			if (i == 0) {
 				assertThat(flag, is(FlagCode.FALSE));
 				assertThat(flag.code(), is(0));
-				assertThat(flag.isTrue(), is(false));
+				assertThat(flag.booleanValue(), is(false));
 			} else {
 				assertThat(flag, is(FlagCode.TRUE));
 				assertThat(flag.code(), is(1));
-				assertThat(flag.isTrue(), is(true));
+				assertThat(flag.booleanValue(), is(true));
 			}
 		}
 	}
