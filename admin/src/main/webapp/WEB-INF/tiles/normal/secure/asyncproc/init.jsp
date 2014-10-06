@@ -10,18 +10,18 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1 class="app-subject">
-	<s:message code="secure/asyncproc/index.message.0" />
+	<s:message code="secure/asyncproc/init.message.0" />
 </h1>
 <div class="app-portion">
 	<c:choose>
 		<c:when test="${result == null}">
 			<div class="app-portion ui-state-error">
-				<s:message code="secure/asyncproc/index.message.1" />
+				<s:message code="secure/asyncproc/init.message.1" />
 			</div>
 		</c:when>
 		<c:when test="${result.asyncProcList.isEmpty()}">
 			<div class="app-portion ui-state-error">
-				<s:message code="secure/asyncproc/index.message.1" />
+				<s:message code="secure/asyncproc/init.message.1" />
 			</div>
 		</c:when>
 		<c:otherwise>
@@ -43,20 +43,20 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th><s:message code="secure/asyncproc/index.column.id" /></th>
-							<th><s:message code="secure/asyncproc/index.column.name" /></th>
+							<th><s:message code="secure/asyncproc/init.column.id" /></th>
+							<th><s:message code="secure/asyncproc/init.column.name" /></th>
 							<th><s:message
-									code="secure/asyncproc/index.column.launcherId" /></th>
-							<th><s:message code="secure/asyncproc/index.column.status" /></th>
+									code="secure/asyncproc/init.column.launcherId" /></th>
+							<th><s:message code="secure/asyncproc/init.column.status" /></th>
 							<th><s:message
-									code="secure/asyncproc/index.column.registeredAt" /></th>
+									code="secure/asyncproc/init.column.registeredAt" /></th>
 							<th><s:message
-									code="secure/asyncproc/index.column.invokedAt" /></th>
+									code="secure/asyncproc/init.column.invokedAt" /></th>
 							<th><s:message
-									code="secure/asyncproc/index.column.startedAt" /></th>
+									code="secure/asyncproc/init.column.startedAt" /></th>
 							<th><s:message
-									code="secure/asyncproc/index.column.finishedAt" /></th>
-							<th><s:message code="secure/asyncproc/index.column.result" /></th>
+									code="secure/asyncproc/init.column.finishedAt" /></th>
+							<th><s:message code="secure/asyncproc/init.column.result" /></th>
 						</tr>
 					</thead>
 					<tbody>

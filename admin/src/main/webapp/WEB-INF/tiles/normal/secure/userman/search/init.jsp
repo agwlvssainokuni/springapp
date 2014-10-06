@@ -10,11 +10,11 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1 class="app-subject">
-	<s:message code="secure/userman/search/index.message.0" />
+	<s:message code="secure/userman/search/init.message.0" />
 </h1>
 <div class="app-portion">
 	<h4 class="app-subject">
-		<s:message code="secure/userman/search/index.message.1" />
+		<s:message code="secure/userman/search/init.message.1" />
 	</h4>
 	<s:hasBindErrors name="usermanSearchForm">
 		<div class="app-portion ui-state-error">
@@ -28,7 +28,7 @@
 	</s:hasBindErrors>
 	<c:if test="${result != null && result.usersList.isEmpty()}">
 		<div class="app-portion ui-state-error">
-			<s:message code="secure/userman/search/index.message.2" />
+			<s:message code="secure/userman/search/init.message.2" />
 		</div>
 	</c:if>
 	<c:set var="resultIsNotEmpty">
@@ -80,9 +80,9 @@
 						<td><input type="hidden" id="sz" name="sz"
 							value="${param.sz}"> <f:button type="submit"
 								class="app-button">
-								<s:message code="secure/userman/search/index.searchButton" />
-							</f:button> <f:button type="submit" name="export" class="app-button">
-								<s:message code="secure/userman/search/index.exportButton" />
+								<s:message code="secure/userman/search/init.searchButton" />
+							</f:button> <f:button type="submit" name="download" class="app-button">
+								<s:message code="secure/userman/search/init.downloadButton" />
 							</f:button></td>
 					</tr>
 				</tfoot>
@@ -114,13 +114,13 @@
 					<tr>
 						<th>#</th>
 						<th><s:message
-								code="secure/userman/search/index.column.loginId" /></th>
+								code="secure/userman/search/init.column.loginId" /></th>
 						<th><s:message
-								code="secure/userman/search/index.column.lastName" /></th>
+								code="secure/userman/search/init.column.lastName" /></th>
 						<th><s:message
-								code="secure/userman/search/index.column.firstName" /></th>
+								code="secure/userman/search/init.column.firstName" /></th>
 						<th><s:message
-								code="secure/userman/search/index.column.registeredAt" /></th>
+								code="secure/userman/search/init.column.registeredAt" /></th>
 					</tr>
 				</thead>
 				<tbody>

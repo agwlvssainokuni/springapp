@@ -1,25 +1,25 @@
 {
-	"name": "secure/home/index",
+	"name": "secure/home/init",
 	"uri": "/secure/",
 	"children": [
 		{
-			"name": "secure/pwdtool/index",
+			"name": "secure/pwdtool/init",
 			"uri": "/secure/pwdtool"
 		},
 		{
-			"name": "secure/asyncproc/index",
+			"name": "secure/asyncproc/init",
 			"uri": "/secure/asyncproc"
 		},
 		{
-			"name": "secure/userman/index",
+			"name": "secure/userman/init",
 			"uri": "/secure/userman",
 			"children": [
 				{
-					"name": "secure/userman/search/index",
+					"name": "secure/userman/search/init",
 					"uri": "/secure/userman/search"
 				},
 				{
-					"name": "secure/userman/import/index",
+					"name": "secure/userman/import/init",
 					"uri": "/secure/userman/import"
 				},
 				{

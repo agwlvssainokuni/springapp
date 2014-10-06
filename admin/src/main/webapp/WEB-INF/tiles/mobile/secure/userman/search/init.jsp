@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="secure/userman/search/index.message.0" />
+	<s:message code="secure/userman/search/init.message.0" />
 </h1>
 <s:hasBindErrors name="usermanSearchForm">
 	<div class="error">
@@ -23,7 +23,7 @@
 </s:hasBindErrors>
 <c:if test="${result != null && result.usersList.isEmpty()}">
 	<div class="error">
-		<s:message code="secure/userman/search/index.message.2" />
+		<s:message code="secure/userman/search/init.message.2" />
 	</div>
 </c:if>
 <c:set var="resultIsNotEmpty">
@@ -35,7 +35,7 @@
 </c:set>
 <div data-role="collapsible" data-collapsed="${resultIsNotEmpty}">
 	<h4>
-		<s:message code="secure/userman/search/index.message.1" />
+		<s:message code="secure/userman/search/init.message.1" />
 	</h4>
 	<f:form servletRelativeAction="/secure/userman/search/execute"
 		method="POST" modelAttribute="usermanSearchForm">
@@ -71,10 +71,10 @@
 		</div>
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
 		<f:button type="submit">
-			<s:message code="secure/userman/search/index.searchButton" />
+			<s:message code="secure/userman/search/init.searchButton" />
 		</f:button>
-		<f:button type="submit" name="export">
-			<s:message code="secure/userman/search/index.exportButton" />
+		<f:button type="submit" name="download">
+			<s:message code="secure/userman/search/init.downloadButton" />
 		</f:button>
 	</f:form>
 </div>
@@ -96,7 +96,7 @@
 			<li><a href="#"
 				class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
 				title="${result.pageSet.prev.no+1}"><s:message
-						code="secure/userman/search/index.paginate.prev" /></a></li>
+						code="secure/userman/search/init.paginate.prev" /></a></li>
 		</ul>
 	</div>
 	<table id="usermanSearchList" data-role="table"
@@ -105,13 +105,13 @@
 			<tr>
 				<th>#</th>
 				<th><s:message
-						code="secure/userman/search/index.column.loginId" /></th>
+						code="secure/userman/search/init.column.loginId" /></th>
 				<th><s:message
-						code="secure/userman/search/index.column.lastName" /></th>
+						code="secure/userman/search/init.column.lastName" /></th>
 				<th><s:message
-						code="secure/userman/search/index.column.firstName" /></th>
+						code="secure/userman/search/init.column.firstName" /></th>
 				<th><s:message
-						code="secure/userman/search/index.column.registeredAt" /></th>
+						code="secure/userman/search/init.column.registeredAt" /></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -134,7 +134,7 @@
 			<li><a href="#"
 				class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
 				title="${result.pageSet.next.no+1}"><s:message
-						code="secure/userman/search/index.paginate.next" /></a></li>
+						code="secure/userman/search/init.paginate.next" /></a></li>
 		</ul>
 	</div>
 </c:if>

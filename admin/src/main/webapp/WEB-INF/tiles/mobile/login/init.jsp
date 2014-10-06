@@ -9,19 +9,19 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="login/index.message.0" />
+	<s:message code="login/init.message.0" />
 </h1>
 <c:if test="${loginFailed}">
 	<div class="error">
 		<div>
-			<s:message code="login/index.message.1" />
+			<s:message code="login/init.message.1" />
 		</div>
 	</div>
 </c:if>
 <c:if test="${loggedOut}">
 	<div>
 		<div>
-			<s:message code="login/index.message.2" />
+			<s:message code="login/init.message.2" />
 		</div>
 	</div>
 </c:if>
@@ -35,6 +35,6 @@
 		<input type="password" id="password" name="password" />
 	</div>
 	<button type="submit">
-		<s:message code="login/index.loginButton" />
+		<s:message code="login/init.loginButton" />
 	</button>
 </form>

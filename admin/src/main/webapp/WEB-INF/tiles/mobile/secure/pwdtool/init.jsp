@@ -9,14 +9,14 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="secure/pwdtool/index.message.0" />
+	<s:message code="secure/pwdtool/init.message.0" />
 </h1>
 <div data-role="fieldcontain">
 	<input id="plainText" type="password" />
 </div>
 <div data-role="fieldcontain">
 	<button id="encodeButton">
-		<s:message code="secure/pwdtool/index.encodeButton" />
+		<s:message code="secure/pwdtool/init.encodeButton" />
 	</button>
 </div>
 <div data-role="fieldcontain">

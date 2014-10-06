@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1 class="app-subject">
-	<s:message code="secure/pwdtool/index.message.0" />
+	<s:message code="secure/pwdtool/init.message.0" />
 </h1>
 <div class="app-portion">
 	<div>
@@ -17,7 +17,7 @@
 	</div>
 	<div>
 		<button id="encodeButton" class="app-button app-width50">
-			<s:message code="secure/pwdtool/index.encodeButton" />
+			<s:message code="secure/pwdtool/init.encodeButton" />
 		</button>
 	</div>
 	<div>

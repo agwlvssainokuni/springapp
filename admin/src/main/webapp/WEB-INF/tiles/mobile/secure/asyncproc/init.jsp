@@ -9,17 +9,17 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="secure/asyncproc/index.message.0" />
+	<s:message code="secure/asyncproc/init.message.0" />
 </h1>
 <c:choose>
 	<c:when test="${result == null}">
 		<div class="error">
-			<s:message code="secure/asyncproc/index.message.1" />
+			<s:message code="secure/asyncproc/init.message.1" />
 		</div>
 	</c:when>
 	<c:when test="${result.asyncProcList.isEmpty()}">
 		<div class="error">
-			<s:message code="secure/asyncproc/index.message.1" />
+			<s:message code="secure/asyncproc/init.message.1" />
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -35,7 +35,7 @@
 				<li><a href="#"
 					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
 					title="${result.pageSet.prev.no+1}"><s:message
-							code="secure/asyncproc/index.paginate.prev" /></a></li>
+							code="secure/asyncproc/init.paginate.prev" /></a></li>
 			</ul>
 		</div>
 		<table id="asyncProcList" data-role="table"
@@ -43,16 +43,16 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th><s:message code="secure/asyncproc/index.column.id" /></th>
-					<th><s:message code="secure/asyncproc/index.column.name" /></th>
-					<th><s:message code="secure/asyncproc/index.column.launcherId" /></th>
-					<th><s:message code="secure/asyncproc/index.column.status" /></th>
+					<th><s:message code="secure/asyncproc/init.column.id" /></th>
+					<th><s:message code="secure/asyncproc/init.column.name" /></th>
+					<th><s:message code="secure/asyncproc/init.column.launcherId" /></th>
+					<th><s:message code="secure/asyncproc/init.column.status" /></th>
 					<th><s:message
-							code="secure/asyncproc/index.column.registeredAt" /></th>
-					<th><s:message code="secure/asyncproc/index.column.invokedAt" /></th>
-					<th><s:message code="secure/asyncproc/index.column.startedAt" /></th>
-					<th><s:message code="secure/asyncproc/index.column.finishedAt" /></th>
-					<th><s:message code="secure/asyncproc/index.column.result" /></th>
+							code="secure/asyncproc/init.column.registeredAt" /></th>
+					<th><s:message code="secure/asyncproc/init.column.invokedAt" /></th>
+					<th><s:message code="secure/asyncproc/init.column.startedAt" /></th>
+					<th><s:message code="secure/asyncproc/init.column.finishedAt" /></th>
+					<th><s:message code="secure/asyncproc/init.column.result" /></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -81,7 +81,7 @@
 				<li><a href="#"
 					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
 					title="${result.pageSet.next.no+1}"><s:message
-							code="secure/asyncproc/index.paginate.next" /></a></li>
+							code="secure/asyncproc/init.paginate.next" /></a></li>
 			</ul>
 		</div>
 	</c:otherwise>
