@@ -45,7 +45,7 @@ public interface SignupEntryController {
 			BindingResult binding, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	@RequestMapping(PathDef.SUBURI_FINISH)
 	ModelAndView finish(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
