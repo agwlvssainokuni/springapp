@@ -33,6 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.admin.app.controller.PathDef;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -42,10 +44,10 @@ public class LoginControllerTest {
 	private LoginController loginController;
 
 	@Test
-	public void index000() {
-		ModelAndView mav = loginController.index(null, null, null);
+	public void init000() {
+		ModelAndView mav = loginController.init(null, null, null);
 		assertNotNull(mav);
-		assertEquals(LoginControllerImpl.VIEW_PATH, mav.getViewName());
+		assertEquals(PathDef.VIEW_LOGIN_INIT, mav.getViewName());
 		assertNull(mav.getView());
 		assertTrue(mav.getModelMap().isEmpty());
 	}
@@ -58,7 +60,7 @@ public class LoginControllerTest {
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + LoginController.URI_PATH,
+		assertEquals("http://localhost" + PathDef.URI_LOGIN,
 				((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loginFailed", true);
 	}
@@ -71,7 +73,7 @@ public class LoginControllerTest {
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + LoginController.URI_PATH,
+		assertEquals("http://localhost" + PathDef.URI_LOGIN,
 				((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loggedOut", true);
 	}

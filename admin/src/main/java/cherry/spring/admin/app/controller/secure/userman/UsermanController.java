@@ -25,13 +25,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(UsermanController.URI_PATH)
+import cherry.spring.admin.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_USERMAN)
 public interface UsermanController {
 
-	public static final String URI_PATH = "/secure/userman";
-
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 }

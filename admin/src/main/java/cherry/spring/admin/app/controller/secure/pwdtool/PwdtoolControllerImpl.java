@@ -27,13 +27,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
+
 /**
  * パスワードエンコーダツール。
  */
 @Controller
 public class PwdtoolControllerImpl implements PwdtoolController {
-
-	public static final String VIEW_PATH = "secure/pwdtool/index";
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -42,9 +42,9 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 	 * ツールの画面を表示する。
 	 */
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_PWDTOOL_INIT);
 		return mav;
 	}
 

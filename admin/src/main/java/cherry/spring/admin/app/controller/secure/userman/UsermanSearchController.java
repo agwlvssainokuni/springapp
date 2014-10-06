@@ -30,34 +30,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(UsermanSearchController.URI_PATH)
+import cherry.spring.admin.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_USERMAN_SEARCH)
 public interface UsermanSearchController {
-
-	public static final String URI_PATH = "secure/userman/search";
-
-	public static final String URI_PATH_REQ = "req";
 
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute("usermanSearchForm")
+	@ModelAttribute()
 	UsermanSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated UsermanSearchForm form,
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@Validated UsermanSearchForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "export")
-	ModelAndView export(@Validated UsermanSearchForm form,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
+	ModelAndView download(@Validated UsermanSearchForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			HttpServletResponse response);

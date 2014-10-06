@@ -29,8 +29,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
 import cherry.spring.admin.app.controller.secure.home.HomeController;
-import cherry.spring.admin.app.controller.secure.home.HomeControllerImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -41,10 +41,10 @@ public class HomeControllerTest {
 	private HomeController homeController;
 
 	@Test
-	public void index000() {
-		ModelAndView mav = homeController.index(null, null, null, null);
+	public void init000() {
+		ModelAndView mav = homeController.init(null, null, null, null);
 		assertNotNull(mav);
-		assertEquals(HomeControllerImpl.VIEW_PATH, mav.getViewName());
+		assertEquals(PathDef.VIEW_HOME_INIT, mav.getViewName());
 		assertNull(mav.getView());
 		assertTrue(mav.getModelMap().isEmpty());
 	}

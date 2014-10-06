@@ -16,6 +16,9 @@
 
 package cherry.spring.admin.app.controller.secure.userman;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,19 +30,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.spring.admin.app.controller.PathDef;
 import cherry.spring.admin.app.service.secure.userman.UsermanImportService;
 
 @Controller
 public class UsermanImportControllerImpl implements UsermanImportController {
-
-	public static final String VIEW_PATH = "secure/userman/import/index";
-
-	public static final String VIEW_PATH_FIN = "secure/userman/import/finish";
 
 	public static final String ASYNC_PARAM = "asyncParam";
 
@@ -52,19 +51,20 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_IMPORT_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(UsermanImportForm form, BindingResult binding,
+	public ModelAndView execute(UsermanImportForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_USERMAN_IMPORT_INIT);
 			return mav;
 		}
 
@@ -73,9 +73,9 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				UsermanImportController.class, "finish", auth, locale,
-				sitePref, request).build();
+		UriComponents uc = fromMethodCall(
+				on(UsermanImportController.class).finish(auth, locale,
+						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -85,7 +85,7 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	@Override
 	public ModelAndView finish(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_IMPORT_FINISH);
 		return mav;
 	}
 

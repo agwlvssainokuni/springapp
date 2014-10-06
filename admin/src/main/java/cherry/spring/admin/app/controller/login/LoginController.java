@@ -25,13 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping(LoginController.URI_PATH)
+import cherry.spring.admin.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_LOGIN)
 public interface LoginController {
 
-	public static final String URI_PATH = "/login";
-
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePref,
+	ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(params = "loginFailed")

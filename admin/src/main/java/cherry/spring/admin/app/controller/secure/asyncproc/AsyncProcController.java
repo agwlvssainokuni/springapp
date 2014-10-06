@@ -26,17 +26,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(AsyncProcController.URI_PATH)
-public interface AsyncProcController {
+import cherry.spring.admin.app.controller.PathDef;
 
-	public static final String URI_PATH = "secure/asyncproc";
+@RequestMapping(PathDef.URI_ASYNCPROC)
+public interface AsyncProcController {
 
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
 
 	@RequestMapping()
-	ModelAndView index(
+	ModelAndView init(
 			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,

@@ -27,15 +27,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
+
 /**
  * パスワードエンコーダツール。
  */
-@RequestMapping(PwdtoolController.URI_PATH)
+@RequestMapping(PathDef.URI_PWDTOOL)
 public interface PwdtoolController {
-
-	public static final String URI_PATH = "/secure/pwdtool";
-
-	public static final String URI_PATH_ENCODE = "encode";
 
 	public static final String PARAM_PLAIN_TEXT = "plainText";
 
@@ -43,13 +41,13 @@ public interface PwdtoolController {
 	 * ツールの画面を表示する。
 	 */
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	/**
 	 * 平文をエンコードした文字列を返却する。
 	 */
-	@RequestMapping(URI_PATH_ENCODE)
+	@RequestMapping(PathDef.SUBURI_ENCODE)
 	@ResponseBody
 	String encode(@RequestParam(PARAM_PLAIN_TEXT) String plainText);
 

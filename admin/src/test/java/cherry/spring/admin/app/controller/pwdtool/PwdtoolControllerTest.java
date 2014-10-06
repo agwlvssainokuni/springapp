@@ -32,8 +32,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
 import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolController;
-import cherry.spring.admin.app.controller.secure.pwdtool.PwdtoolControllerImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -47,10 +47,10 @@ public class PwdtoolControllerTest {
 	private PasswordEncoder passwordEncoder;
 
 	@Test
-	public void index000() {
-		ModelAndView mav = pwdtoolController.index(null, null, null, null);
+	public void init000() {
+		ModelAndView mav = pwdtoolController.init(null, null, null, null);
 		assertNotNull(mav);
-		assertEquals(PwdtoolControllerImpl.VIEW_PATH, mav.getViewName());
+		assertEquals(PathDef.VIEW_PWDTOOL_INIT, mav.getViewName());
 		assertNull(mav.getView());
 		assertTrue(mav.getModelMap().isEmpty());
 	}

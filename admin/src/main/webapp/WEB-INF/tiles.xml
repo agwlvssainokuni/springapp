@@ -4,10 +4,10 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="normal/login/index" template="/WEB-INF/tiles/normal/base_unauth.jsp">
-		<put-attribute name="name" value="login/index" />
+	<definition name="normal/login/init" template="/WEB-INF/tiles/normal/base_unauth.jsp">
+		<put-attribute name="name" value="login/init" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/login/index.jsp" />
+			value="/WEB-INF/tiles/normal/login/init.jsp" />
 	</definition>
 
 	<definition name="normal/secure/**" template="/WEB-INF/tiles/normal/base_auth.jsp">
@@ -16,10 +16,10 @@
 			value="/WEB-INF/tiles/normal/secure/{1}.jsp" />
 	</definition>
 
-	<definition name="mobile/login/index" template="/WEB-INF/tiles/mobile/base_unauth.jsp">
-		<put-attribute name="name" value="login/index" />
+	<definition name="mobile/login/init" template="/WEB-INF/tiles/mobile/base_unauth.jsp">
+		<put-attribute name="name" value="login/init" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/mobile/login/index.jsp" />
+			value="/WEB-INF/tiles/mobile/login/init.jsp" />
 	</definition>
 
 	<definition name="mobile/secure/**" template="/WEB-INF/tiles/mobile/base_auth.jsp">

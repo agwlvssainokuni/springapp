@@ -27,13 +27,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
 import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService;
 import cherry.spring.admin.app.service.secure.asyncproc.AsyncProcService.Result;
 
 @Controller
 public class AsyncProcControllerImpl implements AsyncProcController {
-
-	public static final String VIEW_PATH = "secure/asyncproc/index";
 
 	@Value("${admin.app.asyncproc.pageSize}")
 	private int defaultPageSize;
@@ -42,13 +41,13 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	private AsyncProcService asyncProcService;
 
 	@Override
-	public ModelAndView index(int pageNo, int pageSz, Authentication auth,
+	public ModelAndView init(int pageNo, int pageSz, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		Result result = asyncProcService.searchAsyncProc(auth.getName(),
 				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_ASYNCPROC_INIT);
 		mav.addObject(result);
 		return mav;
 	}

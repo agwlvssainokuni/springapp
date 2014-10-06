@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.admin.app.controller.PathDef;
 import cherry.spring.admin.app.service.secure.userman.UsermanSearchService;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
@@ -38,8 +39,6 @@ import cherry.spring.common.helper.download.DownloadHelper;
 
 @Controller
 public class UsermanSearchControllerImpl implements UsermanSearchController {
-
-	public static final String VIEW_PATH = "secure/userman/search/index";
 
 	@Value("${admin.app.userman.search.pageSize}")
 	private int defaultPageSize;
@@ -65,38 +64,40 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(UsermanSearchForm form, BindingResult binding,
+	public ModelAndView execute(UsermanSearchForm form, BindingResult binding,
 			int pageNo, int pageSz, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_USERMAN_SEARCH_INIT);
 			return mav;
 		}
 
 		UsermanSearchService.Result result = usermanSearchService.searchUsers(
 				form, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 		mav.addObject(result);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView export(final UsermanSearchForm form,
+	public ModelAndView download(final UsermanSearchForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_USERMAN_SEARCH_INIT);
 			return mav;
 		}
 
