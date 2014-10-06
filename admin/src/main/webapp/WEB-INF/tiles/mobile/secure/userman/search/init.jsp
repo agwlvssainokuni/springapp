@@ -79,7 +79,7 @@
 	</f:form>
 </div>
 <c:if test="${resultIsNotEmpty}">
-	<f:form servletRelativeAction="/secure/userman/search/req"
+	<f:form servletRelativeAction="/secure/userman/search/execute"
 		method="POST" modelAttribute="usermanSearchForm"
 		id="usermanSearchFormHidden" cssClass="app-pager-form">
 		<f:hidden path="loginId" id="loginId2" />
@@ -104,8 +104,7 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th><s:message
-						code="secure/userman/search/init.column.loginId" /></th>
+				<th><s:message code="secure/userman/search/init.column.loginId" /></th>
 				<th><s:message
 						code="secure/userman/search/init.column.lastName" /></th>
 				<th><s:message
