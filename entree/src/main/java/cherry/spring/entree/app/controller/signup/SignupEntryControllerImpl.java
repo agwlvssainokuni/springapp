@@ -16,7 +16,11 @@
 
 package cherry.spring.entree.app.controller.signup;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,21 +29,18 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
 import cherry.spring.entree.LogicalError;
+import cherry.spring.entree.app.controller.PathDef;
 import cherry.spring.entree.app.service.signup.SignupEntryService;
+import cherry.spring.entree.app.service.signup.SignupEntryService.UriComponentsSource;
 
 @Controller
 public class SignupEntryControllerImpl implements SignupEntryController {
-
-	public static final String VIEW_PATH = "signup/entry/index";
-
-	public static final String VIEW_PATH_FIN = "signup/entry/finish";
 
 	@Autowired
 	private SignupEntryService signupEntryService;
@@ -53,32 +54,42 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePref,
+	public ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(SignupEntryForm form, BindingResult binding,
-			Locale locale, SitePreference sitePref, HttpServletRequest request,
-			RedirectAttributes redirAttr) {
+	public ModelAndView execute(SignupEntryForm form, BindingResult binding,
+			final Locale locale, final SitePreference sitePref,
+			final HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
 			return mav;
 		}
 
-		if (!signupEntryService.createSignupRequest(form.getEmail(), request,
-				locale)) {
+		UriComponentsSource source = new UriComponentsSource() {
+			@Override
+			public UriComponents buildUriComponents(UUID token) {
+				return fromMethodCall(
+						on(SignupRegisterController.class).init(
+								token.toString(), locale, sitePref, request))
+						.build();
+			}
+		};
+
+		if (!signupEntryService.createSignupRequest(form.getEmail(), locale,
+				source)) {
 			rejectOnSignupTooManyRequest(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
 			return mav;
 		}
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				SignupEntryController.class, "finish", locale, sitePref,
-				request).build();
+		UriComponents uc = fromMethodCall(
+				on(SignupEntryController.class).finish(locale, sitePref,
+						request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -88,7 +99,7 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	@Override
 	public ModelAndView finish(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_FINISH);
 		return mav;
 	}
 

@@ -17,6 +17,8 @@
 package cherry.spring.entree.app.controller.secure.passwd;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
@@ -33,7 +35,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
@@ -42,14 +43,11 @@ import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicalError;
+import cherry.spring.entree.app.controller.PathDef;
 import cherry.spring.entree.app.service.secure.passwd.PasswdService;
 
 @Controller
 public class PasswdControllerImpl implements PasswdController {
-
-	public static final String VIEW_PATH = "secure/passwd/index";
-
-	public static final String VIEW_PATH_FIN = "secure/passwd/finish";
 
 	private final Log log = LogFactory.getLog(getClass());
 
@@ -71,30 +69,30 @@ public class PasswdControllerImpl implements PasswdController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(PasswdForm form, BindingResult binding,
+	public ModelAndView execute(PasswdForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 			return mav;
 		}
 
 		if (!validateForm(form, binding)) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 			return mav;
 		}
 
 		if (!auth.getName().equals(form.getLoginId())) {
 			rejectOnCurAuthFailed(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 			return mav;
 		}
 
@@ -105,7 +103,7 @@ public class PasswdControllerImpl implements PasswdController {
 			checkNotNull(a, "AuthenticationManager#authenticate(token): null");
 		} catch (AuthenticationException ex) {
 			rejectOnCurAuthFailed(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 			return mav;
 		}
 
@@ -119,9 +117,9 @@ public class PasswdControllerImpl implements PasswdController {
 			throw new IllegalStateException("");
 		}
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				PasswdController.class, "finish", auth, locale, sitePref,
-				request).build();
+		UriComponents uc = fromMethodCall(
+				on(PasswdController.class).finish(auth, locale, sitePref,
+						request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -131,7 +129,7 @@ public class PasswdControllerImpl implements PasswdController {
 	@Override
 	public ModelAndView finish(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_FINISH);
 		return mav;
 	}
 

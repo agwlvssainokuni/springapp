@@ -16,12 +16,8 @@
 
 package cherry.spring.entree.app.service.signup;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +26,6 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.spring.common.MailId;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
@@ -39,7 +34,6 @@ import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.helper.signup.SignupRequestDao;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.spring.entree.app.controller.signup.SignupRegisterController;
 
 @Component
 public class SignupEntryServiceImpl implements SignupEntryService {
@@ -69,8 +63,8 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 	@Transactional
 	@Override
-	public boolean createSignupRequest(String mailAddr,
-			HttpServletRequest request, Locale locale) {
+	public boolean createSignupRequest(String mailAddr, Locale locale,
+			UriComponentsSource source) {
 
 		LocalDateTime now = bizdateHelper.now();
 
@@ -107,23 +101,13 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 		Model model = new Model();
 		model.setMailAddr(mailAddr);
-		model.setSignupUri(buildSignupUri(token, request));
+		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
 		SimpleMailMessage message = mailMessageHelper.createMailMessage(
 				MailId.SIGNUP_ENTRY, mailAddr, model, locale);
 		mailSender.send(message);
 
 		return true;
-	}
-
-	private String buildSignupUri(UUID token, HttpServletRequest request) {
-		Map<String, String> paramMap = new HashMap<>();
-		paramMap.put(SignupRegisterController.PATH_VAR, token.toString());
-		return UriComponentsBuilder.newInstance().scheme(request.getScheme())
-				.host(request.getServerName()).port(request.getServerPort())
-				.path(request.getContextPath())
-				.path(SignupRegisterController.URI_PATH).build()
-				.expand(paramMap).toUriString();
 	}
 
 	public static class Model extends MailModel {

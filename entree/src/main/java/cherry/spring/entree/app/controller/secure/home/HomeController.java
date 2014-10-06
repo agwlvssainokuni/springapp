@@ -25,13 +25,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(HomeController.URI_PATH)
+import cherry.spring.entree.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_HOME)
 public interface HomeController {
 
-	public static final String URI_PATH = "/secure";
-
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -17,12 +17,17 @@
 package cherry.spring.entree.app.service.signup;
 
 import java.util.Locale;
+import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.util.UriComponents;
 
 public interface SignupEntryService {
 
-	boolean createSignupRequest(String mailAddr, HttpServletRequest request,
-			Locale locale);
+	boolean createSignupRequest(String mailAddr, Locale locale,
+			UriComponentsSource source);
+
+	public interface UriComponentsSource {
+		UriComponents buildUriComponents(UUID token);
+	}
 
 }

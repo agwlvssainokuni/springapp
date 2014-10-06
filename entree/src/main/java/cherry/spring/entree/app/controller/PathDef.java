@@ -40,6 +40,8 @@ public class PathDef {
 
 	public static final String VIEW_PASSWD_INIT = "secure/passwd/init";
 
+	public static final String VIEW_PASSWD_FINISH = "secure/passwd/finish";
+
 	public static final String VIEW_SIGNUP_ENTRY_INIT = "signup/entry/init";
 
 	public static final String VIEW_SIGNUP_ENTRY_FINISH = "signup/entry/finish";

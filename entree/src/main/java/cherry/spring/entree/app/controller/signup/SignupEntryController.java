@@ -28,28 +28,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping(SignupEntryController.URI_PATH)
+import cherry.spring.entree.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_SIGNUP_ENTRY)
 public interface SignupEntryController {
 
-	public static final String URI_PATH = "/signup";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_FIN = "fin";
-
-	@ModelAttribute("signupEntryForm")
+	@ModelAttribute()
 	SignupEntryForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePref,
+	ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SignupEntryForm form,
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@Validated SignupEntryForm form,
 			BindingResult binding, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(URI_PATH_FIN)
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView finish(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 

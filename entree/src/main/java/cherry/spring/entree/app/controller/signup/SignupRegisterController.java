@@ -29,32 +29,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping(SignupRegisterController.URI_PATH)
+import cherry.spring.entree.app.controller.PathDef;
+
+@RequestMapping(PathDef.URI_SIGNUP_REGISTER)
 public interface SignupRegisterController {
 
-	public static final String URI_PATH = "/signup/{token}";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_FIN = "fin";
-
-	public static final String PATH_VAR = "token";
-
-	@ModelAttribute("signupRegisterForm")
+	@ModelAttribute()
 	SignupRegisterForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(@PathVariable(PATH_VAR) String token, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@PathVariable(PATH_VAR) String token,
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
 			@Validated SignupRegisterForm form, BindingResult binding,
 			Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
-	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(@PathVariable(PATH_VAR) String token, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(PathDef.SUBURI_FINISH)
+	ModelAndView finish(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 }
