@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="secure/passwd/index.message.0" />
+	<s:message code="secure/passwd/init.message.0" />
 </h1>
 <s:hasBindErrors name="passwdForm">
 	<div class="error">
@@ -20,7 +20,7 @@
 		<f:errors path="passwdForm.newPasswordConf" element="div" />
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/secure/passwd/req" method="POST"
+<f:form servletRelativeAction="/secure/passwd/execute" method="POST"
 	modelAttribute="passwdForm">
 	<div data-role="fieldcontain">
 		<f:label path="loginId">
@@ -47,6 +47,6 @@
 		<f:password path="newPasswordConf" cssErrorClass="error" />
 	</div>
 	<f:button type="submit">
-		<s:message code="secure/passwd/index.changeButton" />
+		<s:message code="secure/passwd/init.changeButton" />
 	</f:button>
 </f:form>

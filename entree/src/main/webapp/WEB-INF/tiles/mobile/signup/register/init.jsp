@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1>
-	<s:message code="signup/register/index.message.0" />
+	<s:message code="signup/register/init.message.0" />
 </h1>
 <s:hasBindErrors name="signupRegisterForm">
 	<div class="error">
@@ -19,7 +19,7 @@
 		<f:errors path="signupRegisterForm.firstName" element="div" />
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/signup/${token}/req" method="POST"
+<f:form servletRelativeAction="/signup/${token}/execute" method="POST"
 	modelAttribute="signupRegisterForm">
 	<div data-role="fieldcontain">
 		<f:label path="email">
@@ -40,6 +40,6 @@
 		<f:input path="firstName" cssErrorClass="error" />
 	</div>
 	<f:button type="submit">
-		<s:message code="signup/register/index.registerButton" />
+		<s:message code="signup/register/init.registerButton" />
 	</f:button>
 </f:form>

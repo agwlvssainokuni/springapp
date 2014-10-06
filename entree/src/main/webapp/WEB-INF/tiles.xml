@@ -7,10 +7,10 @@
 	<definition name="mobile/base_unauth" template="/WEB-INF/tiles/mobile/base_unauth.jsp" />
 	<definition name="mobile/base_auth" template="/WEB-INF/tiles/mobile/base_auth.jsp" />
 
-	<definition name="mobile/login/index" extends="mobile/base_unauth">
-		<put-attribute name="name" value="login/index" />
+	<definition name="mobile/login/init" extends="mobile/base_unauth">
+		<put-attribute name="name" value="login/init" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/mobile/login/index.jsp" />
+			value="/WEB-INF/tiles/mobile/login/init.jsp" />
 	</definition>
 
 	<definition name="mobile/signup/**" extends="mobile/base_unauth">
@@ -28,10 +28,10 @@
 	<definition name="normal/base_unauth" template="/WEB-INF/tiles/normal/base_unauth.jsp" />
 	<definition name="normal/base_auth" template="/WEB-INF/tiles/normal/base_auth.jsp" />
 
-	<definition name="normal/login/index" extends="normal/base_unauth">
-		<put-attribute name="name" value="login/index" />
+	<definition name="normal/login/init" extends="normal/base_unauth">
+		<put-attribute name="name" value="login/init" />
 		<put-attribute name="content"
-			value="/WEB-INF/tiles/normal/login/index.jsp" />
+			value="/WEB-INF/tiles/normal/login/init.jsp" />
 	</definition>
 
 	<definition name="normal/signup/**" extends="normal/base_unauth">

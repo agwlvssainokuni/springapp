@@ -8,6 +8,6 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1>
-	<s:message code="secure/home/index.message.0" />
-</h1>
+<h2>
+	<s:message code="secure/home/init.message.0" />
+</h2>
