@@ -18,7 +18,7 @@
 	</div>
 </s:hasBindErrors>
 <div class="app-portion">
-	<f:form servletRelativeAction="/secure/userman/import/req"
+	<f:form servletRelativeAction="/secure/userman/import/execute"
 		method="POST" modelAttribute="usermanImportForm"
 		enctype="multipart/form-data">
 		<table>

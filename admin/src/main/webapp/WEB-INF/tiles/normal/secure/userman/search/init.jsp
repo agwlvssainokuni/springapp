@@ -39,7 +39,7 @@
 		</c:choose>
 	</c:set>
 	<div class="app-portion">
-		<f:form servletRelativeAction="/secure/userman/search/req"
+		<f:form servletRelativeAction="/secure/userman/search/execute"
 			method="POST" modelAttribute="usermanSearchForm">
 			<table>
 				<tbody class="app-transparent">
@@ -90,7 +90,7 @@
 		</f:form>
 	</div>
 	<c:if test="${resultIsNotEmpty}">
-		<f:form servletRelativeAction="/secure/userman/search/req"
+		<f:form servletRelativeAction="/secure/userman/search/execute"
 			method="POST" modelAttribute="usermanSearchForm"
 			id="usermanSearchWithPage" class="app-pager-form">
 			<f:hidden path="loginId" id="loginId2" />

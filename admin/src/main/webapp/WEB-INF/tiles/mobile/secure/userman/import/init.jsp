@@ -17,8 +17,9 @@
 		<f:errors path="usermanImportForm.file" element="div" />
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/secure/userman/import/req" method="POST"
-	modelAttribute="usermanImportForm" enctype="multipart/form-data">
+<f:form servletRelativeAction="/secure/userman/import/execute"
+	method="POST" modelAttribute="usermanImportForm"
+	enctype="multipart/form-data">
 	<div data-role="fieldcontain">
 		<f:label path="file">
 			<s:message code="usermanImportForm.file" />

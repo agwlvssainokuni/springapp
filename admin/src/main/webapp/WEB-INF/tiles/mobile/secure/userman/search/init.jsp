@@ -37,7 +37,7 @@
 	<h4>
 		<s:message code="secure/userman/search/index.message.1" />
 	</h4>
-	<f:form servletRelativeAction="/secure/userman/search/req"
+	<f:form servletRelativeAction="/secure/userman/search/execute"
 		method="POST" modelAttribute="usermanSearchForm">
 		<div data-role="fieldcontain">
 			<f:label path="loginId">
