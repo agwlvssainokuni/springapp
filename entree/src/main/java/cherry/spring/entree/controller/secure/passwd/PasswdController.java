@@ -14,41 +14,40 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.signup;
+package cherry.spring.entree.controller.secure.passwd;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.spring.entree.app.controller.PathDef;
+import cherry.spring.entree.controller.PathDef;
 
-@RequestMapping(PathDef.URI_SIGNUP_REGISTER)
-public interface SignupRegisterController {
+@RequestMapping(PathDef.URI_PASSWD)
+public interface PasswdController {
 
 	@ModelAttribute()
-	SignupRegisterForm getForm();
+	PasswdForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			@Validated SignupRegisterForm form, BindingResult binding,
-			Locale locale, SitePreference sitePref, HttpServletRequest request,
-			RedirectAttributes redirAttr);
+	ModelAndView execute(@Validated PasswdForm form, BindingResult binding,
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 	@RequestMapping(PathDef.SUBURI_FINISH)
-	ModelAndView finish(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView finish(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.signup;
+package cherry.spring.entree.controller;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
-import cherry.spring.common.validator.MaxLength;
-import cherry.spring.entree.app.controller.BaseForm;
+/**
+ * 入力フォームの基底クラス。
+ */
+public abstract class BaseForm implements Serializable {
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = false)
-public class SignupEntryForm extends BaseForm {
-
+	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@MaxLength(512)
-	@Email
-	private String email;
+	/**
+	 * フォームの文字列表記。
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 }

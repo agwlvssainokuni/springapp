@@ -14,25 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.service.secure.passwd;
+package cherry.spring.entree.service.secure.passwd;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+public interface PasswdService {
 
-import cherry.spring.common.helper.password.UserPasswordDao;
-
-@Component
-public class PasswdServiceImpl implements PasswdService {
-
-	@Autowired
-	private UserPasswordDao userPasswordDao;
-
-	@Transactional
-	@Override
-	public boolean changePassword(String loginId, String password) {
-		int count = userPasswordDao.changePassword(loginId, password);
-		return count > 0;
-	}
+	boolean changePassword(String loginId, String password);
 
 }

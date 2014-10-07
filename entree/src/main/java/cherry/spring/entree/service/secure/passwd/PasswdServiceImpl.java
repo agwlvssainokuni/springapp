@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller;
+package cherry.spring.entree.service.secure.passwd;
 
-import java.io.Serializable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import cherry.spring.common.helper.password.UserPasswordDao;
 
-/**
- * 入力フォームの基底クラス。
- */
-public abstract class BaseForm implements Serializable {
+@Component
+public class PasswdServiceImpl implements PasswdService {
 
-	/** シリアルバージョン。 */
-	private static final long serialVersionUID = 1L;
+	@Autowired
+	private UserPasswordDao userPasswordDao;
 
-	/**
-	 * フォームの文字列表記。
-	 */
+	@Transactional
 	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+	public boolean changePassword(String loginId, String password) {
+		int count = userPasswordDao.changePassword(loginId, password);
+		return count > 0;
 	}
 
 }

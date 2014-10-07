@@ -33,7 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import cherry.spring.entree.app.controller.PathDef;
+import cherry.spring.entree.controller.PathDef;
+import cherry.spring.entree.controller.login.LoginController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

@@ -14,38 +14,59 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.signup;
+package cherry.spring.entree.controller.secure.passwd;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.spring.common.validator.MaxLength;
-import cherry.spring.entree.app.controller.BaseForm;
+import cherry.spring.entree.controller.BaseForm;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class SignupRegisterForm extends BaseForm {
+public class PasswdForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
 	@MaxLength(512)
 	@Email
-	private String email;
+	private String loginId;
 
-	@NotEmpty
-	@MaxLength(64)
-	private String firstName;
+	@NotNull
+	@Size(min = 8, max = 16)
+	private String password;
 
-	@NotEmpty
-	@MaxLength(64)
-	private String lastName;
+	@NotNull
+	@Size(min = 8, max = 16)
+	private String newPassword;
 
-	private boolean agree;
+	@NotNull
+	@Size(min = 8, max = 16)
+	private String newPasswordConf;
+
+	/**
+	 * フォームの文字列表記。
+	 */
+	@Override
+	public String toString() {
+		PasswdForm masked = new PasswdForm();
+		masked.setLoginId(loginId);
+		masked.setPassword("<MASKED>");
+		masked.setNewPassword("<MASKED>");
+		masked.setNewPasswordConf("<MASKED>");
+		return ToStringBuilder.reflectionToString(masked,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 }

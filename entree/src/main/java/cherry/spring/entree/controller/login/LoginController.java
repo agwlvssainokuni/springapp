@@ -14,27 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.secure.home;
+package cherry.spring.entree.controller.login;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.spring.entree.app.controller.PathDef;
+import cherry.spring.entree.controller.PathDef;
 
-@Controller
-public class HomeControllerImpl implements HomeController {
+@RequestMapping(PathDef.URI_LOGIN)
+public interface LoginController {
 
-	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_HOME_INIT);
-		return mav;
-	}
+	@RequestMapping()
+	ModelAndView init(Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
+
+	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
+
+	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 }

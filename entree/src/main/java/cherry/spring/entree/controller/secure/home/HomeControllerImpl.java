@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.secure.home;
+package cherry.spring.entree.controller.secure.home;
 
 import java.util.Locale;
 
@@ -22,16 +22,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.spring.entree.app.controller.PathDef;
+import cherry.spring.entree.controller.PathDef;
 
-@RequestMapping(PathDef.URI_HOME)
-public interface HomeController {
+@Controller
+public class HomeControllerImpl implements HomeController {
 
-	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	@Override
+	public ModelAndView init(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_HOME_INIT);
+		return mav;
+	}
 
 }

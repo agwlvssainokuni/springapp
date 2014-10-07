@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.service.signup;
+package cherry.spring.entree.controller.signup;
 
-import java.util.Locale;
-import java.util.UUID;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.web.util.UriComponents;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-public interface SignupEntryService {
+import cherry.spring.common.validator.MaxLength;
+import cherry.spring.entree.controller.BaseForm;
 
-	boolean createSignupRequest(String mailAddr, Locale locale,
-			UriComponentsSource source);
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+public class SignupEntryForm extends BaseForm {
 
-	public interface UriComponentsSource {
-		UriComponents buildUriComponents(UUID token);
-	}
+	private static final long serialVersionUID = 1L;
+
+	@NotEmpty
+	@MaxLength(512)
+	@Email
+	private String email;
 
 }

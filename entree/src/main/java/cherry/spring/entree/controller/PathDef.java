@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller;
+package cherry.spring.entree.controller;
 
 public class PathDef {
 
@@ -49,5 +49,9 @@ public class PathDef {
 	public static final String VIEW_SIGNUP_REGISTER_INIT = "signup/register/init";
 
 	public static final String VIEW_SIGNUP_REGISTER_FINISH = "signup/register/finish";
+
+	public static final String METHOD_LOGIN_FAILED = "loginFailed";
+
+	public static final String METHOD_LOGGED_OUT = "loggedOut";
 
 }

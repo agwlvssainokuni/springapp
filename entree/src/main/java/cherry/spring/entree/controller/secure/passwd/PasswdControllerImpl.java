@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.secure.passwd;
+package cherry.spring.entree.controller.secure.passwd;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
@@ -43,8 +43,8 @@ import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicalError;
-import cherry.spring.entree.app.controller.PathDef;
-import cherry.spring.entree.app.service.secure.passwd.PasswdService;
+import cherry.spring.entree.controller.PathDef;
+import cherry.spring.entree.service.secure.passwd.PasswdService;
 
 @Controller
 public class PasswdControllerImpl implements PasswdController {

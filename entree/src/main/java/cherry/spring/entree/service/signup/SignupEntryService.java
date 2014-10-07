@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.service.signup;
+package cherry.spring.entree.service.signup;
 
 import java.util.Locale;
+import java.util.UUID;
 
-public interface SignupRegisterService {
+import org.springframework.web.util.UriComponents;
 
-	boolean createUser(String mailAddr, String token, String firstName,
-			String lastName, Locale locale);
+public interface SignupEntryService {
+
+	boolean createSignupRequest(String mailAddr, Locale locale,
+			UriComponentsSource source);
+
+	public interface UriComponentsSource {
+		UriComponents buildUriComponents(UUID token);
+	}
 
 }

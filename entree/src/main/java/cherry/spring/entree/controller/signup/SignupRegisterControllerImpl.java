@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.signup;
+package cherry.spring.entree.controller.signup;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,61 +34,55 @@ import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
 import cherry.spring.entree.LogicalError;
-import cherry.spring.entree.app.controller.PathDef;
-import cherry.spring.entree.app.service.signup.SignupEntryService;
-import cherry.spring.entree.app.service.signup.SignupEntryService.UriComponentsSource;
+import cherry.spring.entree.controller.PathDef;
+import cherry.spring.entree.service.signup.SignupRegisterService;
 
 @Controller
-public class SignupEntryControllerImpl implements SignupEntryController {
+public class SignupRegisterControllerImpl implements SignupRegisterController {
 
 	@Autowired
-	private SignupEntryService signupEntryService;
+	private SignupRegisterService signupRegisterService;
 
 	@Autowired
 	private LogicalErrorHelper logicalErrorHelper;
 
 	@Override
-	public SignupEntryForm getForm() {
-		return new SignupEntryForm();
+	public SignupRegisterForm getForm() {
+		return new SignupRegisterForm();
 	}
 
 	@Override
-	public ModelAndView init(Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
+	public ModelAndView init(String token, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_INIT);
+		mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(SignupEntryForm form, BindingResult binding,
-			final Locale locale, final SitePreference sitePref,
-			final HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(String token, SignupRegisterForm form,
+			BindingResult binding, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SIGNUP_REGISTER_INIT);
+			mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 			return mav;
 		}
 
-		UriComponentsSource source = new UriComponentsSource() {
-			@Override
-			public UriComponents buildUriComponents(UUID token) {
-				return fromMethodCall(
-						on(SignupRegisterController.class).init(
-								token.toString(), locale, sitePref, request))
-						.build();
-			}
-		};
-
-		if (!signupEntryService.createSignupRequest(form.getEmail(), locale,
-				source)) {
-			rejectOnSignupTooManyRequest(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
+		if (!signupRegisterService.createUser(form.getEmail(), token,
+				form.getFirstName(), form.getLastName(), locale)) {
+			rejectOnSignupEntryUnmatch(binding);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SIGNUP_REGISTER_INIT);
+			mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 			return mav;
 		}
 
 		UriComponents uc = fromMethodCall(
-				on(SignupEntryController.class).finish(locale, sitePref,
-						request)).build();
+				on(SignupRegisterController.class).finish(token, locale,
+						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -97,14 +90,15 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	@Override
-	public ModelAndView finish(Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_FINISH);
+	public ModelAndView finish(String token, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_FINISH);
+		mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 		return mav;
 	}
 
-	private void rejectOnSignupTooManyRequest(BindingResult binding) {
-		logicalErrorHelper.reject(binding, LogicalError.SignupTooManyRequest);
+	private void rejectOnSignupEntryUnmatch(BindingResult binding) {
+		logicalErrorHelper.reject(binding, LogicalError.SignupEntryUnmatch);
 	}
 
 }

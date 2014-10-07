@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cherry.spring.entree.app.service.signup;
+
+package cherry.spring.entree.service.signup;
 
 import java.util.Locale;
+import java.util.UUID;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
-import cherry.spring.common.db.gen.dto.User;
-import cherry.spring.common.db.gen.mapper.UserMapper;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
@@ -38,12 +36,9 @@ import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
 @Component
-public class SignupRegisterServiceImpl implements SignupRegisterService {
+public class SignupEntryServiceImpl implements SignupEntryService {
 
 	private final Log log = LogFactory.getLog(getClass());
-
-	@Autowired
-	private UserMapper userMapper;
 
 	@Autowired
 	private SignupRequestDao signupRequestDao;
@@ -57,58 +52,59 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	@Autowired
 	private MailSender mailSender;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	@Value("${entree.app.signup.entry.intervalInSec}")
+	private Integer intervalInSec;
 
-	@Value("${entree.app.signup.register.validInSec}")
-	private Integer validInSec;
+	@Value("${entree.app.signup.entry.rangeInSec}")
+	private Integer rangeInSec;
 
-	@Value("${entree.app.signup.register.pwdLength}")
-	private Integer pwdLength;
-
-	@Value("${entree.app.signup.register.pwdChars}")
-	private String pwdChars;
+	@Value("${entree.app.signup.entry.numOfReq}")
+	private Integer numOfReq;
 
 	@Transactional
 	@Override
-	public boolean createUser(String mailAddr, String token, String firstName,
-			String lastName, Locale locale) {
+	public boolean createSignupRequest(String mailAddr, Locale locale,
+			UriComponentsSource source) {
 
 		LocalDateTime now = bizdateHelper.now();
 
-		if (!signupRequestDao.validateToken(mailAddr, token,
-				now.minusSeconds(validInSec))) {
+		if (!signupRequestDao.validateMailAddr(mailAddr,
+				now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec),
+				numOfReq)) {
 			if (log.isDebugEnabled()) {
-				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}",
-						mailAddr, token, validInSec);
+				log.debug(
+						"Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}",
+						mailAddr, intervalInSec, rangeInSec, numOfReq);
 			}
 			return false;
 		}
 
-		String rawPassword = RandomStringUtils.random(pwdLength, pwdChars);
-		String password = passwordEncoder.encode(rawPassword);
+		UUID token = UUID.randomUUID();
+		LocalDateTime appliedAt = bizdateHelper.now();
 
-		User entity = new User();
-		entity.setLoginId(mailAddr);
-		entity.setPassword(password);
-		entity.setFirstName(firstName);
-		entity.setLastName(lastName);
-		int count = userMapper.insertSelective(entity);
-		assert count == 1;
+		Integer id = signupRequestDao.createSignupRequest(mailAddr,
+				token.toString(), appliedAt);
+		if (id == null) {
+			if (log.isDebugEnabled()) {
+				log.debug(
+						"Failed to create: mailAddr={0}, token={1}, appliedAt={2}",
+						mailAddr, token.toString(), appliedAt);
+			}
+			return false;
+		}
+
 		if (log.isDebugEnabled()) {
 			log.debug(
-					"users is created: id={0}, mailAddr={1}, password={2}, firstName={3}, lastName={4}",
-					entity.getId(), mailAddr, password, firstName, lastName);
+					"signup_requests is created, id={0}, mailAddr={1}, token={2}",
+					id, mailAddr, token);
 		}
 
 		Model model = new Model();
 		model.setMailAddr(mailAddr);
-		model.setPassword(rawPassword);
-		model.setFirstName(firstName);
-		model.setLastName(lastName);
+		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
 		SimpleMailMessage message = mailMessageHelper.createMailMessage(
-				MailId.SIGNUP_REGISTER, mailAddr, model, locale);
+				MailId.SIGNUP_ENTRY, mailAddr, model, locale);
 		mailSender.send(message);
 
 		return true;
@@ -118,11 +114,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 		private String mailAddr;
 
-		private String password;
-
-		private String firstName;
-
-		private String lastName;
+		private String signupUri;
 
 		public String getMailAddr() {
 			return mailAddr;
@@ -132,28 +124,12 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 			this.mailAddr = mailAddr;
 		}
 
-		public String getPassword() {
-			return password;
+		public String getSignupUri() {
+			return signupUri;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
+		public void setSignupUri(String signupUri) {
+			this.signupUri = signupUri;
 		}
 	}
 

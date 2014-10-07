@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.signup;
+package cherry.spring.entree.controller.signup;
 
 import java.util.Locale;
 
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.spring.entree.app.controller.PathDef;
+import cherry.spring.entree.controller.PathDef;
 
 @RequestMapping(PathDef.URI_SIGNUP_ENTRY)
 public interface SignupEntryController {

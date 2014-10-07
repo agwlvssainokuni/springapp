@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.service.secure.passwd;
+package cherry.spring.entree.service.signup;
 
-public interface PasswdService {
+import java.util.Locale;
 
-	boolean changePassword(String loginId, String password);
+public interface SignupRegisterService {
+
+	boolean createUser(String mailAddr, String token, String firstName,
+			String lastName, Locale locale);
 
 }

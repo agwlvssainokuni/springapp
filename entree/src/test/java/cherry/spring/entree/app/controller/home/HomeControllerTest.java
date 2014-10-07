@@ -29,8 +29,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.spring.entree.app.controller.PathDef;
-import cherry.spring.entree.app.controller.secure.home.HomeController;
+import cherry.spring.entree.controller.PathDef;
+import cherry.spring.entree.controller.secure.home.HomeController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
