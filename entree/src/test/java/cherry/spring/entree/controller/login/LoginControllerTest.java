@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.app.controller.home;
+package cherry.spring.entree.controller.login;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,25 +30,52 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.spring.entree.controller.PathDef;
-import cherry.spring.entree.controller.secure.home.HomeController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class HomeControllerTest {
+public class LoginControllerTest {
 
 	@Autowired
-	private HomeController homeController;
+	private LoginController loginController;
 
 	@Test
 	public void init000() {
-		ModelAndView mav = homeController.init(null, null, null, null);
+		ModelAndView mav = loginController.init(null, null, null);
 		assertNotNull(mav);
-		assertEquals(PathDef.VIEW_HOME_INIT, mav.getViewName());
+		assertEquals(PathDef.VIEW_LOGIN_INIT, mav.getViewName());
 		assertNull(mav.getView());
 		assertTrue(mav.getModelMap().isEmpty());
+	}
+
+	@Test
+	public void loginFailed000() {
+		RedirectAttributes redirAttr = mock(RedirectAttributes.class);
+		ModelAndView mav = loginController.loginFailed(null, null, null,
+				redirAttr);
+		assertNotNull(mav);
+		assertNull(mav.getViewName());
+		assertTrue(mav.getView() instanceof RedirectView);
+		assertEquals("http://localhost" + PathDef.URI_LOGIN,
+				((RedirectView) mav.getView()).getUrl());
+		verify(redirAttr).addFlashAttribute("loginFailed", true);
+	}
+
+	@Test
+	public void loggedOut000() {
+		RedirectAttributes redirAttr = mock(RedirectAttributes.class);
+		ModelAndView mav = loginController.loggedOut(null, null, null,
+				redirAttr);
+		assertNotNull(mav);
+		assertNull(mav.getViewName());
+		assertTrue(mav.getView() instanceof RedirectView);
+		assertEquals("http://localhost" + PathDef.URI_LOGIN,
+				((RedirectView) mav.getView()).getUrl());
+		verify(redirAttr).addFlashAttribute("loggedOut", true);
 	}
 
 }
