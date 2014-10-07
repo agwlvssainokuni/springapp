@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.login;
+package cherry.spring.admin.controller.login;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -34,7 +34,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.spring.admin.controller.PathDef;
-import cherry.spring.admin.controller.login.LoginController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

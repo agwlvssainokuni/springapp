@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.home;
+package cherry.spring.admin.controller.home;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.app.controller.pwdtool;
+package cherry.spring.admin.controller.pwdtool;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
