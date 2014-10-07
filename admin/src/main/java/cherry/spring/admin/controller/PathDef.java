@@ -56,6 +56,18 @@ public class PathDef {
 
 	public static final String VIEW_USERMAN_IMPORT_FINISH = "secure/userman/import/finish";
 
+	public static final String METHOD_LOGIN_FAILED = "loginFailed";
+
+	public static final String METHOD_LOGGED_OUT = "download";
+
 	public static final String METHOD_DOWNLOAD = "download";
+
+	public static final String PARAM_NO = "no";
+
+	public static final String PARAM_SZ = "sz";
+
+	public static final String PARAM_PLAIN_TEXT = "plainText";
+
+	public static final String PARAM_ENCODED_TEXT = "encodedText";
 
 }

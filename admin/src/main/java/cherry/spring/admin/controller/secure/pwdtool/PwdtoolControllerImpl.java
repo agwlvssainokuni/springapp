@@ -56,4 +56,12 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 		return passwordEncoder.encode(plainText);
 	}
 
+	/**
+	 * 平文とエンコードした文字列を照合する。
+	 */
+	@Override
+	public boolean match(String plainText, String encodedText) {
+		return passwordEncoder.matches(plainText, encodedText);
+	}
+
 }

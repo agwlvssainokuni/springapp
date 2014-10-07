@@ -34,11 +34,11 @@ public interface LoginController {
 	ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(params = "loginFailed")
+	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
 	ModelAndView loginFailed(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(params = "loggedOut")
+	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
 	ModelAndView loggedOut(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 

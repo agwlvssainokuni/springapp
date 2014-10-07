@@ -31,14 +31,10 @@ import cherry.spring.admin.controller.PathDef;
 @RequestMapping(PathDef.URI_ASYNCPROC)
 public interface AsyncProcController {
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
 	@RequestMapping()
 	ModelAndView init(
-			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
+			@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") int pageNo,
+			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") int pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 

@@ -46,7 +46,7 @@ public class LoginControllerImpl implements LoginController {
 	public ModelAndView loginFailed(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
-		redirAttr.addFlashAttribute("loginFailed", true);
+		redirAttr.addFlashAttribute(PathDef.METHOD_LOGIN_FAILED, true);
 
 		UriComponents uc = fromMethodCall(
 				on(LoginController.class).init(locale, sitePref, request))
@@ -61,7 +61,7 @@ public class LoginControllerImpl implements LoginController {
 	public ModelAndView loggedOut(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
-		redirAttr.addFlashAttribute("loggedOut", true);
+		redirAttr.addFlashAttribute(PathDef.METHOD_LOGGED_OUT, true);
 
 		UriComponents uc = fromMethodCall(
 				on(LoginController.class).init(locale, sitePref, request))

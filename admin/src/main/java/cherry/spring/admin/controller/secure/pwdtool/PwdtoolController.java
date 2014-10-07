@@ -35,8 +35,6 @@ import cherry.spring.admin.controller.PathDef;
 @RequestMapping(PathDef.URI_PWDTOOL)
 public interface PwdtoolController {
 
-	public static final String PARAM_PLAIN_TEXT = "plainText";
-
 	/**
 	 * ツールの画面を表示する。
 	 */
@@ -49,6 +47,14 @@ public interface PwdtoolController {
 	 */
 	@RequestMapping(PathDef.SUBURI_ENCODE)
 	@ResponseBody
-	String encode(@RequestParam(PARAM_PLAIN_TEXT) String plainText);
+	String encode(@RequestParam(PathDef.PARAM_PLAIN_TEXT) String plainText);
+
+	/**
+	 * 平文とエンコードした文字列を照合する。
+	 */
+	@RequestMapping(PathDef.SUBURI_MATCH)
+	@ResponseBody
+	boolean match(@RequestParam(PathDef.PARAM_PLAIN_TEXT) String plainText,
+			@RequestParam(PathDef.PARAM_ENCODED_TEXT) String encodedText);
 
 }
