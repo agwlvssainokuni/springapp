@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.controller.home;
+package cherry.spring.entree.controller.secure.home;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,7 +30,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.entree.controller.PathDef;
-import cherry.spring.entree.controller.secure.home.HomeController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

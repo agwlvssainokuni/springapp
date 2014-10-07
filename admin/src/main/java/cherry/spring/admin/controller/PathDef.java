@@ -58,7 +58,7 @@ public class PathDef {
 
 	public static final String METHOD_LOGIN_FAILED = "loginFailed";
 
-	public static final String METHOD_LOGGED_OUT = "download";
+	public static final String METHOD_LOGGED_OUT = "loggedOut";
 
 	public static final String METHOD_DOWNLOAD = "download";
 

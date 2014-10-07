@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.controller.pwdtool;
+package cherry.spring.admin.controller.secure.pwdtool;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,7 +33,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.controller.PathDef;
-import cherry.spring.admin.controller.secure.pwdtool.PwdtoolController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
