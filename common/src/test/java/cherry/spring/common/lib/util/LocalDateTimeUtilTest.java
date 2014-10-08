@@ -24,9 +24,16 @@ import static org.junit.Assert.assertThat;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.Period;
+import org.junit.After;
 import org.junit.Test;
 
 public class LocalDateTimeUtilTest {
+
+	@After
+	public void after() {
+		LocalDateTimeUtil.setUnitOfTime(Period.seconds(1));
+	}
 
 	@Test
 	public void testRangeFromLocalDate() {
@@ -99,6 +106,20 @@ public class LocalDateTimeUtilTest {
 	}
 
 	@Test
+	public void testSetUnitOfTimeAndRangeToLocalDateLocalTime() {
+		LocalDateTimeUtil.setUnitOfTime(Period.minutes(1));
+
+		LocalDate nowD = LocalDate.now();
+		LocalTime nowT = LocalTime.now();
+		assertThat(
+				LocalDateTimeUtil.rangeTo(nowD, nowT),
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
+						nowD.getDayOfMonth(), nowT.getHourOfDay(), nowT
+								.getMinuteOfHour(), nowT.getSecondOfMinute(),
+						nowT.getMillisOfSecond()).plusMinutes(1)));
+	}
+
+	@Test
 	public void testRangeToLocalDateTime() {
 		LocalDateTime now = LocalDateTime.now();
 		assertThat(LocalDateTimeUtil.rangeTo((LocalDateTime) null),
@@ -109,6 +130,19 @@ public class LocalDateTimeUtilTest {
 						.getDayOfMonth(), now.getHourOfDay(), now
 						.getMinuteOfHour(), now.getSecondOfMinute(), now
 						.getMillisOfSecond()).plusSeconds(1)));
+	}
+
+	@Test
+	public void testSetUnitOfTimeAndRangeToLocalDateTime() {
+		LocalDateTimeUtil.setUnitOfTime(Period.minutes(1));
+
+		LocalDateTime now = LocalDateTime.now();
+		assertThat(
+				LocalDateTimeUtil.rangeTo(now),
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
+						.getDayOfMonth(), now.getHourOfDay(), now
+						.getMinuteOfHour(), now.getSecondOfMinute(), now
+						.getMillisOfSecond()).plusMinutes(1)));
 	}
 
 	@Test
