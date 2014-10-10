@@ -16,13 +16,6 @@
 
 package cherry.spring.common.helper.mail;
 
-import java.util.List;
-import java.util.Locale;
-
-public interface MailMessageDao {
-
-	MailTemplateDto findTemplate(String name, Locale locale);
-
-	List<MailTemplateAddressDto> findAddresses(String name);
-
+public enum RcptType {
+	CC, BCC
 }

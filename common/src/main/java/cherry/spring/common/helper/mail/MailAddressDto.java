@@ -21,20 +21,16 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class MailTemplateAddressDto implements Serializable {
+public class MailAddressDto implements Serializable {
 
 	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
-
-	public enum RcptType {
-		CC, BCC
-	}
 
 	/** 宛先ID。 */
 	private Integer id;
 
 	/** 宛先区分。 */
-	private String rcptType;
+	private RcptType rcptType;
 
 	/** メールアドレス。 */
 	private String mailAddr;
@@ -45,14 +41,6 @@ public class MailTemplateAddressDto implements Serializable {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public boolean isCc() {
-		return RcptType.CC.name().equalsIgnoreCase(rcptType);
-	}
-
-	public boolean isBcc() {
-		return RcptType.BCC.name().equalsIgnoreCase(rcptType);
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -61,11 +49,11 @@ public class MailTemplateAddressDto implements Serializable {
 		this.id = id;
 	}
 
-	public String getRcptType() {
+	public RcptType getRcptType() {
 		return rcptType;
 	}
 
-	public void setRcptType(String rcptType) {
+	public void setRcptType(RcptType rcptType) {
 		this.rcptType = rcptType;
 	}
 
