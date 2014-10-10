@@ -50,10 +50,10 @@ import cherry.spring.common.type.DeletedFlag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class SignupRequestDaoTest {
+public class SignupRequestHelperTest {
 
 	@Autowired
-	private SignupRequestHelper dao;
+	private SignupRequestHelper helper;
 
 	@Autowired
 	private SignupRequestMapper mapper;
@@ -69,11 +69,11 @@ public class SignupRequestDaoTest {
 		assertEquals(mapper.selectByExample(crit).size(), 0);
 
 		LocalDateTime before = now();
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
-		assertNotNull(dao.createSignupRequest(mailAddr, UUID.randomUUID()
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
 		LocalDateTime after = now();
 
@@ -105,43 +105,43 @@ public class SignupRequestDaoTest {
 	@Test
 	public void testValidateMailAddr00() {
 		String mailAddr = "addr00@example.com";
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(5),
-				5));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(5),
-				5));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(5),
-				5));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(5),
-				5));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(5),
-				5));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(dao.validateMailAddr(mailAddr, now(),
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
+				now().minusSeconds(5), 5));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
+				now().minusSeconds(5), 5));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
+				now().minusSeconds(5), 5));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
+				now().minusSeconds(5), 5));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertFalse(helper.validateMailAddr(mailAddr, now(), now()
+				.minusSeconds(5), 5));
 	}
 
 	@Test
 	public void testValidateMailAddr01() {
 		String mailAddr = "addr01@example.com";
-		assertTrue(dao.validateMailAddr(mailAddr, now(), now().minusSeconds(1),
-				1));
-		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(dao.validateMailAddr(mailAddr, now(),
+		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(1), 1));
+		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		assertFalse(helper.validateMailAddr(mailAddr, now(), now()
+				.minusSeconds(1), 1));
 	}
 
 	@Test
 	public void testValidateMailAddr10() {
 		String mailAddr = "addr10@example.com";
-		assertTrue(dao.validateMailAddr(mailAddr, now().minusSeconds(1), now()
-				.minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now().minusSeconds(1),
+				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(dao.validateMailAddr(mailAddr, now().minusSeconds(1), now()
-				.minusSeconds(5), 5));
+		assertFalse(helper.validateMailAddr(mailAddr, now().minusSeconds(1),
+				now().minusSeconds(5), 5));
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class SignupRequestDaoTest {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(dao.validateToken(mailAddr, entity.getToken(), now()
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
 	}
 
@@ -158,9 +158,9 @@ public class SignupRequestDaoTest {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(dao.validateToken(mailAddr, entity.getToken(), now()
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
-		assertFalse(dao.validateToken(mailAddr, entity.getToken(), now()));
+		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now()));
 	}
 
 	@Test
@@ -168,10 +168,10 @@ public class SignupRequestDaoTest {
 		String mailAddr = "token02@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(dao.validateToken(mailAddr, entity.getToken(), now()
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
-		assertFalse(dao.validateToken(mailAddr, UUID.randomUUID().toString(),
-				now().minusSeconds(5)));
+		assertFalse(helper.validateToken(mailAddr,
+				UUID.randomUUID().toString(), now().minusSeconds(5)));
 	}
 
 	@Test
@@ -181,7 +181,7 @@ public class SignupRequestDaoTest {
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(dao.validateToken(mailAddr, entity.getToken(), now()
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
 	}
 
@@ -194,7 +194,7 @@ public class SignupRequestDaoTest {
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(entity));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(dao.validateToken(mailAddr, entity.getToken(), valid));
+		assertFalse(helper.validateToken(mailAddr, entity.getToken(), valid));
 	}
 
 	@Test
@@ -204,7 +204,7 @@ public class SignupRequestDaoTest {
 		assertEquals(1, mapper.insertSelective(entity));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(dao.validateToken(mailAddr, entity.getToken(), now()
+		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
 	}
 
