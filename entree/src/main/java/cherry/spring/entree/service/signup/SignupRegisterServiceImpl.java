@@ -15,6 +15,8 @@
  */
 package cherry.spring.entree.service.signup;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.util.Locale;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -24,7 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
@@ -33,11 +35,11 @@ import cherry.spring.common.db.gen.mapper.UserMapper;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
-import cherry.spring.common.helper.signup.SignupRequestDao;
+import cherry.spring.common.helper.signup.SignupRequestHelper;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
-@Component
+@Service
 public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 	private final Log log = LogFactory.getLog(getClass());
@@ -46,7 +48,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private UserMapper userMapper;
 
 	@Autowired
-	private SignupRequestDao signupRequestDao;
+	private SignupRequestHelper signupRequestHelper;
 
 	@Autowired
 	private BizdateHelper bizdateHelper;
@@ -76,7 +78,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 		LocalDateTime now = bizdateHelper.now();
 
-		if (!signupRequestDao.validateToken(mailAddr, token,
+		if (!signupRequestHelper.validateToken(mailAddr, token,
 				now.minusSeconds(validInSec))) {
 			if (log.isDebugEnabled()) {
 				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}",
@@ -94,11 +96,11 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
 		int count = userMapper.insertSelective(entity);
-		assert count == 1;
+		checkState(count == 1, "failed to create user: user={0}, count={1}",
+				entity, count);
+
 		if (log.isDebugEnabled()) {
-			log.debug(
-					"users is created: id={0}, mailAddr={1}, password={2}, firstName={3}, lastName={4}",
-					entity.getId(), mailAddr, password, firstName, lastName);
+			log.debug("user is created: user={0}", entity);
 		}
 
 		Model model = new Model();

@@ -24,24 +24,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.MailId;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
-import cherry.spring.common.helper.signup.SignupRequestDao;
+import cherry.spring.common.helper.signup.SignupRequestHelper;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
-@Component
+@Service
 public class SignupEntryServiceImpl implements SignupEntryService {
 
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private SignupRequestDao signupRequestDao;
+	private SignupRequestHelper signupRequestHelper;
 
 	@Autowired
 	private BizdateHelper bizdateHelper;
@@ -68,7 +68,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 		LocalDateTime now = bizdateHelper.now();
 
-		if (!signupRequestDao.validateMailAddr(mailAddr,
+		if (!signupRequestHelper.validateMailAddr(mailAddr,
 				now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec),
 				numOfReq)) {
 			if (log.isDebugEnabled()) {
@@ -82,7 +82,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		UUID token = UUID.randomUUID();
 		LocalDateTime appliedAt = bizdateHelper.now();
 
-		Integer id = signupRequestDao.createSignupRequest(mailAddr,
+		Integer id = signupRequestHelper.createSignupRequest(mailAddr,
 				token.toString(), appliedAt);
 		if (id == null) {
 			if (log.isDebugEnabled()) {

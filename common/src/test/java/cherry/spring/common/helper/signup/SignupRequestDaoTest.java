@@ -53,7 +53,7 @@ import cherry.spring.common.type.DeletedFlag;
 public class SignupRequestDaoTest {
 
 	@Autowired
-	private SignupRequestDao dao;
+	private SignupRequestHelper dao;
 
 	@Autowired
 	private SignupRequestMapper mapper;
@@ -95,7 +95,7 @@ public class SignupRequestDaoTest {
 		KeyHolder keyHolder = any(KeyHolder.class);
 		when(op.update(anyString(), paramSource, keyHolder)).thenReturn(0);
 
-		SignupRequestDaoImpl impl = new SignupRequestDaoImpl();
+		SignupRequestHelperImpl impl = new SignupRequestHelperImpl();
 		ReflectionTestUtils.setField(impl, "namedParameterJdbcOperations", op);
 
 		assertNull(impl.createSignupRequest(mailAddr, UUID.randomUUID()
