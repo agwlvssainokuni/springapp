@@ -16,38 +16,40 @@
 
 package cherry.spring.common.helper.bizdate;
 
-import java.util.List;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 public class BizdateHelperImpl implements BizdateHelper {
 
 	@Autowired
 	private BizdateDao bizdateDao;
 
+	@Transactional(readOnly = true)
 	@Override
 	public LocalDate today() {
-		List<BizdateDto> list = bizdateDao.selectFirst();
-		if (list.isEmpty()) {
+		try {
+			BizdateDto dto = bizdateDao.findBizdate();
+			return dto.getBizdate();
+		} catch (IncorrectResultSizeDataAccessException ex) {
 			return LocalDate.now();
 		}
-		BizdateDto dto = list.get(0);
-		return dto.getBizdate();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public LocalDateTime now() {
-		List<BizdateDto> list = bizdateDao.selectFirst();
-		if (list.isEmpty()) {
+		try {
+			BizdateDto dto = bizdateDao.findBizdate();
+			return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
+					.plusHours(dto.getOffsetHour())
+					.plusMinutes(dto.getOffsetMinute())
+					.plusSeconds(dto.getOffsetSecond());
+		} catch (IncorrectResultSizeDataAccessException ex) {
 			return LocalDateTime.now();
 		}
-		BizdateDto dto = list.get(0);
-		return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
-				.plusHours(dto.getOffsetHour())
-				.plusMinutes(dto.getOffsetMinute())
-				.plusSeconds(dto.getOffsetSecond());
 	}
 
 }

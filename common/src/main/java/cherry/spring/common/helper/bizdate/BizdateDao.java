@@ -16,10 +16,8 @@
 
 package cherry.spring.common.helper.bizdate;
 
-import java.util.List;
-
 public interface BizdateDao {
 
-	List<BizdateDto> selectFirst();
+	BizdateDto findBizdate();
 
 }

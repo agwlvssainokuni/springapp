@@ -132,7 +132,6 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
 	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
 	<bean class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
 	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />

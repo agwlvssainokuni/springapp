@@ -17,7 +17,6 @@
 package cherry.spring.common.helper.bizdate;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -51,8 +50,9 @@ public class BizdateDaoImpl implements BizdateDao, InitializingBean {
 	}
 
 	@Override
-	public List<BizdateDto> selectFirst() {
-		return namedParameterJdbcOperations.query(sqlSelectFirst, rowMapper);
+	public BizdateDto findBizdate() {
+		return namedParameterJdbcOperations.queryForObject(sqlSelectFirst,
+				(Map<String, ?>) null, rowMapper);
 	}
 
 }

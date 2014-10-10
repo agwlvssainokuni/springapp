@@ -51,6 +51,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.helper.async.AsyncProcHelper;
+import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.json.JsonHelper;
 import cherry.spring.common.lib.etl.CsvProvider;
 import cherry.spring.common.lib.etl.LimiterException;
@@ -85,6 +86,9 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 
 	@Value("${admin.app.userman.import.queue}")
 	private String queue;
+
+	@Autowired
+	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private AsyncProcHelper asyncProcHelper;
@@ -123,7 +127,8 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	public Map<String, String> launchImportUsers(MultipartFile file,
 			String launcherId) {
 		String name = UsermanImportService.class.getSimpleName();
-		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId);
+		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId,
+				bizdateHelper.now());
 		try {
 			File tempFile = createFile(file);
 
@@ -133,12 +138,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			message.put(LAUNCHER_ID, launcherId);
 			jmsOperations.convertAndSend(queue, message);
 
-			asyncProcHelper.invokeAsyncProc(procId);
+			asyncProcHelper.invokeAsyncProc(procId, bizdateHelper.now());
 
 			return message;
 		} catch (IOException ex) {
-			asyncProcHelper
-					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
+			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
+					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -150,7 +155,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		Integer procId = parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			asyncProcHelper.startAsyncProc(procId);
+			asyncProcHelper.startAsyncProc(procId, bizdateHelper.now());
 
 			LoadResult loadResult = loadFile(tempFile);
 
@@ -158,15 +163,16 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			map.put("total", loadResult.getTotalCount());
 			map.put("success", loadResult.getSuccessCount());
 			map.put("failed", loadResult.getFailedCount());
-			asyncProcHelper.successAsyncProc(procId, jsonHelper.fromMap(map));
+			asyncProcHelper.successAsyncProc(procId, bizdateHelper.now(),
+					jsonHelper.fromMap(map));
 
 		} catch (DataAccessException | LimiterException ex) {
-			asyncProcHelper
-					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
+			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
+					jsonHelper.fromThrowable(ex));
 			throw ex;
 		} catch (IOException ex) {
-			asyncProcHelper
-					.errorAsyncProc(procId, jsonHelper.fromThrowable(ex));
+			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
+					jsonHelper.fromThrowable(ex));
 			throw new IllegalStateException(ex);
 		} finally {
 			if (!tempFile.delete()) {

@@ -16,14 +16,17 @@
 
 package cherry.spring.common.helper.mail;
 
-import cherry.spring.common.db.BaseDto;
+import java.io.Serializable;
 
-public class MailTemplateAddressDto extends BaseDto {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class MailTemplateAddressDto implements Serializable {
 
 	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
 
-	static enum Type {
+	public enum RcptType {
 		CC, BCC
 	}
 
@@ -36,12 +39,18 @@ public class MailTemplateAddressDto extends BaseDto {
 	/** メールアドレス。 */
 	private String mailAddr;
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
 	public boolean isCc() {
-		return Type.CC.name().equalsIgnoreCase(rcptType);
+		return RcptType.CC.name().equalsIgnoreCase(rcptType);
 	}
 
 	public boolean isBcc() {
-		return Type.BCC.name().equalsIgnoreCase(rcptType);
+		return RcptType.BCC.name().equalsIgnoreCase(rcptType);
 	}
 
 	public Integer getId() {
