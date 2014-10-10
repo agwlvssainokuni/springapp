@@ -16,23 +16,46 @@
 
 package cherry.spring.entree.service.secure.passwd;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
+import org.springframework.data.jdbc.query.SqlUpdateCallback;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.helper.password.UserPasswordDao;
+import cherry.spring.common.db.gen.query.QUser;
+import cherry.spring.common.type.DeletedFlag;
 
-@Component
+import com.mysema.query.sql.dml.SQLUpdateClause;
+
+@Service
 public class PasswdServiceImpl implements PasswdService {
 
 	@Autowired
-	private UserPasswordDao userPasswordDao;
+	private QueryDslJdbcOperations queryDslJdbcOperations;
 
 	@Transactional
 	@Override
-	public boolean changePassword(String loginId, String password) {
-		int count = userPasswordDao.changePassword(loginId, password);
-		return count > 0;
+	public boolean changePassword(final String loginId, final String password) {
+
+		final QUser u = new QUser("u");
+		long count = queryDslJdbcOperations.update(u, new SqlUpdateCallback() {
+			@Override
+			public long doInSqlUpdateClause(SQLUpdateClause update) {
+
+				update.set(u.password, password);
+				update.set(u.lockVersion, u.lockVersion.add(1));
+				update.set(u.updatedAt,
+						u.updatedAt.currentTimestamp(LocalDateTime.class));
+
+				update.where(u.loginId.eq(loginId));
+				update.where(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+
+				return update.execute();
+			}
+		});
+
+		return count == 1L;
 	}
 
 }
