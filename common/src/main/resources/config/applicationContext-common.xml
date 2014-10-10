@@ -133,7 +133,6 @@
 	</bean>
 
 	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
-	<bean class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
 	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
 	<bean class="cherry.spring.common.helper.download.DownloadHelperImpl" />
 	<bean class="cherry.spring.common.helper.json.JsonHelperImpl" />
