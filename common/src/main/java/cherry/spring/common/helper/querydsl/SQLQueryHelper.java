@@ -28,11 +28,12 @@ import com.mysema.query.types.Expression;
 
 public interface SQLQueryHelper {
 
-	<T> SearchResult<T> search(QueryConfigurer configurer, long pageNo,
-			long pageSz, RowMapper<T> rowMapper, Expression<?>... expressions);
+	<T> SearchResult<T> search(QueryConfigurer commonClause,
+			QueryConfigurer orderByClause, long pageNo, long pageSz,
+			RowMapper<T> rowMapper, Expression<?>... expressions);
 
-	long download(QueryConfigurer configurer, Consumer consumer,
-			Limiter limiter, Expression<?>... expressions)
+	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause,
+			Consumer consumer, Limiter limiter, Expression<?>... expressions)
 			throws LimiterException, IOException;
 
 }

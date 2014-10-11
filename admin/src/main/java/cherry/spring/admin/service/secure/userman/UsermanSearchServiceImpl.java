@@ -36,7 +36,6 @@ import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
 
-import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
 
@@ -54,9 +53,9 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	public Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz) {
 
 		QUser u = new QUser("u");
-		SearchResult<User> r = sqlQueryHelper.search(getConfigurer(u, form),
-				pageNo, pageSz, rowMapperCreator.create(User.class),
-				getColumns(u));
+		SearchResult<User> r = sqlQueryHelper.search(commonClause(u, form),
+				orderByClause(u, form), pageNo, pageSz,
+				rowMapperCreator.create(User.class), getColumns(u));
 
 		Result result = new Result();
 		result.setPageSet(r.getPageSet());
@@ -70,9 +69,9 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		try {
 
 			QUser u = new QUser("u");
-			return sqlQueryHelper.download(getConfigurer(u, form),
-					new CsvConsumer(writer, true), new NoneLimiter(),
-					getColumns(u));
+			return sqlQueryHelper.download(commonClause(u, form),
+					orderByClause(u, form), new CsvConsumer(writer, true),
+					new NoneLimiter(), getColumns(u));
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -84,38 +83,42 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 				u.lockVersion, u.deletedFlg };
 	}
 
-	private QueryConfigurer getConfigurer(final QUser u,
+	private QueryConfigurer commonClause(final QUser u,
 			final UsermanSearchForm form) {
 		return new QueryConfigurer() {
-
 			@Override
 			public SQLQuery configure(SQLQuery query) {
+				query.from(u);
 
-				BooleanBuilder where = new BooleanBuilder();
 				if (StringUtils.isNoneBlank(form.getLoginId())) {
-					where.and(u.loginId.startsWith(form.getLoginId()));
+					query.where(u.loginId.startsWith(form.getLoginId()));
 				}
 				if (form.getRegisteredFrom() != null) {
-					where.and(u.registeredAt.goe(LocalDateTimeUtil
+					query.where(u.registeredAt.goe(LocalDateTimeUtil
 							.rangeFrom(form.getRegisteredFrom())));
 				}
 				if (form.getRegisteredTo() != null) {
-					where.and(u.registeredAt.lt(LocalDateTimeUtil.rangeTo(form
-							.getRegisteredTo())));
+					query.where(u.registeredAt.lt(LocalDateTimeUtil
+							.rangeTo(form.getRegisteredTo())));
 				}
 				if (StringUtils.isNotBlank(form.getFirstName())) {
-					where.and(u.firstName.startsWith(form.getFirstName()));
+					query.where(u.firstName.startsWith(form.getFirstName()));
 				}
 				if (StringUtils.isNotBlank(form.getLastName())) {
-					where.and(u.lastName.startsWith(form.getLastName()));
+					query.where(u.lastName.startsWith(form.getLastName()));
 				}
-				where.and(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-				return query.from(u).where(where);
+				query.where(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				return query;
 			}
+		};
+	}
 
+	private QueryConfigurer orderByClause(final QUser u,
+			final UsermanSearchForm form) {
+		return new QueryConfigurer() {
 			@Override
-			public SQLQuery orderBy(SQLQuery query) {
+			public SQLQuery configure(SQLQuery query) {
 				return query.orderBy(u.id.asc());
 			}
 		};

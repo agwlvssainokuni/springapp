@@ -28,7 +28,6 @@ import cherry.spring.common.helper.querydsl.SearchResult;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
 
-import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
 
 @Component
@@ -46,10 +45,10 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 
 		QAsyncProc a = new QAsyncProc("a");
 		SearchResult<AsyncProc> r = sqlQueryHelper.search(
-				createConfigurer(a, loginId), pageNo, pageSz,
-				rowMapperCreator.create(AsyncProc.class), a.id, a.launcherId,
-				a.name, a.status, a.registeredAt, a.invokedAt, a.startedAt,
-				a.finishedAt, a.result, a.updatedAt, a.createdAt,
+				commonClause(a, loginId), orderByClause(a, loginId), pageNo,
+				pageSz, rowMapperCreator.create(AsyncProc.class), a.id,
+				a.launcherId, a.name, a.status, a.registeredAt, a.invokedAt,
+				a.startedAt, a.finishedAt, a.result, a.updatedAt, a.createdAt,
 				a.lockVersion, a.deletedFlg);
 
 		Result result = new Result();
@@ -58,23 +57,24 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 		return result;
 	}
 
-	private QueryConfigurer createConfigurer(final QAsyncProc a,
+	private QueryConfigurer commonClause(final QAsyncProc a,
 			final String loginId) {
 		return new QueryConfigurer() {
-
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-
-				BooleanBuilder where = new BooleanBuilder();
-				where.and(a.launcherId.eq(loginId));
-				where.and(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-
-				query.from(a).where(where);
+				query.from(a);
+				query.where(a.launcherId.eq(loginId));
+				query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return query;
 			}
+		};
+	}
 
+	private QueryConfigurer orderByClause(final QAsyncProc a,
+			final String loginId) {
+		return new QueryConfigurer() {
 			@Override
-			public SQLQuery orderBy(SQLQuery query) {
+			public SQLQuery configure(SQLQuery query) {
 				query.orderBy(a.id.desc());
 				return query;
 			}

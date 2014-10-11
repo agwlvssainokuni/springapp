@@ -22,6 +22,4 @@ public interface QueryConfigurer {
 
 	SQLQuery configure(SQLQuery query);
 
-	SQLQuery orderBy(SQLQuery query);
-
 }
