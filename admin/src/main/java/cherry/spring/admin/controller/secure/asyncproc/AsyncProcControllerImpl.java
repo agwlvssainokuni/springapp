@@ -35,13 +35,13 @@ import cherry.spring.admin.service.secure.asyncproc.AsyncProcService.Result;
 public class AsyncProcControllerImpl implements AsyncProcController {
 
 	@Value("${admin.app.asyncproc.pageSize}")
-	private int defaultPageSize;
+	private long defaultPageSize;
 
 	@Autowired
 	private AsyncProcService asyncProcService;
 
 	@Override
-	public ModelAndView init(int pageNo, int pageSz, Authentication auth,
+	public ModelAndView init(long pageNo, long pageSz, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		Result result = asyncProcService.searchAsyncProc(auth.getName(),

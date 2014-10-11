@@ -33,8 +33,8 @@ public interface AsyncProcController {
 
 	@RequestMapping()
 	ModelAndView init(
-			@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") int pageSz,
+			@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") long pageNo,
+			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") long pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 

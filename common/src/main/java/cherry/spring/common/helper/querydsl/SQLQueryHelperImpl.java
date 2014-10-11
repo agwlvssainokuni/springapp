@@ -43,30 +43,28 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	private Paginator paginator;
 
 	@Override
-	public <T> SQLQueryResult<T> search(SQLQueryConfigurer configurer,
-			int pageNo, int pageSz, RowMapper<T> rowMapper,
-			Expression<?>... projection) {
+	public <T> SearchResult<T> search(QueryConfigurer configurer, long pageNo,
+			long pageSz, RowMapper<T> rowMapper, Expression<?>... projection) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = configurer.configure(query);
 		long count = queryDslJdbcOperations.count(query);
 
-		PageSet pageSet = paginator.paginate(pageNo, (int) count, pageSz);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = configurer.orderBy(query);
 		List<T> list = queryDslJdbcOperations.query(query, rowMapper,
 				projection);
 
-		SQLQueryResult<T> result = new SQLQueryResult<>();
-		result.setTotalCount((int) count);
-		result.setCount(list.size());
+		SearchResult<T> result = new SearchResult<>();
+		result.setTotalCount(count);
 		result.setPageSet(pageSet);
 		result.setResultList(list);
 		return result;
 	}
 
 	@Override
-	public long download(SQLQueryConfigurer configurer, Consumer consumer,
+	public long download(QueryConfigurer configurer, Consumer consumer,
 			Limiter limiter, Expression<?>... projection)
 			throws LimiterException, IOException {
 

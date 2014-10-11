@@ -27,7 +27,7 @@ import cherry.spring.common.lib.paginate.PageSet;
 
 public interface AsyncProcService {
 
-	Result searchAsyncProc(String loginId, int pageNo, int pageSz);
+	Result searchAsyncProc(String loginId, long pageNo, long pageSz);
 
 	public static class Result implements Serializable {
 

@@ -27,9 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.spring.admin.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.query.QUser;
-import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
+import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.spring.common.helper.querydsl.SearchResult;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
@@ -54,7 +54,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	public Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz) {
 
 		QUser u = new QUser("u");
-		SQLQueryResult<User> r = sqlQueryHelper.search(getConfigurer(u, form),
+		SearchResult<User> r = sqlQueryHelper.search(getConfigurer(u, form),
 				pageNo, pageSz, rowMapperCreator.create(User.class),
 				getColumns(u));
 
@@ -84,9 +84,9 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 				u.lockVersion, u.deletedFlg };
 	}
 
-	private SQLQueryConfigurer getConfigurer(final QUser u,
+	private QueryConfigurer getConfigurer(final QUser u,
 			final UsermanSearchForm form) {
-		return new SQLQueryConfigurer() {
+		return new QueryConfigurer() {
 
 			@Override
 			public SQLQuery configure(SQLQuery query) {

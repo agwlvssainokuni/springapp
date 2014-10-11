@@ -18,7 +18,7 @@ package cherry.spring.common.helper.querydsl;
 
 import com.mysema.query.sql.SQLQuery;
 
-public interface SQLQueryConfigurer {
+public interface QueryConfigurer {
 
 	SQLQuery configure(SQLQuery query);
 

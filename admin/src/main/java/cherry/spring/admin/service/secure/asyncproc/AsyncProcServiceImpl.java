@@ -22,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.db.gen.query.QAsyncProc;
-import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
+import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.spring.common.helper.querydsl.SearchResult;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
 
@@ -42,10 +42,10 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Transactional
 	@Override
-	public Result searchAsyncProc(String loginId, int pageNo, int pageSz) {
+	public Result searchAsyncProc(String loginId, long pageNo, long pageSz) {
 
 		QAsyncProc a = new QAsyncProc("a");
-		SQLQueryResult<AsyncProc> r = sqlQueryHelper.search(
+		SearchResult<AsyncProc> r = sqlQueryHelper.search(
 				createConfigurer(a, loginId), pageNo, pageSz,
 				rowMapperCreator.create(AsyncProc.class), a.id, a.launcherId,
 				a.name, a.status, a.registeredAt, a.invokedAt, a.startedAt,
@@ -58,9 +58,9 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 		return result;
 	}
 
-	private SQLQueryConfigurer createConfigurer(final QAsyncProc a,
+	private QueryConfigurer createConfigurer(final QAsyncProc a,
 			final String loginId) {
-		return new SQLQueryConfigurer() {
+		return new QueryConfigurer() {
 
 			@Override
 			public SQLQuery configure(SQLQuery query) {
