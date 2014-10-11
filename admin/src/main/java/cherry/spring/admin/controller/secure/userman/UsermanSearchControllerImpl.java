@@ -33,9 +33,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.userman.UsermanSearchService;
+import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
 import cherry.spring.common.helper.download.DownloadHelper;
+import cherry.spring.common.lib.paginate.PagedList;
 
 @Controller
 public class UsermanSearchControllerImpl implements UsermanSearchController {
@@ -72,7 +74,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 	@Override
 	public ModelAndView execute(UsermanSearchForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication auth, Locale locale,
+			long pageNo, long pageSz, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
@@ -81,8 +83,8 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 			return mav;
 		}
 
-		UsermanSearchService.Result result = usermanSearchService.searchUsers(
-				form, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+		PagedList<User> result = usermanSearchService.searchUsers(form, pageNo,
+				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 		mav.addObject(result);

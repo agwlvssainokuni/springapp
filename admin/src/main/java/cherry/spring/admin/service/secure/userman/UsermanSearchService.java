@@ -17,31 +17,15 @@
 package cherry.spring.admin.service.secure.userman;
 
 import java.io.Writer;
-import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import cherry.spring.admin.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.gen.dto.User;
-import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.PagedList;
 
 public interface UsermanSearchService {
 
-	Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz);
+	PagedList<User> searchUsers(UsermanSearchForm form, long pageNo, long pageSz);
 
 	long exportUsers(Writer writer, UsermanSearchForm form);
-
-	@Getter
-	@Setter
-	@EqualsAndHashCode
-	@ToString
-	public static class Result {
-
-		private PageSet pageSet;
-
-		private List<User> usersList;
-	}
 
 }

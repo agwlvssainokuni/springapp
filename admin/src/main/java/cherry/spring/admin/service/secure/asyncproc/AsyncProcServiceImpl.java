@@ -17,20 +17,20 @@
 package cherry.spring.admin.service.secure.asyncproc;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.db.gen.query.QAsyncProc;
 import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SearchResult;
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 import com.mysema.query.sql.SQLQuery;
 
-@Component
+@Service
 public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Autowired
@@ -41,20 +41,15 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Transactional
 	@Override
-	public Result searchAsyncProc(String loginId, long pageNo, long pageSz) {
-
+	public PagedList<AsyncProc> searchAsyncProc(String loginId, long pageNo,
+			long pageSz) {
 		QAsyncProc a = new QAsyncProc("a");
-		SearchResult<AsyncProc> r = sqlQueryHelper.search(
-				commonClause(a, loginId), orderByClause(a, loginId), pageNo,
-				pageSz, rowMapperCreator.create(AsyncProc.class), a.id,
-				a.launcherId, a.name, a.status, a.registeredAt, a.invokedAt,
-				a.startedAt, a.finishedAt, a.result, a.updatedAt, a.createdAt,
+		return sqlQueryHelper.search(commonClause(a, loginId),
+				orderByClause(a, loginId), pageNo, pageSz,
+				rowMapperCreator.create(AsyncProc.class), a.id, a.launcherId,
+				a.name, a.status, a.registeredAt, a.invokedAt, a.startedAt,
+				a.finishedAt, a.result, a.updatedAt, a.createdAt,
 				a.lockVersion, a.deletedFlg);
-
-		Result result = new Result();
-		result.setPageSet(r.getPageSet());
-		result.setAsyncProcList(r.getResultList());
-		return result;
 	}
 
 	private QueryConfigurer commonClause(final QAsyncProc a,

@@ -21,7 +21,7 @@ import java.io.Writer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.admin.controller.secure.userman.UsermanSearchForm;
@@ -29,9 +29,9 @@ import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.query.QUser;
 import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SearchResult;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.etl.NoneLimiter;
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
@@ -39,7 +39,7 @@ import cherry.spring.common.type.jdbc.RowMapperCreator;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
 
-@Component
+@Service
 public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Autowired
@@ -50,24 +50,18 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Transactional
 	@Override
-	public Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz) {
-
+	public PagedList<User> searchUsers(UsermanSearchForm form, long pageNo,
+			long pageSz) {
 		QUser u = new QUser("u");
-		SearchResult<User> r = sqlQueryHelper.search(commonClause(u, form),
+		return sqlQueryHelper.search(commonClause(u, form),
 				orderByClause(u, form), pageNo, pageSz,
 				rowMapperCreator.create(User.class), getColumns(u));
-
-		Result result = new Result();
-		result.setPageSet(r.getPageSet());
-		result.setUsersList(r.getResultList());
-		return result;
 	}
 
 	@Transactional
 	@Override
 	public long exportUsers(Writer writer, UsermanSearchForm form) {
 		try {
-
 			QUser u = new QUser("u");
 			return sqlQueryHelper.download(commonClause(u, form),
 					orderByClause(u, form), new CsvConsumer(writer, true),

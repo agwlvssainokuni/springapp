@@ -42,7 +42,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsOperations;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
@@ -61,7 +61,7 @@ import cherry.spring.common.lib.util.ToMapUtil;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
-@Component
+@Service
 public class UsermanImportServiceImpl implements UsermanImportService {
 
 	public static final String PROC_ID = "procId";

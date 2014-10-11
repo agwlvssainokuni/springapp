@@ -16,48 +16,12 @@
 
 package cherry.spring.admin.service.secure.asyncproc;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import cherry.spring.common.db.gen.dto.AsyncProc;
-import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.PagedList;
 
 public interface AsyncProcService {
 
-	Result searchAsyncProc(String loginId, long pageNo, long pageSz);
-
-	public static class Result implements Serializable {
-
-		private static final long serialVersionUID = 1L;
-
-		private PageSet pageSet;
-
-		private List<AsyncProc> asyncProcList;
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this,
-					ToStringStyle.SHORT_PREFIX_STYLE);
-		}
-
-		public PageSet getPageSet() {
-			return pageSet;
-		}
-
-		public void setPageSet(PageSet pageSet) {
-			this.pageSet = pageSet;
-		}
-
-		public List<AsyncProc> getAsyncProcList() {
-			return asyncProcList;
-		}
-
-		public void setAsyncProcList(List<AsyncProc> asyncProcList) {
-			this.asyncProcList = asyncProcList;
-		}
-	}
+	PagedList<AsyncProc> searchAsyncProc(String loginId, long pageNo,
+			long pageSz);
 
 }

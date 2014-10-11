@@ -49,8 +49,8 @@ public interface UsermanSearchController {
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated UsermanSearchForm form,
 			BindingResult binding,
-			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
+			@RequestParam(value = PARAM_NO, defaultValue = "0") long pageNo,
+			@RequestParam(value = PARAM_SZ, defaultValue = "0") long pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
