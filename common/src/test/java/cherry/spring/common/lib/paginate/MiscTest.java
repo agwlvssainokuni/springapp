@@ -39,7 +39,7 @@ public class MiscTest {
 	public void testPageSetToString() {
 		PageSet pageSet = new PageSet();
 		assertEquals(
-				"PageSet[current=<null>,prev=<null>,next=<null>,first=<null>,last=<null>,range=<null>]",
+				"PageSet[totalCount=0,pageSz=0,current=<null>,prev=<null>,next=<null>,first=<null>,last=<null>,range=<null>]",
 				pageSet.toString());
 	}
 
