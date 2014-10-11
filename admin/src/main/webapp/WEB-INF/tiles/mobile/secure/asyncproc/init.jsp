@@ -12,12 +12,12 @@
 	<s:message code="secure/asyncproc/init.message.0" />
 </h1>
 <c:choose>
-	<c:when test="${result == null}">
+	<c:when test="${pagedList == null}">
 		<div class="error">
 			<s:message code="secure/asyncproc/init.message.1" />
 		</div>
 	</c:when>
-	<c:when test="${result.asyncProcList.isEmpty()}">
+	<c:when test="${pagedList.list.isEmpty()}">
 		<div class="error">
 			<s:message code="secure/asyncproc/init.message.1" />
 		</div>
@@ -30,11 +30,11 @@
 				name="${_csrf.parameterName}" value="${_csrf.token}">
 		</form>
 		<div data-role="navbar" class="app-pager-link">
-			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
+			<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
 			<ul>
 				<li><a href="#"
 					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
-					title="${result.pageSet.prev.no+1}"><s:message
+					title="${pagedList.pageSet.prev.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.prev" /></a></li>
 			</ul>
 		</div>
@@ -57,10 +57,10 @@
 			</thead>
 			<tbody>
 				<c:forEach var="count" begin="1"
-					end="${result.asyncProcList.size()}">
+					end="${pagedList.list.size()}">
 					<tr>
-						<td><c:out value="${result.pageSet.current.from + count}" /></td>
-						<s:nestedPath path="result.asyncProcList[${count - 1}]">
+						<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+						<s:nestedPath path="pagedList.list[${count - 1}]">
 							<td><s:bind path="id">${status.value}</s:bind></td>
 							<td><s:bind path="name">${status.value}</s:bind></td>
 							<td><s:bind path="launcherId">${status.value}</s:bind></td>
@@ -76,11 +76,11 @@
 			</tbody>
 		</table>
 		<div data-role="navbar" class="app-pager-link">
-			<span class="app-current" title="${result.pageSet.current.no+1}"></span>
+			<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
 			<ul>
 				<li><a href="#"
 					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
-					title="${result.pageSet.next.no+1}"><s:message
+					title="${pagedList.pageSet.next.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.next" /></a></li>
 			</ul>
 		</div>

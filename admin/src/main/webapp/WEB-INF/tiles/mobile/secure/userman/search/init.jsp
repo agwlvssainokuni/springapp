@@ -21,15 +21,15 @@
 		<f:errors path="usermanSearchForm.firstName" element="div" />
 	</div>
 </s:hasBindErrors>
-<c:if test="${result != null && result.usersList.isEmpty()}">
+<c:if test="${pagedList != null && pagedList.list.isEmpty()}">
 	<div class="error">
 		<s:message code="secure/userman/search/init.message.2" />
 	</div>
 </c:if>
 <c:set var="resultIsNotEmpty">
 	<c:choose>
-		<c:when test="${result == null}">false</c:when>
-		<c:when test="${result.usersList.isEmpty()}">false</c:when>
+		<c:when test="${pagedList == null}">false</c:when>
+		<c:when test="${pagedList.list.isEmpty()}">false</c:when>
 		<c:otherwise>true</c:otherwise>
 	</c:choose>
 </c:set>
@@ -91,11 +91,11 @@
 		<input type="hidden" id="sz" name="sz" value="${param.sz}">
 	</f:form>
 	<div data-role="navbar" class="app-pager-link">
-		<span class="app-current" title="${result.pageSet.current.no+1}"></span>
+		<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
 		<ul>
 			<li><a href="#"
 				class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
-				title="${result.pageSet.prev.no+1}"><s:message
+				title="${pagedList.pageSet.prev.no+1}"><s:message
 						code="secure/userman/search/init.paginate.prev" /></a></li>
 		</ul>
 	</div>
@@ -114,10 +114,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="count" begin="1" end="${result.usersList.size()}">
+			<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 				<tr>
-					<td><c:out value="${result.pageSet.current.from + count}" /></td>
-					<s:nestedPath path="result.usersList[${count - 1}]">
+					<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+					<s:nestedPath path="pagedList.list[${count - 1}]">
 						<td><s:bind path="loginId">${status.value}</s:bind></td>
 						<td><s:bind path="lastName">${status.value}</s:bind></td>
 						<td><s:bind path="firstName">${status.value}</s:bind></td>
@@ -128,11 +128,11 @@
 		</tbody>
 	</table>
 	<div data-role="navbar" class="app-pager-link">
-		<span class="app-current" title="${result.pageSet.current.no+1}"></span>
+		<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
 		<ul>
 			<li><a href="#"
 				class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
-				title="${result.pageSet.next.no+1}"><s:message
+				title="${pagedList.pageSet.next.no+1}"><s:message
 						code="secure/userman/search/init.paginate.next" /></a></li>
 		</ul>
 	</div>

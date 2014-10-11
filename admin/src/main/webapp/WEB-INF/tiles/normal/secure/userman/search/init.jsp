@@ -26,15 +26,15 @@
 			<f:errors path="usermanSearchForm.firstName" element="div" />
 		</div>
 	</s:hasBindErrors>
-	<c:if test="${result != null && result.usersList.isEmpty()}">
+	<c:if test="${pagedList != null && pagedList.list.isEmpty()}">
 		<div class="app-portion ui-state-error">
 			<s:message code="secure/userman/search/init.message.2" />
 		</div>
 	</c:if>
 	<c:set var="resultIsNotEmpty">
 		<c:choose>
-			<c:when test="${result == null}">false</c:when>
-			<c:when test="${result.usersList.isEmpty()}">false</c:when>
+			<c:when test="${pagedList == null}">false</c:when>
+			<c:when test="${pagedList.list.isEmpty()}">false</c:when>
 			<c:otherwise>true</c:otherwise>
 		</c:choose>
 	</c:set>
@@ -105,9 +105,9 @@
 			<div class="app-pager">
 				<div class="app-pager-desc">
 					<s:message code="common/pager.message.0"
-						arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
+						arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 				</div>
-				<app:pagerLink pageSet="${result.pageSet}" />
+				<app:pagerLink pageSet="${pagedList.pageSet}" />
 			</div>
 			<table id="usermanSearchList" class="app-stripe app-width-full">
 				<thead>
@@ -124,10 +124,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="count" begin="1" end="${result.usersList.size()}">
+					<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 						<tr>
-							<td><c:out value="${result.pageSet.current.from + count}" /></td>
-							<s:nestedPath path="result.usersList[${count - 1}]">
+							<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+							<s:nestedPath path="pagedList.list[${count - 1}]">
 								<td><s:bind path="loginId">${status.value}</s:bind></td>
 								<td><s:bind path="lastName">${status.value}</s:bind></td>
 								<td><s:bind path="firstName">${status.value}</s:bind></td>
@@ -138,7 +138,7 @@
 				</tbody>
 			</table>
 			<div class="app-pager">
-				<app:pagerLink pageSet="${result.pageSet}" />
+				<app:pagerLink pageSet="${pagedList.pageSet}" />
 			</div>
 		</div>
 	</c:if>

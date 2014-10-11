@@ -14,12 +14,12 @@
 </h1>
 <div class="app-portion">
 	<c:choose>
-		<c:when test="${result == null}">
+		<c:when test="${pagedList == null}">
 			<div class="app-portion ui-state-error">
 				<s:message code="secure/asyncproc/init.message.1" />
 			</div>
 		</c:when>
-		<c:when test="${result.asyncProcList.isEmpty()}">
+		<c:when test="${pagedList.list.isEmpty()}">
 			<div class="app-portion ui-state-error">
 				<s:message code="secure/asyncproc/init.message.1" />
 			</div>
@@ -35,9 +35,9 @@
 				<div class="app-pager">
 					<div class="app-pager-desc">
 						<s:message code="common/pager.message.0"
-							arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
+							arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 					</div>
-					<app:pagerLink pageSet="${result.pageSet}" />
+					<app:pagerLink pageSet="${pagedList.pageSet}" />
 				</div>
 				<table id="asyncProcList" class="app-stripe app-width-full">
 					<thead>
@@ -61,10 +61,10 @@
 					</thead>
 					<tbody>
 						<c:forEach var="count" begin="1"
-							end="${result.asyncProcList.size()}">
+							end="${pagedList.list.size()}">
 							<tr>
-								<td><c:out value="${result.pageSet.current.from + count}" /></td>
-								<s:nestedPath path="result.asyncProcList[${count - 1}]">
+								<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+								<s:nestedPath path="pagedList.list[${count - 1}]">
 									<td><s:bind path="id">${status.value}</s:bind></td>
 									<td><s:bind path="name">${status.value}</s:bind></td>
 									<td><s:bind path="launcherId">${status.value}</s:bind></td>
@@ -80,7 +80,7 @@
 					</tbody>
 				</table>
 				<div class="app-pager">
-					<app:pagerLink pageSet="${result.pageSet}" />
+					<app:pagerLink pageSet="${pagedList.pageSet}" />
 				</div>
 			</div>
 		</c:otherwise>
