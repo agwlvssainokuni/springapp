@@ -43,21 +43,21 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionOperations;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.helper.async.AsyncProcHelper;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
-import cherry.spring.common.helper.json.JsonHelper;
 import cherry.spring.common.lib.etl.CsvProvider;
 import cherry.spring.common.lib.etl.LimiterException;
 import cherry.spring.common.lib.etl.LoadResult;
 import cherry.spring.common.lib.etl.Loader;
 import cherry.spring.common.lib.etl.NoneLimiter;
+import cherry.spring.common.lib.util.ToMapUtil;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
@@ -87,14 +87,14 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	@Value("${admin.app.userman.import.queue}")
 	private String queue;
 
+	@Value("${admin.app.userman.import.stackTraceDepth}")
+	private int stackTraceDepth;
+
 	@Autowired
 	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private AsyncProcHelper asyncProcHelper;
-
-	@Autowired
-	private JsonHelper jsonHelper;
 
 	@Autowired
 	@Qualifier("usermanImportSql")
@@ -143,7 +143,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			return message;
 		} catch (IOException ex) {
 			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
-					jsonHelper.fromThrowable(ex));
+					ToMapUtil.fromThrowable(ex, stackTraceDepth));
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -163,17 +163,12 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			map.put("total", loadResult.getTotalCount());
 			map.put("success", loadResult.getSuccessCount());
 			map.put("failed", loadResult.getFailedCount());
-			asyncProcHelper.successAsyncProc(procId, bizdateHelper.now(),
-					jsonHelper.fromMap(map));
+			asyncProcHelper.successAsyncProc(procId, bizdateHelper.now(), map);
 
-		} catch (DataAccessException | LimiterException ex) {
+		} catch (DataAccessException | LimiterException | IllegalStateException ex) {
 			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
-					jsonHelper.fromThrowable(ex));
+					ToMapUtil.fromThrowable(ex, stackTraceDepth));
 			throw ex;
-		} catch (IOException ex) {
-			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
-					jsonHelper.fromThrowable(ex));
-			throw new IllegalStateException(ex);
 		} finally {
 			if (!tempFile.delete()) {
 				log.debug("failed to delete a temporary file: {0}",
@@ -204,27 +199,23 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		}
 	}
 
-	private LoadResult loadFile(File file) throws IOException {
+	private LoadResult loadFile(final File file) throws IllegalStateException {
+		TransactionOperations txOp = new TransactionTemplate(
+				new DataSourceTransactionManager(dataSource));
+		return txOp.execute(new TransactionCallback<LoadResult>() {
+			@Override
+			public LoadResult doInTransaction(TransactionStatus status) {
+				try (InputStream in = new FileInputStream(file);
+						Reader reader = new InputStreamReader(in, charset)) {
 
-		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
-				dataSource);
-		TransactionDefinition txDef = new DefaultTransactionDefinition();
-		TransactionStatus status = txMgr.getTransaction(txDef);
+					return loader.load(dataSource, usermanImportSql,
+							new CsvProvider(reader, true), new NoneLimiter());
 
-		try (InputStream in = new FileInputStream(file);
-				Reader reader = new InputStreamReader(in, charset)) {
-
-			CsvProvider provider = new CsvProvider(reader, true);
-			LoadResult result = loader.load(dataSource, usermanImportSql,
-					provider, new NoneLimiter());
-
-			txMgr.commit(status);
-
-			return result;
-		} catch (IOException | RuntimeException ex) {
-			txMgr.rollback(status);
-			throw ex;
-		}
+				} catch (IOException ex) {
+					throw new IllegalStateException(ex);
+				}
+			}
+		});
 	}
 
 }
