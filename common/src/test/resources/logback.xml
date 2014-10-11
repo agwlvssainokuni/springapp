@@ -9,6 +9,7 @@
 	<appender name="onmemory"
 		class="cherry.spring.common.log.trace.OnMemoryAppender" />
 	<logger name="cherry.spring" level="DEBUG" />
+	<logger name="com.mysema" level="DEBUG" />
 	<logger name="org.springframework" level="DEBUG" />
 	<logger name="org.flywaydb" level="DEBUG" />
 	<logger name="trace" level="TRACE" />
