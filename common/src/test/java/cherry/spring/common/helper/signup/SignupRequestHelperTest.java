@@ -20,8 +20,8 @@ import static org.joda.time.LocalDateTime.now;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -98,8 +98,13 @@ public class SignupRequestHelperTest {
 		SignupRequestHelperImpl impl = new SignupRequestHelperImpl();
 		ReflectionTestUtils.setField(impl, "namedParameterJdbcOperations", op);
 
-		assertNull(impl.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString(), now()));
+		try {
+			impl.createSignupRequest(mailAddr, UUID.randomUUID().toString(),
+					now());
+			fail("Exception must be thrown");
+		} catch (IllegalStateException ex) {
+			// OK
+		}
 	}
 
 	@Test
