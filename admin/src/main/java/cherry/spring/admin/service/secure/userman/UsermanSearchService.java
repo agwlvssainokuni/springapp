@@ -31,7 +31,7 @@ public interface UsermanSearchService {
 
 	Result searchUsers(UsermanSearchForm form, int pageNo, int pageSz);
 
-	int exportUsers(Writer writer, UsermanSearchForm form);
+	long exportUsers(Writer writer, UsermanSearchForm form);
 
 	@Getter
 	@Setter

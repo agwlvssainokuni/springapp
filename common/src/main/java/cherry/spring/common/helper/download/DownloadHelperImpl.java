@@ -75,7 +75,7 @@ public class DownloadHelperImpl implements DownloadHelper {
 		try (OutputStream out = response.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, charset)) {
 
-			int count = action.doDownload(writer);
+			long count = action.doDownload(writer);
 
 			if (log.isDebugEnabled()) {
 				log.debug("Download action completed: result={0}", count);

@@ -52,8 +52,8 @@ public class DownloadHelperImplTest {
 
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public int doDownload(Writer writer) throws IOException {
-				return 123;
+			public long doDownload(Writer writer) throws IOException {
+				return 123L;
 			}
 		};
 		downloadHelper.download(response, "text/csv", "test_{0}.csv",
@@ -74,7 +74,7 @@ public class DownloadHelperImplTest {
 		final IOException ioex = new IOException();
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public int doDownload(Writer writer) throws IOException {
+			public long doDownload(Writer writer) throws IOException {
 				throw ioex;
 			}
 		};

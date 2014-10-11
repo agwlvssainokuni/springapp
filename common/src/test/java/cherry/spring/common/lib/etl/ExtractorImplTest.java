@@ -51,11 +51,11 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(dataSource,
+			long count = impl.extract(dataSource,
 					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
 					paramMap, consumer, new NoneLimiter());
 
-			assertEquals(3, count);
+			assertEquals(3L, count);
 
 		} finally {
 			cleanupData();
@@ -75,11 +75,11 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(dataSource,
+			long count = impl.extract(dataSource,
 					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
 					paramMap, consumer, new NoneLimiter());
 
-			assertEquals(3, count);
+			assertEquals(3L, count);
 
 		} finally {
 			cleanupData();
@@ -97,11 +97,11 @@ public class ExtractorImplTest {
 		try {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			int count = impl.extract(dataSource,
+			long count = impl.extract(dataSource,
 					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
 					paramMap, consumer, new NoneLimiter());
 
-			assertEquals(0, count);
+			assertEquals(0L, count);
 
 		} finally {
 			cleanupData();

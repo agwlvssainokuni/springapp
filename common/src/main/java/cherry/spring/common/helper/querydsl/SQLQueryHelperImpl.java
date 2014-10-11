@@ -66,11 +66,11 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	}
 
 	@Override
-	public int download(SQLQueryConfigurer configurer, Consumer consumer,
+	public long download(SQLQueryConfigurer configurer, Consumer consumer,
 			Limiter limiter, Expression<?>... projection)
 			throws LimiterException, IOException {
 
-		ResultSetExtractor<Integer> extractor = new ExtractorResultSetExtractor(
+		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(
 				consumer, limiter);
 
 		limiter.start();

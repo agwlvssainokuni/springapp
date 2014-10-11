@@ -66,7 +66,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Transactional
 	@Override
-	public int exportUsers(Writer writer, UsermanSearchForm form) {
+	public long exportUsers(Writer writer, UsermanSearchForm form) {
 		try {
 
 			QUser u = new QUser("u");

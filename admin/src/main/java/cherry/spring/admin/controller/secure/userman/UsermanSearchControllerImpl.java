@@ -103,7 +103,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public int doDownload(Writer writer) throws IOException {
+			public long doDownload(Writer writer) throws IOException {
 				return usermanSearchService.exportUsers(writer, form);
 			}
 		};

@@ -31,7 +31,7 @@ public interface SQLQueryHelper {
 	<T> SQLQueryResult<T> search(SQLQueryConfigurer configurer, int pageNo,
 			int pageSz, RowMapper<T> rowMapper, Expression<?>... expressions);
 
-	int download(SQLQueryConfigurer configurer, Consumer consumer,
+	long download(SQLQueryConfigurer configurer, Consumer consumer,
 			Limiter limiter, Expression<?>... expressions)
 			throws LimiterException, IOException;
 
