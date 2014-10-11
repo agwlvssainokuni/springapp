@@ -150,9 +150,9 @@ public class TotalCountStrategyTest {
 		check(new Range(4, 8), strategy.calculate(9, 10));
 	}
 
-	private void check(Iterable<Integer> a, Iterable<Integer> b) {
-		Iterator<Integer> ia = a.iterator();
-		Iterator<Integer> ib = b.iterator();
+	private void check(Iterable<Long> a, Iterable<Long> b) {
+		Iterator<Long> ia = a.iterator();
+		Iterator<Long> ib = b.iterator();
 		while (ia.hasNext() && ib.hasNext()) {
 			assertEquals(ia.next(), ib.next());
 		}

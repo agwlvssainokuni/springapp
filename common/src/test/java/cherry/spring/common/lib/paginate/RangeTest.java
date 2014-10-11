@@ -39,26 +39,26 @@ public class RangeTest {
 
 	@Test
 	public void testIterator1to1() {
-		int number = 1;
-		for (Integer i : new Range(1, 1)) {
-			assertEquals(number++, i.intValue());
+		long number = 1;
+		for (long i : new Range(1, 1)) {
+			assertEquals(number++, i);
 		}
 	}
 
 	@Test
 	public void testIterator1to10() {
 		int number = 1;
-		for (Integer i : new Range(1, 10)) {
-			assertEquals(number++, i.intValue());
+		for (long i : new Range(1, 10)) {
+			assertEquals(number++, i);
 		}
 	}
 
 	@Test
 	public void testIteratorOver() {
-		Iterator<Integer> iter = (new Range(1, 10)).iterator();
-		for (int i = 1; i <= 10; i++) {
+		Iterator<Long> iter = (new Range(1, 10)).iterator();
+		for (long i = 1; i <= 10; i++) {
 			assertTrue(iter.hasNext());
-			assertEquals(i, iter.next().intValue());
+			assertEquals(i, iter.next().longValue());
 		}
 
 		assertFalse(iter.hasNext());
@@ -72,7 +72,7 @@ public class RangeTest {
 
 	@Test
 	public void testIteratorRemove() {
-		Iterator<Integer> iter = (new Range(1, 1)).iterator();
+		Iterator<Long> iter = (new Range(1, 1)).iterator();
 		try {
 			iter.remove();
 		} catch (Exception ex) {
