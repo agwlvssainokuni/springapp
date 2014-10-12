@@ -44,7 +44,7 @@ import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
-import cherry.spring.entree.controller.secure.passwd.PasswdForm.Prop;
+import cherry.spring.entree.controller.secure.passwd.PasswdFormBase.Prop;
 import cherry.spring.entree.service.secure.passwd.PasswdService;
 
 @Controller

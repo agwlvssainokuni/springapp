@@ -16,8 +16,6 @@
 
 package cherry.spring.entree.controller.signup;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,29 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class SignupEntryForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SignupEntryForm extends SignupEntryFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(512)
-	@org.hibernate.validator.constraints.Email
-	private String email;
-
-	@Getter
-	public enum Prop {
-		Email("email", "signupEntryForm.email"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }

@@ -16,8 +16,6 @@
 
 package cherry.spring.admin.controller.secure.userman;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,27 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class UsermanImportForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class UsermanImportForm extends UsermanImportFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@javax.validation.constraints.NotNull
-	private org.springframework.web.multipart.MultipartFile file;
-
-	@Getter
-	public enum Prop {
-		File("file", "usermanImportForm.file"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }

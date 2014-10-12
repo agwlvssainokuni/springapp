@@ -14,34 +14,38 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.controller.secure.passwd;
+package cherry.spring.admin.controller.secure.userman;
+
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-public class PasswdForm extends PasswdFormBase {
+@EqualsAndHashCode
+@ToString
+public abstract class UsermanImportFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * フォームの文字列表記。
-	 */
-	@Override
-	public String toString() {
-		PasswdForm masked = new PasswdForm();
-		masked.setLoginId(getLoginId());
-		masked.setPassword("<MASKED>");
-		masked.setNewPassword("<MASKED>");
-		masked.setNewPasswordConf("<MASKED>");
-		return ToStringBuilder.reflectionToString(masked,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+	@javax.validation.constraints.NotNull
+	private org.springframework.web.multipart.MultipartFile file;
+
+	@Getter
+	public enum Prop {
+		File("file", "usermanImportForm.file"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
 	}
 
 }

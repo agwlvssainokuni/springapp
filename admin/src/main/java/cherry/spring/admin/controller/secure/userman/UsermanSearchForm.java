@@ -16,8 +16,6 @@
 
 package cherry.spring.admin.controller.secure.userman;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,43 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class UsermanSearchForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class UsermanSearchForm extends UsermanSearchFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@cherry.spring.common.validator.MaxLength(512)
-	private String loginId;
-
-	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
-	private org.joda.time.LocalDateTime registeredFrom;
-
-	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.TO)
-	private org.joda.time.LocalDateTime registeredTo;
-
-	@cherry.spring.common.validator.MaxLength(64)
-	private String firstName;
-
-	@cherry.spring.common.validator.MaxLength(64)
-	private String lastName;
-
-	@Getter
-	public enum Prop {
-		LoginId("loginId", "usermanSearchForm.loginId"), //
-		RegisteredFrom("registeredFrom", "usermanSearchForm.registeredFrom"), //
-		RegisteredTo("registeredTo", "usermanSearchForm.registeredTo"), //
-		FirstName("firstName", "usermanSearchForm.firstName"), //
-		LastName("lastName", "usermanSearchForm.lastName"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }

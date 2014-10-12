@@ -14,34 +14,40 @@
  * limitations under the License.
  */
 
-package cherry.spring.entree.controller.secure.passwd;
+package cherry.spring.entree.controller.signup;
+
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-public class PasswdForm extends PasswdFormBase {
+@EqualsAndHashCode
+@ToString
+public abstract class SignupEntryFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * フォームの文字列表記。
-	 */
-	@Override
-	public String toString() {
-		PasswdForm masked = new PasswdForm();
-		masked.setLoginId(getLoginId());
-		masked.setPassword("<MASKED>");
-		masked.setNewPassword("<MASKED>");
-		masked.setNewPasswordConf("<MASKED>");
-		return ToStringBuilder.reflectionToString(masked,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(512)
+	@org.hibernate.validator.constraints.Email
+	private String email;
+
+	@Getter
+	public enum Prop {
+		Email("email", "signupEntryForm.email"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
 	}
 
 }
