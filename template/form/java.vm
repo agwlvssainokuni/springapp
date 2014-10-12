@@ -85,10 +85,10 @@ public class ${formDef.className} implements Serializable {
 	@org.hibernate.validator.constraints.NotEmpty
 #end
 #if ($prop.minlen)
-	@@cherry.spring.common.validator.MinLength($prop.minlen)
+	@cherry.spring.common.validator.MinLength($prop.minlen)
 #end
 #if ($prop.maxlen)
-	@@cherry.spring.common.validator.MaxLength($prop.maxlen)
+	@cherry.spring.common.validator.MaxLength($prop.maxlen)
 #end
 ################ サブ型
 #if ($prop.subtype == "半角")
