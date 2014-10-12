@@ -16,24 +16,22 @@
 
 package cherry.spring.admin.controller.secure.userman;
 
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import cherry.spring.admin.controller.BaseForm;
+import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
-public class UsermanImportForm extends BaseForm {
+@EqualsAndHashCode
+@ToString
+public class UsermanImportForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull
-	private MultipartFile file;
+	@javax.validation.constraints.NotNull
+	private org.springframework.web.multipart.MultipartFile file;
 
 }

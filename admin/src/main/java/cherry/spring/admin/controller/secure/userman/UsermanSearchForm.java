@@ -16,37 +16,34 @@
 
 package cherry.spring.admin.controller.secure.userman;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import org.joda.time.LocalDateTime;
-
-import cherry.spring.admin.controller.BaseForm;
-import cherry.spring.common.type.format.CustomDateTimeFormat;
-import cherry.spring.common.type.format.CustomDateTimeFormat.Range;
-import cherry.spring.common.validator.MaxLength;
+import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
-public class UsermanSearchForm extends BaseForm {
+@EqualsAndHashCode
+@ToString
+public class UsermanSearchForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@MaxLength(512)
+	@cherry.spring.common.validator.MaxLength(512)
 	private String loginId;
 
-	@CustomDateTimeFormat(Range.FROM)
-	private LocalDateTime registeredFrom;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
+	private org.joda.time.LocalDateTime registeredFrom;
 
-	@CustomDateTimeFormat(Range.TO)
-	private LocalDateTime registeredTo;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.TO)
+	private org.joda.time.LocalDateTime registeredTo;
 
-	@MaxLength(64)
+	@cherry.spring.common.validator.MaxLength(64)
 	private String firstName;
 
-	@MaxLength(64)
+	@cherry.spring.common.validator.MaxLength(64)
 	private String lastName;
 
 }
