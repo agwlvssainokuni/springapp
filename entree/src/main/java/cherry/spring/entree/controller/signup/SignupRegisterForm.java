@@ -44,4 +44,20 @@ public class SignupRegisterForm implements Serializable {
 	@cherry.spring.common.validator.MaxLength(64)
 	private String lastName;
 
+	@Getter
+	public enum Prop {
+		Email("email", "signupRegisterForm.email"), //
+		FirstName("firstName", "signupRegisterForm.firstName"), //
+		LastName("lastName", "signupRegisterForm.lastName"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

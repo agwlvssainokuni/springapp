@@ -46,4 +46,22 @@ public class UsermanSearchForm implements Serializable {
 	@cherry.spring.common.validator.MaxLength(64)
 	private String lastName;
 
+	@Getter
+	public enum Prop {
+		LoginId("loginId", "usermanSearchForm.loginId"), //
+		RegisteredFrom("registeredFrom", "usermanSearchForm.registeredFrom"), //
+		RegisteredTo("registeredTo", "usermanSearchForm.registeredTo"), //
+		FirstName("firstName", "usermanSearchForm.firstName"), //
+		LastName("lastName", "usermanSearchForm.lastName"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

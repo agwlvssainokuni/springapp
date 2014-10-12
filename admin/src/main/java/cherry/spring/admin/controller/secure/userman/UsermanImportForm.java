@@ -34,4 +34,18 @@ public class UsermanImportForm implements Serializable {
 	@javax.validation.constraints.NotNull
 	private org.springframework.web.multipart.MultipartFile file;
 
+	@Getter
+	public enum Prop {
+		File("file", "usermanImportForm.file"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

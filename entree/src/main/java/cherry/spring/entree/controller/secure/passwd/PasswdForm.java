@@ -66,4 +66,21 @@ public class PasswdForm implements Serializable {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
+	@Getter
+	public enum Prop {
+		LoginId("loginId", "passwdForm.loginId"), //
+		Password("password", "passwdForm.password"), //
+		NewPassword("newPassword", "passwdForm.newPassword"), //
+		NewPasswordConf("newPasswordConf", "passwdForm.newPasswordConf"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }
