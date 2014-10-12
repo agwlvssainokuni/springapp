@@ -118,6 +118,8 @@ public class GenerateForm extends DefaultTask {
 			}
 		}
 
+		message("{0}", list);
+
 		message("Generating forms.");
 
 		for (FormDef formDef : list) {
@@ -194,20 +196,19 @@ public class GenerateForm extends DefaultTask {
 					break;
 
 				case "##COLDEF":
-
-					int lastCellNum = row.getLastCellNum();
-					for (int i = firstCellNum + 1; i <= lastCellNum; i++) {
-						Cell c = row.getCell(i);
-						if (c.getCellType() == Cell.CELL_TYPE_BLANK) {
+					for (Cell cell : row) {
+						if (cell.getColumnIndex() == firstCellNum) {
 							continue;
 						}
-						coldef.put(i, c.getStringCellValue());
+						if (cell.getCellType() != Cell.CELL_TYPE_STRING) {
+							continue;
+						}
+						coldef.put(cell.getColumnIndex(),
+								cell.getStringCellValue());
 					}
-
 					state = State.ROW;
 					coldefFirstCellNum = firstCellNum;
 					continue;
-
 				default:
 					// NOTHING
 					break;
@@ -216,20 +217,57 @@ public class GenerateForm extends DefaultTask {
 
 			if (state == State.ROW) {
 
-				Cell firstCell = row.getCell(coldefFirstCellNum);
-				if (firstCell.getCellType() == Cell.CELL_TYPE_BLANK) {
-					continue;
-				}
+				PropertyDef prop = null;
+				for (Cell cell : row) {
 
-				PropertyDef prop = new PropertyDef();
-				for (Map.Entry<Integer, String> entry : coldef.entrySet()) {
-					Cell cell = row.getCell(entry.getKey());
-					prop.put(entry.getValue(), cell.getStringCellValue());
+					if (cell.getColumnIndex() == coldefFirstCellNum) {
+						prop = new PropertyDef();
+						continue;
+					}
+					if (prop == null) {
+						continue;
+					}
+					String name = coldef.get(cell.getColumnIndex());
+					if (name == null) {
+						continue;
+					}
+
+					String value = getCellValueAsString(cell);
+					if (value != null) {
+						prop.put(name, value);
+					}
 				}
-				formDef.getPropertyDef().add(prop);
+				if (prop != null) {
+					formDef.getPropertyDef().add(prop);
+				}
 			}
 		}
+
+		if (formDef.getFullyQualifiedClassName() == null) {
+			return null;
+		}
+
 		return formDef;
+	}
+
+	private String getCellValueAsString(Cell cell) {
+		switch (cell.getCellType()) {
+		case Cell.CELL_TYPE_STRING:
+			return cell.getStringCellValue();
+		case Cell.CELL_TYPE_NUMERIC:
+			return String.valueOf((int) cell.getNumericCellValue());
+		case Cell.CELL_TYPE_FORMULA:
+			switch (cell.getCachedFormulaResultType()) {
+			case Cell.CELL_TYPE_STRING:
+				return cell.getStringCellValue();
+			case Cell.CELL_TYPE_NUMERIC:
+				return String.valueOf((int) cell.getNumericCellValue());
+			default:
+				return null;
+			}
+		default:
+			return null;
+		}
 	}
 
 	@Setter
