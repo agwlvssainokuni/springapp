@@ -32,6 +32,7 @@ public class ${formDef.className} implements Serializable {
 	private static final long serialVersionUID = 1L;
 #foreach ($prop in $formDef.propertyDef)
 
+########################################################################
 #if ($prop.type == "数値")
 #if ($prop.required == "○")
 	@javax.validation.constraints.NotNull
@@ -42,6 +43,7 @@ public class ${formDef.className} implements Serializable {
 #if ($prop.max)
 	@javax.validation.constraints.Max($prop.max)
 #end
+################ サブ型
 #if ($prop.subtype == "整数")
 	private Integer ${prop.name};
 #elseif ($prop.subtype == "整数(Long)")
@@ -49,10 +51,12 @@ public class ${formDef.className} implements Serializable {
 #else
 	private java.math.BigDecimal ${prop.name};
 #end
+########################################################################
 #elseif ($prop.type == "日付" || $prop.type == "時刻" || $prop.type == "日時")
 #if ($prop.required == "○")
 	@javax.validation.constraints.NotNull
 #end
+################ サブ型
 #if ($prop.subtype == "範囲下限")
 	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
 #elseif ($prop.subtype == "範囲上限")
@@ -60,13 +64,22 @@ public class ${formDef.className} implements Serializable {
 #else
 	@cherry.spring.common.type.format.CustomDateTimeFormat()
 #end
-#if ($prop.subtype == "日付")
+################ 変数宣言
+#if ($prop.type == "日付")
 	private org.joda.time.LocalDate ${prop.name};
 #elseif ($prop.type == "時刻")
 	private org.joda.time.LocalTime ${prop.name};
 #else
 	private org.joda.time.LocalDateTime ${prop.name};
 #end
+########################################################################
+#elseif ($prop.type == "ファイル")
+#if ($prop.required == "○")
+	@javax.validation.constraints.NotNull
+#end
+################ 変数宣言
+	private org.springframework.web.multipart.MultipartFile ${prop.name};
+########################################################################
 #elseif ($prop.type == "文字列")
 #if ($prop.required == "○")
 	@org.hibernate.validator.constraints.NotEmpty
@@ -77,6 +90,7 @@ public class ${formDef.className} implements Serializable {
 #if ($prop.maxlen)
 	@@cherry.spring.common.validator.MaxLength($prop.maxlen)
 #end
+################ サブ型
 #if ($prop.subtype == "半角")
 	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.BasicLatin)
 #elseif ($prop.subtype == "半角(カナ含む)")
@@ -85,7 +99,9 @@ public class ${formDef.className} implements Serializable {
 	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.FullWidth)
 #else
 #end
+################ 変数宣言
 	private String ${prop.name};
+########################################################################
 #else
 #end
 #end
