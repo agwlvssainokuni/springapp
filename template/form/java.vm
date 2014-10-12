@@ -91,7 +91,9 @@ public class ${formDef.className} implements Serializable {
 	@cherry.spring.common.validator.MaxLength($prop.maxlen)
 #end
 ################ サブ型
-#if ($prop.subtype == "半角")
+#if ($prop.subtype == "メール")
+	@org.hibernate.validator.constraints.Email
+#elseif ($prop.subtype == "半角")
 	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.BasicLatin)
 #elseif ($prop.subtype == "半角(カナ含む)")
 	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.HalfWidth)
