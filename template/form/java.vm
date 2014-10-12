@@ -30,8 +30,8 @@ import lombok.ToString;
 public class ${formDef.className} implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-#foreach ($prop in $formDef.propertyDef)
 
+#foreach ($prop in $formDef.propertyDef)
 ########################################################################
 #if ($prop.type == "数値")
 #if ($prop.required == "○")
@@ -51,6 +51,7 @@ public class ${formDef.className} implements Serializable {
 #else
 	private java.math.BigDecimal ${prop.name};
 #end
+
 ########################################################################
 #elseif ($prop.type == "日付" || $prop.type == "時刻" || $prop.type == "日時")
 #if ($prop.required == "○")
@@ -72,6 +73,7 @@ public class ${formDef.className} implements Serializable {
 #else
 	private org.joda.time.LocalDateTime ${prop.name};
 #end
+
 ########################################################################
 #elseif ($prop.type == "ファイル")
 #if ($prop.required == "○")
@@ -79,6 +81,27 @@ public class ${formDef.className} implements Serializable {
 #end
 ################ 変数宣言
 	private org.springframework.web.multipart.MultipartFile ${prop.name};
+
+########################################################################
+#elseif ($prop.type == "フラグ")
+################ 変数宣言
+	private boolean ${prop.name};
+
+########################################################################
+#elseif ($prop.type == "リスト")
+################ 変数宣言
+	private java.util.List<${prop.subtype}> ${prop.name};
+
+########################################################################
+#elseif ($prop.type == "ロックバージョン")
+################ 変数宣言
+	private Integer ${prop.name};
+
+########################################################################
+#elseif ($prop.type == "ページネーション")
+################ 変数宣言
+	private long ${prop.name} = 0L;
+
 ########################################################################
 #elseif ($prop.type == "文字列")
 #if ($prop.required == "○")
@@ -103,9 +126,9 @@ public class ${formDef.className} implements Serializable {
 #end
 ################ 変数宣言
 	private String ${prop.name};
+
 ########################################################################
 #else
 #end
 #end
-
 }
