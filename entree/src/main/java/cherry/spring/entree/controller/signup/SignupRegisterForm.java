@@ -38,12 +38,10 @@ public class SignupRegisterForm implements Serializable {
 
 	@org.hibernate.validator.constraints.NotEmpty
 	@cherry.spring.common.validator.MaxLength(64)
-	@org.hibernate.validator.constraints.Email
 	private String firstName;
 
 	@org.hibernate.validator.constraints.NotEmpty
 	@cherry.spring.common.validator.MaxLength(64)
-	@org.hibernate.validator.constraints.Email
 	private String lastName;
 
 }
