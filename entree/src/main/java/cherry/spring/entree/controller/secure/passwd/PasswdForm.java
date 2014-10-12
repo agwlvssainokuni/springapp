@@ -16,8 +16,7 @@
 
 package cherry.spring.entree.controller.secure.passwd;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,34 +24,32 @@ import lombok.Setter;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import cherry.spring.common.validator.MaxLength;
-import cherry.spring.entree.controller.BaseForm;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
-public class PasswdForm extends BaseForm {
+@EqualsAndHashCode
+public class PasswdForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@MaxLength(512)
-	@Email
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(512)
+	@org.hibernate.validator.constraints.Email
 	private String loginId;
 
-	@NotNull
-	@Size(min = 8, max = 16)
+	@javax.validation.constraints.NotNull
+	@cherry.spring.common.validator.MinLength(8)
+	@cherry.spring.common.validator.MaxLength(16)
 	private String password;
 
-	@NotNull
-	@Size(min = 8, max = 16)
+	@javax.validation.constraints.NotNull
+	@cherry.spring.common.validator.MinLength(8)
+	@cherry.spring.common.validator.MaxLength(16)
 	private String newPassword;
 
-	@NotNull
-	@Size(min = 8, max = 16)
+	@javax.validation.constraints.NotNull
+	@cherry.spring.common.validator.MinLength(8)
+	@cherry.spring.common.validator.MaxLength(16)
 	private String newPasswordConf;
 
 	/**

@@ -16,36 +16,34 @@
 
 package cherry.spring.entree.controller.signup;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import cherry.spring.common.validator.MaxLength;
-import cherry.spring.entree.controller.BaseForm;
+import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
-public class SignupRegisterForm extends BaseForm {
+@EqualsAndHashCode
+@ToString
+public class SignupRegisterForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@MaxLength(512)
-	@Email
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(512)
+	@org.hibernate.validator.constraints.Email
 	private String email;
 
-	@NotEmpty
-	@MaxLength(64)
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(64)
+	@org.hibernate.validator.constraints.Email
 	private String firstName;
 
-	@NotEmpty
-	@MaxLength(64)
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(64)
+	@org.hibernate.validator.constraints.Email
 	private String lastName;
-
-	private boolean agree;
 
 }
