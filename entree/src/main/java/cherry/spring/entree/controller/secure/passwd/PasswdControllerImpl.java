@@ -44,6 +44,7 @@ import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
+import cherry.spring.entree.controller.secure.passwd.PasswdForm.Prop;
 import cherry.spring.entree.service.secure.passwd.PasswdService;
 
 @Controller
@@ -140,15 +141,15 @@ public class PasswdControllerImpl implements PasswdController {
 		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
 			return true;
 		}
-		logicalErrorHelper.rejectValue(binding, "newPasswordConf",
+		logicalErrorHelper.rejectValue(binding, Prop.NewPasswordConf.getName(),
 				LogicalError.PasswdConfirmFailed);
 		return false;
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
 		logicalErrorHelper.reject(binding, LogicalError.CurAuthFailed,
-				logicalErrorHelper.resolve("passwdForm.loginId"),
-				logicalErrorHelper.resolve("passwdForm.password"));
+				logicalErrorHelper.resolve(Prop.LoginId.getNameWithForm()),
+				logicalErrorHelper.resolve(Prop.Password.getNameWithForm()));
 	}
 
 }
