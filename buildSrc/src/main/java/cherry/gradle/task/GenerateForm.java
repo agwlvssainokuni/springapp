@@ -28,14 +28,20 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -62,8 +68,6 @@ public class GenerateForm extends DefaultTask {
 	private String templateEncoding = "UTF-8";
 
 	private File javaBaseDir = new File("src/generated/java");
-
-	private String javaBasePackage;
 
 	private String javaEncoding = "UTF-8";
 
@@ -120,7 +124,7 @@ public class GenerateForm extends DefaultTask {
 			VelocityContext context = new VelocityContext();
 			context.put("formDef", formDef);
 
-			message("{0}.{1}", formDef.getPackageName(), formDef.getClassName());
+			message("{0}", formDef.getFullyQualifiedClassName());
 
 			String pkg = formDef.getPackageName();
 			File pkgDir = new File(javaBaseDir, pkg.replaceAll("\\.", "/"));
@@ -160,49 +164,120 @@ public class GenerateForm extends DefaultTask {
 		return list;
 	}
 
+	private enum State {
+		HEAD, ROW
+	}
+
 	private FormDef parseSheet(Sheet sheet) {
+
+		State state = State.HEAD;
+		int coldefFirstCellNum = -1;
+		Map<Integer, String> coldef = new TreeMap<>();
+
 		FormDef formDef = new FormDef();
+		formDef.setPropertyDef(new ArrayList<PropertyDef>());
 		for (Row row : sheet) {
-			int num = row.getFirstCellNum();
-			if (num < 0) {
+
+			int firstCellNum = row.getFirstCellNum();
+			if (firstCellNum < 0) {
 				continue;
 			}
-			// TODO 定義書解析ロジックを実装する。
+
+			if (state == State.HEAD) {
+
+				Cell firstCell = row.getCell(firstCellNum);
+
+				switch (firstCell.getStringCellValue()) {
+				case "##FQCN":
+					formDef.setFullyQualifiedClassName(row.getCell(
+							firstCellNum + 1).getStringCellValue());
+					break;
+
+				case "##COLDEF":
+
+					int lastCellNum = row.getLastCellNum();
+					for (int i = firstCellNum + 1; i <= lastCellNum; i++) {
+						Cell c = row.getCell(i);
+						if (c.getCellType() == Cell.CELL_TYPE_BLANK) {
+							continue;
+						}
+						coldef.put(i, c.getStringCellValue());
+					}
+
+					state = State.ROW;
+					coldefFirstCellNum = firstCellNum;
+					continue;
+
+				default:
+					// NOTHING
+					break;
+				}
+			}
+
+			if (state == State.ROW) {
+
+				Cell firstCell = row.getCell(coldefFirstCellNum);
+				if (firstCell.getCellType() == Cell.CELL_TYPE_BLANK) {
+					continue;
+				}
+
+				PropertyDef prop = new PropertyDef();
+				for (Map.Entry<Integer, String> entry : coldef.entrySet()) {
+					Cell cell = row.getCell(entry.getKey());
+					prop.put(entry.getValue(), cell.getStringCellValue());
+				}
+				formDef.getPropertyDef().add(prop);
+			}
 		}
-		// TODO ダミー定義。
-		formDef.setPackageName("cherry.spring.form");
-		formDef.setClassName("FooForm");
 		return formDef;
 	}
 
 	@Setter
 	@Getter
+	@EqualsAndHashCode
+	@ToString
 	public static class FormDef {
-		private String packageName;
-		private String className;
-		private String formName;
+		private String fullyQualifiedClassName;
 		private List<PropertyDef> propertyDef;
+
+		public String getClassName() {
+			int index = fullyQualifiedClassName.lastIndexOf(".");
+			if (index < 0) {
+				return fullyQualifiedClassName;
+			} else {
+				return fullyQualifiedClassName.substring(index + 1);
+			}
+		}
+
+		public String getPackageName() {
+			int index = fullyQualifiedClassName.lastIndexOf(".");
+			if (index < 0) {
+				return "";
+			} else {
+				return fullyQualifiedClassName.substring(0, index);
+			}
+		}
+
+		public String getFormName() {
+			StringBuilder b = new StringBuilder(getClassName());
+			b.setCharAt(0, Character.toLowerCase(b.charAt(0)));
+			return b.toString();
+		}
+
+		public String getDirName() {
+			return getPackageName().replaceAll("\\.", "/");
+		}
 	}
 
-	@Setter
-	@Getter
-	public static class PropertyDef {
-		private String label;
-		private String name;
-		private String javaType;
-		private List<ValidationDef> validationDef;
-	}
+	public static class PropertyDef extends LinkedHashMap<String, String> {
 
-	@Setter
-	@Getter
-	public static class ValidationDef {
-		private boolean required;
-		private String pattern;
-		private String type;
-		private Integer minLength;
-		private Integer maxLength;
-		private Integer minValue;
-		private Integer maxValue;
+		private static final long serialVersionUID = 1L;
+
+		public String capitalize(String key) {
+			StringBuilder b = new StringBuilder(get(key));
+			b.setCharAt(0, Character.toUpperCase(b.charAt(0)));
+			return b.toString();
+		}
 	}
 
 }
