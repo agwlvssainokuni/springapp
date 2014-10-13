@@ -153,7 +153,7 @@ public class GenerateForm extends DefaultTask {
 	}
 
 	private List<TypeDef> parseDef(File file) throws IOException {
-		WorkbookParser parser = new WorkbookParser();
+		WorkbookParser parser = new SheetBasedParser();
 		List<TypeDef> list = new LinkedList<>();
 		try (InputStream in = new FileInputStream(file)) {
 			Workbook workbook = WorkbookFactory.create(in);
