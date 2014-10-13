@@ -27,6 +27,7 @@ import cherry.spring.common.db.gen.query.QUser;
 import cherry.spring.common.type.DeletedFlag;
 
 import com.mysema.query.sql.dml.SQLUpdateClause;
+import com.mysema.query.types.expr.DateTimeExpression;
 
 @Service
 public class PasswdServiceImpl implements PasswdService {
@@ -45,8 +46,8 @@ public class PasswdServiceImpl implements PasswdService {
 
 				update.set(u.password, password);
 				update.set(u.lockVersion, u.lockVersion.add(1));
-				update.set(u.updatedAt,
-						u.updatedAt.currentTimestamp(LocalDateTime.class));
+				update.set(u.updatedAt, DateTimeExpression
+						.currentTimestamp(LocalDateTime.class));
 
 				update.where(u.loginId.eq(loginId));
 				update.where(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
