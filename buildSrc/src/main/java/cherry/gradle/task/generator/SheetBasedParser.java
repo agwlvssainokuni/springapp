@@ -34,9 +34,9 @@ public class SheetBasedParser implements WorkbookParser {
 		int numOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < numOfSheets; i++) {
 			Sheet sheet = workbook.getSheetAt(i);
-			TypeDef formDef = parseSheet(sheet);
-			if (formDef != null) {
-				list.add(formDef);
+			TypeDef typeDef = parseSheet(sheet);
+			if (typeDef != null) {
+				list.add(typeDef);
 			}
 		}
 		return list;
