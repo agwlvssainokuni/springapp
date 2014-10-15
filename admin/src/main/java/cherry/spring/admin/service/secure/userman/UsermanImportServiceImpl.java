@@ -122,7 +122,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		}
 	}
 
-	@Transactional
+	@Transactional("jtaTransactionManager")
 	@Override
 	public Map<String, String> launchImportUsers(MultipartFile file,
 			String launcherId) {
