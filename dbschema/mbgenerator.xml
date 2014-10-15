@@ -18,6 +18,11 @@
 		</commentGenerator>
 		<jdbcConnection driverClass="org.h2.Driver"
 			connectionURL="jdbc:h2:./build/gendb" userId="sa" />
+		<javaTypeResolver
+			type="cherry.mybatis.generator.custom.JavaTypeResolverCustomImpl">
+			<property name="useJodaTime" value="true" />
+			<property name="javaTypeByColumnName.DELETED_FLG" value="cherry.spring.common.type.DeletedFlag" />
+		</javaTypeResolver>
 		<javaModelGenerator targetPackage="cherry.spring.common.db.gen.dto"
 			targetProject="../common/src/mybatis/java" />
 		<sqlMapGenerator targetPackage="cherry.spring.common.db.gen.mapper"
@@ -26,59 +31,24 @@
 			type="ANNOTATEDMAPPER" targetProject="../common/src/mybatis/java" />
 		<table tableName="user">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="signup_request">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="applied_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="mail_template">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="mail_template_address">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="mail_template_text">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="async_proc">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="invoked_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="started_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="finished_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
-			<columnOverride column="bizdate" javaType="org.joda.time.LocalDate" />
-			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
-			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 	</context>
 </generatorConfiguration>
