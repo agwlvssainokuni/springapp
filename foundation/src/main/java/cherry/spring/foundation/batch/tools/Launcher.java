@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.batch.tools;
+package cherry.spring.foundation.batch.tools;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +26,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-import cherry.spring.batch.ExitStatus;
-import cherry.spring.batch.IBatch;
+import cherry.spring.foundation.batch.ExitStatus;
+import cherry.spring.foundation.batch.IBatch;
 
 public class Launcher {
 

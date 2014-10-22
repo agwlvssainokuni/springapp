@@ -14,26 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.spring.batch;
+package cherry.spring.foundation.batch;
 
-public enum ExitStatus {
-	/** 正常終了 (0) */
-	NORMAL(0),
-	/** 警告終了 (50) */
-	WARN(50),
-	/** 異常修了 (100) */
-	ERROR(100),
-	/** 致命的異常 (150) */
-	FATAL(150);
+public interface IBatch {
 
-	private final int code;
-
-	private ExitStatus(int code) {
-		this.code = code;
-	}
-
-	public int getCode() {
-		return code;
-	}
+	ExitStatus execute(String... args);
 
 }
