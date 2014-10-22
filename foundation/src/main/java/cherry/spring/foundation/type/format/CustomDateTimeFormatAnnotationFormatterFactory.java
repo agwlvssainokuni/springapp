@@ -44,25 +44,25 @@ import cherry.spring.foundation.type.format.CustomDateTimeFormat.Range;
 public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<CustomDateTimeFormat> {
 
-	@Value("${common.format.date.print}")
+	@Value("${foundation.format.date.print}")
 	private String dateToPrint;
 
-	@Value("${common.format.date.parse}")
+	@Value("${foundation.format.date.parse}")
 	private String dateToParse;
 
-	@Value("${common.format.time.print}")
+	@Value("${foundation.format.time.print}")
 	private String timeToPrint;
 
-	@Value("${common.format.time.parse.hm}")
+	@Value("${foundation.format.time.parse.hm}")
 	private String timeToParseHm;
 
-	@Value("${common.format.time.parse.s}")
+	@Value("${foundation.format.time.parse.s}")
 	private String timeToParseS;
 
-	@Value("${common.format.delimiter.print}")
+	@Value("${foundation.format.delimiter.print}")
 	private String delimiterToPrint;
 
-	@Value("${common.format.delimiter.parse}")
+	@Value("${foundation.format.delimiter.parse}")
 	private String delimiterToParse;
 
 	private Set<Class<?>> fieldTypes = new HashSet<Class<?>>(Arrays.asList(
