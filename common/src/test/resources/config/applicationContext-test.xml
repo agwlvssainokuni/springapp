@@ -19,11 +19,9 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan base-package="cherry.spring.common.db" />
-
-	<bean class="cherry.spring.common.lib.paginate.PaginatorImpl">
+	<bean class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
-			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
+			<bean class="cherry.goods.paginate.TotalCountStrategy">
 				<property name="totalCount" value="7" />
 				<property name="lowerSideHint" value="3" />
 				<property name="lowerTrim" value="1" />
