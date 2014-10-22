@@ -38,10 +38,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.foundation.type.EnumUtil;
-import cherry.spring.foundation.type.FlagCode;
-import cherry.spring.foundation.type.LabeledEnum;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class EnumUtilTest {
@@ -100,8 +96,9 @@ public class EnumUtilTest {
 
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
-		map.put("cherry.spring.common.type.FlagCode.FALSE", "FLAG_CODE_FALSE");
-		map.put("cherry.spring.common.type.FlagCode.TRUE", "FLAG_CODE_TRUE");
+		map.put("cherry.spring.foundation.type.FlagCode.FALSE",
+				"FLAG_CODE_FALSE");
+		map.put("cherry.spring.foundation.type.FlagCode.TRUE", "FLAG_CODE_TRUE");
 		return new MessageSource() {
 
 			@Override

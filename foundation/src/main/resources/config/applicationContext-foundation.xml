@@ -24,7 +24,7 @@
 				and
 				!execution(* cherry.spring.foundation.type..*.*(..))
 				and
-				!execution(* cherry.spring.foundation.helper.crypto..*.*(..))
+				!execution(* cherry.spring.foundation.crypto..*.*(..))
 				" />
 	</aop:config>
 
