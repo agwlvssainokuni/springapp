@@ -21,10 +21,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import cherry.spring.foundation.etl.Column;
-import cherry.spring.foundation.etl.LimiterException;
-import cherry.spring.foundation.etl.LoadResult;
-
 public class MiscTest {
 
 	@Test

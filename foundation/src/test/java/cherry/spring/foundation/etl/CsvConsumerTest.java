@@ -23,10 +23,6 @@ import java.io.StringWriter;
 
 import org.junit.Test;
 
-import cherry.spring.foundation.etl.Column;
-import cherry.spring.foundation.etl.Consumer;
-import cherry.spring.foundation.etl.CsvConsumer;
-
 public class CsvConsumerTest {
 
 	@Test

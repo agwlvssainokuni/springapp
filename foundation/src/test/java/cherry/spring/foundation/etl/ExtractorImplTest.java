@@ -36,12 +36,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.foundation.etl.Column;
-import cherry.spring.foundation.etl.Consumer;
-import cherry.spring.foundation.etl.CsvConsumer;
-import cherry.spring.foundation.etl.ExtractorImpl;
-import cherry.spring.foundation.etl.NoneLimiter;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class ExtractorImplTest {
