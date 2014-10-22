@@ -46,7 +46,7 @@ import cherry.spring.common.db.gen.dto.SignupRequest;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria.Criteria;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
-import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.foundation.type.DeletedFlag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
