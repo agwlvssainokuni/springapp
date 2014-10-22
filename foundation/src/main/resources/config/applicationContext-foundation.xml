@@ -135,18 +135,20 @@
 	<bean class="cherry.spring.foundation.sql.SqlLoaderImpl" />
 
 	<bean class="cherry.goods.sql.SimpleSqlParser" />
-	<bean class="cherry.spring.common.lib.etl.ExtractorImpl" />
-	<bean class="cherry.spring.common.lib.etl.LoaderImpl" />
+	<bean class="cherry.spring.foundation.etl.ExtractorImpl" />
+	<bean class="cherry.spring.foundation.etl.LoaderImpl" />
 
-	<bean class="cherry.spring.common.type.EnumUtil" factory-method="setMessageSource">
+	<bean class="cherry.spring.foundation.type.EnumUtil"
+		factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 
-	<bean class="cherry.spring.common.type.CodeUtil" factory-method="setMessageSource">
+	<bean class="cherry.spring.foundation.type.CodeUtil"
+		factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 
-	<bean class="cherry.spring.common.type.SecureString"
+	<bean class="cherry.spring.foundation.type.SecureString"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.foundation.crypto.SecureStringHelper">
@@ -156,7 +158,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.type.SecureInteger"
+	<bean class="cherry.spring.foundation.type.SecureInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.foundation.crypto.SecureIntegerHelper">
@@ -165,7 +167,8 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.type.SecureLong" factory-method="setEncoder">
+	<bean class="cherry.spring.foundation.type.SecureLong"
+		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.foundation.crypto.SecureLongHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
@@ -173,7 +176,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.type.SecureBigInteger"
+	<bean class="cherry.spring.foundation.type.SecureBigInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.foundation.crypto.SecureBigIntegerHelper">
@@ -182,7 +185,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.type.SecureBigDecimal"
+	<bean class="cherry.spring.foundation.type.SecureBigDecimal"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.foundation.crypto.SecureBigDecimalHelper">
