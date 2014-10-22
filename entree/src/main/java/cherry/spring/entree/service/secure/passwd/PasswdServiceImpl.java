@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.db.gen.query.QUser;
-import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.foundation.type.DeletedFlag;
 
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.expr.DateTimeExpression;

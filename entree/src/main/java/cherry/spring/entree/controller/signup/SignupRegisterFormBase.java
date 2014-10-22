@@ -32,16 +32,16 @@ public abstract class SignupRegisterFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(512)
+	@cherry.spring.foundation.validator.MaxLength(512)
 	@org.hibernate.validator.constraints.Email
 	private String email;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(64)
+	@cherry.spring.foundation.validator.MaxLength(64)
 	private String firstName;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(64)
+	@cherry.spring.foundation.validator.MaxLength(64)
 	private String lastName;
 
 	@Getter
