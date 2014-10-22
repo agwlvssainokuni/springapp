@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
 
-	@Value("${common.helper.onetimetoken.name}")
+	@Value("${foundation.onetimetoken.name}")
 	private String name;
 
 	@Override

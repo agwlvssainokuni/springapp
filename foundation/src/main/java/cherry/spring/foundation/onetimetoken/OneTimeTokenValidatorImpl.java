@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class OneTimeTokenValidatorImpl implements OneTimeTokenValidator {
 
-	@Value("${common.helper.onetimetoken.name}")
+	@Value("${foundation.onetimetoken.name}")
 	private String name;
 
 	@Override
