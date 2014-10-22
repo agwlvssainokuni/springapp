@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.gen.dto;
+package cherry.spring.foundation.type.db.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

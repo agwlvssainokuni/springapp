@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.db.gen.mapper;
+package cherry.spring.foundation.type.db.mapper;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.type.JdbcType;
 
-import cherry.spring.common.db.gen.dto.ConversionTest;
+import cherry.spring.foundation.type.db.dto.ConversionTest;
 
 public interface ConversionTestMapper {
 
