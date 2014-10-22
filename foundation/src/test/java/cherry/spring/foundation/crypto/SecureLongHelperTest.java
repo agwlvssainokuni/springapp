@@ -26,8 +26,6 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.foundation.crypto.AESCipherHelper;
-import cherry.spring.foundation.crypto.SecureLongHelper;
 import cherry.spring.foundation.type.SecureLong;
 
 public class SecureLongHelperTest {

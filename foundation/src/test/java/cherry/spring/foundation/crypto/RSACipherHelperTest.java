@@ -27,8 +27,6 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.foundation.crypto.RSACipherHelper;
-import cherry.spring.foundation.crypto.RSAKeyLoader;
 
 public class RSACipherHelperTest {
 

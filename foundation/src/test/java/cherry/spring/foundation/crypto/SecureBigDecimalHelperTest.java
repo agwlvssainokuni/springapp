@@ -27,8 +27,6 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.foundation.crypto.AESCipherHelper;
-import cherry.spring.foundation.crypto.SecureBigDecimalHelper;
 import cherry.spring.foundation.type.SecureBigDecimal;
 
 public class SecureBigDecimalHelperTest {
