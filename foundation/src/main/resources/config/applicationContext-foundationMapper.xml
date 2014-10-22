@@ -5,7 +5,29 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="typeHandlersPackage" value="cherry.spring.founcation.type.mybatis" />
+		<property name="typeHandlers">
+			<list>
+				<bean class="cherry.spring.foundation.type.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.spring.foundation.type.mybatis.FlagCodeTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.JodaDateTimeTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.JodaLocalDateTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.JodaLocalTimeTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.SecureBigDecimalTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.SecureBigIntegerTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.spring.foundation.type.mybatis.SecureLongTypeHandler" />
+				<bean
+					class="cherry.spring.foundation.type.mybatis.SecureStringTypeHandler" />
+			</list>
+		</property>
 	</bean>
 
 </beans>
