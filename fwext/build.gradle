@@ -2,8 +2,6 @@ apply plugin: "eclipse-wtp"
 
 dependencies {
 	compile project(":goods")
-	compile project(":fwext")
-	compile project(":dbschema")
 	compile "com.h2database:h2:${versionH2db}"
 	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "joda-time:joda-time:${versionJodaTime}"

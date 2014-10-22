@@ -1,1 +1,1 @@
-include "dbschema", "common", "admin", "entree", "batch"
+include "goods", "fwext", "dbschema", "common", "admin", "entree", "batch"
