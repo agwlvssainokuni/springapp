@@ -16,8 +16,6 @@
 
 package cherry.spring.foundation.log.trace;
 
-import cherry.spring.foundation.log.trace.TraceInterceptor;
-
 /**
  * {@link TraceInterceptor} のテスト.
  */
