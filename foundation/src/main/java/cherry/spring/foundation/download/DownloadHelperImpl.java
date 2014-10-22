@@ -37,16 +37,16 @@ public class DownloadHelperImpl implements DownloadHelper {
 
 	private final Log log = LogFactory.getLog(getClass());
 
-	@Value("${common.helper.download.charset}")
+	@Value("${foundation.download.charset}")
 	private Charset charset;
 
-	@Value("${common.helper.download.headerName}")
+	@Value("${foundation.download.headerName}")
 	private String headerName;
 
-	@Value("${common.helper.download.headerValue}")
+	@Value("${foundation.download.headerValue}")
 	private String headerValue;
 
-	@Value("${common.helper.download.format}")
+	@Value("${foundation.download.format}")
 	private DateTimeFormatter formatter;
 
 	@Override
