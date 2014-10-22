@@ -2,8 +2,6 @@ apply plugin: "eclipse-wtp"
 
 dependencies {
 	compile project(":goods")
-	compile "com.h2database:h2:${versionH2db}"
-	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "joda-time:joda-time:${versionJodaTime}"
 	compile "com.google.guava:guava:${versionGuava}"
 	compile "commons-pool:commons-pool:${versionCommonsPool}"
@@ -60,6 +58,8 @@ dependencies {
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testCompile "com.h2database:h2:${versionH2db}"
+	testCompile "org.flywaydb:flyway-core:${versionFlyway}"
 	testCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
