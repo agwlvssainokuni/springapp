@@ -26,8 +26,6 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import cherry.spring.foundation.mask.BigDecimalMasker;
-
 public class BigDecimalMaskerTest {
 
 	@Test

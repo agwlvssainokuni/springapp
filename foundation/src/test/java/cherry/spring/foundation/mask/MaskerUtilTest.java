@@ -29,10 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cherry.spring.foundation.etl.Decorator;
-import cherry.spring.foundation.mask.IntegerMasker;
-import cherry.spring.foundation.mask.Masker;
-import cherry.spring.foundation.mask.MaskerUtil;
-import cherry.spring.foundation.mask.StringMasker;
 
 public class MaskerUtilTest {
 

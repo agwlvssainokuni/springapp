@@ -23,8 +23,6 @@ import static org.junit.Assert.assertThat;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import cherry.spring.foundation.mask.LocalDateMasker;
-
 public class LocalDateMaskerTest {
 
 	@Test

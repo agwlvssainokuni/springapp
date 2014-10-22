@@ -25,8 +25,6 @@ import java.sql.Time;
 import org.joda.time.LocalTime;
 import org.junit.Test;
 
-import cherry.spring.foundation.mask.SqlTimeMasker;
-
 public class SqlTimeMaskerTest {
 
 	@Test

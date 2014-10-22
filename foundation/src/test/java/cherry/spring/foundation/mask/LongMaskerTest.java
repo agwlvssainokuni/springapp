@@ -23,8 +23,6 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import cherry.spring.foundation.mask.LongMasker;
-
 public class LongMaskerTest {
 
 	@Test
