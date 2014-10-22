@@ -28,7 +28,7 @@ import javax.script.ScriptException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.io.Resource;
 
-import cherry.spring.common.lib.js.JsObjectExtractor;
+import cherry.goods.js.JsObjectExtractor;
 
 /**
  * 設定データ抽出機能のファクトリ.

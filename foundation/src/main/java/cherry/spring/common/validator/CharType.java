@@ -16,22 +16,22 @@
 
 package cherry.spring.common.validator;
 
-import static cherry.spring.common.lib.chartype.CharTypeValidator.ALPHA;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.BASIC_LATIN;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_ALPHA;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_HIRAGANA;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_KATAKANA;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_LOWER;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_NUMERIC;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_SPACE;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_UPPER;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.FULL_WIDTH;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.HALF_KATAKANA;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.HALF_WIDTH;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.LOWER;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.NUMERIC;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.SPACE;
-import static cherry.spring.common.lib.chartype.CharTypeValidator.UPPER;
+import static cherry.goods.chartype.CharTypeValidator.ALPHA;
+import static cherry.goods.chartype.CharTypeValidator.BASIC_LATIN;
+import static cherry.goods.chartype.CharTypeValidator.FULL_ALPHA;
+import static cherry.goods.chartype.CharTypeValidator.FULL_HIRAGANA;
+import static cherry.goods.chartype.CharTypeValidator.FULL_KATAKANA;
+import static cherry.goods.chartype.CharTypeValidator.FULL_LOWER;
+import static cherry.goods.chartype.CharTypeValidator.FULL_NUMERIC;
+import static cherry.goods.chartype.CharTypeValidator.FULL_SPACE;
+import static cherry.goods.chartype.CharTypeValidator.FULL_UPPER;
+import static cherry.goods.chartype.CharTypeValidator.FULL_WIDTH;
+import static cherry.goods.chartype.CharTypeValidator.HALF_KATAKANA;
+import static cherry.goods.chartype.CharTypeValidator.HALF_WIDTH;
+import static cherry.goods.chartype.CharTypeValidator.LOWER;
+import static cherry.goods.chartype.CharTypeValidator.NUMERIC;
+import static cherry.goods.chartype.CharTypeValidator.SPACE;
+import static cherry.goods.chartype.CharTypeValidator.UPPER;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;

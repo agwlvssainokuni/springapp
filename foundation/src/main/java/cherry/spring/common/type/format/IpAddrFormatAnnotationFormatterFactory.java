@@ -31,9 +31,9 @@ import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.Parser;
 import org.springframework.format.Printer;
 
-import cherry.spring.common.lib.ipaddr.IpAddrUtil;
-import cherry.spring.common.log.Log;
-import cherry.spring.common.log.LogFactory;
+import cherry.goods.ipaddr.IpAddrUtil;
+import cherry.goods.log.Log;
+import cherry.goods.log.LogFactory;
 
 public class IpAddrFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<IpAddrFormat> {

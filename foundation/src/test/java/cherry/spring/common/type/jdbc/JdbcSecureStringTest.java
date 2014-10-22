@@ -33,8 +33,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.goods.util.RandomUtil;
 import cherry.spring.common.db.gen.dto.ConversionTest;
-import cherry.spring.common.lib.util.RandomUtil;
 import cherry.spring.common.type.SecureString;
 
 @RunWith(SpringJUnit4ClassRunner.class)

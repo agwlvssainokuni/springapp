@@ -18,9 +18,9 @@ package cherry.spring.admin.service.secure.userman;
 
 import java.io.Writer;
 
+import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.secure.userman.UsermanSearchForm;
 import cherry.spring.common.db.gen.dto.User;
-import cherry.spring.common.lib.paginate.PagedList;
 
 public interface UsermanSearchService {
 

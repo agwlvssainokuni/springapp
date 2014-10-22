@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cherry.spring.common.lib.csv.CsvParser;
+import cherry.goods.csv.CsvParser;
 
 /**
  * データ取込み機能でCSVファイルをデータ取得元とする。

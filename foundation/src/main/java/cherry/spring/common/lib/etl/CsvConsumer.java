@@ -19,7 +19,7 @@ package cherry.spring.common.lib.etl;
 import java.io.IOException;
 import java.io.Writer;
 
-import cherry.spring.common.lib.csv.CsvCreator;
+import cherry.goods.csv.CsvCreator;
 
 /**
  * データ抽出機能でCSVファイルをデータ格納先とする。

@@ -134,7 +134,7 @@
 	<bean class="cherry.spring.common.helper.sql.SqlExecutorImpl" />
 	<bean class="cherry.spring.common.helper.sql.SqlLoaderImpl" />
 
-	<bean class="cherry.spring.common.lib.sql.SimpleSqlParser" />
+	<bean class="cherry.goods.sql.SimpleSqlParser" />
 	<bean class="cherry.spring.common.lib.etl.ExtractorImpl" />
 	<bean class="cherry.spring.common.lib.etl.LoaderImpl" />
 

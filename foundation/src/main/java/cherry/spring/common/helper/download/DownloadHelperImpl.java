@@ -30,8 +30,8 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 
-import cherry.spring.common.log.Log;
-import cherry.spring.common.log.LogFactory;
+import cherry.goods.log.Log;
+import cherry.goods.log.LogFactory;
 
 public class DownloadHelperImpl implements DownloadHelper {
 

@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
-import cherry.spring.common.lib.sql.SimpleSqlParser;
+import cherry.goods.sql.SimpleSqlParser;
 
 public class SqlLoaderImpl implements SqlLoader {
 

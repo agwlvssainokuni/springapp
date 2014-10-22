@@ -26,7 +26,7 @@ import java.security.KeyPairGenerator;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.spring.common.lib.util.RandomUtil;
+import cherry.goods.util.RandomUtil;
 
 public class RSACipherHelperTest {
 

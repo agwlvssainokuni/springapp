@@ -31,13 +31,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.userman.UsermanSearchService;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
 import cherry.spring.common.helper.download.DownloadHelper;
-import cherry.spring.common.lib.paginate.PagedList;
 
 @Controller
 public class UsermanSearchControllerImpl implements UsermanSearchController {

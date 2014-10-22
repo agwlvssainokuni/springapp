@@ -20,10 +20,10 @@ import java.io.IOException;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import cherry.goods.paginate.PagedList;
 import cherry.spring.common.lib.etl.Consumer;
 import cherry.spring.common.lib.etl.Limiter;
 import cherry.spring.common.lib.etl.LimiterException;
-import cherry.spring.common.lib.paginate.PagedList;
 
 import com.mysema.query.types.Expression;
 

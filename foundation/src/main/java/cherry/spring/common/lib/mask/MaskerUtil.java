@@ -19,9 +19,9 @@ package cherry.spring.common.lib.mask;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import cherry.goods.util.CamelCaseUtil;
 import cherry.spring.common.lib.etl.Decorator;
 import cherry.spring.common.lib.etl.MaskerDecorator;
-import cherry.spring.common.lib.util.CamelCaseUtil;
 
 public class MaskerUtil {
 

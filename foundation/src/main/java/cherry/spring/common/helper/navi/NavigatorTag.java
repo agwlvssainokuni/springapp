@@ -16,7 +16,7 @@
 
 package cherry.spring.common.helper.navi;
 
-import static cherry.spring.common.helper.AppCtxTag.getBeanByClass;
+import static cherry.spring.common.helper.AppCtxHolder.getAppCtx;
 
 import java.util.List;
 
@@ -24,12 +24,8 @@ import cherry.spring.common.helper.navi.Navigator.Node;
 
 public class NavigatorTag {
 
-	public static Navigator getNavigator() {
-		return getBeanByClass(Navigator.class);
-	}
-
 	public static List<Node> navigate(String name) {
-		return getNavigator().navigate(name);
+		return getAppCtx().getBean(Navigator.class).navigate(name);
 	}
 
 }

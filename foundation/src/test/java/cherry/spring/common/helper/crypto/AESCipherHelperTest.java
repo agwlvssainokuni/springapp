@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.spring.common.lib.util.RandomUtil;
+import cherry.goods.util.RandomUtil;
 
 public class AESCipherHelperTest {
 

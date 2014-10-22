@@ -38,7 +38,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.DataBinder;
 
-import cherry.spring.common.type.format.CustomDateTimeFormat;
 import cherry.spring.common.type.format.CustomDateTimeFormat.Range;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -24,8 +24,8 @@ import java.security.SecureRandom;
 
 import org.junit.Test;
 
+import cherry.goods.util.RandomUtil;
 import cherry.spring.common.helper.crypto.VersioningStrategy.VersionedData;
-import cherry.spring.common.lib.util.RandomUtil;
 
 public class DefaultVersioningStrategyTest {
 

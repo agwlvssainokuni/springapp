@@ -16,18 +16,17 @@
 
 package cherry.spring.common.validator;
 
-import static cherry.spring.common.lib.chartype.CharTypeValidator.validate;
+import static cherry.goods.chartype.CharTypeValidator.validate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cherry.spring.common.lib.chartype.CharTypeResult;
+import cherry.goods.chartype.CharTypeResult;
 import cherry.spring.common.validator.CharType.Mode;
 
-public class CharTypeValidator implements
-		ConstraintValidator<CharType, String> {
+public class CharTypeValidator implements ConstraintValidator<CharType, String> {
 
 	private int mode;
 

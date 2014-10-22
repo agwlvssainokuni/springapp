@@ -26,7 +26,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.common.lib.util.RandomUtil;
+import cherry.goods.util.RandomUtil;
 import cherry.spring.common.type.SecureString;
 
 @RunWith(SpringJUnit4ClassRunner.class)

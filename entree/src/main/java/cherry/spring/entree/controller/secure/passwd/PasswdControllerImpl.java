@@ -39,9 +39,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.goods.log.Log;
+import cherry.goods.log.LogFactory;
 import cherry.spring.common.helper.logicalerror.LogicalErrorHelper;
-import cherry.spring.common.log.Log;
-import cherry.spring.common.log.LogFactory;
 import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
 import cherry.spring.entree.controller.secure.passwd.PasswdFormBase.Prop;

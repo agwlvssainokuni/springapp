@@ -31,7 +31,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import cherry.spring.common.lib.sql.SimpleSqlParser;
+import cherry.goods.sql.SimpleSqlParser;
 
 /**
  * SQL実行機能。

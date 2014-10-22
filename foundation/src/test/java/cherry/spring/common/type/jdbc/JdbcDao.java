@@ -28,8 +28,6 @@ import org.springframework.stereotype.Component;
 
 import cherry.spring.common.db.gen.dto.ConversionTest;
 import cherry.spring.common.helper.sql.SqlLoader;
-import cherry.spring.common.type.jdbc.RowMapperCreator;
-import cherry.spring.common.type.jdbc.SqlParameterSourceCreator;
 
 @Component
 public class JdbcDao implements InitializingBean {
