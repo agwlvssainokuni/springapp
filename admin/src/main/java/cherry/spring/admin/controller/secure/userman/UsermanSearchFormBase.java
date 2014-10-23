@@ -31,19 +31,19 @@ public abstract class UsermanSearchFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@cherry.spring.foundation.validator.MaxLength(512)
+	@cherry.spring.fwcore.validator.MaxLength(512)
 	private String loginId;
 
-	@cherry.spring.foundation.type.format.CustomDateTimeFormat(cherry.spring.foundation.type.format.CustomDateTimeFormat.Range.FROM)
+	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalDateTime registeredFrom;
 
-	@cherry.spring.foundation.type.format.CustomDateTimeFormat(cherry.spring.foundation.type.format.CustomDateTimeFormat.Range.TO)
+	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.TO)
 	private org.joda.time.LocalDateTime registeredTo;
 
-	@cherry.spring.foundation.validator.MaxLength(64)
+	@cherry.spring.fwcore.validator.MaxLength(64)
 	private String firstName;
 
-	@cherry.spring.foundation.validator.MaxLength(64)
+	@cherry.spring.fwcore.validator.MaxLength(64)
 	private String lastName;
 
 	@Getter
