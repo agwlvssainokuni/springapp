@@ -9,10 +9,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
 
-	<context:property-placeholder location="classpath:foundation.properties"
+	<context:property-placeholder location="classpath:fwcore.properties"
 		ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.spring.foundation" />
+	<context:component-scan base-package="cherry.spring.fwcore" />
 
 	<tx:annotation-driven />
 
@@ -20,17 +20,17 @@
 		<aop:advisor advice-ref="traceInterceptor"
 			pointcut="execution(* cherry..*.*(..))
 				and
-				!execution(* cherry.spring.foundation.log..*.*(..))
+				!execution(* cherry.spring.fwcore.log..*.*(..))
 				and
-				!execution(* cherry.spring.foundation.type..*.*(..))
+				!execution(* cherry.spring.fwcore.type..*.*(..))
 				and
-				!execution(* cherry.spring.foundation.crypto..*.*(..))
+				!execution(* cherry.spring.fwcore.crypto..*.*(..))
 				" />
 	</aop:config>
 
-	<bean id="traceInterceptor" class="cherry.spring.foundation.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="${foundation.trace.arrayLengthLimit}" />
-		<property name="objectLengthLimit" value="${foundation.trace.objectLengthLimit}" />
+	<bean id="traceInterceptor" class="cherry.spring.fwcore.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="${fwcore.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${fwcore.trace.objectLengthLimit}" />
 		<property name="packagePrefix">
 			<list>
 				<value>cherry.spring</value>
@@ -44,7 +44,7 @@
 				<entry key="java.util.ResourceBundle"
 					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
 				<entry key="org.joda.time.format.DateTimeFormatter"
-					value="cherry.spring.foundation.type.editor.DateTimeFormatEditor" />
+					value="cherry.spring.fwcore.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
 	</bean>
@@ -57,30 +57,29 @@
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean
-					class="cherry.spring.foundation.type.format.IpAddrFormatAnnotationFormatterFactory" />
+					class="cherry.spring.fwcore.type.format.IpAddrFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
 			<set>
 				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
-				<bean
-					class="cherry.spring.foundation.type.format.DelegateFormatterRegistrar">
+				<bean class="cherry.spring.fwcore.type.format.DelegateFormatterRegistrar">
 					<property name="formatters">
 						<list>
 							<bean
 								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
-								<property name="dateFormatter" value="${foundation.format.date}" />
-								<property name="timeFormatter" value="${foundation.format.time}" />
-								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
+								<property name="dateFormatter" value="${fwcore.format.date}" />
+								<property name="timeFormatter" value="${fwcore.format.time}" />
+								<property name="dateTimeFormatter" value="${fwcore.format.datetime}" />
 							</bean>
 							<bean
-								class="cherry.spring.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+								class="cherry.spring.fwcore.type.format.CustomDateTimeFormatAnnotationFormatterFactory" />
 							<bean
-								class="cherry.spring.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
+								class="cherry.spring.fwcore.type.converter.JodaTimeSqlConverterRegistrar" />
 							<bean
-								class="cherry.spring.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
+								class="cherry.spring.fwcore.type.converter.SecureTypeSqlConverterRegistrar" />
 							<bean
-								class="cherry.spring.foundation.type.converter.CodeSqlConverterRegistrar" />
+								class="cherry.spring.fwcore.type.converter.CodeSqlConverterRegistrar" />
 						</list>
 					</property>
 				</bean>
@@ -110,10 +109,10 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${foundation.mail.host}" />
-		<property name="port" value="${foundation.mail.port}" />
-		<property name="protocol" value="${foundation.mail.protocol}" />
-		<property name="defaultEncoding" value="${foundation.mail.encoding}" />
+		<property name="host" value="${fwcore.mail.host}" />
+		<property name="port" value="${fwcore.mail.port}" />
+		<property name="protocol" value="${fwcore.mail.protocol}" />
+		<property name="defaultEncoding" value="${fwcore.mail.encoding}" />
 	</bean>
 
 	<bean id="namedParameterJdbcOperations"
@@ -126,80 +125,77 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean class="cherry.spring.foundation.download.DownloadHelperImpl" />
-	<bean class="cherry.spring.foundation.logicalerror.LogicalErrorHelperImpl" />
-	<bean class="cherry.spring.foundation.onetimetoken.OneTimeTokenIssuerImpl" />
-	<bean class="cherry.spring.foundation.onetimetoken.OneTimeTokenValidatorImpl" />
-	<bean class="cherry.spring.foundation.querydsl.SQLQueryHelperImpl" />
-	<bean class="cherry.spring.foundation.sql.SqlExecutorImpl" />
-	<bean class="cherry.spring.foundation.sql.SqlLoaderImpl" />
+	<bean class="cherry.spring.fwcore.download.DownloadHelperImpl" />
+	<bean class="cherry.spring.fwcore.logicalerror.LogicalErrorHelperImpl" />
+	<bean class="cherry.spring.fwcore.onetimetoken.OneTimeTokenIssuerImpl" />
+	<bean class="cherry.spring.fwcore.onetimetoken.OneTimeTokenValidatorImpl" />
+	<bean class="cherry.spring.fwcore.querydsl.SQLQueryHelperImpl" />
+	<bean class="cherry.spring.fwcore.sql.SqlExecutorImpl" />
+	<bean class="cherry.spring.fwcore.sql.SqlLoaderImpl" />
 
 	<bean class="cherry.goods.sql.SimpleSqlParser" />
-	<bean class="cherry.spring.foundation.etl.ExtractorImpl" />
-	<bean class="cherry.spring.foundation.etl.LoaderImpl" />
+	<bean class="cherry.spring.fwcore.etl.ExtractorImpl" />
+	<bean class="cherry.spring.fwcore.etl.LoaderImpl" />
 
-	<bean class="cherry.spring.foundation.type.EnumUtil"
-		factory-method="setMessageSource">
+	<bean class="cherry.spring.fwcore.type.EnumUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.CodeUtil"
-		factory-method="setMessageSource">
+	<bean class="cherry.spring.fwcore.type.CodeUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.SecureString"
+	<bean class="cherry.spring.fwcore.type.SecureString"
 		factory-method="setEncoder">
 		<constructor-arg>
-			<bean class="cherry.spring.foundation.crypto.SecureStringHelper">
+			<bean class="cherry.spring.fwcore.crypto.SecureStringHelper">
 				<property name="charset" value="UTF-8" />
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.SecureInteger"
+	<bean class="cherry.spring.fwcore.type.SecureInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
-			<bean class="cherry.spring.foundation.crypto.SecureIntegerHelper">
+			<bean class="cherry.spring.fwcore.crypto.SecureIntegerHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.SecureLong"
-		factory-method="setEncoder">
+	<bean class="cherry.spring.fwcore.type.SecureLong" factory-method="setEncoder">
 		<constructor-arg>
-			<bean class="cherry.spring.foundation.crypto.SecureLongHelper">
+			<bean class="cherry.spring.fwcore.crypto.SecureLongHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.SecureBigInteger"
+	<bean class="cherry.spring.fwcore.type.SecureBigInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
-			<bean class="cherry.spring.foundation.crypto.SecureBigIntegerHelper">
+			<bean class="cherry.spring.fwcore.crypto.SecureBigIntegerHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.foundation.type.SecureBigDecimal"
+	<bean class="cherry.spring.fwcore.type.SecureBigDecimal"
 		factory-method="setEncoder">
 		<constructor-arg>
-			<bean class="cherry.spring.foundation.crypto.SecureBigDecimalHelper">
+			<bean class="cherry.spring.fwcore.crypto.SecureBigDecimalHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
 			</bean>
 		</constructor-arg>
 	</bean>
 
-	<bean id="aesCipherHelper" class="cherry.spring.foundation.crypto.VersionedCipherHelper">
+	<bean id="aesCipherHelper" class="cherry.spring.fwcore.crypto.VersionedCipherHelper">
 		<property name="defaultVersion" value="0" />
 		<property name="cipherHelperMap">
-			<map key-type="java.lang.Integer" value-type="cherry.spring.foundation.crypto.CipherHelper">
+			<map key-type="java.lang.Integer" value-type="cherry.spring.fwcore.crypto.CipherHelper">
 				<entry key="0">
-					<bean class="cherry.spring.foundation.crypto.AESCipherHelper">
+					<bean class="cherry.spring.fwcore.crypto.AESCipherHelper">
 						<property name="secretKey" value="classpath:crypto/0/key.bin" />
 						<property name="initVector" value="classpath:crypto/0/iv.bin" />
 						<property name="keyCipherHelper" ref="rsaCipherHelper" />
@@ -209,9 +205,9 @@
 		</property>
 	</bean>
 
-	<bean id="rsaCipherHelper" class="cherry.spring.foundation.crypto.RSACipherHelper">
+	<bean id="rsaCipherHelper" class="cherry.spring.fwcore.crypto.RSACipherHelper">
 		<property name="keyLoader">
-			<bean class="cherry.spring.foundation.crypto.RSAKeyLoader" />
+			<bean class="cherry.spring.fwcore.crypto.RSAKeyLoader" />
 		</property>
 		<property name="privateKey" value="classpath:crypto/rsa/privkey.pk8" />
 		<property name="publicKey" value="classpath:crypto/rsa/pubkey.der" />
