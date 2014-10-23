@@ -8,7 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@ taglib prefix="common" uri="urn:springapp:common"%>
+<%@ taglib prefix="fwcore" uri="urn:springapp:fwcore"%>
 <c:set var="name">
 	<tiles:getAsString name="name" />
 </c:set>
@@ -53,7 +53,7 @@
 		<div id="Navi">
 			<ul class="app-flat">
 				<li><s:message code="base/auth.navigation" /></li>
-				<c:forEach var="node" items="${common:navigate(name)}">
+				<c:forEach var="node" items="${fwcore:navigate(name)}">
 					<s:url var="uri" value="${node.uri}">
 						<c:if test="${node.uri.contains('{id}')}">
 							<s:param name="id" value="${id}" />
