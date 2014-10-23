@@ -38,10 +38,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.fwcore.type.EnumUtil;
-import cherry.spring.fwcore.type.FlagCode;
-import cherry.spring.fwcore.type.LabeledEnum;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class EnumUtilTest {

@@ -26,8 +26,6 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
-import cherry.spring.fwcore.mask.BigIntegerMasker;
-
 public class BigIntegerMaskerTest {
 
 	@Test

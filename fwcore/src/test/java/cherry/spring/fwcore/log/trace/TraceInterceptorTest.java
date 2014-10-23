@@ -29,7 +29,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import cherry.spring.fwcore.log.trace.TraceInterceptor;
 
 /**
  * {@link TraceInterceptor} のテスト.

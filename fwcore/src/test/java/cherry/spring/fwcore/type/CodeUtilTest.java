@@ -40,10 +40,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.fwcore.type.CodeUtil;
-import cherry.spring.fwcore.type.DeletedFlag;
-import cherry.spring.fwcore.type.FlagCode;
-import cherry.spring.fwcore.type.LabeledCode;
 import cherry.spring.fwcore.type.CodeUtil.CodeMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)

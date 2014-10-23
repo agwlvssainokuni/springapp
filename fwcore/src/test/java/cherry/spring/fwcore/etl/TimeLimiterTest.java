@@ -20,10 +20,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import cherry.spring.fwcore.etl.Limiter;
-import cherry.spring.fwcore.etl.LimiterException;
-import cherry.spring.fwcore.etl.TimeLimiter;
-
 public class TimeLimiterTest {
 
 	@Test

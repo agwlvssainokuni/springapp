@@ -29,10 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cherry.spring.fwcore.etl.Decorator;
-import cherry.spring.fwcore.mask.IntegerMasker;
-import cherry.spring.fwcore.mask.Masker;
-import cherry.spring.fwcore.mask.MaskerUtil;
-import cherry.spring.fwcore.mask.StringMasker;
 
 public class MaskerUtilTest {
 

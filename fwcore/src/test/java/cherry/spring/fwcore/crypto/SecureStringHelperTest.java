@@ -26,8 +26,6 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.fwcore.crypto.AESCipherHelper;
-import cherry.spring.fwcore.crypto.SecureStringHelper;
 import cherry.spring.fwcore.type.SecureString;
 
 public class SecureStringHelperTest {
