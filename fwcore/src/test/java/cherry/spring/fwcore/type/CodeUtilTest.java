@@ -159,8 +159,8 @@ public class CodeUtilTest {
 
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
-		map.put("cherry.spring.foundation.type.FlagCode.0", "FLAG_CODE_FALSE");
-		map.put("cherry.spring.foundation.type.FlagCode.1", "FLAG_CODE_TRUE");
+		map.put("cherry.spring.fwcore.type.FlagCode.0", "FLAG_CODE_FALSE");
+		map.put("cherry.spring.fwcore.type.FlagCode.1", "FLAG_CODE_TRUE");
 		return new MessageSource() {
 
 			@Override

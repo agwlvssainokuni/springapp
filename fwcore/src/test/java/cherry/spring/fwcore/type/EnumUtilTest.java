@@ -96,9 +96,8 @@ public class EnumUtilTest {
 
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
-		map.put("cherry.spring.foundation.type.FlagCode.FALSE",
-				"FLAG_CODE_FALSE");
-		map.put("cherry.spring.foundation.type.FlagCode.TRUE", "FLAG_CODE_TRUE");
+		map.put("cherry.spring.fwcore.type.FlagCode.FALSE", "FLAG_CODE_FALSE");
+		map.put("cherry.spring.fwcore.type.FlagCode.TRUE", "FLAG_CODE_TRUE");
 		return new MessageSource() {
 
 			@Override
