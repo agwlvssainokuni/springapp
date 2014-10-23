@@ -27,10 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.asyncproc.AsyncProcService;
 import cherry.spring.common.db.gen.dto.AsyncProc;
-import cherry.spring.common.lib.paginate.PagedList;
 
 @Controller
 public class AsyncProcControllerImpl implements AsyncProcController {

@@ -16,8 +16,8 @@
 
 package cherry.spring.admin.service.secure.asyncproc;
 
+import cherry.goods.paginate.PagedList;
 import cherry.spring.common.db.gen.dto.AsyncProc;
-import cherry.spring.common.lib.paginate.PagedList;
 
 public interface AsyncProcService {
 

@@ -32,7 +32,7 @@ public abstract class SignupEntryFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(512)
+	@cherry.spring.fwcore.validator.MaxLength(512)
 	@org.hibernate.validator.constraints.Email
 	private String email;
 

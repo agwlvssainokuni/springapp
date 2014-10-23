@@ -16,11 +16,11 @@
 
 package cherry.spring.entree;
 
-import static cherry.spring.common.log.Level.ERROR;
-import static cherry.spring.common.log.Level.INFO;
-import static cherry.spring.common.log.Level.WARN;
-import cherry.spring.common.log.ILogId;
-import cherry.spring.common.log.Level;
+import static cherry.goods.log.Level.ERROR;
+import static cherry.goods.log.Level.INFO;
+import static cherry.goods.log.Level.WARN;
+import cherry.goods.log.ILogId;
+import cherry.goods.log.Level;
 
 public enum LogId implements ILogId {
 	// ここから

@@ -16,7 +16,7 @@
 
 package cherry.spring.entree;
 
-import cherry.spring.common.helper.logicalerror.ILogicalError;
+import cherry.spring.fwcore.logicalerror.ILogicalError;
 
 public enum LogicalError implements ILogicalError {
 	/** サインアップ：回数制限超過 */

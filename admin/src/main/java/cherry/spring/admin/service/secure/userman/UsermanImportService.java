@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import cherry.spring.common.lib.etl.LoadResult;
+import cherry.spring.fwcore.etl.LoadResult;
 
 public interface UsermanImportService {
 

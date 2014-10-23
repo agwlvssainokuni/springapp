@@ -1,1 +1,1 @@
-include "dbschema", "common", "admin", "entree", "batch"
+include "goods", "fwcore", "dbschema", "common", "admin", "entree", "batch"

@@ -1,0 +1,16 @@
+apply plugin: "eclipse-wtp"
+
+dependencies {
+	compile "joda-time:joda-time:${versionJodaTime}"
+	compile "com.google.guava:guava:${versionGuava}"
+	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
+	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
+	compile "commons-codec:commons-codec:${versionCommonsCodec}"
+	compile "org.fluentd:fluent-logger:${versionFluentLogger}"
+	compile "org.slf4j:slf4j-api:${versionSlf4j}"
+	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
+	compile "ch.qos.logback:logback-core:${versionLogback}"
+	compile "ch.qos.logback:logback-classic:${versionLogback}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
+}

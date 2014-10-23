@@ -16,24 +16,30 @@
 
 package cherry.spring.admin;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import cherry.spring.fwcore.AppCtxHolder;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class AppCtxTest {
+
+	@Autowired
+	private ApplicationContext appCtx;
 
 	@Test
 	public void testGetAppCtx() {
-		AppCtxUtil.clearAppCtx();
-		try {
-			ApplicationContext appCtx = AppCtxUtil.getAppCtx();
-			assertNotNull(appCtx);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("failed to get ApplicationContext");
-		}
+		assertThat(AppCtxHolder.getAppCtx(), is(appCtx));
 	}
 
 }

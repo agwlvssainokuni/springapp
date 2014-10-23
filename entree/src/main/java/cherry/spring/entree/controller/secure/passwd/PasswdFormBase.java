@@ -32,23 +32,23 @@ public abstract class PasswdFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(512)
+	@cherry.spring.fwcore.validator.MaxLength(512)
 	@org.hibernate.validator.constraints.Email
 	private String loginId;
 
 	@javax.validation.constraints.NotNull
-	@cherry.spring.common.validator.MinLength(8)
-	@cherry.spring.common.validator.MaxLength(16)
+	@cherry.spring.fwcore.validator.MinLength(8)
+	@cherry.spring.fwcore.validator.MaxLength(16)
 	private String password;
 
 	@javax.validation.constraints.NotNull
-	@cherry.spring.common.validator.MinLength(8)
-	@cherry.spring.common.validator.MaxLength(16)
+	@cherry.spring.fwcore.validator.MinLength(8)
+	@cherry.spring.fwcore.validator.MaxLength(16)
 	private String newPassword;
 
 	@javax.validation.constraints.NotNull
-	@cherry.spring.common.validator.MinLength(8)
-	@cherry.spring.common.validator.MaxLength(16)
+	@cherry.spring.fwcore.validator.MinLength(8)
+	@cherry.spring.fwcore.validator.MaxLength(16)
 	private String newPasswordConf;
 
 	@Getter

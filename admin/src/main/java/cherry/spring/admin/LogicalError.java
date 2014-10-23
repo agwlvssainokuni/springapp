@@ -16,7 +16,7 @@
 
 package cherry.spring.admin;
 
-import cherry.spring.common.helper.logicalerror.ILogicalError;
+import cherry.spring.fwcore.logicalerror.ILogicalError;
 
 public enum LogicalError implements ILogicalError {
 	// ダミー
