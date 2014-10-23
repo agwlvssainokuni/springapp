@@ -23,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.goods.paginate.PagedList;
 import cherry.spring.common.db.gen.dto.AsyncProc;
 import cherry.spring.common.db.gen.query.QAsyncProc;
-import cherry.spring.foundation.querydsl.QueryConfigurer;
-import cherry.spring.foundation.querydsl.SQLQueryHelper;
-import cherry.spring.foundation.type.DeletedFlag;
-import cherry.spring.foundation.type.jdbc.RowMapperCreator;
+import cherry.spring.fwcore.querydsl.QueryConfigurer;
+import cherry.spring.fwcore.querydsl.SQLQueryHelper;
+import cherry.spring.fwcore.type.DeletedFlag;
+import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
 
 import com.mysema.query.sql.SQLQuery;
 

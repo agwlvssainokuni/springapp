@@ -45,7 +45,7 @@ import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
 import cherry.spring.entree.controller.secure.passwd.PasswdFormBase.Prop;
 import cherry.spring.entree.service.secure.passwd.PasswdService;
-import cherry.spring.foundation.logicalerror.LogicalErrorHelper;
+import cherry.spring.fwcore.logicalerror.LogicalErrorHelper;
 
 @Controller
 public class PasswdControllerImpl implements PasswdController {

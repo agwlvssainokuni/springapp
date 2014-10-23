@@ -37,7 +37,7 @@ import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
 import cherry.spring.entree.service.signup.SignupEntryService;
 import cherry.spring.entree.service.signup.SignupEntryService.UriComponentsSource;
-import cherry.spring.foundation.logicalerror.LogicalErrorHelper;
+import cherry.spring.fwcore.logicalerror.LogicalErrorHelper;
 
 @Controller
 public class SignupEntryControllerImpl implements SignupEntryController {

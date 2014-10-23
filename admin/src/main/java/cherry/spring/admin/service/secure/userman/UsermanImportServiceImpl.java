@@ -55,11 +55,11 @@ import cherry.goods.log.LogFactory;
 import cherry.goods.util.ToMapUtil;
 import cherry.spring.common.helper.async.AsyncProcHelper;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
-import cherry.spring.foundation.etl.CsvProvider;
-import cherry.spring.foundation.etl.LimiterException;
-import cherry.spring.foundation.etl.LoadResult;
-import cherry.spring.foundation.etl.Loader;
-import cherry.spring.foundation.etl.NoneLimiter;
+import cherry.spring.fwcore.etl.CsvProvider;
+import cherry.spring.fwcore.etl.LimiterException;
+import cherry.spring.fwcore.etl.LoadResult;
+import cherry.spring.fwcore.etl.Loader;
+import cherry.spring.fwcore.etl.NoneLimiter;
 
 @Service
 public class UsermanImportServiceImpl implements UsermanImportService {

@@ -36,8 +36,8 @@ import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.userman.UsermanSearchService;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
-import cherry.spring.foundation.download.DownloadAction;
-import cherry.spring.foundation.download.DownloadHelper;
+import cherry.spring.fwcore.download.DownloadAction;
+import cherry.spring.fwcore.download.DownloadHelper;
 
 @Controller
 public class UsermanSearchControllerImpl implements UsermanSearchController {

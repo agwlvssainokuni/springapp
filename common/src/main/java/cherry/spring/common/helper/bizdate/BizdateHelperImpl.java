@@ -29,8 +29,8 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
-import cherry.spring.foundation.sql.SqlLoader;
-import cherry.spring.foundation.type.jdbc.RowMapperCreator;
+import cherry.spring.fwcore.sql.SqlLoader;
+import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
 
 public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
 
