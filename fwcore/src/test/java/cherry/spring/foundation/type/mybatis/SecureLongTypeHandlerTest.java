@@ -32,9 +32,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.foundation.type.SecureLong;
 import cherry.spring.foundation.type.db.dto.ConversionTest;
 import cherry.spring.foundation.type.db.mapper.ConversionTestMapper;
+import cherry.spring.fwcore.type.SecureLong;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

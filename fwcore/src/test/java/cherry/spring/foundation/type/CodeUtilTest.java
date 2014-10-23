@@ -16,10 +16,10 @@
 
 package cherry.spring.foundation.type;
 
-import static cherry.spring.foundation.type.CodeUtil.getCodeMap;
-import static cherry.spring.foundation.type.CodeUtil.getLabeledCode;
-import static cherry.spring.foundation.type.CodeUtil.getLabeledCodeList;
-import static cherry.spring.foundation.type.CodeUtil.getMap;
+import static cherry.spring.fwcore.type.CodeUtil.getCodeMap;
+import static cherry.spring.fwcore.type.CodeUtil.getLabeledCode;
+import static cherry.spring.fwcore.type.CodeUtil.getLabeledCodeList;
+import static cherry.spring.fwcore.type.CodeUtil.getMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -40,7 +40,11 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.foundation.type.CodeUtil.CodeMap;
+import cherry.spring.fwcore.type.CodeUtil;
+import cherry.spring.fwcore.type.DeletedFlag;
+import cherry.spring.fwcore.type.FlagCode;
+import cherry.spring.fwcore.type.LabeledCode;
+import cherry.spring.fwcore.type.CodeUtil.CodeMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

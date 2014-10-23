@@ -23,6 +23,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import cherry.spring.fwcore.mask.IntegerMasker;
+
 public class IntegerMaskerTest {
 
 	@Test

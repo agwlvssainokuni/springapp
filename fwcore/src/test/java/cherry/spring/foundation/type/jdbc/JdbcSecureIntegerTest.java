@@ -34,8 +34,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.foundation.type.SecureInteger;
 import cherry.spring.foundation.type.db.dto.ConversionTest;
+import cherry.spring.fwcore.type.SecureInteger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

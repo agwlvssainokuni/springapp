@@ -26,8 +26,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.foundation.sql.SqlLoader;
 import cherry.spring.foundation.type.db.dto.ConversionTest;
+import cherry.spring.fwcore.sql.SqlLoader;
+import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
+import cherry.spring.fwcore.type.jdbc.SqlParameterSourceCreator;
 
 @Component
 public class JdbcDao implements InitializingBean {

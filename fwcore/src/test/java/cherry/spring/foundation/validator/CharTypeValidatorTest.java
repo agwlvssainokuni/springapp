@@ -16,12 +16,12 @@
 
 package cherry.spring.foundation.validator;
 
-import static cherry.spring.foundation.validator.CharType.Mode.Alpha;
-import static cherry.spring.foundation.validator.CharType.Mode.Lower;
-import static cherry.spring.foundation.validator.CharType.Mode.None;
-import static cherry.spring.foundation.validator.CharType.Mode.Numeric;
-import static cherry.spring.foundation.validator.CharType.Mode.Space;
-import static cherry.spring.foundation.validator.CharType.Mode.Upper;
+import static cherry.spring.fwcore.validator.CharType.Mode.Alpha;
+import static cherry.spring.fwcore.validator.CharType.Mode.Lower;
+import static cherry.spring.fwcore.validator.CharType.Mode.None;
+import static cherry.spring.fwcore.validator.CharType.Mode.Numeric;
+import static cherry.spring.fwcore.validator.CharType.Mode.Space;
+import static cherry.spring.fwcore.validator.CharType.Mode.Upper;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -41,6 +41,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
+
+import cherry.spring.fwcore.validator.CharType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

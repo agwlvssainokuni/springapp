@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
+import cherry.spring.fwcore.mask.SqlTimestampMasker;
+
 public class SqlTimestampMaskerTest {
 
 	@Test

@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
+import cherry.spring.fwcore.crypto.AESCipherHelper;
 
 public class AESCipherHelperTest {
 

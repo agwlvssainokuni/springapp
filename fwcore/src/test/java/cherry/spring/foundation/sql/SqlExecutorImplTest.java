@@ -34,6 +34,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.spring.fwcore.sql.SqlExecutor;
+import cherry.spring.fwcore.sql.SqlExecutorImpl;
+
 /**
  * {@link SqlExecutorImpl} のテスト.
  */

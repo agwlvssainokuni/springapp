@@ -21,6 +21,10 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import cherry.spring.fwcore.etl.Column;
+import cherry.spring.fwcore.etl.LimiterException;
+import cherry.spring.fwcore.etl.LoadResult;
+
 public class MiscTest {
 
 	@Test

@@ -26,7 +26,9 @@ import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.foundation.type.SecureInteger;
+import cherry.spring.fwcore.crypto.AESCipherHelper;
+import cherry.spring.fwcore.crypto.SecureIntegerHelper;
+import cherry.spring.fwcore.type.SecureInteger;
 
 public class SecureIntegerHelperTest {
 

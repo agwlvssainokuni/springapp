@@ -41,7 +41,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.DataBinder;
 
-import cherry.spring.foundation.type.format.IpAddrFormat.Version;
+import cherry.spring.fwcore.type.format.IpAddrFormat;
+import cherry.spring.fwcore.type.format.IpAddrFormatAnnotationFormatterFactory;
+import cherry.spring.fwcore.type.format.IpAddrFormat.Version;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

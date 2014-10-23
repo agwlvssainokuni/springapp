@@ -26,6 +26,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cherry.spring.fwcore.etl.CsvProvider;
+
 public class CsvProviderTest {
 
 	@Test

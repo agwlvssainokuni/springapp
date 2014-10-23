@@ -22,6 +22,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import cherry.spring.fwcore.mask.StringMasker;
+
 public class StringMaskerTest {
 
 	@Test

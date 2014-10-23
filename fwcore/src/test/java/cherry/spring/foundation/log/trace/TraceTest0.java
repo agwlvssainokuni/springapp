@@ -16,6 +16,9 @@
 
 package cherry.spring.foundation.log.trace;
 
+import cherry.spring.fwcore.log.trace.Mask;
+import cherry.spring.fwcore.log.trace.TraceInterceptor;
+
 /**
  * {@link TraceInterceptor} のテスト.
  */

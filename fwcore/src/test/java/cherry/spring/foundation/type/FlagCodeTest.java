@@ -21,6 +21,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import cherry.spring.fwcore.type.FlagCode;
+
 public class FlagCodeTest {
 
 	@Test
