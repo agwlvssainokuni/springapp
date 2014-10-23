@@ -21,7 +21,7 @@
 		<javaTypeResolver
 			type="cherry.mybatis.generator.custom.JavaTypeResolverCustomImpl">
 			<property name="useJodaTime" value="true" />
-			<property name="javaTypeByColumnName.DELETED_FLG" value="cherry.spring.foundation.type.DeletedFlag" />
+			<property name="javaTypeByColumnName.DELETED_FLG" value="cherry.spring.fwcore.type.DeletedFlag" />
 		</javaTypeResolver>
 		<javaModelGenerator targetPackage="cherry.spring.common.db.gen.dto"
 			targetProject="../common/src/mybatis/java" />
