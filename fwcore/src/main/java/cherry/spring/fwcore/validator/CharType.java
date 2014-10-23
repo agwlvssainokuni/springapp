@@ -101,7 +101,7 @@ public @interface CharType {
 
 	String acceptable() default "";
 
-	String message() default "{cherry.spring.common.validator.CharType.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharType.message}";
 
 	Class<?>[] groups() default {};
 

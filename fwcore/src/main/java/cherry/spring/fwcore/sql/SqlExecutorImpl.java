@@ -38,7 +38,7 @@ import cherry.goods.sql.SimpleSqlParser;
  */
 public class SqlExecutorImpl implements SqlExecutor {
 
-	@Value("${foundation.sqlexecutor.charset}")
+	@Value("${fwcore.sqlexecutor.charset}")
 	private Charset charset;
 
 	@Autowired

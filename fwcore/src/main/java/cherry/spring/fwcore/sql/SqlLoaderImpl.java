@@ -34,13 +34,13 @@ import cherry.goods.sql.SimpleSqlParser;
 
 public class SqlLoaderImpl implements SqlLoader {
 
-	@Value("${foundation.sqlloader.charset}")
+	@Value("${fwcore.sqlloader.charset}")
 	private Charset charset;
 
-	@Value("${foundation.sqlloader.extension}")
+	@Value("${fwcore.sqlloader.extension}")
 	private String extension;
 
-	@Value("${foundation.sqlloader.namePattern}")
+	@Value("${fwcore.sqlloader.namePattern}")
 	private Pattern namePattern;
 
 	@Autowired

@@ -44,25 +44,25 @@ import cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range;
 public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<CustomDateTimeFormat> {
 
-	@Value("${foundation.format.date.print}")
+	@Value("${fwcore.format.date.print}")
 	private String dateToPrint;
 
-	@Value("${foundation.format.date.parse}")
+	@Value("${fwcore.format.date.parse}")
 	private String dateToParse;
 
-	@Value("${foundation.format.time.print}")
+	@Value("${fwcore.format.time.print}")
 	private String timeToPrint;
 
-	@Value("${foundation.format.time.parse.hm}")
+	@Value("${fwcore.format.time.parse.hm}")
 	private String timeToParseHm;
 
-	@Value("${foundation.format.time.parse.s}")
+	@Value("${fwcore.format.time.parse.s}")
 	private String timeToParseS;
 
-	@Value("${foundation.format.delimiter.print}")
+	@Value("${fwcore.format.delimiter.print}")
 	private String delimiterToPrint;
 
-	@Value("${foundation.format.delimiter.parse}")
+	@Value("${fwcore.format.delimiter.parse}")
 	private String delimiterToParse;
 
 	private Set<Class<?>> fieldTypes = new HashSet<Class<?>>(Arrays.asList(

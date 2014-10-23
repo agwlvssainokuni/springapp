@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeNumeric {
 
-	String message() default "{cherry.spring.common.validator.CharTypeNumeric.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeNumeric.message}";
 
 	Class<?>[] groups() default {};
 

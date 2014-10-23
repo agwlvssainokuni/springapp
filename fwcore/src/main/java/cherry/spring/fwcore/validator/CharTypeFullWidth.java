@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeFullWidth {
 
-	String message() default "{cherry.spring.common.validator.CharTypeFullWidth.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeFullWidth.message}";
 
 	Class<?>[] groups() default {};
 

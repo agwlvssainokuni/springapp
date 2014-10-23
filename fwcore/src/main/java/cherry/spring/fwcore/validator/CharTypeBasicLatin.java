@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeBasicLatin {
 
-	String message() default "{cherry.spring.common.validator.CharTypeBasicLatin.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeBasicLatin.message}";
 
 	Class<?>[] groups() default {};
 

@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeAlphaNumeric {
 
-	String message() default "{cherry.spring.common.validator.CharTypeAlphaNumeric.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeAlphaNumeric.message}";
 
 	Class<?>[] groups() default {};
 

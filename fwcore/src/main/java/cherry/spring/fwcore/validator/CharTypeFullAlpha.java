@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeFullAlpha {
 
-	String message() default "{cherry.spring.common.validator.CharTypeFullAlpha.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeFullAlpha.message}";
 
 	Class<?>[] groups() default {};
 

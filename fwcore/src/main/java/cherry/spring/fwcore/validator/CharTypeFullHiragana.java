@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeFullHiragana {
 
-	String message() default "{cherry.spring.common.validator.CharTypeFullHiragana.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeFullHiragana.message}";
 
 	Class<?>[] groups() default {};
 

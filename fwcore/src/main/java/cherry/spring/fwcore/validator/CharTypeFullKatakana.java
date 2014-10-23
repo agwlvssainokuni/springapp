@@ -39,7 +39,7 @@ import cherry.spring.fwcore.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeFullKatakana {
 
-	String message() default "{cherry.spring.common.validator.CharTypeFullKatakana.message}";
+	String message() default "{cherry.spring.fwcore.validator.CharTypeFullKatakana.message}";
 
 	Class<?>[] groups() default {};
 
