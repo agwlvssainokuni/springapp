@@ -34,7 +34,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
  * {@link TraceInterceptor} のテスト.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:cherry/spring/foundation/log/trace/applicationContext.xml")
+@ContextConfiguration(locations = "classpath:cherry/spring/fwcore/log/trace/applicationContext.xml")
 public class TraceInterceptorTest {
 
 	@Autowired
@@ -61,14 +61,13 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test0: ()",
+		assertEquals("cherry.spring.fwcore.log.trace.TraceTest0Impl#test0: ()",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test0: void",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test0: void",
 				e1.getMessage());
 	}
 
@@ -88,13 +87,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test1: (12345)",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test1: (12345)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test1: 12345",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test1: 12345",
 				e1.getMessage());
 	}
 
@@ -114,13 +113,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test2: ([12345, 67890])",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test2: ([12345, 67890])",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test2: [12345, 67890]",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test2: [12345, 67890]",
 				e1.getMessage());
 	}
 
@@ -140,13 +139,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test2: (<null>)",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test2: (<null>)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test2: <null>",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test2: <null>",
 				e1.getMessage());
 	}
 
@@ -166,13 +165,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test3: (12345, 67890)",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test3: (12345, 67890)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test3: 1234567890",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test3: 1234567890",
 				e1.getMessage());
 	}
 
@@ -192,13 +191,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test4: (12345, <MASKED>)",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test4: (12345, <MASKED>)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test4: <MASKED>",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test4: <MASKED>",
 				e1.getMessage());
 	}
 
@@ -221,14 +220,13 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test5: ()",
+		assertEquals("cherry.spring.fwcore.log.trace.TraceTest0Impl#test5: ()",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXCEPTION", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest0Impl#test5: java.lang.Exception",
+				"cherry.spring.fwcore.log.trace.TraceTest0Impl#test5: java.lang.Exception",
 				e1.getMessage());
 	}
 
@@ -248,13 +246,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: ([1, 2, 3, 4, 5])",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: ([1, 2, 3, 4, 5])",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: [1, 2, 3, 4, 5]",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: [1, 2, 3, 4, 5]",
 				e1.getMessage());
 	}
 
@@ -274,13 +272,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: ([array of int size 6])",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: ([array of int size 6])",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: [array of int size 6]",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: [array of int size 6]",
 				e1.getMessage());
 	}
 
@@ -300,13 +298,13 @@ public class TraceInterceptorTest {
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: ([11111, 22222, 33333,...<truncated>...)",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: ([11111, 22222, 33333,...<truncated>...)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
 		assertEquals(
-				"cherry.spring.foundation.log.trace.TraceTest1Impl#test: [11111, 22222, 33333,...<truncated>...",
+				"cherry.spring.fwcore.log.trace.TraceTest1Impl#test: [11111, 22222, 33333,...<truncated>...",
 				e1.getMessage());
 	}
 
