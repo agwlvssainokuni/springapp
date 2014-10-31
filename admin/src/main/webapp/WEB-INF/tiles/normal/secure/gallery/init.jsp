@@ -18,8 +18,8 @@
 	<table class="app-collabel">
 		<tbody>
 			<tr>
-				<th><s:message code="secure/gallery/init.label.zipCode" /></th>
-				<td><input id="zipCode" name="zipCode" class="app-width10"></td>
+				<th><s:message code="secure/gallery/init.label.zipcd" /></th>
+				<td><input id="zipcd" name="zipcd" class="app-width10"></td>
 			</tr>
 			<tr>
 				<th><s:message code="secure/gallery/init.label.pref" /></th>
