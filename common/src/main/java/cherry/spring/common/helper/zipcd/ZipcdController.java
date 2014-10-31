@@ -26,6 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cherry.spring.common.api.ApiResponse;
 
@@ -33,11 +34,13 @@ import cherry.spring.common.api.ApiResponse;
 public interface ZipcdController {
 
 	@RequestMapping()
+	@ResponseBody
 	ApiResponse<List<ZipcdAddress>> execute(
 			@RequestParam("zipcd") String zipcd, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping("{zipcd}")
+	@ResponseBody
 	ApiResponse<List<ZipcdAddress>> executeByPath(
 			@PathVariable("zipcd") String zipcd, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
