@@ -32,6 +32,8 @@ public class PathDef {
 
 	public static final String URI_USERMAN_SEARCH = "/secure/userman/search";
 
+	public static final String URI_GALLERY = "/secure/gallery";
+
 	public static final String SUBURI_EXECUTE = "execute";
 
 	public static final String SUBURI_FINISH = "finish";
@@ -55,6 +57,8 @@ public class PathDef {
 	public static final String VIEW_USERMAN_IMPORT_INIT = "secure/userman/import/init";
 
 	public static final String VIEW_USERMAN_IMPORT_FINISH = "secure/userman/import/finish";
+
+	public static final String VIEW_GALLERY_INIT = "secure/gallery/init";
 
 	public static final String METHOD_LOGIN_FAILED = "loginFailed";
 
