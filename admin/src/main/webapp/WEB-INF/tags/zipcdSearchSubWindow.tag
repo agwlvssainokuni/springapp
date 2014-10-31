@@ -27,7 +27,7 @@
 		});
 	});
 
-	function zipcdSearchSubWindow(zipcd) {
+	function zipcdSearchSubWindow(zipcd, callback) {
 		$.ajax({
 			url : "${zipcdUri}",
 			type : "POST",
