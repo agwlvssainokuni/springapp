@@ -19,5 +19,7 @@
 					code="secure/home/init.menu.asyncproc" /></a></li>
 		<li><a href="<c:url value="/secure/userman" />"><s:message
 					code="secure/home/init.menu.userman" /></a></li>
+		<li><a href="<c:url value="/secure/gallery" />"><s:message
+					code="secure/home/init.menu.gallery" /></a></li>
 	</ul>
 </div>
