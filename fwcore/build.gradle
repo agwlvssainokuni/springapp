@@ -48,7 +48,7 @@ dependencies {
 	compile "org.springframework.security:spring-security-config:${versionSpringSecurity}"
 	compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
 	compile "org.springframework.data:spring-data-commons:${versionSpringDataCommons}"
-	//	compile "org.springframework.data:spring-data-jdbc-core:${versionSpringDataJdbcCore}"
+	compile "org.springframework.data:spring-data-jdbc-core:${versionSpringDataJdbcCore}"
 	compile "org.hibernate:hibernate-validator:${versionHibernateValidator}"
 	compile "javax.mail:mail:${versionJavaMail}"
 	compile "javax.validation:validation-api:${versionJavaValidation}"
