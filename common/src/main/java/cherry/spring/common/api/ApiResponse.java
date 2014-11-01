@@ -25,7 +25,7 @@ public class ApiResponse<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int code;
+	private int status;
 
 	private String description;
 
@@ -37,12 +37,12 @@ public class ApiResponse<T> implements Serializable {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public int getCode() {
-		return code;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getDescription() {

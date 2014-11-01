@@ -16,20 +16,24 @@
 
 package cherry.spring.common.helper.zipcd;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
 import cherry.spring.common.api.ApiResponse;
+import cherry.spring.common.api.ApiStatus;
 
 @Controller
 public class ZipcdControllerImpl implements ZipcdController {
+
+	@Autowired
+	private ZipcdService zipcdService;
 
 	@Override
 	public ApiResponse<List<ZipcdAddress>> execute(String zipcd,
@@ -46,32 +50,13 @@ public class ZipcdControllerImpl implements ZipcdController {
 	}
 
 	private ApiResponse<List<ZipcdAddress>> executeImpl(String zipcd) {
-		// TODO 実装する
 
-		ZipcdAddress addr1 = new ZipcdAddress();
-		addr1.setZipcd(zipcd);
-		addr1.setCityCd("CITY CODE 1");
-		addr1.setPref("PREF 1");
-		addr1.setCity("CITY 1");
-		addr1.setAddr("ADDR 1");
-		addr1.setPrefKana("PREF KANA 1");
-		addr1.setCityKana("CITY KANA 1");
-		addr1.setAddrKana("ADDR KANA 1");
-
-		ZipcdAddress addr2 = new ZipcdAddress();
-		addr2.setZipcd(zipcd);
-		addr2.setCityCd("CITY CODE 2");
-		addr2.setPref("PREF 2");
-		addr2.setCity("CITY 2");
-		addr2.setAddr("ADDR 2");
-		addr2.setPrefKana("PREF KANA 2");
-		addr2.setCityKana("CITY KANA 2");
-		addr2.setAddrKana("ADDR KANA 2");
+		List<ZipcdAddress> result = zipcdService.search(zipcd);
+		ApiStatus status = result.isEmpty() ? ApiStatus.WARN : ApiStatus.OK;
 
 		ApiResponse<List<ZipcdAddress>> response = new ApiResponse<>();
-		response.setCode(0);
-		response.setDescription("OK");
-		response.setResult(Arrays.asList(addr1, addr2));
+		response.setStatus(status.getValue());
+		response.setResult(result);
 		return response;
 	}
 
