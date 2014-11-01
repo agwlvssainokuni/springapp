@@ -7,6 +7,7 @@
 		<thead>
 			<tr>
 				<th></th>
+				<th>Zip Code</th>
 				<th>Prefecture</th>
 				<th>City</th>
 				<th>Address</th>
@@ -21,23 +22,53 @@
 		$("#ZipcdSearchSubWindow").dialog({
 			autoOpen : false,
 			closeOnEscape : true,
-			closeText : "CANCEL",
 			modal : true,
-			title : "SELECT ADDRESS"
+			width : 600,
+			title : "ZIPCODE SEARCH"
 		});
 	});
 
 	function zipcdSearchSubWindow(zipcd, callback) {
+
+		var onSuccess = function(data, textStatus, jqXHR) {
+			if (data.code != 0) {
+				alert(data.message);
+				return;
+			}
+			if (data.result.length == 0) {
+				alert("NOT FOUND");
+			} else if (data.result.length == 1) {
+				callback(data.result[0]);
+			} else {
+				var dialog = $("#ZipcdSearchSubWindow");
+				var tbody = $("table tbody", dialog);
+				tbody.empty();
+				function onClick(record) {
+					return function(event) {
+						event.preventDefault();
+						callback(record);
+						dialog.dialog("close");
+					}
+				}
+				for (var i = 0; i < data.result.length; i++) {
+					var record = data.result[i];
+					tbody.append("<tr><td><button>SELECT</button></td><td>"
+							+ record.zipcd + "</td><td>" + record.pref
+							+ "</td><td>" + record.city + "</td><td>"
+							+ record.addr + "</td></tr>");
+					$("tr:last button", tbody).click(onClick(record));
+				}
+				dialog.dialog("open");
+			}
+		};
+
 		$.ajax({
 			url : "${zipcdUri}",
 			type : "POST",
 			data : {
 				zipcd : zipcd
 			},
-			success : function(data, textStatus, jqXHR) {
-				alert(textStatus);
-				$("#ZipcdSearchSubWindow").open();
-			}
+			success : onSuccess
 		});
 	}
 </script>
