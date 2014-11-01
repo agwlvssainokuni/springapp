@@ -5,7 +5,6 @@ mainClassName = "cherry.spring.batch.tools.Main"
 dependencies {
 	compile project(":common")
 	compile "com.h2database:h2:${versionH2db}"
-	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "commons-cli:commons-cli:1.2"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testCompile "org.springframework:spring-test:${versionSpring}"

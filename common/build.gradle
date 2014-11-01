@@ -4,13 +4,13 @@ dependencies {
 	compile project(":goods")
 	compile project(":fwcore")
 	compile project(":dbschema")
+	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	provided "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	provided "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 	provided "javax.jms:jms-api:${versionJavaJms}"
 	provided "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testCompile "com.h2database:h2:${versionH2db}"
-	testCompile "org.flywaydb:flyway-core:${versionFlyway}"
 	testCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
