@@ -28,4 +28,6 @@
 						code="secure/home/init.menu.userman.import" /></a></li>
 		</ul>
 	</li>
+	<li><a href="<c:url value="/secure/gallery" />"><s:message
+				code="secure/home/init.menu.gallery" /></a></li>
 </ul>

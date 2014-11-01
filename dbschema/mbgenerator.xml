@@ -50,5 +50,8 @@
 		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
+		<table tableName="zipcd_master">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
 	</context>
 </generatorConfiguration>
