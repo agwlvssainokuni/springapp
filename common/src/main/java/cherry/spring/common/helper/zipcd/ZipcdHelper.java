@@ -18,7 +18,7 @@ package cherry.spring.common.helper.zipcd;
 
 import java.util.List;
 
-public interface ZipcdService {
+public interface ZipcdHelper {
 
 	List<ZipcdAddress> search(String zipcd);
 

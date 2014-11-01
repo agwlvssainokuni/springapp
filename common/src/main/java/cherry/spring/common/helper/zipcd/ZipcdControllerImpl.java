@@ -33,7 +33,7 @@ import cherry.spring.common.api.ApiStatus;
 public class ZipcdControllerImpl implements ZipcdController {
 
 	@Autowired
-	private ZipcdService zipcdService;
+	private ZipcdHelper zipcdHelper;
 
 	@Override
 	public ApiResponse<List<ZipcdAddress>> execute(String zipcd,
@@ -51,7 +51,7 @@ public class ZipcdControllerImpl implements ZipcdController {
 
 	private ApiResponse<List<ZipcdAddress>> executeImpl(String zipcd) {
 
-		List<ZipcdAddress> result = zipcdService.search(zipcd);
+		List<ZipcdAddress> result = zipcdHelper.search(zipcd);
 		ApiStatus status = result.isEmpty() ? ApiStatus.WARN : ApiStatus.OK;
 
 		ApiResponse<List<ZipcdAddress>> response = new ApiResponse<>();

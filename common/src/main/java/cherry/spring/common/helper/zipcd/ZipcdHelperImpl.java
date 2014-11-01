@@ -33,7 +33,7 @@ import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
 import com.mysema.query.sql.SQLQuery;
 
 @Service
-public class ZipcdServiceImpl implements ZipcdService, InitializingBean {
+public class ZipcdHelperImpl implements ZipcdHelper, InitializingBean {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
