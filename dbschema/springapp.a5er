@@ -15,6 +15,8 @@ Page=非同期処理
 PageInfo="非同期処理",4,"A3Landscape",$FFFFFF
 Page=業務日時
 PageInfo="業務日時",4,"A3Landscape",$FFFFFF
+Page=郵便番号
+PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
 Page=SpringApp
 PageInfo="SpringApp",4,"A3Landscape",$FFFFFF
 Domain=ID=@INT
@@ -32,6 +34,7 @@ Domain=メール本文=@VARCHAR(4096)
 Domain=区分=@VARCHAR(3)
 Domain=フラグ=@INT
 Domain=JSON=@VARCHAR(4096)
+Domain=郵便番号=@VARCHAR(7)
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -61,6 +64,31 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=zipcd_master
+LName=郵便番号マスタ
+Comment=
+TableOption=
+Page=郵便番号
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="市区町村コード","city_cd","@INT","NOT NULL",,"","",$FFFFFFFF,""
+Field="郵便番号","zipcd","*郵便番号","NOT NULL",,"","",$FFFFFFFF,""
+Field="都道府県","pref","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="市区町村","city","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="町域","addr","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="都道府県(カナ)","pref_kana","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="市区町村(カナ)","city_kana","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="町域(カナ)","addr_kana","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,zipcd
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141101095614
+Position="郵便番号",500,500
 
 [Entity]
 PName=bizdatetime_master
