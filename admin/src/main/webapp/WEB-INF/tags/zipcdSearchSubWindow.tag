@@ -36,35 +36,41 @@
 	function zipcdSearchSubWindow(zipcd, callback) {
 
 		var onSuccess = function(data, textStatus, jqXHR) {
-			if (data.code != 0) {
-				alert(data.message);
+			if (data.status != 0) {
+				if (data.status == 1) {
+					alert("${alertNotFound}");
+				} else {
+					alert(data.description);
+				}
 				return;
 			}
-			if (data.result.length == 0) {
-				alert("${alertNotFound}");
-			} else if (data.result.length == 1) {
+
+			if (data.result.length == 1) {
 				callback(data.result[0]);
-			} else {
-				var dialog = $("#zipcdSearchSubWindow");
-				var tbody = $("table tbody", dialog);
-				tbody.empty();
-				function onClick(record) {
-					return function(event) {
-						event.preventDefault();
-						callback(record);
-						dialog.dialog("close");
-					}
-				}
-				for (var i = 0; i < data.result.length; i++) {
-					var record = data.result[i];
-					tbody.append("<tr><td><button>" + "${selectButton}"
-							+ "</button></td><td>" + record.zipcd + "</td><td>"
-							+ record.pref + "</td><td>" + record.city
-							+ "</td><td>" + record.addr + "</td></tr>");
-					$("tr:last button", tbody).click(onClick(record));
-				}
-				dialog.dialog("open");
+				return;
 			}
+
+			var dialog = $("#zipcdSearchSubWindow");
+			function onClick(record) {
+				return function(event) {
+					event.preventDefault();
+					callback(record);
+					dialog.dialog("close");
+				}
+			}
+
+			var tbody = $("table tbody", dialog);
+			tbody.empty();
+			for (var i = 0; i < data.result.length; i++) {
+				var record = data.result[i];
+				tbody.append("<tr><td><button>" + "${selectButton}"
+						+ "</button></td><td>" + record.zipcd + "</td><td>"
+						+ record.pref + "</td><td>" + record.city + "</td><td>"
+						+ record.addr + "</td></tr>");
+				$("tr:last button", tbody).click(onClick(record));
+			}
+
+			dialog.dialog("open");
 		};
 
 		$.ajax({
