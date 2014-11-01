@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,7 @@ public class ZipcdServiceImpl implements ZipcdService, InitializingBean {
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable("zipcd")
 	@Override
 	public List<ZipcdAddress> search(String zipcd) {
 		QZipcdMaster z = new QZipcdMaster("z");
