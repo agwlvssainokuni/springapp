@@ -16,35 +16,48 @@
 
 package cherry.spring.common.helper.zipcd;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.db.gen.query.QZipcdMaster;
-import cherry.spring.fwcore.type.DeletedFlag;
+import cherry.spring.fwcore.sql.SqlLoader;
 import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
-
-import com.mysema.query.sql.SQLQuery;
 
 @Service
 public class ZipcdHelperImpl implements ZipcdHelper, InitializingBean {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
 
+	@Autowired
+	private SqlLoader sqlLoader;
+
 	private RowMapper<ZipcdAddress> rowMapper;
 
+	private String queryByZipcd;
+
+	public void setQueryByZipcd(String queryByZipcd) {
+		this.queryByZipcd = queryByZipcd;
+	}
+
 	@Override
-	public void afterPropertiesSet() {
+	public void afterPropertiesSet() throws IOException {
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
 		rowMapper = rowMapperCreator.create(ZipcdAddress.class);
 	}
 
@@ -52,14 +65,10 @@ public class ZipcdHelperImpl implements ZipcdHelper, InitializingBean {
 	@Cacheable("zipcd")
 	@Override
 	public List<ZipcdAddress> search(String zipcd) {
-		QZipcdMaster z = new QZipcdMaster("z");
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(z).where(z.zipcd.eq(zipcd))
-				.where(z.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.orderBy(z.id.asc());
-		return queryDslJdbcOperations.query(query, rowMapper, z.cityCd,
-				z.zipcd, z.pref, z.city, z.addr, z.prefKana, z.cityKana,
-				z.addrKana);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("zipcd", zipcd);
+		return namedParameterJdbcOperations.query(queryByZipcd, paramMap,
+				rowMapper);
 	}
 
 }
