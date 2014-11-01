@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<div id="ZipcdSearchSubWindow">
+<div id="zipcdSearchSubWindow">
 	<table>
 		<thead>
 			<tr>
@@ -19,11 +19,11 @@
 <c:url var="zipcdUri" value="/secure/common/zipcd" />
 <script type="text/javascript">
 	$(function() {
-		$("#ZipcdSearchSubWindow").dialog({
+		$("#zipcdSearchSubWindow").dialog({
 			autoOpen : false,
 			closeOnEscape : true,
 			modal : true,
-			width : 600,
+			width : 800,
 			title : "ZIPCODE SEARCH"
 		});
 	});
@@ -40,7 +40,7 @@
 			} else if (data.result.length == 1) {
 				callback(data.result[0]);
 			} else {
-				var dialog = $("#ZipcdSearchSubWindow");
+				var dialog = $("#zipcdSearchSubWindow");
 				var tbody = $("table tbody", dialog);
 				tbody.empty();
 				function onClick(record) {
