@@ -1,4 +1,5 @@
-<%@ tag language="java" pageEncoding="UTF-8" body-content="empty"%>
+<%@ tag language="java" body-content="empty" pageEncoding="UTF-8"
+	trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
@@ -35,28 +36,29 @@
 
 	function zipcdSearchSubWindow(zipcd, callback) {
 
-		var onSuccess = function(data, textStatus, jqXHR) {
-			if (data.status != 0) {
-				if (data.status == 1) {
-					alert("${alertNotFound}");
-				} else {
-					alert(data.description);
-				}
+		var dialog = $("#zipcdSearchSubWindow");
+
+		function onClick(record) {
+			return function(event) {
+				event.preventDefault();
+				callback(record);
+				dialog.dialog("close");
+			}
+		}
+
+		function onSuccess(data, textStatus, jqXHR) {
+			if (data.status == 1) {
+				alert("${alertNotFound}");
+				return;
+			}
+			if (data.status > 1) {
+				alert(data.description);
 				return;
 			}
 
 			if (data.result.length == 1) {
 				callback(data.result[0]);
 				return;
-			}
-
-			var dialog = $("#zipcdSearchSubWindow");
-			function onClick(record) {
-				return function(event) {
-					event.preventDefault();
-					callback(record);
-					dialog.dialog("close");
-				}
 			}
 
 			var tbody = $("table tbody", dialog);
@@ -71,7 +73,7 @@
 			}
 
 			dialog.dialog("open");
-		};
+		}
 
 		$.ajax({
 			url : "${zipcdUri}",
