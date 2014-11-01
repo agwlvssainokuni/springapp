@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cherry.spring.common.api.ApiResponse;
 
-@RequestMapping("/secure/common/zipcd")
+@RequestMapping("${common.helper.zipcd.uripath}")
 public interface ZipcdController {
 
 	@RequestMapping()
