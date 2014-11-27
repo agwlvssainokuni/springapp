@@ -25,6 +25,26 @@ import java.io.IOException;
  */
 public interface FileProcessHandler {
 
+	/**
+	 * 非同期で実行するファイル処理の本体。
+	 * 
+	 * @param file
+	 *            処理対象のファイル。
+	 * @param name
+	 *            HTTPリクエストで受け渡された元のパラメタ名。
+	 * @param originalFilename
+	 *            HTTPリクエストで受け渡された元のファイル名。
+	 * @param contentType
+	 *            HTTPリクエストで受け渡されたコンテントタイプ。
+	 * @param size
+	 *            HTTPリクエストで受け渡された元のファイルのサイズ。
+	 * @param asyncId
+	 *            非同期実行状況を管理するためのID。
+	 * @return 非同期で実行したファイル処理の結果。
+	 * @throws IOException
+	 *             ファイルI/Oで異常が発生したことを表す。ファイル処理で発生したI/O例外は非同期処理フレームワークがまとめて捕捉して処理
+	 *             (ログ出力して異常終了として記録) する。
+	 */
 	FileProcessResult handleFile(File file, String name,
 			String originalFilename, String contentType, long size, long asyncId)
 			throws IOException;
