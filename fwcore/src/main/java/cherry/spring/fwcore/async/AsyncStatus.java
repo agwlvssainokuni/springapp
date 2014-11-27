@@ -18,12 +18,16 @@ package cherry.spring.fwcore.async;
 
 import cherry.spring.fwcore.type.Code;
 
+/**
+ * 非同期実行フレームワーク。<br />
+ * 非同期処理の実行状況 (ステータス) を表す。
+ */
 public enum AsyncStatus implements Code<String> {
 	/** キュー投入準備中 (初期状態)。 */
 	PREPARING("0"),
 	/** キュー投入済み。 */
-	INVOKED("1"),
-	/** 非同期処理実行開始。 */
+	LAUNCHED("1"),
+	/** 非同期処理実行中。 */
 	PROCESSING("2"),
 	/** 非同期処理正常終了 (全件OK)。 */
 	SUCCESS("3"),
@@ -34,12 +38,16 @@ public enum AsyncStatus implements Code<String> {
 	/** 非同期処理例外終了 (例外発生)。 */
 	EXCEPTION("9");
 
+	/** 実行状況の区分値。 */
 	private final String code;
 
 	private AsyncStatus(String code) {
 		this.code = code;
 	}
 
+	/**
+	 * @return 実行状況の区分値。
+	 * */
 	@Override
 	public String code() {
 		return this.code;
