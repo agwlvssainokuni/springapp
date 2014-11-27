@@ -36,4 +36,13 @@ public interface AsyncProcessFacade {
 	 */
 	long launchFileProcess(MultipartFile file, String handlerName);
 
+	/**
+	 * 非同期のコマンド実行を実行登録する。
+	 * 
+	 * @param command
+	 *            実行するコマンド (コマンドライン)。
+	 * @return 非同期実行状況の管理データのID。
+	 */
+	long launchCommand(String... command);
+
 }
