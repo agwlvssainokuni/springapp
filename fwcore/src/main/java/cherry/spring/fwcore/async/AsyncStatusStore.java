@@ -28,17 +28,6 @@ import cherry.spring.fwcore.command.CommandResult;
 public interface AsyncStatusStore {
 
 	/**
-	 * 非同期処理の実行状況 (ステータス) を取得する。
-	 * 
-	 * @param asyncId
-	 *            非同期実行状況の管理データのID。
-	 * @param launcherId
-	 *            非同期処理の実行者のID。
-	 * @return 非同期処理の実行状況 (ステータス)。
-	 */
-	AsyncStatus getCurrentStatus(long asyncId, String launcherId);
-
-	/**
 	 * 非同期処理 (ファイル処理) の管理データを作成する。
 	 * 
 	 * @param launcherId
