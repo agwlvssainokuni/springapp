@@ -66,10 +66,24 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 	}
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
-	public long createCommand(String launcherId, LocalDateTime dtm,
-			String... command) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
+	public long createCommand(final String launcherId, final LocalDateTime dtm,
+			final String... command) {
+		final QAsyncProc a = new QAsyncProc("a");
+		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+			@Override
+			public long doInSqlInsertClause(SQLInsertClause insert) {
+				insert.set(a.name, command[0]);
+				insert.set(a.launcherId, launcherId);
+				insert.set(a.status, "PREPARING");
+				insert.set(a.registeredAt, dtm);
+				Long id = insert.executeWithKey(Long.class);
+				checkState(
+						id != null,
+						"failed to create async_proc: name={0}, launcherId={1}, registeredAt={2}",
+						command[0], launcherId, dtm);
+				return id.longValue();
+			}
+		});
 	}
 
 	@Transactional("jtaTransactionManager")
@@ -141,10 +155,26 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishCommand(long asyncId, LocalDateTime dtm,
-			AsyncStatus status, CommandResult result) {
-		// TODO 自動生成されたメソッド・スタブ
-
+	public void finishCommand(final long asyncId, final LocalDateTime dtm,
+			AsyncStatus status, final CommandResult result) {
+		final QAsyncProc a = new QAsyncProc("a");
+		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+			@Override
+			public long doInSqlUpdateClause(SQLUpdateClause update) {
+				update.set(a.status, "SUCCESS");
+				update.set(a.finishedAt, dtm);
+				update.set(a.result, result.toString());
+				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
+				update.set(a.lockVersion, a.lockVersion.add(1));
+				update.where(a.id.eq((int) asyncId));
+				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				return update.execute();
+			}
+		});
+		checkState(
+				count == 1,
+				"failed to update async_proc: id={0}, finishedAt={1}, result={2}, count={3}",
+				asyncId, dtm, result.toString(), count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
