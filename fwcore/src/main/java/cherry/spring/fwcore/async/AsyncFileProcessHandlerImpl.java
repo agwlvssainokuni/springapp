@@ -43,26 +43,23 @@ import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.fwcore.bizdtm.BizDateTime;
 
+/**
+ * 非同期実行フレームワーク。<br />
+ * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}
+ * を実装することとする。
+ */
 public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 
 	private static final String TYPE_NAME = "type";
-
 	private static final String TYPE_VALUE = "AsyncFileProcessHandler";
-
 	private static final String TYPE_SELECTOR = "type = 'AsyncFileProcessHandler'";
 
 	private static final String ASYNCID = "asyncId";
-
 	private static final String FILE = "file";
-
 	private static final String NAME = "name";
-
 	private static final String ORIGINAL_FILENAME = "originalFilename";
-
 	private static final String CONTENT_TYPE = "contentType";
-
 	private static final String SIZE = "size";
-
 	private static final String HANDLER_NAME = "handlerName";
 
 	private final Log log = LogFactory.getLog(getClass());
@@ -123,6 +120,14 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 		return asyncId;
 	}
 
+	/**
+	 * 実行登録したファイル処理を実行する。<br />
+	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 
+	 * @param message
+	 *            {@link #launchFileProcess(String, MultipartFile, String)}
+	 *            において登録した内容がコンテナから受渡される。
+	 */
 	@JmsListener(destination = "${fwcore.async.queue}", selector = TYPE_SELECTOR)
 	@Override
 	public void handleMessage(Map<String, String> message) {

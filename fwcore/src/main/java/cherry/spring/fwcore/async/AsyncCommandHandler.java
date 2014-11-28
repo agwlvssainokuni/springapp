@@ -18,6 +18,12 @@ package cherry.spring.fwcore.async;
 
 import java.util.Map;
 
+import org.springframework.jms.annotation.JmsListener;
+
+/**
+ * 非同期実行フレームワーク。<br />
+ * 非同期にコマンドを実行する機能を提供する。
+ */
 public interface AsyncCommandHandler {
 
 	/**
@@ -31,6 +37,14 @@ public interface AsyncCommandHandler {
 	 */
 	long launchCommand(String launcherId, String... command);
 
+	/**
+	 * 実行登録したコマンドを実行する。<br />
+	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 
+	 * @param message
+	 *            {@link #launchCommand(String, String...)}
+	 *            において登録した内容がコンテナから受渡される。
+	 */
 	void handleMessage(Map<String, String> message);
 
 }

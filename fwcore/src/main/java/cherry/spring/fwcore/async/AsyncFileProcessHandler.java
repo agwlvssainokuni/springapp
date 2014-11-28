@@ -19,8 +19,14 @@ package cherry.spring.fwcore.async;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 非同期実行フレームワーク。<br />
+ * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}
+ * を実装することとする。
+ */
 public interface AsyncFileProcessHandler {
 
 	/**
@@ -40,6 +46,14 @@ public interface AsyncFileProcessHandler {
 	long launchFileProcess(String launcherId, MultipartFile file,
 			String handlerName) throws IOException;
 
+	/**
+	 * 実行登録したファイル処理を実行する。<br />
+	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 
+	 * @param message
+	 *            {@link #launchFileProcess(String, MultipartFile, String)}
+	 *            において登録した内容がコンテナから受渡される。
+	 */
 	void handleMessage(Map<String, String> message);
 
 }

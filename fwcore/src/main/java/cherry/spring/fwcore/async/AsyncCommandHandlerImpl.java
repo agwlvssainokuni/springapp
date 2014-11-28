@@ -34,12 +34,14 @@ import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.command.CommandLauncher;
 import cherry.spring.fwcore.command.CommandResult;
 
+/**
+ * 非同期実行フレームワーク。<br />
+ * 非同期にコマンドを実行する機能を提供する。
+ */
 public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
 	private static final String TYPE_NAME = "type";
-
 	private static final String TYPE_VALUE = "AsyncCommandHandler";
-
 	private static final String TYPE_SELECTOR = "type = 'AsyncCommandHandler'";
 
 	private static final String ASYNCID = "asyncId";
@@ -84,6 +86,14 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		return asyncId;
 	}
 
+	/**
+	 * 実行登録したコマンドを実行する。<br />
+	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 
+	 * @param message
+	 *            {@link #launchCommand(String, String...)}
+	 *            において登録した内容がコンテナから受渡される。
+	 */
 	@JmsListener(destination = "${fwcore.async.queue}", selector = TYPE_SELECTOR)
 	@Override
 	public void handleMessage(Map<String, String> message) {
