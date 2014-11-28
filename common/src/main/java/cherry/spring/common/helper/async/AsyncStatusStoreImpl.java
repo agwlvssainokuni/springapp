@@ -155,7 +155,7 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "SUCCESS");
+				update.set(a.status, "ERROR");
 				update.set(a.finishedAt, dtm);
 				update.set(a.result, th.getMessage());
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
