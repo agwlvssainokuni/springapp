@@ -69,6 +69,15 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		}
 	};
 
+	/**
+	 * 非同期のコマンド実行を実行登録する。
+	 * 
+	 * @param launcherId
+	 *            非同期処理の実行者のID。
+	 * @param command
+	 *            実行するコマンド (コマンドライン)。
+	 * @return 非同期実行状況の管理データのID。
+	 */
 	@Override
 	public long launchCommand(String launcherId, String... command) {
 
