@@ -33,4 +33,8 @@
 		<property name="taskExecutor" ref="taskExecutor" />
 	</bean>
 
+	<bean class="cherry.spring.fwcore.async.AsyncProcessFacadeImpl" />
+	<bean class="cherry.spring.fwcore.async.AsyncFileProcessHandlerImpl" />
+	<bean class="cherry.spring.fwcore.async.AsyncCommandHandlerImpl" />
+
 </beans>
