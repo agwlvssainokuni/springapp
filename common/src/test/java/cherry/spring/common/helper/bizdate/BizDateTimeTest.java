@@ -37,7 +37,7 @@ import cherry.spring.fwcore.bizdtm.BizDateTime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class BizdateHelperTest {
+public class BizDateTimeTest {
 
 	@Autowired
 	private BizDateTime bizDateTime;
