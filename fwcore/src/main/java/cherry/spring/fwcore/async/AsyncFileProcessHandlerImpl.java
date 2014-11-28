@@ -107,31 +107,35 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
 	 * @return 非同期実行状況の管理データのID。
-	 * @throws IOException
-	 *             一時ファイル作成で異常発生。
 	 */
 	@Override
 	public long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName) throws IOException {
+			String handlerName) {
 
 		long asyncId = asyncStatusStore.createFileProcess(launcherId,
 				bizDateTime.now(), file.getName(), file.getOriginalFilename(),
 				file.getContentType(), file.getSize(), handlerName);
+		try {
 
-		File tempFile = createFile(file);
+			File tempFile = createFile(file);
 
-		Map<String, String> message = new HashMap<>();
-		message.put(ASYNCID, String.valueOf(asyncId));
-		message.put(FILE, tempFile.getAbsolutePath());
-		message.put(NAME, file.getName());
-		message.put(ORIGINAL_FILENAME, file.getOriginalFilename());
-		message.put(CONTENT_TYPE, file.getContentType());
-		message.put(SIZE, String.valueOf(file.getSize()));
-		message.put(HANDLER_NAME, handlerName);
-		jmsOperations.convertAndSend(queue, message, messagePostProcessor);
+			Map<String, String> message = new HashMap<>();
+			message.put(ASYNCID, String.valueOf(asyncId));
+			message.put(FILE, tempFile.getAbsolutePath());
+			message.put(NAME, file.getName());
+			message.put(ORIGINAL_FILENAME, file.getOriginalFilename());
+			message.put(CONTENT_TYPE, file.getContentType());
+			message.put(SIZE, String.valueOf(file.getSize()));
+			message.put(HANDLER_NAME, handlerName);
+			jmsOperations.convertAndSend(queue, message, messagePostProcessor);
 
-		asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
-		return asyncId;
+			asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
+			return asyncId;
+		} catch (IOException ex) {
+			asyncStatusStore
+					.finishWithException(asyncId, bizDateTime.now(), ex);
+			throw new IllegalStateException(ex);
+		}
 	}
 
 	/**

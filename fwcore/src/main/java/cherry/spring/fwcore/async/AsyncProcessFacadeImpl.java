@@ -16,8 +16,6 @@
 
 package cherry.spring.fwcore.async;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,12 +44,10 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
 	 * @return 非同期実行状況の管理データのID。
-	 * @throws IOException
-	 *             一時ファイル作成で異常発生。
 	 */
 	@Override
 	public long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName) throws IOException {
+			String handlerName) {
 		return asyncFileProcessHandler.launchFileProcess(launcherId, file,
 				handlerName);
 	}

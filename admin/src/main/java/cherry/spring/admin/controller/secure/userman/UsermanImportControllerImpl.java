@@ -20,7 +20,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +34,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.spring.admin.controller.PathDef;
-import cherry.spring.admin.service.secure.userman.UsermanImportService;
+import cherry.spring.fwcore.async.AsyncProcessFacade;
 
 @Controller
 public class UsermanImportControllerImpl implements UsermanImportController {
@@ -43,7 +42,7 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 	public static final String ASYNC_PARAM = "asyncParam";
 
 	@Autowired
-	private UsermanImportService usermanImportService;
+	private AsyncProcessFacade asyncProcessFacade;
 
 	@Override
 	public UsermanImportForm getForm() {
@@ -68,10 +67,10 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 			return mav;
 		}
 
-		Map<String, String> asyncParam = usermanImportService
-				.launchImportUsers(form.getFile(), auth.getName());
+		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
+				form.getFile(), "usermanImportFileProcessHandler");
 
-		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 
 		UriComponents uc = fromMethodCall(
 				on(UsermanImportController.class).finish(auth, locale,
