@@ -22,8 +22,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-
-import org.springframework.beans.factory.annotation.Value;
+import java.nio.charset.StandardCharsets;
 
 /**
  * コマンドを実行機能。<br />
@@ -31,13 +30,19 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class CommandLauncherImpl implements CommandLauncher {
 
-	/** 標準出力、標準エラー出力を収集する際の文字符号化方式。 */
-	@Value("${fwcore.command.charset}")
-	private Charset charset;
+	/** 標準出力、標準エラー出力を収集する際の文字符号化方式。既定値はUTF-8。 */
+	private Charset charset = StandardCharsets.UTF_8;
 
-	/** 表樹エラー出力を標準出力にリダイレクトするか。 */
-	@Value("${fwcore.command.redirectErrorStream}")
-	private boolean redirectErrorStream;
+	/** 表樹エラー出力を標準出力にリダイレクトするか。既定値はtrue (リダイレクトする)。 */
+	private boolean redirectErrorStream = true;
+
+	public void setCharset(Charset charset) {
+		this.charset = charset;
+	}
+
+	public void setRedirectErrorStream(boolean redirectErrorStream) {
+		this.redirectErrorStream = redirectErrorStream;
+	}
 
 	/**
 	 * コマンドを実行し、実行結果 (終了コード、標準出力、標準エラー出力) を取得する。
