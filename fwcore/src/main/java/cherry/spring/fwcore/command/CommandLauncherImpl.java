@@ -22,7 +22,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * コマンドを実行機能。<br />
@@ -30,19 +31,13 @@ import java.nio.charset.StandardCharsets;
  */
 public class CommandLauncherImpl implements CommandLauncher {
 
-	/** 標準出力、標準エラー出力を収集する際の文字符号化方式。既定値はUTF-8。 */
-	private Charset charset = StandardCharsets.UTF_8;
+	/** 標準出力、標準エラー出力を収集する際の文字符号化方式。 */
+	@Value("${fwcore.command.charset}")
+	private Charset charset;
 
-	/** 表樹エラー出力を標準出力にリダイレクトするか。既定値はtrue。 */
-	private boolean redirectErrorStream = true;
-
-	public void setCharset(Charset charset) {
-		this.charset = charset;
-	}
-
-	public void setRedirectErrorStream(boolean redirectErrorStream) {
-		this.redirectErrorStream = redirectErrorStream;
-	}
+	/** 表樹エラー出力を標準出力にリダイレクトするか。 */
+	@Value("${fwcore.command.redirectErrorStream}")
+	private boolean redirectErrorStream;
 
 	/**
 	 * コマンドを実行し、実行結果 (終了コード、標準出力、標準エラー出力) を取得する。
@@ -61,10 +56,8 @@ public class CommandLauncherImpl implements CommandLauncher {
 		CommandResult result = new CommandResult();
 		Process proc = (new ProcessBuilder(command)).redirectErrorStream(
 				redirectErrorStream).start();
-		if (!redirectErrorStream) {
-			try (InputStream in = proc.getErrorStream()) {
-				result.setStderr(readStream(in));
-			}
+		try (InputStream in = proc.getErrorStream()) {
+			result.setStderr(readStream(in));
 		}
 		try (InputStream in = proc.getInputStream()) {
 			result.setStdout(readStream(in));
