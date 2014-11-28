@@ -33,13 +33,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.spring.common.db.gen.dto.BizdatetimeMaster;
 import cherry.spring.common.db.gen.mapper.BizdatetimeMasterMapper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class BizdateHelperTest {
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -56,7 +57,7 @@ public class BizdateHelperTest {
 	@Test
 	public void testTodayWithoutMaster() {
 		LocalDate pre = LocalDate.now();
-		LocalDate today = bizdateHelper.today();
+		LocalDate today = bizDateTime.today();
 		LocalDate post = LocalDate.now();
 		assertThat(today.isBefore(pre), is(false));
 		assertThat(today.isAfter(post), is(false));
@@ -70,13 +71,13 @@ public class BizdateHelperTest {
 		record.setBizdate(orig);
 		bizdatetimeMasterMapper.insertSelective(record);
 
-		assertThat(bizdateHelper.today(), is(orig));
+		assertThat(bizDateTime.today(), is(orig));
 	}
 
 	@Test
 	public void testNowWithoutMaster() {
 		LocalDateTime pre = LocalDateTime.now();
-		LocalDateTime now = bizdateHelper.now();
+		LocalDateTime now = bizDateTime.now();
 		LocalDateTime post = LocalDateTime.now();
 		assertThat(now.isBefore(pre), is(false));
 		assertThat(now.isAfter(post), is(false));
@@ -96,7 +97,7 @@ public class BizdateHelperTest {
 				.plusHours(record.getOffsetHour())
 				.plusMinutes(record.getOffsetMinute())
 				.plusSeconds(record.getOffsetSecond());
-		LocalDateTime now = bizdateHelper.now();
+		LocalDateTime now = bizDateTime.now();
 		LocalDateTime post = LocalDateTime.now()
 				.plusDays(record.getOffsetDay())
 				.plusHours(record.getOffsetHour())

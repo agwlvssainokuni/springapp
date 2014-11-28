@@ -35,7 +35,7 @@ import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.userman.UsermanSearchService;
 import cherry.spring.common.db.gen.dto.User;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.download.DownloadAction;
 import cherry.spring.fwcore.download.DownloadHelper;
 
@@ -55,7 +55,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	private UsermanSearchService usermanSearchService;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private DownloadHelper downloadHelper;
@@ -110,7 +110,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 			}
 		};
 		downloadHelper.download(response, contentType, filename,
-				bizdateHelper.now(), action);
+				bizDateTime.now(), action);
 
 		return null;
 	}

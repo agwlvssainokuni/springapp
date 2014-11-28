@@ -54,7 +54,7 @@ import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.goods.util.ToMapUtil;
 import cherry.spring.common.helper.async.AsyncProcHelper;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.etl.CsvProvider;
 import cherry.spring.fwcore.etl.LimiterException;
 import cherry.spring.fwcore.etl.LoadResult;
@@ -91,7 +91,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 	private int stackTraceDepth;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private AsyncProcHelper asyncProcHelper;
@@ -128,7 +128,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			String launcherId) {
 		String name = UsermanImportService.class.getSimpleName();
 		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId,
-				bizdateHelper.now());
+				bizDateTime.now());
 		try {
 			File tempFile = createFile(file);
 
@@ -138,11 +138,11 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			message.put(LAUNCHER_ID, launcherId);
 			jmsOperations.convertAndSend(queue, message);
 
-			asyncProcHelper.invokeAsyncProc(procId, bizdateHelper.now());
+			asyncProcHelper.invokeAsyncProc(procId, bizDateTime.now());
 
 			return message;
 		} catch (IOException ex) {
-			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
+			asyncProcHelper.errorAsyncProc(procId, bizDateTime.now(),
 					ToMapUtil.fromThrowable(ex, stackTraceDepth));
 			throw new IllegalStateException(ex);
 		}
@@ -155,7 +155,7 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 		Integer procId = parseInt(message.get(PROC_ID));
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			asyncProcHelper.startAsyncProc(procId, bizdateHelper.now());
+			asyncProcHelper.startAsyncProc(procId, bizDateTime.now());
 
 			LoadResult loadResult = loadFile(tempFile);
 
@@ -163,10 +163,10 @@ public class UsermanImportServiceImpl implements UsermanImportService {
 			map.put("total", loadResult.getTotalCount());
 			map.put("success", loadResult.getSuccessCount());
 			map.put("failed", loadResult.getFailedCount());
-			asyncProcHelper.successAsyncProc(procId, bizdateHelper.now(), map);
+			asyncProcHelper.successAsyncProc(procId, bizDateTime.now(), map);
 
 		} catch (DataAccessException | LimiterException | IllegalStateException ex) {
-			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
+			asyncProcHelper.errorAsyncProc(procId, bizDateTime.now(),
 					ToMapUtil.fromThrowable(ex, stackTraceDepth));
 			throw ex;
 		} finally {

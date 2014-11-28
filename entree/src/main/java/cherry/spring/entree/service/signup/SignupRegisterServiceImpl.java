@@ -34,10 +34,10 @@ import cherry.goods.log.LogFactory;
 import cherry.spring.common.MailId;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.mapper.UserMapper;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 
 @Service
 public class SignupRegisterServiceImpl implements SignupRegisterService {
@@ -51,7 +51,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private SignupRequestHelper signupRequestHelper;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
@@ -76,7 +76,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	public boolean createUser(String mailAddr, String token, String firstName,
 			String lastName, Locale locale) {
 
-		LocalDateTime now = bizdateHelper.now();
+		LocalDateTime now = bizDateTime.now();
 
 		if (!signupRequestHelper.validateToken(mailAddr, token,
 				now.minusSeconds(validInSec))) {

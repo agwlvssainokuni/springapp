@@ -30,10 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.MailId;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.mail.MailMessageHelper;
 import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 
 @Service
 public class SignupEntryServiceImpl implements SignupEntryService {
@@ -44,7 +44,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	private SignupRequestHelper signupRequestHelper;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizdateHelper;
 
 	@Autowired
 	private MailMessageHelper mailMessageHelper;
