@@ -13,7 +13,7 @@
 </h1>
 <div>
 	<s:message code="secure/userman/import/finish.message.1"
-		arguments="${asyncParam.procId}" />
+		arguments="${asyncParam}" />
 </div>
 <div>
 	<a href="<c:url value="/secure/asyncproc" />"><s:message
