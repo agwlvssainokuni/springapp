@@ -19,7 +19,7 @@ package cherry.spring.fwcore.async;
 import org.joda.time.LocalDateTime;
 import org.springframework.web.multipart.MultipartFile;
 
-import cherry.spring.fwcore.command.CommandResult;
+import cherry.goods.command.CommandResult;
 
 /**
  * 非同期実行フレームワーク。<br />

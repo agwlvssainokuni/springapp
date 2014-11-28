@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.command;
+package cherry.goods.command;
 
 import java.io.IOException;
 import java.io.InputStream;
