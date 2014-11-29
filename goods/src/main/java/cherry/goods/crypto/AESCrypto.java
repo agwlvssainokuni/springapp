@@ -36,7 +36,7 @@ public class AESCrypto implements Crypto {
 	private String algorithm = "AES/CBC/PKCS5Padding";
 
 	/** AES暗号アルゴリズムで使用する共通鍵、初期化ベクタを復号化する機能を保持する。 */
-	private Crypto keyCrypto;
+	private Crypto keyCrypto = new NullCrypto();
 
 	/** AES暗号アルゴリズムで使用する共通鍵を保持する。 */
 	private Key secretKey;
