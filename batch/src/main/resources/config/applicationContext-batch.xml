@@ -11,7 +11,7 @@
 
 	<context:component-scan base-package="cherry.spring.batch" />
 
-	<bean class="cherry.goods.paginate.PaginatorImpl">
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
 			<bean class="cherry.goods.paginate.TotalCountStrategy">
 				<property name="totalCount" value="9" />
