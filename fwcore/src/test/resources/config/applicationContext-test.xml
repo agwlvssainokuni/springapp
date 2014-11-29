@@ -24,7 +24,7 @@
 
 	<mybatis-spring:scan base-package="cherry.foundation.type.db.mapper" />
 
-	<bean class="cherry.goods.paginate.PaginatorImpl">
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
 			<bean class="cherry.goods.paginate.TotalCountStrategy">
 				<property name="totalCount" value="7" />

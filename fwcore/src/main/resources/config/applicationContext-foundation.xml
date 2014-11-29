@@ -111,6 +111,8 @@
 		</property>
 	</bean>
 
+	<bean class="cherry.foundation.AppCtxHolder" />
+
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
