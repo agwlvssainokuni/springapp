@@ -16,11 +16,9 @@
 
 package cherry.goods.crypto;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 /**
  * データの版管理の機能を提供する。<br />
@@ -30,33 +28,19 @@ public class DefaultVersionStrategy implements VersionStrategy<byte[], Integer> 
 
 	@Override
 	public byte[] encode(byte[] data, Integer version) {
-		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-				DataOutputStream out2 = new DataOutputStream(out)) {
-			out2.writeInt(version.intValue());
-			out2.write(data);
-			return out.toByteArray();
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+		out.writeInt(version.intValue());
+		out.write(data);
+		return out.toByteArray();
 	}
 
 	@Override
 	public VersionedData<byte[], Integer> decode(byte[] encoded) {
-		try (ByteArrayInputStream in = new ByteArrayInputStream(encoded);
-				DataInputStream in2 = new DataInputStream(in);
-				ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			int version = in2.readInt();
-			byte[] buff = new byte[4096];
-			int len;
-			while ((len = in2.read(buff)) >= 0) {
-				out.write(buff, 0, len);
-			}
-			out.flush();
-			return new VersionedData<byte[], Integer>(out.toByteArray(),
-					version);
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataInput in = ByteStreams.newDataInput(encoded);
+		int version = in.readInt();
+		byte[] data = new byte[encoded.length - 4];
+		in.readFully(data);
+		return new VersionedData<byte[], Integer>(data, version);
 	}
 
 }
