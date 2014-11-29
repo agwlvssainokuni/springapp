@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.mask;
+package cherry.spring.fwcore.etl;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 import static com.google.common.base.CaseFormat.UPPER_UNDERSCORE;
@@ -23,8 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cherry.goods.masker.Masker;
-import cherry.spring.fwcore.etl.Decorator;
-import cherry.spring.fwcore.etl.MaskerDecorator;
 
 public class MaskerUtil {
 

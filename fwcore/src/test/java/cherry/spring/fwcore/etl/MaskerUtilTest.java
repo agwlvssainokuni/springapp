@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.mask;
+package cherry.spring.fwcore.etl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -31,7 +31,6 @@ import org.junit.Test;
 import cherry.goods.masker.IntegerMasker;
 import cherry.goods.masker.Masker;
 import cherry.goods.masker.StringMasker;
-import cherry.spring.fwcore.etl.Decorator;
 
 public class MaskerUtilTest {
 
