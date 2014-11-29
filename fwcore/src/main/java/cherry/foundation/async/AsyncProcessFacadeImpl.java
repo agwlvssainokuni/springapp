@@ -16,7 +16,6 @@
 
 package cherry.foundation.async;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -26,12 +25,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 
 	/** ファイル処理の実行登録の本体。 */
-	@Autowired
 	private AsyncFileProcessHandler asyncFileProcessHandler;
 
 	/** コマンド実行の実行登録の本体。 */
-	@Autowired
 	private AsyncCommandHandler asyncCommandHandler;
+
+	public void setAsyncFileProcessHandler(
+			AsyncFileProcessHandler asyncFileProcessHandler) {
+		this.asyncFileProcessHandler = asyncFileProcessHandler;
+	}
+
+	public void setAsyncCommandHandler(AsyncCommandHandler asyncCommandHandler) {
+		this.asyncCommandHandler = asyncCommandHandler;
+	}
 
 	/**
 	 * 非同期のファイル処理を実行登録する。

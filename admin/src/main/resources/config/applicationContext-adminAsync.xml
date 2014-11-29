@@ -37,7 +37,10 @@
 		<property name="defaultDestinationName" value="${admin.async.queue}" />
 	</bean>
 
-	<bean id="asyncProcessFacade" class="cherry.foundation.async.AsyncProcessFacadeImpl" />
+	<bean id="asyncProcessFacade" class="cherry.foundation.async.AsyncProcessFacadeImpl">
+		<property name="asyncFileProcessHandler" ref="asyncFileProcessHandler" />
+		<property name="asyncCommandHandler" ref="asyncCommandHandler" />
+	</bean>
 
 	<bean id="asyncFileProcessHandler" class="cherry.foundation.async.AsyncFileProcessHandlerImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
