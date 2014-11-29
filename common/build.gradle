@@ -2,7 +2,7 @@ apply plugin: "eclipse-wtp"
 
 dependencies {
 	compile project(":goods")
-	compile project(":fwcore")
+	compile project(":foundation")
 	compile project(":dbschema")
 	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	provided "javax.servlet:javax.servlet-api:${versionJavaServlet}"
