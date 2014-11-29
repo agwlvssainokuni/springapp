@@ -27,14 +27,8 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.jms.core.MessagePostProcessor;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,16 +37,14 @@ import cherry.foundation.bizdtm.BizDateTime;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 
+import com.google.common.io.ByteStreams;
+
 /**
  * 非同期実行フレームワーク。<br />
  * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}
  * を実装することとする。
  */
 public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
-
-	private static final String TYPE_NAME = "type";
-	private static final String TYPE_VALUE = "AsyncFileProcessHandler";
-	private static final String TYPE_SELECTOR = "type = 'AsyncFileProcessHandler'";
 
 	private static final String ASYNCID = "asyncId";
 	private static final String FILE = "file";
@@ -64,37 +56,54 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 
 	private final Log log = LogFactory.getLog(getClass());
 
-	@Autowired
 	private BizDateTime bizDateTime;
 
-	@Autowired
 	private AsyncStatusStore asyncStatusStore;
 
-	@Autowired
 	private JmsOperations jmsOperations;
 
-	@Autowired
 	private ApplicationContext applicationContext;
 
-	@Value("${fwcore.async.queue}")
-	private String queue;
-
-	@Value("${fwcore.async.file.tempDir}")
 	private File tempDir;
 
-	@Value("${fwcore.async.file.tempPrefix}")
 	private String tempPrefix;
 
-	@Value("${fwcore.async.file.tempSuffix}")
 	private String tempSuffix;
 
-	private MessagePostProcessor messagePostProcessor = new MessagePostProcessor() {
-		@Override
-		public Message postProcessMessage(Message message) throws JMSException {
-			message.setStringProperty(TYPE_NAME, TYPE_VALUE);
-			return message;
-		}
-	};
+	private MessagePostProcessor messagePostProcessor;
+
+	public void setBizDateTime(BizDateTime bizDateTime) {
+		this.bizDateTime = bizDateTime;
+	}
+
+	public void setAsyncStatusStore(AsyncStatusStore asyncStatusStore) {
+		this.asyncStatusStore = asyncStatusStore;
+	}
+
+	public void setJmsOperations(JmsOperations jmsOperations) {
+		this.jmsOperations = jmsOperations;
+	}
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+
+	public void setTempDir(File tempDir) {
+		this.tempDir = tempDir;
+	}
+
+	public void setTempPrefix(String tempPrefix) {
+		this.tempPrefix = tempPrefix;
+	}
+
+	public void setTempSuffix(String tempSuffix) {
+		this.tempSuffix = tempSuffix;
+	}
+
+	public void setMessagePostProcessor(
+			MessagePostProcessor messagePostProcessor) {
+		this.messagePostProcessor = messagePostProcessor;
+	}
 
 	/**
 	 * 非同期のファイル処理を実行登録する。
@@ -127,7 +136,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 			message.put(CONTENT_TYPE, file.getContentType());
 			message.put(SIZE, String.valueOf(file.getSize()));
 			message.put(HANDLER_NAME, handlerName);
-			jmsOperations.convertAndSend(queue, message, messagePostProcessor);
+			jmsOperations.convertAndSend(message, messagePostProcessor);
 
 			asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
 			return asyncId;
@@ -140,13 +149,12 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 
 	/**
 	 * 実行登録したファイル処理を実行する。<br />
-	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 本メソッドはコンテナが呼出すことを意図するものである。
 	 * 
 	 * @param message
 	 *            {@link #launchFileProcess(String, MultipartFile, String)}
 	 *            において登録した内容がコンテナから受渡される。
 	 */
-	@JmsListener(destination = "${fwcore.async.queue}", selector = TYPE_SELECTOR)
 	@Override
 	public void handleMessage(Map<String, String> message) {
 
@@ -193,11 +201,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 		try {
 			try (InputStream in = file.getInputStream();
 					OutputStream out = new FileOutputStream(tempFile)) {
-				byte[] buff = new byte[4096];
-				int size;
-				while ((size = in.read(buff, 0, buff.length)) >= 0) {
-					out.write(buff, 0, size);
-				}
+				ByteStreams.copy(in, out);
 				return tempFile;
 			}
 		} catch (IOException ex) {

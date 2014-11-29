@@ -21,12 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.jms.core.MessagePostProcessor;
 
@@ -40,34 +34,38 @@ import cherry.goods.command.CommandResult;
  */
 public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
-	private static final String TYPE_NAME = "type";
-	private static final String TYPE_VALUE = "AsyncCommandHandler";
-	private static final String TYPE_SELECTOR = "type = 'AsyncCommandHandler'";
-
 	private static final String ASYNCID = "asyncId";
 
-	@Autowired
 	private BizDateTime bizDateTime;
 
-	@Autowired
 	private AsyncStatusStore asyncStatusStore;
 
-	@Autowired
 	private JmsOperations jmsOperations;
 
-	@Autowired
 	private CommandLauncher commandLauncher;
 
-	@Value("${fwcore.async.queue}")
-	private String queue;
+	private MessagePostProcessor messagePostProcessor;
 
-	private MessagePostProcessor messagePostProcessor = new MessagePostProcessor() {
-		@Override
-		public Message postProcessMessage(Message message) throws JMSException {
-			message.setStringProperty(TYPE_NAME, TYPE_VALUE);
-			return message;
-		}
-	};
+	public void setBizDateTime(BizDateTime bizDateTime) {
+		this.bizDateTime = bizDateTime;
+	}
+
+	public void setAsyncStatusStore(AsyncStatusStore asyncStatusStore) {
+		this.asyncStatusStore = asyncStatusStore;
+	}
+
+	public void setJmsOperations(JmsOperations jmsOperations) {
+		this.jmsOperations = jmsOperations;
+	}
+
+	public void setCommandLauncher(CommandLauncher commandLauncher) {
+		this.commandLauncher = commandLauncher;
+	}
+
+	public void setMessagePostProcessor(
+			MessagePostProcessor messagePostProcessor) {
+		this.messagePostProcessor = messagePostProcessor;
+	}
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
@@ -89,7 +87,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		for (int i = 0; i < command.length; i++) {
 			message.put(String.valueOf(i), command[i]);
 		}
-		jmsOperations.convertAndSend(queue, message, messagePostProcessor);
+		jmsOperations.convertAndSend(message, messagePostProcessor);
 
 		asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
 		return asyncId;
@@ -97,13 +95,12 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
 	/**
 	 * 実行登録したコマンドを実行する。<br />
-	 * 本メソッドはコンテナが呼出すことを意図するものであり、{@link JmsListener}アノテーションを付与する。
+	 * 本メソッドはコンテナが呼出すことを意図するものである。
 	 * 
 	 * @param message
 	 *            {@link #launchCommand(String, String...)}
 	 *            において登録した内容がコンテナから受渡される。
 	 */
-	@JmsListener(destination = "${fwcore.async.queue}", selector = TYPE_SELECTOR)
 	@Override
 	public void handleMessage(Map<String, String> message) {
 
