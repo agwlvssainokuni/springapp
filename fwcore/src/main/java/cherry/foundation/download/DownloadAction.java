@@ -17,10 +17,10 @@
 package cherry.foundation.download;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.OutputStream;
 
 public interface DownloadAction {
 
-	long doDownload(Writer writer) throws IOException;
+	long doDownload(OutputStream stream) throws IOException;
 
 }

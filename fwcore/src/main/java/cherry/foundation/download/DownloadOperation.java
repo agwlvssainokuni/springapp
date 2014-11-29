@@ -16,13 +16,16 @@
 
 package cherry.foundation.download;
 
+import java.nio.charset.Charset;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDateTime;
 
-public interface DownloadHelper {
+public interface DownloadOperation {
 
 	void download(HttpServletResponse response, String contentType,
-			String filename, LocalDateTime timestamp, DownloadAction action);
+			Charset charset, String filename, LocalDateTime timestamp,
+			DownloadAction action);
 
 }
