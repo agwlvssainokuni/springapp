@@ -131,7 +131,14 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean class="cherry.foundation.download.DownloadTemplate">
+	<bean id="rowMapperCreator"
+		class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	<bean id="sqlParameterSourceCreator"
+		class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
+
+	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
 		<property name="headerName" value="${foundation.download.headerName}" />
 		<property name="headerValue" value="${foundation.download.headerValue}" />
 		<property name="formatter" value="${foundation.download.format}" />

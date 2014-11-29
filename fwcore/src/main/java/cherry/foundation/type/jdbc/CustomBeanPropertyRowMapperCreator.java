@@ -18,18 +18,18 @@ package cherry.foundation.type.jdbc;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
 import cherry.goods.masker.Masker;
 
-@Component
 public class CustomBeanPropertyRowMapperCreator implements RowMapperCreator {
 
-	@Autowired
 	private ConversionService conversionService;
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
+	}
 
 	@Override
 	public <T> RowMapper<T> create(Class<T> mappedClass) {
