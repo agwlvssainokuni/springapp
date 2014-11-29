@@ -37,6 +37,8 @@ public class CommandLauncherTest {
 			assertEquals(0, result.getExitValue());
 			assertTrue(result.getStdout().startsWith("java version"));
 			assertEquals("", result.getStderr());
+			assertTrue(result.toString().startsWith(
+					"CommandResult[exitValue=0,"));
 		} catch (IOException | InterruptedException ex) {
 			fail("Exception must not be thrown");
 		}
@@ -50,8 +52,10 @@ public class CommandLauncherTest {
 		try {
 			CommandResult result = launcher.launch("java", "-version");
 			assertEquals(0, result.getExitValue());
-			assertEquals("", result.getStdout());
 			assertTrue(result.getStderr().startsWith("java version"));
+			assertEquals("", result.getStdout());
+			assertTrue(result.toString().startsWith(
+					"CommandResult[exitValue=0,"));
 		} catch (IOException | InterruptedException ex) {
 			fail("Exception must not be thrown");
 		}
