@@ -29,8 +29,8 @@
 	</aop:config>
 
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="${fwcore.trace.arrayLengthLimit}" />
-		<property name="objectLengthLimit" value="${fwcore.trace.objectLengthLimit}" />
+		<property name="arrayLengthLimit" value="${foundation.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${foundation.trace.objectLengthLimit}" />
 		<property name="packagePrefix">
 			<list>
 				<value>cherry</value>
@@ -66,12 +66,20 @@
 						<list>
 							<bean
 								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
-								<property name="dateFormatter" value="${fwcore.format.date}" />
-								<property name="timeFormatter" value="${fwcore.format.time}" />
-								<property name="dateTimeFormatter" value="${fwcore.format.datetime}" />
+								<property name="dateFormatter" value="${foundation.format.date}" />
+								<property name="timeFormatter" value="${foundation.format.time}" />
+								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
 							</bean>
 							<bean
-								class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+								class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
+								<property name="dateToPrint" value="${foundation.format.dateToPrint}" />
+								<property name="dateToParse" value="${foundation.format.dateToParse}" />
+								<property name="timeToPrint" value="${foundation.format.timeToPrint}" />
+								<property name="timeToParseHm" value="${foundation.format.timeToParseHm}" />
+								<property name="timeToParseS" value="${foundation.format.timeToParseS}" />
+								<property name="delimiterToPrint" value="${foundation.format.delimiterToPrint}" />
+								<property name="delimiterToParse" value="${foundation.format.delimiterToParse}" />
+							</bean>
 							<bean
 								class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
 							<bean
@@ -107,10 +115,10 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${fwcore.mail.host}" />
-		<property name="port" value="${fwcore.mail.port}" />
-		<property name="protocol" value="${fwcore.mail.protocol}" />
-		<property name="defaultEncoding" value="${fwcore.mail.encoding}" />
+		<property name="host" value="${foundation.mail.host}" />
+		<property name="port" value="${foundation.mail.port}" />
+		<property name="protocol" value="${foundation.mail.protocol}" />
+		<property name="defaultEncoding" value="${foundation.mail.encoding}" />
 	</bean>
 
 	<bean id="namedParameterJdbcOperations"

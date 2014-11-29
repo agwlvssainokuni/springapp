@@ -28,7 +28,6 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.Parser;
 import org.springframework.format.Printer;
@@ -44,30 +43,55 @@ import cherry.foundation.type.format.CustomDateTimeFormat.Range;
 public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		AnnotationFormatterFactory<CustomDateTimeFormat> {
 
-	@Value("${fwcore.format.date.print}")
 	private String dateToPrint;
 
-	@Value("${fwcore.format.date.parse}")
 	private String dateToParse;
 
-	@Value("${fwcore.format.time.print}")
 	private String timeToPrint;
 
-	@Value("${fwcore.format.time.parse.hm}")
 	private String timeToParseHm;
 
-	@Value("${fwcore.format.time.parse.s}")
 	private String timeToParseS;
 
-	@Value("${fwcore.format.delimiter.print}")
 	private String delimiterToPrint;
 
-	@Value("${fwcore.format.delimiter.parse}")
 	private String delimiterToParse;
 
 	private Set<Class<?>> fieldTypes = new HashSet<Class<?>>(Arrays.asList(
 			LocalDate.class, LocalTime.class, LocalDateTime.class,
 			DateTime.class));
+
+	public void setDateToPrint(String dateToPrint) {
+		this.dateToPrint = dateToPrint;
+	}
+
+	public void setDateToParse(String dateToParse) {
+		this.dateToParse = dateToParse;
+	}
+
+	public void setTimeToPrint(String timeToPrint) {
+		this.timeToPrint = timeToPrint;
+	}
+
+	public void setTimeToParseHm(String timeToParseHm) {
+		this.timeToParseHm = timeToParseHm;
+	}
+
+	public void setTimeToParseS(String timeToParseS) {
+		this.timeToParseS = timeToParseS;
+	}
+
+	public void setDelimiterToPrint(String delimiterToPrint) {
+		this.delimiterToPrint = delimiterToPrint;
+	}
+
+	public void setDelimiterToParse(String delimiterToParse) {
+		this.delimiterToParse = delimiterToParse;
+	}
+
+	public void setFieldTypes(Set<Class<?>> fieldTypes) {
+		this.fieldTypes = fieldTypes;
+	}
 
 	@Override
 	public Set<Class<?>> getFieldTypes() {
