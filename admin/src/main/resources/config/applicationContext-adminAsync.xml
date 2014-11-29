@@ -14,11 +14,6 @@
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
-	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="xaConnectionFactory" />
-		<property name="destinationResolver" ref="destinationResolver" />
-	</bean>
-
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="${admin.taskExecutor.corePoolSize}" />
@@ -26,15 +21,56 @@
 		<property name="waitForTasksToCompleteOnShutdown" value="true" />
 	</bean>
 
-	<bean id="jmsListenerContainerFactory"
-		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
-		<property name="connectionFactory" ref="connectionFactory" />
+	<jms:listener-container connection-factory="connectionFactory"
+		destination-resolver="destinationResolver" task-executor="taskExecutor">
+		<jms:listener destination="${admin.async.queue}"
+			selector="type = 'asyncFileProcessHandler'" ref="asyncFileProcessHandler"
+			method="handleMessage" />
+		<jms:listener destination="${admin.async.queue}"
+			selector="type = 'asyncCommandHandler'" ref="asyncCommandHandler"
+			method="handleMessage" />
+	</jms:listener-container>
+
+	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="xaConnectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
-		<property name="taskExecutor" ref="taskExecutor" />
+		<property name="defaultDestinationName" value="${admin.async.queue}" />
 	</bean>
 
-	<bean class="cherry.spring.fwcore.async.AsyncProcessFacadeImpl" />
-	<bean class="cherry.spring.fwcore.async.AsyncFileProcessHandlerImpl" />
-	<bean class="cherry.spring.fwcore.async.AsyncCommandHandlerImpl" />
+	<bean id="asyncProcessFacade" class="cherry.foundation.async.AsyncProcessFacadeImpl" />
+
+	<bean id="asyncFileProcessHandler" class="cherry.foundation.async.AsyncFileProcessHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="asyncStatusStore" ref="asyncStatusStore" />
+		<property name="jmsOperations" ref="jmsOperations" />
+		<property name="messagePostProcessor">
+			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">
+				<property name="properties">
+					<map key-type="java.lang.String">
+						<entry key="type" value="asyncFileProcessHandler" />
+					</map>
+				</property>
+			</bean>
+		</property>
+		<property name="tempDir" value="${admin.async.file.tempDir}" />
+		<property name="tempPrefix" value="${admin.async.file.tempPrefix}" />
+		<property name="tempSuffix" value="${admin.async.file.tempSuffix}" />
+	</bean>
+
+	<bean id="asyncCommandHandler" class="cherry.foundation.async.AsyncCommandHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="asyncStatusStore" ref="asyncStatusStore" />
+		<property name="jmsOperations" ref="jmsOperations" />
+		<property name="messagePostProcessor">
+			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">
+				<property name="properties">
+					<map key-type="java.lang.String">
+						<entry key="type" value="asyncCommandHandler" />
+					</map>
+				</property>
+			</bean>
+		</property>
+		<property name="commandLauncher" ref="commandLauncher" />
+	</bean>
 
 </beans>

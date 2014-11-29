@@ -140,9 +140,9 @@
 	<bean class="cherry.foundation.etl.ExtractorImpl" />
 	<bean class="cherry.foundation.etl.LoaderImpl" />
 
-	<bean class="cherry.goods.command.CommandLauncherImpl">
-		<property name="charset" value="${fwcore.command.charset}" />
-		<property name="redirectErrorStream" value="${fwcore.command.redirectErrorStream}" />
+	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">
+		<property name="charset" value="${foundation.command.charset}" />
+		<property name="redirectErrorStream" value="${foundation.command.redirectErrorStream}" />
 	</bean>
 
 	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
