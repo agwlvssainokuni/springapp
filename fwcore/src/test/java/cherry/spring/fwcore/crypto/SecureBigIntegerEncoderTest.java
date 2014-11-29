@@ -29,7 +29,7 @@ import org.springframework.security.util.InMemoryResource;
 import cherry.goods.util.RandomUtil;
 import cherry.spring.fwcore.type.SecureBigInteger;
 
-public class SecureBigIntegerHelperTest {
+public class SecureBigIntegerEncoderTest {
 
 	private SecureRandom random = new SecureRandom();
 

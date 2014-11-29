@@ -20,23 +20,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.fwcore.type.SecureInteger;
+import cherry.spring.fwcore.type.SecureBigDecimal;
 
-public class SecureIntegerHelperTest {
+public class SecureBigDecimalEncoderTest {
 
 	private SecureRandom random = new SecureRandom();
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureIntegerEncoder helper = createSecureIntegerHelper();
+		SecureBigDecimalEncoder helper = createSecureBigDecimalHelper();
 		for (int i = 0; i < 100; i++) {
-			Integer plain = Integer.valueOf(random.nextInt());
+			BigDecimal plain = BigDecimal.valueOf(random.nextDouble());
 			String crypto = helper.encode(plain);
 			assertThat(crypto, is(not(plain.toString())));
 			assertThat(helper.decode(crypto), is(plain));
@@ -44,37 +45,38 @@ public class SecureIntegerHelperTest {
 	}
 
 	@Test
-	public void testSecureInteger() throws Exception {
-		SecureInteger.setEncoder(createSecureIntegerHelper());
+	public void testSecureBigDecimal() throws Exception {
+		SecureBigDecimal.setEncoder(createSecureBigDecimalHelper());
 		for (int i = 0; i < 100; i++) {
 
-			Integer plain = Integer.valueOf(random.nextInt());
-			SecureInteger ss0 = SecureInteger.plainValueOf(plain);
+			BigDecimal plain = BigDecimal.valueOf(random.nextDouble());
+			SecureBigDecimal ss0 = SecureBigDecimal.plainValueOf(plain);
 			assertThat(ss0.plain(), is(plain));
 			assertThat(ss0.crypto(), is(not(plain.toString())));
 
-			SecureInteger ss1 = SecureInteger.cryptoValueOf(ss0.crypto());
+			SecureBigDecimal ss1 = SecureBigDecimal.cryptoValueOf(ss0.crypto());
 			assertThat(ss1.plain(), is(plain));
 			assertThat(ss1.crypto(), is(ss0.crypto()));
 
-			SecureInteger ss2 = SecureInteger.plainValueOf(ss1.plain());
+			SecureBigDecimal ss2 = SecureBigDecimal.plainValueOf(ss1.plain());
 			assertThat(ss2.plain(), is(plain));
 			assertThat(ss2.crypto(), is(ss0.crypto()));
 
-			SecureInteger ss3 = SecureInteger.cryptoValueOf(ss2.crypto());
+			SecureBigDecimal ss3 = SecureBigDecimal.cryptoValueOf(ss2.crypto());
 			assertThat(ss3.plain(), is(plain));
 			assertThat(ss3.crypto(), is(ss0.crypto()));
 		}
 	}
 
-	private SecureIntegerEncoder createSecureIntegerHelper() throws Exception {
+	private SecureBigDecimalEncoder createSecureBigDecimalHelper()
+			throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureIntegerEncoder sshelper = new SecureIntegerEncoder();
+		SecureBigDecimalEncoder sshelper = new SecureBigDecimalEncoder();
 		sshelper.setCrypto(crypto);
 		return sshelper;
 	}

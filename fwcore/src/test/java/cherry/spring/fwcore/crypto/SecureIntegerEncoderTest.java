@@ -20,60 +20,61 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
-import cherry.spring.fwcore.type.SecureString;
+import cherry.spring.fwcore.type.SecureInteger;
 
-public class SecureStringHelperTest {
+public class SecureIntegerEncoderTest {
+
+	private SecureRandom random = new SecureRandom();
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureStringEncoder helper = createSecureStringHelper();
+		SecureIntegerEncoder helper = createSecureIntegerHelper();
 		for (int i = 0; i < 100; i++) {
-			String plain = RandomUtil.randomString(1024);
+			Integer plain = Integer.valueOf(random.nextInt());
 			String crypto = helper.encode(plain);
-			assertThat(crypto, is(not(plain)));
+			assertThat(crypto, is(not(plain.toString())));
 			assertThat(helper.decode(crypto), is(plain));
 		}
 	}
 
 	@Test
-	public void testSecureString() throws Exception {
-		SecureString.setEncoder(createSecureStringHelper());
+	public void testSecureInteger() throws Exception {
+		SecureInteger.setEncoder(createSecureIntegerHelper());
 		for (int i = 0; i < 100; i++) {
 
-			String plain = RandomUtil.randomString(1024);
-			SecureString ss0 = SecureString.plainValueOf(plain);
+			Integer plain = Integer.valueOf(random.nextInt());
+			SecureInteger ss0 = SecureInteger.plainValueOf(plain);
 			assertThat(ss0.plain(), is(plain));
-			assertThat(ss0.crypto(), is(not(plain)));
+			assertThat(ss0.crypto(), is(not(plain.toString())));
 
-			SecureString ss1 = SecureString.cryptoValueOf(ss0.crypto());
+			SecureInteger ss1 = SecureInteger.cryptoValueOf(ss0.crypto());
 			assertThat(ss1.plain(), is(plain));
 			assertThat(ss1.crypto(), is(ss0.crypto()));
 
-			SecureString ss2 = SecureString.plainValueOf(ss1.plain());
+			SecureInteger ss2 = SecureInteger.plainValueOf(ss1.plain());
 			assertThat(ss2.plain(), is(plain));
 			assertThat(ss2.crypto(), is(ss0.crypto()));
 
-			SecureString ss3 = SecureString.cryptoValueOf(ss2.crypto());
+			SecureInteger ss3 = SecureInteger.cryptoValueOf(ss2.crypto());
 			assertThat(ss3.plain(), is(plain));
 			assertThat(ss3.crypto(), is(ss0.crypto()));
 		}
 	}
 
-	private SecureStringEncoder createSecureStringHelper() throws Exception {
+	private SecureIntegerEncoder createSecureIntegerHelper() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureStringEncoder sshelper = new SecureStringEncoder();
-		sshelper.setCharset(StandardCharsets.UTF_8);
+		SecureIntegerEncoder sshelper = new SecureIntegerEncoder();
 		sshelper.setCrypto(crypto);
 		return sshelper;
 	}
