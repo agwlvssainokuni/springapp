@@ -29,12 +29,12 @@ package cherry.spring.fwcore.batch;
 public enum ExitStatus {
 	/** 正常終了 (0) */
 	NORMAL(0),
-	/** 警告終了 (50) */
-	WARN(50),
-	/** 異常修了 (100) */
-	ERROR(100),
-	/** 致命的異常 (150) */
-	FATAL(150);
+	/** 警告終了 (1) */
+	WARN(1),
+	/** 異常修了 (-1) */
+	ERROR(1),
+	/** 致命的異常 (-2) */
+	FATAL(-2);
 
 	/** 終了コード値を保持する。 */
 	private final int code;
