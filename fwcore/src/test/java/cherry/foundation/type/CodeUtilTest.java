@@ -40,10 +40,6 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.CodeUtil;
-import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.FlagCode;
-import cherry.foundation.type.LabeledCode;
 import cherry.foundation.type.CodeUtil.CodeMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -163,8 +159,8 @@ public class CodeUtilTest {
 
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
-		map.put("cherry.spring.fwcore.type.FlagCode.0", "FLAG_CODE_FALSE");
-		map.put("cherry.spring.fwcore.type.FlagCode.1", "FLAG_CODE_TRUE");
+		map.put("cherry.foundation.type.FlagCode.0", "FLAG_CODE_FALSE");
+		map.put("cherry.foundation.type.FlagCode.1", "FLAG_CODE_TRUE");
 		return new MessageSource() {
 
 			@Override

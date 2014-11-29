@@ -21,13 +21,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import cherry.foundation.type.FlagCode;
-
 public class FlagCodeTest {
 
 	@Test
 	public void test() {
-		for (int i = -1024; i <= 1024; i++) {
+		for (int i = -50; i <= 50; i++) {
 			FlagCode flag = FlagCode.valueOf(i);
 			if (i == 0) {
 				assertThat(flag, is(FlagCode.FALSE));

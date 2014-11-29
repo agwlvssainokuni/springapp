@@ -34,11 +34,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.etl.CsvProvider;
-import cherry.foundation.etl.LoadResult;
-import cherry.foundation.etl.LoaderImpl;
-import cherry.foundation.etl.NoneLimiter;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class LoaderImplTest {

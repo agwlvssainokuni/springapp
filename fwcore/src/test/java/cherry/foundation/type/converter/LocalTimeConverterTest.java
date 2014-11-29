@@ -50,4 +50,5 @@ public class LocalTimeConverterTest {
 			assertThat(cs.convert(time, LocalTime.class), is(lt));
 		}
 	}
+
 }

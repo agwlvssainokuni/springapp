@@ -46,7 +46,7 @@ public class SecureLongConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			Long plain = random.nextLong();
 			String crypto = SecureLong.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureLong.class).plain(), is(plain));

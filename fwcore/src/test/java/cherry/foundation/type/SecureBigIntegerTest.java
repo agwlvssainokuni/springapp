@@ -28,21 +28,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureBigInteger;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureBigIntegerTest {
 
-	private int loopCount = 1000;
-
-	private int size = 1024;
-
 	@Test
 	public void testRandomTest() {
-		for (int i = 0; i < loopCount; i++) {
-			BigInteger plain = new BigInteger(RandomUtil.randomBytes(size));
+		for (int i = 0; i < 100; i++) {
+			BigInteger plain = new BigInteger(RandomUtil.randomBytes(1024));
 			SecureBigInteger sec0 = plainValueOf(plain);
 			SecureBigInteger sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));

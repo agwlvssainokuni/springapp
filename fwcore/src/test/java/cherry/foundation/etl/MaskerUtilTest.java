@@ -28,8 +28,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import cherry.foundation.etl.Decorator;
-import cherry.foundation.etl.MaskerUtil;
 import cherry.goods.masker.IntegerMasker;
 import cherry.goods.masker.Masker;
 import cherry.goods.masker.StringMasker;

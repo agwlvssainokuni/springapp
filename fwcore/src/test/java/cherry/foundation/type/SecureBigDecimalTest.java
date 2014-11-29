@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureBigDecimal;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,14 +38,10 @@ public class SecureBigDecimalTest {
 
 	private SecureRandom random = new SecureRandom();
 
-	private int loopCount = 1000;
-
-	private int size = 1024;
-
 	@Test
 	public void testRandomTest() {
-		for (int i = 0; i < loopCount; i++) {
-			BigInteger bi = new BigInteger(RandomUtil.randomBytes(size));
+		for (int i = 0; i < 100; i++) {
+			BigInteger bi = new BigInteger(RandomUtil.randomBytes(1024));
 			int scale = random.nextInt();
 			BigDecimal plain = new BigDecimal(bi, scale);
 			SecureBigDecimal sec0 = plainValueOf(plain);

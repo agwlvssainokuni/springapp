@@ -46,7 +46,7 @@ public class SecureIntegerConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			Integer plain = random.nextInt();
 			String crypto = SecureInteger.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureInteger.class).plain(),

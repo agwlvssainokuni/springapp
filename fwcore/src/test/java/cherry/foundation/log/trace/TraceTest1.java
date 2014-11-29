@@ -16,8 +16,6 @@
 
 package cherry.foundation.log.trace;
 
-import cherry.foundation.log.trace.TraceInterceptor;
-
 /**
  * {@link TraceInterceptor} のテスト.
  */

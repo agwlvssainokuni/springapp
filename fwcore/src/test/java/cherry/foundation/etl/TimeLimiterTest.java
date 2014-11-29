@@ -20,10 +20,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import cherry.foundation.etl.Limiter;
-import cherry.foundation.etl.LimiterException;
-import cherry.foundation.etl.TimeLimiter;
-
 public class TimeLimiterTest {
 
 	@Test

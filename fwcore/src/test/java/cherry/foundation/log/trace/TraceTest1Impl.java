@@ -18,8 +18,6 @@ package cherry.foundation.log.trace;
 
 import org.springframework.stereotype.Component;
 
-import cherry.foundation.log.trace.TraceInterceptor;
-
 /**
  * {@link TraceInterceptor} のテスト.
  */

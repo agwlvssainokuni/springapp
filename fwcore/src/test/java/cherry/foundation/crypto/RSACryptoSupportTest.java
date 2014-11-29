@@ -26,7 +26,6 @@ import java.security.KeyPairGenerator;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.foundation.crypto.RSACryptoSupport;
 import cherry.goods.util.RandomUtil;
 
 public class RSACryptoSupportTest {

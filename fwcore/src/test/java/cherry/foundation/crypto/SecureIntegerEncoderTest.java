@@ -25,8 +25,6 @@ import java.security.SecureRandom;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-import cherry.foundation.crypto.AESCryptoSupport;
-import cherry.foundation.crypto.SecureIntegerEncoder;
 import cherry.foundation.type.SecureInteger;
 import cherry.goods.util.RandomUtil;
 

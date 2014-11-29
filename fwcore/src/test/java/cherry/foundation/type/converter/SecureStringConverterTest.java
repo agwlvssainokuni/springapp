@@ -43,7 +43,7 @@ public class SecureStringConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			String plain = RandomUtil.randomString(1024);
 			String crypto = SecureString.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureString.class).plain(),

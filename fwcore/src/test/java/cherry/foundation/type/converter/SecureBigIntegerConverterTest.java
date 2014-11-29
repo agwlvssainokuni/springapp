@@ -48,7 +48,7 @@ public class SecureBigIntegerConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			BigInteger plain = BigInteger.valueOf(random.nextLong());
 			String crypto = SecureBigInteger.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureBigInteger.class).plain(),

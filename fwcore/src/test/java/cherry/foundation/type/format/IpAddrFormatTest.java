@@ -41,8 +41,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.DataBinder;
 
-import cherry.foundation.type.format.IpAddrFormat;
-import cherry.foundation.type.format.IpAddrFormatAnnotationFormatterFactory;
 import cherry.foundation.type.format.IpAddrFormat.Version;
 
 @RunWith(SpringJUnit4ClassRunner.class)

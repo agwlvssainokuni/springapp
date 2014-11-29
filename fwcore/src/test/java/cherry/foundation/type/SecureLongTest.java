@@ -28,19 +28,15 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureLong;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SecureLongTest {
 
 	private SecureRandom random = new SecureRandom();
 
-	private int loopCount = 1000;
-
 	@Test
 	public void testRandomTest() {
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < 100; i++) {
 			Long plain = Long.valueOf(random.nextLong());
 			SecureLong sec0 = plainValueOf(plain);
 			SecureLong sec1 = cryptoValueOf(sec0.crypto());

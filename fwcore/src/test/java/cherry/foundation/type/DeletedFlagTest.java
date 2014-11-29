@@ -22,13 +22,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import cherry.foundation.type.DeletedFlag;
-
 public class DeletedFlagTest {
 
 	@Test
 	public void test() {
-		for (int i = -1024 * 1024; i <= 1024 * 1024; i++) {
+		for (int i = -1024; i <= 1024; i++) {
 			DeletedFlag df = new DeletedFlag(i);
 			assertThat(df.code(), is(i));
 			assertThat(df.compareTo(DeletedFlag.NOT_DELETED), is(i));

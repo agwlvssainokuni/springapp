@@ -48,7 +48,7 @@ public class SecureBigDecimalConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			BigDecimal plain = new BigDecimal(random.nextDouble());
 			String crypto = SecureBigDecimal.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureBigDecimal.class).plain(),
