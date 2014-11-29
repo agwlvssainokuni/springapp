@@ -34,7 +34,7 @@ public class SecureIntegerHelperTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureIntegerHelper helper = createSecureIntegerHelper();
+		SecureIntegerEncoder helper = createSecureIntegerHelper();
 		for (int i = 0; i < 100; i++) {
 			Integer plain = Integer.valueOf(random.nextInt());
 			String crypto = helper.encode(plain);
@@ -67,14 +67,14 @@ public class SecureIntegerHelperTest {
 		}
 	}
 
-	private SecureIntegerHelper createSecureIntegerHelper() throws Exception {
+	private SecureIntegerEncoder createSecureIntegerHelper() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureIntegerHelper sshelper = new SecureIntegerHelper();
+		SecureIntegerEncoder sshelper = new SecureIntegerEncoder();
 		sshelper.setCrypto(crypto);
 		return sshelper;
 	}

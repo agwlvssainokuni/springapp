@@ -22,7 +22,7 @@ import org.apache.commons.codec.binary.Hex;
 import cherry.goods.crypto.Crypto;
 import cherry.spring.fwcore.type.SecureType.Encoder;
 
-public abstract class SecureTypeBaseHelper<T> implements Encoder<T> {
+public abstract class SecureTypeEncoder<T> implements Encoder<T> {
 
 	private Crypto crypto;
 

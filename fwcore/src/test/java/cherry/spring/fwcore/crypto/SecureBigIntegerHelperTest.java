@@ -35,7 +35,7 @@ public class SecureBigIntegerHelperTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureBigIntegerHelper helper = createSecureBigIntegerHelper();
+		SecureBigIntegerEncoder helper = createSecureBigIntegerHelper();
 		for (int i = 0; i < 100; i++) {
 			BigInteger plain = BigInteger.valueOf(random.nextLong());
 			String crypto = helper.encode(plain);
@@ -68,7 +68,7 @@ public class SecureBigIntegerHelperTest {
 		}
 	}
 
-	private SecureBigIntegerHelper createSecureBigIntegerHelper()
+	private SecureBigIntegerEncoder createSecureBigIntegerHelper()
 			throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
@@ -76,7 +76,7 @@ public class SecureBigIntegerHelperTest {
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureBigIntegerHelper sshelper = new SecureBigIntegerHelper();
+		SecureBigIntegerEncoder sshelper = new SecureBigIntegerEncoder();
 		sshelper.setCrypto(crypto);
 		return sshelper;
 	}

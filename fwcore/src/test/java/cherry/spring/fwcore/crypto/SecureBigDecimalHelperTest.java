@@ -35,7 +35,7 @@ public class SecureBigDecimalHelperTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureBigDecimalHelper helper = createSecureBigDecimalHelper();
+		SecureBigDecimalEncoder helper = createSecureBigDecimalHelper();
 		for (int i = 0; i < 100; i++) {
 			BigDecimal plain = BigDecimal.valueOf(random.nextDouble());
 			String crypto = helper.encode(plain);
@@ -68,7 +68,7 @@ public class SecureBigDecimalHelperTest {
 		}
 	}
 
-	private SecureBigDecimalHelper createSecureBigDecimalHelper()
+	private SecureBigDecimalEncoder createSecureBigDecimalHelper()
 			throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
@@ -76,7 +76,7 @@ public class SecureBigDecimalHelperTest {
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureBigDecimalHelper sshelper = new SecureBigDecimalHelper();
+		SecureBigDecimalEncoder sshelper = new SecureBigDecimalEncoder();
 		sshelper.setCrypto(crypto);
 		return sshelper;
 	}

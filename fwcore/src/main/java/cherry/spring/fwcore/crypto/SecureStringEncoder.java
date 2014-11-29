@@ -18,7 +18,7 @@ package cherry.spring.fwcore.crypto;
 
 import java.nio.charset.Charset;
 
-public class SecureStringHelper extends SecureTypeBaseHelper<String> {
+public class SecureStringEncoder extends SecureTypeEncoder<String> {
 
 	private Charset charset;
 

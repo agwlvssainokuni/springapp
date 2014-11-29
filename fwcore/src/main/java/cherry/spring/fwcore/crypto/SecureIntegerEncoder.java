@@ -22,13 +22,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class SecureLongHelper extends SecureTypeBaseHelper<Long> {
+public class SecureIntegerEncoder extends SecureTypeEncoder<Integer> {
 
 	@Override
-	protected byte[] typeToBytes(Long p) {
+	protected byte[] typeToBytes(Integer p) {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
 				DataOutputStream out2 = new DataOutputStream(out)) {
-			out2.writeLong(p.longValue());
+			out2.writeInt(p.intValue());
 			out2.flush();
 			return out.toByteArray();
 		} catch (IOException ex) {
@@ -37,10 +37,10 @@ public class SecureLongHelper extends SecureTypeBaseHelper<Long> {
 	}
 
 	@Override
-	protected Long bytesToType(byte[] p) {
+	protected Integer bytesToType(byte[] p) {
 		try (ByteArrayInputStream in = new ByteArrayInputStream(p);
 				DataInputStream in2 = new DataInputStream(in)) {
-			return in2.readLong();
+			return in2.readInt();
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}

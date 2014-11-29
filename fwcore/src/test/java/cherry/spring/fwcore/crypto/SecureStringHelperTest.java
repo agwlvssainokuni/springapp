@@ -32,7 +32,7 @@ public class SecureStringHelperTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureStringHelper helper = createSecureStringHelper();
+		SecureStringEncoder helper = createSecureStringHelper();
 		for (int i = 0; i < 100; i++) {
 			String plain = RandomUtil.randomString(1024);
 			String crypto = helper.encode(plain);
@@ -65,14 +65,14 @@ public class SecureStringHelperTest {
 		}
 	}
 
-	private SecureStringHelper createSecureStringHelper() throws Exception {
+	private SecureStringEncoder createSecureStringHelper() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureStringHelper sshelper = new SecureStringHelper();
+		SecureStringEncoder sshelper = new SecureStringEncoder();
 		sshelper.setCharset(StandardCharsets.UTF_8);
 		sshelper.setCrypto(crypto);
 		return sshelper;

@@ -18,7 +18,7 @@ package cherry.spring.fwcore.crypto;
 
 import java.math.BigInteger;
 
-public class SecureBigIntegerHelper extends SecureTypeBaseHelper<BigInteger> {
+public class SecureBigIntegerEncoder extends SecureTypeEncoder<BigInteger> {
 
 	@Override
 	protected byte[] typeToBytes(BigInteger p) {

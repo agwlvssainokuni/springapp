@@ -21,19 +21,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
-public class SecureBigDecimalHelper extends SecureTypeBaseHelper<BigDecimal> {
+public class SecureLongEncoder extends SecureTypeEncoder<Long> {
 
 	@Override
-	protected byte[] typeToBytes(BigDecimal p) {
-		int scale = p.scale();
-		BigInteger bi = p.scaleByPowerOfTen(scale).toBigIntegerExact();
+	protected byte[] typeToBytes(Long p) {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
 				DataOutputStream out2 = new DataOutputStream(out)) {
-			out2.writeInt(scale);
-			out2.write(bi.toByteArray());
+			out2.writeLong(p.longValue());
 			out2.flush();
 			return out.toByteArray();
 		} catch (IOException ex) {
@@ -42,19 +37,10 @@ public class SecureBigDecimalHelper extends SecureTypeBaseHelper<BigDecimal> {
 	}
 
 	@Override
-	protected BigDecimal bytesToType(byte[] p) {
+	protected Long bytesToType(byte[] p) {
 		try (ByteArrayInputStream in = new ByteArrayInputStream(p);
-				DataInputStream in2 = new DataInputStream(in);
-				ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			int scale = in2.readInt();
-			byte[] buff = new byte[128];
-			int len;
-			while ((len = in2.read(buff)) >= 0) {
-				out.write(buff, 0, len);
-			}
-			out.flush();
-			BigInteger bi = new BigInteger(out.toByteArray());
-			return new BigDecimal(bi, scale);
+				DataInputStream in2 = new DataInputStream(in)) {
+			return in2.readLong();
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
