@@ -28,34 +28,31 @@ import org.springframework.security.util.InMemoryResource;
 
 import cherry.goods.util.RandomUtil;
 
-public class RSACipherHelperTest {
-
-	private int loopCount = 1000;
-
-	private int size = 245;
+public class RSACryptoSupportTest {
 
 	@Test
 	public void testEncDec() throws Exception {
-		RSACryptoSupport helper = createCipherHelper();
-		for (int i = 0; i < loopCount; i++) {
-			byte[] plain = RandomUtil.randomBytes(size);
-			byte[] crypto = helper.encrypt(plain);
-			assertThat(crypto, is(not(plain)));
-			assertThat(helper.decrypt(crypto), is(plain));
+		RSACryptoSupport crypto = createCrypto();
+		for (int i = 0; i < 100; i++) {
+			byte[] p = RandomUtil.randomBytes(245);
+			byte[] c = crypto.encrypt(p);
+			assertThat(c, is(not(p)));
+			assertThat(crypto.decrypt(c), is(p));
 		}
 	}
 
-	private RSACryptoSupport createCipherHelper() throws Exception {
+	private RSACryptoSupport createCrypto() throws Exception {
 		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
 		keygen.initialize(2048);
 		KeyPair key = keygen.generateKeyPair();
-		RSACryptoSupport helper = new RSACryptoSupport();
-		helper.setAlgorithm("RSA/ECB/PKCS1Padding");
-		helper.setKeyLoader(new RSAKeyLoader());
-		helper.setPublicKey(new InMemoryResource(key.getPublic().getEncoded()));
-		helper.setPrivateKey(new InMemoryResource(key.getPrivate().getEncoded()));
-		helper.afterPropertiesSet();
-		return helper;
+		RSACryptoSupport crypto = new RSACryptoSupport();
+		crypto.setAlgorithm("RSA/ECB/PKCS1Padding");
+		crypto.setPublicKeyResource(new InMemoryResource(key.getPublic()
+				.getEncoded()));
+		crypto.setPrivateKeyResource(new InMemoryResource(key.getPrivate()
+				.getEncoded()));
+		crypto.afterPropertiesSet();
+		return crypto;
 	}
 
 }

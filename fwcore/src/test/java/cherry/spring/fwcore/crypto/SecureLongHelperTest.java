@@ -35,7 +35,7 @@ public class SecureLongHelperTest {
 	@Test
 	public void testEncodeDecode() throws Exception {
 		SecureLongHelper helper = createSecureLongHelper();
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			Long plain = Long.valueOf(random.nextInt());
 			String crypto = helper.encode(plain);
 			assertThat(crypto, is(not(plain.toString())));
@@ -46,7 +46,7 @@ public class SecureLongHelperTest {
 	@Test
 	public void testSecureLong() throws Exception {
 		SecureLong.setEncoder(createSecureLongHelper());
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 
 			Long plain = Long.valueOf(random.nextInt());
 			SecureLong ss0 = SecureLong.plainValueOf(plain);
@@ -68,12 +68,14 @@ public class SecureLongHelperTest {
 	}
 
 	private SecureLongHelper createSecureLongHelper() throws Exception {
-		AESCryptoSupport helper = new AESCryptoSupport();
-		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
-		helper.afterPropertiesSet();
+		AESCryptoSupport crypto = new AESCryptoSupport();
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
+				.randomBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
+				.randomBytes(16)));
+		crypto.afterPropertiesSet();
 		SecureLongHelper sshelper = new SecureLongHelper();
-		sshelper.setCipherHelper(helper);
+		sshelper.setCrypto(crypto);
 		return sshelper;
 	}
 

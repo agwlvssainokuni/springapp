@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
@@ -33,7 +33,7 @@ public class SecureStringHelperTest {
 	@Test
 	public void testEncodeDecode() throws Exception {
 		SecureStringHelper helper = createSecureStringHelper();
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			String plain = RandomUtil.randomString(1024);
 			String crypto = helper.encode(plain);
 			assertThat(crypto, is(not(plain)));
@@ -44,7 +44,7 @@ public class SecureStringHelperTest {
 	@Test
 	public void testSecureString() throws Exception {
 		SecureString.setEncoder(createSecureStringHelper());
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 
 			String plain = RandomUtil.randomString(1024);
 			SecureString ss0 = SecureString.plainValueOf(plain);
@@ -66,13 +66,15 @@ public class SecureStringHelperTest {
 	}
 
 	private SecureStringHelper createSecureStringHelper() throws Exception {
-		AESCryptoSupport helper = new AESCryptoSupport();
-		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
-		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
-		helper.afterPropertiesSet();
+		AESCryptoSupport crypto = new AESCryptoSupport();
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
+				.randomBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
+				.randomBytes(16)));
+		crypto.afterPropertiesSet();
 		SecureStringHelper sshelper = new SecureStringHelper();
-		sshelper.setCharset(Charset.forName("UTF-8"));
-		sshelper.setCipherHelper(helper);
+		sshelper.setCharset(StandardCharsets.UTF_8);
+		sshelper.setCrypto(crypto);
 		return sshelper;
 	}
 

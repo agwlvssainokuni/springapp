@@ -26,8 +26,8 @@ public abstract class SecureTypeBaseHelper<T> implements Encoder<T> {
 
 	private Crypto crypto;
 
-	public void setCrypto(Crypto Crypto) {
-		this.crypto = Crypto;
+	public void setCrypto(Crypto crypto) {
+		this.crypto = crypto;
 	}
 
 	@Override

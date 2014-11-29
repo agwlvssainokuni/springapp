@@ -36,6 +36,14 @@ public class RSACryptoSupport extends RSACrypto implements InitializingBean {
 	/** RSA暗号アルゴリズムで使用する秘密鍵が定義されたファイルのパスを保持する。 */
 	private Resource privateKeyResource;
 
+	public void setPublicKeyResource(Resource publicKeyResource) {
+		this.publicKeyResource = publicKeyResource;
+	}
+
+	public void setPrivateKeyResource(Resource privateKeyResource) {
+		this.privateKeyResource = privateKeyResource;
+	}
+
 	/**
 	 * RSA暗号アルゴリズムによる暗号化/復号化の機能を初期化する。<br />
 	 * 具体的には、ファイルのパスとして指定された公開鍵と秘密鍵を、ファイルから読込み、復号化し、JCE APIで使用する形式で保持する。
