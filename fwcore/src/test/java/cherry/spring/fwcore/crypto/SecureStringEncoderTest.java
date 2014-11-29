@@ -32,18 +32,18 @@ public class SecureStringEncoderTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureStringEncoder helper = createSecureStringHelper();
+		SecureStringEncoder encoder = createSecureStringEncoder();
 		for (int i = 0; i < 100; i++) {
 			String plain = RandomUtil.randomString(1024);
-			String crypto = helper.encode(plain);
+			String crypto = encoder.encode(plain);
 			assertThat(crypto, is(not(plain)));
-			assertThat(helper.decode(crypto), is(plain));
+			assertThat(encoder.decode(crypto), is(plain));
 		}
 	}
 
 	@Test
 	public void testSecureString() throws Exception {
-		SecureString.setEncoder(createSecureStringHelper());
+		SecureString.setEncoder(createSecureStringEncoder());
 		for (int i = 0; i < 100; i++) {
 
 			String plain = RandomUtil.randomString(1024);
@@ -65,17 +65,17 @@ public class SecureStringEncoderTest {
 		}
 	}
 
-	private SecureStringEncoder createSecureStringHelper() throws Exception {
+	private SecureStringEncoder createSecureStringEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureStringEncoder sshelper = new SecureStringEncoder();
-		sshelper.setCharset(StandardCharsets.UTF_8);
-		sshelper.setCrypto(crypto);
-		return sshelper;
+		SecureStringEncoder encoder = new SecureStringEncoder();
+		encoder.setCharset(StandardCharsets.UTF_8);
+		encoder.setCrypto(crypto);
+		return encoder;
 	}
 
 }

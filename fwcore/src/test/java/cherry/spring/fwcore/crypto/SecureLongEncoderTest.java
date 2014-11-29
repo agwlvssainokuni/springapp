@@ -34,18 +34,18 @@ public class SecureLongEncoderTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureLongEncoder helper = createSecureLongHelper();
+		SecureLongEncoder encoder = createSecureLongEncoder();
 		for (int i = 0; i < 100; i++) {
 			Long plain = Long.valueOf(random.nextInt());
-			String crypto = helper.encode(plain);
+			String crypto = encoder.encode(plain);
 			assertThat(crypto, is(not(plain.toString())));
-			assertThat(helper.decode(crypto), is(plain));
+			assertThat(encoder.decode(crypto), is(plain));
 		}
 	}
 
 	@Test
 	public void testSecureLong() throws Exception {
-		SecureLong.setEncoder(createSecureLongHelper());
+		SecureLong.setEncoder(createSecureLongEncoder());
 		for (int i = 0; i < 100; i++) {
 
 			Long plain = Long.valueOf(random.nextInt());
@@ -67,16 +67,16 @@ public class SecureLongEncoderTest {
 		}
 	}
 
-	private SecureLongEncoder createSecureLongHelper() throws Exception {
+	private SecureLongEncoder createSecureLongEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureLongEncoder sshelper = new SecureLongEncoder();
-		sshelper.setCrypto(crypto);
-		return sshelper;
+		SecureLongEncoder encoder = new SecureLongEncoder();
+		encoder.setCrypto(crypto);
+		return encoder;
 	}
 
 }

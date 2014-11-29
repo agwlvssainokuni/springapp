@@ -34,18 +34,18 @@ public class SecureIntegerEncoderTest {
 
 	@Test
 	public void testEncodeDecode() throws Exception {
-		SecureIntegerEncoder helper = createSecureIntegerHelper();
+		SecureIntegerEncoder encoder = createSecureIntegerEncoder();
 		for (int i = 0; i < 100; i++) {
 			Integer plain = Integer.valueOf(random.nextInt());
-			String crypto = helper.encode(plain);
+			String crypto = encoder.encode(plain);
 			assertThat(crypto, is(not(plain.toString())));
-			assertThat(helper.decode(crypto), is(plain));
+			assertThat(encoder.decode(crypto), is(plain));
 		}
 	}
 
 	@Test
 	public void testSecureInteger() throws Exception {
-		SecureInteger.setEncoder(createSecureIntegerHelper());
+		SecureInteger.setEncoder(createSecureIntegerEncoder());
 		for (int i = 0; i < 100; i++) {
 
 			Integer plain = Integer.valueOf(random.nextInt());
@@ -67,16 +67,16 @@ public class SecureIntegerEncoderTest {
 		}
 	}
 
-	private SecureIntegerEncoder createSecureIntegerHelper() throws Exception {
+	private SecureIntegerEncoder createSecureIntegerEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		crypto.afterPropertiesSet();
-		SecureIntegerEncoder sshelper = new SecureIntegerEncoder();
-		sshelper.setCrypto(crypto);
-		return sshelper;
+		SecureIntegerEncoder encoder = new SecureIntegerEncoder();
+		encoder.setCrypto(crypto);
+		return encoder;
 	}
 
 }
