@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.foundation.logicalerror.LogicalErrorHelper;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.entree.LogicalError;
@@ -54,9 +54,6 @@ public class PasswdControllerImpl implements PasswdController {
 
 	@Autowired
 	private PasswdService passwdService;
-
-	@Autowired
-	private LogicalErrorHelper logicalErrorHelper;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -141,15 +138,15 @@ public class PasswdControllerImpl implements PasswdController {
 		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
 			return true;
 		}
-		logicalErrorHelper.rejectValue(binding, Prop.NewPasswordConf.getName(),
+		LogicalErrorUtil.rejectValue(binding, Prop.NewPasswordConf.getName(),
 				LogicalError.PasswdConfirmFailed);
 		return false;
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
-		logicalErrorHelper.reject(binding, LogicalError.CurAuthFailed,
-				logicalErrorHelper.resolve(Prop.LoginId.getNameWithForm()),
-				logicalErrorHelper.resolve(Prop.Password.getNameWithForm()));
+		LogicalErrorUtil.reject(binding, LogicalError.CurAuthFailed,
+				LogicalErrorUtil.resolve(Prop.LoginId.getNameWithForm()),
+				LogicalErrorUtil.resolve(Prop.Password.getNameWithForm()));
 	}
 
 }

@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.foundation.logicalerror.LogicalErrorHelper;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
 import cherry.spring.entree.service.signup.SignupEntryService;
@@ -44,9 +44,6 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 
 	@Autowired
 	private SignupEntryService signupEntryService;
-
-	@Autowired
-	private LogicalErrorHelper logicalErrorHelper;
 
 	@Override
 	public SignupEntryForm getForm() {
@@ -104,7 +101,7 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	private void rejectOnSignupTooManyRequest(BindingResult binding) {
-		logicalErrorHelper.reject(binding, LogicalError.SignupTooManyRequest);
+		LogicalErrorUtil.reject(binding, LogicalError.SignupTooManyRequest);
 	}
 
 }

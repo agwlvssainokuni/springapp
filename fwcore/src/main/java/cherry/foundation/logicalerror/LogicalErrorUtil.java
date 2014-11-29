@@ -20,32 +20,27 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
-public class LogicalErrorHelperImpl implements LogicalErrorHelper {
+public class LogicalErrorUtil {
 
-	@Override
-	public void reject(BindingResult binding, ILogicalError logicalError,
-			Object... args) {
+	public static void reject(BindingResult binding,
+			ILogicalError logicalError, Object... args) {
 		binding.reject(logicalError.code(), args, logicalError.code());
 	}
 
-	@Override
-	public void rejectValue(BindingResult binding, String name,
+	public static void rejectValue(BindingResult binding, String name,
 			ILogicalError logicError, Object... args) {
 		binding.rejectValue(name, logicError.code(), args, logicError.code());
 	}
 
-	@Override
-	public MessageSourceResolvable resolve(String code) {
+	public static MessageSourceResolvable resolve(String code) {
 		return new DefaultMessageSourceResolvable(code);
 	}
 
-	@Override
-	public void rejectOnOptimisticLockError(BindingResult binding) {
+	public static void rejectOnOptimisticLockError(BindingResult binding) {
 		reject(binding, LogicalError.OptimisticLockError);
 	}
 
-	@Override
-	public void rejectOnOneTimeTokenError(BindingResult binding) {
+	public static void rejectOnOneTimeTokenError(BindingResult binding) {
 		reject(binding, LogicalError.OneTimeTokenError);
 	}
 

@@ -32,7 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.foundation.logicalerror.LogicalErrorHelper;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.spring.entree.LogicalError;
 import cherry.spring.entree.controller.PathDef;
 import cherry.spring.entree.service.signup.SignupRegisterService;
@@ -42,9 +42,6 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 
 	@Autowired
 	private SignupRegisterService signupRegisterService;
-
-	@Autowired
-	private LogicalErrorHelper logicalErrorHelper;
 
 	@Override
 	public SignupRegisterForm getForm() {
@@ -98,7 +95,7 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	}
 
 	private void rejectOnSignupEntryUnmatch(BindingResult binding) {
-		logicalErrorHelper.reject(binding, LogicalError.SignupEntryUnmatch);
+		LogicalErrorUtil.reject(binding, LogicalError.SignupEntryUnmatch);
 	}
 
 }
