@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.log.web;
+package cherry.spring.fwcore.springmvc;
 
 import java.util.Map;
 

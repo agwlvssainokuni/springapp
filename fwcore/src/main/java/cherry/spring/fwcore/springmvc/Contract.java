@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.mvc;
+package cherry.spring.fwcore.springmvc;
 
-public class NotFoundException extends RuntimeException {
+import com.google.common.base.Joiner;
 
-	private static final long serialVersionUID = 1L;
+public class Contract {
 
-	public NotFoundException() {
-		super();
-	}
-
-	public NotFoundException(String message) {
-		super(message);
-	}
-
-	public NotFoundException(Throwable cause) {
-		super(cause);
-	}
-
-	public NotFoundException(String message, Throwable cause) {
-		super(message, cause);
+	public static <T> void shouldExist(T reference, Class<T> type,
+			Object... args) throws NotFoundException {
+		if (reference == null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(type.getSimpleName()).append(" not found");
+			if (args.length > 0) {
+				sb.append(": ");
+				Joiner.on(", ").appendTo(sb, args);
+			}
+			throw new NotFoundException(sb.toString());
+		}
 	}
 
 }

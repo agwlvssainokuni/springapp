@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.fwcore.mvc;
+package cherry.spring.fwcore.springmvc;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
