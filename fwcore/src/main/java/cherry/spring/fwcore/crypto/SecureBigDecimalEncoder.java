@@ -16,13 +16,12 @@
 
 package cherry.spring.fwcore.crypto;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 public class SecureBigDecimalEncoder extends SecureTypeEncoder<BigDecimal> {
 
@@ -30,34 +29,20 @@ public class SecureBigDecimalEncoder extends SecureTypeEncoder<BigDecimal> {
 	protected byte[] typeToBytes(BigDecimal p) {
 		int scale = p.scale();
 		BigInteger bi = p.scaleByPowerOfTen(scale).toBigIntegerExact();
-		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-				DataOutputStream out2 = new DataOutputStream(out)) {
-			out2.writeInt(scale);
-			out2.write(bi.toByteArray());
-			out2.flush();
-			return out.toByteArray();
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+		out.writeInt(scale);
+		out.write(bi.toByteArray());
+		return out.toByteArray();
 	}
 
 	@Override
 	protected BigDecimal bytesToType(byte[] p) {
-		try (ByteArrayInputStream in = new ByteArrayInputStream(p);
-				DataInputStream in2 = new DataInputStream(in);
-				ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			int scale = in2.readInt();
-			byte[] buff = new byte[128];
-			int len;
-			while ((len = in2.read(buff)) >= 0) {
-				out.write(buff, 0, len);
-			}
-			out.flush();
-			BigInteger bi = new BigInteger(out.toByteArray());
-			return new BigDecimal(bi, scale);
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataInput in = ByteStreams.newDataInput(p);
+		int scale = in.readInt();
+		byte[] buff = new byte[p.length - 4];
+		in.readFully(buff);
+		BigInteger bi = new BigInteger(buff);
+		return new BigDecimal(bi, scale);
 	}
 
 }

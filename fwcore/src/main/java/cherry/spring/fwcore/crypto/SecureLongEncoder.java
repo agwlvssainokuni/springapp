@@ -16,34 +16,23 @@
 
 package cherry.spring.fwcore.crypto;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 public class SecureLongEncoder extends SecureTypeEncoder<Long> {
 
 	@Override
 	protected byte[] typeToBytes(Long p) {
-		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-				DataOutputStream out2 = new DataOutputStream(out)) {
-			out2.writeLong(p.longValue());
-			out2.flush();
-			return out.toByteArray();
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+		out.writeLong(p.longValue());
+		return out.toByteArray();
 	}
 
 	@Override
 	protected Long bytesToType(byte[] p) {
-		try (ByteArrayInputStream in = new ByteArrayInputStream(p);
-				DataInputStream in2 = new DataInputStream(in)) {
-			return in2.readLong();
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		ByteArrayDataInput in = ByteStreams.newDataInput(p);
+		return in.readLong();
 	}
 
 }
