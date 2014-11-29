@@ -26,25 +26,35 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
 import cherry.goods.sql.SimpleSqlParser;
 
 public class SqlLoaderImpl implements SqlLoader {
 
-	@Value("${fwcore.sqlloader.charset}")
 	private Charset charset;
 
-	@Value("${fwcore.sqlloader.extension}")
 	private String extension;
 
-	@Value("${fwcore.sqlloader.namePattern}")
 	private Pattern namePattern;
 
-	@Autowired
 	private SimpleSqlParser simpleSqlParser;
+
+	public void setCharset(Charset charset) {
+		this.charset = charset;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+	public void setNamePattern(Pattern namePattern) {
+		this.namePattern = namePattern;
+	}
+
+	public void setSimpleSqlParser(SimpleSqlParser simpleSqlParser) {
+		this.simpleSqlParser = simpleSqlParser;
+	}
 
 	@Override
 	public Map<String, String> load(Class<?> klass) throws IOException {

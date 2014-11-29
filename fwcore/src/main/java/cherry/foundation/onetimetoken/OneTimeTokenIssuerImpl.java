@@ -20,12 +20,13 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
 
-	@Value("${fwcore.onetimetoken.name}")
 	private String name;
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public OneTimeToken newToken(HttpServletRequest request) {

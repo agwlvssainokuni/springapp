@@ -19,7 +19,6 @@ package cherry.foundation.querydsl;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -37,11 +36,18 @@ import com.mysema.query.types.Expression;
 
 public class SQLQueryHelperImpl implements SQLQueryHelper {
 
-	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	@Autowired
 	private Paginator paginator;
+
+	public void setQueryDslJdbcOperations(
+			QueryDslJdbcOperations queryDslJdbcOperations) {
+		this.queryDslJdbcOperations = queryDslJdbcOperations;
+	}
+
+	public void setPaginator(Paginator paginator) {
+		this.paginator = paginator;
+	}
 
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause,

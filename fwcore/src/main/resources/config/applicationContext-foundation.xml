@@ -138,15 +138,35 @@
 	</bean>
 
 	<bean class="cherry.foundation.logicalerror.LogicalErrorHelperImpl" />
-	<bean class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl" />
-	<bean class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl" />
-	<bean class="cherry.foundation.querydsl.SQLQueryHelperImpl" />
-	<bean class="cherry.foundation.sql.SqlExecutorImpl" />
-	<bean class="cherry.foundation.sql.SqlLoaderImpl" />
 
-	<bean class="cherry.goods.sql.SimpleSqlParser" />
-	<bean class="cherry.foundation.etl.ExtractorImpl" />
-	<bean class="cherry.foundation.etl.LoaderImpl" />
+	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
+		<property name="name" value="${foundation.onetimetoken.name}" />
+	</bean>
+	<bean id="oneTimeTokenValidator"
+		class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
+		<property name="name" value="${foundation.onetimetoken.name}" />
+	</bean>
+
+	<bean id="sqlQueryHelper" class="cherry.foundation.querydsl.SQLQueryHelperImpl">
+		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
+		<property name="paginator" ref="paginator" />
+	</bean>
+
+	<bean id="sqlExecutor" class="cherry.foundation.sql.SqlExecutorImpl">
+		<property name="charset" value="${foundation.sqlexecutor.charset}" />
+		<property name="simpleSqlParser" ref="simpleSqlParser" />
+	</bean>
+	<bean id="sqlLoader" class="cherry.foundation.sql.SqlLoaderImpl">
+		<property name="charset" value="${foundation.sqlloader.charset}" />
+		<property name="extension" value="${foundation.sqlloader.extension}" />
+		<property name="namePattern" value="${foundation.sqlloader.namePattern}" />
+		<property name="simpleSqlParser" ref="simpleSqlParser" />
+	</bean>
+
+	<bean id="extractor" class="cherry.foundation.etl.ExtractorImpl" />
+	<bean id="loader" class="cherry.foundation.etl.LoaderImpl" />
+
+	<bean id="simpleSqlParser" class="cherry.goods.sql.SimpleSqlParser" />
 
 	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">
 		<property name="charset" value="${foundation.command.charset}" />

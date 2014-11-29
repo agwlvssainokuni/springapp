@@ -25,8 +25,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -38,11 +36,17 @@ import cherry.goods.sql.SimpleSqlParser;
  */
 public class SqlExecutorImpl implements SqlExecutor {
 
-	@Value("${fwcore.sqlexecutor.charset}")
 	private Charset charset;
 
-	@Autowired
 	private SimpleSqlParser simpleSqlParser;
+
+	public void setCharset(Charset charset) {
+		this.charset = charset;
+	}
+
+	public void setSimpleSqlParser(SimpleSqlParser simpleSqlParser) {
+		this.simpleSqlParser = simpleSqlParser;
+	}
 
 	/**
 	 * SQLを実行する。

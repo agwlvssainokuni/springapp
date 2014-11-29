@@ -19,12 +19,13 @@ package cherry.foundation.onetimetoken;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class OneTimeTokenValidatorImpl implements OneTimeTokenValidator {
 
-	@Value("${fwcore.onetimetoken.name}")
 	private String name;
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public synchronized boolean isValid(HttpServletRequest request) {
