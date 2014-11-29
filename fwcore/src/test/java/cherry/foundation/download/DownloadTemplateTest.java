@@ -23,7 +23,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -38,10 +39,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class DownloadHelperImplTest {
+public class DownloadTemplateTest {
 
 	@Autowired
-	private DownloadHelper downloadHelper;
+	private DownloadOperation downloadOperation;
 
 	@Test
 	public void testDownload00() throws IOException {
@@ -52,12 +53,12 @@ public class DownloadHelperImplTest {
 
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public long doDownload(Writer writer) throws IOException {
+			public long doDownload(OutputStream stream) throws IOException {
 				return 123L;
 			}
 		};
-		downloadHelper.download(response, "text/csv", "test_{0}.csv",
-				timestamp, action);
+		downloadOperation.download(response, "text/csv",
+				StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
 		verify(response).setHeader("Content-Disposition",
@@ -74,14 +75,14 @@ public class DownloadHelperImplTest {
 		final IOException ioex = new IOException();
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public long doDownload(Writer writer) throws IOException {
+			public long doDownload(OutputStream stream) throws IOException {
 				throw ioex;
 			}
 		};
 
 		try {
-			downloadHelper.download(response, "text/csv", "test_{0}.csv",
-					timestamp, action);
+			downloadOperation.download(response, "text/csv",
+					StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
 			fail("Excption must be thrown");
 		} catch (IllegalStateException ex) {
 			assertSame(ex.getCause(), ioex);

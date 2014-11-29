@@ -123,7 +123,12 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean class="cherry.foundation.download.DownloadHelperImpl" />
+	<bean class="cherry.foundation.download.DownloadTemplate">
+		<property name="headerName" value="${foundation.download.headerName}" />
+		<property name="headerValue" value="${foundation.download.headerValue}" />
+		<property name="formatter" value="${foundation.download.format}" />
+	</bean>
+
 	<bean class="cherry.foundation.logicalerror.LogicalErrorHelperImpl" />
 	<bean class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl" />
 	<bean class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl" />
