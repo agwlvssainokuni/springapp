@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.jms.core.MessagePostProcessor;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +45,8 @@ import com.google.common.io.ByteStreams;
  * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}
  * を実装することとする。
  */
-public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
+public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
+		ApplicationContextAware {
 
 	private static final String ASYNCID = "asyncId";
 	private static final String FILE = "file";
@@ -84,6 +86,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler {
 		this.jmsOperations = jmsOperations;
 	}
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
