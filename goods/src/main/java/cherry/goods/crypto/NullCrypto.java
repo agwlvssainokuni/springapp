@@ -19,7 +19,7 @@ package cherry.goods.crypto;
 /**
  * 暗号化/復号化のインタフェースで、実際は暗号化/復号化しない機能を提供する。
  */
-public class NullCipherHelper implements CipherHelper {
+public class NullCrypto implements Crypto {
 
 	@Override
 	public byte[] encrypt(byte[] in) {

@@ -30,13 +30,13 @@ import javax.crypto.NoSuchPaddingException;
 /**
  * AES暗号アルゴリズムによる暗号化/復号化の機能を提供する。
  */
-public class AESCipherHelper implements CipherHelper {
+public class AESCrypto implements Crypto {
 
 	/** AES暗号アルゴリズムを使用するためのアルゴリズム名を保持する。 */
 	private String algorithm = "AES/CBC/PKCS5Padding";
 
 	/** AES暗号アルゴリズムで使用する共通鍵、初期化ベクタを復号化する機能を保持する。 */
-	private CipherHelper keyCipherHelper;
+	private Crypto keyCrypto;
 
 	/** AES暗号アルゴリズムで使用する共通鍵を保持する。 */
 	private Key secretKey;
@@ -48,17 +48,17 @@ public class AESCipherHelper implements CipherHelper {
 		this.algorithm = algorithm;
 	}
 
-	public void setKeyCipherHelper(CipherHelper keyCipherHelper) {
-		this.keyCipherHelper = keyCipherHelper;
+	public void setKeyCrypto(Crypto keyCrypto) {
+		this.keyCrypto = keyCrypto;
 	}
 
 	public void setSecretKeyBytes(byte[] secretKeyBytes) {
-		byte[] keyBin = keyCipherHelper.decrypt(secretKeyBytes);
+		byte[] keyBin = keyCrypto.decrypt(secretKeyBytes);
 		this.secretKey = KeyUtil.createAesSecretKey(keyBin);
 	}
 
 	public void setInitVectorBytes(byte[] initVectorBytes) {
-		byte[] ivBin = keyCipherHelper.decrypt(initVectorBytes);
+		byte[] ivBin = keyCrypto.decrypt(initVectorBytes);
 		this.initVector = KeyUtil.createAesInitVector(ivBin);
 	}
 

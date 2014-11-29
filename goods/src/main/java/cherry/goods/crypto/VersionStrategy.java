@@ -32,7 +32,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @param <V>
  *            版情報の型。
  */
-public interface VersioningStrategy<T, V> {
+public interface VersionStrategy<T, V> {
 
 	/**
 	 * 素データに版情報を付加したデータを生成する。

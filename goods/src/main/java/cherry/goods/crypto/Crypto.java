@@ -19,7 +19,7 @@ package cherry.goods.crypto;
 /**
  * 暗号化/復号化の機能のインタフェースを規定する。
  */
-public interface CipherHelper {
+public interface Crypto {
 
 	/**
 	 * 暗号化する。
