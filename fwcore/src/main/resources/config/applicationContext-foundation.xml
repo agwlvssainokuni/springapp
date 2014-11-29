@@ -164,19 +164,15 @@
 	<!-- DB処理補助機能設定 -->
 	<bean id="sqlExecutor" class="cherry.foundation.sql.SqlExecutorImpl">
 		<property name="charset" value="${foundation.sqlexecutor.charset}" />
-		<property name="simpleSqlParser" ref="simpleSqlParser" />
 	</bean>
 	<bean id="sqlLoader" class="cherry.foundation.sql.SqlLoaderImpl">
 		<property name="charset" value="${foundation.sqlloader.charset}" />
 		<property name="extension" value="${foundation.sqlloader.extension}" />
 		<property name="namePattern" value="${foundation.sqlloader.namePattern}" />
-		<property name="simpleSqlParser" ref="simpleSqlParser" />
 	</bean>
 
 	<bean id="extractor" class="cherry.foundation.etl.ExtractorImpl" />
 	<bean id="loader" class="cherry.foundation.etl.LoaderImpl" />
-
-	<bean id="simpleSqlParser" class="cherry.goods.sql.SimpleSqlParser" />
 
 	<!-- コマンド実行機能設定 -->
 	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">

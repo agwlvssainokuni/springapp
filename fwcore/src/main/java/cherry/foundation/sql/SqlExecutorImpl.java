@@ -38,14 +38,8 @@ public class SqlExecutorImpl implements SqlExecutor {
 
 	private Charset charset;
 
-	private SimpleSqlParser simpleSqlParser;
-
 	public void setCharset(Charset charset) {
 		this.charset = charset;
-	}
-
-	public void setSimpleSqlParser(SimpleSqlParser simpleSqlParser) {
-		this.simpleSqlParser = simpleSqlParser;
 	}
 
 	/**
@@ -117,7 +111,7 @@ public class SqlExecutorImpl implements SqlExecutor {
 				dataSource);
 
 		String sql;
-		while ((sql = simpleSqlParser.nextStatement(reader)) != null) {
+		while ((sql = SimpleSqlParser.nextStatement(reader)) != null) {
 
 			sql = sql.trim();
 			if (sql.isEmpty()) {

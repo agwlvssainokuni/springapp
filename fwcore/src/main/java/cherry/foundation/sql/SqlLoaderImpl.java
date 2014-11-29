@@ -38,8 +38,6 @@ public class SqlLoaderImpl implements SqlLoader {
 
 	private Pattern namePattern;
 
-	private SimpleSqlParser simpleSqlParser;
-
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
@@ -50,10 +48,6 @@ public class SqlLoaderImpl implements SqlLoader {
 
 	public void setNamePattern(Pattern namePattern) {
 		this.namePattern = namePattern;
-	}
-
-	public void setSimpleSqlParser(SimpleSqlParser simpleSqlParser) {
-		this.simpleSqlParser = simpleSqlParser;
 	}
 
 	@Override
@@ -97,7 +91,7 @@ public class SqlLoaderImpl implements SqlLoader {
 
 	private String nextName(Reader reader) throws IOException {
 		String comment;
-		while ((comment = simpleSqlParser.nextComment(reader)) != null) {
+		while ((comment = SimpleSqlParser.nextComment(reader)) != null) {
 			Matcher matcher = namePattern.matcher(comment.trim());
 			if (matcher.find()) {
 				return matcher.group(1);
@@ -108,7 +102,7 @@ public class SqlLoaderImpl implements SqlLoader {
 
 	private String nextStatement(Reader reader) throws IOException {
 		String statement;
-		while ((statement = simpleSqlParser.nextStatement(reader)) != null) {
+		while ((statement = SimpleSqlParser.nextStatement(reader)) != null) {
 			String stmt = statement.trim();
 			if (stmt.length() > 0) {
 				return stmt;

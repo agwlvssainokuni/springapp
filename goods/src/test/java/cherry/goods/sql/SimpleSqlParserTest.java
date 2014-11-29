@@ -30,8 +30,6 @@ import org.junit.Test;
  */
 public class SimpleSqlParserTest {
 
-	private SimpleSqlParser simpleSqlParser = new SimpleSqlParser();
-
 	/**
 	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
 	 * 区分: 正常<br>
@@ -44,8 +42,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL", sql1);
@@ -64,8 +62,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL", sql1);
@@ -85,9 +83,9 @@ public class SimpleSqlParserTest {
 				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
-		String sql3 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
+		String sql3 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT 111 FROM DUAL", sql1);
@@ -108,9 +106,9 @@ public class SimpleSqlParserTest {
 				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
-		String sql3 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
+		String sql3 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT 111 FROM DUAL", sql1);
@@ -130,8 +128,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT '111' FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT '111' FROM DUAL", sql1);
@@ -150,8 +148,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT '11''11' FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT '11''11' FROM DUAL", sql1);
@@ -170,8 +168,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT '11-11' FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT '11-11' FROM DUAL", sql1);
@@ -190,8 +188,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT 11-11 FROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT 11-11 FROM DUAL", sql1);
@@ -210,8 +208,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT 11-11 --COMMENT\r\nFROM DUAL;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT 11-11 \r\nFROM DUAL", sql1);
@@ -230,8 +228,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL -");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL -", sql1);
@@ -250,8 +248,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT * FROM DUAL --");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
 
 		// 検証
 		assertEquals("SELECT * FROM DUAL ", sql1);
@@ -270,8 +268,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT", sql1);
@@ -290,8 +288,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -310,9 +308,9 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT1\r\n-- COMMENT2\r\n");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
-		String sql3 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
+		String sql3 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT1\r\n", sql1);
@@ -332,8 +330,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -352,9 +350,9 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT x FROM dual;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextStatement(reader);
-		String sql3 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
+		String sql3 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -375,8 +373,8 @@ public class SimpleSqlParserTest {
 				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
@@ -396,9 +394,9 @@ public class SimpleSqlParserTest {
 				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextStatement(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
-		String sql3 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
+		String sql3 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("SELECT x FROM dual", sql1);
@@ -418,8 +416,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("SELECT 1-1 FROM dual;-- COMMENT");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT", sql1);
@@ -438,8 +436,8 @@ public class SimpleSqlParserTest {
 		Reader reader = new StringReader("-- COMMENT\r\nSELECT 1-1 FROM dual;");
 
 		// 実行
-		String sql1 = simpleSqlParser.nextComment(reader);
-		String sql2 = simpleSqlParser.nextComment(reader);
+		String sql1 = SimpleSqlParser.nextComment(reader);
+		String sql2 = SimpleSqlParser.nextComment(reader);
 
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
