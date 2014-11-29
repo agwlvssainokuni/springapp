@@ -20,6 +20,7 @@
 				and !execution(* cherry.foundation.log..*.*(..))
 				and !execution(* cherry.foundation.type..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
+				and !execution(* cherry.goods.crypto..*.*(..))
 				" />
 	</aop:config>
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
@@ -142,8 +143,6 @@
 		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
 		<property name="paginator" ref="paginator" />
 	</bean>
-
-	<bean class="cherry.foundation.logicalerror.LogicalErrorHelperImpl" />
 
 	<!-- ダウンロード設定 -->
 	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
