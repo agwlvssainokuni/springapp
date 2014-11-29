@@ -33,8 +33,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.async.AsyncProcessFacade;
 import cherry.spring.admin.controller.PathDef;
-import cherry.spring.fwcore.async.AsyncProcessFacade;
 
 @Controller
 public class UsermanImportControllerImpl implements UsermanImportController {

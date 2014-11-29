@@ -35,7 +35,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.fwcore.type.SecureBigDecimal;
+import cherry.foundation.type.SecureBigDecimal;
 import cherry.spring.fwcore.type.db.dto.ConversionTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)

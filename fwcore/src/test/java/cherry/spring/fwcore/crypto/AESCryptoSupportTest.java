@@ -22,6 +22,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
+import cherry.foundation.crypto.AESCryptoSupport;
 import cherry.goods.util.RandomUtil;
 
 public class AESCryptoSupportTest {

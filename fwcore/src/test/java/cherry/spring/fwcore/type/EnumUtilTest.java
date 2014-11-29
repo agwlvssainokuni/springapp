@@ -16,8 +16,8 @@
 
 package cherry.spring.fwcore.type;
 
-import static cherry.spring.fwcore.type.EnumUtil.getLabeledEnum;
-import static cherry.spring.fwcore.type.EnumUtil.getLabeledEnumList;
+import static cherry.foundation.type.EnumUtil.getLabeledEnum;
+import static cherry.foundation.type.EnumUtil.getLabeledEnumList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -37,6 +37,10 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cherry.foundation.type.EnumUtil;
+import cherry.foundation.type.FlagCode;
+import cherry.foundation.type.LabeledEnum;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

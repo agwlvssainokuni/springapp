@@ -16,8 +16,8 @@
 
 package cherry.spring.fwcore.type;
 
-import static cherry.spring.fwcore.type.SecureLong.cryptoValueOf;
-import static cherry.spring.fwcore.type.SecureLong.plainValueOf;
+import static cherry.foundation.type.SecureLong.cryptoValueOf;
+import static cherry.foundation.type.SecureLong.plainValueOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -27,6 +27,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cherry.foundation.type.SecureLong;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

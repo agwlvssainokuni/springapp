@@ -22,6 +22,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import cherry.foundation.type.DeletedFlag;
+
 public class DeletedFlagTest {
 
 	@Test

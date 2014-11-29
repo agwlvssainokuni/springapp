@@ -42,11 +42,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import cherry.foundation.type.DeletedFlag;
 import cherry.spring.common.db.gen.dto.SignupRequest;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria.Criteria;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
-import cherry.spring.fwcore.type.DeletedFlag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

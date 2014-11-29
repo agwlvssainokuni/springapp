@@ -31,7 +31,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.fwcore.type.DeletedFlag;
+import cherry.foundation.type.DeletedFlag;
 import cherry.spring.fwcore.type.db.dto.ConversionTest;
 import cherry.spring.fwcore.type.db.mapper.ConversionTestMapper;
 

@@ -25,8 +25,10 @@ import java.security.SecureRandom;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
+import cherry.foundation.crypto.AESCryptoSupport;
+import cherry.foundation.crypto.SecureLongEncoder;
+import cherry.foundation.type.SecureLong;
 import cherry.goods.util.RandomUtil;
-import cherry.spring.fwcore.type.SecureLong;
 
 public class SecureLongEncoderTest {
 

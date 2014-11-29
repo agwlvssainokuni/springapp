@@ -23,8 +23,8 @@ import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.type.DeletedFlag;
 import cherry.spring.common.db.gen.query.QUser;
-import cherry.spring.fwcore.type.DeletedFlag;
 
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.expr.DateTimeExpression;

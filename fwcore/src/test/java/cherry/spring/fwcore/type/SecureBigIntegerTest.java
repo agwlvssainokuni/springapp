@@ -16,8 +16,8 @@
 
 package cherry.spring.fwcore.type;
 
-import static cherry.spring.fwcore.type.SecureBigInteger.cryptoValueOf;
-import static cherry.spring.fwcore.type.SecureBigInteger.plainValueOf;
+import static cherry.foundation.type.SecureBigInteger.cryptoValueOf;
+import static cherry.foundation.type.SecureBigInteger.plainValueOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.type.SecureBigInteger;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)

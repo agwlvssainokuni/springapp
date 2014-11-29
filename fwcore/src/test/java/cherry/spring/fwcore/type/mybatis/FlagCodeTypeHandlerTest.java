@@ -31,7 +31,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.spring.fwcore.type.FlagCode;
+import cherry.foundation.type.FlagCode;
 import cherry.spring.fwcore.type.db.dto.ConversionTest;
 import cherry.spring.fwcore.type.db.mapper.ConversionTestMapper;
 

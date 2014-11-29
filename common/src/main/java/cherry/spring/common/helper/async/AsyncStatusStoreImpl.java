@@ -27,12 +27,12 @@ import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.async.AsyncStatus;
+import cherry.foundation.async.AsyncStatusStore;
+import cherry.foundation.async.FileProcessResult;
+import cherry.foundation.type.DeletedFlag;
 import cherry.goods.command.CommandResult;
 import cherry.spring.common.db.gen.query.QAsyncProc;
-import cherry.spring.fwcore.async.AsyncStatus;
-import cherry.spring.fwcore.async.AsyncStatusStore;
-import cherry.spring.fwcore.async.FileProcessResult;
-import cherry.spring.fwcore.type.DeletedFlag;
 
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;

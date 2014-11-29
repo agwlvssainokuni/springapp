@@ -36,12 +36,12 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import cherry.spring.fwcore.async.FileProcessHandler;
-import cherry.spring.fwcore.async.FileProcessResult;
-import cherry.spring.fwcore.etl.CsvProvider;
-import cherry.spring.fwcore.etl.LoadResult;
-import cherry.spring.fwcore.etl.Loader;
-import cherry.spring.fwcore.etl.NoneLimiter;
+import cherry.foundation.async.FileProcessHandler;
+import cherry.foundation.async.FileProcessResult;
+import cherry.foundation.etl.CsvProvider;
+import cherry.foundation.etl.LoadResult;
+import cherry.foundation.etl.Loader;
+import cherry.foundation.etl.NoneLimiter;
 
 @Component("usermanImportFileProcessHandler")
 public class UsermanImportFileProcessHandler implements FileProcessHandler {

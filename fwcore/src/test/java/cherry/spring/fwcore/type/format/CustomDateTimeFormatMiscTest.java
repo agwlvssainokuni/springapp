@@ -20,6 +20,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory;
+
 public class CustomDateTimeFormatMiscTest {
 
 	@Test
