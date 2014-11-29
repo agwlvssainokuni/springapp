@@ -19,29 +19,30 @@ package cherry.spring.fwcore.crypto;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import cherry.goods.crypto.Crypto;
 import cherry.spring.fwcore.type.SecureType.Encoder;
 
 public abstract class SecureTypeBaseHelper<T> implements Encoder<T> {
 
-	private CipherHelper cipherHelper;
+	private Crypto crypto;
 
-	public void setCipherHelper(CipherHelper cipherHelper) {
-		this.cipherHelper = cipherHelper;
+	public void setCrypto(Crypto Crypto) {
+		this.crypto = Crypto;
 	}
 
 	@Override
 	public String encode(T p) {
-		byte[] plain = typeToBytes(p);
-		byte[] crypto = cipherHelper.encrypt(plain);
-		return new String(Hex.encodeHex(crypto));
+		byte[] pln = typeToBytes(p);
+		byte[] crp = crypto.encrypt(pln);
+		return new String(Hex.encodeHex(crp));
 	}
 
 	@Override
 	public T decode(String c) {
 		try {
-			byte[] crypto = Hex.decodeHex(c.toCharArray());
-			byte[] plain = cipherHelper.decrypt(crypto);
-			return bytesToType(plain);
+			byte[] crp = Hex.decodeHex(c.toCharArray());
+			byte[] pln = crypto.decrypt(crp);
+			return bytesToType(pln);
 		} catch (DecoderException ex) {
 			throw new IllegalArgumentException(ex);
 		}

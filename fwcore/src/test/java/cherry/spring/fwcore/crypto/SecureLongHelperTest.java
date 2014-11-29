@@ -68,7 +68,7 @@ public class SecureLongHelperTest {
 	}
 
 	private SecureLongHelper createSecureLongHelper() throws Exception {
-		AESCipherHelper helper = new AESCipherHelper();
+		AESCryptoSupport helper = new AESCryptoSupport();
 		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();

@@ -29,7 +29,7 @@ public class AESCipherHelperTest {
 	@Test
 	public void testDefault() throws Exception {
 
-		AESCipherHelper helper = new AESCipherHelper();
+		AESCryptoSupport helper = new AESCryptoSupport();
 		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
@@ -45,7 +45,7 @@ public class AESCipherHelperTest {
 	@Test
 	public void testCBC() throws Exception {
 
-		AESCipherHelper helper = new AESCipherHelper();
+		AESCryptoSupport helper = new AESCryptoSupport();
 		helper.setAlgorithm("AES/CBC/PKCS5Padding");
 		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.setInitVector(new InMemoryResource(RandomUtil.randomBytes(16)));
@@ -62,7 +62,7 @@ public class AESCipherHelperTest {
 	@Test
 	public void testECB() throws Exception {
 
-		AESCipherHelper helper = new AESCipherHelper();
+		AESCryptoSupport helper = new AESCryptoSupport();
 		helper.setAlgorithm("AES/ECB/PKCS5Padding");
 		helper.setSecretKey(new InMemoryResource(RandomUtil.randomBytes(16)));
 		helper.afterPropertiesSet();
@@ -81,19 +81,19 @@ public class AESCipherHelperTest {
 		byte[] key = RandomUtil.randomBytes(16);
 		byte[] iv = RandomUtil.randomBytes(16);
 
-		AESCipherHelper helper0 = new AESCipherHelper();
+		AESCryptoSupport helper0 = new AESCryptoSupport();
 		helper0.setSecretKey(new InMemoryResource(key));
 		helper0.setInitVector(new InMemoryResource(iv));
 		helper0.afterPropertiesSet();
 
-		AESCipherHelper keyCipherHelper = new AESCipherHelper();
+		AESCryptoSupport keyCipherHelper = new AESCryptoSupport();
 		keyCipherHelper.setSecretKey(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		keyCipherHelper.setInitVector(new InMemoryResource(RandomUtil
 				.randomBytes(16)));
 		keyCipherHelper.afterPropertiesSet();
 
-		AESCipherHelper helper1 = new AESCipherHelper();
+		AESCryptoSupport helper1 = new AESCryptoSupport();
 		helper1.setSecretKey(new InMemoryResource(keyCipherHelper.encrypt(key)));
 		helper1.setInitVector(new InMemoryResource(keyCipherHelper.encrypt(iv)));
 		helper1.setKeyCipherHelper(keyCipherHelper);

@@ -36,7 +36,7 @@ public class RSACipherHelperTest {
 
 	@Test
 	public void testEncDec() throws Exception {
-		RSACipherHelper helper = createCipherHelper();
+		RSACryptoSupport helper = createCipherHelper();
 		for (int i = 0; i < loopCount; i++) {
 			byte[] plain = RandomUtil.randomBytes(size);
 			byte[] crypto = helper.encrypt(plain);
@@ -45,11 +45,11 @@ public class RSACipherHelperTest {
 		}
 	}
 
-	private RSACipherHelper createCipherHelper() throws Exception {
+	private RSACryptoSupport createCipherHelper() throws Exception {
 		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
 		keygen.initialize(2048);
 		KeyPair key = keygen.generateKeyPair();
-		RSACipherHelper helper = new RSACipherHelper();
+		RSACryptoSupport helper = new RSACryptoSupport();
 		helper.setAlgorithm("RSA/ECB/PKCS1Padding");
 		helper.setKeyLoader(new RSAKeyLoader());
 		helper.setPublicKey(new InMemoryResource(key.getPublic().getEncoded()));
