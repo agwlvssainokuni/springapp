@@ -23,7 +23,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.fwcore.mask.Masker;
+import cherry.goods.masker.Masker;
 
 @Component
 public class CustomBeanPropertyRowMapperCreator implements RowMapperCreator {

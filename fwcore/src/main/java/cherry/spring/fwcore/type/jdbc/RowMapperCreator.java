@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import cherry.spring.fwcore.mask.Masker;
+import cherry.goods.masker.Masker;
 
 public interface RowMapperCreator {
 

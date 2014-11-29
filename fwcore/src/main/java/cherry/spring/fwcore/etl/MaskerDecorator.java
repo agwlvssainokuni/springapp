@@ -16,7 +16,7 @@
 
 package cherry.spring.fwcore.etl;
 
-import cherry.spring.fwcore.mask.Masker;
+import cherry.goods.masker.Masker;
 
 public class MaskerDecorator<T> implements Decorator {
 

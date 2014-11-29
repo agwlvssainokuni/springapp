@@ -25,7 +25,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import cherry.spring.fwcore.mask.Masker;
+import cherry.goods.masker.Masker;
 
 public class CustomBeanPropertyRowMapper<T> extends BeanPropertyRowMapper<T> {
 

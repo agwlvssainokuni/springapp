@@ -16,10 +16,13 @@
 
 package cherry.spring.fwcore.mask;
 
+import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+import static com.google.common.base.CaseFormat.UPPER_UNDERSCORE;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cherry.goods.util.CamelCaseUtil;
+import cherry.goods.masker.Masker;
 import cherry.spring.fwcore.etl.Decorator;
 import cherry.spring.fwcore.etl.MaskerDecorator;
 
@@ -40,8 +43,7 @@ public class MaskerUtil {
 			Map<String, Masker<?>> maskerMap) {
 		Map<String, Masker<?>> map = new LinkedHashMap<>();
 		for (Map.Entry<String, Masker<?>> entry : maskerMap.entrySet()) {
-			String key = CamelCaseUtil.fromUnderscoreDelimited(entry.getKey(),
-					false);
+			String key = UPPER_UNDERSCORE.to(LOWER_CAMEL, entry.getKey());
 			map.put(key, entry.getValue());
 		}
 		return map;
