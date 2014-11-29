@@ -17,7 +17,11 @@
 package cherry.spring.admin.controller.secure.userman;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.download.DownloadAction;
-import cherry.foundation.download.DownloadHelper;
+import cherry.foundation.download.DownloadOperation;
 import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.userman.UsermanSearchService;
@@ -58,7 +62,9 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	private BizDateTime bizDateTime;
 
 	@Autowired
-	private DownloadHelper downloadHelper;
+	private DownloadOperation downloadOperation;
+
+	private Charset charset = StandardCharsets.UTF_8;
 
 	@Override
 	public UsermanSearchForm getForm() {
@@ -105,11 +111,13 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 
 		DownloadAction action = new DownloadAction() {
 			@Override
-			public long doDownload(Writer writer) throws IOException {
-				return usermanSearchService.exportUsers(writer, form);
+			public long doDownload(OutputStream stream) throws IOException {
+				try (Writer writer = new OutputStreamWriter(stream, charset)) {
+					return usermanSearchService.exportUsers(writer, form);
+				}
 			}
 		};
-		downloadHelper.download(response, contentType, filename,
+		downloadOperation.download(response, contentType, charset, filename,
 				bizDateTime.now(), action);
 
 		return null;
