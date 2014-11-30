@@ -24,7 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
@@ -118,15 +120,17 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 	 * @param handlerName
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
+	 * @param args
+	 *            追加パラメタ。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
 	public long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName) {
+			String handlerName, String... args) {
 
 		long asyncId = asyncStatusStore.createFileProcess(launcherId,
 				bizDateTime.now(), file.getName(), file.getOriginalFilename(),
-				file.getContentType(), file.getSize(), handlerName);
+				file.getContentType(), file.getSize(), handlerName, args);
 		try {
 
 			File tempFile = createFile(file);
@@ -139,6 +143,9 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 			message.put(CONTENT_TYPE, file.getContentType());
 			message.put(SIZE, String.valueOf(file.getSize()));
 			message.put(HANDLER_NAME, handlerName);
+			for (int i = 0; i < args.length; i++) {
+				message.put(String.valueOf(i), args[i]);
+			}
 			jmsOperations.convertAndSend(message, messagePostProcessor);
 
 			asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
@@ -169,13 +176,23 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 		long size = Long.parseLong(message.get(SIZE));
 		String handlerName = message.get(HANDLER_NAME);
 
+		List<String> args = new ArrayList<>();
+		for (int i = 0;; i++) {
+			String v = message.get(String.valueOf(i));
+			if (v == null) {
+				break;
+			}
+			args.add(v);
+		}
+
 		asyncStatusStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
 			FileProcessHandler handler = applicationContext.getBean(
 					handlerName, FileProcessHandler.class);
 			FileProcessResult result = handler.handleFile(tempFile, name,
-					originalFilename, contentType, size, asyncId);
+					originalFilename, contentType, size, asyncId,
+					args.toArray(new String[args.size()]));
 
 			AsyncStatus status;
 			if (result.getTotalCount() == result.getOkCount()) {

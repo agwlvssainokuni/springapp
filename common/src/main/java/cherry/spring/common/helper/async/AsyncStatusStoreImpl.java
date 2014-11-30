@@ -46,7 +46,8 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 	@Override
 	public long createFileProcess(final String launcherId,
 			final LocalDateTime dtm, String name, String originalFilename,
-			String contentType, long size, final String handlerName) {
+			String contentType, long size, final String handlerName,
+			String... args) {
 		final QAsyncProc a = new QAsyncProc("a");
 		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
 			@Override

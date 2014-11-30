@@ -61,8 +61,8 @@ public class UsermanImportFileProcessHandler implements FileProcessHandler {
 
 	@Override
 	public FileProcessResult handleFile(final File file, String name,
-			String originalFilename, String contentType, long size, long asyncId)
-			throws IOException {
+			String originalFilename, String contentType, long size,
+			long asyncId, String... args) throws IOException {
 		TransactionOperations txOp = new TransactionTemplate(
 				new DataSourceTransactionManager(dataSource));
 		return txOp.execute(new TransactionCallback<FileProcessResult>() {
