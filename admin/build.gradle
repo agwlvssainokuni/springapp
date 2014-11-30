@@ -16,6 +16,7 @@ dependencies {
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testCompile "com.h2database:h2:${versionH2db}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
