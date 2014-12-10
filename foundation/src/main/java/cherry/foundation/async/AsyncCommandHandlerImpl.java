@@ -73,6 +73,8 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param command
 	 *            実行するコマンド。
 	 * @param args
@@ -80,10 +82,11 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchCommand(String launcherId, String command, String... args) {
+	public long launchCommand(String launcherId, String description,
+			String command, String... args) {
 
 		long asyncId = asyncStatusStore.createCommand(launcherId,
-				bizDateTime.now(), command);
+				bizDateTime.now(), description, command, args);
 
 		Map<String, String> message = new HashMap<>();
 		message.put(ASYNCID, String.valueOf(asyncId));

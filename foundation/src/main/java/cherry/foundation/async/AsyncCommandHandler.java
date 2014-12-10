@@ -31,13 +31,16 @@ public interface AsyncCommandHandler {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param command
 	 *            実行するコマンド。
 	 * @param args
 	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchCommand(String launcherId, String command, String... args);
+	long launchCommand(String launcherId, String description, String command,
+			String... args);
 
 	/**
 	 * 実行登録したコマンドを実行する。<br />

@@ -44,6 +44,8 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param file
 	 *            処理対象のファイル。
 	 * @param handlerName
@@ -54,10 +56,10 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName, String... args) {
-		return asyncFileProcessHandler.launchFileProcess(launcherId, file,
-				handlerName, args);
+	public long launchFileProcess(String launcherId, String description,
+			MultipartFile file, String handlerName, String... args) {
+		return asyncFileProcessHandler.launchFileProcess(launcherId,
+				description, file, handlerName, args);
 	}
 
 	/**
@@ -65,6 +67,8 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param command
 	 *            実行するコマンド。
 	 * @param args
@@ -72,8 +76,10 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchCommand(String launcherId, String command, String... args) {
-		return asyncCommandHandler.launchCommand(launcherId, command, args);
+	public long launchCommand(String launcherId, String description,
+			String command, String... args) {
+		return asyncCommandHandler.launchCommand(launcherId, description,
+				command, args);
 	}
 
 }

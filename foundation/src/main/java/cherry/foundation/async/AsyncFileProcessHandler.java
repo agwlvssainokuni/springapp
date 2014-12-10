@@ -33,6 +33,8 @@ public interface AsyncFileProcessHandler {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param file
 	 *            処理対象のファイル。
 	 * @param handlerName
@@ -42,8 +44,8 @@ public interface AsyncFileProcessHandler {
 	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName, String... args);
+	long launchFileProcess(String launcherId, String description,
+			MultipartFile file, String handlerName, String... args);
 
 	/**
 	 * 実行登録したファイル処理を実行する。<br />

@@ -115,6 +115,8 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param file
 	 *            処理対象のファイル。
 	 * @param handlerName
@@ -125,12 +127,13 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName, String... args) {
+	public long launchFileProcess(String launcherId, String description,
+			MultipartFile file, String handlerName, String... args) {
 
 		long asyncId = asyncStatusStore.createFileProcess(launcherId,
-				bizDateTime.now(), file.getName(), file.getOriginalFilename(),
-				file.getContentType(), file.getSize(), handlerName, args);
+				bizDateTime.now(), description, file.getName(),
+				file.getOriginalFilename(), file.getContentType(),
+				file.getSize(), handlerName, args);
 		try {
 
 			File tempFile = createFile(file);

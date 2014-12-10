@@ -29,6 +29,8 @@ public interface AsyncProcessFacade {
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param file
 	 *            処理対象のファイル。
 	 * @param handlerName
@@ -38,20 +40,23 @@ public interface AsyncProcessFacade {
 	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName, String... args);
+	long launchFileProcess(String launcherId, String description,
+			MultipartFile file, String handlerName, String... args);
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
 	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param command
 	 *            実行するコマンド。
 	 * @param args
 	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchCommand(String launcherId, String command, String... args);
+	long launchCommand(String launcherId, String description, String command,
+			String... args);
 
 }
