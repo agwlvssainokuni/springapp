@@ -32,7 +32,11 @@ import cherry.foundation.async.AsyncStatusStore;
 import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.type.DeletedFlag;
 import cherry.goods.command.CommandResult;
-import cherry.spring.common.db.gen.query.QAsyncProc;
+import cherry.spring.common.db.gen.query.QAsyncProcess;
+import cherry.spring.common.db.gen.query.QAsyncProcessCommand;
+import cherry.spring.common.db.gen.query.QAsyncProcessCommandArg;
+import cherry.spring.common.db.gen.query.QAsyncProcessFile;
+import cherry.spring.common.db.gen.query.QAsyncProcessFileArg;
 
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
@@ -44,162 +48,232 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
-	public long createFileProcess(final String launcherId,
-			final LocalDateTime dtm, String name, String originalFilename,
-			String contentType, long size, final String handlerName,
-			String... args) {
-		final QAsyncProc a = new QAsyncProc("a");
-		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+	public long createFileProcess(String launcherId, LocalDateTime dtm,
+			final String description, final String name,
+			final String originalFilename, final String contentType,
+			final long size, final String handlerName, String... args) {
+
+		final long asyncId = createAsyncProcess(launcherId, description, "FIL",
+				dtm);
+
+		final QAsyncProcessFile a = new QAsyncProcessFile("a");
+		queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.name, handlerName);
-				insert.set(a.launcherId, launcherId);
-				insert.set(a.status, "PREPARING");
-				insert.set(a.registeredAt, dtm);
+				insert.set(a.asyncId, asyncId);
+				insert.set(a.paramName, name);
+				insert.set(a.originalFilename, originalFilename);
+				insert.set(a.contentType, contentType);
+				insert.set(a.fileSize, size);
+				insert.set(a.handlerName, handlerName);
 				Long id = insert.executeWithKey(Long.class);
 				checkState(
 						id != null,
-						"failed to create async_proc: name={0}, launcherId={1}, registeredAt={2}",
-						handlerName, launcherId, dtm);
+						"failed to create async_process_file: asyncId={0}, paramName={1}, originalFilename={2}, contentType={3}, fileSize={4}, handlerName={5}",
+						asyncId, name, originalFilename, contentType, size,
+						handlerName);
 				return id.longValue();
 			}
 		});
+
+		final QAsyncProcessFileArg b = new QAsyncProcessFileArg("b");
+		for (final String arg : args) {
+			queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+				@Override
+				public long doInSqlInsertClause(SQLInsertClause insert) {
+					insert.set(b.asyncId, asyncId);
+					insert.set(b.argument, arg);
+					Long id = insert.executeWithKey(Long.class);
+					checkState(
+							id != null,
+							"failed to create async_process_file_arg: asyncId={0}, arg={1}",
+							asyncId, arg);
+					return id.longValue();
+				}
+			});
+		}
+
+		return asyncId;
 	}
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
-	public long createCommand(final String launcherId, final LocalDateTime dtm,
-			final String... command) {
-		final QAsyncProc a = new QAsyncProc("a");
-		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+	public long createCommand(String launcherId, LocalDateTime dtm,
+			final String description, final String command, String... args) {
+
+		final long asyncId = createAsyncProcess(launcherId, description, "CMD",
+				dtm);
+
+		final QAsyncProcessCommand a = new QAsyncProcessCommand("a");
+		queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.name, command[0]);
-				insert.set(a.launcherId, launcherId);
-				insert.set(a.status, "PREPARING");
-				insert.set(a.registeredAt, dtm);
+				insert.set(a.asyncId, asyncId);
+				insert.set(a.command, command);
 				Long id = insert.executeWithKey(Long.class);
 				checkState(
 						id != null,
-						"failed to create async_proc: name={0}, launcherId={1}, registeredAt={2}",
-						command[0], launcherId, dtm);
+						"failed to create async_process_command: asyncId={0}, command={1}",
+						asyncId, command);
 				return id.longValue();
 			}
 		});
+
+		final QAsyncProcessCommandArg b = new QAsyncProcessCommandArg("b");
+		for (final String arg : args) {
+			queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+				@Override
+				public long doInSqlInsertClause(SQLInsertClause insert) {
+					insert.set(b.asyncId, asyncId);
+					insert.set(b.argument, arg);
+					Long id = insert.executeWithKey(Long.class);
+					checkState(
+							id != null,
+							"failed to create async_process_command_arg: asyncProcessId={0}, arg={1}",
+							asyncId, arg);
+					return id.longValue();
+				}
+			});
+		}
+
+		return asyncId;
 	}
 
 	@Transactional("jtaTransactionManager")
 	public void updateToLaunched(final long asyncId, final LocalDateTime dtm) {
-		final QAsyncProc a = new QAsyncProc("a");
+		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "INVOKED");
-				update.set(a.invokedAt, dtm);
+				update.set(a.asyncStatus, AsyncStatus.LAUNCHED.code());
+				update.set(a.launchedAt, dtm);
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
 				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq((int) asyncId));
+				update.where(a.id.eq(asyncId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(
 				count == 1,
-				"failed to update async_proc: id={0}, invokedAt={1}, count={2}",
+				"failed to update async_process: id={0}, launchedAt={1}, count={2}",
 				asyncId, dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void updateToProcessing(final long asyncId, final LocalDateTime dtm) {
-		final QAsyncProc a = new QAsyncProc("a");
+		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "PROCESSING");
+				update.set(a.asyncStatus, AsyncStatus.PROCESSING.code());
 				update.set(a.startedAt, dtm);
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
 				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq((int) asyncId));
+				update.where(a.id.eq(asyncId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(
 				count == 1,
-				"failed to update async_proc: id={0}, startedAt={1}, count={2}",
+				"failed to update async_process: id={0}, startedAt={1}, count={2}",
 				asyncId, dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void finishFileProcess(final long asyncId, final LocalDateTime dtm,
-			AsyncStatus status, final FileProcessResult result) {
-		final QAsyncProc a = new QAsyncProc("a");
+			final AsyncStatus status, final FileProcessResult result) {
+		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "SUCCESS");
+				update.set(a.asyncStatus, status.code());
 				update.set(a.finishedAt, dtm);
-				update.set(a.result, result.toString());
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
 				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq((int) asyncId));
+				update.where(a.id.eq(asyncId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(
 				count == 1,
-				"failed to update async_proc: id={0}, finishedAt={1}, result={2}, count={3}",
+				"failed to update async_process: id={0}, finishedAt={1}, result={2}, count={3}",
 				asyncId, dtm, result.toString(), count);
+		// TODO
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void finishCommand(final long asyncId, final LocalDateTime dtm,
-			AsyncStatus status, final CommandResult result) {
-		final QAsyncProc a = new QAsyncProc("a");
+			final AsyncStatus status, final CommandResult result) {
+		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "SUCCESS");
+				update.set(a.asyncStatus, status.code());
 				update.set(a.finishedAt, dtm);
-				update.set(a.result, result.toString());
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
 				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq((int) asyncId));
+				update.where(a.id.eq(asyncId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(
 				count == 1,
-				"failed to update async_proc: id={0}, finishedAt={1}, result={2}, count={3}",
+				"failed to update async_process: id={0}, finishedAt={1}, result={2}, count={3}",
 				asyncId, dtm, result.toString(), count);
+		// TODO
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void finishWithException(final long asyncId,
 			final LocalDateTime dtm, final Throwable th) {
-		final QAsyncProc a = new QAsyncProc("a");
+		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.status, "ERROR");
+				update.set(a.asyncStatus, AsyncStatus.EXCEPTION.code());
 				update.set(a.finishedAt, dtm);
-				update.set(a.result, th.getMessage());
 				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
 				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq((int) asyncId));
+				update.where(a.id.eq(asyncId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(
 				count == 1,
-				"failed to update async_proc: id={0}, finishedAt={1}, result={2}, count={3}",
+				"failed to update async_process: id={0}, finishedAt={1}, result={2}, count={3}",
 				asyncId, dtm, th.getMessage(), count);
+		// TODO
+	}
+
+	private long createAsyncProcess(final String launcherId,
+			final String description, final String asyncType,
+			final LocalDateTime dtm) {
+		final QAsyncProcess a = new QAsyncProcess("a");
+		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+			@Override
+			public long doInSqlInsertClause(SQLInsertClause insert) {
+				insert.set(a.launchedBy, launcherId);
+				insert.set(a.description, description);
+				insert.set(a.asyncType, asyncType);
+				insert.set(a.asyncStatus, AsyncStatus.LAUNCHING.code());
+				insert.set(a.registeredAt, dtm);
+				Long id = insert.executeWithKey(Long.class);
+				checkState(
+						id != null,
+						"failed to create async_process: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
+						launcherId, description, asyncType,
+						AsyncStatus.LAUNCHING.code(), dtm);
+				return id.longValue();
+			}
+		});
 	}
 
 }
