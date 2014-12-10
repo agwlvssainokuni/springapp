@@ -35,6 +35,7 @@ import cherry.goods.command.CommandResult;
 public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
 	private static final String ASYNCID = "asyncId";
+	private static final String COMMAND = "command";
 
 	private BizDateTime bizDateTime;
 
@@ -69,23 +70,26 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
-	 * 
+	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
 	 * @param command
-	 *            実行するコマンド (コマンドライン)。
+	 *            実行するコマンド。
+	 * @param args
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchCommand(String launcherId, String... command) {
+	public long launchCommand(String launcherId, String command, String... args) {
 
 		long asyncId = asyncStatusStore.createCommand(launcherId,
 				bizDateTime.now(), command);
 
 		Map<String, String> message = new HashMap<>();
 		message.put(ASYNCID, String.valueOf(asyncId));
-		for (int i = 0; i < command.length; i++) {
-			message.put(String.valueOf(i), command[i]);
+		message.put(COMMAND, command);
+		for (int i = 0; i < args.length; i++) {
+			message.put(String.valueOf(i), args[i]);
 		}
 		jmsOperations.convertAndSend(message, messagePostProcessor);
 
@@ -96,7 +100,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	/**
 	 * 実行登録したコマンドを実行する。<br />
 	 * 本メソッドはコンテナが呼出すことを意図するものである。
-	 * 
+	 *
 	 * @param message
 	 *            {@link #launchCommand(String, String...)}
 	 *            において登録した内容がコンテナから受渡される。
@@ -105,20 +109,21 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	public void handleMessage(Map<String, String> message) {
 
 		long asyncId = Long.parseLong(message.get(ASYNCID));
-		List<String> command = new ArrayList<>();
+		List<String> cmdline = new ArrayList<>();
+		cmdline.add(message.get(COMMAND));
 		for (int i = 0;; i++) {
 			String v = message.get(String.valueOf(i));
 			if (v == null) {
 				break;
 			}
-			command.add(v);
+			cmdline.add(v);
 		}
 
 		asyncStatusStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
-			CommandResult result = commandLauncher.launch(command
-					.toArray(new String[command.size()]));
+			CommandResult result = commandLauncher.launch(cmdline
+					.toArray(new String[cmdline.size()]));
 
 			AsyncStatus status;
 			if (result.getExitValue() == 0) {
