@@ -1,13 +1,13 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/10 23:27:02
+-- Date/Time    : 2014/12/11 6:17:12
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
 -- 非同期実行状況管理・コマンド・結果
 CREATE TABLE async_process_command_result(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	exit_value INTEGER NOT NULL,
 	stdout VARCHAR (1024) NOT NULL,
 	stderr VARCHAR (1024) NOT NULL,
@@ -20,8 +20,8 @@ CREATE TABLE async_process_command_result(
 
 -- 非同期実行状況管理・コマンド・引数
 CREATE TABLE async_process_command_arg(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	argument VARCHAR (50) NOT NULL,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE async_process_command_arg(
 
 -- 非同期実行状況管理・コマンド
 CREATE TABLE async_process_command(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	command VARCHAR (50) NOT NULL,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -44,8 +44,8 @@ CREATE TABLE async_process_command(
 
 -- 非同期実行状況管理・ファイル処理・結果詳細
 CREATE TABLE async_process_file_result_detail(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	record_number bigint NOT NULL,
 	description VARCHAR (50),
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -57,8 +57,8 @@ CREATE TABLE async_process_file_result_detail(
 
 -- 非同期実行状況管理・ファイル処理・結果
 CREATE TABLE async_process_file_result(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	total_count bigint NOT NULL,
 	ok_count bigint NOT NULL,
 	ng_count bigint NOT NULL,
@@ -71,8 +71,8 @@ CREATE TABLE async_process_file_result(
 
 -- 非同期実行状況管理・ファイル処理・引数
 CREATE TABLE async_process_file_arg(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	argument VARCHAR (50) NOT NULL,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -83,8 +83,8 @@ CREATE TABLE async_process_file_arg(
 
 -- 非同期実行状況管理・ファイル処理
 CREATE TABLE async_process_file(
-	id INTEGER NOT NULL auto_increment,
-	async_process_id INTEGER NOT NULL,
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
 	handler_name VARCHAR (50) NOT NULL,
 	param_name VARCHAR (50) NOT NULL,
 	original_filename VARCHAR (50) NOT NULL,
@@ -99,12 +99,13 @@ CREATE TABLE async_process_file(
 
 -- 非同期実行状況管理
 CREATE TABLE async_process(
-	id INTEGER NOT NULL auto_increment,
+	id bigint NOT NULL auto_increment,
 	launched_by VARCHAR (32) NOT NULL,
-	type VARCHAR (3) NOT NULL,
-	status VARCHAR (3) NOT NULL,
-	launched_at TIMESTAMP NOT NULL,
-	invoked_at TIMESTAMP,
+	description VARCHAR (64) NOT NULL,
+	async_type VARCHAR (3) NOT NULL,
+	async_status VARCHAR (3) NOT NULL,
+	registered_at TIMESTAMP NOT NULL,
+	launched_at TIMESTAMP,
 	started_at TIMESTAMP,
 	finished_at TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -116,7 +117,7 @@ CREATE TABLE async_process(
 
 -- 非同期処理
 CREATE TABLE async_proc(
-	id INTEGER NOT NULL auto_increment,
+	id bigint NOT NULL auto_increment,
 	launcher_id VARCHAR (512) NOT NULL,
 	name VARCHAR (32) NOT NULL,
 	status VARCHAR (32) NOT NULL CHECK status IN (
@@ -148,7 +149,7 @@ COMMENT
 	ON COLUMN async_process_command_result.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_command_result.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_command_result.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_command_result.exit_value IS '終了コード';
@@ -178,7 +179,7 @@ COMMENT
 	ON COLUMN async_process_command_arg.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_command_arg.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_command_arg.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_command_arg.argument IS '引数';
@@ -202,7 +203,7 @@ COMMENT
 	ON COLUMN async_process_command.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_command.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_command.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_command.command IS 'コマンド';
@@ -226,7 +227,7 @@ COMMENT
 	ON COLUMN async_process_file_result_detail.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_file_result_detail.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_file_result_detail.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_file_result_detail.record_number IS 'NGレコード番号';
@@ -253,7 +254,7 @@ COMMENT
 	ON COLUMN async_process_file_result.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_file_result.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_file_result.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_file_result.total_count IS '総件数';
@@ -283,7 +284,7 @@ COMMENT
 	ON COLUMN async_process_file_arg.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_file_arg.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_file_arg.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_file_arg.argument IS '引数';
@@ -307,7 +308,7 @@ COMMENT
 	ON COLUMN async_process_file.id IS 'ID';
 
 COMMENT
-	ON COLUMN async_process_file.async_process_id IS '非同期実行状況管理ID';
+	ON COLUMN async_process_file.async_id IS '非同期実行状況管理ID';
 
 COMMENT
 	ON COLUMN async_process_file.handler_name IS 'ハンドラ名';
@@ -346,16 +347,19 @@ COMMENT
 	ON COLUMN async_process.launched_by IS 'キュー投入者ID';
 
 COMMENT
-	ON COLUMN async_process.type IS '非同期処理種別';
+	ON COLUMN async_process.description IS '内容表記';
 
 COMMENT
-	ON COLUMN async_process.status IS 'ステータス';
+	ON COLUMN async_process.async_type IS '非同期実行種別';
 
 COMMENT
-	ON COLUMN async_process.launched_at IS '登録日時';
+	ON COLUMN async_process.async_status IS '非同期実行状況';
 
 COMMENT
-	ON COLUMN async_process.invoked_at IS 'キュー投入日時';
+	ON COLUMN async_process.registered_at IS '登録日時';
+
+COMMENT
+	ON COLUMN async_process.launched_at IS 'キュー投入日時';
 
 COMMENT
 	ON COLUMN async_process.started_at IS '実行開始日時';
