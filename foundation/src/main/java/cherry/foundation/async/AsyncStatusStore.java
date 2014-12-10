@@ -52,7 +52,7 @@ public interface AsyncStatusStore {
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
 	 * @param args
-	 *            追加パラメタ。
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	long createFileProcess(String launcherId, LocalDateTime dtm,
