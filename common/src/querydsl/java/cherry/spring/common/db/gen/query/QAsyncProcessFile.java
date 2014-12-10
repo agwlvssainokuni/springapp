@@ -24,7 +24,7 @@ public class QAsyncProcessFile extends com.mysema.query.sql.RelationalPathBase<B
 
     public static final QAsyncProcessFile asyncProcessFile = new QAsyncProcessFile("ASYNC_PROCESS_FILE");
 
-    public final NumberPath<Integer> asyncProcessId = createNumber("asyncProcessId", Integer.class);
+    public final NumberPath<Long> asyncId = createNumber("asyncId", Long.class);
 
     public final StringPath contentType = createString("contentType");
 
@@ -36,7 +36,7 @@ public class QAsyncProcessFile extends com.mysema.query.sql.RelationalPathBase<B
 
     public final StringPath handlerName = createString("handlerName");
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -69,13 +69,13 @@ public class QAsyncProcessFile extends com.mysema.query.sql.RelationalPathBase<B
     }
 
     public void addMetadata() {
-        addMetadata(asyncProcessId, ColumnMetadata.named("ASYNC_PROCESS_ID").withIndex(2).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(asyncId, ColumnMetadata.named("ASYNC_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(contentType, ColumnMetadata.named("CONTENT_TYPE").withIndex(6).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(9).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(11).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(fileSize, ColumnMetadata.named("FILE_SIZE").withIndex(7).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(handlerName, ColumnMetadata.named("HANDLER_NAME").withIndex(3).ofType(Types.VARCHAR).withSize(50).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(10).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(originalFilename, ColumnMetadata.named("ORIGINAL_FILENAME").withIndex(5).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(paramName, ColumnMetadata.named("PARAM_NAME").withIndex(4).ofType(Types.VARCHAR).withSize(50).notNull());

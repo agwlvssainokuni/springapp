@@ -24,7 +24,7 @@ public class QAsyncProcessCommand extends com.mysema.query.sql.RelationalPathBas
 
     public static final QAsyncProcessCommand asyncProcessCommand = new QAsyncProcessCommand("ASYNC_PROCESS_COMMAND");
 
-    public final NumberPath<Integer> asyncProcessId = createNumber("asyncProcessId", Integer.class);
+    public final NumberPath<Long> asyncId = createNumber("asyncId", Long.class);
 
     public final StringPath command = createString("command");
 
@@ -32,7 +32,7 @@ public class QAsyncProcessCommand extends com.mysema.query.sql.RelationalPathBas
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -61,11 +61,11 @@ public class QAsyncProcessCommand extends com.mysema.query.sql.RelationalPathBas
     }
 
     public void addMetadata() {
-        addMetadata(asyncProcessId, ColumnMetadata.named("ASYNC_PROCESS_ID").withIndex(2).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(asyncId, ColumnMetadata.named("ASYNC_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(command, ColumnMetadata.named("COMMAND").withIndex(3).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }

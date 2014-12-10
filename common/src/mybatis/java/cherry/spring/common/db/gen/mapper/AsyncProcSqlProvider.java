@@ -159,7 +159,7 @@ public class AsyncProcSqlProvider {
         UPDATE("ASYNC_PROC");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getLauncherId() != null) {
@@ -224,7 +224,7 @@ public class AsyncProcSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROC");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("LAUNCHER_ID = #{record.launcherId,jdbcType=VARCHAR}");
         SET("NAME = #{record.name,jdbcType=VARCHAR}");
         SET("STATUS = #{record.status,jdbcType=VARCHAR}");
@@ -301,7 +301,7 @@ public class AsyncProcSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

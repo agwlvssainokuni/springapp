@@ -59,8 +59,8 @@ public class AsyncProcessFileSqlProvider {
         BEGIN();
         INSERT_INTO("ASYNC_PROCESS_FILE");
         
-        if (record.getAsyncProcessId() != null) {
-            VALUES("ASYNC_PROCESS_ID", "#{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            VALUES("ASYNC_ID", "#{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getHandlerName() != null) {
@@ -115,7 +115,7 @@ public class AsyncProcessFileSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("ASYNC_PROCESS_ID");
+        SELECT("ASYNC_ID");
         SELECT("HANDLER_NAME");
         SELECT("PARAM_NAME");
         SELECT("ORIGINAL_FILENAME");
@@ -149,11 +149,11 @@ public class AsyncProcessFileSqlProvider {
         UPDATE("ASYNC_PROCESS_FILE");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getHandlerName() != null) {
@@ -206,8 +206,8 @@ public class AsyncProcessFileSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         SET("HANDLER_NAME = #{record.handlerName,jdbcType=VARCHAR}");
         SET("PARAM_NAME = #{record.paramName,jdbcType=VARCHAR}");
         SET("ORIGINAL_FILENAME = #{record.originalFilename,jdbcType=VARCHAR}");
@@ -233,8 +233,8 @@ public class AsyncProcessFileSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE");
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getHandlerName() != null) {
@@ -273,7 +273,7 @@ public class AsyncProcessFileSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

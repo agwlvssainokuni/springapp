@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class BAsyncProcessCommandResult {
 
-    private Integer asyncProcessId;
+    private Long asyncId;
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -16,7 +16,7 @@ public class BAsyncProcessCommandResult {
 
     private Integer exitValue;
 
-    private Integer id;
+    private Long id;
 
     private Integer lockVersion;
 
@@ -26,12 +26,12 @@ public class BAsyncProcessCommandResult {
 
     private org.joda.time.LocalDateTime updatedAt;
 
-    public Integer getAsyncProcessId() {
-        return asyncProcessId;
+    public Long getAsyncId() {
+        return asyncId;
     }
 
-    public void setAsyncProcessId(Integer asyncProcessId) {
-        this.asyncProcessId = asyncProcessId;
+    public void setAsyncId(Long asyncId) {
+        this.asyncId = asyncId;
     }
 
     public org.joda.time.LocalDateTime getCreatedAt() {
@@ -58,11 +58,11 @@ public class BAsyncProcessCommandResult {
         this.exitValue = exitValue;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,7 +99,7 @@ public class BAsyncProcessCommandResult {
     }
 
     public String toString() {
-         return "asyncProcessId = " + asyncProcessId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", exitValue = " + exitValue + ", id = " + id + ", lockVersion = " + lockVersion + ", stderr = " + stderr + ", stdout = " + stdout + ", updatedAt = " + updatedAt;
+         return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", exitValue = " + exitValue + ", id = " + id + ", lockVersion = " + lockVersion + ", stderr = " + stderr + ", stdout = " + stdout + ", updatedAt = " + updatedAt;
     }
 
 }

@@ -24,7 +24,7 @@ public class QAsyncProcessFileResultDetail extends com.mysema.query.sql.Relation
 
     public static final QAsyncProcessFileResultDetail asyncProcessFileResultDetail = new QAsyncProcessFileResultDetail("ASYNC_PROCESS_FILE_RESULT_DETAIL");
 
-    public final NumberPath<Integer> asyncProcessId = createNumber("asyncProcessId", Integer.class);
+    public final NumberPath<Long> asyncId = createNumber("asyncId", Long.class);
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
@@ -32,7 +32,7 @@ public class QAsyncProcessFileResultDetail extends com.mysema.query.sql.Relation
 
     public final StringPath description = createString("description");
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -63,11 +63,11 @@ public class QAsyncProcessFileResultDetail extends com.mysema.query.sql.Relation
     }
 
     public void addMetadata() {
-        addMetadata(asyncProcessId, ColumnMetadata.named("ASYNC_PROCESS_ID").withIndex(2).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(asyncId, ColumnMetadata.named("ASYNC_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(description, ColumnMetadata.named("DESCRIPTION").withIndex(4).ofType(Types.VARCHAR).withSize(50));
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(recordNumber, ColumnMetadata.named("RECORD_NUMBER").withIndex(3).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());

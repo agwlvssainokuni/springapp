@@ -63,20 +63,24 @@ public class AsyncProcessSqlProvider {
             VALUES("LAUNCHED_BY", "#{launchedBy,jdbcType=VARCHAR}");
         }
         
-        if (record.getType() != null) {
-            VALUES("TYPE", "#{type,jdbcType=VARCHAR}");
+        if (record.getDescription() != null) {
+            VALUES("DESCRIPTION", "#{description,jdbcType=VARCHAR}");
         }
         
-        if (record.getStatus() != null) {
-            VALUES("STATUS", "#{status,jdbcType=VARCHAR}");
+        if (record.getAsyncType() != null) {
+            VALUES("ASYNC_TYPE", "#{asyncType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getAsyncStatus() != null) {
+            VALUES("ASYNC_STATUS", "#{asyncStatus,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRegisteredAt() != null) {
+            VALUES("REGISTERED_AT", "#{registeredAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getLaunchedAt() != null) {
             VALUES("LAUNCHED_AT", "#{launchedAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getInvokedAt() != null) {
-            VALUES("INVOKED_AT", "#{invokedAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getStartedAt() != null) {
@@ -120,10 +124,11 @@ public class AsyncProcessSqlProvider {
             SELECT("ID");
         }
         SELECT("LAUNCHED_BY");
-        SELECT("TYPE");
-        SELECT("STATUS");
+        SELECT("DESCRIPTION");
+        SELECT("ASYNC_TYPE");
+        SELECT("ASYNC_STATUS");
+        SELECT("REGISTERED_AT");
         SELECT("LAUNCHED_AT");
-        SELECT("INVOKED_AT");
         SELECT("STARTED_AT");
         SELECT("FINISHED_AT");
         SELECT("UPDATED_AT");
@@ -154,27 +159,31 @@ public class AsyncProcessSqlProvider {
         UPDATE("ASYNC_PROCESS");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getLaunchedBy() != null) {
             SET("LAUNCHED_BY = #{record.launchedBy,jdbcType=VARCHAR}");
         }
         
-        if (record.getType() != null) {
-            SET("TYPE = #{record.type,jdbcType=VARCHAR}");
+        if (record.getDescription() != null) {
+            SET("DESCRIPTION = #{record.description,jdbcType=VARCHAR}");
         }
         
-        if (record.getStatus() != null) {
-            SET("STATUS = #{record.status,jdbcType=VARCHAR}");
+        if (record.getAsyncType() != null) {
+            SET("ASYNC_TYPE = #{record.asyncType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getAsyncStatus() != null) {
+            SET("ASYNC_STATUS = #{record.asyncStatus,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRegisteredAt() != null) {
+            SET("REGISTERED_AT = #{record.registeredAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getLaunchedAt() != null) {
             SET("LAUNCHED_AT = #{record.launchedAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getInvokedAt() != null) {
-            SET("INVOKED_AT = #{record.invokedAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getStartedAt() != null) {
@@ -215,12 +224,13 @@ public class AsyncProcessSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("LAUNCHED_BY = #{record.launchedBy,jdbcType=VARCHAR}");
-        SET("TYPE = #{record.type,jdbcType=VARCHAR}");
-        SET("STATUS = #{record.status,jdbcType=VARCHAR}");
+        SET("DESCRIPTION = #{record.description,jdbcType=VARCHAR}");
+        SET("ASYNC_TYPE = #{record.asyncType,jdbcType=VARCHAR}");
+        SET("ASYNC_STATUS = #{record.asyncStatus,jdbcType=VARCHAR}");
+        SET("REGISTERED_AT = #{record.registeredAt,jdbcType=TIMESTAMP}");
         SET("LAUNCHED_AT = #{record.launchedAt,jdbcType=TIMESTAMP}");
-        SET("INVOKED_AT = #{record.invokedAt,jdbcType=TIMESTAMP}");
         SET("STARTED_AT = #{record.startedAt,jdbcType=TIMESTAMP}");
         SET("FINISHED_AT = #{record.finishedAt,jdbcType=TIMESTAMP}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
@@ -247,20 +257,24 @@ public class AsyncProcessSqlProvider {
             SET("LAUNCHED_BY = #{launchedBy,jdbcType=VARCHAR}");
         }
         
-        if (record.getType() != null) {
-            SET("TYPE = #{type,jdbcType=VARCHAR}");
+        if (record.getDescription() != null) {
+            SET("DESCRIPTION = #{description,jdbcType=VARCHAR}");
         }
         
-        if (record.getStatus() != null) {
-            SET("STATUS = #{status,jdbcType=VARCHAR}");
+        if (record.getAsyncType() != null) {
+            SET("ASYNC_TYPE = #{asyncType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getAsyncStatus() != null) {
+            SET("ASYNC_STATUS = #{asyncStatus,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRegisteredAt() != null) {
+            SET("REGISTERED_AT = #{registeredAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getLaunchedAt() != null) {
             SET("LAUNCHED_AT = #{launchedAt,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getInvokedAt() != null) {
-            SET("INVOKED_AT = #{invokedAt,jdbcType=TIMESTAMP}");
         }
         
         if (record.getStartedAt() != null) {
@@ -287,7 +301,7 @@ public class AsyncProcessSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

@@ -59,8 +59,8 @@ public class AsyncProcessCommandResultSqlProvider {
         BEGIN();
         INSERT_INTO("ASYNC_PROCESS_COMMAND_RESULT");
         
-        if (record.getAsyncProcessId() != null) {
-            VALUES("ASYNC_PROCESS_ID", "#{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            VALUES("ASYNC_ID", "#{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getExitValue() != null) {
@@ -107,7 +107,7 @@ public class AsyncProcessCommandResultSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("ASYNC_PROCESS_ID");
+        SELECT("ASYNC_ID");
         SELECT("EXIT_VALUE");
         SELECT("STDOUT");
         SELECT("STDERR");
@@ -139,11 +139,11 @@ public class AsyncProcessCommandResultSqlProvider {
         UPDATE("ASYNC_PROCESS_COMMAND_RESULT");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getExitValue() != null) {
@@ -188,8 +188,8 @@ public class AsyncProcessCommandResultSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_COMMAND_RESULT");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         SET("EXIT_VALUE = #{record.exitValue,jdbcType=INTEGER}");
         SET("STDOUT = #{record.stdout,jdbcType=VARCHAR}");
         SET("STDERR = #{record.stderr,jdbcType=VARCHAR}");
@@ -213,8 +213,8 @@ public class AsyncProcessCommandResultSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_COMMAND_RESULT");
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getExitValue() != null) {
@@ -245,7 +245,7 @@ public class AsyncProcessCommandResultSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

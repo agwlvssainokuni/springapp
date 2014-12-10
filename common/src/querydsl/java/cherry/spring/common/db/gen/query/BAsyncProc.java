@@ -14,7 +14,7 @@ public class BAsyncProc {
 
     private org.joda.time.LocalDateTime finishedAt;
 
-    private Integer id;
+    private Long id;
 
     private org.joda.time.LocalDateTime invokedAt;
 
@@ -58,11 +58,11 @@ public class BAsyncProc {
         this.finishedAt = finishedAt;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

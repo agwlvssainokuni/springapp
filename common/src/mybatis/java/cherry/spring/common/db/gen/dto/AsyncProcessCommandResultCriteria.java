@@ -206,113 +206,113 @@ public class AsyncProcessCommandResultCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdIsNull() {
-            addCriterion("ASYNC_PROCESS_ID is null");
+        public Criteria andAsyncIdIsNull() {
+            addCriterion("ASYNC_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdIsNotNull() {
-            addCriterion("ASYNC_PROCESS_ID is not null");
+        public Criteria andAsyncIdIsNotNull() {
+            addCriterion("ASYNC_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdEqualTo(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID =", value, "asyncProcessId");
+        public Criteria andAsyncIdEqualTo(Long value) {
+            addCriterion("ASYNC_ID =", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdNotEqualTo(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID <>", value, "asyncProcessId");
+        public Criteria andAsyncIdNotEqualTo(Long value) {
+            addCriterion("ASYNC_ID <>", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdGreaterThan(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID >", value, "asyncProcessId");
+        public Criteria andAsyncIdGreaterThan(Long value) {
+            addCriterion("ASYNC_ID >", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID >=", value, "asyncProcessId");
+        public Criteria andAsyncIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("ASYNC_ID >=", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdLessThan(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID <", value, "asyncProcessId");
+        public Criteria andAsyncIdLessThan(Long value) {
+            addCriterion("ASYNC_ID <", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdLessThanOrEqualTo(Integer value) {
-            addCriterion("ASYNC_PROCESS_ID <=", value, "asyncProcessId");
+        public Criteria andAsyncIdLessThanOrEqualTo(Long value) {
+            addCriterion("ASYNC_ID <=", value, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdIn(List<Integer> values) {
-            addCriterion("ASYNC_PROCESS_ID in", values, "asyncProcessId");
+        public Criteria andAsyncIdIn(List<Long> values) {
+            addCriterion("ASYNC_ID in", values, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdNotIn(List<Integer> values) {
-            addCriterion("ASYNC_PROCESS_ID not in", values, "asyncProcessId");
+        public Criteria andAsyncIdNotIn(List<Long> values) {
+            addCriterion("ASYNC_ID not in", values, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdBetween(Integer value1, Integer value2) {
-            addCriterion("ASYNC_PROCESS_ID between", value1, value2, "asyncProcessId");
+        public Criteria andAsyncIdBetween(Long value1, Long value2) {
+            addCriterion("ASYNC_ID between", value1, value2, "asyncId");
             return (Criteria) this;
         }
 
-        public Criteria andAsyncProcessIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("ASYNC_PROCESS_ID not between", value1, value2, "asyncProcessId");
+        public Criteria andAsyncIdNotBetween(Long value1, Long value2) {
+            addCriterion("ASYNC_ID not between", value1, value2, "asyncId");
             return (Criteria) this;
         }
 

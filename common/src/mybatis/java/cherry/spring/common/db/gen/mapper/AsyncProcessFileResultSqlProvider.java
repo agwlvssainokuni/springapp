@@ -59,8 +59,8 @@ public class AsyncProcessFileResultSqlProvider {
         BEGIN();
         INSERT_INTO("ASYNC_PROCESS_FILE_RESULT");
         
-        if (record.getAsyncProcessId() != null) {
-            VALUES("ASYNC_PROCESS_ID", "#{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            VALUES("ASYNC_ID", "#{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getTotalCount() != null) {
@@ -107,7 +107,7 @@ public class AsyncProcessFileResultSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("ASYNC_PROCESS_ID");
+        SELECT("ASYNC_ID");
         SELECT("TOTAL_COUNT");
         SELECT("OK_COUNT");
         SELECT("NG_COUNT");
@@ -139,11 +139,11 @@ public class AsyncProcessFileResultSqlProvider {
         UPDATE("ASYNC_PROCESS_FILE_RESULT");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getTotalCount() != null) {
@@ -188,8 +188,8 @@ public class AsyncProcessFileResultSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE_RESULT");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         SET("TOTAL_COUNT = #{record.totalCount,jdbcType=BIGINT}");
         SET("OK_COUNT = #{record.okCount,jdbcType=BIGINT}");
         SET("NG_COUNT = #{record.ngCount,jdbcType=BIGINT}");
@@ -213,8 +213,8 @@ public class AsyncProcessFileResultSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE_RESULT");
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getTotalCount() != null) {
@@ -245,7 +245,7 @@ public class AsyncProcessFileResultSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

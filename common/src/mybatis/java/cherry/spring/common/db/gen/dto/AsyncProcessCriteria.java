@@ -206,52 +206,52 @@ public class AsyncProcessCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -326,143 +326,273 @@ public class AsyncProcessCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("TYPE is null");
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNotNull() {
-            addCriterion("TYPE is not null");
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(String value) {
-            addCriterion("TYPE =", value, "type");
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(String value) {
-            addCriterion("TYPE <>", value, "type");
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(String value) {
-            addCriterion("TYPE >", value, "type");
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("TYPE >=", value, "type");
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(String value) {
-            addCriterion("TYPE <", value, "type");
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(String value) {
-            addCriterion("TYPE <=", value, "type");
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLike(String value) {
-            addCriterion("TYPE like", value, "type");
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("DESCRIPTION like", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotLike(String value) {
-            addCriterion("TYPE not like", value, "type");
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("DESCRIPTION not like", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<String> values) {
-            addCriterion("TYPE in", values, "type");
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<String> values) {
-            addCriterion("TYPE not in", values, "type");
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(String value1, String value2) {
-            addCriterion("TYPE between", value1, value2, "type");
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(String value1, String value2) {
-            addCriterion("TYPE not between", value1, value2, "type");
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("STATUS is null");
+        public Criteria andAsyncTypeIsNull() {
+            addCriterion("ASYNC_TYPE is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("STATUS is not null");
+        public Criteria andAsyncTypeIsNotNull() {
+            addCriterion("ASYNC_TYPE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(String value) {
-            addCriterion("STATUS =", value, "status");
+        public Criteria andAsyncTypeEqualTo(String value) {
+            addCriterion("ASYNC_TYPE =", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(String value) {
-            addCriterion("STATUS <>", value, "status");
+        public Criteria andAsyncTypeNotEqualTo(String value) {
+            addCriterion("ASYNC_TYPE <>", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(String value) {
-            addCriterion("STATUS >", value, "status");
+        public Criteria andAsyncTypeGreaterThan(String value) {
+            addCriterion("ASYNC_TYPE >", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(String value) {
-            addCriterion("STATUS >=", value, "status");
+        public Criteria andAsyncTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ASYNC_TYPE >=", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(String value) {
-            addCriterion("STATUS <", value, "status");
+        public Criteria andAsyncTypeLessThan(String value) {
+            addCriterion("ASYNC_TYPE <", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(String value) {
-            addCriterion("STATUS <=", value, "status");
+        public Criteria andAsyncTypeLessThanOrEqualTo(String value) {
+            addCriterion("ASYNC_TYPE <=", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLike(String value) {
-            addCriterion("STATUS like", value, "status");
+        public Criteria andAsyncTypeLike(String value) {
+            addCriterion("ASYNC_TYPE like", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotLike(String value) {
-            addCriterion("STATUS not like", value, "status");
+        public Criteria andAsyncTypeNotLike(String value) {
+            addCriterion("ASYNC_TYPE not like", value, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<String> values) {
-            addCriterion("STATUS in", values, "status");
+        public Criteria andAsyncTypeIn(List<String> values) {
+            addCriterion("ASYNC_TYPE in", values, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<String> values) {
-            addCriterion("STATUS not in", values, "status");
+        public Criteria andAsyncTypeNotIn(List<String> values) {
+            addCriterion("ASYNC_TYPE not in", values, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(String value1, String value2) {
-            addCriterion("STATUS between", value1, value2, "status");
+        public Criteria andAsyncTypeBetween(String value1, String value2) {
+            addCriterion("ASYNC_TYPE between", value1, value2, "asyncType");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(String value1, String value2) {
-            addCriterion("STATUS not between", value1, value2, "status");
+        public Criteria andAsyncTypeNotBetween(String value1, String value2) {
+            addCriterion("ASYNC_TYPE not between", value1, value2, "asyncType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusIsNull() {
+            addCriterion("ASYNC_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusIsNotNull() {
+            addCriterion("ASYNC_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusEqualTo(String value) {
+            addCriterion("ASYNC_STATUS =", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusNotEqualTo(String value) {
+            addCriterion("ASYNC_STATUS <>", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusGreaterThan(String value) {
+            addCriterion("ASYNC_STATUS >", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("ASYNC_STATUS >=", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusLessThan(String value) {
+            addCriterion("ASYNC_STATUS <", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusLessThanOrEqualTo(String value) {
+            addCriterion("ASYNC_STATUS <=", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusLike(String value) {
+            addCriterion("ASYNC_STATUS like", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusNotLike(String value) {
+            addCriterion("ASYNC_STATUS not like", value, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusIn(List<String> values) {
+            addCriterion("ASYNC_STATUS in", values, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusNotIn(List<String> values) {
+            addCriterion("ASYNC_STATUS not in", values, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusBetween(String value1, String value2) {
+            addCriterion("ASYNC_STATUS between", value1, value2, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAsyncStatusNotBetween(String value1, String value2) {
+            addCriterion("ASYNC_STATUS not between", value1, value2, "asyncStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtIsNull() {
+            addCriterion("REGISTERED_AT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtIsNotNull() {
+            addCriterion("REGISTERED_AT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtEqualTo(LocalDateTime value) {
+            addCriterion("REGISTERED_AT =", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtNotEqualTo(LocalDateTime value) {
+            addCriterion("REGISTERED_AT <>", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtGreaterThan(LocalDateTime value) {
+            addCriterion("REGISTERED_AT >", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("REGISTERED_AT >=", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtLessThan(LocalDateTime value) {
+            addCriterion("REGISTERED_AT <", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("REGISTERED_AT <=", value, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtIn(List<LocalDateTime> values) {
+            addCriterion("REGISTERED_AT in", values, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtNotIn(List<LocalDateTime> values) {
+            addCriterion("REGISTERED_AT not in", values, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("REGISTERED_AT between", value1, value2, "registeredAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisteredAtNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("REGISTERED_AT not between", value1, value2, "registeredAt");
             return (Criteria) this;
         }
 
@@ -523,66 +653,6 @@ public class AsyncProcessCriteria {
 
         public Criteria andLaunchedAtNotBetween(LocalDateTime value1, LocalDateTime value2) {
             addCriterion("LAUNCHED_AT not between", value1, value2, "launchedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtIsNull() {
-            addCriterion("INVOKED_AT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtIsNotNull() {
-            addCriterion("INVOKED_AT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtEqualTo(LocalDateTime value) {
-            addCriterion("INVOKED_AT =", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtNotEqualTo(LocalDateTime value) {
-            addCriterion("INVOKED_AT <>", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtGreaterThan(LocalDateTime value) {
-            addCriterion("INVOKED_AT >", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtGreaterThanOrEqualTo(LocalDateTime value) {
-            addCriterion("INVOKED_AT >=", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtLessThan(LocalDateTime value) {
-            addCriterion("INVOKED_AT <", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtLessThanOrEqualTo(LocalDateTime value) {
-            addCriterion("INVOKED_AT <=", value, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtIn(List<LocalDateTime> values) {
-            addCriterion("INVOKED_AT in", values, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtNotIn(List<LocalDateTime> values) {
-            addCriterion("INVOKED_AT not in", values, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtBetween(LocalDateTime value1, LocalDateTime value2) {
-            addCriterion("INVOKED_AT between", value1, value2, "invokedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvokedAtNotBetween(LocalDateTime value1, LocalDateTime value2) {
-            addCriterion("INVOKED_AT not between", value1, value2, "invokedAt");
             return (Criteria) this;
         }
 

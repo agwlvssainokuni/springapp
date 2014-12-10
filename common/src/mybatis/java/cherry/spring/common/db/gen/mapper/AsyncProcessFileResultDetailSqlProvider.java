@@ -59,8 +59,8 @@ public class AsyncProcessFileResultDetailSqlProvider {
         BEGIN();
         INSERT_INTO("ASYNC_PROCESS_FILE_RESULT_DETAIL");
         
-        if (record.getAsyncProcessId() != null) {
-            VALUES("ASYNC_PROCESS_ID", "#{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            VALUES("ASYNC_ID", "#{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getRecordNumber() != null) {
@@ -103,7 +103,7 @@ public class AsyncProcessFileResultDetailSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("ASYNC_PROCESS_ID");
+        SELECT("ASYNC_ID");
         SELECT("RECORD_NUMBER");
         SELECT("DESCRIPTION");
         SELECT("UPDATED_AT");
@@ -134,11 +134,11 @@ public class AsyncProcessFileResultDetailSqlProvider {
         UPDATE("ASYNC_PROCESS_FILE_RESULT_DETAIL");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getRecordNumber() != null) {
@@ -179,8 +179,8 @@ public class AsyncProcessFileResultDetailSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE_RESULT_DETAIL");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("ASYNC_PROCESS_ID = #{record.asyncProcessId,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("ASYNC_ID = #{record.asyncId,jdbcType=BIGINT}");
         SET("RECORD_NUMBER = #{record.recordNumber,jdbcType=BIGINT}");
         SET("DESCRIPTION = #{record.description,jdbcType=VARCHAR}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
@@ -203,8 +203,8 @@ public class AsyncProcessFileResultDetailSqlProvider {
         BEGIN();
         UPDATE("ASYNC_PROCESS_FILE_RESULT_DETAIL");
         
-        if (record.getAsyncProcessId() != null) {
-            SET("ASYNC_PROCESS_ID = #{asyncProcessId,jdbcType=INTEGER}");
+        if (record.getAsyncId() != null) {
+            SET("ASYNC_ID = #{asyncId,jdbcType=BIGINT}");
         }
         
         if (record.getRecordNumber() != null) {
@@ -231,7 +231,7 @@ public class AsyncProcessFileResultDetailSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }
