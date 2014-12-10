@@ -35,6 +35,13 @@ Domain=区分=@VARCHAR(3)
 Domain=フラグ=@INT
 Domain=JSON=@VARCHAR(4096)
 Domain=郵便番号=@VARCHAR(7)
+Domain=パラメタ=@VARCHAR(50)
+Domain=サイズ=BIGINT
+Domain=件数=BIGINT
+Domain=番号=BIGINT
+Domain=引数=@VARCHAR(50)
+Domain=終了コード=@INT
+Domain=コマンド出力=@VARCHAR(1024)
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -64,6 +71,311 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Relation]
+Entity1=async_process_command
+Entity2=async_process_command_result
+RelationType1=2
+RelationType2=2
+Fields1=async_process_id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,4534,5466,4427,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210223837
+LineMode=0
+Bar1=453
+Bar2=547
+Bar3=443
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command_result
+LName=非同期実行状況管理・コマンド・結果
+Comment=
+TableOption=
+Page=非同期処理
+Left=1500
+Top=1800
+Field="ID","ID","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="終了コード","exit_value","*終了コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="標準出力","stdout","*コマンド出力","NOT NULL",,"","",$FFFFFFFF,""
+Field="標準エラー出力","stderr","*コマンド出力","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210224117
+Position="非同期処理",1500,1800
+
+[Relation]
+Entity1=async_process_command
+Entity2=async_process_command_arg
+RelationType1=2
+RelationType2=3
+Fields1=async_process_id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,5618,4382,5618,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210223343
+LineMode=0
+Bar1=562
+Bar2=438
+Bar3=562
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command_arg
+LName=非同期実行状況管理・コマンド・引数
+Comment=
+TableOption=
+Page=非同期処理
+Left=2500
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="引数","argument","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210223949
+Position="非同期処理",2500,1500
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_command
+RelationType1=2
+RelationType2=2
+Fields1=id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,5618,4382,2456,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210223200
+LineMode=0
+Bar1=562
+Bar2=438
+Bar3=246
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command
+LName=非同期実行状況管理・コマンド
+Comment=
+TableOption=
+Page=非同期処理
+Left=1500
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="コマンド","command","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210223221
+Position="非同期処理",1500,1500
+
+[Relation]
+Entity1=async_process_file
+Entity2=async_process_file_result
+RelationType1=2
+RelationType2=2
+Fields1=async_process_id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,4534,5466,4534,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210222901
+LineMode=0
+Bar1=453
+Bar2=547
+Bar3=453
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=async_process_file_result
+Entity2=async_process_file_result_detail
+RelationType1=2
+RelationType2=3
+Fields1=async_process_id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,3912,6088,3995,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210222628
+LineMode=0
+Bar1=391
+Bar2=609
+Bar3=400
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file_result_detail
+LName=非同期実行状況管理・ファイル処理・結果詳細
+Comment=
+TableOption=
+Page=非同期処理
+Left=2500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="NGレコード番号","record_number","*番号","NOT NULL",,"","",$FFFFFFFF,""
+Field="付加情報","description","*パラメタ",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210225039
+Position="非同期処理",2500,1000
+
+[Entity]
+PName=async_process_file_result
+LName=非同期実行状況管理・ファイル処理・結果
+Comment=
+TableOption=
+Page=非同期処理
+Left=1500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="総件数","total_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
+Field="OK件数","ok_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
+Field="NG件数","ng_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210224517
+Position="非同期処理",1500,1000
+
+[Relation]
+Entity1=async_process_file
+Entity2=async_process_file_arg
+RelationType1=2
+RelationType2=3
+Fields1=async_process_id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,4544,5456,4507,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210221732
+LineMode=0
+Bar1=454
+Bar2=546
+Bar3=451
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file_arg
+LName=非同期実行状況管理・ファイル処理・引数
+Comment=
+TableOption=
+Page=非同期処理
+Left=2500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="引数","argument","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210224549
+Position="非同期処理",2500,500
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_file
+RelationType1=2
+RelationType2=2
+Fields1=id
+Fields2=async_process_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,1611,8389,1841,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210220842
+LineMode=0
+Bar1=161
+Bar2=839
+Bar3=184
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file
+LName=非同期実行状況管理・ファイル処理
+Comment=
+TableOption=
+Page=非同期処理
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_process_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="ハンドラ名","handler_name","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Field="パラメタ名","param_name","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Field="元ファイル名","original_filename","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Field="コンテントタイプ","content_type","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルサイズ","file_size","*サイズ","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210224956
+Position="非同期処理",1500,500
+
+[Entity]
+PName=async_process
+LName=非同期実行状況管理
+Comment=
+TableOption=
+Page=非同期処理
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="キュー投入者ID","launched_by","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="非同期処理種別","type","*区分","NOT NULL",,"","",$FFFFFFFF,""
+Field="ステータス","status","*区分","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","launched_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="キュー投入日時","invoked_at","*日時",,,"","",$FFFFFFFF,""
+Field="実行開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
+Field="実行終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141210225352
+Position="非同期処理",500,500
 
 [Entity]
 PName=zipcd_master
@@ -161,7 +473,7 @@ Comment=
 TableOption=
 Page=非同期処理
 Left=500
-Top=500
+Top=1500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="起動者ID","launcher_id","*ログインID","NOT NULL",,"","",$FFFFFFFF,""
 Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
@@ -177,7 +489,7 @@ Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140824200759
-Position="非同期処理",500,500
+Position="非同期処理",500,1500
 
 [Entity]
 PName=mail_template
