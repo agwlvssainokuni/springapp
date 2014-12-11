@@ -62,7 +62,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 
 	private BizDateTime bizDateTime;
 
-	private AsyncStatusStore asyncStatusStore;
+	private AsyncProcessStore asyncProcessStore;
 
 	private JmsOperations jmsOperations;
 
@@ -80,8 +80,8 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 		this.bizDateTime = bizDateTime;
 	}
 
-	public void setAsyncStatusStore(AsyncStatusStore asyncStatusStore) {
-		this.asyncStatusStore = asyncStatusStore;
+	public void setAsyncProcessStore(AsyncProcessStore asyncProcessStore) {
+		this.asyncProcessStore = asyncProcessStore;
 	}
 
 	public void setJmsOperations(JmsOperations jmsOperations) {
@@ -130,7 +130,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 	public long launchFileProcess(String launcherId, String description,
 			MultipartFile file, String handlerName, String... args) {
 
-		long asyncId = asyncStatusStore.createFileProcess(launcherId,
+		long asyncId = asyncProcessStore.createFileProcess(launcherId,
 				bizDateTime.now(), description, file.getName(),
 				file.getOriginalFilename(), file.getContentType(),
 				file.getSize(), handlerName, args);
@@ -151,11 +151,11 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 			}
 			jmsOperations.convertAndSend(message, messagePostProcessor);
 
-			asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
+			asyncProcessStore.updateToLaunched(asyncId, bizDateTime.now());
 			return asyncId;
 		} catch (IOException ex) {
-			asyncStatusStore
-					.finishWithException(asyncId, bizDateTime.now(), ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
+					ex);
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -188,7 +188,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 			args.add(v);
 		}
 
-		asyncStatusStore.updateToProcessing(asyncId, bizDateTime.now());
+		asyncProcessStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
 			FileProcessHandler handler = applicationContext.getBean(
@@ -206,11 +206,11 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 				status = AsyncStatus.WARN;
 			}
 
-			asyncStatusStore.finishFileProcess(asyncId, bizDateTime.now(),
+			asyncProcessStore.finishFileProcess(asyncId, bizDateTime.now(),
 					status, result);
 		} catch (Exception ex) {
-			asyncStatusStore
-					.finishWithException(asyncId, bizDateTime.now(), ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
+					ex);
 		} finally {
 			deleteFile(tempFile);
 		}

@@ -27,8 +27,8 @@ import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.async.AsyncProcessStore;
 import cherry.foundation.async.AsyncStatus;
-import cherry.foundation.async.AsyncStatusStore;
 import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.async.FileRecordInfo;
 import cherry.foundation.type.DeletedFlag;
@@ -45,7 +45,7 @@ import cherry.spring.common.db.gen.query.QAsyncProcessFileResultDetail;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 
-public class AsyncStatusStoreImpl implements AsyncStatusStore {
+public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;

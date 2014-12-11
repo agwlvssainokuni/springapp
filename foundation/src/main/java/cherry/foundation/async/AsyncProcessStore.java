@@ -25,7 +25,7 @@ import cherry.goods.command.CommandResult;
  * 非同期実行フレームワーク。<br />
  * 非同期処理の実行状況の管理データをDB管理するためのインタフェース。
  */
-public interface AsyncStatusStore {
+public interface AsyncProcessStore {
 
 	/**
 	 * 非同期処理 (ファイル処理) の管理データを作成する。

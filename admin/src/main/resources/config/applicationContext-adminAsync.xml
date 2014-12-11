@@ -44,7 +44,7 @@
 
 	<bean id="asyncFileProcessHandler" class="cherry.foundation.async.AsyncFileProcessHandlerImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
-		<property name="asyncStatusStore" ref="asyncStatusStore" />
+		<property name="asyncProcessStore" ref="asyncProcessStore" />
 		<property name="jmsOperations" ref="jmsOperations" />
 		<property name="messagePostProcessor">
 			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">
@@ -62,7 +62,7 @@
 
 	<bean id="asyncCommandHandler" class="cherry.foundation.async.AsyncCommandHandlerImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
-		<property name="asyncStatusStore" ref="asyncStatusStore" />
+		<property name="asyncProcessStore" ref="asyncProcessStore" />
 		<property name="jmsOperations" ref="jmsOperations" />
 		<property name="messagePostProcessor">
 			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">

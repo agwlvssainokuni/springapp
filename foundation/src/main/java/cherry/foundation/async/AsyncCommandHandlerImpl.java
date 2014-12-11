@@ -39,7 +39,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 
 	private BizDateTime bizDateTime;
 
-	private AsyncStatusStore asyncStatusStore;
+	private AsyncProcessStore asyncProcessStore;
 
 	private JmsOperations jmsOperations;
 
@@ -51,8 +51,8 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		this.bizDateTime = bizDateTime;
 	}
 
-	public void setAsyncStatusStore(AsyncStatusStore asyncStatusStore) {
-		this.asyncStatusStore = asyncStatusStore;
+	public void setAsyncProcessStore(AsyncProcessStore asyncProcessStore) {
+		this.asyncProcessStore = asyncProcessStore;
 	}
 
 	public void setJmsOperations(JmsOperations jmsOperations) {
@@ -85,7 +85,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	public long launchCommand(String launcherId, String description,
 			String command, String... args) {
 
-		long asyncId = asyncStatusStore.createCommand(launcherId,
+		long asyncId = asyncProcessStore.createCommand(launcherId,
 				bizDateTime.now(), description, command, args);
 
 		Map<String, String> message = new HashMap<>();
@@ -96,7 +96,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		}
 		jmsOperations.convertAndSend(message, messagePostProcessor);
 
-		asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
+		asyncProcessStore.updateToLaunched(asyncId, bizDateTime.now());
 		return asyncId;
 	}
 
@@ -122,7 +122,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 			cmdline.add(v);
 		}
 
-		asyncStatusStore.updateToProcessing(asyncId, bizDateTime.now());
+		asyncProcessStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
 			CommandResult result = commandLauncher.launch(cmdline
@@ -135,11 +135,11 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 				status = AsyncStatus.ERROR;
 			}
 
-			asyncStatusStore.finishCommand(asyncId, bizDateTime.now(), status,
+			asyncProcessStore.finishCommand(asyncId, bizDateTime.now(), status,
 					result);
 		} catch (Exception ex) {
-			asyncStatusStore
-					.finishWithException(asyncId, bizDateTime.now(), ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
+					ex);
 		}
 	}
 
