@@ -20,6 +20,8 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
@@ -221,7 +223,9 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		final QAsyncProcessFileResultDetail b = new QAsyncProcessFileResultDetail(
 				"b");
-		for (final FileRecordInfo r : result.getNgRecordInfoList()) {
+		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>()
+				: result.getNgRecordInfoList());
+		for (final FileRecordInfo r : list) {
 			if (r.isOk()) {
 				continue;
 			}
