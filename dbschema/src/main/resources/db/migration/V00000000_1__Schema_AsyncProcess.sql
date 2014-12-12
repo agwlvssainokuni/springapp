@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/13 0:10:49
+-- Date/Time    : 2014/12/13 7:41:49
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -16,6 +16,9 @@ CREATE TABLE async_process_exception(
 	CONSTRAINT async_process_exception_pkc PRIMARY KEY (id)
 );
 
+CREATE INDEX async_process_exception_ix1
+	ON async_process_exception(async_id);
+
 -- 非同期実行状況管理・コマンド・結果
 CREATE TABLE async_process_command_result(
 	id bigint NOT NULL auto_increment,
@@ -30,6 +33,9 @@ CREATE TABLE async_process_command_result(
 	CONSTRAINT async_process_command_result_pkc PRIMARY KEY (id)
 );
 
+CREATE INDEX async_process_command_result_ix1
+	ON async_process_command_result(async_id);
+
 -- 非同期実行状況管理・コマンド・引数
 CREATE TABLE async_process_command_arg(
 	id bigint NOT NULL auto_increment,
@@ -41,6 +47,9 @@ CREATE TABLE async_process_command_arg(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL,
 	CONSTRAINT async_process_command_arg_pkc PRIMARY KEY (id)
 );
+
+CREATE INDEX async_process_command_arg_ix1
+	ON async_process_command_arg(async_id);
 
 -- 非同期実行状況管理・コマンド
 CREATE TABLE async_process_command(
@@ -54,6 +63,9 @@ CREATE TABLE async_process_command(
 	CONSTRAINT async_process_command_pkc PRIMARY KEY (id)
 );
 
+CREATE INDEX async_process_command_ix1
+	ON async_process_command(async_id);
+
 -- 非同期実行状況管理・ファイル処理・結果詳細
 CREATE TABLE async_process_file_result_detail(
 	id bigint NOT NULL auto_increment,
@@ -66,6 +78,9 @@ CREATE TABLE async_process_file_result_detail(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL,
 	CONSTRAINT async_process_file_result_detail_pkc PRIMARY KEY (id)
 );
+
+CREATE INDEX async_process_file_result_detail_ix1
+	ON async_process_file_result_detail(async_id);
 
 -- 非同期実行状況管理・ファイル処理・結果
 CREATE TABLE async_process_file_result(
@@ -81,6 +96,9 @@ CREATE TABLE async_process_file_result(
 	CONSTRAINT async_process_file_result_pkc PRIMARY KEY (id)
 );
 
+CREATE INDEX async_process_file_result_ix1
+	ON async_process_file_result(async_id);
+
 -- 非同期実行状況管理・ファイル処理・引数
 CREATE TABLE async_process_file_arg(
 	id bigint NOT NULL auto_increment,
@@ -92,6 +110,9 @@ CREATE TABLE async_process_file_arg(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL,
 	CONSTRAINT async_process_file_arg_pkc PRIMARY KEY (id)
 );
+
+CREATE INDEX async_process_file_arg_ix1
+	ON async_process_file_arg(async_id);
 
 -- 非同期実行状況管理・ファイル処理
 CREATE TABLE async_process_file(
@@ -108,6 +129,9 @@ CREATE TABLE async_process_file(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL,
 	CONSTRAINT async_process_file_pkc PRIMARY KEY (id)
 );
+
+CREATE INDEX async_process_file_ix1
+	ON async_process_file(async_id);
 
 -- 非同期実行状況管理
 CREATE TABLE async_process(
@@ -127,32 +151,8 @@ CREATE TABLE async_process(
 	CONSTRAINT async_process_pkc PRIMARY KEY (id)
 );
 
--- 非同期処理
-CREATE TABLE async_proc(
-	id bigint NOT NULL auto_increment,
-	launcher_id VARCHAR (512) NOT NULL,
-	name VARCHAR (32) NOT NULL,
-	status VARCHAR (32) NOT NULL CHECK status IN (
-		'PREPARING',
-		'INVOKED',
-		'PROCESSING',
-		'SUCCESS',
-		'ERROR'
-	) ,
-	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	invoked_at TIMESTAMP,
-	started_at TIMESTAMP,
-	finished_at TIMESTAMP,
-	RESULT text,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	lock_version INTEGER DEFAULT 1 NOT NULL,
-	deleted_flg INTEGER DEFAULT 0 NOT NULL,
-	CONSTRAINT async_proc_pkc PRIMARY KEY (id)
-);
-
-CREATE INDEX async_proc_ix1
-	ON async_proc(launcher_id);
+CREATE INDEX async_process_ix1
+	ON async_process(launched_by);
 
 COMMENT
 	ON TABLE async_process_exception IS '非同期実行状況管理・例外';
@@ -414,47 +414,5 @@ COMMENT
 
 COMMENT
 	ON COLUMN async_process.deleted_flg IS '削除フラグ';
-
-COMMENT
-	ON TABLE async_proc IS '非同期処理';
-
-COMMENT
-	ON COLUMN async_proc.id IS 'ID';
-
-COMMENT
-	ON COLUMN async_proc.launcher_id IS '起動者ID';
-
-COMMENT
-	ON COLUMN async_proc.name IS '処理名称';
-
-COMMENT
-	ON COLUMN async_proc.status IS '状況';
-
-COMMENT
-	ON COLUMN async_proc.registered_at IS '登録日時';
-
-COMMENT
-	ON COLUMN async_proc.invoked_at IS '投入日時';
-
-COMMENT
-	ON COLUMN async_proc.started_at IS '開始日時';
-
-COMMENT
-	ON COLUMN async_proc.finished_at IS '終了日時';
-
-COMMENT
-	ON COLUMN async_proc.RESULT IS '結果情報';
-
-COMMENT
-	ON COLUMN async_proc.updated_at IS '更新日時';
-
-COMMENT
-	ON COLUMN async_proc.created_at IS '作成日時';
-
-COMMENT
-	ON COLUMN async_proc.lock_version IS 'ロックバージョン';
-
-COMMENT
-	ON COLUMN async_proc.deleted_flg IS '削除フラグ';
 
 

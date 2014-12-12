@@ -1,12 +1,12 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/11/01 9:56:33
+-- Date/Time    : 2014/12/13 7:43:33
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
 -- 郵便番号マスタ
 CREATE TABLE zipcd_master(
-	id INTEGER NOT NULL auto_increment,
+	id bigint NOT NULL auto_increment,
 	city_cd INTEGER NOT NULL,
 	zipcd VARCHAR (7) NOT NULL,
 	pref VARCHAR (64) NOT NULL,

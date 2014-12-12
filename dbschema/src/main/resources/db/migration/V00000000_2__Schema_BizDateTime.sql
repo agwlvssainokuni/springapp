@@ -1,12 +1,12 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/09/15 10:36:38
+-- Date/Time    : 2014/12/13 7:42:43
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
 -- 業務日時マスタ
 CREATE TABLE bizdatetime_master(
-	id INTEGER NOT NULL auto_increment,
+	id bigint NOT NULL auto_increment,
 	bizdate DATE DEFAULT CURRENT_DATE NOT NULL,
 	offset_day INTEGER DEFAULT 0 NOT NULL,
 	offset_hour INTEGER DEFAULT 0 NOT NULL,

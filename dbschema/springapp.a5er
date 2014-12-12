@@ -105,11 +105,12 @@ Top=1200
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
 Field="例外情報","exception","*JSON","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000544
+ModifiedDateTime=20141213074050
 Position="非同期処理",500,1200
 
 [Relation]
@@ -146,11 +147,12 @@ Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFF
 Field="終了コード","exit_value","*終了コード","NOT NULL",,"","",$FFFFFFFF,""
 Field="標準出力","stdout","*コマンド出力","NOT NULL",,"","",$FFFFFFFF,""
 Field="標準エラー出力","stderr","*コマンド出力","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000929
+ModifiedDateTime=20141213074030
 Position="非同期処理",1500,1800
 
 [Relation]
@@ -185,11 +187,12 @@ Top=1500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
 Field="引数","argument","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061325
+ModifiedDateTime=20141213074024
 Position="非同期処理",2500,1500
 
 [Relation]
@@ -224,11 +227,12 @@ Top=1500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
 Field="コマンド","command","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061321
+ModifiedDateTime=20141213074014
 Position="非同期処理",1500,1500
 
 [Relation]
@@ -285,11 +289,12 @@ Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
 Field="NGレコード番号","record_number","*番号","NOT NULL",,"","",$FFFFFFFF,""
 Field="付加情報","description","*パラメタ",,,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061317
+ModifiedDateTime=20141213073939
 Position="非同期処理",2500,1000
 
 [Entity]
@@ -305,11 +310,12 @@ Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFF
 Field="総件数","total_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
 Field="OK件数","ok_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
 Field="NG件数","ng_count","*件数","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000854
+ModifiedDateTime=20141213073945
 Position="非同期処理",1500,1000
 
 [Relation]
@@ -344,11 +350,12 @@ Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
 Field="引数","argument","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000844
+ModifiedDateTime=20141213073950
 Position="非同期処理",2500,500
 
 [Relation]
@@ -387,11 +394,12 @@ Field="パラメタ名","param_name","*パラメタ","NOT NULL",,"","",$FFFFFFFF
 Field="元ファイル名","original_filename","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
 Field="コンテントタイプ","content_type","*パラメタ","NOT NULL",,"","",$FFFFFFFF,""
 Field="ファイルサイズ","file_size","*サイズ","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000835
+ModifiedDateTime=20141213074100
 Position="非同期処理",1500,500
 
 [Entity]
@@ -411,11 +419,12 @@ Field="登録日時","registered_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
 Field="キュー投入日時","launched_at","*日時",,,"","",$FFFFFFFF,""
 Field="実行開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
 Field="実行終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
+Index==0,launched_by
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141213000821
+ModifiedDateTime=20141213074002
 Position="非同期処理",500,500
 
 [Entity]
@@ -506,31 +515,6 @@ Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140824200819
 Position="SPRINGAPP",1500,500
-
-[Entity]
-PName=async_proc
-LName=非同期処理
-Comment=
-TableOption=
-Page=非同期処理
-Left=500
-Top=2000
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="起動者ID","launcher_id","*ログインID","NOT NULL",,"","",$FFFFFFFF,""
-Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
-Field="状況","status","*識別名","NOT NULL",,"","",$FFFFFFFF,"CHECK status IN (\qPREPARING\q,\qINVOKED\q,\qPROCESSING\q,\qSUCCESS\q,\qERROR\q)"
-Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
-Field="投入日時","invoked_at","*日時",,,"","",$FFFFFFFF,""
-Field="開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
-Field="終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
-Field="結果情報","result","*JSON",,,"","",$FFFFFFFF,""
-Index==0,launcher_id
-EffectMode=None
-Tag=トランザクション
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20140824200759
-Position="非同期処理",500,2000
 
 [Entity]
 PName=mail_template
