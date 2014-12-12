@@ -82,7 +82,7 @@ public class QAsyncProc extends com.mysema.query.sql.RelationalPathBase<BAsyncPr
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(12).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(name, ColumnMetadata.named("NAME").withIndex(3).ofType(Types.VARCHAR).withSize(32).notNull());
         addMetadata(registeredAt, ColumnMetadata.named("REGISTERED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(result, ColumnMetadata.named("RESULT").withIndex(9).ofType(Types.VARCHAR).withSize(4096));
+        addMetadata(result, ColumnMetadata.named("RESULT").withIndex(9).ofType(Types.CLOB).withSize(2147483647));
         addMetadata(startedAt, ColumnMetadata.named("STARTED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
         addMetadata(status, ColumnMetadata.named("STATUS").withIndex(4).ofType(Types.VARCHAR).withSize(32).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(10).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());

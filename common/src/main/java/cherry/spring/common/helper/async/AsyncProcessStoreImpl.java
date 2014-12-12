@@ -20,6 +20,8 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
+import java.util.Map;
+
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
@@ -33,15 +35,19 @@ import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.async.FileRecordInfo;
 import cherry.foundation.type.DeletedFlag;
 import cherry.goods.command.CommandResult;
+import cherry.goods.util.ToMapUtil;
 import cherry.spring.common.db.gen.query.QAsyncProcess;
 import cherry.spring.common.db.gen.query.QAsyncProcessCommand;
 import cherry.spring.common.db.gen.query.QAsyncProcessCommandArg;
 import cherry.spring.common.db.gen.query.QAsyncProcessCommandResult;
+import cherry.spring.common.db.gen.query.QAsyncProcessException;
 import cherry.spring.common.db.gen.query.QAsyncProcessFile;
 import cherry.spring.common.db.gen.query.QAsyncProcessFileArg;
 import cherry.spring.common.db.gen.query.QAsyncProcessFileResult;
 import cherry.spring.common.db.gen.query.QAsyncProcessFileResultDetail;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 
@@ -49,6 +55,9 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
@@ -266,7 +275,27 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		finishAsyncProcess(asyncId, dtm, AsyncStatus.EXCEPTION);
 
-		// TODO
+		final QAsyncProcessException a = new QAsyncProcessException("a");
+		queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+			@Override
+			public long doInSqlInsertClause(SQLInsertClause insert) {
+				insert.set(a.asyncId, asyncId);
+				try {
+					Map<String, Object> map = ToMapUtil.fromThrowable(th,
+							Integer.MAX_VALUE);
+					insert.set(a.exception,
+							objectMapper.writeValueAsString(map));
+				} catch (JsonProcessingException ex) {
+					throw new IllegalStateException();
+				}
+				Long id = insert.executeWithKey(Long.class);
+				checkState(
+						id != null,
+						"failed to create QAsyncProcessCommandResult: asyncId={0}, exception={1}",
+						asyncId, th.getMessage());
+				return id.longValue();
+			}
+		});
 	}
 
 	private long createAsyncProcess(final String launcherId,
