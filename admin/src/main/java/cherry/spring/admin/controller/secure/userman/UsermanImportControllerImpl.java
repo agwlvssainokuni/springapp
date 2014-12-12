@@ -68,7 +68,8 @@ public class UsermanImportControllerImpl implements UsermanImportController {
 		}
 
 		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
-				form.getFile(), "usermanImportFileProcessHandler");
+				"UsermanImport", form.getFile(),
+				"usermanImportFileProcessHandler");
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 

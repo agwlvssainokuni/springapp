@@ -17,11 +17,11 @@
 package cherry.spring.admin.service.secure.asyncproc;
 
 import cherry.goods.paginate.PagedList;
-import cherry.spring.common.db.gen.dto.AsyncProc;
+import cherry.spring.common.db.gen.dto.AsyncProcess;
 
 public interface AsyncProcService {
 
-	PagedList<AsyncProc> searchAsyncProc(String loginId, long pageNo,
+	PagedList<AsyncProcess> searchAsyncProc(String loginId, long pageNo,
 			long pageSz);
 
 }

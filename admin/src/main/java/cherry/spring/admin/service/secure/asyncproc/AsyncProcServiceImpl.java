@@ -25,8 +25,8 @@ import cherry.foundation.querydsl.SQLQueryHelper;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.goods.paginate.PagedList;
-import cherry.spring.common.db.gen.dto.AsyncProc;
-import cherry.spring.common.db.gen.query.QAsyncProc;
+import cherry.spring.common.db.gen.dto.AsyncProcess;
+import cherry.spring.common.db.gen.query.QAsyncProcess;
 
 import com.mysema.query.sql.SQLQuery;
 
@@ -41,31 +41,31 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Transactional
 	@Override
-	public PagedList<AsyncProc> searchAsyncProc(String loginId, long pageNo,
+	public PagedList<AsyncProcess> searchAsyncProc(String loginId, long pageNo,
 			long pageSz) {
-		QAsyncProc a = new QAsyncProc("a");
+		QAsyncProcess a = new QAsyncProcess("a");
 		return sqlQueryHelper.search(commonClause(a, loginId),
 				orderByClause(a, loginId), pageNo, pageSz,
-				rowMapperCreator.create(AsyncProc.class), a.id, a.launcherId,
-				a.name, a.status, a.registeredAt, a.invokedAt, a.startedAt,
-				a.finishedAt, a.result, a.updatedAt, a.createdAt,
-				a.lockVersion, a.deletedFlg);
+				rowMapperCreator.create(AsyncProcess.class), a.id,
+				a.launchedBy, a.description, a.asyncType, a.asyncStatus,
+				a.registeredAt, a.launchedAt, a.startedAt, a.finishedAt,
+				a.updatedAt, a.createdAt, a.lockVersion, a.deletedFlg);
 	}
 
-	private QueryConfigurer commonClause(final QAsyncProc a,
+	private QueryConfigurer commonClause(final QAsyncProcess a,
 			final String loginId) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 				query.from(a);
-				query.where(a.launcherId.eq(loginId));
+				query.where(a.launchedBy.eq(loginId));
 				query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return query;
 			}
 		};
 	}
 
-	private QueryConfigurer orderByClause(final QAsyncProc a,
+	private QueryConfigurer orderByClause(final QAsyncProcess a,
 			final String loginId) {
 		return new QueryConfigurer() {
 			@Override

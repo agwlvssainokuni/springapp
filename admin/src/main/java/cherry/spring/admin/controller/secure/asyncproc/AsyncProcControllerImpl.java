@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.goods.paginate.PagedList;
 import cherry.spring.admin.controller.PathDef;
 import cherry.spring.admin.service.secure.asyncproc.AsyncProcService;
-import cherry.spring.common.db.gen.dto.AsyncProc;
+import cherry.spring.common.db.gen.dto.AsyncProcess;
 
 @Controller
 public class AsyncProcControllerImpl implements AsyncProcController {
@@ -45,7 +45,7 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	public ModelAndView init(long pageNo, long pageSz, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
-		PagedList<AsyncProc> result = asyncProcService.searchAsyncProc(
+		PagedList<AsyncProcess> result = asyncProcService.searchAsyncProc(
 				auth.getName(), pageNo,
 				(pageSz <= 0 ? defaultPageSize : pageSz));
 
