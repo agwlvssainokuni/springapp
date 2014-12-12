@@ -1,8 +1,20 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/11 6:17:12
+-- Date/Time    : 2014/12/13 0:10:49
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- 非同期実行状況管理・例外
+CREATE TABLE async_process_exception(
+	id bigint NOT NULL auto_increment,
+	async_id bigint NOT NULL,
+	EXCEPTION text NOT NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	lock_version INTEGER DEFAULT 1 NOT NULL,
+	deleted_flg INTEGER DEFAULT 0 NOT NULL,
+	CONSTRAINT async_process_exception_pkc PRIMARY KEY (id)
+);
 
 -- 非同期実行状況管理・コマンド・結果
 CREATE TABLE async_process_command_result(
@@ -131,7 +143,7 @@ CREATE TABLE async_proc(
 	invoked_at TIMESTAMP,
 	started_at TIMESTAMP,
 	finished_at TIMESTAMP,
-	RESULT VARCHAR (4096),
+	RESULT text,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	lock_version INTEGER DEFAULT 1 NOT NULL,
@@ -141,6 +153,30 @@ CREATE TABLE async_proc(
 
 CREATE INDEX async_proc_ix1
 	ON async_proc(launcher_id);
+
+COMMENT
+	ON TABLE async_process_exception IS '非同期実行状況管理・例外';
+
+COMMENT
+	ON COLUMN async_process_exception.id IS 'ID';
+
+COMMENT
+	ON COLUMN async_process_exception.async_id IS '非同期実行状況管理ID';
+
+COMMENT
+	ON COLUMN async_process_exception.EXCEPTION IS '例外情報';
+
+COMMENT
+	ON COLUMN async_process_exception.updated_at IS '更新日時';
+
+COMMENT
+	ON COLUMN async_process_exception.created_at IS '作成日時';
+
+COMMENT
+	ON COLUMN async_process_exception.lock_version IS 'ロックバージョン';
+
+COMMENT
+	ON COLUMN async_process_exception.deleted_flg IS '削除フラグ';
 
 COMMENT
 	ON TABLE async_process_command_result IS '非同期実行状況管理・コマンド・結果';

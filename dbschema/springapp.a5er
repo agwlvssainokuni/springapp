@@ -33,7 +33,7 @@ Domain=メール件名=@VARCHAR(1024)
 Domain=メール本文=@VARCHAR(4096)
 Domain=区分=@VARCHAR(3)
 Domain=フラグ=@INT
-Domain=JSON=@VARCHAR(4096)
+Domain=JSON=TEXT
 Domain=郵便番号=@VARCHAR(7)
 Domain=パラメタ=@VARCHAR(50)
 Domain=サイズ=BIGINT
@@ -42,6 +42,7 @@ Domain=番号=BIGINT
 Domain=引数=@VARCHAR(50)
 Domain=終了コード=@INT
 Domain=コマンド出力=@VARCHAR(1024)
+Domain==
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -71,6 +72,45 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_exception
+RelationType1=2
+RelationType2=1
+Fields1=id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期処理",0,1961,8039,1802,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141212235848
+LineMode=0
+Bar1=196
+Bar2=804
+Bar3=180
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_exception
+LName=非同期実行状況管理・例外
+Comment=
+TableOption=
+Page=非同期処理
+Left=500
+Top=1200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="例外情報","exception","*JSON","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141213000544
+Position="非同期処理",500,1200
 
 [Relation]
 Entity1=async_process_command
@@ -110,7 +150,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061328
+ModifiedDateTime=20141213000929
 Position="非同期処理",1500,1800
 
 [Relation]
@@ -156,20 +196,20 @@ Position="非同期処理",2500,1500
 Entity1=async_process
 Entity2=async_process_command
 RelationType1=2
-RelationType2=2
+RelationType2=1
 Fields1=id
 Fields2=async_id
 Cardinarity1=
 Cardinarity2=
-Position="非同期処理",0,5618,4382,2456,R,R
+Position="非同期処理",0,5618,4382,2665,R,R
 Dependence=0
 Caption=
 PName=
-ModifiedDateTime=20141210223200
+ModifiedDateTime=20141212235907
 LineMode=0
 Bar1=562
 Bar2=438
-Bar3=246
+Bar3=266
 TermPos1=R
 TermPos2=R
 
@@ -269,7 +309,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061312
+ModifiedDateTime=20141213000854
 Position="非同期処理",1500,1000
 
 [Relation]
@@ -308,25 +348,25 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061558
+ModifiedDateTime=20141213000844
 Position="非同期処理",2500,500
 
 [Relation]
 Entity1=async_process
 Entity2=async_process_file
 RelationType1=2
-RelationType2=2
+RelationType2=1
 Fields1=id
 Fields2=async_id
 Cardinarity1=
 Cardinarity2=
-Position="非同期処理",0,1611,8389,1841,R,R
+Position="非同期処理",0,1517,8389,1841,R,R
 Dependence=0
 Caption=
 PName=
-ModifiedDateTime=20141210220842
+ModifiedDateTime=20141212235859
 LineMode=0
-Bar1=161
+Bar1=152
 Bar2=839
 Bar3=184
 TermPos1=R
@@ -351,7 +391,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061304
+ModifiedDateTime=20141213000835
 Position="非同期処理",1500,500
 
 [Entity]
@@ -375,7 +415,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141211061236
+ModifiedDateTime=20141213000821
 Position="非同期処理",500,500
 
 [Entity]
@@ -474,7 +514,7 @@ Comment=
 TableOption=
 Page=非同期処理
 Left=500
-Top=1500
+Top=2000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="起動者ID","launcher_id","*ログインID","NOT NULL",,"","",$FFFFFFFF,""
 Field="処理名称","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
@@ -490,7 +530,7 @@ Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140824200759
-Position="非同期処理",500,1500
+Position="非同期処理",500,2000
 
 [Entity]
 PName=mail_template

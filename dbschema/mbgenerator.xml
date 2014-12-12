@@ -50,6 +50,9 @@
 		<table tableName="async_process">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
+		<table tableName="async_process_exception">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
 		<table tableName="async_process_file">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
