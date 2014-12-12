@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.async.AsyncProcessStore;
 import cherry.foundation.async.AsyncStatus;
+import cherry.foundation.async.AsyncType;
 import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.async.FileRecordInfo;
 import cherry.foundation.type.DeletedFlag;
@@ -68,8 +69,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			final String originalFilename, final String contentType,
 			final long size, final String handlerName, String... args) {
 
-		final long asyncId = createAsyncProcess(launcherId, description, "FIL",
-				dtm);
+		final long asyncId = createAsyncProcess(launcherId, description,
+				AsyncType.FILE, dtm);
 
 		final QAsyncProcessFile a = new QAsyncProcessFile("a");
 		queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
@@ -115,8 +116,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	public long createCommand(String launcherId, LocalDateTime dtm,
 			final String description, final String command, String... args) {
 
-		final long asyncId = createAsyncProcess(launcherId, description, "CMD",
-				dtm);
+		final long asyncId = createAsyncProcess(launcherId, description,
+				AsyncType.COMMAND, dtm);
 
 		final QAsyncProcessCommand a = new QAsyncProcessCommand("a");
 		queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
@@ -303,7 +304,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	}
 
 	private long createAsyncProcess(final String launcherId,
-			final String description, final String asyncType,
+			final String description, final AsyncType asyncType,
 			final LocalDateTime dtm) {
 		final QAsyncProcess a = new QAsyncProcess("a");
 		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
@@ -311,14 +312,14 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.launchedBy, launcherId);
 				insert.set(a.description, description);
-				insert.set(a.asyncType, asyncType);
+				insert.set(a.asyncType, asyncType.code());
 				insert.set(a.asyncStatus, AsyncStatus.LAUNCHING.code());
 				insert.set(a.registeredAt, dtm);
 				Long id = insert.executeWithKey(Long.class);
 				checkState(
 						id != null,
 						"failed to create QAsyncProcess: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
-						launcherId, description, asyncType,
+						launcherId, description, asyncType.code(),
 						AsyncStatus.LAUNCHING.code(), dtm);
 				return id.longValue();
 			}
