@@ -291,7 +291,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				Long id = insert.executeWithKey(Long.class);
 				checkState(
 						id != null,
-						"failed to create QAsyncProcessCommandResult: asyncId={0}, exception={1}",
+						"failed to create QAsyncProcessException: asyncId={0}, exception={1}",
 						asyncId, th.getMessage());
 				return id.longValue();
 			}
@@ -313,7 +313,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				Long id = insert.executeWithKey(Long.class);
 				checkState(
 						id != null,
-						"failed to create async_process: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
+						"failed to create QAsyncProcess: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
 						launcherId, description, asyncType,
 						AsyncStatus.LAUNCHING.code(), dtm);
 				return id.longValue();
