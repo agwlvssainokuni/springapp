@@ -28,8 +28,8 @@
 			<form action="<c:url value="/secure/asyncproc" />" method="POST"
 				class="app-pager-form">
 				<input type="hidden" id="no" name="no"> <input type="hidden"
-					id="sz" name="sz" value="${param.sz}"> <input type="hidden"
-					name="${_csrf.parameterName}" value="${_csrf.token}">
+					id="sz" name="sz" value="${param.sz}">
+				<security:csrfInput />
 			</form>
 			<div class="app-portion">
 				<div class="app-pager">
@@ -44,36 +44,37 @@
 						<tr>
 							<th>#</th>
 							<th><s:message code="secure/asyncproc/init.column.id" /></th>
-							<th><s:message code="secure/asyncproc/init.column.name" /></th>
 							<th><s:message
-									code="secure/asyncproc/init.column.launcherId" /></th>
-							<th><s:message code="secure/asyncproc/init.column.status" /></th>
+									code="secure/asyncproc/init.column.description" /></th>
+							<th><s:message
+									code="secure/asyncproc/init.column.launchedBy" /></th>
+							<th><s:message code="secure/asyncproc/init.column.asyncType" /></th>
+							<th><s:message
+									code="secure/asyncproc/init.column.asyncStatus" /></th>
 							<th><s:message
 									code="secure/asyncproc/init.column.registeredAt" /></th>
 							<th><s:message
-									code="secure/asyncproc/init.column.invokedAt" /></th>
-							<th><s:message
-									code="secure/asyncproc/init.column.startedAt" /></th>
+									code="secure/asyncproc/init.column.launchedAt" /></th>
+							<th><s:message code="secure/asyncproc/init.column.startedAt" /></th>
 							<th><s:message
 									code="secure/asyncproc/init.column.finishedAt" /></th>
-							<th><s:message code="secure/asyncproc/init.column.result" /></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="count" begin="1"
-							end="${pagedList.list.size()}">
+						<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 							<tr>
-								<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+								<td><c:out
+										value="${pagedList.pageSet.current.from + count}" /></td>
 								<s:nestedPath path="pagedList.list[${count - 1}]">
 									<td><s:bind path="id">${status.value}</s:bind></td>
-									<td><s:bind path="name">${status.value}</s:bind></td>
-									<td><s:bind path="launcherId">${status.value}</s:bind></td>
-									<td><s:bind path="status">${status.value}</s:bind></td>
+									<td><s:bind path="description">${status.value}</s:bind></td>
+									<td><s:bind path="launchedBy">${status.value}</s:bind></td>
+									<td><s:bind path="asyncType">${status.value}</s:bind></td>
+									<td><s:bind path="asyncStatus">${status.value}</s:bind></td>
 									<td><s:bind path="registeredAt">${status.value}</s:bind></td>
-									<td><s:bind path="invokedAt">${status.value}</s:bind></td>
+									<td><s:bind path="launchedAt">${status.value}</s:bind></td>
 									<td><s:bind path="startedAt">${status.value}</s:bind></td>
 									<td><s:bind path="finishedAt">${status.value}</s:bind></td>
-									<td><s:bind path="result">${status.value}</s:bind></td>
 								</s:nestedPath>
 							</tr>
 						</c:forEach>
