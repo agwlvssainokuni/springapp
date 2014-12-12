@@ -38,7 +38,7 @@ public class QZipcdMaster extends com.mysema.query.sql.RelationalPathBase<BZipcd
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -80,7 +80,7 @@ public class QZipcdMaster extends com.mysema.query.sql.RelationalPathBase<BZipcd
         addMetadata(cityKana, ColumnMetadata.named("CITY_KANA").withIndex(8).ofType(Types.VARCHAR).withSize(64).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(11).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(13).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(12).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(pref, ColumnMetadata.named("PREF").withIndex(4).ofType(Types.VARCHAR).withSize(64).notNull());
         addMetadata(prefKana, ColumnMetadata.named("PREF_KANA").withIndex(7).ofType(Types.VARCHAR).withSize(64).notNull());

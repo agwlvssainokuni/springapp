@@ -144,7 +144,7 @@ public class BizdatetimeMasterSqlProvider {
         UPDATE("BIZDATETIME_MASTER");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getBizdate() != null) {
@@ -197,7 +197,7 @@ public class BizdatetimeMasterSqlProvider {
         BEGIN();
         UPDATE("BIZDATETIME_MASTER");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("BIZDATE = #{record.bizdate,jdbcType=DATE}");
         SET("OFFSET_DAY = #{record.offsetDay,jdbcType=INTEGER}");
         SET("OFFSET_HOUR = #{record.offsetHour,jdbcType=INTEGER}");
@@ -259,7 +259,7 @@ public class BizdatetimeMasterSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

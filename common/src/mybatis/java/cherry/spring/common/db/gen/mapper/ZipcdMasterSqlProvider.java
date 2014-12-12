@@ -159,7 +159,7 @@ public class ZipcdMasterSqlProvider {
         UPDATE("ZIPCD_MASTER");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getCityCd() != null) {
@@ -224,7 +224,7 @@ public class ZipcdMasterSqlProvider {
         BEGIN();
         UPDATE("ZIPCD_MASTER");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("CITY_CD = #{record.cityCd,jdbcType=INTEGER}");
         SET("ZIPCD = #{record.zipcd,jdbcType=VARCHAR}");
         SET("PREF = #{record.pref,jdbcType=VARCHAR}");
@@ -301,7 +301,7 @@ public class ZipcdMasterSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }
