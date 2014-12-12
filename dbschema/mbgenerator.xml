@@ -44,9 +44,6 @@
 		<table tableName="mail_template_text">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="async_proc">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
 		<table tableName="async_process">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
