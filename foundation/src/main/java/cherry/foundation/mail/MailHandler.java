@@ -32,6 +32,6 @@ public interface MailHandler {
 
 	List<Long> listMessage(LocalDateTime dtm);
 
-	void sendMessage(long messageId);
+	boolean sendMessage(long messageId);
 
 }

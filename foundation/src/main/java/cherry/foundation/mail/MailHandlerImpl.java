@@ -76,10 +76,14 @@ public class MailHandlerImpl implements MailHandler {
 
 	@Transactional
 	@Override
-	public void sendMessage(long messageId) {
+	public boolean sendMessage(long messageId) {
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
+		if (msg == null) {
+			return false;
+		}
 		messageStore.finishMessage(messageId);
 		mailSender.send(msg);
+		return true;
 	}
 
 }
