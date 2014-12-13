@@ -47,19 +47,9 @@ public class MailHandlerImpl implements MailHandler {
 
 	@Transactional
 	@Override
-	public long send(String launcherId, String messageName, String from,
+	public long sendLater(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body) {
-		LocalDateTime now = bizDateTime.now();
-		return messageStore.createMessage(launcherId, messageName, now, from,
-				to, cc, bcc, subject, body);
-	}
-
-	@Transactional
-	@Override
-	public long sendLater(String launcherId, String messageName,
-			LocalDateTime scheduledAt, String from, List<String> to,
-			List<String> cc, List<String> bcc, String subject, String body) {
+			String body, LocalDateTime scheduledAt) {
 		return messageStore.createMessage(launcherId, messageName, scheduledAt,
 				from, to, cc, bcc, subject, body);
 	}

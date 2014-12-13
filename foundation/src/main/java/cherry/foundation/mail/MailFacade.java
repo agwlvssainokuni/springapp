@@ -20,7 +20,11 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
-public interface MailHandler {
+public interface MailFacade {
+
+	long send(String launcherId, String messageName, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject,
+			String body);
 
 	long sendLater(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
@@ -29,9 +33,5 @@ public interface MailHandler {
 	long sendNow(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body);
-
-	List<Long> listMessage(LocalDateTime dtm);
-
-	void sendMessage(long messageId);
 
 }
