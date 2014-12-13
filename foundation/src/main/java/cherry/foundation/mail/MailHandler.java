@@ -22,13 +22,17 @@ import org.joda.time.LocalDateTime;
 
 public interface MailHandler {
 
-	long sendNow(String launcherId, String messageName, String from,
+	long send(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body);
 
-	long send(String launcherId, String messageName, LocalDateTime scheduledAt,
-			String from, List<String> to, List<String> cc, List<String> bcc,
-			String subject, String body);
+	long sendLater(String launcherId, String messageName,
+			LocalDateTime scheduledAt, String from, List<String> to,
+			List<String> cc, List<String> bcc, String subject, String body);
+
+	long sendNow(String launcherId, String messageName, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject,
+			String body);
 
 	List<Long> listMessage(LocalDateTime dtm);
 
