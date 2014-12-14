@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.bizdate;
+package cherry.spring.common.foundation.impl;
 
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import lombok.EqualsAndHashCode;

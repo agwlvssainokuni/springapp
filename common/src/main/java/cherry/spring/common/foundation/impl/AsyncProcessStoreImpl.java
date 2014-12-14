@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.async;
+package cherry.spring.common.foundation.impl;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
