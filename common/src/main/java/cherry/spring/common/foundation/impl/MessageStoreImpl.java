@@ -64,9 +64,9 @@ public class MessageStoreImpl implements MessageStore {
 			List<String> cc, List<String> bcc, String subject, String body) {
 		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName,
 				scheduledAt, from, subject, body);
-		createMailRcpt(mailId, "to", to);
-		createMailRcpt(mailId, "cc", cc);
-		createMailRcpt(mailId, "bcc", bcc);
+		createMailRcpt(mailId, RcptType.TO.name(), to);
+		createMailRcpt(mailId, RcptType.CC.name(), cc);
+		createMailRcpt(mailId, RcptType.BCC.name(), bcc);
 		createMailQueue(mailId, scheduledAt);
 		return mailId;
 	}
@@ -109,18 +109,15 @@ public class MessageStoreImpl implements MessageStore {
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
 		for (MailRcpt rcpt : mailrcpt) {
-			switch (rcpt.getRcptType()) {
-			case "to":
+			RcptType type = RcptType.valueOf(rcpt.getRcptType());
+			if (type == RcptType.TO) {
 				to.add(rcpt.getRcptAddr());
-				break;
-			case "cc":
+			}
+			if (type == RcptType.CC) {
 				cc.add(rcpt.getRcptAddr());
-				break;
-			case "bcc":
+			}
+			if (type == RcptType.BCC) {
 				bcc.add(rcpt.getRcptAddr());
-				break;
-			default:
-				break;
 			}
 		}
 
