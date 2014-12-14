@@ -15,8 +15,8 @@ Page=非同期実行フレームワーク
 PageInfo="非同期実行フレームワーク",4,"A3Landscape",$FFFFFF
 Page=メール送信機能
 PageInfo="メール送信機能",4,"A3Landscape",$FFFFFF
-Page=メールテンプレート
-PageInfo="メールテンプレート",4,"A3Landscape",$FFFFFF
+Page=メール文面テンプレート
+PageInfo="メール文面テンプレート",4,"A3Landscape",$FFFFFF
 Page=郵便番号
 PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
 Page=SpringApp
@@ -630,97 +630,59 @@ PName=mail_template
 LName=メールテンプレート
 Comment=
 TableOption=
-Page=メールテンプレート
+Page=メール文面テンプレート
 Left=500
 Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="テンプレート名","name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
-Field="差出人","sender","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,name
+Field="テンプレート名","template_name","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="差出人","from_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="件名","subject","*メール件名","NOT NULL",,"","",$FFFFFFFF,""
+Field="本文","body","*メール本文","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,template_name
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140824200714
-Position="メールテンプレート",500,500
+ModifiedDateTime=20141214103233
+Position="メール文面テンプレート",500,500
 
 [Entity]
 PName=mail_template_address
 LName=メールテンプレート宛先
 Comment=
 TableOption=
-Page=メールテンプレート
-Left=1500
-Top=500
+Page=メール文面テンプレート
+Left=500
+Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールテンプレートID","mail_template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
-Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
-Field="宛先区分","rcpt_type","*区分","NOT NULL",,"","",$FFFFFFFF,"CHECK rcpt_type IN (\qCC\q, \qBCC\q)"
-Index==1,mail_template_id,mail_addr,rcpt_type
+Field="メールテンプレートID","template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先区分","rcpt_type","*区分","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先アドレス","rcpt_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,template_id
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140824200721
-Position="メールテンプレート",1500,500
+ModifiedDateTime=20141214103431
+Position="メール文面テンプレート",500,1000
 
 [Relation]
 Entity1=mail_template
 Entity2=mail_template_address
-RelationType1=1
-RelationType2=3
+RelationType1=2
+RelationType2=4
 Fields1=id
-Fields2=mail_template_id
+Fields2=template_id
 Cardinarity1=
 Cardinarity2=
-Position="メールテンプレート",0,2088,9044,1405,R,R
+Position="メール文面テンプレート",0,2076,6064,1395,R,R
 Dependence=0
 Caption=
 PName=
+ModifiedDateTime=20141214103349
 LineMode=0
-Bar1=209
-Bar2=904
+Bar1=208
+Bar2=606
 Bar3=140
-TermPos1=R
-TermPos2=R
-
-[Entity]
-PName=mail_template_text
-LName=メールテンプレート文面
-Comment=
-TableOption=
-Page=メールテンプレート
-Left=1500
-Top=900
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールテンプレートID","mail_template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
-Field="ロケール","locale","*ロケール","NOT NULL",,"","",$FFFFFFFF,""
-Field="件名","subject","*メール件名","NOT NULL",,"","",$FFFFFFFF,""
-Field="本文","body","*メール本文","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,mail_template_id,locale
-EffectMode=None
-Tag=マスタ
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20140824200725
-Position="メールテンプレート",1500,900
-
-[Relation]
-Entity1=mail_template
-Entity2=mail_template_text
-RelationType1=1
-RelationType2=3
-Fields1=id
-Fields2=mail_template_id
-Cardinarity1=
-Cardinarity2=
-Position="メールテンプレート",0,6823,5622,4584,R,R
-Dependence=0
-Caption=
-PName=
-LineMode=0
-Bar1=682
-Bar2=562
-Bar3=458
 TermPos1=R
 TermPos2=R

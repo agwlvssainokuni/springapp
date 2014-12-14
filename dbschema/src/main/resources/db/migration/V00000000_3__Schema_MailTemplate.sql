@@ -1,136 +1,59 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/08/24 20:13:41
+-- Date/Time    : 2014/12/14 10:34:50
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
 -- メールテンプレート
-CREATE TABLE mail_template(
-	id INTEGER NOT NULL auto_increment,
-	name VARCHAR (32) NOT NULL,
-	sender VARCHAR (512) NOT NULL,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	lock_version INTEGER DEFAULT 1 NOT NULL,
-	deleted_flg INTEGER DEFAULT 0 NOT NULL,
-	CONSTRAINT mail_template_pkc PRIMARY KEY (id)
-);
+create table mail_template (
+  id BIGINT not null AUTO_INCREMENT
+  , template_name VARCHAR(32) not null
+  , from_addr VARCHAR(512) not null
+  , subject VARCHAR(1024) not null
+  , body VARCHAR(4096) not null
+  , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , lock_version INTEGER default 1 not null
+  , deleted_flg INTEGER default 0 not null
+  , constraint mail_template_PKC primary key (id)
+) ;
 
-CREATE UNIQUE INDEX mail_template_ix1
-	ON mail_template(name);
+create index mail_template_IX1
+  on mail_template(template_name);
 
 -- メールテンプレート宛先
-CREATE TABLE mail_template_address(
-	id INTEGER NOT NULL auto_increment,
-	mail_template_id INTEGER NOT NULL,
-	mail_addr VARCHAR (512) NOT NULL,
-	rcpt_type VARCHAR (3) NOT NULL CHECK rcpt_type IN ('CC', 'BCC'),
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	lock_version INTEGER DEFAULT 1 NOT NULL,
-	deleted_flg INTEGER DEFAULT 0 NOT NULL,
-	CONSTRAINT mail_template_address_pkc PRIMARY KEY (id)
-);
+create table mail_template_address (
+  id BIGINT not null AUTO_INCREMENT
+  , template_id BIGINT not null
+  , rcpt_type VARCHAR(3) not null
+  , rcpt_addr VARCHAR(512) not null
+  , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , lock_version INTEGER default 1 not null
+  , deleted_flg INTEGER default 0 not null
+  , constraint mail_template_address_PKC primary key (id)
+) ;
 
-CREATE UNIQUE INDEX mail_template_address_ix1
-	ON mail_template_address(mail_template_id, mail_addr, rcpt_type);
+create index mail_template_address_IX1
+  on mail_template_address(template_id);
 
--- メールテンプレート文面
-CREATE TABLE mail_template_text(
-	id INTEGER NOT NULL auto_increment,
-	mail_template_id INTEGER NOT NULL,
-	locale VARCHAR (5) NOT NULL,
-	subject VARCHAR (1024) NOT NULL,
-	body VARCHAR (4096) NOT NULL,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	lock_version INTEGER DEFAULT 1 NOT NULL,
-	deleted_flg INTEGER DEFAULT 0 NOT NULL,
-	CONSTRAINT mail_template_text_pkc PRIMARY KEY (id)
-);
+comment on table mail_template is 'メールテンプレート';
+comment on column mail_template.id is 'ID';
+comment on column mail_template.template_name is 'テンプレート名';
+comment on column mail_template.from_addr is '差出人';
+comment on column mail_template.subject is '件名';
+comment on column mail_template.body is '本文';
+comment on column mail_template.updated_at is '更新日時';
+comment on column mail_template.created_at is '作成日時';
+comment on column mail_template.lock_version is 'ロックバージョン';
+comment on column mail_template.deleted_flg is '削除フラグ';
 
-CREATE UNIQUE INDEX mail_template_text_ix1
-	ON mail_template_text(mail_template_id, locale);
-
-COMMENT
-	ON TABLE mail_template IS 'メールテンプレート';
-
-COMMENT
-	ON COLUMN mail_template.id IS 'ID';
-
-COMMENT
-	ON COLUMN mail_template.name IS 'テンプレート名';
-
-COMMENT
-	ON COLUMN mail_template.sender IS '差出人';
-
-COMMENT
-	ON COLUMN mail_template.updated_at IS '更新日時';
-
-COMMENT
-	ON COLUMN mail_template.created_at IS '作成日時';
-
-COMMENT
-	ON COLUMN mail_template.lock_version IS 'ロックバージョン';
-
-COMMENT
-	ON COLUMN mail_template.deleted_flg IS '削除フラグ';
-
-COMMENT
-	ON TABLE mail_template_address IS 'メールテンプレート宛先';
-
-COMMENT
-	ON COLUMN mail_template_address.id IS 'ID';
-
-COMMENT
-	ON COLUMN mail_template_address.mail_template_id IS 'メールテンプレートID';
-
-COMMENT
-	ON COLUMN mail_template_address.mail_addr IS 'メールアドレス';
-
-COMMENT
-	ON COLUMN mail_template_address.rcpt_type IS '宛先区分';
-
-COMMENT
-	ON COLUMN mail_template_address.updated_at IS '更新日時';
-
-COMMENT
-	ON COLUMN mail_template_address.created_at IS '作成日時';
-
-COMMENT
-	ON COLUMN mail_template_address.lock_version IS 'ロックバージョン';
-
-COMMENT
-	ON COLUMN mail_template_address.deleted_flg IS '削除フラグ';
-
-COMMENT
-	ON TABLE mail_template_text IS 'メールテンプレート文面';
-
-COMMENT
-	ON COLUMN mail_template_text.id IS 'ID';
-
-COMMENT
-	ON COLUMN mail_template_text.mail_template_id IS 'メールテンプレートID';
-
-COMMENT
-	ON COLUMN mail_template_text.locale IS 'ロケール';
-
-COMMENT
-	ON COLUMN mail_template_text.subject IS '件名';
-
-COMMENT
-	ON COLUMN mail_template_text.body IS '本文';
-
-COMMENT
-	ON COLUMN mail_template_text.updated_at IS '更新日時';
-
-COMMENT
-	ON COLUMN mail_template_text.created_at IS '作成日時';
-
-COMMENT
-	ON COLUMN mail_template_text.lock_version IS 'ロックバージョン';
-
-COMMENT
-	ON COLUMN mail_template_text.deleted_flg IS '削除フラグ';
-
-
+comment on table mail_template_address is 'メールテンプレート宛先';
+comment on column mail_template_address.id is 'ID';
+comment on column mail_template_address.template_id is 'メールテンプレートID';
+comment on column mail_template_address.rcpt_type is '宛先区分';
+comment on column mail_template_address.rcpt_addr is '宛先アドレス';
+comment on column mail_template_address.updated_at is '更新日時';
+comment on column mail_template_address.created_at is '作成日時';
+comment on column mail_template_address.lock_version is 'ロックバージョン';
+comment on column mail_template_address.deleted_flg is '削除フラグ';
