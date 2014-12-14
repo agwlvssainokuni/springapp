@@ -17,6 +17,7 @@
 package cherry.foundation.async;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -29,6 +30,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
@@ -166,6 +169,203 @@ public class AsyncFileProcessHandlerImplTest {
 					"d", "e", 100L, "f");
 			verify(asyncProcessStore).finishWithException(10L, now, exception);
 		}
+	}
+
+	@Test
+	public void testHandleMessage_NO_ARG() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+
+		FileProcessResult result = new FileProcessResult();
+		result.setTotalCount(10L);
+		result.setOkCount(10L);
+		result.setNgCount(0L);
+		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
+
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
+				.thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishFileProcess(10L, now,
+				AsyncStatus.SUCCESS, result);
+	}
+
+	@Test
+	public void testHandleMessage_2_ARGS() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+		message.put("0", "e");
+		message.put("1", "f");
+
+		FileProcessResult result = new FileProcessResult();
+		result.setTotalCount(10L);
+		result.setOkCount(10L);
+		result.setNgCount(0L);
+		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
+
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f"))
+				.thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler)
+				.handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f");
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishFileProcess(10L, now,
+				AsyncStatus.SUCCESS, result);
+	}
+
+	@Test
+	public void testHandleMessage_ERROR() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+
+		FileProcessResult result = new FileProcessResult();
+		result.setTotalCount(10L);
+		result.setOkCount(0L);
+		result.setNgCount(10L);
+		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
+
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
+				.thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishFileProcess(10L, now,
+				AsyncStatus.ERROR, result);
+	}
+
+	@Test
+	public void testHandleMessage_WARN() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+
+		FileProcessResult result = new FileProcessResult();
+		result.setTotalCount(10L);
+		result.setOkCount(5L);
+		result.setNgCount(5L);
+		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
+
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
+				.thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.WARN,
+				result);
+	}
+
+	@Test
+	public void testHandleMessage_exception() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+
+		IllegalStateException exception = new IllegalStateException();
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenThrow(
+				exception);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishWithException(10L, now, exception);
 	}
 
 	private AsyncFileProcessHandlerImpl createImpl() {
