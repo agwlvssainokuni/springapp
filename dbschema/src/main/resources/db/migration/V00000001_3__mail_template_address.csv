@@ -1,5 +1,0 @@
-#,name,mail_addr,rcpt_type
-1,signup/entry,cc@test.com,CC
-2,signup/entry,bcc@test.com,BCC
-3,signup/register,cc@test.com,CC
-4,signup/register,bcc@test.com,BCC

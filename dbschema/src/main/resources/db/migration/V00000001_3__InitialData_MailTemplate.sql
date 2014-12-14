@@ -1,44 +1,48 @@
 INSERT INTO mail_template (
-	name,
-	sender
-)
-SELECT
-	A.name,
-	A.sender
-FROM
-	CSVREAD('classpath:/db/migration/V00000001_3__mail_template.csv') AS A
-;
-
-INSERT INTO mail_template_address (
-	mail_template_id,
-	mail_addr,
-	rcpt_type
-)
-SELECT
-	B.id,
-	A.mail_addr,
-	A.rcpt_type
-FROM
-	CSVREAD('classpath:/db/migration/V00000001_3__mail_template_address.csv') AS A
-	JOIN mail_template AS B
-	ON
-		B.name = A.name
-;
-
-INSERT INTO mail_template_text (
-	mail_template_id,
-	locale,
+	template_name,
+	from_addr,
 	subject,
 	body
 )
-SELECT
-	B.id,
-	A.locale,
-	A.subject,
-	A.body
-FROM
-	CSVREAD('classpath:/db/migration/V00000001_3__mail_template_text.csv') AS A
-	JOIN mail_template AS B
-	ON
-		B.name = A.name
+VALUES
+(
+	'SIGNUP_ENTRY',
+	'noreply@test.com',
+	'サインアップエントリ',
+	'${model.mailAddr}, サインアップURI: ${model.signupUri}'
+),
+(
+	'SIGNUP_REGISTER',
+	'noreply@test.com',
+	'サインアップ登録',
+	'${model.mailAddr}, パスワード: ${model.password}'
+)
+;
+
+INSERT INTO mail_template_address (
+	template_id,
+	rcpt_type,
+	rcpt_addr
+)
+VALUES
+(
+	(SELECT id FROM mail_template WHERE template_name = 'SIGNUP_ENTRY'),
+	'CC',
+	'cc@test.com'
+),
+(
+	(SELECT id FROM mail_template WHERE template_name = 'SIGNUP_ENTRY'),
+	'BCC',
+	'bcc@test.com'
+),
+(
+	(SELECT id FROM mail_template WHERE template_name = 'SIGNUP_REGISTER'),
+	'CC',
+	'cc@test.com'
+),
+(
+	(SELECT id FROM mail_template WHERE template_name = 'SIGNUP_REGISTER'),
+	'BCC',
+	'bcc@test.com'
+)
 ;
