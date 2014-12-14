@@ -29,19 +29,7 @@
 			targetProject="../common/src/mybatis/java" />
 		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper"
 			type="ANNOTATEDMAPPER" targetProject="../common/src/mybatis/java" />
-		<table tableName="user">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		<table tableName="signup_request">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		<table tableName="mail_template">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		<table tableName="mail_template_address">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		<table tableName="mail_template_text">
+		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 		<table tableName="async_process">
@@ -71,10 +59,31 @@
 		<table tableName="async_process_command_result">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="bizdatetime_master">
+		<table tableName="mail_log">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_rcpt">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_queue">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_template">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_template_address">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_template_text">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 		<table tableName="zipcd_master">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="user">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="signup_request">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>
