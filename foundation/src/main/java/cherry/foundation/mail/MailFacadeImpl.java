@@ -26,7 +26,27 @@ public class MailFacadeImpl implements MailFacade {
 
 	private BizDateTime bizDateTime;
 
+	private MessageHandler messageHandler;
+
 	private MailHandler mailHandler;
+
+	public void setBizDateTime(BizDateTime bizDateTime) {
+		this.bizDateTime = bizDateTime;
+	}
+
+	public void setMessageHandler(MessageHandler messageHandler) {
+		this.messageHandler = messageHandler;
+	}
+
+	public void setMailHandler(MailHandler mailHandler) {
+		this.mailHandler = mailHandler;
+	}
+
+	@Override
+	public Message createMessage(String templateName, String to,
+			MailModel mailModel) {
+		return messageHandler.createMessage(templateName, to, mailModel);
+	}
 
 	@Override
 	public long send(String launcherId, String messageName, String from,

@@ -22,6 +22,8 @@ import org.joda.time.LocalDateTime;
 
 public interface MailFacade {
 
+	Message createMessage(String templateName, String to, MailModel mailModel);
+
 	long send(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body);
