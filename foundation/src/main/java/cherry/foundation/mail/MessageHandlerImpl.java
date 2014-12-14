@@ -41,10 +41,10 @@ public class MessageHandlerImpl implements MessageHandler {
 
 	@Transactional(readOnly = true)
 	@Override
-	public MailMessage createMessage(String templateName, String to,
+	public Message createMessage(String templateName, String to,
 			MailModel mailModel) {
 
-		MailTemplate template = templateStore.getTemplate(templateName);
+		Template template = templateStore.getTemplate(templateName);
 
 		List<String> toAddr = new ArrayList<>();
 		toAddr.add(to);
@@ -52,7 +52,7 @@ public class MessageHandlerImpl implements MessageHandler {
 			toAddr.addAll(template.getToAddr());
 		}
 
-		MailMessage message = new MailMessage();
+		Message message = new Message();
 		message.setFromAddr(template.getFromAddr());
 		message.setToAddr(toAddr);
 		message.setCcAddr(template.getCcAddr());

@@ -18,7 +18,6 @@ package cherry.foundation.mail;
 
 public interface MessageHandler {
 
-	MailMessage createMessage(String templateName, String to,
-			MailModel mailModel);
+	Message createMessage(String templateName, String to, MailModel mailModel);
 
 }

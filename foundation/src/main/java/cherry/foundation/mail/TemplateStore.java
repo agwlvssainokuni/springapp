@@ -18,6 +18,6 @@ package cherry.foundation.mail;
 
 public interface TemplateStore {
 
-	MailTemplate getTemplate(String templateName);
+	Template getTemplate(String templateName);
 
 }
