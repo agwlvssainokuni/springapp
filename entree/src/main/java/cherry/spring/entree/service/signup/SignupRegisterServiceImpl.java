@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
-import cherry.foundation.mail.Message;
+import cherry.foundation.mail.MailData;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.db.gen.dto.User;
@@ -107,7 +107,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		model.setFirstName(firstName);
 		model.setLastName(lastName);
 
-		Message msg = mailFacade.createMessage("SIGNUP_REGISTER", mailAddr,
+		MailData msg = mailFacade.createMailData("SIGNUP_REGISTER", mailAddr,
 				model);
 		mailFacade.send("unknown", "SIGNUP_REGISTER", msg.getFromAddr(),
 				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),

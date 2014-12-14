@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
-import cherry.foundation.mail.Message;
+import cherry.foundation.mail.MailData;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
@@ -101,7 +101,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		model.setMailAddr(mailAddr);
 		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
-		Message msg = mailFacade.createMessage("SIGNUP_ENTRY", mailAddr, model);
+		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr, model);
 		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(),
 				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
 				msg.getSubject(), msg.getBody());
