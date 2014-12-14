@@ -59,16 +59,16 @@ public class MailTemplateAddressSqlProvider {
         BEGIN();
         INSERT_INTO("MAIL_TEMPLATE_ADDRESS");
         
-        if (record.getMailTemplateId() != null) {
-            VALUES("MAIL_TEMPLATE_ID", "#{mailTemplateId,jdbcType=INTEGER}");
-        }
-        
-        if (record.getMailAddr() != null) {
-            VALUES("MAIL_ADDR", "#{mailAddr,jdbcType=VARCHAR}");
+        if (record.getTemplateId() != null) {
+            VALUES("TEMPLATE_ID", "#{templateId,jdbcType=BIGINT}");
         }
         
         if (record.getRcptType() != null) {
             VALUES("RCPT_TYPE", "#{rcptType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRcptAddr() != null) {
+            VALUES("RCPT_ADDR", "#{rcptAddr,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -103,9 +103,9 @@ public class MailTemplateAddressSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("MAIL_TEMPLATE_ID");
-        SELECT("MAIL_ADDR");
+        SELECT("TEMPLATE_ID");
         SELECT("RCPT_TYPE");
+        SELECT("RCPT_ADDR");
         SELECT("UPDATED_AT");
         SELECT("CREATED_AT");
         SELECT("LOCK_VERSION");
@@ -134,19 +134,19 @@ public class MailTemplateAddressSqlProvider {
         UPDATE("MAIL_TEMPLATE_ADDRESS");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getMailTemplateId() != null) {
-            SET("MAIL_TEMPLATE_ID = #{record.mailTemplateId,jdbcType=INTEGER}");
-        }
-        
-        if (record.getMailAddr() != null) {
-            SET("MAIL_ADDR = #{record.mailAddr,jdbcType=VARCHAR}");
+        if (record.getTemplateId() != null) {
+            SET("TEMPLATE_ID = #{record.templateId,jdbcType=BIGINT}");
         }
         
         if (record.getRcptType() != null) {
             SET("RCPT_TYPE = #{record.rcptType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRcptAddr() != null) {
+            SET("RCPT_ADDR = #{record.rcptAddr,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -179,10 +179,10 @@ public class MailTemplateAddressSqlProvider {
         BEGIN();
         UPDATE("MAIL_TEMPLATE_ADDRESS");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("MAIL_TEMPLATE_ID = #{record.mailTemplateId,jdbcType=INTEGER}");
-        SET("MAIL_ADDR = #{record.mailAddr,jdbcType=VARCHAR}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("TEMPLATE_ID = #{record.templateId,jdbcType=BIGINT}");
         SET("RCPT_TYPE = #{record.rcptType,jdbcType=VARCHAR}");
+        SET("RCPT_ADDR = #{record.rcptAddr,jdbcType=VARCHAR}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
         SET("CREATED_AT = #{record.createdAt,jdbcType=TIMESTAMP}");
         SET("LOCK_VERSION = #{record.lockVersion,jdbcType=INTEGER}");
@@ -203,16 +203,16 @@ public class MailTemplateAddressSqlProvider {
         BEGIN();
         UPDATE("MAIL_TEMPLATE_ADDRESS");
         
-        if (record.getMailTemplateId() != null) {
-            SET("MAIL_TEMPLATE_ID = #{mailTemplateId,jdbcType=INTEGER}");
-        }
-        
-        if (record.getMailAddr() != null) {
-            SET("MAIL_ADDR = #{mailAddr,jdbcType=VARCHAR}");
+        if (record.getTemplateId() != null) {
+            SET("TEMPLATE_ID = #{templateId,jdbcType=BIGINT}");
         }
         
         if (record.getRcptType() != null) {
             SET("RCPT_TYPE = #{rcptType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRcptAddr() != null) {
+            SET("RCPT_ADDR = #{rcptAddr,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -231,7 +231,7 @@ public class MailTemplateAddressSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

@@ -24,17 +24,21 @@ public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<BMail
 
     public static final QMailTemplate mailTemplate = new QMailTemplate("MAIL_TEMPLATE");
 
+    public final StringPath body = createString("body");
+
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final StringPath fromAddr = createString("fromAddr");
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
-    public final StringPath name = createString("name");
+    public final StringPath subject = createString("subject");
 
-    public final StringPath sender = createString("sender");
+    public final StringPath templateName = createString("templateName");
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
@@ -61,13 +65,15 @@ public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<BMail
     }
 
     public void addMetadata() {
-        addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(name, ColumnMetadata.named("NAME").withIndex(2).ofType(Types.VARCHAR).withSize(32).notNull());
-        addMetadata(sender, ColumnMetadata.named("SENDER").withIndex(3).ofType(Types.VARCHAR).withSize(512).notNull());
-        addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(body, ColumnMetadata.named("BODY").withIndex(5).ofType(Types.VARCHAR).withSize(4096).notNull());
+        addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(fromAddr, ColumnMetadata.named("FROM_ADDR").withIndex(3).ofType(Types.VARCHAR).withSize(512).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(subject, ColumnMetadata.named("SUBJECT").withIndex(4).ofType(Types.VARCHAR).withSize(1024).notNull());
+        addMetadata(templateName, ColumnMetadata.named("TEMPLATE_NAME").withIndex(2).ofType(Types.VARCHAR).withSize(32).notNull());
+        addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 
 }

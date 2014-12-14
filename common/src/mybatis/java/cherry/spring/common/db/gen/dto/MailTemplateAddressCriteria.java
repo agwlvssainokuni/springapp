@@ -206,183 +206,113 @@ public class MailTemplateAddressCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdIsNull() {
-            addCriterion("MAIL_TEMPLATE_ID is null");
+        public Criteria andTemplateIdIsNull() {
+            addCriterion("TEMPLATE_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdIsNotNull() {
-            addCriterion("MAIL_TEMPLATE_ID is not null");
+        public Criteria andTemplateIdIsNotNull() {
+            addCriterion("TEMPLATE_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdEqualTo(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID =", value, "mailTemplateId");
+        public Criteria andTemplateIdEqualTo(Long value) {
+            addCriterion("TEMPLATE_ID =", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdNotEqualTo(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID <>", value, "mailTemplateId");
+        public Criteria andTemplateIdNotEqualTo(Long value) {
+            addCriterion("TEMPLATE_ID <>", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdGreaterThan(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID >", value, "mailTemplateId");
+        public Criteria andTemplateIdGreaterThan(Long value) {
+            addCriterion("TEMPLATE_ID >", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID >=", value, "mailTemplateId");
+        public Criteria andTemplateIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("TEMPLATE_ID >=", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdLessThan(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID <", value, "mailTemplateId");
+        public Criteria andTemplateIdLessThan(Long value) {
+            addCriterion("TEMPLATE_ID <", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdLessThanOrEqualTo(Integer value) {
-            addCriterion("MAIL_TEMPLATE_ID <=", value, "mailTemplateId");
+        public Criteria andTemplateIdLessThanOrEqualTo(Long value) {
+            addCriterion("TEMPLATE_ID <=", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdIn(List<Integer> values) {
-            addCriterion("MAIL_TEMPLATE_ID in", values, "mailTemplateId");
+        public Criteria andTemplateIdIn(List<Long> values) {
+            addCriterion("TEMPLATE_ID in", values, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdNotIn(List<Integer> values) {
-            addCriterion("MAIL_TEMPLATE_ID not in", values, "mailTemplateId");
+        public Criteria andTemplateIdNotIn(List<Long> values) {
+            addCriterion("TEMPLATE_ID not in", values, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdBetween(Integer value1, Integer value2) {
-            addCriterion("MAIL_TEMPLATE_ID between", value1, value2, "mailTemplateId");
+        public Criteria andTemplateIdBetween(Long value1, Long value2) {
+            addCriterion("TEMPLATE_ID between", value1, value2, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andMailTemplateIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("MAIL_TEMPLATE_ID not between", value1, value2, "mailTemplateId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrIsNull() {
-            addCriterion("MAIL_ADDR is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrIsNotNull() {
-            addCriterion("MAIL_ADDR is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrEqualTo(String value) {
-            addCriterion("MAIL_ADDR =", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrNotEqualTo(String value) {
-            addCriterion("MAIL_ADDR <>", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrGreaterThan(String value) {
-            addCriterion("MAIL_ADDR >", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrGreaterThanOrEqualTo(String value) {
-            addCriterion("MAIL_ADDR >=", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrLessThan(String value) {
-            addCriterion("MAIL_ADDR <", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrLessThanOrEqualTo(String value) {
-            addCriterion("MAIL_ADDR <=", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrLike(String value) {
-            addCriterion("MAIL_ADDR like", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrNotLike(String value) {
-            addCriterion("MAIL_ADDR not like", value, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrIn(List<String> values) {
-            addCriterion("MAIL_ADDR in", values, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrNotIn(List<String> values) {
-            addCriterion("MAIL_ADDR not in", values, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrBetween(String value1, String value2) {
-            addCriterion("MAIL_ADDR between", value1, value2, "mailAddr");
-            return (Criteria) this;
-        }
-
-        public Criteria andMailAddrNotBetween(String value1, String value2) {
-            addCriterion("MAIL_ADDR not between", value1, value2, "mailAddr");
+        public Criteria andTemplateIdNotBetween(Long value1, Long value2) {
+            addCriterion("TEMPLATE_ID not between", value1, value2, "templateId");
             return (Criteria) this;
         }
 
@@ -453,6 +383,76 @@ public class MailTemplateAddressCriteria {
 
         public Criteria andRcptTypeNotBetween(String value1, String value2) {
             addCriterion("RCPT_TYPE not between", value1, value2, "rcptType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrIsNull() {
+            addCriterion("RCPT_ADDR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrIsNotNull() {
+            addCriterion("RCPT_ADDR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrEqualTo(String value) {
+            addCriterion("RCPT_ADDR =", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrNotEqualTo(String value) {
+            addCriterion("RCPT_ADDR <>", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrGreaterThan(String value) {
+            addCriterion("RCPT_ADDR >", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrGreaterThanOrEqualTo(String value) {
+            addCriterion("RCPT_ADDR >=", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrLessThan(String value) {
+            addCriterion("RCPT_ADDR <", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrLessThanOrEqualTo(String value) {
+            addCriterion("RCPT_ADDR <=", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrLike(String value) {
+            addCriterion("RCPT_ADDR like", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrNotLike(String value) {
+            addCriterion("RCPT_ADDR not like", value, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrIn(List<String> values) {
+            addCriterion("RCPT_ADDR in", values, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrNotIn(List<String> values) {
+            addCriterion("RCPT_ADDR not in", values, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrBetween(String value1, String value2) {
+            addCriterion("RCPT_ADDR between", value1, value2, "rcptAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andRcptAddrNotBetween(String value1, String value2) {
+            addCriterion("RCPT_ADDR not between", value1, value2, "rcptAddr");
             return (Criteria) this;
         }
 

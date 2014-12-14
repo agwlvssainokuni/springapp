@@ -59,12 +59,20 @@ public class MailTemplateSqlProvider {
         BEGIN();
         INSERT_INTO("MAIL_TEMPLATE");
         
-        if (record.getName() != null) {
-            VALUES("NAME", "#{name,jdbcType=VARCHAR}");
+        if (record.getTemplateName() != null) {
+            VALUES("TEMPLATE_NAME", "#{templateName,jdbcType=VARCHAR}");
         }
         
-        if (record.getSender() != null) {
-            VALUES("SENDER", "#{sender,jdbcType=VARCHAR}");
+        if (record.getFromAddr() != null) {
+            VALUES("FROM_ADDR", "#{fromAddr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSubject() != null) {
+            VALUES("SUBJECT", "#{subject,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getBody() != null) {
+            VALUES("BODY", "#{body,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -99,8 +107,10 @@ public class MailTemplateSqlProvider {
         } else {
             SELECT("ID");
         }
-        SELECT("NAME");
-        SELECT("SENDER");
+        SELECT("TEMPLATE_NAME");
+        SELECT("FROM_ADDR");
+        SELECT("SUBJECT");
+        SELECT("BODY");
         SELECT("UPDATED_AT");
         SELECT("CREATED_AT");
         SELECT("LOCK_VERSION");
@@ -129,15 +139,23 @@ public class MailTemplateSqlProvider {
         UPDATE("MAIL_TEMPLATE");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
-        if (record.getName() != null) {
-            SET("NAME = #{record.name,jdbcType=VARCHAR}");
+        if (record.getTemplateName() != null) {
+            SET("TEMPLATE_NAME = #{record.templateName,jdbcType=VARCHAR}");
         }
         
-        if (record.getSender() != null) {
-            SET("SENDER = #{record.sender,jdbcType=VARCHAR}");
+        if (record.getFromAddr() != null) {
+            SET("FROM_ADDR = #{record.fromAddr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSubject() != null) {
+            SET("SUBJECT = #{record.subject,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getBody() != null) {
+            SET("BODY = #{record.body,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -170,9 +188,11 @@ public class MailTemplateSqlProvider {
         BEGIN();
         UPDATE("MAIL_TEMPLATE");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
-        SET("NAME = #{record.name,jdbcType=VARCHAR}");
-        SET("SENDER = #{record.sender,jdbcType=VARCHAR}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
+        SET("TEMPLATE_NAME = #{record.templateName,jdbcType=VARCHAR}");
+        SET("FROM_ADDR = #{record.fromAddr,jdbcType=VARCHAR}");
+        SET("SUBJECT = #{record.subject,jdbcType=VARCHAR}");
+        SET("BODY = #{record.body,jdbcType=VARCHAR}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
         SET("CREATED_AT = #{record.createdAt,jdbcType=TIMESTAMP}");
         SET("LOCK_VERSION = #{record.lockVersion,jdbcType=INTEGER}");
@@ -193,12 +213,20 @@ public class MailTemplateSqlProvider {
         BEGIN();
         UPDATE("MAIL_TEMPLATE");
         
-        if (record.getName() != null) {
-            SET("NAME = #{name,jdbcType=VARCHAR}");
+        if (record.getTemplateName() != null) {
+            SET("TEMPLATE_NAME = #{templateName,jdbcType=VARCHAR}");
         }
         
-        if (record.getSender() != null) {
-            SET("SENDER = #{sender,jdbcType=VARCHAR}");
+        if (record.getFromAddr() != null) {
+            SET("FROM_ADDR = #{fromAddr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSubject() != null) {
+            SET("SUBJECT = #{subject,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getBody() != null) {
+            SET("BODY = #{body,jdbcType=VARCHAR}");
         }
         
         if (record.getUpdatedAt() != null) {
@@ -217,7 +245,7 @@ public class MailTemplateSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

@@ -12,15 +12,15 @@ public class BMailTemplateAddress {
 
     private Integer deletedFlg;
 
-    private Integer id;
+    private Long id;
 
     private Integer lockVersion;
 
-    private String mailAddr;
-
-    private Integer mailTemplateId;
+    private String rcptAddr;
 
     private String rcptType;
+
+    private Long templateId;
 
     private org.joda.time.LocalDateTime updatedAt;
 
@@ -40,11 +40,11 @@ public class BMailTemplateAddress {
         this.deletedFlg = deletedFlg;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,20 +56,12 @@ public class BMailTemplateAddress {
         this.lockVersion = lockVersion;
     }
 
-    public String getMailAddr() {
-        return mailAddr;
+    public String getRcptAddr() {
+        return rcptAddr;
     }
 
-    public void setMailAddr(String mailAddr) {
-        this.mailAddr = mailAddr;
-    }
-
-    public Integer getMailTemplateId() {
-        return mailTemplateId;
-    }
-
-    public void setMailTemplateId(Integer mailTemplateId) {
-        this.mailTemplateId = mailTemplateId;
+    public void setRcptAddr(String rcptAddr) {
+        this.rcptAddr = rcptAddr;
     }
 
     public String getRcptType() {
@@ -78,6 +70,14 @@ public class BMailTemplateAddress {
 
     public void setRcptType(String rcptType) {
         this.rcptType = rcptType;
+    }
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -89,7 +89,7 @@ public class BMailTemplateAddress {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", mailTemplateId = " + mailTemplateId + ", rcptType = " + rcptType + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", rcptAddr = " + rcptAddr + ", rcptType = " + rcptType + ", templateId = " + templateId + ", updatedAt = " + updatedAt;
     }
 
 }

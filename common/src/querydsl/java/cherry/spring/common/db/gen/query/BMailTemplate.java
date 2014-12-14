@@ -8,19 +8,31 @@ import javax.annotation.Generated;
 @Generated("com.mysema.query.codegen.BeanSerializer")
 public class BMailTemplate {
 
+    private String body;
+
     private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
-    private Integer id;
+    private String fromAddr;
+
+    private Long id;
 
     private Integer lockVersion;
 
-    private String name;
+    private String subject;
 
-    private String sender;
+    private String templateName;
 
     private org.joda.time.LocalDateTime updatedAt;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 
     public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
@@ -38,11 +50,19 @@ public class BMailTemplate {
         this.deletedFlg = deletedFlg;
     }
 
-    public Integer getId() {
+    public String getFromAddr() {
+        return fromAddr;
+    }
+
+    public void setFromAddr(String fromAddr) {
+        this.fromAddr = fromAddr;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,20 +74,20 @@ public class BMailTemplate {
         this.lockVersion = lockVersion;
     }
 
-    public String getName() {
-        return name;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
-    public String getSender() {
-        return sender;
+    public String getTemplateName() {
+        return templateName;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -79,7 +99,7 @@ public class BMailTemplate {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", name = " + name + ", sender = " + sender + ", updatedAt = " + updatedAt;
+         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", lockVersion = " + lockVersion + ", subject = " + subject + ", templateName = " + templateName + ", updatedAt = " + updatedAt;
     }
 
 }

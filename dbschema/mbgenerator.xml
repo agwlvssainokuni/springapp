@@ -74,9 +74,6 @@
 		<table tableName="mail_template_address">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="mail_template_text">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
 		<table tableName="zipcd_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
