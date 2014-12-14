@@ -19,24 +19,25 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.Locale;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
+import cherry.foundation.mail.MailFacade;
+import cherry.foundation.mail.MailModel;
+import cherry.foundation.mail.Message;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
-import cherry.spring.common.MailId;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.mapper.UserMapper;
-import cherry.spring.common.helper.mail.MailMessageHelper;
-import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
 
 @Service
@@ -54,10 +55,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private BizDateTime bizDateTime;
 
 	@Autowired
-	private MailMessageHelper mailMessageHelper;
-
-	@Autowired
-	private MailSender mailSender;
+	private MailFacade mailFacade;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -109,54 +107,22 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		model.setFirstName(firstName);
 		model.setLastName(lastName);
 
-		SimpleMailMessage message = mailMessageHelper.createMailMessage(
-				MailId.SIGNUP_REGISTER, mailAddr, model, locale);
-		mailSender.send(message);
+		Message msg = mailFacade.createMessage("SIGNUP_REGISTER", mailAddr,
+				model);
+		mailFacade.send("unknown", "SIGNUP_REGISTER", msg.getFromAddr(),
+				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
+				msg.getSubject(), msg.getBody());
 
 		return true;
 	}
 
+	@Setter
+	@Getter
 	public static class Model extends MailModel {
-
 		private String mailAddr;
-
 		private String password;
-
 		private String firstName;
-
 		private String lastName;
-
-		public String getMailAddr() {
-			return mailAddr;
-		}
-
-		public void setMailAddr(String mailAddr) {
-			this.mailAddr = mailAddr;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
 	}
 
 }

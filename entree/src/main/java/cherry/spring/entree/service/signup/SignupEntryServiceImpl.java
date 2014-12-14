@@ -19,20 +19,21 @@ package cherry.spring.entree.service.signup;
 import java.util.Locale;
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
+import cherry.foundation.mail.MailFacade;
+import cherry.foundation.mail.MailModel;
+import cherry.foundation.mail.Message;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
-import cherry.spring.common.MailId;
-import cherry.spring.common.helper.mail.MailMessageHelper;
-import cherry.spring.common.helper.mail.MailModel;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
 
 @Service
@@ -47,10 +48,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 	private BizDateTime bizdateHelper;
 
 	@Autowired
-	private MailMessageHelper mailMessageHelper;
-
-	@Autowired
-	private MailSender mailSender;
+	private MailFacade mailFacade;
 
 	@Value("${entree.app.signup.entry.intervalInSec}")
 	private Integer intervalInSec;
@@ -103,34 +101,19 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		model.setMailAddr(mailAddr);
 		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
-		SimpleMailMessage message = mailMessageHelper.createMailMessage(
-				MailId.SIGNUP_ENTRY, mailAddr, model, locale);
-		mailSender.send(message);
+		Message msg = mailFacade.createMessage("SIGNUP_ENTRY", mailAddr, model);
+		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(),
+				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
+				msg.getSubject(), msg.getBody());
 
 		return true;
 	}
 
+	@Setter
+	@Getter
 	public static class Model extends MailModel {
-
 		private String mailAddr;
-
 		private String signupUri;
-
-		public String getMailAddr() {
-			return mailAddr;
-		}
-
-		public void setMailAddr(String mailAddr) {
-			this.mailAddr = mailAddr;
-		}
-
-		public String getSignupUri() {
-			return signupUri;
-		}
-
-		public void setSignupUri(String signupUri) {
-			this.signupUri = signupUri;
-		}
 	}
 
 }
