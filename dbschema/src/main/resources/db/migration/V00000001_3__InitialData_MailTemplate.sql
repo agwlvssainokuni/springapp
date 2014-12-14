@@ -6,7 +6,7 @@ SELECT
 	A.name,
 	A.sender
 FROM
-	CSVREAD('classpath:/db/migration/V00000001_0__mail_template.csv') AS A
+	CSVREAD('classpath:/db/migration/V00000001_3__mail_template.csv') AS A
 ;
 
 INSERT INTO mail_template_address (
@@ -19,7 +19,7 @@ SELECT
 	A.mail_addr,
 	A.rcpt_type
 FROM
-	CSVREAD('classpath:/db/migration/V00000001_0__mail_template_address.csv') AS A
+	CSVREAD('classpath:/db/migration/V00000001_3__mail_template_address.csv') AS A
 	JOIN mail_template AS B
 	ON
 		B.name = A.name
@@ -37,7 +37,7 @@ SELECT
 	A.subject,
 	A.body
 FROM
-	CSVREAD('classpath:/db/migration/V00000001_0__mail_template_text.csv') AS A
+	CSVREAD('classpath:/db/migration/V00000001_3__mail_template_text.csv') AS A
 	JOIN mail_template AS B
 	ON
 		B.name = A.name
