@@ -31,7 +31,6 @@ import com.mysema.query.types.Expression;
 import com.mysema.query.types.Operation;
 import com.mysema.query.types.Ops;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
 
 public class QueryDslUtil {
 
@@ -39,7 +38,7 @@ public class QueryDslUtil {
 		if (value == null) {
 			return value;
 		}
-		ColumnMetadata metadata = ColumnMetadata.getColumnMetadata(path);
+		ColumnMetadata metadata = getColumnMetadata(path);
 		if (metadata.getSize() < 0) {
 			return value;
 		} else if (value.length() <= metadata.getSize()) {
@@ -49,25 +48,27 @@ public class QueryDslUtil {
 		}
 	}
 
+	public static String getExpressionLabel(Expression<?> expression) {
+		if (expression instanceof Operation) {
+			Operation<?> op = (Operation<?>) expression;
+			if (op.getOperator() == Ops.ALIAS) {
+				return ((Path<?>) op.getArg(1)).getMetadata().getName();
+			}
+		}
+		if (expression instanceof Path) {
+			return getColumnMetadata((Path<?>) expression).getName();
+		}
+		return null;
+	}
+
 	public static Map<String, ?> tupleToMap(Tuple tuple,
 			Expression<?>... expressions) {
 		Map<String, Object> map = new LinkedHashMap<>();
 		for (Expression<?> expr : expressions) {
-			if (expr instanceof Operation) {
-				Operation<?> op = (Operation<?>) expr;
-				if (op.getOperator() == Ops.ALIAS) {
-					Path<?> path = (Path<?>) op.getArg(1);
-					PathMetadata<?> md = path.getMetadata();
-					String name = UPPER_UNDERSCORE
-							.to(LOWER_CAMEL, md.getName());
-					map.put(name, tuple.get(expr));
-				}
-			} else if (expr instanceof Path) {
-				ColumnMetadata md = getColumnMetadata((Path<?>) expr);
-				String name = UPPER_UNDERSCORE.to(LOWER_CAMEL, md.getName());
-				map.put(name, tuple.get(expr));
-			} else {
-				// IGNORE
+			String label = getExpressionLabel(expr);
+			if (label != null) {
+				map.put(UPPER_UNDERSCORE.to(LOWER_CAMEL, label),
+						tuple.get(expr));
 			}
 		}
 		return map;
