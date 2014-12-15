@@ -50,17 +50,16 @@ public class BizDateTimeImpl implements BizDateTime {
 
 	@Override
 	public LocalDateTime now() {
-		Expression<LocalDateTime> currentDtm = currentTimestamp(
-				LocalDateTime.class).as("current_dtm");
+		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
 		SQLQuery query = createSqlQuery(a);
 		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(
-				currentDtm, a.offsetDay, a.offsetHour, a.offsetMinute,
+				curDtm, a.offsetDay, a.offsetHour, a.offsetMinute,
 				a.offsetSecond));
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
-		return tuple.get(currentDtm).plusDays(tuple.get(a.offsetDay))
+		return tuple.get(curDtm).plusDays(tuple.get(a.offsetDay))
 				.plusHours(tuple.get(a.offsetHour))
 				.plusMinutes(tuple.get(a.offsetMinute))
 				.plusSeconds(tuple.get(a.offsetSecond));
