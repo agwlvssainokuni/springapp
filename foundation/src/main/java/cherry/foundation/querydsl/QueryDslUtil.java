@@ -18,6 +18,7 @@ package cherry.foundation.querydsl;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 import static com.google.common.base.CaseFormat.UPPER_UNDERSCORE;
+import static com.mysema.query.sql.ColumnMetadata.getColumnMetadata;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,7 +27,11 @@ import java.util.Map;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.ColumnMetadata;
+import com.mysema.query.types.Expression;
+import com.mysema.query.types.Operation;
+import com.mysema.query.types.Ops;
 import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
 
 public class QueryDslUtil {
 
@@ -44,21 +49,35 @@ public class QueryDslUtil {
 		}
 	}
 
-	public static Map<String, ?> tupleToMap(Tuple tuple, Path<?>... paths) {
+	public static Map<String, ?> tupleToMap(Tuple tuple,
+			Expression<?>... expressions) {
 		Map<String, Object> map = new LinkedHashMap<>();
-		for (Path<?> p : paths) {
-			ColumnMetadata metadata = ColumnMetadata.getColumnMetadata(p);
-			String name = UPPER_UNDERSCORE.to(LOWER_CAMEL, metadata.getName());
-			map.put(name, tuple.get(p));
+		for (Expression<?> expr : expressions) {
+			if (expr instanceof Operation) {
+				Operation<?> op = (Operation<?>) expr;
+				if (op.getOperator() == Ops.ALIAS) {
+					Path<?> path = (Path<?>) op.getArg(1);
+					PathMetadata<?> md = path.getMetadata();
+					String name = UPPER_UNDERSCORE
+							.to(LOWER_CAMEL, md.getName());
+					map.put(name, tuple.get(expr));
+				}
+			} else if (expr instanceof Path) {
+				ColumnMetadata md = getColumnMetadata((Path<?>) expr);
+				String name = UPPER_UNDERSCORE.to(LOWER_CAMEL, md.getName());
+				map.put(name, tuple.get(expr));
+			} else {
+				// IGNORE
+			}
 		}
 		return map;
 	}
 
 	public static List<Map<String, ?>> tupleListToMapList(
-			List<Tuple> tupleList, Path<?>... paths) {
+			List<Tuple> tupleList, Expression<?>... expressions) {
 		List<Map<String, ?>> list = new ArrayList<>(tupleList.size());
 		for (Tuple tuple : tupleList) {
-			list.add(tupleToMap(tuple, paths));
+			list.add(tupleToMap(tuple, expressions));
 		}
 		return list;
 	}
