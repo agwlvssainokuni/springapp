@@ -30,7 +30,7 @@ import com.mysema.query.types.Path;
 
 public class QueryDslUtil {
 
-	public static String adjustSize(String value, Path<String> path) {
+	public static String adjustSize(String value, Path<?> path) {
 		if (value == null) {
 			return value;
 		}
