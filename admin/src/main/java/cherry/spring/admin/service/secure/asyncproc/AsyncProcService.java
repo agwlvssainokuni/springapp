@@ -17,11 +17,14 @@
 package cherry.spring.admin.service.secure.asyncproc;
 
 import cherry.goods.paginate.PagedList;
-import cherry.spring.common.db.gen.dto.AsyncProcess;
+
+import com.mysema.query.Tuple;
+import com.mysema.query.types.Expression;
 
 public interface AsyncProcService {
 
-	PagedList<AsyncProcess> searchAsyncProc(String loginId, long pageNo,
-			long pageSz);
+	PagedList<Tuple> searchAsyncProc(String loginId, long pageNo, long pageSz);
+
+	Expression<?>[] getColumns();
 
 }

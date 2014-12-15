@@ -23,12 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.foundation.querydsl.QueryConfigurer;
 import cherry.foundation.querydsl.SQLQueryHelper;
 import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.goods.paginate.PagedList;
-import cherry.spring.common.db.gen.dto.AsyncProcess;
 import cherry.spring.common.db.gen.query.QAsyncProcess;
+import cherry.spring.common.db.gen.query.QAsyncProcessFile;
+import cherry.spring.common.db.gen.query.QAsyncProcessFileResult;
 
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.Expression;
 
 @Service
 public class AsyncProcServiceImpl implements AsyncProcService {
@@ -36,28 +38,35 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 	@Autowired
 	private SQLQueryHelper sqlQueryHelper;
 
-	@Autowired
-	private RowMapperCreator rowMapperCreator;
+	private QAsyncProcess a = new QAsyncProcess("a");
+	private QAsyncProcessFile b = new QAsyncProcessFile("b");
+	private QAsyncProcessFileResult c = new QAsyncProcessFileResult("c");
 
 	@Transactional
 	@Override
-	public PagedList<AsyncProcess> searchAsyncProc(String loginId, long pageNo,
+	public PagedList<Tuple> searchAsyncProc(String loginId, long pageNo,
 			long pageSz) {
-		QAsyncProcess a = new QAsyncProcess("a");
-		return sqlQueryHelper.search(commonClause(a, loginId),
-				orderByClause(a, loginId), pageNo, pageSz,
-				rowMapperCreator.create(AsyncProcess.class), a.id,
-				a.launchedBy, a.description, a.asyncType, a.asyncStatus,
-				a.registeredAt, a.launchedAt, a.startedAt, a.finishedAt,
-				a.updatedAt, a.createdAt, a.lockVersion, a.deletedFlg);
+		return sqlQueryHelper.search(commonClause(loginId), orderByClause(),
+				pageNo, pageSz, getColumns());
 	}
 
-	private QueryConfigurer commonClause(final QAsyncProcess a,
-			final String loginId) {
+	@Override
+	public Expression<?>[] getColumns() {
+		return new Expression<?>[] { a.id, a.launchedBy, a.description,
+				a.asyncType, a.asyncStatus, a.registeredAt, a.launchedAt,
+				a.startedAt, a.finishedAt, b.originalFilename, b.fileSize,
+				c.totalCount, c.okCount, c.ngCount };
+	}
+
+	private QueryConfigurer commonClause(final String loginId) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 				query.from(a);
+				query.leftJoin(b).on(b.asyncId.eq(a.id),
+						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				query.leftJoin(c).on(c.asyncId.eq(a.id),
+						c.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				query.where(a.launchedBy.eq(loginId));
 				query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return query;
@@ -65,8 +74,7 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 		};
 	}
 
-	private QueryConfigurer orderByClause(final QAsyncProcess a,
-			final String loginId) {
+	private QueryConfigurer orderByClause() {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
