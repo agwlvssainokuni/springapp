@@ -8,6 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1>
 	<s:message code="secure/asyncproc/init.message.0" />
 </h1>
@@ -49,6 +50,12 @@
 					<th><s:message code="secure/asyncproc/init.column.asyncType" /></th>
 					<th><s:message code="secure/asyncproc/init.column.asyncStatus" /></th>
 					<th><s:message
+							code="secure/asyncproc/init.column.originalFilename" /></th>
+					<th><s:message code="secure/asyncproc/init.column.fileSize" /></th>
+					<th><s:message code="secure/asyncproc/init.column.totalCount" /></th>
+					<th><s:message code="secure/asyncproc/init.column.okCount" /></th>
+					<th><s:message code="secure/asyncproc/init.column.ngCount" /></th>
+					<th><s:message
 							code="secure/asyncproc/init.column.registeredAt" /></th>
 					<th><s:message code="secure/asyncproc/init.column.launchedAt" /></th>
 					<th><s:message code="secure/asyncproc/init.column.startedAt" /></th>
@@ -59,16 +66,21 @@
 				<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 					<tr>
 						<td><c:out value="${pagedList.pageSet.current.from + count}" /></td>
-						<s:nestedPath path="pagedList.list[${count - 1}]">
-							<td><s:bind path="id">${status.value}</s:bind></td>
-							<td><s:bind path="description">${status.value}</s:bind></td>
-							<td><s:bind path="launchedBy">${status.value}</s:bind></td>
-							<td><s:bind path="asyncType">${status.value}</s:bind></td>
-							<td><s:bind path="asyncStatus">${status.value}</s:bind></td>
-							<td><s:bind path="registeredAt">${status.value}</s:bind></td>
-							<td><s:bind path="launchedAt">${status.value}</s:bind></td>
-							<td><s:bind path="startedAt">${status.value}</s:bind></td>
-							<td><s:bind path="finishedAt">${status.value}</s:bind></td>
+						<s:nestedPath path="pagedList">
+							<td><app:out path="list[${count-1}][id]" /></td>
+							<td><app:out path="list[${count-1}][description]" /></td>
+							<td><app:out path="list[${count-1}][launchedBy]" /></td>
+							<td><app:out path="list[${count-1}][asyncType]" /></td>
+							<td><app:out path="list[${count-1}][asyncStatus]" /></td>
+							<td><app:out path="list[${count-1}][originalFilename]" /></td>
+							<td><app:out path="list[${count-1}][fileSize]" /></td>
+							<td><app:out path="list[${count-1}][totalCount]" /></td>
+							<td><app:out path="list[${count-1}][okCount]" /></td>
+							<td><app:out path="list[${count-1}][ngCount]" /></td>
+							<td><app:out path="list[${count-1}][registeredAt]" /></td>
+							<td><app:out path="list[${count-1}][launchedAt]" /></td>
+							<td><app:out path="list[${count-1}][startedAt]" /></td>
+							<td><app:out path="list[${count-1}][finishedAt]" /></td>
 						</s:nestedPath>
 					</tr>
 				</c:forEach>
