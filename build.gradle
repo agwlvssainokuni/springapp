@@ -50,6 +50,7 @@ subprojects {
 		versionCommonsDbcp2 = "2.0.1"
 		versionCommonsLang3 = "3.3.2"
 		versionCommonsMath3 = "3.3"
+		versionCommonsCollections4 = "4.0"
 		versionCommonsCodec = "1.9"
 		versionVelocity = "1.7"
 		versionFluentLogger = "0.3.0"
