@@ -11,6 +11,8 @@ dependencies {
 	compile "org.apache.commons:commons-collections4:${versionCommonsCollections4}"
 	compile "org.apache.commons:commons-compress:${versionCommonsCompress}"
 	compile "commons-codec:commons-codec:${versionCommonsCodec}"
+	compile "org.apache.commons:commons-csv:${versionCommonsCsv}"
+	compile "org.apache.commons:commons-exec:${versionCommonsExec}"
 	compile "org.apache.velocity:velocity:${versionVelocity}"
 	compile "org.fluentd:fluent-logger:${versionFluentLogger}"
 	compile "org.slf4j:slf4j-api:${versionSlf4j}"
