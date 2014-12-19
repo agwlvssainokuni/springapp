@@ -62,6 +62,7 @@ public class CharTypeValidatorTest {
 		val.put("alpha", "ABCabc");
 		val.put("upper", "ABC");
 		val.put("lower", "abc");
+		val.put("surrogate", "\uD842\uDF9F");
 
 		TestDto dto = new TestDto();
 
@@ -77,6 +78,7 @@ public class CharTypeValidatorTest {
 		assertThat(dto.getAlpha(), is("ABCabc"));
 		assertThat(dto.getUpper(), is("ABC"));
 		assertThat(dto.getLower(), is("abc"));
+		assertThat(dto.getSurrogate(), is("\uD842\uDF9F"));
 	}
 
 	@Test
@@ -122,6 +124,9 @@ public class CharTypeValidatorTest {
 
 		@CharType(Lower)
 		private String lower;
+
+		@CharType(value = None, acceptable = "\uD842\uDF9F" /* \u20B9F */)
+		private String surrogate;
 	}
 
 }
