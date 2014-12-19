@@ -18,6 +18,7 @@ package cherry.goods.sql;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -173,6 +174,26 @@ public class SimpleSqlParserTest {
 
 		// 検証
 		assertEquals("SELECT '11-11' FROM DUAL", sql1);
+		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
+	 * 区分: 正常<br>
+	 * SQLの長さが0
+	 */
+	@Test
+	public void testNextStatement_13() throws IOException {
+
+		// 準備
+		Reader reader = new StringReader(";");
+
+		// 実行
+		String sql1 = SimpleSqlParser.nextStatement(reader);
+		String sql2 = SimpleSqlParser.nextStatement(reader);
+
+		// 検証
+		assertEquals("", sql1);
 		assertNull(sql2);
 	}
 
@@ -442,6 +463,20 @@ public class SimpleSqlParserTest {
 		// 検証
 		assertEquals("-- COMMENT\r\n", sql1);
 		assertNull(sql2);
+	}
+
+	/**
+	 * 対象: コンストラクタ.<br>
+	 * 区分: 正常<br>
+	 * 例外が発生しない
+	 */
+	@Test
+	public void testMisc() {
+		try {
+			new SimpleSqlParser();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
 	}
 
 }

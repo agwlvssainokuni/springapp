@@ -19,6 +19,7 @@ package cherry.goods.ipaddr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
 
@@ -1100,4 +1101,12 @@ public class IpAddrUtilTest {
 						"00000000000000000000000000000000", 16)));
 	}
 
+	@Test
+	public void testMisc() {
+		try {
+			new IpAddrUtil();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
+	}
 }

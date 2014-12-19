@@ -43,6 +43,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -64,6 +65,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -85,6 +87,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -106,6 +109,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -127,6 +131,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -148,6 +153,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -169,6 +175,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -190,6 +197,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -211,6 +219,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -232,6 +241,7 @@ public class CsvCreatorTest {
 		StringWriter target = new StringWriter();
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -255,6 +265,7 @@ public class CsvCreatorTest {
 		CsvCreator creator = new CsvCreator(target);
 		creator.write(record1);
 		creator.write(record2);
+		creator.flush();
 		creator.close();
 
 		// 検証
@@ -279,6 +290,7 @@ public class CsvCreatorTest {
 		CsvCreator creator = new CsvCreator(target, "\r\n");
 		creator.write(record1);
 		creator.write(record2);
+		creator.flush();
 		creator.close();
 
 		// 検証
