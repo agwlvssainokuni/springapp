@@ -19,6 +19,7 @@ dependencies {
 	testCompile "com.h2database:h2:${versionH2db}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
 

@@ -9,6 +9,7 @@ dependencies {
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 }

@@ -16,8 +16,9 @@
 
 package cherry.goods.crypto;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
@@ -42,6 +43,8 @@ public class DefaultVersioningStrategyTest {
 			VersionedData<byte[], Integer> vd = strategy.decode(encoded);
 			assertThat(vd.getData(), is(plain));
 			assertThat(vd.getVersion(), is(Integer.valueOf(version)));
+			assertThat(vd.toString(),
+					startsWith("VersionStrategy.VersionedData[data={"));
 		}
 	}
 

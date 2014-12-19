@@ -18,7 +18,7 @@ package cherry.foundation.type;
 
 import static cherry.foundation.type.SecureBigDecimal.cryptoValueOf;
 import static cherry.foundation.type.SecureBigDecimal.plainValueOf;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;

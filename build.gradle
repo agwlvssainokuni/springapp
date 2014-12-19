@@ -83,6 +83,7 @@ subprojects {
 		versionJavaTransaction = "1.1-rev-1"
 		versionLombok = "1.14.8"
 		versionJunit = "4.11"
+		versionHamcrest = "1.3"
 		versionMockito = "1.10.8"
 	}
 

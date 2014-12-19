@@ -20,7 +20,7 @@ import static cherry.foundation.type.CodeUtil.getCodeMap;
 import static cherry.foundation.type.CodeUtil.getLabeledCode;
 import static cherry.foundation.type.CodeUtil.getLabeledCodeList;
 import static cherry.foundation.type.CodeUtil.getMap;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 

@@ -22,7 +22,7 @@ import static cherry.foundation.validator.CharType.Mode.None;
 import static cherry.foundation.validator.CharType.Mode.Numeric;
 import static cherry.foundation.validator.CharType.Mode.Space;
 import static cherry.foundation.validator.CharType.Mode.Upper;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.HashMap;

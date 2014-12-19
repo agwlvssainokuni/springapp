@@ -12,5 +12,6 @@ dependencies {
 	compile "ch.qos.logback:logback-core:${versionLogback}"
 	compile "ch.qos.logback:logback-classic:${versionLogback}"
 	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }

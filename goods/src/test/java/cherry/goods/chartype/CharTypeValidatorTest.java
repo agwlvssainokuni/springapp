@@ -32,7 +32,7 @@ import static cherry.goods.chartype.CharTypeValidator.LOWER;
 import static cherry.goods.chartype.CharTypeValidator.NUMERIC;
 import static cherry.goods.chartype.CharTypeValidator.SPACE;
 import static cherry.goods.chartype.CharTypeValidator.UPPER;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
