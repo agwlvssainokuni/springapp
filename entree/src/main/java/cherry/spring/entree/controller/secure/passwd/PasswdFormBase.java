@@ -18,6 +18,8 @@ package cherry.spring.entree.controller.secure.passwd;
 
 import java.io.Serializable;
 
+import javax.validation.groups.Default;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,24 +33,24 @@ public abstract class PasswdFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.foundation.validator.MaxLength(512)
-	@org.hibernate.validator.constraints.Email
+	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
+	@cherry.foundation.validator.MaxLength(value = 512, groups = { Default.class })
+	@org.hibernate.validator.constraints.Email(groups = { Default.class })
 	private String loginId;
 
-	@javax.validation.constraints.NotNull
-	@cherry.foundation.validator.MinLength(8)
-	@cherry.foundation.validator.MaxLength(16)
+	@javax.validation.constraints.NotNull(groups = { Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
 	private String password;
 
-	@javax.validation.constraints.NotNull
-	@cherry.foundation.validator.MinLength(8)
-	@cherry.foundation.validator.MaxLength(16)
+	@javax.validation.constraints.NotNull(groups = { Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
 	private String newPassword;
 
-	@javax.validation.constraints.NotNull
-	@cherry.foundation.validator.MinLength(8)
-	@cherry.foundation.validator.MaxLength(16)
+	@javax.validation.constraints.NotNull(groups = { Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
 	private String newPasswordConf;
 
 	@Getter

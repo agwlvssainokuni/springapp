@@ -18,6 +18,8 @@ package ${typeDef.packageName};
 
 import java.io.Serializable;
 
+import javax.validation.groups.Default;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,13 +37,13 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #if ($prop.type == "数値")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = { Default.class })
 #end
 #if ($prop.min)
-	@javax.validation.constraints.Min($prop.min)
+	@javax.validation.constraints.Min(value = $prop.min, groups = { Default.class })
 #end
 #if ($prop.max)
-	@javax.validation.constraints.Max($prop.max)
+	@javax.validation.constraints.Max(value = $prop.max, groups = { Default.class })
 #end
 ################ サブ型
 #if ($prop.subtype == "整数")
@@ -55,7 +57,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #elseif ($prop.type == "日付" || $prop.type == "時刻" || $prop.type == "日時")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = { Default.class })
 #end
 ################ サブ型
 #if ($prop.subtype == "範囲下限")
@@ -77,7 +79,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #elseif ($prop.type == "ファイル")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = { Default.class })
 #end
 ################ 変数宣言
 	private org.springframework.web.multipart.MultipartFile ${prop.name};
@@ -106,44 +108,44 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #elseif ($prop.type == "文字列")
 #if ($prop.required == "○")
 #if ($prop.minlen)
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = { Default.class })
 #else
-	@org.hibernate.validator.constraints.NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
 #end
 #end
 #if ($prop.minlen)
-	@cherry.foundation.validator.MinLength($prop.minlen)
+	@cherry.foundation.validator.MinLength(value = $prop.minlen, groups = { Default.class })
 #end
 #if ($prop.maxlen)
-	@cherry.foundation.validator.MaxLength($prop.maxlen)
+	@cherry.foundation.validator.MaxLength(value = $prop.maxlen, groups = { Default.class })
 #end
 ################ サブ型
 #if ($prop.subtype == "メール")
-	@org.hibernate.validator.constraints.Email
+	@org.hibernate.validator.constraints.Email(groups = { Default.class })
 #elseif ($prop.subtype == "半角")
-	@cherry.foundation.validator.CharTypeBasicLatin
+	@cherry.foundation.validator.CharTypeBasicLatin(groups = { Default.class })
 #elseif ($prop.subtype == "半角(カナ含む)")
-	@cherry.foundation.validator.CharTypeHalfWidth
+	@cherry.foundation.validator.CharTypeHalfWidth(groups = { Default.class })
 #elseif ($prop.subtype == "半角数字")
-	@cherry.foundation.validator.CharTypeNumeric
+	@cherry.foundation.validator.CharTypeNumeric(groups = { Default.class })
 #elseif ($prop.subtype == "半角英字")
-	@cherry.foundation.validator.CharTypeAlpha
+	@cherry.foundation.validator.CharTypeAlpha(groups = { Default.class })
 #elseif ($prop.subtype == "半角英数字")
-	@cherry.foundation.validator.CharTypeAlphaNumeric
+	@cherry.foundation.validator.CharTypeAlphaNumeric(groups = { Default.class })
 #elseif ($prop.subtype == "半角カナ")
-	@cherry.foundation.validator.CharTypeHalfKatakana
+	@cherry.foundation.validator.CharTypeHalfKatakana(groups = { Default.class })
 #elseif ($prop.subtype == "全角")
-	@cherry.foundation.validator.CharTypeFullWidth
+	@cherry.foundation.validator.CharTypeFullWidth(groups = { Default.class })
 #elseif ($prop.subtype == "全角数字")
-	@cherry.foundation.validator.CharTypeFullNumeric
+	@cherry.foundation.validator.CharTypeFullNumeric(groups = { Default.class })
 #elseif ($prop.subtype == "全角英字")
-	@cherry.foundation.validator.CharTypeFullAlpha
+	@cherry.foundation.validator.CharTypeFullAlpha(groups = { Default.class })
 #elseif ($prop.subtype == "全角英数字")
-	@cherry.foundation.validator.CharTypeFullAlphaNumeric
+	@cherry.foundation.validator.CharTypeFullAlphaNumeric(groups = { Default.class })
 #elseif ($prop.subtype == "全角ひらがな")
-	@cherry.foundation.validator.CharTypeFullHiragana
+	@cherry.foundation.validator.CharTypeFullHiragana(groups = { Default.class })
 #elseif ($prop.subtype == "全角カタカナ")
-	@cherry.foundation.validator.CharTypeFullKatakana
+	@cherry.foundation.validator.CharTypeFullKatakana(groups = { Default.class })
 #else
 #end
 ################ 変数宣言
