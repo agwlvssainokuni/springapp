@@ -1,0 +1,9 @@
+numberForm.int1=int1
+numberForm.int2=int2
+numberForm.int3=int3
+numberForm.long1=long1
+numberForm.long2=long2
+numberForm.long3=long3
+numberForm.decimal1=decimal1
+numberForm.decimal2=decimal2
+numberForm.decimal3=decimal3

@@ -1,0 +1,6 @@
+miscForm.misc1=misc1
+miscForm.misc2=misc2
+miscForm.misc3=misc3
+miscForm.misc4=misc4
+miscForm.misc5=misc5
+miscForm.misc6=misc6
