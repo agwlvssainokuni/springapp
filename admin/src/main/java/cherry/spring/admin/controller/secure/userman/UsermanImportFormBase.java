@@ -18,12 +18,14 @@ package cherry.spring.admin.controller.secure.userman;
 
 import java.io.Serializable;
 
-import javax.validation.groups.Default;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Getter
 @Setter
@@ -33,7 +35,7 @@ public abstract class UsermanImportFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@javax.validation.constraints.NotNull(groups = { Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
 	private org.springframework.web.multipart.MultipartFile file;
 
 	@Getter
@@ -47,6 +49,10 @@ public abstract class UsermanImportFormBase implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 

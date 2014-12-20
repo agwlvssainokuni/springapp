@@ -18,12 +18,14 @@ package cherry.spring.entree.controller.secure.passwd;
 
 import java.io.Serializable;
 
-import javax.validation.groups.Default;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Getter
 @Setter
@@ -33,24 +35,24 @@ public abstract class PasswdFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 512, groups = { Default.class })
-	@org.hibernate.validator.constraints.Email(groups = { Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 512, groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.Email(groups = { javax.validation.groups.Default.class })
 	private String loginId;
 
-	@javax.validation.constraints.NotNull(groups = { Default.class })
-	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { javax.validation.groups.Default.class })
 	private String password;
 
-	@javax.validation.constraints.NotNull(groups = { Default.class })
-	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { javax.validation.groups.Default.class })
 	private String newPassword;
 
-	@javax.validation.constraints.NotNull(groups = { Default.class })
-	@cherry.foundation.validator.MinLength(value = 8, groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 16, groups = { Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MinLength(value = 8, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 16, groups = { javax.validation.groups.Default.class })
 	private String newPasswordConf;
 
 	@Getter
@@ -67,6 +69,10 @@ public abstract class PasswdFormBase implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 

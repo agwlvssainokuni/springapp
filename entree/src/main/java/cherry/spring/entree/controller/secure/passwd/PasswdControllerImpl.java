@@ -145,8 +145,7 @@ public class PasswdControllerImpl implements PasswdController {
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
 		LogicalErrorUtil.reject(binding, LogicalError.CurAuthFailed,
-				LogicalErrorUtil.resolve(Prop.LoginId.getNameWithForm()),
-				LogicalErrorUtil.resolve(Prop.Password.getNameWithForm()));
+				Prop.LoginId.resolve(), Prop.Password.resolve());
 	}
 
 }

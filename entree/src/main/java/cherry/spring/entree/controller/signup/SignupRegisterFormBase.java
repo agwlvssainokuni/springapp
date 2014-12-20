@@ -18,12 +18,14 @@ package cherry.spring.entree.controller.signup;
 
 import java.io.Serializable;
 
-import javax.validation.groups.Default;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Getter
 @Setter
@@ -33,17 +35,17 @@ public abstract class SignupRegisterFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 512, groups = { Default.class })
-	@org.hibernate.validator.constraints.Email(groups = { Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 512, groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.Email(groups = { javax.validation.groups.Default.class })
 	private String email;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 64, groups = { Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 64, groups = { javax.validation.groups.Default.class })
 	private String firstName;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { Default.class })
-	@cherry.foundation.validator.MaxLength(value = 64, groups = { Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 64, groups = { javax.validation.groups.Default.class })
 	private String lastName;
 
 	@Getter
@@ -59,6 +61,10 @@ public abstract class SignupRegisterFormBase implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 
