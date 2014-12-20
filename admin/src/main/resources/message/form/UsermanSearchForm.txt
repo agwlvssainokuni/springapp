@@ -1,6 +1,3 @@
-loginForm.loginId=LOGIN ID
-loginForm.password=PASSWORD
-usermanImportForm.file=FILE
 usermanSearchForm.loginId=Login Id
 usermanSearchForm.registeredFrom=Registered Date (From)
 usermanSearchForm.registeredTo=Registered Date (To)
