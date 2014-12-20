@@ -1,0 +1,3 @@
+signupRegisterForm.email=E-mail address
+signupRegisterForm.firstName=First Name
+signupRegisterForm.lastName=Last Name

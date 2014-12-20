@@ -1,0 +1,4 @@
+passwdForm.loginId=Login Id
+passwdForm.password=Password
+passwdForm.newPassword=New Password
+passwdForm.newPasswordConf=New Password (Confirm)
