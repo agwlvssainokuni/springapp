@@ -1,3 +1,5 @@
 #foreach ($prop in $typeDef.itemDef)
+#if ($prop.name)
 ${typeDef.formName}.${prop.name}=${prop.label}
+#end
 #end
