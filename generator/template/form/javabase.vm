@@ -182,7 +182,9 @@ public abstract class ${typeDef.className}Base implements Serializable {
 	@Getter
 	public enum Prop {
 #foreach ($prop in $typeDef.itemDef)
+#if ($prop.name)
 		${prop.upperCamel("name")}("${prop.name}", "${typeDef.formName}.${prop.name}"), //
+#end
 #end
 		DUMMY("dummy", "dummy");
 
