@@ -69,12 +69,16 @@ public class SignupRequestHelperTest {
 		assertEquals(mapper.selectByExample(crit).size(), 0);
 
 		LocalDateTime before = now();
+		sleep(100L);
 		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
+		sleep(100L);
 		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
+		sleep(100L);
 		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
 				.toString(), now()));
+		sleep(100L);
 		LocalDateTime after = now();
 
 		Interval interval = new Interval(before.toDate().getTime(), after
@@ -113,18 +117,23 @@ public class SignupRequestHelperTest {
 		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		sleep(100L);
 		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		sleep(100L);
 		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		sleep(100L);
 		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		sleep(100L);
 		assertTrue(helper.validateMailAddr(mailAddr, now(),
 				now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
+		sleep(100L);
 		assertFalse(helper.validateMailAddr(mailAddr, now(), now()
 				.minusSeconds(5), 5));
 	}
@@ -165,6 +174,7 @@ public class SignupRequestHelperTest {
 		assertEquals(1, mapper.insertSelective(entity));
 		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
 				.minusSeconds(5)));
+		sleep(100L);
 		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now()));
 	}
 
@@ -223,6 +233,14 @@ public class SignupRequestHelperTest {
 		entity.setMailAddr(mailAddr);
 		entity.setToken(UUID.randomUUID().toString());
 		return entity;
+	}
+
+	private void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException ex) {
+			// NOTHING
+		}
 	}
 
 }
