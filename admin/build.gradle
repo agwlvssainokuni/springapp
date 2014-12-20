@@ -31,9 +31,3 @@ eclipse.wtp.facet {
 war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 }
-
-task generateForm(type: cherry.gradle.task.generator.GenerateForm) {
-	definitionFiles = [file("formdef.xls")]
-	javaBaseDir = file("src/main/java")
-	propertiesFile = file("src/main/resources/message/form.properties")
-}
