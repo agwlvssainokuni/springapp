@@ -18,8 +18,6 @@ package ${typeDef.packageName};
 
 import java.io.Serializable;
 
-import javax.validation.groups.Default;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +32,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 	private static final long serialVersionUID = 1L;
 ########################################################################
 #macro (groups $prop)
-{ Default.class##
+{ javax.validation.groups.Default.class##
 #if ($prop.g1 == "○"), cherry.foundation.validator.groups.G1.class#end
 #if ($prop.g2 == "○"), cherry.foundation.validator.groups.G2.class#end
 #if ($prop.g3 == "○"), cherry.foundation.validator.groups.G3.class#end
@@ -54,10 +52,18 @@ public abstract class ${typeDef.className}Base implements Serializable {
 	@javax.validation.constraints.NotNull(groups = #groups($prop))
 #end
 #if ($prop.min)
+#if ($prop.subtype == "整数" || $prop.subtype == "整数(Long)")
 	@javax.validation.constraints.Min(value = $prop.min, groups = #groups($prop))
+#else
+	@javax.validation.constraints.DecimalMin(value = "$prop.min", groups = #groups($prop))
+#end
 #end
 #if ($prop.max)
+#if ($prop.subtype == "整数" || $prop.subtype == "整数(Long)")
 	@javax.validation.constraints.Max(value = $prop.max, groups = #groups($prop))
+#else
+	@javax.validation.constraints.DecimalMax(value = "$prop.max", groups = #groups($prop))
+#end
 #end
 ################ サブ型
 #if ($prop.subtype == "整数")
