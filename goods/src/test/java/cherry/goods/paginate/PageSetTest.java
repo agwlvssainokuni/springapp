@@ -30,28 +30,32 @@ public class PageSetTest {
 		Page p0 = createPage(0, 0, 0, 1);
 		Page p1 = createPage(1, 1, 1, 1);
 		Page p2 = createPage(2, 2, 2, 1);
+		Page p3 = createPage(3, 3, 3, 1);
+		Page p4 = createPage(4, 4, 4, 1);
 
 		PageSet pageSet = new PageSet();
 		pageSet.setFirst(p0);
-		pageSet.setPrev(p0);
-		pageSet.setCurrent(p1);
-		pageSet.setNext(p2);
-		pageSet.setLast(p2);
+		pageSet.setPrev(p1);
+		pageSet.setCurrent(p2);
+		pageSet.setNext(p3);
+		pageSet.setLast(p4);
 		pageSet.setPageSz(1);
-		pageSet.setTotalCount(3);
-		pageSet.setRange(Arrays.asList(p0, p1, p2));
+		pageSet.setTotalCount(5);
+		pageSet.setRange(Arrays.asList(p0, p1, p2, p3, p4));
 
 		assertEquals(p0, pageSet.getFirst());
-		assertEquals(p0, pageSet.getPrev());
-		assertEquals(p1, pageSet.getCurrent());
-		assertEquals(p2, pageSet.getNext());
-		assertEquals(p2, pageSet.getLast());
+		assertEquals(p1, pageSet.getPrev());
+		assertEquals(p2, pageSet.getCurrent());
+		assertEquals(p3, pageSet.getNext());
+		assertEquals(p4, pageSet.getLast());
 		assertEquals(1L, pageSet.getPageSz());
-		assertEquals(3L, pageSet.getTotalCount());
-		assertEquals(3, pageSet.getRange().size());
+		assertEquals(5L, pageSet.getTotalCount());
+		assertEquals(5, pageSet.getRange().size());
 		assertEquals(p0, pageSet.getRange().get(0));
 		assertEquals(p1, pageSet.getRange().get(1));
 		assertEquals(p2, pageSet.getRange().get(2));
+		assertEquals(p3, pageSet.getRange().get(3));
+		assertEquals(p4, pageSet.getRange().get(4));
 	}
 
 	@Test
@@ -60,19 +64,21 @@ public class PageSetTest {
 		Page p0 = createPage(0, 0, 0, 1);
 		Page p1 = createPage(1, 1, 1, 1);
 		Page p2 = createPage(2, 2, 2, 1);
+		Page p3 = createPage(3, 3, 3, 1);
+		Page p4 = createPage(4, 4, 4, 1);
 
 		PageSet pageSet = new PageSet();
 		pageSet.setFirst(p0);
-		pageSet.setPrev(p0);
-		pageSet.setCurrent(p1);
-		pageSet.setNext(p2);
-		pageSet.setLast(p2);
+		pageSet.setPrev(p1);
+		pageSet.setCurrent(p2);
+		pageSet.setNext(p3);
+		pageSet.setLast(p4);
 		pageSet.setPageSz(1);
-		pageSet.setTotalCount(3);
-		pageSet.setRange(Arrays.asList(p0, p1, p2));
+		pageSet.setTotalCount(5);
+		pageSet.setRange(Arrays.asList(p0, p1, p2, p3, p4));
 
 		assertEquals(
-				"PageSet[totalCount=3,pageSz=1,current=Page[no=1,count=1,from=1,to=1],prev=Page[no=0,count=1,from=0,to=0],next=Page[no=2,count=1,from=2,to=2],first=Page[no=0,count=1,from=0,to=0],last=Page[no=2,count=1,from=2,to=2],range=[Page[no=0,count=1,from=0,to=0], Page[no=1,count=1,from=1,to=1], Page[no=2,count=1,from=2,to=2]]]",
+				"PageSet[totalCount=5,pageSz=1,current=Page[no=2,count=1,from=2,to=2],prev=Page[no=1,count=1,from=1,to=1],next=Page[no=3,count=1,from=3,to=3],first=Page[no=0,count=1,from=0,to=0],last=Page[no=4,count=1,from=4,to=4],range=[Page[no=0,count=1,from=0,to=0], Page[no=1,count=1,from=1,to=1], Page[no=2,count=1,from=2,to=2], Page[no=3,count=1,from=3,to=3], Page[no=4,count=1,from=4,to=4]]]",
 				pageSet.toString());
 	}
 
