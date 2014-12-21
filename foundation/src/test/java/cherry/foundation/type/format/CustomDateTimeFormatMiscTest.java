@@ -16,6 +16,7 @@
 
 package cherry.foundation.type.format;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -42,6 +43,12 @@ public class CustomDateTimeFormatMiscTest {
 		} catch (IllegalStateException ex) {
 			// OK
 		}
+	}
+
+	@Test
+	public void testEnum() {
+		assertEquals(CustomDateTimeFormat.Range.NONE,
+				CustomDateTimeFormat.Range.valueOf("NONE"));
 	}
 
 }
