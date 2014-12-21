@@ -103,6 +103,12 @@ public class CharTypeValidatorTest {
 		assertThat(result.getErrorCount(), is(6));
 	}
 
+	@Test
+	public void testMisc() {
+		assertThat(CharType.Mode.valueOf("BasicLatin"),
+				is(CharType.Mode.BasicLatin));
+	}
+
 	@Getter
 	@Setter
 	public static class TestDto {
