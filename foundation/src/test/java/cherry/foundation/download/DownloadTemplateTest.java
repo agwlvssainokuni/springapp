@@ -19,6 +19,7 @@ package cherry.foundation.download;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -89,6 +90,27 @@ public class DownloadTemplateTest {
 		}
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
+		verify(response).setHeader("Content-Disposition",
+				"attachment; filename=\"test_" + ts + ".csv\"");
+	}
+
+	@Test
+	public void testDownload02() throws IOException {
+		HttpServletResponse response = createMock();
+		LocalDateTime timestamp = LocalDateTime.now();
+		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss")
+				.print(timestamp);
+
+		DownloadAction action = new DownloadAction() {
+			@Override
+			public long doDownload(OutputStream stream) throws IOException {
+				return 123L;
+			}
+		};
+		downloadOperation.download(response, "text/csv", null, "test_{0}.csv",
+				timestamp, action);
+		verify(response).setContentType("text/csv");
+		verify(response, never()).setCharacterEncoding("UTF-8");
 		verify(response).setHeader("Content-Disposition",
 				"attachment; filename=\"test_" + ts + ".csv\"");
 	}
