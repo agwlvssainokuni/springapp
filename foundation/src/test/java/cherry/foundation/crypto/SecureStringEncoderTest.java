@@ -19,9 +19,12 @@ package cherry.foundation.crypto;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
@@ -62,6 +65,17 @@ public class SecureStringEncoderTest {
 			SecureString ss3 = SecureString.cryptoValueOf(ss2.crypto());
 			assertThat(ss3.plain(), is(plain));
 			assertThat(ss3.crypto(), is(ss0.crypto()));
+		}
+	}
+
+	@Test
+	public void testDecoderException() throws Exception {
+		SecureStringEncoder encoder = createSecureStringEncoder();
+		try {
+			encoder.decode("XXXX");
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			assertTrue(ex.getCause() instanceof DecoderException);
 		}
 	}
 
