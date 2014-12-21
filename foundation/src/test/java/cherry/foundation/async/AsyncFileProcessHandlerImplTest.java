@@ -172,6 +172,33 @@ public class AsyncFileProcessHandlerImplTest {
 	}
 
 	@Test
+	public void testLaunchFileProcess_IOException() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+		when(
+				asyncProcessStore.createFileProcess("a", now, "b", "c", "d",
+						"e", 100L, "f")).thenReturn(10L);
+
+		IOException ioException = new IOException();
+		MultipartFile file = mock(MultipartFile.class);
+		when(file.getName()).thenReturn("c");
+		when(file.getOriginalFilename()).thenReturn("d");
+		when(file.getContentType()).thenReturn("e");
+		when(file.getSize()).thenReturn(100L);
+		when(file.getInputStream()).thenThrow(ioException);
+
+		try {
+			impl.launchFileProcess("a", "b", file, "f");
+			fail("Exception must be thrown");
+		} catch (IllegalStateException ex) {
+			assertEquals(ioException, ex.getCause());
+		}
+	}
+
+	@Test
 	public void testHandleMessage_NO_ARG() throws Exception {
 
 		AsyncFileProcessHandlerImpl impl = createImpl();
@@ -366,6 +393,47 @@ public class AsyncFileProcessHandlerImplTest {
 		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
 		verify(asyncProcessStore).updateToProcessing(10L, now);
 		verify(asyncProcessStore).finishWithException(10L, now, exception);
+	}
+
+	@Test
+	public void testHandleMessage_failedToDelete() throws Exception {
+
+		AsyncFileProcessHandlerImpl impl = createImpl();
+
+		LocalDateTime now = LocalDateTime.now();
+		when(bizDateTime.now()).thenReturn(now);
+
+		File tempFile = File.createTempFile("./prefix_", ".csv");
+		tempFile.delete();
+
+		Map<String, String> message = new HashMap<>();
+		message.put("asyncId", "10");
+		message.put("file", tempFile.getAbsolutePath());
+		message.put("name", "a");
+		message.put("originalFilename", "b");
+		message.put("contentType", "c");
+		message.put("size", "100");
+		message.put("handlerName", "d");
+
+		FileProcessResult result = new FileProcessResult();
+		result.setTotalCount(10L);
+		result.setOkCount(10L);
+		result.setNgCount(0L);
+		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
+
+		FileProcessHandler handler = mock(FileProcessHandler.class);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
+				.thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class))
+				.thenReturn(handler);
+
+		impl.handleMessage(message);
+		assertFalse(tempFile.exists());
+
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
+		verify(asyncProcessStore).updateToProcessing(10L, now);
+		verify(asyncProcessStore).finishFileProcess(10L, now,
+				AsyncStatus.SUCCESS, result);
 	}
 
 	private AsyncFileProcessHandlerImpl createImpl() {
