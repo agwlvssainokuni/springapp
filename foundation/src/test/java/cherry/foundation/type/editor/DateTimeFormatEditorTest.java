@@ -17,23 +17,28 @@
 package cherry.foundation.type.editor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
 public class DateTimeFormatEditorTest {
 
 	@Test
-	public void testGetAsText_00() {
+	public void testForNull() {
 		DateTimeFormatEditor editor = new DateTimeFormatEditor();
 		editor.setAsText(null);
 		assertEquals("", editor.getAsText());
+		assertNull(editor.getValue());
 	}
 
 	@Test
-	public void testGetAsText_01() {
+	public void testForYYYYMMDD() {
 		DateTimeFormatEditor editor = new DateTimeFormatEditor();
 		editor.setAsText("yyyy/MM/dd");
 		assertEquals("yyyy/MM/dd", editor.getAsText());
+		assertTrue(editor.getValue() instanceof DateTimeFormatter);
 	}
 
 }
