@@ -44,4 +44,11 @@ public class DeletedFlagTest {
 			}
 		}
 	}
+
+	@Test
+	public void testTypeMismatch() {
+		assertThat(DeletedFlag.NOT_DELETED.equals("0"), is(false));
+		assertThat(DeletedFlag.NOT_DELETED.compareTo(null), is(1));
+	}
+
 }

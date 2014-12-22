@@ -39,4 +39,12 @@ public class FlagCodeTest {
 		}
 	}
 
+	@Test
+	public void testValueOf() {
+		assertThat(FlagCode.valueOf(true), is(FlagCode.TRUE));
+		assertThat(FlagCode.valueOf("TRUE"), is(FlagCode.TRUE));
+		assertThat(FlagCode.valueOf(false), is(FlagCode.FALSE));
+		assertThat(FlagCode.valueOf("FALSE"), is(FlagCode.FALSE));
+	}
+
 }
