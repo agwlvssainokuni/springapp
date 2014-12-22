@@ -25,6 +25,8 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.security.util.InMemoryResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -47,6 +49,14 @@ public class SqlLoaderImplTest {
 		assertEquals("SELECT 4 FROM dual", sqlmap.get("TEST04"));
 		assertEquals("SELECT 5 FROM dual", sqlmap.get("TEST05"));
 		assertNull(sqlmap.get("TEST06"));
+	}
+
+	@Test
+	public void DDLをリソースから読込む() throws IOException {
+		Resource resource = new InMemoryResource(
+				"-- NAME: TEST00\nSELECT 0 FROM dual;");
+		Map<String, String> sqlmap = sqlLoader.load(resource);
+		assertEquals("SELECT 0 FROM dual", sqlmap.get("TEST00"));
 	}
 
 }
