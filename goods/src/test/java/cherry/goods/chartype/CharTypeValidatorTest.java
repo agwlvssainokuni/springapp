@@ -34,6 +34,7 @@ import static cherry.goods.chartype.CharTypeValidator.SPACE;
 import static cherry.goods.chartype.CharTypeValidator.UPPER;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -213,6 +214,55 @@ public class CharTypeValidatorTest {
 		assertThat(CharTypeValidator.isValid('0', SPACE, acceptable), is(true));
 		assertThat(CharTypeValidator.isValid('A', SPACE, acceptable), is(true));
 		assertThat(CharTypeValidator.isValid('a', SPACE, acceptable), is(false));
+	}
+
+	@Test
+	public void testValidate0() {
+		int[] acceptable = new int[] {};
+		CharTypeResult result = CharTypeValidator.validate("ABCDEF", ALPHA,
+				acceptable);
+		assertThat(result.isValid(), is(true));
+		assertThat(result.getIndex(), is(-1));
+		assertThat(result.getCodePoint(), is(-1));
+	}
+
+	@Test
+	public void testValidate1() {
+		int[] acceptable = new int[] {};
+		CharTypeResult result = CharTypeValidator.validate("ABCあDEF", ALPHA,
+				acceptable);
+		assertThat(result.isValid(), is(false));
+		assertThat(result.getIndex(), is(3));
+		assertThat(result.getCodePoint(), is((int) 'あ'));
+	}
+
+	@Test
+	public void testValidate2() {
+		int[] acceptable = new int[] {};
+		CharTypeResult result = CharTypeValidator.validate(
+				"ABC\uD842\uDF9FDEF", ALPHA, acceptable);
+		assertThat(result.isValid(), is(false));
+		assertThat(result.getIndex(), is(3));
+		assertThat(result.getCodePoint(), is(0x20B9F));
+	}
+
+	@Test
+	public void testValidate3() {
+		int[] acceptable = new int[] { 0x20B9F };
+		CharTypeResult result = CharTypeValidator.validate(
+				"ABC\uD842\uDF9FDEF", ALPHA, acceptable);
+		assertThat(result.isValid(), is(true));
+		assertThat(result.getIndex(), is(-1));
+		assertThat(result.getCodePoint(), is(-1));
+	}
+
+	@Test
+	public void testInstantiate() {
+		try {
+			new CharTypeValidator();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
 	}
 
 }
