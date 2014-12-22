@@ -94,6 +94,15 @@ public class EnumUtilTest {
 		}
 	}
 
+	@Test
+	public void testInstantiate() {
+		try {
+			new EnumUtil();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
+	}
+
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
 		map.put("cherry.foundation.type.FlagCode.FALSE", "FLAG_CODE_FALSE");

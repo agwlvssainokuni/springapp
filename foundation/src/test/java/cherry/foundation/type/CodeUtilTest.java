@@ -157,6 +157,15 @@ public class CodeUtilTest {
 		}
 	}
 
+	@Test
+	public void testInstantiate() {
+		try {
+			new CodeUtil();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
+	}
+
 	private MessageSource createMessageSource() {
 		final Map<String, String> map = new HashMap<>();
 		map.put("cherry.foundation.type.FlagCode.0", "FLAG_CODE_FALSE");
