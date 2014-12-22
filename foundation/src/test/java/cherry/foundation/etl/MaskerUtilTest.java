@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -71,6 +72,15 @@ public class MaskerUtilTest {
 		assertThat(map.get("dddEeeFff"), is(notNullValue()));
 		assertThat(((Masker<Integer>) map.get("dddEeeFff")).mask(1234),
 				is(9934));
+	}
+
+	@Test
+	public void testInstantiate() {
+		try {
+			new MaskerUtil();
+		} catch (Exception ex) {
+			fail("Exception must not be thrown");
+		}
 	}
 
 }
