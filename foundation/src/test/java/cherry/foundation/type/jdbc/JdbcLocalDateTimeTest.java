@@ -88,4 +88,23 @@ public class JdbcLocalDateTimeTest {
 		assertThat(r.getJodaDatetime(), is(orig));
 	}
 
+	@Test
+	public void testSaveAndLoad_masked() {
+		LocalDateTime orig = LocalDateTime.now();
+		ConversionTest record = new ConversionTest();
+		record.setJodaDatetime(orig);
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = jdbcDao.insert(record, keyHolder);
+
+		assertThat(count, is(1));
+		assertThat(keyHolder.getKey().intValue(), is(not(0)));
+
+		List<ConversionTest> list = jdbcDao.selectAllWithMask();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getJodaDatetime(), is(new LocalDateTime(2000, 1, 1, 0, 0,
+				0)));
+	}
+
 }
