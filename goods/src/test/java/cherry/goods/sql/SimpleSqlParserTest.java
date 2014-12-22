@@ -471,12 +471,23 @@ public class SimpleSqlParserTest {
 	 * 例外が発生しない
 	 */
 	@Test
-	public void testMisc() {
+	public void testInstantiate() {
 		try {
 			new SimpleSqlParser();
 		} catch (Exception ex) {
 			fail("Exception must not be thrown");
 		}
+	}
+
+	/**
+	 * 対象: 内部列挙型.<br>
+	 * 区分: 正常<br>
+	 * 文字列から列挙型インスタンスを解決できる
+	 */
+	@Test
+	public void testEnum() {
+		assertEquals(SimpleSqlParser.State.DEFAULT,
+				SimpleSqlParser.State.valueOf("DEFAULT"));
 	}
 
 }
