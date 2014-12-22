@@ -19,6 +19,7 @@ package cherry.foundation.type;
 import static cherry.foundation.type.SecureString.cryptoValueOf;
 import static cherry.foundation.type.SecureString.plainValueOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -26,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.type.SecureType.Encoder;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,6 +42,21 @@ public class SecureStringTest {
 			SecureString sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));
 		}
+	}
+
+	@Test
+	public void testToString() {
+		SecureString sec = plainValueOf("ABC");
+		assertThat(sec.toString(), is("SecureString[ABC]"));
+	}
+
+	@Test
+	public void testNoneEncoder() {
+		Encoder<String> encoder = new SecureString.NoneEncoder();
+		assertThat(encoder.encode(null), is(nullValue()));
+		assertThat(encoder.encode("ABC"), is("ABC"));
+		assertThat(encoder.decode(null), is(nullValue()));
+		assertThat(encoder.decode("ABC"), is("ABC"));
 	}
 
 }

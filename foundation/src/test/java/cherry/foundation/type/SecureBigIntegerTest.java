@@ -19,6 +19,7 @@ package cherry.foundation.type;
 import static cherry.foundation.type.SecureBigInteger.cryptoValueOf;
 import static cherry.foundation.type.SecureBigInteger.plainValueOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigInteger;
@@ -28,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.type.SecureType.Encoder;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,6 +44,21 @@ public class SecureBigIntegerTest {
 			SecureBigInteger sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));
 		}
+	}
+
+	@Test
+	public void testToString() {
+		SecureBigInteger sec = plainValueOf(BigInteger.ONE);
+		assertThat(sec.toString(), is("SecureBigInteger[1]"));
+	}
+
+	@Test
+	public void testNoneEncoder() {
+		Encoder<BigInteger> encoder = new SecureBigInteger.NoneEncoder();
+		assertThat(encoder.encode(null), is(nullValue()));
+		assertThat(encoder.encode(BigInteger.ONE), is("1"));
+		assertThat(encoder.decode(null), is(nullValue()));
+		assertThat(encoder.decode("1"), is(BigInteger.ONE));
 	}
 
 }

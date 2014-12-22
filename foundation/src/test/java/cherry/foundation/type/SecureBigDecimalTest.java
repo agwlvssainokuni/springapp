@@ -19,6 +19,7 @@ package cherry.foundation.type;
 import static cherry.foundation.type.SecureBigDecimal.cryptoValueOf;
 import static cherry.foundation.type.SecureBigDecimal.plainValueOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
@@ -30,6 +31,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.type.SecureType.Encoder;
 import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,6 +50,21 @@ public class SecureBigDecimalTest {
 			SecureBigDecimal sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));
 		}
+	}
+
+	@Test
+	public void testToString() {
+		SecureBigDecimal sec = plainValueOf(BigDecimal.ONE);
+		assertThat(sec.toString(), is("SecureBigDecimal[1]"));
+	}
+
+	@Test
+	public void testNoneEncoder() {
+		Encoder<BigDecimal> encoder = new SecureBigDecimal.NoneEncoder();
+		assertThat(encoder.encode(null), is(nullValue()));
+		assertThat(encoder.encode(BigDecimal.ONE), is("1"));
+		assertThat(encoder.decode(null), is(nullValue()));
+		assertThat(encoder.decode("1"), is(BigDecimal.ONE));
 	}
 
 }

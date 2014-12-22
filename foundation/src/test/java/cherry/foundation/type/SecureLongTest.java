@@ -19,6 +19,7 @@ package cherry.foundation.type;
 import static cherry.foundation.type.SecureLong.cryptoValueOf;
 import static cherry.foundation.type.SecureLong.plainValueOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
@@ -27,6 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cherry.foundation.type.SecureType.Encoder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -42,6 +45,21 @@ public class SecureLongTest {
 			SecureLong sec1 = cryptoValueOf(sec0.crypto());
 			assertThat(sec1.plain(), is(plain));
 		}
+	}
+
+	@Test
+	public void testToString() {
+		SecureLong sec = plainValueOf(1L);
+		assertThat(sec.toString(), is("SecureLong[1]"));
+	}
+
+	@Test
+	public void testNoneEncoder() {
+		Encoder<Long> encoder = new SecureLong.NoneEncoder();
+		assertThat(encoder.encode(null), is(nullValue()));
+		assertThat(encoder.encode(1L), is("1"));
+		assertThat(encoder.decode(null), is(nullValue()));
+		assertThat(encoder.decode("1"), is(1L));
 	}
 
 }
