@@ -45,7 +45,7 @@ public class LocalDateTimeConverterTest {
 	@Test
 	public void testConvert() {
 		LocalDateTime now = LocalDateTime.now();
-		for (int i = -86400 * 16; i <= 86400 * 16; i++) {
+		for (int i = -86400 * 16; i <= 86400 * 16; i += 10) {
 			LocalDateTime ldt = now.plusSeconds(i);
 			Timestamp ts = new Timestamp(ldt.toDate().getTime());
 			assertThat(cs.convert(ts, LocalDateTime.class), is(ldt));

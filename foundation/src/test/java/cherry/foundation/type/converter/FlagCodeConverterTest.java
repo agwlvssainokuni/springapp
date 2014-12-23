@@ -42,7 +42,7 @@ public class FlagCodeConverterTest {
 
 	@Test
 	public void testConvert() {
-		for (int i = -1024; i <= 1024; i++) {
+		for (int i = -100; i <= 100; i++) {
 			if (i == 0) {
 				assertThat(cs.convert(i, FlagCode.class), is(FlagCode.FALSE));
 			} else {
