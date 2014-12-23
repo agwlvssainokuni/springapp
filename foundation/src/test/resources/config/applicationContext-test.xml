@@ -35,4 +35,9 @@
 		</property>
 	</bean>
 
+	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
+		<property name="objectMapper" ref="objectMapper" />
+		<property name="navigationDef" value="classpath:cherry/foundation/navi/navi.json" />
+	</bean>
+
 </beans>
