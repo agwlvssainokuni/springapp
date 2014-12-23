@@ -20,16 +20,21 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.Writer;
 import java.util.Arrays;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
 import org.junit.Test;
 
 public class MailDataHandlerImplTest {
@@ -37,7 +42,7 @@ public class MailDataHandlerImplTest {
 	@Test
 	public void testFullAddress() {
 		MailDataHandler handler = create("name", "from@addr", "other@addr",
-				"cc@addr", "bcc@addr", "subject", "body");
+				"cc@addr", "bcc@addr", "subject", "body", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -57,7 +62,7 @@ public class MailDataHandlerImplTest {
 	@Test
 	public void testEmptyTemplate() {
 		MailDataHandler handler = create("name", "from@addr", null, null, null,
-				"", "");
+				"", "", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -74,7 +79,8 @@ public class MailDataHandlerImplTest {
 	@Test
 	public void testTemplateEvaluation() {
 		MailDataHandler handler = create("name", "from@addr", null, null, null,
-				"param=${model.param}", "param is ${model.param}");
+				"param=${model.param}", "param is ${model.param}",
+				VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -88,8 +94,28 @@ public class MailDataHandlerImplTest {
 		assertEquals("param is PARAM", mailData.getBody());
 	}
 
+	@Test
+	public void testTemplateEvaluationFalse() {
+		MailDataHandler handler = create("name", "from@addr", null, null, null,
+				"param=${model.param}", "param is ${model.param}",
+				VelocityMode.MOCK_FALSE);
+		Model model = new Model();
+		model.setParam("PARAM");
+		try {
+			handler.createMailData("name", "to@addr", model);
+			fail("Exception must be thrown");
+		} catch (IllegalStateException ex) {
+			assertNull(ex.getCause());
+		}
+	}
+
+	static enum VelocityMode {
+		NORMAL, MOCK_FALSE
+	}
+
 	private MailDataHandler create(String name, String fromAddr, String toAddr,
-			String ccAddr, String bccAddr, String subject, String body) {
+			String ccAddr, String bccAddr, String subject, String body,
+			VelocityMode velocityMode) {
 
 		MailData mailData = new MailData();
 		mailData.setFromAddr(fromAddr);
@@ -108,8 +134,19 @@ public class MailDataHandlerImplTest {
 		TemplateStore templateStore = mock(TemplateStore.class);
 		when(templateStore.getTemplate(eq(name))).thenReturn(mailData);
 
-		VelocityEngine velocityEngine = new VelocityEngine();
-		velocityEngine.init();
+		VelocityEngine velocityEngine;
+		switch (velocityMode) {
+		case NORMAL:
+			velocityEngine = new VelocityEngine();
+			velocityEngine.init();
+			break;
+		default:
+			velocityEngine = mock(VelocityEngine.class);
+			when(
+					velocityEngine.evaluate((Context) any(), (Writer) any(),
+							anyString(), anyString())).thenReturn(false);
+			break;
+		}
 
 		MailDataHandlerImpl impl = new MailDataHandlerImpl();
 		impl.setTemplateStore(templateStore);
