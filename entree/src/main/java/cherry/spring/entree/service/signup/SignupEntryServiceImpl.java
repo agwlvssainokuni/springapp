@@ -19,8 +19,10 @@ package cherry.spring.entree.service.signup;
 import java.util.Locale;
 import java.util.UUID;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
+import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
-import cherry.foundation.mail.MailData;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.helper.signup.SignupRequestHelper;
@@ -101,7 +103,8 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		model.setMailAddr(mailAddr);
 		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
-		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr, model);
+		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr,
+				model);
 		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(),
 				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
 				msg.getSubject(), msg.getBody());
@@ -111,7 +114,9 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 	@Setter
 	@Getter
-	public static class Model extends MailModel {
+	@EqualsAndHashCode
+	@ToString
+	public static class Model implements MailModel {
 		private String mailAddr;
 		private String signupUri;
 	}

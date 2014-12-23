@@ -19,8 +19,10 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.Locale;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.LocalDateTime;
@@ -31,9 +33,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
+import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
-import cherry.foundation.mail.MailData;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.db.gen.dto.User;
@@ -118,7 +120,9 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 	@Setter
 	@Getter
-	public static class Model extends MailModel {
+	@EqualsAndHashCode
+	@ToString
+	public static class Model implements MailModel {
 		private String mailAddr;
 		private String password;
 		private String firstName;
