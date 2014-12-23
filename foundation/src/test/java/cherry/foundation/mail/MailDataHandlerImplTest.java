@@ -16,6 +16,7 @@
 
 package cherry.foundation.mail;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,12 +24,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.Writer;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -120,19 +121,22 @@ public class MailDataHandlerImplTest {
 		MailData mailData = new MailData();
 		mailData.setFromAddr(fromAddr);
 		if (isNotEmpty(toAddr)) {
-			mailData.setToAddr(Arrays.asList(toAddr));
+			mailData.setToAddr(asList(toAddr));
 		}
 		if (isNotEmpty(ccAddr)) {
-			mailData.setCcAddr(Arrays.asList(ccAddr));
+			mailData.setCcAddr(asList(ccAddr));
 		}
 		if (isNotEmpty(bccAddr)) {
-			mailData.setBccAddr(Arrays.asList(bccAddr));
+			mailData.setBccAddr(asList(bccAddr));
 		}
 		mailData.setSubject(subject);
 		mailData.setBody(body);
 
-		TemplateStore templateStore = mock(TemplateStore.class);
-		when(templateStore.getTemplate(eq(name))).thenReturn(mailData);
+		Map<String, MailData> map = new HashMap<>();
+		map.put(name, mailData);
+
+		SimpleTemplateStore templateStore = new SimpleTemplateStore();
+		templateStore.setMailDataMap(map);
 
 		VelocityEngine velocityEngine;
 		switch (velocityMode) {

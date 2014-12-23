@@ -24,10 +24,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -49,16 +46,16 @@ public class MailSendHandlerImplTest {
 		long messageId = handler.sendLater("loginId", "messageName",
 				"from@addr", asList("to@addr"), asList("cc@addr"),
 				asList("bcc@addr"), "subject", "body", now);
-		assertEquals(1L, messageId);
+		assertEquals(0L, messageId);
 
 		List<Long> list = handler.listMessage(now);
 		assertEquals(1, list.size());
-		assertEquals(1L, list.get(0).longValue());
+		assertEquals(0L, list.get(0).longValue());
 
 		ArgumentCaptor<SimpleMailMessage> message = ArgumentCaptor
 				.forClass(SimpleMailMessage.class);
 		doNothing().when(mailSender).send(message.capture());
-		boolean first = handler.sendMessage(1L);
+		boolean first = handler.sendMessage(0L);
 
 		assertTrue(first);
 		assertEquals("from@addr", message.getValue().getFrom());
@@ -71,7 +68,7 @@ public class MailSendHandlerImplTest {
 		assertEquals("subject", message.getValue().getSubject());
 		assertEquals("body", message.getValue().getText());
 
-		boolean second = handler.sendMessage(1L);
+		boolean second = handler.sendMessage(0L);
 		assertFalse(second);
 	}
 
@@ -87,7 +84,7 @@ public class MailSendHandlerImplTest {
 		long messageId = handler.sendNow("loginId", "messageName", "from@addr",
 				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"),
 				"subject", "body");
-		assertEquals(1L, messageId);
+		assertEquals(0L, messageId);
 
 		assertEquals("from@addr", message.getValue().getFrom());
 		assertEquals(1, message.getValue().getTo().length);
@@ -99,7 +96,7 @@ public class MailSendHandlerImplTest {
 		assertEquals("subject", message.getValue().getSubject());
 		assertEquals("body", message.getValue().getText());
 
-		boolean result = handler.sendMessage(1L);
+		boolean result = handler.sendMessage(0L);
 		assertFalse(result);
 	}
 
@@ -107,7 +104,7 @@ public class MailSendHandlerImplTest {
 		BizDateTime bizDateTime = mock(BizDateTime.class);
 		when(bizDateTime.now()).thenReturn(now);
 
-		MessageStore messageStore = new MessageStoreImpl();
+		MessageStore messageStore = new SimpleMessageStore();
 
 		mailSender = mock(MailSender.class);
 
@@ -116,43 +113,6 @@ public class MailSendHandlerImplTest {
 		impl.setMessageStore(messageStore);
 		impl.setMailSender(mailSender);
 		return impl;
-	}
-
-	public static class MessageStoreImpl implements MessageStore {
-
-		private long messageId = 1L;
-
-		private Map<Long, SimpleMailMessage> messageMap = new LinkedHashMap<>();
-
-		@Override
-		public long createMessage(String launcherId, String messageName,
-				LocalDateTime scheduledAt, String from, List<String> to,
-				List<String> cc, List<String> bcc, String subject, String body) {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom(from);
-			message.setTo(to.toArray(new String[to.size()]));
-			message.setCc(cc.toArray(new String[cc.size()]));
-			message.setBcc(bcc.toArray(new String[bcc.size()]));
-			message.setSubject(subject);
-			message.setText(body);
-			messageMap.put(messageId, message);
-			return messageId++;
-		}
-
-		@Override
-		public List<Long> listMessage(LocalDateTime dtm) {
-			return new ArrayList<Long>(messageMap.keySet());
-		}
-
-		@Override
-		public SimpleMailMessage getMessage(long messageId) {
-			return messageMap.get(messageId);
-		}
-
-		@Override
-		public void finishMessage(long messageId) {
-			messageMap.remove(messageId);
-		}
 	}
 
 }
