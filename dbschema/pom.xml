@@ -18,7 +18,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<url>jdbc:h2:file:./build/gendb</url>
+					<url>jdbc:h2:file:./target/gendb</url>
 					<user>sa</user>
 					<placeholderPrefix>$$${</placeholderPrefix>
 					<placeholderSuffix>}</placeholderSuffix>
@@ -59,10 +59,10 @@
 				<version>${versionQuerydsl}</version>
 				<configuration>
 					<jdbcDriver>org.h2.Driver</jdbcDriver>
-					<jdbcUrl>jdbc:h2:./build/gendb</jdbcUrl>
+					<jdbcUrl>jdbc:h2:./target/gendb</jdbcUrl>
 					<jdbcUser>sa</jdbcUser>
 					<packageName>cherry.spring.common.db.gen.query</packageName>
-					<targetFolder>${project.basedir}/../common/src/querydsl/java</targetFolder>
+					<targetFolder>${project.basedir}/../common/src/generated/java</targetFolder>
 					<namePrefix>Q</namePrefix>
 					<beanPrefix>B</beanPrefix>
 					<exportBeans>true</exportBeans>
