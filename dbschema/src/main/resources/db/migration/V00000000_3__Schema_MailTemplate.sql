@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/27 6:23:59
+-- Date/Time    : 2014/12/27 7:16:22
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -7,10 +7,10 @@
 -- メールテンプレート
 create table mail_template (
   id BIGINT not null AUTO_INCREMENT
-  , template_name VARCHAR(32) not null
-  , from_addr VARCHAR(512) not null
-  , subject VARCHAR(1024) not null
-  , body VARCHAR(4096) not null
+  , template_name VARCHAR(30) not null
+  , from_addr VARCHAR(300) not null
+  , subject VARCHAR(1000) not null
+  , body VARCHAR(5000) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -26,7 +26,7 @@ create table mail_template_rcpt (
   id BIGINT not null AUTO_INCREMENT
   , template_id BIGINT not null
   , rcpt_type VARCHAR(3) not null
-  , rcpt_addr VARCHAR(512) not null
+  , rcpt_addr VARCHAR(300) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null

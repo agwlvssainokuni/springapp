@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/27 6:24:41
+-- Date/Time    : 2014/12/27 7:16:55
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -7,11 +7,11 @@
 -- 利用者
 create table user (
   id BIGINT not null AUTO_INCREMENT
-  , login_id VARCHAR(512) not null
-  , password CHAR(60) not null
+  , login_id VARCHAR(300) not null
+  , password VARCHAR(100) not null
   , registered_at TIMESTAMP default CURRENT_TIMESTAMP not null
-  , first_name VARCHAR(64) not null
-  , last_name VARCHAR(64) not null
+  , first_name VARCHAR(50) not null
+  , last_name VARCHAR(50) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -25,8 +25,8 @@ create unique index user_IX1
 -- 利用申請
 create table signup_request (
   id BIGINT not null AUTO_INCREMENT
-  , mail_addr VARCHAR(512) not null
-  , token CHAR(36) not null
+  , mail_addr VARCHAR(300) not null
+  , token VARCHAR(50) not null
   , applied_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null

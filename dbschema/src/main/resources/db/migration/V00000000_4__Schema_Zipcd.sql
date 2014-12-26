@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/27 6:24:19
+-- Date/Time    : 2014/12/27 7:16:38
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -8,13 +8,13 @@
 create table zipcd_master (
   id BIGINT not null AUTO_INCREMENT
   , city_cd INTEGER not null
-  , zipcd VARCHAR(7) not null
-  , pref VARCHAR(64) not null
-  , city VARCHAR(64) not null
-  , addr VARCHAR(64) not null
-  , pref_kana VARCHAR(64) not null
-  , city_kana VARCHAR(64) not null
-  , addr_kana VARCHAR(64) not null
+  , zipcd VARCHAR(10) not null
+  , pref VARCHAR(30) not null
+  , city VARCHAR(50) not null
+  , addr VARCHAR(50) not null
+  , pref_kana VARCHAR(30) not null
+  , city_kana VARCHAR(50) not null
+  , addr_kana VARCHAR(50) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
