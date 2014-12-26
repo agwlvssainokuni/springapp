@@ -1,6 +1,5 @@
 package cherry.querytutorial.db.gen.dto;
 
-import cherry.foundation.type.DeletedFlag;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.LocalDateTime;
@@ -706,52 +705,52 @@ public class NoteCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgEqualTo(DeletedFlag value) {
+        public Criteria andDeletedFlgEqualTo(Integer value) {
             addCriterion("DELETED_FLG =", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgNotEqualTo(DeletedFlag value) {
+        public Criteria andDeletedFlgNotEqualTo(Integer value) {
             addCriterion("DELETED_FLG <>", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgGreaterThan(DeletedFlag value) {
+        public Criteria andDeletedFlgGreaterThan(Integer value) {
             addCriterion("DELETED_FLG >", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgGreaterThanOrEqualTo(DeletedFlag value) {
+        public Criteria andDeletedFlgGreaterThanOrEqualTo(Integer value) {
             addCriterion("DELETED_FLG >=", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgLessThan(DeletedFlag value) {
+        public Criteria andDeletedFlgLessThan(Integer value) {
             addCriterion("DELETED_FLG <", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgLessThanOrEqualTo(DeletedFlag value) {
+        public Criteria andDeletedFlgLessThanOrEqualTo(Integer value) {
             addCriterion("DELETED_FLG <=", value, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgIn(List<DeletedFlag> values) {
+        public Criteria andDeletedFlgIn(List<Integer> values) {
             addCriterion("DELETED_FLG in", values, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgNotIn(List<DeletedFlag> values) {
+        public Criteria andDeletedFlgNotIn(List<Integer> values) {
             addCriterion("DELETED_FLG not in", values, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgBetween(DeletedFlag value1, DeletedFlag value2) {
+        public Criteria andDeletedFlgBetween(Integer value1, Integer value2) {
             addCriterion("DELETED_FLG between", value1, value2, "deletedFlg");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedFlgNotBetween(DeletedFlag value1, DeletedFlag value2) {
+        public Criteria andDeletedFlgNotBetween(Integer value1, Integer value2) {
             addCriterion("DELETED_FLG not between", value1, value2, "deletedFlg");
             return (Criteria) this;
         }
