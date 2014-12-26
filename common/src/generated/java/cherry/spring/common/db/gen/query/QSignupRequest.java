@@ -68,8 +68,8 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<BSig
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(mailAddr, ColumnMetadata.named("MAIL_ADDR").withIndex(2).ofType(Types.VARCHAR).withSize(512).notNull());
-        addMetadata(token, ColumnMetadata.named("TOKEN").withIndex(3).ofType(Types.CHAR).withSize(36).notNull());
+        addMetadata(mailAddr, ColumnMetadata.named("MAIL_ADDR").withIndex(2).ofType(Types.VARCHAR).withSize(300).notNull());
+        addMetadata(token, ColumnMetadata.named("TOKEN").withIndex(3).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 

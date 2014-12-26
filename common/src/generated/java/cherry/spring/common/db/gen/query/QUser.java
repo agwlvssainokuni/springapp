@@ -69,12 +69,12 @@ public class QUser extends com.mysema.query.sql.RelationalPathBase<BUser> {
     public void addMetadata() {
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(10).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(firstName, ColumnMetadata.named("FIRST_NAME").withIndex(5).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(firstName, ColumnMetadata.named("FIRST_NAME").withIndex(5).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(lastName, ColumnMetadata.named("LAST_NAME").withIndex(6).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(lastName, ColumnMetadata.named("LAST_NAME").withIndex(6).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(loginId, ColumnMetadata.named("LOGIN_ID").withIndex(2).ofType(Types.VARCHAR).withSize(512).notNull());
-        addMetadata(password, ColumnMetadata.named("PASSWORD").withIndex(3).ofType(Types.CHAR).withSize(60).notNull());
+        addMetadata(loginId, ColumnMetadata.named("LOGIN_ID").withIndex(2).ofType(Types.VARCHAR).withSize(300).notNull());
+        addMetadata(password, ColumnMetadata.named("PASSWORD").withIndex(3).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(registeredAt, ColumnMetadata.named("REGISTERED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }

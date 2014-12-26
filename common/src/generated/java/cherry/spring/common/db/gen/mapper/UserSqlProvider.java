@@ -64,7 +64,7 @@ public class UserSqlProvider {
         }
         
         if (record.getPassword() != null) {
-            VALUES("PASSWORD", "#{password,jdbcType=CHAR}");
+            VALUES("PASSWORD", "#{password,jdbcType=VARCHAR}");
         }
         
         if (record.getRegisteredAt() != null) {
@@ -152,7 +152,7 @@ public class UserSqlProvider {
         }
         
         if (record.getPassword() != null) {
-            SET("PASSWORD = #{record.password,jdbcType=CHAR}");
+            SET("PASSWORD = #{record.password,jdbcType=VARCHAR}");
         }
         
         if (record.getRegisteredAt() != null) {
@@ -199,7 +199,7 @@ public class UserSqlProvider {
         
         SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("LOGIN_ID = #{record.loginId,jdbcType=VARCHAR}");
-        SET("PASSWORD = #{record.password,jdbcType=CHAR}");
+        SET("PASSWORD = #{record.password,jdbcType=VARCHAR}");
         SET("REGISTERED_AT = #{record.registeredAt,jdbcType=TIMESTAMP}");
         SET("FIRST_NAME = #{record.firstName,jdbcType=VARCHAR}");
         SET("LAST_NAME = #{record.lastName,jdbcType=VARCHAR}");
@@ -228,7 +228,7 @@ public class UserSqlProvider {
         }
         
         if (record.getPassword() != null) {
-            SET("PASSWORD = #{password,jdbcType=CHAR}");
+            SET("PASSWORD = #{password,jdbcType=VARCHAR}");
         }
         
         if (record.getRegisteredAt() != null) {

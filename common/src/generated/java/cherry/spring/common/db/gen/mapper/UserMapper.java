@@ -61,7 +61,7 @@ public interface UserMapper {
         "LAST_NAME, UPDATED_AT, ",
         "CREATED_AT, LOCK_VERSION, ",
         "DELETED_FLG)",
-        "values (#{loginId,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, ",
+        "values (#{loginId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{registeredAt,jdbcType=TIMESTAMP}, #{firstName,jdbcType=VARCHAR}, ",
         "#{lastName,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, ",
         "#{createdAt,jdbcType=TIMESTAMP}, #{lockVersion,jdbcType=INTEGER}, ",
@@ -90,7 +90,7 @@ public interface UserMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="LOGIN_ID", property="loginId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.CHAR),
+        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="REGISTERED_AT", property="registeredAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="FIRST_NAME", property="firstName", jdbcType=JdbcType.VARCHAR),
         @Result(column="LAST_NAME", property="lastName", jdbcType=JdbcType.VARCHAR),
@@ -111,7 +111,7 @@ public interface UserMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="LOGIN_ID", property="loginId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.CHAR),
+        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="REGISTERED_AT", property="registeredAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="FIRST_NAME", property="firstName", jdbcType=JdbcType.VARCHAR),
         @Result(column="LAST_NAME", property="lastName", jdbcType=JdbcType.VARCHAR),
@@ -138,7 +138,7 @@ public interface UserMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="LOGIN_ID", property="loginId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.CHAR),
+        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="REGISTERED_AT", property="registeredAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="FIRST_NAME", property="firstName", jdbcType=JdbcType.VARCHAR),
         @Result(column="LAST_NAME", property="lastName", jdbcType=JdbcType.VARCHAR),
@@ -185,7 +185,7 @@ public interface UserMapper {
     @Update({
         "update USER",
         "set LOGIN_ID = #{loginId,jdbcType=VARCHAR},",
-          "PASSWORD = #{password,jdbcType=CHAR},",
+          "PASSWORD = #{password,jdbcType=VARCHAR},",
           "REGISTERED_AT = #{registeredAt,jdbcType=TIMESTAMP},",
           "FIRST_NAME = #{firstName,jdbcType=VARCHAR},",
           "LAST_NAME = #{lastName,jdbcType=VARCHAR},",

@@ -64,7 +64,7 @@ public class SignupRequestSqlProvider {
         }
         
         if (record.getToken() != null) {
-            VALUES("TOKEN", "#{token,jdbcType=CHAR}");
+            VALUES("TOKEN", "#{token,jdbcType=VARCHAR}");
         }
         
         if (record.getAppliedAt() != null) {
@@ -142,7 +142,7 @@ public class SignupRequestSqlProvider {
         }
         
         if (record.getToken() != null) {
-            SET("TOKEN = #{record.token,jdbcType=CHAR}");
+            SET("TOKEN = #{record.token,jdbcType=VARCHAR}");
         }
         
         if (record.getAppliedAt() != null) {
@@ -181,7 +181,7 @@ public class SignupRequestSqlProvider {
         
         SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("MAIL_ADDR = #{record.mailAddr,jdbcType=VARCHAR}");
-        SET("TOKEN = #{record.token,jdbcType=CHAR}");
+        SET("TOKEN = #{record.token,jdbcType=VARCHAR}");
         SET("APPLIED_AT = #{record.appliedAt,jdbcType=TIMESTAMP}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
         SET("CREATED_AT = #{record.createdAt,jdbcType=TIMESTAMP}");
@@ -208,7 +208,7 @@ public class SignupRequestSqlProvider {
         }
         
         if (record.getToken() != null) {
-            SET("TOKEN = #{token,jdbcType=CHAR}");
+            SET("TOKEN = #{token,jdbcType=VARCHAR}");
         }
         
         if (record.getAppliedAt() != null) {

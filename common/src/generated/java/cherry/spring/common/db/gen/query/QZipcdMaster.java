@@ -73,19 +73,19 @@ public class QZipcdMaster extends com.mysema.query.sql.RelationalPathBase<BZipcd
     }
 
     public void addMetadata() {
-        addMetadata(addr, ColumnMetadata.named("ADDR").withIndex(6).ofType(Types.VARCHAR).withSize(64).notNull());
-        addMetadata(addrKana, ColumnMetadata.named("ADDR_KANA").withIndex(9).ofType(Types.VARCHAR).withSize(64).notNull());
-        addMetadata(city, ColumnMetadata.named("CITY").withIndex(5).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(addr, ColumnMetadata.named("ADDR").withIndex(6).ofType(Types.VARCHAR).withSize(50).notNull());
+        addMetadata(addrKana, ColumnMetadata.named("ADDR_KANA").withIndex(9).ofType(Types.VARCHAR).withSize(50).notNull());
+        addMetadata(city, ColumnMetadata.named("CITY").withIndex(5).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(cityCd, ColumnMetadata.named("CITY_CD").withIndex(2).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(cityKana, ColumnMetadata.named("CITY_KANA").withIndex(8).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(cityKana, ColumnMetadata.named("CITY_KANA").withIndex(8).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(11).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(13).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(12).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(pref, ColumnMetadata.named("PREF").withIndex(4).ofType(Types.VARCHAR).withSize(64).notNull());
-        addMetadata(prefKana, ColumnMetadata.named("PREF_KANA").withIndex(7).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(pref, ColumnMetadata.named("PREF").withIndex(4).ofType(Types.VARCHAR).withSize(30).notNull());
+        addMetadata(prefKana, ColumnMetadata.named("PREF_KANA").withIndex(7).ofType(Types.VARCHAR).withSize(30).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(10).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(zipcd, ColumnMetadata.named("ZIPCD").withIndex(3).ofType(Types.VARCHAR).withSize(7).notNull());
+        addMetadata(zipcd, ColumnMetadata.named("ZIPCD").withIndex(3).ofType(Types.VARCHAR).withSize(10).notNull());
     }
 
 }

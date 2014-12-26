@@ -60,7 +60,7 @@ public interface SignupRequestMapper {
         "APPLIED_AT, UPDATED_AT, ",
         "CREATED_AT, LOCK_VERSION, ",
         "DELETED_FLG)",
-        "values (#{mailAddr,jdbcType=VARCHAR}, #{token,jdbcType=CHAR}, ",
+        "values (#{mailAddr,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, ",
         "#{appliedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, ",
         "#{createdAt,jdbcType=TIMESTAMP}, #{lockVersion,jdbcType=INTEGER}, ",
         "#{deletedFlg,jdbcType=INTEGER})"
@@ -88,7 +88,7 @@ public interface SignupRequestMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="MAIL_ADDR", property="mailAddr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TOKEN", property="token", jdbcType=JdbcType.CHAR),
+        @Result(column="TOKEN", property="token", jdbcType=JdbcType.VARCHAR),
         @Result(column="APPLIED_AT", property="appliedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATED_AT", property="updatedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="CREATED_AT", property="createdAt", jdbcType=JdbcType.TIMESTAMP),
@@ -107,7 +107,7 @@ public interface SignupRequestMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="MAIL_ADDR", property="mailAddr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TOKEN", property="token", jdbcType=JdbcType.CHAR),
+        @Result(column="TOKEN", property="token", jdbcType=JdbcType.VARCHAR),
         @Result(column="APPLIED_AT", property="appliedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATED_AT", property="updatedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="CREATED_AT", property="createdAt", jdbcType=JdbcType.TIMESTAMP),
@@ -131,7 +131,7 @@ public interface SignupRequestMapper {
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="MAIL_ADDR", property="mailAddr", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TOKEN", property="token", jdbcType=JdbcType.CHAR),
+        @Result(column="TOKEN", property="token", jdbcType=JdbcType.VARCHAR),
         @Result(column="APPLIED_AT", property="appliedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATED_AT", property="updatedAt", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="CREATED_AT", property="createdAt", jdbcType=JdbcType.TIMESTAMP),
@@ -176,7 +176,7 @@ public interface SignupRequestMapper {
     @Update({
         "update SIGNUP_REQUEST",
         "set MAIL_ADDR = #{mailAddr,jdbcType=VARCHAR},",
-          "TOKEN = #{token,jdbcType=CHAR},",
+          "TOKEN = #{token,jdbcType=VARCHAR},",
           "APPLIED_AT = #{appliedAt,jdbcType=TIMESTAMP},",
           "UPDATED_AT = #{updatedAt,jdbcType=TIMESTAMP},",
           "CREATED_AT = #{createdAt,jdbcType=TIMESTAMP},",
