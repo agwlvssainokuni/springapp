@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="cherry.querytutorial" />
+
+	<jdbc:embedded-database id="dataSource" type="H2" />
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="locations" value="db/migration" />
+		<property name="encoding" value="UTF-8" />
+		<property name="placeholderPrefix" value="$$${" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+
+	<bean class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+		<constructor-arg ref="dataSource" type="javax.sql.DataSource" />
+	</bean>
+
+	<mybatis-spring:scan base-package="cherry.querytutorial.db.gen.mapper" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeHandlers">
+			<list>
+				<bean class="cherry.foundation.type.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.FlagCodeTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.JodaDateTimeTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.JodaLocalTimeTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.SecureBigDecimalTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.SecureBigIntegerTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.SecureLongTypeHandler" />
+				<bean class="cherry.foundation.type.mybatis.SecureStringTypeHandler" />
+			</list>
+		</property>
+	</bean>
+
+</beans>
