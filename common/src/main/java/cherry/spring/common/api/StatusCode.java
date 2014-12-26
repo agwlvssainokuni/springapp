@@ -16,12 +16,12 @@
 
 package cherry.spring.common.api;
 
-public enum ApiStatus {
+public enum StatusCode {
 	OK(0), WARN(1), ERROR(2);
 
 	private int value;
 
-	private ApiStatus(int value) {
+	private StatusCode(int value) {
 		this.value = value;
 	}
 

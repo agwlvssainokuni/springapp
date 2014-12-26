@@ -26,36 +26,37 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
-import cherry.spring.common.api.ApiResponse;
-import cherry.spring.common.api.ApiStatus;
+import cherry.spring.common.api.Response;
+import cherry.spring.common.api.StatusCode;
 
 @Controller
 public class ZipcdControllerImpl implements ZipcdController {
 
 	@Autowired
-	private ZipcdHelper zipcdHelper;
+	private ZipcdService zipcdService;
 
 	@Override
-	public ApiResponse<List<ZipcdAddress>> execute(String zipcd,
+	public Response<List<ZipcdAddress>> execute(String zipcd,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		return executeImpl(zipcd);
 	}
 
 	@Override
-	public ApiResponse<List<ZipcdAddress>> executeByPath(String zipcd,
+	public Response<List<ZipcdAddress>> executeByPath(String zipcd,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		return executeImpl(zipcd);
 	}
 
-	private ApiResponse<List<ZipcdAddress>> executeImpl(String zipcd) {
+	private Response<List<ZipcdAddress>> executeImpl(String zipcd) {
 
-		List<ZipcdAddress> result = zipcdHelper.search(zipcd);
-		ApiStatus status = result.isEmpty() ? ApiStatus.WARN : ApiStatus.OK;
+		List<ZipcdAddress> result = zipcdService.search(zipcd);
+		StatusCode statusCode = result.isEmpty() ? StatusCode.WARN
+				: StatusCode.OK;
 
-		ApiResponse<List<ZipcdAddress>> response = new ApiResponse<>();
-		response.setStatus(status.getValue());
+		Response<List<ZipcdAddress>> response = new Response<>();
+		response.setStatusCode(statusCode.getValue());
 		response.setResult(result);
 		return response;
 	}

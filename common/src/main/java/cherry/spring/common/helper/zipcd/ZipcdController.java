@@ -28,20 +28,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cherry.spring.common.api.ApiResponse;
+import cherry.spring.common.api.Response;
 
 @RequestMapping("${common.helper.zipcd.uripath}")
 public interface ZipcdController {
 
 	@RequestMapping()
 	@ResponseBody
-	ApiResponse<List<ZipcdAddress>> execute(
-			@RequestParam("zipcd") String zipcd, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	Response<List<ZipcdAddress>> execute(@RequestParam("zipcd") String zipcd,
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping("{zipcd}")
 	@ResponseBody
-	ApiResponse<List<ZipcdAddress>> executeByPath(
+	Response<List<ZipcdAddress>> executeByPath(
 			@PathVariable("zipcd") String zipcd, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
 

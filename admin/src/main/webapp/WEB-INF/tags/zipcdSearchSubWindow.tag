@@ -47,11 +47,11 @@
 		}
 
 		function onSuccess(data, textStatus, jqXHR) {
-			if (data.status == 1) {
+			if (data.statusCode == 1) {
 				alert("${alertNotFound}");
 				return;
 			}
-			if (data.status > 1) {
+			if (data.statusCode > 1) {
 				alert(data.description);
 				return;
 			}
@@ -77,7 +77,7 @@
 
 		$.ajax({
 			url : "${zipcdUri}",
-			type : "POST",
+			type : "GET",
 			data : {
 				zipcd : zipcd
 			},
