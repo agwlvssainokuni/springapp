@@ -3,24 +3,39 @@
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<!-- 自動スキャン -->
 	<context:component-scan base-package="cherry.querytutorial" />
 
-	<jdbc:embedded-database id="dataSource" type="H2" />
-
-	<tx:annotation-driven />
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+	<!-- 基本設定 (トレース) -->
+	<aop:config>
+		<aop:advisor advice-ref="traceInterceptor"
+			pointcut="execution(* cherry..*.*(..))
+				and !execution(* cherry.foundation.log..*.*(..))
+				and !execution(* cherry.foundation.type..*.*(..))
+				" />
+	</aop:config>
+	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="0" />
+		<property name="objectLengthLimit" value="0" />
+		<property name="packagePrefix">
+			<list>
+				<value>cherry</value>
+			</list>
+		</property>
 	</bean>
+	<!-- 基本設定 (コンテキスト) -->
+	<bean class="cherry.foundation.AppCtxHolder" />
 
+	<!-- データソース -->
+	<jdbc:embedded-database id="dataSource" type="H2" />
 	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
 		<property name="dataSource" ref="dataSource" />
 		<property name="locations" value="db/migration" />
@@ -29,12 +44,20 @@
 		<property name="placeholderSuffix" value="}" />
 	</bean>
 
+	<!-- トランザクション制御 -->
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- Querydsl -->
 	<bean class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
 		<constructor-arg ref="dataSource" type="javax.sql.DataSource" />
 	</bean>
 
+	<!-- MyBatis -->
 	<mybatis-spring:scan base-package="cherry.querytutorial.db.gen.mapper" />
-
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="typeHandlers">
