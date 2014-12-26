@@ -4,7 +4,7 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>springapp</groupId>
-	<artifactId>dbexample</artifactId>
+	<artifactId>querytutorial</artifactId>
 	<version>1.0</version>
 	<properties>
 		<versionH2db>1.4.181</versionH2db>
@@ -59,10 +59,10 @@
 				<version>${versionQuerydsl}</version>
 				<configuration>
 					<jdbcDriver>org.h2.Driver</jdbcDriver>
-					<jdbcUrl>jdbc:h2:./gen/gendb</jdbcUrl>
+					<jdbcUrl>jdbc:h2:./target/gendb</jdbcUrl>
 					<jdbcUser>sa</jdbcUser>
-					<packageName>cherry.dbexample.db.gen.query</packageName>
-					<targetFolder>${project.basedir}/src/querydsl/java</targetFolder>
+					<packageName>cherry.querytutorial.db.gen.query</packageName>
+					<targetFolder>${project.basedir}/src/generated/java</targetFolder>
 					<namePrefix>Q</namePrefix>
 					<beanPrefix>B</beanPrefix>
 					<exportBeans>true</exportBeans>

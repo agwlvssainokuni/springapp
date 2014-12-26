@@ -3,7 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-	<context id="dbexample" targetRuntime="MyBatis3">
+	<context id="querytutorial" targetRuntime="MyBatis3">
 		<property name="javaFileEncoding" value="UTF-8" />
 		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
 			<property name="searchString" value="Example$" />
@@ -23,12 +23,12 @@
 			<property name="useJodaTime" value="true" />
 			<property name="javaTypeByColumnName.DELETED_FLG" value="cherry.foundation.type.DeletedFlag" />
 		</javaTypeResolver>
-		<javaModelGenerator targetPackage="cherry.dbexample.db.gen.dto"
-			targetProject="./src/mybatis/java" />
-		<sqlMapGenerator targetPackage="cherry.dbexample.db.gen.mapper"
-			targetProject="./src/mybatis/java" />
-		<javaClientGenerator targetPackage="cherry.dbexample.db.gen.mapper"
-			type="ANNOTATEDMAPPER" targetProject="./src/mybatis/java" />
+		<javaModelGenerator targetPackage="cherry.querytutorial.db.gen.dto"
+			targetProject="./src/generated/java" />
+		<sqlMapGenerator targetPackage="cherry.querytutorial.db.gen.mapper"
+			targetProject="./src/generated/java" />
+		<javaClientGenerator targetPackage="cherry.querytutorial.db.gen.mapper"
+			type="ANNOTATEDMAPPER" targetProject="./src/generated/java" />
 		<table tableName="priority_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
