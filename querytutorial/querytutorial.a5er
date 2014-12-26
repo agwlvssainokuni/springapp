@@ -1,0 +1,147 @@
+﻿# A5:ER FORMAT:09
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=QueryTutorial
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=QueryTutorial
+PageInfo="QueryTutorial",4,"A3Landscape",$FFFFFF
+Domain=ID=BIGINT
+Domain=整数【32bit】=@INT
+Domain=整数【64bit】=BIGINT
+Domain=区分値【2】=@VARCHAR(2)
+Domain=区分値【3】=@VARCHAR(3)
+Domain=区分値【5】=@VARCHAR(5)
+Domain=文字列【10】=@VARCHAR(10)
+Domain=文字列【30】=@VARCHAR(30)
+Domain=文字列【50】=@VARCHAR(50)
+Domain=文字列【100】=@VARCHAR(100)
+Domain=文字列【300】=@VARCHAR(300)
+Domain=文字列【500】=@VARCHAR(500)
+Domain=文字列【1000】=@VARCHAR(1000)
+Domain=文字列【3000】=@VARCHAR(3000)
+Domain=文字列【5000】=@VARCHAR(5000)
+Domain=文字列【TEXT】=TEXT
+Domain=日付=@DATE
+Domain=時刻=@TIME
+Domain=日時=@DATETIME
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=4
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="ロックバージョン","lock_version","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF
+CommonField="削除フラグ","deleted_flg","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Relation]
+Entity1=todo
+Entity2=note
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=todo_id
+Cardinarity1=
+Cardinarity2=
+Position="QUERYTUTORIAL",0,1847,8153,1938,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141227075748
+LineMode=0
+Bar1=185
+Bar2=815
+Bar3=194
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=note
+LName=ノート
+Comment=
+TableOption=
+Page=QUERYTUTORIAL
+Left=500
+Top=1150
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="TODO ID","todo_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿者","posted_by","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿日時","posted_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="ノート","description","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,todo_id
+Index==0,posted_by
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227080102
+Position="QUERYTUTORIAL",500,1150
+
+[Entity]
+PName=priority_master
+LName=優先度マスタ
+Comment=
+TableOption=
+Page=QUERYTUTORIAL
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="優先度コード","priority_cd","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="優先度表示名","priority_label","*文字列【10】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,priority_cd
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227080109
+Position="QUERYTUTORIAL",1500,500
+
+[Entity]
+PName=todo
+LName=TODO
+Comment=
+TableOption=
+Page=QUERYTUTORIAL
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="投稿者","posted_by","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="登校日時","posted_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="期日","due_dt","*日付","NOT NULL",,"","",$FFFFFFFF,""
+Field="完了日時","done_at","*日時",,,"","",$FFFFFFFF,""
+Field="完了フラグ","done_flg","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="優先度コード","priority_cd","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="TODO内容","description","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,posted_by
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227080040
+Position="QUERYTUTORIAL",500,500

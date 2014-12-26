@@ -1,0 +1,13 @@
+apply plugin: "eclipse-wtp"
+
+dependencies {
+	compile project(":goods")
+	compile project(":foundation")
+	compile "org.flywaydb:flyway-core:${versionFlyway}"
+	compile "com.h2database:h2:${versionH2db}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
+}
