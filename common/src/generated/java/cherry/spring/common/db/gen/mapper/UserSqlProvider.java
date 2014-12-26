@@ -144,7 +144,7 @@ public class UserSqlProvider {
         UPDATE("USER");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getLoginId() != null) {
@@ -197,7 +197,7 @@ public class UserSqlProvider {
         BEGIN();
         UPDATE("USER");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("LOGIN_ID = #{record.loginId,jdbcType=VARCHAR}");
         SET("PASSWORD = #{record.password,jdbcType=CHAR}");
         SET("REGISTERED_AT = #{record.registeredAt,jdbcType=TIMESTAMP}");
@@ -259,7 +259,7 @@ public class UserSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

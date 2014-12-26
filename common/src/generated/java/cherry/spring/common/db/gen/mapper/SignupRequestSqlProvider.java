@@ -134,7 +134,7 @@ public class SignupRequestSqlProvider {
         UPDATE("SIGNUP_REQUEST");
         
         if (record.getId() != null) {
-            SET("ID = #{record.id,jdbcType=INTEGER}");
+            SET("ID = #{record.id,jdbcType=BIGINT}");
         }
         
         if (record.getMailAddr() != null) {
@@ -179,7 +179,7 @@ public class SignupRequestSqlProvider {
         BEGIN();
         UPDATE("SIGNUP_REQUEST");
         
-        SET("ID = #{record.id,jdbcType=INTEGER}");
+        SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("MAIL_ADDR = #{record.mailAddr,jdbcType=VARCHAR}");
         SET("TOKEN = #{record.token,jdbcType=CHAR}");
         SET("APPLIED_AT = #{record.appliedAt,jdbcType=TIMESTAMP}");
@@ -231,7 +231,7 @@ public class SignupRequestSqlProvider {
             SET("DELETED_FLG = #{deletedFlg,jdbcType=INTEGER}");
         }
         
-        WHERE("ID = #{id,jdbcType=INTEGER}");
+        WHERE("ID = #{id,jdbcType=BIGINT}");
         
         return SQL();
     }

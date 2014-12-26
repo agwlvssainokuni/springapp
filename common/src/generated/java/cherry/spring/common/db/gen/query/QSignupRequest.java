@@ -30,7 +30,7 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<BSig
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -66,7 +66,7 @@ public class QSignupRequest extends com.mysema.query.sql.RelationalPathBase<BSig
         addMetadata(appliedAt, ColumnMetadata.named("APPLIED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(mailAddr, ColumnMetadata.named("MAIL_ADDR").withIndex(2).ofType(Types.VARCHAR).withSize(512).notNull());
         addMetadata(token, ColumnMetadata.named("TOKEN").withIndex(3).ofType(Types.CHAR).withSize(36).notNull());

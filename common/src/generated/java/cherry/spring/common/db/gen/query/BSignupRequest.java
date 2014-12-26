@@ -14,7 +14,7 @@ public class BSignupRequest {
 
     private Integer deletedFlg;
 
-    private Integer id;
+    private Long id;
 
     private Integer lockVersion;
 
@@ -48,11 +48,11 @@ public class BSignupRequest {
         this.deletedFlg = deletedFlg;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
