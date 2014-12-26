@@ -647,7 +647,7 @@ ModifiedDateTime=20141214103233
 Position="メール文面テンプレート",500,500
 
 [Entity]
-PName=mail_template_address
+PName=mail_template_rcpt
 LName=メールテンプレート宛先
 Comment=
 TableOption=
@@ -663,12 +663,12 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141214103431
+ModifiedDateTime=20141227061707
 Position="メール文面テンプレート",500,1000
 
 [Relation]
 Entity1=mail_template
-Entity2=mail_template_address
+Entity2=mail_template_rcpt
 RelationType1=2
 RelationType2=4
 Fields1=id

@@ -19,7 +19,7 @@ VALUES
 )
 ;
 
-INSERT INTO mail_template_address (
+INSERT INTO mail_template_rcpt (
 	template_id,
 	rcpt_type,
 	rcpt_addr
