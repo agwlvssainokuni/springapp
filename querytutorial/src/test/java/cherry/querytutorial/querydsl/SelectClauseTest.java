@@ -16,6 +16,7 @@
 
 package cherry.querytutorial.querydsl;
 
+import static com.mysema.query.support.Expressions.cases;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -42,7 +43,6 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
-import com.mysema.query.types.expr.CaseBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext.xml")
@@ -157,8 +157,8 @@ public class SelectClauseTest {
 		query.orderBy(a.id.asc());
 
 		LocalDate baseDt = new LocalDate(2015, 2, 1);
-		Expression<String> doneDesc = new CaseBuilder().when(a.doneFlg.eq(1))
-				.then("実施済").when(a.dueDt.before(baseDt)).then("未実施(期限内)")
+		Expression<String> doneDesc = cases().when(a.doneFlg.eq(1)).then("実施済")
+				.when(a.dueDt.before(baseDt)).then("未実施(期限内)")
 				.otherwise("未実施(期限切)");
 
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
