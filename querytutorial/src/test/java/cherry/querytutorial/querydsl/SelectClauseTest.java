@@ -17,6 +17,7 @@
 package cherry.querytutorial.querydsl;
 
 import static com.mysema.query.support.Expressions.cases;
+import static com.mysema.query.support.Expressions.constant;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -258,6 +259,32 @@ public class SelectClauseTest {
 			System.out.println(MessageFormat.format(
 					"{0}: priorityCd={1}, priorityLabel={2}", valId,
 					valPriorityCd, valPriorityLabel));
+		}
+	}
+
+	@Test
+	public void 定数を列として指定する() {
+
+		QTodo a = new QTodo("a");
+
+		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
+		Expression<Boolean> due = a.dueDt.after(baseDt);
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.orderBy(a.id.asc());
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.dueDt, baseDt, due));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			LocalDate valDueDt = tuple.get(a.dueDt);
+			LocalDate valBaseDt = tuple.get(baseDt);
+			Boolean valDue = tuple.get(due);
+			System.out.println(MessageFormat.format(
+					"{0}: dueDt={1}, baseDt={2}, due={3}", valId, valDueDt,
+					valBaseDt, valDue));
 		}
 	}
 

@@ -16,6 +16,7 @@
 
 package cherry.querytutorial.querydsl;
 
+import static com.mysema.query.support.Expressions.constant;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -38,6 +39,7 @@ import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,8 +54,9 @@ public class WhereClauseTest {
 
 		QTodo a = new QTodo("a");
 
-		LocalDate baseDt = new LocalDate(2015, 2, 1);
-		LocalDateTime baseDtm = new LocalDateTime(2015, 2, 1, 0, 0);
+		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
+		Expression<LocalDateTime> baseDtm = constant(new LocalDateTime(2015, 2,
+				1, 0, 0));
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -63,17 +66,21 @@ public class WhereClauseTest {
 		query.orderBy(a.id.asc());
 
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneAt));
+				baseDt, baseDtm, a.postedAt, a.dueDt, a.doneAt));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
+			LocalDate valBaseDt = tuple.get(baseDt);
+			LocalDateTime valBaseDtm = tuple.get(baseDtm);
 			LocalDateTime valPostedAt = tuple.get(a.postedAt);
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			System.out.println(MessageFormat.format(
-					"{0}: postedAt={1}, dueDt={2}, doneAt={3}", valId,
-					valPostedAt, valDueDt, valDoneAt));
+			System.out
+					.println(MessageFormat
+							.format("{0}: baseDt={1}, baseDtm={2}, postedAt={3}, dueDt={4}, doneAt={5}",
+									valId, valBaseDt, valBaseDtm, valPostedAt,
+									valDueDt, valDoneAt));
 		}
 	}
 
@@ -82,8 +89,9 @@ public class WhereClauseTest {
 
 		QTodo a = new QTodo("a");
 
-		LocalDate baseDt = new LocalDate(2015, 2, 1);
-		LocalDateTime baseDtm = new LocalDateTime(2015, 2, 1, 0, 0);
+		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
+		Expression<LocalDateTime> baseDtm = constant(new LocalDateTime(2015, 2,
+				1, 0, 0));
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -93,17 +101,21 @@ public class WhereClauseTest {
 		query.orderBy(a.id.asc());
 
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneAt));
+				baseDt, baseDtm, a.postedAt, a.dueDt, a.doneAt));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
+			LocalDate valBaseDt = tuple.get(baseDt);
+			LocalDateTime valBaseDtm = tuple.get(baseDtm);
 			LocalDateTime valPostedAt = tuple.get(a.postedAt);
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			System.out.println(MessageFormat.format(
-					"{0}: postedAt={1}, dueDt={2}, doneAt={3}", valId,
-					valPostedAt, valDueDt, valDoneAt));
+			System.out
+					.println(MessageFormat
+							.format("{0}: baseDt={1}, baseDtm={2}, postedAt={3}, dueDt={4}, doneAt={5}",
+									valId, valBaseDt, valBaseDtm, valPostedAt,
+									valDueDt, valDoneAt));
 		}
 	}
 
