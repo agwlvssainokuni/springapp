@@ -53,6 +53,17 @@ public class SelectClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id, a.posted_by, a.posted_at, a.due_dt, a.done_at, a.done_flg, a.description,
+	 *     a.updated_at, a.created_at, a.lock_version, a.deleted_flg
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 全列を取得する() {
 
@@ -71,6 +82,16 @@ public class SelectClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id, a.posted_by, a.posted_at
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 取得する列を指定する() {
 
@@ -94,6 +115,20 @@ public class SelectClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id, 
+	 *     a.lock_version,
+	 *     a.lock_version + 1 AS lv1,
+	 *     a.lock_version - 1 AS lv2,
+	 *     a.id + a.id        AS id3
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 算術計算式を指定する() {
 
@@ -122,6 +157,19 @@ public class SelectClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.description,
+	 *     LENGTH(a.description) AS desc1
+	 *     (a.description || ' ' || a.posted_by) AS desc2
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 関数呼出しを指定する() {
 
@@ -149,6 +197,24 @@ public class SelectClauseTest {
 		}
 	}
 
+/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.due_dt,
+	 *     a.done_flg,
+	 *     '2015-02-01',
+	 *     CASE
+	 *         WHEN a.done_flg = 1 THEN '実施済'
+	 *         WHEN a.due_dt < '2015-02-01' THEN '未実施(期限内)'
+	 *         ELSE '未実施(期限切)'
+	 *     END
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void CASE式を指定する() {
 
@@ -158,26 +224,42 @@ public class SelectClauseTest {
 		query.from(a);
 		query.orderBy(a.id.asc());
 
-		LocalDate baseDt = new LocalDate(2015, 2, 1);
+		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
 		Expression<String> doneDesc = cases().when(a.doneFlg.eq(1)).then("実施済")
-				.when(a.dueDt.before(baseDt)).then("未実施(期限内)")
+				.when(a.dueDt.lt(baseDt)).then("未実施(期限内)")
 				.otherwise("未実施(期限切)");
 
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.dueDt, a.doneFlg, doneDesc));
+				a.dueDt, a.doneFlg, baseDt, doneDesc));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			Integer valDoneFlg = tuple.get(a.doneFlg);
+			LocalDate valBaseDt = tuple.get(baseDt);
 			String valDoneDesc = tuple.get(doneDesc);
 			System.out.println(MessageFormat.format(
-					"{0}: dueDt={1}, doneFlg={2}, doneDesc={3}", valId,
-					valDueDt, valDoneFlg, valDoneDesc));
+					"{0}: dueDt={1}, doneFlg={2}, baseDt={3}, doneDesc={4}",
+					valId, valDueDt, valDoneFlg, valBaseDt, valDoneDesc));
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.posted_by,
+	 *     COUNT(a.id)      AS cnt,
+	 *     MIN(a.posted_at) AS min_posted_at,
+	 *     MAX(a.posted_at) AS max_posted_at
+	 * FROM
+	 *     todo AS a
+	 * GROUP BY
+	 *     a.posted_by
+	 * ORDER BY
+	 *     a.posted_by ASC
+	 * </pre>
+	 */
 	@Test
 	public void 集計関数を指定する() {
 
@@ -208,6 +290,24 @@ public class SelectClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     (
+	 *         SELECT b.name FROM account AS b
+	 *         WHERE
+	 *             b.login_id = a.posted_by
+	 *             AND
+	 *             b.deleted_flg = 0
+	 *     ) AS poster_name
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void スカラサブクエリを指定する() {
 
@@ -237,6 +337,23 @@ public class SelectClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     b.name AS poster_name
+	 * FROM
+	 *     todo AS a
+	 *     LEFT JOIN account AS b
+	 *     ON
+	 *         b.login_id = a.posted_by
+	 *         AND
+	 *         b.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 結合した列を指定する() {
 
@@ -263,6 +380,19 @@ public class SelectClauseTest {
 		}
 	}
 
+/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.due_dt,
+	 *     '2015-02-01',
+	 *     a.due_dt < '2015-02-01' AS due
+	 * FROM
+	 *     todo AS a
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 定数を列として指定する() {
 
