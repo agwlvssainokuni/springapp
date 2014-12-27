@@ -37,7 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
-import cherry.querytutorial.db.gen.query.QPriorityMaster;
+import cherry.querytutorial.db.gen.query.QAccount;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
@@ -212,28 +212,28 @@ public class SelectClauseTest {
 	public void スカラサブクエリを指定する() {
 
 		QTodo a = new QTodo("a");
-		QPriorityMaster b = new QPriorityMaster("b");
+		QAccount b = new QAccount("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.orderBy(a.id.asc());
 
-		Expression<String> priorityLabel = new SQLSubQuery()
+		Expression<String> posterName = new SQLSubQuery()
 				.from(b)
-				.where(b.priorityCd.eq(a.priorityCd),
+				.where(b.loginId.eq(a.postedBy),
 						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.unique(b.priorityLabel).as("priority_label");
+				.unique(b.name).as("poster_name");
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.priorityCd, priorityLabel));
+				a.postedBy, posterName));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			Integer valPriorityCd = tuple.get(a.priorityCd);
-			String valPriorityLabel = tuple.get(priorityLabel);
+			String valPostedBy = tuple.get(a.postedBy);
+			String valPosterName = tuple.get(posterName);
 			System.out.println(MessageFormat.format(
 					"{0}: priorityCd={1}, priorityLabel={2}", valId,
-					valPriorityCd, valPriorityLabel));
+					valPostedBy, valPosterName));
 		}
 	}
 
@@ -241,25 +241,25 @@ public class SelectClauseTest {
 	public void 結合した列を指定する() {
 
 		QTodo a = new QTodo("a");
-		QPriorityMaster b = new QPriorityMaster("b");
+		QAccount b = new QAccount("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)
 				.join(b)
-				.on(b.priorityCd.eq(a.priorityCd),
+				.on(b.loginId.eq(a.postedBy),
 						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.priorityCd, b.priorityLabel));
+				a.postedBy, b.name.as("poster_name")));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			Integer valPriorityCd = tuple.get(a.priorityCd);
-			String valPriorityLabel = tuple.get(b.priorityLabel);
+			String valPostedBy = tuple.get(a.postedBy);
+			String valPosterName = tuple.get(b.name.as("poster_name"));
 			System.out.println(MessageFormat.format(
 					"{0}: priorityCd={1}, priorityLabel={2}", valId,
-					valPriorityCd, valPriorityLabel));
+					valPostedBy, valPosterName));
 		}
 	}
 
