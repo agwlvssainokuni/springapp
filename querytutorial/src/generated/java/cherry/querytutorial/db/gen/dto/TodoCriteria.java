@@ -566,66 +566,6 @@ public class TodoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andPriorityCdIsNull() {
-            addCriterion("PRIORITY_CD is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdIsNotNull() {
-            addCriterion("PRIORITY_CD is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdEqualTo(Integer value) {
-            addCriterion("PRIORITY_CD =", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdNotEqualTo(Integer value) {
-            addCriterion("PRIORITY_CD <>", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdGreaterThan(Integer value) {
-            addCriterion("PRIORITY_CD >", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("PRIORITY_CD >=", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdLessThan(Integer value) {
-            addCriterion("PRIORITY_CD <", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdLessThanOrEqualTo(Integer value) {
-            addCriterion("PRIORITY_CD <=", value, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdIn(List<Integer> values) {
-            addCriterion("PRIORITY_CD in", values, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdNotIn(List<Integer> values) {
-            addCriterion("PRIORITY_CD not in", values, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdBetween(Integer value1, Integer value2) {
-            addCriterion("PRIORITY_CD between", value1, value2, "priorityCd");
-            return (Criteria) this;
-        }
-
-        public Criteria andPriorityCdNotBetween(Integer value1, Integer value2) {
-            addCriterion("PRIORITY_CD not between", value1, value2, "priorityCd");
-            return (Criteria) this;
-        }
-
         public Criteria andDescriptionIsNull() {
             addCriterion("DESCRIPTION is null");
             return (Criteria) this;

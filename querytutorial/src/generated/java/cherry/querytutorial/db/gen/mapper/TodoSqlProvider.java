@@ -79,10 +79,6 @@ public class TodoSqlProvider {
             VALUES("DONE_FLG", "#{doneFlg,jdbcType=INTEGER}");
         }
         
-        if (record.getPriorityCd() != null) {
-            VALUES("PRIORITY_CD", "#{priorityCd,jdbcType=INTEGER}");
-        }
-        
         if (record.getDescription() != null) {
             VALUES("DESCRIPTION", "#{description,jdbcType=VARCHAR}");
         }
@@ -124,7 +120,6 @@ public class TodoSqlProvider {
         SELECT("DUE_DT");
         SELECT("DONE_AT");
         SELECT("DONE_FLG");
-        SELECT("PRIORITY_CD");
         SELECT("DESCRIPTION");
         SELECT("UPDATED_AT");
         SELECT("CREATED_AT");
@@ -177,10 +172,6 @@ public class TodoSqlProvider {
             SET("DONE_FLG = #{record.doneFlg,jdbcType=INTEGER}");
         }
         
-        if (record.getPriorityCd() != null) {
-            SET("PRIORITY_CD = #{record.priorityCd,jdbcType=INTEGER}");
-        }
-        
         if (record.getDescription() != null) {
             SET("DESCRIPTION = #{record.description,jdbcType=VARCHAR}");
         }
@@ -221,7 +212,6 @@ public class TodoSqlProvider {
         SET("DUE_DT = #{record.dueDt,jdbcType=DATE}");
         SET("DONE_AT = #{record.doneAt,jdbcType=TIMESTAMP}");
         SET("DONE_FLG = #{record.doneFlg,jdbcType=INTEGER}");
-        SET("PRIORITY_CD = #{record.priorityCd,jdbcType=INTEGER}");
         SET("DESCRIPTION = #{record.description,jdbcType=VARCHAR}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
         SET("CREATED_AT = #{record.createdAt,jdbcType=TIMESTAMP}");
@@ -261,10 +251,6 @@ public class TodoSqlProvider {
         
         if (record.getDoneFlg() != null) {
             SET("DONE_FLG = #{doneFlg,jdbcType=INTEGER}");
-        }
-        
-        if (record.getPriorityCd() != null) {
-            SET("PRIORITY_CD = #{priorityCd,jdbcType=INTEGER}");
         }
         
         if (record.getDescription() != null) {

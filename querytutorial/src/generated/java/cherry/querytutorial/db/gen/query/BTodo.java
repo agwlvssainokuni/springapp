@@ -28,8 +28,6 @@ public class BTodo {
 
     private String postedBy;
 
-    private Integer priorityCd;
-
     private org.joda.time.LocalDateTime updatedAt;
 
     public org.joda.time.LocalDateTime getCreatedAt() {
@@ -112,14 +110,6 @@ public class BTodo {
         this.postedBy = postedBy;
     }
 
-    public Integer getPriorityCd() {
-        return priorityCd;
-    }
-
-    public void setPriorityCd(Integer priorityCd) {
-        this.priorityCd = priorityCd;
-    }
-
     public org.joda.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -129,7 +119,7 @@ public class BTodo {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", doneAt = " + doneAt + ", doneFlg = " + doneFlg + ", dueDt = " + dueDt + ", id = " + id + ", lockVersion = " + lockVersion + ", postedAt = " + postedAt + ", postedBy = " + postedBy + ", priorityCd = " + priorityCd + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", doneAt = " + doneAt + ", doneFlg = " + doneFlg + ", dueDt = " + dueDt + ", id = " + id + ", lockVersion = " + lockVersion + ", postedAt = " + postedAt + ", postedBy = " + postedBy + ", updatedAt = " + updatedAt;
     }
 
 }

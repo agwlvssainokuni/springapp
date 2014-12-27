@@ -28,13 +28,10 @@
 			targetProject="./src/generated/java" />
 		<javaClientGenerator targetPackage="cherry.querytutorial.db.gen.mapper"
 			type="ANNOTATEDMAPPER" targetProject="./src/generated/java" />
-		<table tableName="priority_master">
+		<table tableName="account">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 		<table tableName="todo">
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		<table tableName="note">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>

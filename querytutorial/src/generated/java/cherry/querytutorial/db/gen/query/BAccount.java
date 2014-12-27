@@ -3,10 +3,10 @@ package cherry.querytutorial.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BPriorityMaster is a Querydsl bean type
+ * BAccount is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BPriorityMaster {
+public class BAccount {
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -16,9 +16,9 @@ public class BPriorityMaster {
 
     private Integer lockVersion;
 
-    private Integer priorityCd;
+    private String loginId;
 
-    private String priorityLabel;
+    private String name;
 
     private org.joda.time.LocalDateTime updatedAt;
 
@@ -54,20 +54,20 @@ public class BPriorityMaster {
         this.lockVersion = lockVersion;
     }
 
-    public Integer getPriorityCd() {
-        return priorityCd;
+    public String getLoginId() {
+        return loginId;
     }
 
-    public void setPriorityCd(Integer priorityCd) {
-        this.priorityCd = priorityCd;
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
     }
 
-    public String getPriorityLabel() {
-        return priorityLabel;
+    public String getName() {
+        return name;
     }
 
-    public void setPriorityLabel(String priorityLabel) {
-        this.priorityLabel = priorityLabel;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -79,7 +79,7 @@ public class BPriorityMaster {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", priorityCd = " + priorityCd + ", priorityLabel = " + priorityLabel + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", loginId = " + loginId + ", name = " + name + ", updatedAt = " + updatedAt;
     }
 
 }

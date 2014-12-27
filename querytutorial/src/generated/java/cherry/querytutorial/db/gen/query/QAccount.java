@@ -15,14 +15,14 @@ import java.sql.Types;
 
 
 /**
- * QPriorityMaster is a Querydsl query type for BPriorityMaster
+ * QAccount is a Querydsl query type for BAccount
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QPriorityMaster extends com.mysema.query.sql.RelationalPathBase<BPriorityMaster> {
+public class QAccount extends com.mysema.query.sql.RelationalPathBase<BAccount> {
 
-    private static final long serialVersionUID = 646196113;
+    private static final long serialVersionUID = -1569540574;
 
-    public static final QPriorityMaster priorityMaster = new QPriorityMaster("PRIORITY_MASTER");
+    public static final QAccount account = new QAccount("ACCOUNT");
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
@@ -32,31 +32,31 @@ public class QPriorityMaster extends com.mysema.query.sql.RelationalPathBase<BPr
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
-    public final NumberPath<Integer> priorityCd = createNumber("priorityCd", Integer.class);
+    public final StringPath loginId = createString("loginId");
 
-    public final StringPath priorityLabel = createString("priorityLabel");
+    public final StringPath name = createString("name");
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<BPriorityMaster> priorityMasterPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BAccount> accountPkc = createPrimaryKey(id);
 
-    public QPriorityMaster(String variable) {
-        super(BPriorityMaster.class, forVariable(variable), "PUBLIC", "PRIORITY_MASTER");
+    public QAccount(String variable) {
+        super(BAccount.class, forVariable(variable), "PUBLIC", "ACCOUNT");
         addMetadata();
     }
 
-    public QPriorityMaster(String variable, String schema, String table) {
-        super(BPriorityMaster.class, forVariable(variable), schema, table);
+    public QAccount(String variable, String schema, String table) {
+        super(BAccount.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QPriorityMaster(Path<? extends BPriorityMaster> path) {
-        super(path.getType(), path.getMetadata(), "PUBLIC", "PRIORITY_MASTER");
+    public QAccount(Path<? extends BAccount> path) {
+        super(path.getType(), path.getMetadata(), "PUBLIC", "ACCOUNT");
         addMetadata();
     }
 
-    public QPriorityMaster(PathMetadata<?> metadata) {
-        super(BPriorityMaster.class, metadata, "PUBLIC", "PRIORITY_MASTER");
+    public QAccount(PathMetadata<?> metadata) {
+        super(BAccount.class, metadata, "PUBLIC", "ACCOUNT");
         addMetadata();
     }
 
@@ -65,8 +65,8 @@ public class QPriorityMaster extends com.mysema.query.sql.RelationalPathBase<BPr
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(priorityCd, ColumnMetadata.named("PRIORITY_CD").withIndex(2).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(priorityLabel, ColumnMetadata.named("PRIORITY_LABEL").withIndex(3).ofType(Types.VARCHAR).withSize(10).notNull());
+        addMetadata(loginId, ColumnMetadata.named("LOGIN_ID").withIndex(2).ofType(Types.VARCHAR).withSize(100).notNull());
+        addMetadata(name, ColumnMetadata.named("NAME").withIndex(3).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 
