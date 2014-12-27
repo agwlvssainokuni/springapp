@@ -46,6 +46,23 @@ public class FromClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     b.name AS poster_name
+	 * FROM
+	 *     todo AS a
+	 *     JOIN account AS b
+	 *     ON
+	 *         b.login_id = a.posted_by
+	 *         AND
+	 *         b.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 内部結合() {
 
@@ -73,6 +90,23 @@ public class FromClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     b.name AS poster_name
+	 * FROM
+	 *     todo AS a
+	 *     LEFT JOIN account AS b
+	 *     ON
+	 *         b.login_id = a.posted_by
+	 *         AND
+	 *         b.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 左外部結合() {
 
@@ -100,6 +134,23 @@ public class FromClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     b.name AS poster_name
+	 * FROM
+	 *     todo AS a
+	 *     RIGHT JOIN account AS b
+	 *     ON
+	 *         b.login_id = a.posted_by
+	 *         AND
+	 *         b.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void 右外部結合() {
 
@@ -127,6 +178,23 @@ public class FromClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     a.posted_by,
+	 *     b.name AS poster_name
+	 * FROM
+	 *     todo AS a
+	 *     FULL JOIN account AS b
+	 *     ON
+	 *         b.login_id = a.posted_by
+	 *         AND
+	 *         b.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	// @Test
 	public void 全外部結合() {
 
