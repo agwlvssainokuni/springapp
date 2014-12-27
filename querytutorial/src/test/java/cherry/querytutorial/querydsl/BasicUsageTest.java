@@ -33,8 +33,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
-import cherry.querytutorial.db.gen.dto.PriorityMaster;
-import cherry.querytutorial.db.gen.query.QPriorityMaster;
+import cherry.querytutorial.db.gen.dto.Account;
+import cherry.querytutorial.db.gen.query.QAccount;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -53,7 +53,7 @@ public class BasicUsageTest {
 
 	@Test
 	public void test全列取得Tuple受け() {
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
@@ -64,8 +64,8 @@ public class BasicUsageTest {
 		assertThat(list.size(), is(3));
 		for (Tuple tuple : list) {
 			assertThat(tuple.get(a.id), is(not(nullValue())));
-			assertThat(tuple.get(a.priorityCd), is(not(nullValue())));
-			assertThat(tuple.get(a.priorityLabel), is(not(nullValue())));
+			assertThat(tuple.get(a.loginId), is(not(nullValue())));
+			assertThat(tuple.get(a.name), is(not(nullValue())));
 			assertThat(tuple.get(a.updatedAt), is(not(nullValue())));
 			assertThat(tuple.get(a.createdAt), is(not(nullValue())));
 			assertThat(tuple.get(a.lockVersion), is(not(nullValue())));
@@ -76,7 +76,7 @@ public class BasicUsageTest {
 	@Test
 	public void test列指定Tuple受け() {
 
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -84,14 +84,14 @@ public class BasicUsageTest {
 		query.orderBy(a.id.asc());
 
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.priorityCd, a.priorityLabel));
+				a.loginId, a.name));
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
 		for (Tuple tuple : list) {
 			assertThat(tuple.get(a.id), is(nullValue()));
-			assertThat(tuple.get(a.priorityCd), is(not(nullValue())));
-			assertThat(tuple.get(a.priorityLabel), is(not(nullValue())));
+			assertThat(tuple.get(a.loginId), is(not(nullValue())));
+			assertThat(tuple.get(a.name), is(not(nullValue())));
 			assertThat(tuple.get(a.updatedAt), is(nullValue()));
 			assertThat(tuple.get(a.createdAt), is(nullValue()));
 			assertThat(tuple.get(a.lockVersion), is(nullValue()));
@@ -102,22 +102,22 @@ public class BasicUsageTest {
 	@Test
 	public void test全列取得Bean受け_QBean() {
 
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
-				new QBean<PriorityMaster>(PriorityMaster.class, a.all()));
+		List<Account> list = queryDslJdbcOperations.query(query,
+				new QBean<Account>(Account.class, a.all()));
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (PriorityMaster entity : list) {
+		for (Account entity : list) {
 			assertThat(entity.getId(), is(not(nullValue())));
-			assertThat(entity.getPriorityCd(), is(not(nullValue())));
-			assertThat(entity.getPriorityLabel(), is(not(nullValue())));
+			assertThat(entity.getLoginId(), is(not(nullValue())));
+			assertThat(entity.getName(), is(not(nullValue())));
 			assertThat(entity.getUpdatedAt(), is(not(nullValue())));
 			assertThat(entity.getCreatedAt(), is(not(nullValue())));
 			assertThat(entity.getLockVersion(), is(not(nullValue())));
@@ -128,23 +128,22 @@ public class BasicUsageTest {
 	@Test
 	public void test列指定Bean受け_QBean() {
 
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
-				new QBean<PriorityMaster>(PriorityMaster.class, a.priorityCd,
-						a.priorityLabel));
+		List<Account> list = queryDslJdbcOperations.query(query,
+				new QBean<Account>(Account.class, a.loginId, a.name));
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (PriorityMaster entity : list) {
+		for (Account entity : list) {
 			assertThat(entity.getId(), is(nullValue()));
-			assertThat(entity.getPriorityCd(), is(not(nullValue())));
-			assertThat(entity.getPriorityLabel(), is(not(nullValue())));
+			assertThat(entity.getLoginId(), is(not(nullValue())));
+			assertThat(entity.getName(), is(not(nullValue())));
 			assertThat(entity.getUpdatedAt(), is(nullValue()));
 			assertThat(entity.getCreatedAt(), is(nullValue()));
 			assertThat(entity.getLockVersion(), is(nullValue()));
@@ -155,22 +154,22 @@ public class BasicUsageTest {
 	@Test
 	public void test全列取得Bean受け_RowMapper() {
 
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(PriorityMaster.class), a.all());
+		List<Account> list = queryDslJdbcOperations.query(query,
+				rowMapperCreator.create(Account.class), a.all());
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (PriorityMaster entity : list) {
+		for (Account entity : list) {
 			assertThat(entity.getId(), is(not(nullValue())));
-			assertThat(entity.getPriorityCd(), is(not(nullValue())));
-			assertThat(entity.getPriorityLabel(), is(not(nullValue())));
+			assertThat(entity.getLoginId(), is(not(nullValue())));
+			assertThat(entity.getName(), is(not(nullValue())));
 			assertThat(entity.getUpdatedAt(), is(not(nullValue())));
 			assertThat(entity.getCreatedAt(), is(not(nullValue())));
 			assertThat(entity.getLockVersion(), is(not(nullValue())));
@@ -181,23 +180,22 @@ public class BasicUsageTest {
 	@Test
 	public void test列指定Bean受け_RowMapper() {
 
-		QPriorityMaster a = new QPriorityMaster("a");
+		QAccount a = new QAccount("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(PriorityMaster.class), a.priorityCd,
-				a.priorityLabel);
+		List<Account> list = queryDslJdbcOperations.query(query,
+				rowMapperCreator.create(Account.class), a.loginId, a.name);
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (PriorityMaster entity : list) {
+		for (Account entity : list) {
 			assertThat(entity.getId(), is(nullValue()));
-			assertThat(entity.getPriorityCd(), is(not(nullValue())));
-			assertThat(entity.getPriorityLabel(), is(not(nullValue())));
+			assertThat(entity.getLoginId(), is(not(nullValue())));
+			assertThat(entity.getName(), is(not(nullValue())));
 			assertThat(entity.getUpdatedAt(), is(nullValue()));
 			assertThat(entity.getCreatedAt(), is(nullValue()));
 			assertThat(entity.getLockVersion(), is(nullValue()));
