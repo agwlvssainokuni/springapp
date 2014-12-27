@@ -70,7 +70,7 @@ public class SignupRequestHelperImpl implements SignupRequestHelper,
 
 	@Transactional
 	@Override
-	public int createSignupRequest(String mailAddr, String token,
+	public long createSignupRequest(String mailAddr, String token,
 			LocalDateTime appliedAt) {
 
 		Map<String, Object> paramMap = new HashMap<>();
@@ -85,7 +85,7 @@ public class SignupRequestHelperImpl implements SignupRequestHelper,
 				count == 1,
 				"failed to create signup_request: mailAddr={0}, token={1}, appliedAt={2}, count={3}",
 				mailAddr, token, appliedAt, count);
-		return keyHolder.getKey().intValue();
+		return keyHolder.getKey().longValue();
 	}
 
 	@Transactional(readOnly = true)

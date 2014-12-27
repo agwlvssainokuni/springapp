@@ -17,6 +17,7 @@
 package cherry.spring.common.helper.signup;
 
 import static com.google.common.base.Preconditions.checkState;
+import static com.mysema.query.support.Expressions.cases;
 
 import java.sql.SQLException;
 
@@ -32,8 +33,7 @@ import cherry.spring.common.db.gen.query.QSignupRequest;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.sql.dml.SQLInsertClause;
-import com.mysema.query.types.Expression;
-import com.mysema.query.types.expr.CaseBuilder;
+import com.mysema.query.types.expr.BooleanExpression;
 
 public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 
@@ -42,25 +42,25 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 
 	@Transactional
 	@Override
-	public int createSignupRequest(final String mailAddr, final String token,
+	public long createSignupRequest(final String mailAddr, final String token,
 			final LocalDateTime appliedAt) {
 		final QSignupRequest a = new QSignupRequest("a");
-		SqlInsertWithKeyCallback<Integer> callback = new SqlInsertWithKeyCallback<Integer>() {
+		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
 			@Override
-			public Integer doInSqlInsertWithKeyClause(SQLInsertClause insert)
+			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert)
 					throws SQLException {
 				insert.set(a.mailAddr, mailAddr);
 				insert.set(a.token, token);
 				insert.set(a.appliedAt, appliedAt);
-				return insert.executeWithKey(Integer.class);
+				return insert.executeWithKey(Long.class);
 			}
 		};
-		Integer id = queryDslJdbcOperations.insertWithKey(a, callback);
+		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
 		checkState(
 				id != null,
 				"failed to create QSignupRequest: mailAddr={0}, token={1}, appliedAt={2}",
 				mailAddr, token, appliedAt);
-		return id.intValue();
+		return id.longValue();
 	}
 
 	@Transactional(readOnly = true)
@@ -69,14 +69,14 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 			LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
 
 		QSignupRequest a = new QSignupRequest("a");
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.mailAddr.eq(mailAddr));
-		query.where(a.appliedAt.goe(rangeFrom));
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-		Expression<Boolean> cases = (new CaseBuilder())
-				.when(a.id.count().eq(0L)).then(true)
+		SQLQuery query = queryDslJdbcOperations
+				.newSqlQuery()
+				.from(a)
+				.where(a.mailAddr.eq(mailAddr), a.appliedAt.goe(rangeFrom),
+						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+
+		BooleanExpression cases = cases().when(a.id.count().eq(0L)).then(true)
 				.when(a.id.count().goe(numOfReq)).then(false)
 				.when(a.appliedAt.max().goe(intervalFrom)).then(false)
 				.otherwise(true);
@@ -90,21 +90,20 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 			LocalDateTime validFrom) {
 
 		QSignupRequest a = new QSignupRequest("a");
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.mailAddr.eq(mailAddr));
-		query.where(a.token.eq(token));
-		query.where(a.appliedAt.goe(validFrom));
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-
 		QSignupRequest b = new QSignupRequest("b");
-		SQLSubQuery subquery = new SQLSubQuery();
-		subquery.from(b);
-		subquery.where(b.mailAddr.eq(a.mailAddr));
-		subquery.where(b.appliedAt.gt(a.appliedAt));
-		subquery.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-		query.where(subquery.notExists());
+		SQLQuery query = queryDslJdbcOperations
+				.newSqlQuery()
+				.from(a)
+				.where(a.mailAddr.eq(mailAddr), a.token.eq(token),
+						a.appliedAt.goe(validFrom),
+						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.where(new SQLSubQuery()
+						.from(b)
+						.where(b.mailAddr.eq(a.mailAddr),
+								b.appliedAt.gt(a.appliedAt),
+								b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+						.notExists());
 
 		return queryDslJdbcOperations
 				.queryForObject(query, a.id.count().gt(0L));

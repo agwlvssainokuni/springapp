@@ -20,7 +20,7 @@ import org.joda.time.LocalDateTime;
 
 public interface SignupRequestHelper {
 
-	int createSignupRequest(String mailAddr, String token,
+	long createSignupRequest(String mailAddr, String token,
 			LocalDateTime appliedAt);
 
 	boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom,
