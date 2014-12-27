@@ -3,6 +3,7 @@ INSERT INTO priority_master (
 	priority_label
 )
 VALUES
+(0, '優先度：指定なし'),
 (1, '優先度：高'),
 (2, '優先度：中'),
 (3, '優先度：小');
