@@ -16,6 +16,7 @@
 
 package cherry.querytutorial.querydsl;
 
+import static com.mysema.query.support.Expressions.as;
 import static com.mysema.query.support.Expressions.cases;
 import static com.mysema.query.support.Expressions.constant;
 import static org.hamcrest.Matchers.empty;
@@ -267,8 +268,9 @@ public class SelectClauseTest {
 
 		QTodo a = new QTodo("a");
 
-		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
-		Expression<Boolean> due = a.dueDt.after(baseDt);
+		Expression<LocalDate> dt = constant(new LocalDate(2015, 2, 1));
+		Expression<LocalDate> baseDt = as(dt, "base_dt");
+		Expression<Boolean> due = a.dueDt.lt(dt).as("due");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
