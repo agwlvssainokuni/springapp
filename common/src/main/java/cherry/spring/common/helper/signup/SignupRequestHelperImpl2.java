@@ -105,8 +105,7 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 								b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
 						.notExists());
 
-		return queryDslJdbcOperations
-				.queryForObject(query, a.id.count().gt(0L));
+		return queryDslJdbcOperations.exists(query);
 	}
 
 }
