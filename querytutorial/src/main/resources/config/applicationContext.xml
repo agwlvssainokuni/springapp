@@ -80,4 +80,53 @@
 	<!-- 業務日時 -->
 	<bean id="bizDateTime" class="cherry.foundation.bizdtm.SimpleBizDateTime" />
 
+	<bean id="rowMapperCreator"
+		class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.ResourceBundle"
+					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="org.joda.time.format.DateTimeFormatter"
+					value="cherry.foundation.type.editor.DateTimeFormatEditor" />
+			</map>
+		</property>
+	</bean>
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="registerDefaultFormatters" value="false" />
+		<property name="formatters">
+			<set>
+				<bean
+					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+				<bean class="org.springframework.format.number.NumberFormatter">
+					<property name="pattern" value="#,##0" />
+				</bean>
+			</set>
+		</property>
+		<property name="formatterRegistrars">
+			<set>
+				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
+				<bean class="cherry.foundation.type.format.DelegateFormatterRegistrar">
+					<property name="formatters">
+						<list>
+							<bean
+								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+								<property name="dateFormatter" value="yyyy/MM/dd" />
+								<property name="timeFormatter" value="HH:mm:ss" />
+								<property name="dateTimeFormatter" value="yyyy/MM/dd HH:mm:ss" />
+							</bean>
+							<bean
+								class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
+							<bean
+								class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
+						</list>
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+
 </beans>
