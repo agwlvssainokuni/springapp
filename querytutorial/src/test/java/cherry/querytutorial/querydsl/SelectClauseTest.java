@@ -172,4 +172,35 @@ public class SelectClauseTest {
 					valDueDt, valDoneFlg, valDoneDesc));
 		}
 	}
+
+	@Test
+	public void 集計関数を指定する() {
+
+		QTodo a = new QTodo("a");
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		query.orderBy(a.postedBy.asc());
+
+		Expression<Long> cnt = a.id.count().as("cnt");
+		Expression<LocalDateTime> minPostedAt = a.postedAt.min().as(
+				"min_posted_at");
+		Expression<LocalDateTime> maxPostedAt = a.postedAt.max().as(
+				"max_posted_at");
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, cnt, minPostedAt, maxPostedAt));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			String valPostedBy = tuple.get(a.postedBy);
+			Long valCnt = tuple.get(cnt);
+			LocalDateTime valMinPostedAt = tuple.get(minPostedAt);
+			LocalDateTime valMaxPostedAt = tuple.get(maxPostedAt);
+			System.out.println(MessageFormat.format(
+					"{0}: cnt={1}, minPostedAt={2}, maxPostedAt={3}",
+					valPostedBy, valCnt, valMinPostedAt, valMaxPostedAt));
+		}
+	}
+
 }
