@@ -18,6 +18,7 @@ package cherry.querytutorial.querydsl;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -29,8 +30,9 @@ import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.querytutorial.db.gen.dto.Todo;
-import cherry.querytutorial.db.gen.query.QTodo;
+import cherry.foundation.type.DeletedFlag;
+import cherry.querytutorial.db.gen.dto.PriorityMaster;
+import cherry.querytutorial.db.gen.query.QPriorityMaster;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -46,43 +48,51 @@ public class BasicUsageTest {
 
 	@Test
 	public void test全列取得Tuple受け() {
+		QPriorityMaster a = new QPriorityMaster("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(QTodo.todo);
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				QTodo.todo.all()));
-		assertThat(list, is(empty()));
+		query.from(a);
+		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(a.id.asc());
+		List<Tuple> list = queryDslJdbcOperations.query(query,
+				new QTuple(a.all()));
+		assertThat(list, is(not(empty())));
 	}
 
 	@Test
 	public void test列指定Tuple受け() {
+		QPriorityMaster a = new QPriorityMaster("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(QTodo.todo);
+		query.from(a);
+		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(a.id.asc());
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				QTodo.todo.id, QTodo.todo.postedBy, QTodo.todo.postedAt,
-				QTodo.todo.dueDt, QTodo.todo.doneAt, QTodo.todo.doneFlg,
-				QTodo.todo.priorityCd, QTodo.todo.description));
-		assertThat(list, is(empty()));
+				a.priorityCd, a.priorityLabel));
+		assertThat(list, is(not(empty())));
 	}
 
 	@Test
 	public void test全列取得Bean受け() {
+		QPriorityMaster a = new QPriorityMaster("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(QTodo.todo);
-		List<Todo> list = queryDslJdbcOperations.query(query, new QBean<Todo>(
-				Todo.class, QTodo.todo.all()));
-		assertThat(list, is(empty()));
+		query.from(a);
+		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(a.id.asc());
+		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
+				new QBean<PriorityMaster>(PriorityMaster.class, a.all()));
+		assertThat(list, is(not(empty())));
 	}
 
 	@Test
 	public void test列指定Bean受け() {
+		QPriorityMaster a = new QPriorityMaster("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(QTodo.todo);
-		List<Todo> list = queryDslJdbcOperations.query(query, new QBean<Todo>(
-				Todo.class, QTodo.todo.id, QTodo.todo.postedBy,
-				QTodo.todo.postedAt, QTodo.todo.dueDt, QTodo.todo.doneAt,
-				QTodo.todo.doneFlg, QTodo.todo.priorityCd,
-				QTodo.todo.description));
-		assertThat(list, is(empty()));
+		query.from(a);
+		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(a.id.asc());
+		List<PriorityMaster> list = queryDslJdbcOperations.query(query,
+				new QBean<PriorityMaster>(PriorityMaster.class, a.priorityCd,
+						a.priorityLabel));
+		assertThat(list, is(not(empty())));
 	}
 
 }
