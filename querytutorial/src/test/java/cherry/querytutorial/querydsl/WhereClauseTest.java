@@ -35,10 +35,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
+import cherry.foundation.type.FlagCode;
+import cherry.querytutorial.db.gen.query.QAccount;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
 
@@ -119,4 +122,58 @@ public class WhereClauseTest {
 		}
 	}
 
+	@Test
+	public void EXISTS_1() {
+
+		QTodo a = new QTodo("a");
+		QAccount b = new QAccount("b");
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(b);
+		query.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(new SQLSubQuery()
+				.from(a)
+				.where(a.postedBy.eq(b.loginId),
+						a.doneFlg.eq(FlagCode.TRUE.code()),
+						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.exists());
+
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
+				b.loginId));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(b.id);
+			String valLoginId = tuple.get(b.loginId);
+			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
+					valLoginId));
+		}
+	}
+
+	@Test
+	public void IN_1() {
+
+		QTodo a = new QTodo("a");
+		QAccount b = new QAccount("b");
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(b);
+		query.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(b.loginId.in(new SQLSubQuery()
+				.from(a)
+				.where(a.doneFlg.eq(FlagCode.TRUE.code()),
+						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.list(a.postedBy)));
+
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
+				b.loginId));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(b.id);
+			String valLoginId = tuple.get(b.loginId);
+			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
+					valLoginId));
+		}
+	}
 }
