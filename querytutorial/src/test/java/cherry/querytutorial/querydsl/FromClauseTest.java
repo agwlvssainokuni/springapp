@@ -127,4 +127,31 @@ public class FromClauseTest {
 		}
 	}
 
+	// @Test
+	public void 全外部結合() {
+
+		QTodo a = new QTodo("a");
+		QAccount b = new QAccount("b");
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a)
+				.fullJoin(b)
+				.on(b.loginId.eq(a.postedBy),
+						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(a.id.asc());
+
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedBy, b.name.as("poster_name")));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			String valPostedBy = tuple.get(a.postedBy);
+			String valPosterName = tuple.get(b.name.as("poster_name"));
+			System.out.println(MessageFormat.format(
+					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
+					valPosterName));
+		}
+	}
+
 }
