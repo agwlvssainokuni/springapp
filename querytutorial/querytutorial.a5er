@@ -60,66 +60,23 @@ SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
 
-[Relation]
-Entity1=todo
-Entity2=note
-RelationType1=2
-RelationType2=3
-Fields1=id
-Fields2=todo_id
-Cardinarity1=
-Cardinarity2=
-Position="QUERYTUTORIAL",0,1847,8153,1938,R,R
-Dependence=0
-Caption=
-PName=
-ModifiedDateTime=20141227075748
-LineMode=0
-Bar1=185
-Bar2=815
-Bar3=194
-TermPos1=R
-TermPos2=R
-
 [Entity]
-PName=note
-LName=ノート
-Comment=
-TableOption=
-Page=QUERYTUTORIAL
-Left=500
-Top=1150
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="TODO ID","todo_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
-Field="投稿者","posted_by","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
-Field="投稿日時","posted_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
-Field="ノート","description","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
-Index==0,todo_id
-Index==0,posted_by
-EffectMode=None
-Tag=トランザクション
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20141227080102
-Position="QUERYTUTORIAL",500,1150
-
-[Entity]
-PName=priority_master
-LName=優先度マスタ
+PName=account
+LName=利用者アカウント
 Comment=
 TableOption=
 Page=QUERYTUTORIAL
 Left=1500
 Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="優先度コード","priority_cd","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
-Field="優先度表示名","priority_label","*文字列【10】","NOT NULL",,"","",$FFFFFFFF,""
-Index==0,priority_cd
+Field="ログインID","login_id","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="利用者名","name","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,login_id
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141227080109
+ModifiedDateTime=20141228063417
 Position="QUERYTUTORIAL",1500,500
 
 [Entity]
@@ -136,12 +93,11 @@ Field="登校日時","posted_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
 Field="期日","due_dt","*日付","NOT NULL",,"","",$FFFFFFFF,""
 Field="完了日時","done_at","*日時",,,"","",$FFFFFFFF,""
 Field="完了フラグ","done_flg","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
-Field="優先度コード","priority_cd","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
 Field="TODO内容","description","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
 Index==0,posted_by
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141227080040
+ModifiedDateTime=20141228063407
 Position="QUERYTUTORIAL",500,500
