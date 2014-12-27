@@ -232,8 +232,8 @@ public class SelectClauseTest {
 			String valPostedBy = tuple.get(a.postedBy);
 			String valPosterName = tuple.get(posterName);
 			System.out.println(MessageFormat.format(
-					"{0}: priorityCd={1}, priorityLabel={2}", valId,
-					valPostedBy, valPosterName));
+					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
+					valPosterName));
 		}
 	}
 
@@ -258,8 +258,8 @@ public class SelectClauseTest {
 			String valPostedBy = tuple.get(a.postedBy);
 			String valPosterName = tuple.get(b.name.as("poster_name"));
 			System.out.println(MessageFormat.format(
-					"{0}: priorityCd={1}, priorityLabel={2}", valId,
-					valPostedBy, valPosterName));
+					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
+					valPosterName));
 		}
 	}
 
