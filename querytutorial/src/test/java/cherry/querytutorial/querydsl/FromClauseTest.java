@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThat;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
+import cherry.foundation.type.FlagCode;
 import cherry.querytutorial.db.gen.query.QAccount;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.QTuple;
+import com.mysema.query.types.path.PathBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext.xml")
@@ -219,6 +223,37 @@ public class FromClauseTest {
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
+		}
+	}
+
+	@Test
+	public void FROM句に全選択() {
+
+		QTodo a = new QTodo("a");
+		QTodo b = new QTodo("b");
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(
+				new SQLSubQuery()
+						.from(a)
+						.where(a.doneFlg.eq(FlagCode.TRUE.code()),
+								a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+						.list(a.id, a.postedBy, a.postedAt, a.doneAt),
+				new PathBuilder<Tuple>(Tuple.class, "b"));
+		query.orderBy(b.id.asc());
+
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
+				b.postedBy, b.postedAt, b.doneAt));
+
+		assertThat(list, is(not(empty())));
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(b.id);
+			String valPostedBy = tuple.get(b.postedBy);
+			LocalDateTime valPostedAt = tuple.get(b.postedAt);
+			LocalDateTime valDoneAt = tuple.get(b.doneAt);
+			System.out.println(MessageFormat.format(
+					"{0}: postedBy={1}, postedAt={2}, doneAt={3}", valId,
+					valPostedBy, valPostedAt, valDoneAt));
 		}
 	}
 
