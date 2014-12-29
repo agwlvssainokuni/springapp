@@ -16,6 +16,10 @@
 
 package cherry.querytutorial.querydsl;
 
+import static cherry.foundation.querydsl.PathBuilderUtil.dateTimePath;
+import static cherry.foundation.querydsl.PathBuilderUtil.longPath;
+import static cherry.foundation.querydsl.PathBuilderUtil.pathbuilder;
+import static cherry.foundation.querydsl.PathBuilderUtil.stringPath;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -266,13 +270,11 @@ public class FromClauseTest {
 				.list(x.id.as("a_id"), x.postedBy.as("a_posted_by"),
 						x.postedAt.as("a_posted_at"), x.doneAt.as("a_done_at"));
 
-		PathBuilder<Tuple> a = new PathBuilder<Tuple>(Tuple.class, "a");
-		NumberPath<Long> aId = a.getNumber("a_id", Long.class);
-		StringPath aPostedBy = a.getString("a_posted_by");
-		DateTimePath<LocalDateTime> aPostedAt = a.getDateTime("a_posted_at",
-				LocalDateTime.class);
-		DateTimePath<LocalDateTime> aDoneAt = a.getDateTime("a_done_at",
-				LocalDateTime.class);
+		PathBuilder<Tuple> a = pathbuilder(Tuple.class, "a");
+		NumberPath<Long> aId = longPath(a, "a_id");
+		StringPath aPostedBy = stringPath(a, "a_posted_by");
+		DateTimePath<LocalDateTime> aPostedAt = dateTimePath(a, "a_posted_at");
+		DateTimePath<LocalDateTime> aDoneAt = dateTimePath(a, "a_done_at");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(fullQuery, a);
