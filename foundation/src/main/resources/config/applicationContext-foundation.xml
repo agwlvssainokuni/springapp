@@ -114,6 +114,12 @@
 	<!-- アプリケーションコンテキスト照会設定 -->
 	<bean class="cherry.foundation.AppCtxHolder" />
 
+	<!-- メッセージソースユーティリティ設定 -->
+	<bean class="cherry.foundation.util.MessageSourceUtil"
+		factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
 	<!-- パスワードハッシュ設定 -->
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
