@@ -41,7 +41,11 @@ import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.QTuple;
+import com.mysema.query.types.path.DateTimePath;
+import com.mysema.query.types.path.NumberPath;
 import com.mysema.query.types.path.PathBuilder;
+import com.mysema.query.types.path.StringPath;
+import com.mysema.query.types.query.ListSubQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext.xml")
@@ -229,53 +233,60 @@ public class FromClauseTest {
 	/**
 	 * <pre>
 	 * SELECT
-	 *     b.id,
-	 *     b.posted_by,
-	 *     b.posted_at,
-	 *     b.done_at
+	 *     a.a_id,
+	 *     a.a_posted_by,
+	 *     a.a_posted_at,
+	 *     a.a_done_at
 	 * FROM
 	 *     (
 	 *         SELECT
-	 *            a.id,
-	 *            a.posted_by,
-	 *            a.posted_at,
-	 *            a.done_at
+	 *             todo.id        AS a_id,
+	 *             todo.posted_by AS a_posted_by,
+	 *             todo.posted_at AS a_posted_at,
+	 *             todo.done_at   AS a_done_at
 	 *         FROM
-	 *             todo AS a
+	 *             todo AS todo
 	 *         WHERE
-	 *             a.done_flg = 1
+	 *             todo.done_flg = 1
 	 *             AND
-	 *             a.deleted_flg = 0
-	 *     ) AS b
+	 *             todo.deleted_flg = 0
+	 *     ) AS a
 	 * ORDER BY
-	 *     b.id ASC
+	 *     a.a_id ASC
 	 * </pre>
 	 */
 	@Test
 	public void FROM句に全選択() {
 
-		QTodo a = new QTodo("a");
-		QTodo b = new QTodo("b");
+		QTodo x = QTodo.todo;
+		ListSubQuery<Tuple> fullQuery = new SQLSubQuery()
+				.from(x)
+				.where(x.doneFlg.eq(FlagCode.TRUE.code()),
+						x.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.list(x.id.as("a_id"), x.postedBy.as("a_posted_by"),
+						x.postedAt.as("a_posted_at"), x.doneAt.as("a_done_at"));
+
+		PathBuilder<Tuple> a = new PathBuilder<Tuple>(Tuple.class, "a");
+		NumberPath<Long> aId = a.getNumber("a_id", Long.class);
+		StringPath aPostedBy = a.getString("a_posted_by");
+		DateTimePath<LocalDateTime> aPostedAt = a.getDateTime("a_posted_at",
+				LocalDateTime.class);
+		DateTimePath<LocalDateTime> aDoneAt = a.getDateTime("a_done_at",
+				LocalDateTime.class);
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(
-				new SQLSubQuery()
-						.from(a)
-						.where(a.doneFlg.eq(FlagCode.TRUE.code()),
-								a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-						.list(a.id, a.postedBy, a.postedAt, a.doneAt),
-				new PathBuilder<Tuple>(Tuple.class, "b"));
-		query.orderBy(b.id.asc());
+		query.from(fullQuery, a);
+		query.orderBy(aId.asc());
 
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
-				b.postedBy, b.postedAt, b.doneAt));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(aId,
+				aPostedBy, aPostedAt, aDoneAt));
 
 		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
-			Long valId = tuple.get(b.id);
-			String valPostedBy = tuple.get(b.postedBy);
-			LocalDateTime valPostedAt = tuple.get(b.postedAt);
-			LocalDateTime valDoneAt = tuple.get(b.doneAt);
+			Long valId = tuple.get(aId);
+			String valPostedBy = tuple.get(aPostedBy);
+			LocalDateTime valPostedAt = tuple.get(aPostedAt);
+			LocalDateTime valDoneAt = tuple.get(aDoneAt);
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, postedAt={2}, doneAt={3}", valId,
 					valPostedBy, valPostedAt, valDoneAt));
