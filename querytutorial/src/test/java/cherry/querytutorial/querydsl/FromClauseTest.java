@@ -226,6 +226,31 @@ public class FromClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     b.id,
+	 *     b.posted_by,
+	 *     b.posted_at,
+	 *     b.done_at
+	 * FROM
+	 *     (
+	 *         SELECT
+	 *            a.id,
+	 *            a.posted_by,
+	 *            a.posted_at,
+	 *            a.done_at
+	 *         FROM
+	 *             todo AS a
+	 *         WHERE
+	 *             a.done_flg = 1
+	 *             AND
+	 *             a.deleted_flg = 0
+	 *     ) AS b
+	 * ORDER BY
+	 *     b.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void FROM句に全選択() {
 
