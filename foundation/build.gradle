@@ -26,6 +26,7 @@ dependencies {
 	compile "com.fasterxml.jackson.core:jackson-annotations:${versionJackson}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${versionJackson}"
 	compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${versionJackson}"
+	compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${versionJackson}"
 	compile "org.aspectj:aspectjrt:${versionAspectJ}"
 	compile "org.aspectj:aspectjweaver:${versionAspectJ}"
 	compile "aopalliance:aopalliance:${versionAopalliance}"
