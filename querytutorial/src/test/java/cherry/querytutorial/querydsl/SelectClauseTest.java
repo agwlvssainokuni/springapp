@@ -56,8 +56,17 @@ public class SelectClauseTest {
 	/**
 	 * <pre>
 	 * SELECT
-	 *     a.id, a.posted_by, a.posted_at, a.due_dt, a.done_at, a.done_flg, a.description,
-	 *     a.updated_at, a.created_at, a.lock_version, a.deleted_flg
+	 *     a.id,
+	 *     a.posted_by,
+	 *     a.posted_at,
+	 *     a.due_dt,
+	 *     a.done_at,
+	 *     a.done_flg,
+	 *     a.description,
+	 *     a.updated_at,
+	 *     a.created_at,
+	 *     a.lock_version,
+	 *     a.deleted_flg
 	 * FROM
 	 *     todo AS a
 	 * ORDER BY
@@ -85,7 +94,9 @@ public class SelectClauseTest {
 	/**
 	 * <pre>
 	 * SELECT
-	 *     a.id, a.posted_by, a.posted_at
+	 *     a.id,
+	 *     a.posted_by,
+	 *     a.posted_at
 	 * FROM
 	 *     todo AS a
 	 * ORDER BY
