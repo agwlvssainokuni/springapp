@@ -52,7 +52,7 @@ public class BasicUsageTest {
 	private RowMapperCreator rowMapperCreator;
 
 	@Test
-	public void test全列取得Tuple受け() {
+	public void 全列取得Tuple受け() {
 		QAccount a = new QAccount("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -74,7 +74,7 @@ public class BasicUsageTest {
 	}
 
 	@Test
-	public void test列指定Tuple受け() {
+	public void 列指定Tuple受け() {
 
 		QAccount a = new QAccount("a");
 
@@ -100,7 +100,7 @@ public class BasicUsageTest {
 	}
 
 	@Test
-	public void test全列取得Bean受け_QBean() {
+	public void 全列取得Bean受け_QBean() {
 
 		QAccount a = new QAccount("a");
 
@@ -126,7 +126,7 @@ public class BasicUsageTest {
 	}
 
 	@Test
-	public void test列指定Bean受け_QBean() {
+	public void 列指定Bean受け_QBean() {
 
 		QAccount a = new QAccount("a");
 
@@ -152,7 +152,7 @@ public class BasicUsageTest {
 	}
 
 	@Test
-	public void test全列取得Bean受け_RowMapper() {
+	public void 全列取得Bean受け_RowMapper() {
 
 		QAccount a = new QAccount("a");
 
@@ -178,7 +178,7 @@ public class BasicUsageTest {
 	}
 
 	@Test
-	public void test列指定Bean受け_RowMapper() {
+	public void 列指定Bean受け_RowMapper() {
 
 		QAccount a = new QAccount("a");
 
