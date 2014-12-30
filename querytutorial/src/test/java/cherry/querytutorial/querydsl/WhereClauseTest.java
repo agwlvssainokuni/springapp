@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.FlagCode;
-import cherry.querytutorial.db.gen.query.QAccount;
+import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
@@ -126,7 +126,7 @@ public class WhereClauseTest {
 	public void EXISTS_1() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(b);
@@ -154,7 +154,7 @@ public class WhereClauseTest {
 	public void IN_1() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(b);

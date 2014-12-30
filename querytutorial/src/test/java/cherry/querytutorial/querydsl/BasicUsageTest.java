@@ -33,8 +33,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
-import cherry.querytutorial.db.gen.dto.Account;
-import cherry.querytutorial.db.gen.query.QAccount;
+import cherry.querytutorial.db.gen.dto.Author;
+import cherry.querytutorial.db.gen.query.QAuthor;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -53,7 +53,7 @@ public class BasicUsageTest {
 
 	@Test
 	public void 全列取得Tuple受け() {
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
@@ -76,7 +76,7 @@ public class BasicUsageTest {
 	@Test
 	public void 列指定Tuple受け() {
 
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -102,19 +102,19 @@ public class BasicUsageTest {
 	@Test
 	public void 全列取得Bean受け_QBean() {
 
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<Account> list = queryDslJdbcOperations.query(query,
-				new QBean<Account>(Account.class, a.all()));
+		List<Author> list = queryDslJdbcOperations.query(query,
+				new QBean<Author>(Author.class, a.all()));
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (Account entity : list) {
+		for (Author entity : list) {
 			assertThat(entity.getId(), is(not(nullValue())));
 			assertThat(entity.getLoginId(), is(not(nullValue())));
 			assertThat(entity.getName(), is(not(nullValue())));
@@ -128,19 +128,19 @@ public class BasicUsageTest {
 	@Test
 	public void 列指定Bean受け_QBean() {
 
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<Account> list = queryDslJdbcOperations.query(query,
-				new QBean<Account>(Account.class, a.loginId, a.name));
+		List<Author> list = queryDslJdbcOperations.query(query,
+				new QBean<Author>(Author.class, a.loginId, a.name));
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (Account entity : list) {
+		for (Author entity : list) {
 			assertThat(entity.getId(), is(nullValue()));
 			assertThat(entity.getLoginId(), is(not(nullValue())));
 			assertThat(entity.getName(), is(not(nullValue())));
@@ -154,19 +154,19 @@ public class BasicUsageTest {
 	@Test
 	public void 全列取得Bean受け_RowMapper() {
 
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<Account> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(Account.class), a.all());
+		List<Author> list = queryDslJdbcOperations.query(query,
+				rowMapperCreator.create(Author.class), a.all());
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (Account entity : list) {
+		for (Author entity : list) {
 			assertThat(entity.getId(), is(not(nullValue())));
 			assertThat(entity.getLoginId(), is(not(nullValue())));
 			assertThat(entity.getName(), is(not(nullValue())));
@@ -180,19 +180,19 @@ public class BasicUsageTest {
 	@Test
 	public void 列指定Bean受け_RowMapper() {
 
-		QAccount a = new QAccount("a");
+		QAuthor a = new QAuthor("a");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(a.id.asc());
 
-		List<Account> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(Account.class), a.loginId, a.name);
+		List<Author> list = queryDslJdbcOperations.query(query,
+				rowMapperCreator.create(Author.class), a.loginId, a.name);
 
 		assertThat(list, is(not(empty())));
 		assertThat(list.size(), is(3));
-		for (Account entity : list) {
+		for (Author entity : list) {
 			assertThat(entity.getId(), is(nullValue()));
 			assertThat(entity.getLoginId(), is(not(nullValue())));
 			assertThat(entity.getName(), is(not(nullValue())));

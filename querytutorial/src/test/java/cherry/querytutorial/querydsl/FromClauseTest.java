@@ -38,7 +38,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.FlagCode;
-import cherry.querytutorial.db.gen.query.QAccount;
+import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
@@ -66,7 +66,7 @@ public class FromClauseTest {
 	 *     b.name AS poster_name
 	 * FROM
 	 *     todo AS a
-	 *     JOIN account AS b
+	 *     JOIN author AS b
 	 *     ON
 	 *         b.login_id = a.posted_by
 	 *         AND
@@ -79,7 +79,7 @@ public class FromClauseTest {
 	public void 内部結合() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)
@@ -110,7 +110,7 @@ public class FromClauseTest {
 	 *     b.name AS poster_name
 	 * FROM
 	 *     todo AS a
-	 *     LEFT JOIN account AS b
+	 *     LEFT JOIN author AS b
 	 *     ON
 	 *         b.login_id = a.posted_by
 	 *         AND
@@ -123,7 +123,7 @@ public class FromClauseTest {
 	public void 左外部結合() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)
@@ -154,7 +154,7 @@ public class FromClauseTest {
 	 *     b.name AS poster_name
 	 * FROM
 	 *     todo AS a
-	 *     RIGHT JOIN account AS b
+	 *     RIGHT JOIN author AS b
 	 *     ON
 	 *         b.login_id = a.posted_by
 	 *         AND
@@ -167,7 +167,7 @@ public class FromClauseTest {
 	public void 右外部結合() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)
@@ -198,7 +198,7 @@ public class FromClauseTest {
 	 *     b.name AS poster_name
 	 * FROM
 	 *     todo AS a
-	 *     FULL JOIN account AS b
+	 *     FULL JOIN Author AS b
 	 *     ON
 	 *         b.login_id = a.posted_by
 	 *         AND
@@ -211,7 +211,7 @@ public class FromClauseTest {
 	public void 全外部結合() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)

@@ -37,7 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.DeletedFlag;
-import cherry.querytutorial.db.gen.query.QAccount;
+import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
@@ -307,7 +307,7 @@ public class SelectClauseTest {
 	 *     a.id,
 	 *     a.posted_by,
 	 *     (
-	 *         SELECT b.name FROM account AS b
+	 *         SELECT b.name FROM author AS b
 	 *         WHERE
 	 *             b.login_id = a.posted_by
 	 *             AND
@@ -323,7 +323,7 @@ public class SelectClauseTest {
 	public void スカラサブクエリを指定する() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
@@ -356,7 +356,7 @@ public class SelectClauseTest {
 	 *     b.name AS poster_name
 	 * FROM
 	 *     todo AS a
-	 *     LEFT JOIN account AS b
+	 *     LEFT JOIN author AS b
 	 *     ON
 	 *         b.login_id = a.posted_by
 	 *         AND
@@ -369,7 +369,7 @@ public class SelectClauseTest {
 	public void 結合した列を指定する() {
 
 		QTodo a = new QTodo("a");
-		QAccount b = new QAccount("b");
+		QAuthor b = new QAuthor("b");
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a)
