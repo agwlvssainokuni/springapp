@@ -1,11 +1,11 @@
-INSERT INTO account (
+INSERT INTO author (
 	login_id,
 	name
 )
 VALUES
-('user00', '利用者００'),
-('user01', '利用者０１'),
-('user02', '利用者０２')
+('user00', '投稿者００'),
+('user01', '投稿者０１'),
+('user02', '投稿者０２')
 ;
 
 INSERT INTO todo (

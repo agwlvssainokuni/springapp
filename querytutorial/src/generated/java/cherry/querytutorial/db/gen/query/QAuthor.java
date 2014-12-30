@@ -15,14 +15,14 @@ import java.sql.Types;
 
 
 /**
- * QAccount is a Querydsl query type for BAccount
+ * QAuthor is a Querydsl query type for BAuthor
  */
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
-public class QAccount extends com.mysema.query.sql.RelationalPathBase<BAccount> {
+public class QAuthor extends com.mysema.query.sql.RelationalPathBase<BAuthor> {
 
-    private static final long serialVersionUID = -1569540574;
+    private static final long serialVersionUID = -1280433418;
 
-    public static final QAccount account = new QAccount("ACCOUNT");
+    public static final QAuthor author = new QAuthor("AUTHOR");
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
@@ -38,25 +38,25 @@ public class QAccount extends com.mysema.query.sql.RelationalPathBase<BAccount> 
 
     public final DateTimePath<org.joda.time.LocalDateTime> updatedAt = createDateTime("updatedAt", org.joda.time.LocalDateTime.class);
 
-    public final com.mysema.query.sql.PrimaryKey<BAccount> accountPkc = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<BAuthor> authorPkc = createPrimaryKey(id);
 
-    public QAccount(String variable) {
-        super(BAccount.class, forVariable(variable), "PUBLIC", "ACCOUNT");
+    public QAuthor(String variable) {
+        super(BAuthor.class, forVariable(variable), "PUBLIC", "AUTHOR");
         addMetadata();
     }
 
-    public QAccount(String variable, String schema, String table) {
-        super(BAccount.class, forVariable(variable), schema, table);
+    public QAuthor(String variable, String schema, String table) {
+        super(BAuthor.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
-    public QAccount(Path<? extends BAccount> path) {
-        super(path.getType(), path.getMetadata(), "PUBLIC", "ACCOUNT");
+    public QAuthor(Path<? extends BAuthor> path) {
+        super(path.getType(), path.getMetadata(), "PUBLIC", "AUTHOR");
         addMetadata();
     }
 
-    public QAccount(PathMetadata<?> metadata) {
-        super(BAccount.class, metadata, "PUBLIC", "ACCOUNT");
+    public QAuthor(PathMetadata<?> metadata) {
+        super(BAuthor.class, metadata, "PUBLIC", "AUTHOR");
         addMetadata();
     }
 

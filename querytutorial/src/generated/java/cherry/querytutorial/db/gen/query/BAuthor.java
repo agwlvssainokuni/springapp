@@ -3,10 +3,10 @@ package cherry.querytutorial.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BAccount is a Querydsl bean type
+ * BAuthor is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BAccount {
+public class BAuthor {
 
     private org.joda.time.LocalDateTime createdAt;
 

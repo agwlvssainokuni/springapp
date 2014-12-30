@@ -28,7 +28,7 @@
 			targetProject="./src/generated/java" />
 		<javaClientGenerator targetPackage="cherry.querytutorial.db.gen.mapper"
 			type="ANNOTATEDMAPPER" targetProject="./src/generated/java" />
-		<table tableName="account">
+		<table tableName="author">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 		<table tableName="todo">
