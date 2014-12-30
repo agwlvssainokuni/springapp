@@ -1,11 +1,11 @@
 -- Project Name : QueryTutorial
--- Date/Time    : 2014/12/28 6:34:24
+-- Date/Time    : 2014/12/31 6:47:30
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
--- 利用者アカウント
-create table account (
+-- 投稿者
+create table author (
   id BIGINT not null AUTO_INCREMENT
   , login_id VARCHAR(100) not null
   , name VARCHAR(100) not null
@@ -13,11 +13,11 @@ create table account (
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 0 not null
   , deleted_flg INTEGER default 0 not null
-  , constraint account_PKC primary key (id)
+  , constraint author_PKC primary key (id)
 ) ;
 
-create index account_IX1
-  on account(login_id);
+create index author_IX1
+  on author(login_id);
 
 -- TODO
 create table todo (
@@ -38,14 +38,14 @@ create table todo (
 create index todo_IX1
   on todo(posted_by);
 
-comment on table account is '利用者アカウント';
-comment on column account.id is 'ID';
-comment on column account.login_id is 'ログインID';
-comment on column account.name is '利用者名';
-comment on column account.updated_at is '更新日時';
-comment on column account.created_at is '作成日時';
-comment on column account.lock_version is 'ロックバージョン';
-comment on column account.deleted_flg is '削除フラグ';
+comment on table author is '投稿者';
+comment on column author.id is 'ID';
+comment on column author.login_id is 'ログインID';
+comment on column author.name is '投稿者名';
+comment on column author.updated_at is '更新日時';
+comment on column author.created_at is '作成日時';
+comment on column author.lock_version is 'ロックバージョン';
+comment on column author.deleted_flg is '削除フラグ';
 
 comment on table todo is 'TODO';
 comment on column todo.id is 'ID';

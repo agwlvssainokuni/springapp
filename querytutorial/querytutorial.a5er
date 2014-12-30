@@ -61,8 +61,8 @@ ShowTag=1
 ShowCommonAttributes=0
 
 [Entity]
-PName=account
-LName=利用者アカウント
+PName=author
+LName=投稿者
 Comment=
 TableOption=
 Page=QUERYTUTORIAL
@@ -70,13 +70,13 @@ Left=1500
 Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="ログインID","login_id","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
-Field="利用者名","name","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿者名","name","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
 Index==0,login_id
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141228063417
+ModifiedDateTime=20141231064721
 Position="QUERYTUTORIAL",1500,500
 
 [Entity]
