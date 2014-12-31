@@ -16,10 +16,10 @@
 
 package cherry.querytutorial.querydsl;
 
-import static cherry.foundation.querydsl.PathBuilderUtil.dateTimePath;
-import static cherry.foundation.querydsl.PathBuilderUtil.longPath;
-import static cherry.foundation.querydsl.PathBuilderUtil.pathbuilder;
-import static cherry.foundation.querydsl.PathBuilderUtil.stringPath;
+import static cherry.foundation.querydsl.PathExpressions.dateTimePath;
+import static cherry.foundation.querydsl.PathExpressions.longPath;
+import static cherry.foundation.querydsl.PathExpressions.simplePath;
+import static cherry.foundation.querydsl.PathExpressions.stringPath;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -47,7 +47,7 @@ import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.QTuple;
 import com.mysema.query.types.path.DateTimePath;
 import com.mysema.query.types.path.NumberPath;
-import com.mysema.query.types.path.PathBuilder;
+import com.mysema.query.types.path.SimplePath;
 import com.mysema.query.types.path.StringPath;
 import com.mysema.query.types.query.ListSubQuery;
 
@@ -270,7 +270,7 @@ public class FromClauseTest {
 				.list(x.id.as("a_id"), x.postedBy.as("a_posted_by"),
 						x.postedAt.as("a_posted_at"), x.doneAt.as("a_done_at"));
 
-		PathBuilder<Tuple> a = pathbuilder(Tuple.class, "a");
+		SimplePath<Tuple> a = simplePath("a");
 		NumberPath<Long> aId = longPath(a, "a_id");
 		StringPath aPostedBy = stringPath(a, "a_posted_by");
 		DateTimePath<LocalDateTime> aPostedAt = dateTimePath(a, "a_posted_at");
