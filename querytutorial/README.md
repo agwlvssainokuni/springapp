@@ -166,7 +166,7 @@ SELECT文
 #### 加減乗除
 数値カラムのメタデータ(`NumberExpression`クラス)に下記の算術計算メソッドが定義されています。これを使用してください。
 
-|  #| 演算子  | メソッド名         |
+|  #| 演算子  | メソッド           |
 |--:|:-------|:--------------------|
 |  1| +       | `add(カラム)`      |
 |  2| -       | `subtract(カラム)` |
@@ -180,7 +180,7 @@ SELECT文
 #### 数値関数(インスタンスメソッド)
 数値カラムのメタデータ(`NumberExpression`クラス)のインスタンスメソッドとして下記の数値関数が定義されています。これを使用してください。
 
-|  #| 関数   | メソッド名 |
+|  #| 関数   | メソッド   |
 |--:|:-------|:-----------|
 |  1| abs    | `abs()`    |
 |  2| negate | `negate()` |
@@ -192,7 +192,7 @@ SELECT文
 #### 数値関数(staticメソッド)
 `MathExpressions`クラスのstaticメソッドとして下記の数値関数が定義されています。これを使用してください。
 
-|  #| 関数    | メソッド名                             |
+|  #| 関数    | メソッド                               |
 |--:|:--------|:---------------------------------------|
 |  1| cos     | `cos(カラム)`                          |
 |  2| sin     | `sin(カラム)`                          |
@@ -221,7 +221,7 @@ SELECT文
 #### 文字列関数(インスタンスメソッド)
 文字列カラムのメタデータ(`StringExpression`クラス)のインスタンスメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド名                  |
+|  #| 関数       | メソッド                    |
 |--:|:-----------|:----------------------------|
 |  1| concat     | `concat(カラム)`            |
 |  2| substring  | `substring(カラム, カラム)` |
@@ -234,17 +234,17 @@ SELECT文
 #### 文字列関数(staticメソッド)
 `StringExpressions`クラスのstaticメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
-|  #| 関数    | メソッド名                                                       |
+|  #| 関数    | メソッド                                                         |
 |--:|:--------|:-----------------------------------------------------------------|
 |  1| ltrim   | `ltrim(カラム)`                                                  |
 |  2| rtrim   | `rtrim(カラム)`                                                  |
 |  3| lpad    | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
 |  4| rpad    | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
 
-#### 日時操作関数
+#### 日時操作関数(staticメソッド)
 `SQLExpressions`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド名                           |
+|  #| 関数       | メソッド                             |
 |--:|:-----------|:-------------------------------------|
 |  1| dateadd    | `dateadd(加算部位, カラム, 加算値)`  |
 |  2| datediff   | `datediff(差分部位, カラム, カラム)` |
@@ -257,10 +257,10 @@ SELECT文
 |  9| addMinutes | `addMinutes(カラム, 加算値)`         |
 | 10| addSeconds | `addSeconds(カラム, 加算値)`         |
 
-#### 集約関数
+#### 集約関数(インスタンスメソッド)
 カラムのメタデータのインスタンスメソッドとして下記の集約関数が定義されています。これを使用してください。
 
-|  #| 関数  | メソッド名 |
+|  #| 関数  | メソッド   |
 |--:|:------|:-----------|
 |  1| count | `count()`  |
 |  2| sum   | `sum()`    |
@@ -268,8 +268,47 @@ SELECT文
 |  4| min   | `min()`    |
 
 ### CASE式を指定する
+`CaseBuilder`クラスを使用してCASE式を組み立ててください。
+具体的には、`Expressions.cases()`メソッドにより`CaseBuilder`インスタンスを生成し、`Expressions.cases().when(条件式).then(結果値)...when(条件式).then(結果値).otherwise(結果値)`の形でCASE式を組み立てます。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+
+		/* CASE式を組立てる。 */
+		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
+		Expression<String> doneDesc = cases().when(a.doneFlg.eq(1)).then("実施済")
+				.when(a.dueDt.lt(baseDt)).then("未実施(期限内)")
+				.otherwise("未実施(期限切)");
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.dueDt, a.doneFlg, baseDt, doneDesc));
+```
 
 ### スカラサブクエリを指定する
+`SQLSubQuery`クラスを使用してサブクエリを組み立てください。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+
+		/* スカラサブクエリを組立てる。 */
+		QAuthor b = new QAuthor("b");
+		Expression<String> posterName = new SQLSubQuery()
+				.from(b)
+				.where(b.loginId.eq(a.postedBy),
+						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.unique(b.name).as("poster_name");
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedBy, posterName));
+```
 
 ## FROM句の書き方
 ### 単一表を指定する
