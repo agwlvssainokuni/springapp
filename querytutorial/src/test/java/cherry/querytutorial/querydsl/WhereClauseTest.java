@@ -52,6 +52,27 @@ public class WhereClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     '2015-02-01',
+	 *     '2015-02-01 00:00',
+	 *     a.posted_at,
+	 *     a.due_dt,
+	 *     a.done_at
+	 * FROM
+	 *     todo AS a
+	 * WHERE
+	 *     a.due_dt &lt; '2015-02-01'
+	 *     OR
+	 *     a.posted_at &lt; '2015-02-01 00:00'
+	 *     OR
+	 *     a.done_at &gt; '2015-02-01 00:00'
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void ANDとORの組合せ_1() {
 
@@ -87,6 +108,31 @@ public class WhereClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     a.id,
+	 *     '2015-02-01',
+	 *     '2015-02-01 00:00',
+	 *     a.posted_at,
+	 *     a.due_dt,
+	 *     a.done_at
+	 * FROM
+	 *     todo AS a
+	 * WHERE
+	 *     (
+	 *         a.due_dt &lt; '2015-02-01'
+	 *         OR
+	 *         a.posted_at &lt; '2015-02-01 00:00'
+	 *     )
+	 *     AND
+	 *     a.done_at &gt; '2015-02-01 00:00'
+	 *     OR
+	 *     a.deleted_flg = 0
+	 * ORDER BY
+	 *     a.id ASC
+	 * </pre>
+	 */
 	@Test
 	public void ANDとORの組合せ_2() {
 
@@ -122,6 +168,27 @@ public class WhereClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     b.id,
+	 *     b.login_id
+	 * FROM
+	 *     author AS b
+	 * WHERE
+	 *     b.deleted_flg = 0
+	 *     AND
+	 *     EXISTS (
+	 *         SELECT 1 FROM todo AS a
+	 *         WHERE
+	 *             a.posted_at = b.login_id
+	 *             AND
+	 *             a.done_flg = 1
+	 *             AND
+	 *             a.deleted_flg = 0
+	 *     )
+	 * </pre>
+	 */
 	@Test
 	public void EXISTS_1() {
 
@@ -150,6 +217,25 @@ public class WhereClauseTest {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * SELECT
+	 *     b.id,
+	 *     b.login_id
+	 * FROM
+	 *     author AS b
+	 * WHERE
+	 *     b.deleted_flg = 0
+	 *     AND
+	 *     b.login_id IN (
+	 *         SELECT a.posted_by FROM todo AS a
+	 *         WHERE
+	 *             a.done_flg = 1
+	 *             AND
+	 *             a.deleted_flg = 0
+	 *     )
+	 * </pre>
+	 */
 	@Test
 	public void IN_1() {
 
@@ -176,4 +262,5 @@ public class WhereClauseTest {
 					valLoginId));
 		}
 	}
+
 }
