@@ -98,6 +98,17 @@ SELECT文
 				new QTuple(a.id, a.loginId, a.name));
 ```
 
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.login_id,
+	a.name
+FROM
+	author AS a
+```
+
 #### 全てのカラムを照会する
 テーブルのメタデータの`all()`メソッドを使用してください。
 
@@ -107,6 +118,21 @@ SELECT文
 		query.from(a);
 		List<Tuple> list = queryDslJdbcOperations.query(query,
 				new QTuple(a.all()));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.login_id,
+	a.name,
+	a.updated_at,
+	a.created_at,
+	a.lock_version,
+	a.deleted_flg
+FROM
+	author AS a
 ```
 
 #### アスタリスク「*」を指定して照会する
@@ -120,6 +146,14 @@ SELECT文
 		List<Object[]> list = queryDslJdbcOperations.query(query, Wildcard.all);
 ```
 
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	*
+FROM
+	author AS a
+```
 
 #### カラムにエイリアス(別名)を付与する
 カラムのメタデータの`as(エイリアス名)`メソッドを使用します。
@@ -130,6 +164,17 @@ SELECT文
 		query.from(a);
 		List<Tuple> list = queryDslJdbcOperations.query(query,
 				new QTuple(a.id.as("alias1"), a.loginId.as("alias2"), a.name.as("alias3")));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id		AS alias1,
+	a.login_id	AS alias2,
+	a.name		AS alias3
+FROM
+    author AS a
 ```
 
 ### 定数値を指定する
@@ -147,6 +192,17 @@ SELECT文
 				new QTuple(a.id, val1, val2));
 ```
 
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	1,
+	'string'
+FROM
+	author AS a
+```
+
 #### 定数値のカラムにエイリアス(別名)を付与する
 `Expressions.as(定数カラムオブジェクト, エイリアス名)`メソッドを使用してください。
 (カラムにエイリアス(別名)を付与する場合にも使えますが、カラムのエイリアスは前述の通りカラムのメタデータの`as(エイリアス名)`メソッドを使用してください)
@@ -162,16 +218,27 @@ SELECT文
 				new QTuple(a.id, Expressions.as(val1, "alias1"), Expressions.as(val2, "alias2")));
 ```
 
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	1			AS alias1,
+	'string'	AS alias2
+FROM
+    author AS a
+```
+
 ### カラム(または定数値)に対する算術計算
 #### 加減乗除
 数値カラムのメタデータ(`NumberExpression`クラス)に下記の算術計算メソッドが定義されています。これを使用してください。
 
-|  #| 演算子  | メソッド           |
-|--:|:-------|:--------------------|
-|  1| +(加算) | `add(カラム)`      |
-|  2| -(減算) | `subtract(カラム)` |
-|  3| *(乗算) | `multiply(カラム)` |
-|  4| /(除算) | `divide(カラム)`   |
+|  #| 演算子    | メソッド           |
+|--:|:----------|:-------------------|
+|  1| +(加算)   | `add(カラム)`      |
+|  2| -(減算)   | `subtract(カラム)` |
+|  3| *(乗算)   | `multiply(カラム)` |
+|  4| /(除算)   | `divide(カラム)`   |
 |  5| MOD(剰余) | `mod(カラム)`      |
 
 #### 計算順序
@@ -180,116 +247,116 @@ SELECT文
 #### 数値関数(インスタンスメソッド)
 数値カラムのメタデータ(`NumberExpression`クラス)のインスタンスメソッドとして下記の数値関数が定義されています。これを使用してください。
 
-|  #| 関数   | メソッド   |
-|--:|:-------|:-----------|
-|  1| ABS(絶対値) | `abs()`    |
-|  2| 符号反転 | `negate()` |
-|  3| SQRT(平方根) | `sqrt()`   |
+|  #| 関数              | メソッド   |
+|--:|:------------------|:-----------|
+|  1| ABS(絶対値)       | `abs()`    |
+|  2| 符号反転          | `negate()` |
+|  3| SQRT(平方根)      | `sqrt()`   |
 |  4| FLOOR(整数切下げ) | `floor()`  |
-|  5| CEIL(整数切上げ) | `ceil()`   |
-|  6| ROUND(四捨五入) | `round()`  |
+|  5| CEIL(整数切上げ)  | `ceil()`   |
+|  6| ROUND(四捨五入)   | `round()`  |
 
 #### 数値関数(staticメソッド)
 `MathExpressions`クラスのstaticメソッドとして下記の数値関数が定義されています。これを使用してください。
 
-|  #| 関数    | メソッド                               |
-|--:|:--------|:---------------------------------------|
-|  1| COS(余弦) | `cos(カラム)`                          |
-|  2| SIN(正弦) | `sin(カラム)`                          |
-|  3| TAN(正接) | `tan(カラム)`                          |
-|  4| COT(余接) | `cot(カラム)`                          |
+|  #| 関数               | メソッド                               |
+|--:|:-------------------|:---------------------------------------|
+|  1| COS(余弦)          | `cos(カラム)`                          |
+|  2| SIN(正弦)          | `sin(カラム)`                          |
+|  3| TAN(正接)          | `tan(カラム)`                          |
+|  4| COT(余接)          | `cot(カラム)`                          |
 |  5| ACOS(余弦の逆関数) | `acos(カラム)`                         |
 |  6| ASIN(正弦の逆関数) | `asin(カラム)`                         |
 |  7| ATAN(正接の逆関数) | `atan(カラム)`                         |
-|  8| COSH(双曲線余弦) | `cosh(カラム)`                         |
-|  9| SINH(双曲線正弦) | `sinh(カラム)`                         |
-| 10| TANH(双曲線正接) | `tanh(カラム)`                         |
-| 11| COTH(双曲線余接) | `coth(カラム)`                         |
-| 12| ラジアン→度 | `degrees(カラム)`                      |
-| 13| 度→ラジアン | `radians(カラム)`                      |
-| 14| EXP(指数関数) | `exp(カラム)`                          |
-| 15| LN(自然対数) | `ln(カラム)`                           |
-| 16| LOG(対数) | `log(カラム, 対数の底)`                |
-| 17| POWER(べき乗) | `power(カラム, べき乗数)`              |
-| 18| MAX(最大) | `max(カラム, カラム)`                  |
-| 19| MIN(最小) | `min(カラム, カラム)`                  |
-| 20| RANDOM(乱数) | `random()`, `random(乱数の種)`         |
-| 21| ROUND(四捨五入) | `round(カラム)`, `round(カラム, 桁数)` |
-| 22| SIGN(符号) | `sign(カラム)`                         |
+|  8| COSH(双曲線余弦)   | `cosh(カラム)`                         |
+|  9| SINH(双曲線正弦)   | `sinh(カラム)`                         |
+| 10| TANH(双曲線正接)   | `tanh(カラム)`                         |
+| 11| COTH(双曲線余接)   | `coth(カラム)`                         |
+| 12| ラジアン→度        | `degrees(カラム)`                      |
+| 13| 度→ラジアン        | `radians(カラム)`                      |
+| 14| EXP(指数関数)      | `exp(カラム)`                          |
+| 15| LN(自然対数)       | `ln(カラム)`                           |
+| 16| LOG(対数)          | `log(カラム, 対数の底)`                |
+| 17| POWER(べき乗)      | `power(カラム, べき乗数)`              |
+| 18| MAX(最大)          | `max(カラム, カラム)`                  |
+| 19| MIN(最小)          | `min(カラム, カラム)`                  |
+| 20| RANDOM(乱数)       | `random()`, `random(乱数の種)`         |
+| 21| ROUND(四捨五入)    | `round(カラム)`, `round(カラム, 桁数)` |
+| 22| SIGN(符号)         | `sign(カラム)`                         |
 
 
 #### 文字列関数(インスタンスメソッド)
 文字列カラムのメタデータ(`StringExpression`クラス)のインスタンスメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド                    |
-|--:|:-----------|:----------------------------|
-|  1| CONCAT(文字列結合) | `concat(カラム)`            |
+|  #| 関数                  | メソッド                    |
+|--:|:----------------------|:----------------------------|
+|  1| CONCAT(文字列結合)    | `concat(カラム)`            |
 |  2| SUBSTRING(部分文字列) | `substring(カラム, カラム)` |
-|  3| LENGTH(文字列長) | `length()`                  |
-|  4| LOWER(小文字変換) | `lower()`                   |
-|  5| UPPER(大文字変換) | `upper()`                   |
-|  6| TRIM(空白文字除去) | `trim()`                    |
+|  3| LENGTH(文字列長)      | `length()`                  |
+|  4| LOWER(小文字変換)     | `lower()`                   |
+|  5| UPPER(大文字変換)     | `upper()`                   |
+|  6| TRIM(空白文字除去)    | `trim()`                    |
 
 
 #### 文字列関数(staticメソッド)
 `StringExpressions`クラスのstaticメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
-|  #| 関数    | メソッド                                                         |
-|--:|:--------|:-----------------------------------------------------------------|
-|  1| LTRIM(先頭空白文字除去) | `ltrim(カラム)` |
-|  2| RTRIM(末尾空白文字除去) | `rtrim(カラム)` |
-|  3| LPAD(先頭空白文字追加) | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
-|  4| RPAD(末尾空白文字追加) | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
+|  #| 関数                    | メソッド                                                         |
+|--:|:------------------------|:-----------------------------------------------------------------|
+|  1| LTRIM(先頭空白文字除去) | `ltrim(カラム)`                                                  |
+|  2| RTRIM(末尾空白文字除去) | `rtrim(カラム)`                                                  |
+|  3| LPAD(先頭空白文字追加)  | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
+|  4| RPAD(末尾空白文字追加)  | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
 
 #### 日時操作関数(インスタンスメソッド)
 `DateExpression`クラス、`TimeExpression`クラス、`DateTimeExpression`クラスのインスタンスメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド                             |
-|--:|:-----------|:-------------------------------------|
-|  1| 当年の中の日付(1-366) | `dayOfYear()`  |
-|  2| 当月の中の日付(1-31) | `dayOfMonth()`  |
-|  3| 当週の中の日付(1-7; SUN-SAT) | `dayOfWeek()`  |
-|  4| 年 | `year()`  |
-|  5| 月(1-12; JAN-DEC) | `month()`  |
-|  6| 週 | `week()`  |
-|  7| 時(0-23) | `hour()`  |
-|  8| 分(0-59) | `minute()`  |
-|  9| 秒(0-59) | `second()`  |
-| 10| ミリ秒(0-999) | `milliSecond()`  |
+|  #| 関数                         | メソッド        |
+|--:|:-----------------------------|:----------------|
+|  1| 年                           | `year()`        |
+|  2| 月(1-12; JAN-DEC)            | `month()`       |
+|  3| 週                           | `week()`        |
+|  4| 当年の中の日付(1-366)        | `dayOfYear()`   |
+|  5| 当月の中の日付(1-31)         | `dayOfMonth()`  |
+|  6| 当週の中の日付(1-7; SUN-SAT) | `dayOfWeek()`   |
+|  7| 時(0-23)                     | `hour()`        |
+|  8| 分(0-59)                     | `minute()`      |
+|  9| 秒(0-59)                     | `second()`      |
+| 10| ミリ秒(0-999)                | `milliSecond()` |
 
 #### 日時操作関数(staticメソッド)
 `SQLExpressions`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド                             |
-|--:|:-----------|:-------------------------------------|
+|  #| 関数     | メソッド                             |
+|--:|:---------|:-------------------------------------|
 |  1| 日時加算 | `dateadd(加算部位, カラム, 加算値)`  |
 |  2| 日時差分 | `datediff(差分部位, カラム, カラム)` |
 |  3| 日時切詰 | `datetrunc(切詰部位, カラム)`        |
-|  4| 年加算 | `addYears(カラム, 加算値)`           |
-|  5| 月加算 | `addMonths(カラム, 加算値)`          |
-|  6| 週加算 | `addWeeks(カラム, 加算値)`           |
-|  7| 日加算 | `addDays(カラム, 加算値)`            |
-|  8| 時加算 | `addHours(カラム, 加算値)`           |
-|  9| 分加算 | `addMinutes(カラム, 加算値)`         |
-| 10| 秒加算 | `addSeconds(カラム, 加算値)`         |
+|  4| 年加算   | `addYears(カラム, 加算値)`           |
+|  5| 月加算   | `addMonths(カラム, 加算値)`          |
+|  6| 週加算   | `addWeeks(カラム, 加算値)`           |
+|  7| 日加算   | `addDays(カラム, 加算値)`            |
+|  8| 時加算   | `addHours(カラム, 加算値)`           |
+|  9| 分加算   | `addMinutes(カラム, 加算値)`         |
+| 10| 秒加算   | `addSeconds(カラム, 加算値)`         |
 
 また、`DateExpression`クラス、`TimeExpression`クラス、`DateTimeExpression`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
-|  #| 関数       | メソッド                             |
-|--:|:-----------|:-------------------------------------|
-|  1| CURRENT_DATE(現在日付) | `DateExpression.currentDate(LocalDate.class)` |
-|  2| CURRENT_TIME(現在時刻) | `TimeExpression.currentTime(LocalTime.class)` |
+|  #| 関数                        | メソッド                                                  |
+|--:|:----------------------------|:----------------------------------------------------------|
+|  1| CURRENT_DATE(現在日付)      | `DateExpression.currentDate(LocalDate.class)`             |
+|  2| CURRENT_TIME(現在時刻)      | `TimeExpression.currentTime(LocalTime.class)`             |
 |  3| CURRENT_TIMESTAMP(現在日時) | `DateTimeExpression.currentDateTime(LocalDateTime.class)` |
 
 #### 集約関数(インスタンスメソッド)
 カラムのメタデータのインスタンスメソッドとして下記の集約関数が定義されています。これを使用してください。
 
-|  #| 関数  | メソッド   |
-|--:|:------|:-----------|
-|  1| COUNT(件数) | `count()`  |
-|  2| SUM(合計) | `sum()`    |
-|  3| MAX(最大) | `max()`    |
-|  4| MIN(最小) | `min()`    |
+|  #| 関数        | メソッド  |
+|--:|:------------|:----------|
+|  1| COUNT(件数) | `count()` |
+|  2| SUM(合計)   | `sum()`   |
+|  3| MAX(最大)   | `max()`   |
+|  4| MIN(最小)   | `min()`   |
 
 ### CASE式を指定する
 `CaseBuilder`クラスを使用してCASE式を組み立ててください。
@@ -312,6 +379,24 @@ SELECT文
 				a.dueDt, a.doneFlg, baseDt, doneDesc));
 ```
 
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.due_dt,
+	a.done_flg,
+	DATE('2014-02-01'),
+	CASE
+		WHEN a.done_flg = 1 THEN '実施済'
+		WHEN a.due_dt < '2014-02-01' THEN '未実施(期限内)'
+		ELSE '未実施(期限切)'
+	END
+FROM
+	todo AS a
+```
+
+
 ### スカラサブクエリを指定する
 `SQLSubQuery`クラスを使用してサブクエリを組み立てください。
 
@@ -326,12 +411,32 @@ SELECT文
 		Expression<String> posterName = new SQLSubQuery()
 				.from(b)
 				.where(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+						b.deletedFlg.eq(0))
 				.unique(b.name).as("poster_name");
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
 				a.postedBy, posterName));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.posted_by,
+	(
+		SELECT
+			b.name
+		FROM
+			author AS b
+		WHERE
+			b.login_id = a.posted_by
+			AND
+			b.deleted_flg = 0
+	) AS poster_name
+FROM
+	todo AS a
 ```
 
 ## FROM句の書き方
