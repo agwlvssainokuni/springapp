@@ -168,11 +168,11 @@ SELECT文
 
 |  #| 演算子  | メソッド           |
 |--:|:-------|:--------------------|
-|  1| +       | `add(カラム)`      |
-|  2| -       | `subtract(カラム)` |
-|  3| *       | `multiply(カラム)` |
-|  4| /       | `divide(カラム)`   |
-|  5| mod     | `mod(カラム)`      |
+|  1| +(加算) | `add(カラム)`      |
+|  2| -(減算) | `subtract(カラム)` |
+|  3| *(乗算) | `multiply(カラム)` |
+|  4| /(除算) | `divide(カラム)`   |
+|  5| MOD(剰余) | `mod(カラム)`      |
 
 #### 計算順序
 
@@ -182,40 +182,40 @@ SELECT文
 
 |  #| 関数   | メソッド   |
 |--:|:-------|:-----------|
-|  1| abs    | `abs()`    |
-|  2| negate | `negate()` |
-|  3| sqrt   | `sqrt()`   |
-|  4| floor  | `floor()`  |
-|  5| ceil   | `ceil()`   |
-|  6| round  | `round()`  |
+|  1| ABS(絶対値) | `abs()`    |
+|  2| 符号反転 | `negate()` |
+|  3| SQRT(平方根) | `sqrt()`   |
+|  4| FLOOR(整数切下げ) | `floor()`  |
+|  5| CEIL(整数切上げ) | `ceil()`   |
+|  6| ROUND(四捨五入) | `round()`  |
 
 #### 数値関数(staticメソッド)
 `MathExpressions`クラスのstaticメソッドとして下記の数値関数が定義されています。これを使用してください。
 
 |  #| 関数    | メソッド                               |
 |--:|:--------|:---------------------------------------|
-|  1| cos     | `cos(カラム)`                          |
-|  2| sin     | `sin(カラム)`                          |
-|  3| tan     | `tan(カラム)`                          |
-|  4| cot     | `cot(カラム)`                          |
-|  5| acos    | `acos(カラム)`                         |
-|  6| asin    | `asin(カラム)`                         |
-|  7| atan    | `atan(カラム)`                         |
-|  8| cosh    | `cosh(カラム)`                         |
-|  9| sinh    | `sinh(カラム)`                         |
-| 10| tanh    | `tanh(カラム)`                         |
-| 11| coth    | `coth(カラム)`                         |
-| 12| degrees | `degrees(カラム)`                      |
-| 13| radians | `radians(カラム)`                      |
-| 14| exp     | `exp(カラム)`                          |
-| 15| ln      | `ln(カラム)`                           |
-| 16| log     | `log(カラム, 対数の底)`                |
-| 17| power   | `power(カラム, べき乗数)`              |
-| 18| max     | `max(カラム, カラム)`                  |
-| 19| min     | `min(カラム, カラム)`                  |
-| 20| random  | `random()`, `random(乱数の種)`         |
-| 21| round   | `round(カラム)`, `round(カラム, 桁数)` |
-| 22| sign    | `sign(カラム)`                         |
+|  1| COS(余弦) | `cos(カラム)`                          |
+|  2| SIN(正弦) | `sin(カラム)`                          |
+|  3| TAN(正接) | `tan(カラム)`                          |
+|  4| COT(余接) | `cot(カラム)`                          |
+|  5| ACOS(余弦の逆関数) | `acos(カラム)`                         |
+|  6| ASIN(正弦の逆関数) | `asin(カラム)`                         |
+|  7| ATAN(正接の逆関数) | `atan(カラム)`                         |
+|  8| COSH(双曲線余弦) | `cosh(カラム)`                         |
+|  9| SINH(双曲線正弦) | `sinh(カラム)`                         |
+| 10| TANH(双曲線正接) | `tanh(カラム)`                         |
+| 11| COTH(双曲線余接) | `coth(カラム)`                         |
+| 12| ラジアン→度 | `degrees(カラム)`                      |
+| 13| 度→ラジアン | `radians(カラム)`                      |
+| 14| EXP(指数関数) | `exp(カラム)`                          |
+| 15| LN(自然対数) | `ln(カラム)`                           |
+| 16| LOG(対数) | `log(カラム, 対数の底)`                |
+| 17| POWER(べき乗) | `power(カラム, べき乗数)`              |
+| 18| MAX(最大) | `max(カラム, カラム)`                  |
+| 19| MIN(最小) | `min(カラム, カラム)`                  |
+| 20| RANDOM(乱数) | `random()`, `random(乱数の種)`         |
+| 21| ROUND(四捨五入) | `round(カラム)`, `round(カラム, 桁数)` |
+| 22| SIGN(符号) | `sign(カラム)`                         |
 
 
 #### 文字列関数(インスタンスメソッド)
@@ -223,12 +223,12 @@ SELECT文
 
 |  #| 関数       | メソッド                    |
 |--:|:-----------|:----------------------------|
-|  1| concat     | `concat(カラム)`            |
-|  2| substring  | `substring(カラム, カラム)` |
-|  3| length     | `length()`                  |
-|  4| lower      | `lower()`                   |
-|  5| upper      | `upper()`                   |
-|  6| trim       | `trim()`                    |
+|  1| CONCAT(文字列結合) | `concat(カラム)`            |
+|  2| SUBSTRING(部分文字列) | `substring(カラム, カラム)` |
+|  3| LENGTH(文字列長) | `length()`                  |
+|  4| LOWER(小文字変換) | `lower()`                   |
+|  5| UPPER(大文字変換) | `upper()`                   |
+|  6| TRIM(空白文字除去) | `trim()`                    |
 
 
 #### 文字列関数(staticメソッド)
@@ -236,36 +236,60 @@ SELECT文
 
 |  #| 関数    | メソッド                                                         |
 |--:|:--------|:-----------------------------------------------------------------|
-|  1| ltrim   | `ltrim(カラム)`                                                  |
-|  2| rtrim   | `rtrim(カラム)`                                                  |
-|  3| lpad    | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
-|  4| rpad    | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
+|  1| LTRIM(先頭空白文字除去) | `ltrim(カラム)` |
+|  2| RTRIM(末尾空白文字除去) | `rtrim(カラム)` |
+|  3| LPAD(先頭空白文字追加) | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
+|  4| RPAD(末尾空白文字追加) | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
+
+#### 日時操作関数(インスタンスメソッド)
+`DateExpression`クラス、`TimeExpression`クラス、`DateTimeExpression`クラスのインスタンスメソッドとして下記の日時操作関数が定義されています。これを使用してください。
+
+|  #| 関数       | メソッド                             |
+|--:|:-----------|:-------------------------------------|
+|  1| 当年の中の日付(1-366) | `dayOfYear()`  |
+|  2| 当月の中の日付(1-31) | `dayOfMonth()`  |
+|  3| 当週の中の日付(1-7; SUN-SAT) | `dayOfWeek()`  |
+|  4| 年 | `year()`  |
+|  5| 月(1-12; JAN-DEC) | `month()`  |
+|  6| 週 | `week()`  |
+|  7| 時(0-23) | `hour()`  |
+|  8| 分(0-59) | `minute()`  |
+|  9| 秒(0-59) | `second()`  |
+| 10| ミリ秒(0-999) | `milliSecond()`  |
 
 #### 日時操作関数(staticメソッド)
 `SQLExpressions`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
 |  #| 関数       | メソッド                             |
 |--:|:-----------|:-------------------------------------|
-|  1| dateadd    | `dateadd(加算部位, カラム, 加算値)`  |
-|  2| datediff   | `datediff(差分部位, カラム, カラム)` |
-|  3| datetrunc  | `datetrunc(切詰部位, カラム)`        |
-|  4| addYears   | `addYears(カラム, 加算値)`           |
-|  5| addMonths  | `addMonths(カラム, 加算値)`          |
-|  6| addWeeks   | `addWeeks(カラム, 加算値)`           |
-|  7| addDays    | `addDays(カラム, 加算値)`            |
-|  8| addHours   | `addHours(カラム, 加算値)`           |
-|  9| addMinutes | `addMinutes(カラム, 加算値)`         |
-| 10| addSeconds | `addSeconds(カラム, 加算値)`         |
+|  1| 日時加算 | `dateadd(加算部位, カラム, 加算値)`  |
+|  2| 日時差分 | `datediff(差分部位, カラム, カラム)` |
+|  3| 日時切詰 | `datetrunc(切詰部位, カラム)`        |
+|  4| 年加算 | `addYears(カラム, 加算値)`           |
+|  5| 月加算 | `addMonths(カラム, 加算値)`          |
+|  6| 週加算 | `addWeeks(カラム, 加算値)`           |
+|  7| 日加算 | `addDays(カラム, 加算値)`            |
+|  8| 時加算 | `addHours(カラム, 加算値)`           |
+|  9| 分加算 | `addMinutes(カラム, 加算値)`         |
+| 10| 秒加算 | `addSeconds(カラム, 加算値)`         |
+
+また、`DateExpression`クラス、`TimeExpression`クラス、`DateTimeExpression`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
+
+|  #| 関数       | メソッド                             |
+|--:|:-----------|:-------------------------------------|
+|  1| CURRENT_DATE(現在日付) | `DateExpression.currentDate(LocalDate.class)` |
+|  2| CURRENT_TIME(現在時刻) | `TimeExpression.currentTime(LocalTime.class)` |
+|  3| CURRENT_TIMESTAMP(現在日時) | `DateTimeExpression.currentDateTime(LocalDateTime.class)` |
 
 #### 集約関数(インスタンスメソッド)
 カラムのメタデータのインスタンスメソッドとして下記の集約関数が定義されています。これを使用してください。
 
 |  #| 関数  | メソッド   |
 |--:|:------|:-----------|
-|  1| count | `count()`  |
-|  2| sum   | `sum()`    |
-|  3| max   | `max()`    |
-|  4| min   | `min()`    |
+|  1| COUNT(件数) | `count()`  |
+|  2| SUM(合計) | `sum()`    |
+|  3| MAX(最大) | `max()`    |
+|  4| MIN(最小) | `min()`    |
 
 ### CASE式を指定する
 `CaseBuilder`クラスを使用してCASE式を組み立ててください。
