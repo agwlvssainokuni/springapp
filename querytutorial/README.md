@@ -358,7 +358,43 @@ FROM
 |  3| MAX(最大)   | `max()`   |
 |  4| MIN(最小)   | `min()`   |
 
+
 ### CASE式を指定する
+#### 単純CASE式
+カラムのメタデータのインスタンスメソッドを使用してCASE式を組み立てください。
+具体的には、`メタデータ.when(条件値).then(結果値)...when(条件値).then(結果値).otherwise(結果値)`を使用してCASE式を組み立てます。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+
+		/* CASE式を組立てる。 */
+		Expression<String> doneDesc = a.doneFlg.when(0).then("未実施").when(1)
+				.then("実施済").otherwise("不定");
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.doneFlg, doneDesc));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.done_flg,
+	CASE a.done_flg
+		WHEN 0 THEN '未実施'
+		WHEN 1 THEN '実施済'
+		ELSE '不定'
+	END
+FROM
+	todo AS a
+```
+
+#### 検索CASE式
 `CaseBuilder`クラスを使用してCASE式を組み立ててください。
 具体的には、`Expressions.cases()`メソッドにより`CaseBuilder`インスタンスを生成し、`Expressions.cases().when(条件式).then(結果値)...when(条件式).then(結果値).otherwise(結果値)`の形でCASE式を組み立てます。
 
