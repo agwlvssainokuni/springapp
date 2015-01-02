@@ -16,14 +16,8 @@
 
 package cherry.querytutorial.querydsl;
 
-import static cherry.foundation.querydsl.PathExpressions.dateTimePath;
-import static cherry.foundation.querydsl.PathExpressions.longPath;
-import static cherry.foundation.querydsl.PathExpressions.simplePath;
-import static cherry.foundation.querydsl.PathExpressions.stringPath;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
+import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -36,14 +30,13 @@ import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.FlagCode;
 import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
+import com.mysema.query.support.Expressions;
 import com.mysema.query.types.QTuple;
 import com.mysema.query.types.path.DateTimePath;
 import com.mysema.query.types.path.NumberPath;
@@ -58,232 +51,158 @@ public class FromClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     b.name AS poster_name
-	 * FROM
-	 *     todo AS a
-	 *     JOIN author AS b
-	 *     ON
-	 *         b.login_id = a.posted_by
-	 *         AND
-	 *         b.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 内部結合() {
+	public void sec0301_単一表を指定する() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
-		QAuthor b = new QAuthor("b");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.join(b)
-				.on(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+		query.from(a);
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, b.name.as("poster_name")));
+				a.postedBy));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
-			String valPosterName = tuple.get(b.name.as("poster_name"));
+			out.println(format("{0}: postedBy={1}", valId, valPostedBy));
+		}
+	}
+
+	@Test
+	public void sec030201_複数表を指定して結合する_内部結合() {
+
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		QAuthor b = new QAuthor("b");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).join(b).on(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedBy, b.name));
+
+		/* クエリの結果を表示する。 */
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			String valPostedBy = tuple.get(a.postedBy);
+			String valPosterName = tuple.get(b.name);
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     b.name AS poster_name
-	 * FROM
-	 *     todo AS a
-	 *     LEFT JOIN author AS b
-	 *     ON
-	 *         b.login_id = a.posted_by
-	 *         AND
-	 *         b.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 左外部結合() {
+	public void sec030202_複数表を指定して結合する_左外部結合() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
 		QAuthor b = new QAuthor("b");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.leftJoin(b)
-				.on(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+		query.from(a).leftJoin(b)
+				.on(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, b.name.as("poster_name")));
+				a.postedBy, b.name));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
-			String valPosterName = tuple.get(b.name.as("poster_name"));
+			String valPosterName = tuple.get(b.name);
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     b.name AS poster_name
-	 * FROM
-	 *     todo AS a
-	 *     RIGHT JOIN author AS b
-	 *     ON
-	 *         b.login_id = a.posted_by
-	 *         AND
-	 *         b.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 右外部結合() {
+	public void sec030203_複数表を指定して結合する_右外部結合() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
 		QAuthor b = new QAuthor("b");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.rightJoin(b)
-				.on(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+		query.from(a).rightJoin(b)
+				.on(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, b.name.as("poster_name")));
+				a.postedBy, b.name));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
-			String valPosterName = tuple.get(b.name.as("poster_name"));
+			String valPosterName = tuple.get(b.name);
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     b.name AS poster_name
-	 * FROM
-	 *     todo AS a
-	 *     FULL JOIN Author AS b
-	 *     ON
-	 *         b.login_id = a.posted_by
-	 *         AND
-	 *         b.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	// @Test
-	public void 全外部結合() {
+	public void sec030204_複数表を指定して結合する_全外部結合() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
 		QAuthor b = new QAuthor("b");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.fullJoin(b)
-				.on(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+		query.from(a).fullJoin(b)
+				.on(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, b.name.as("poster_name")));
+				a.postedBy, b.name));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
-			String valPosterName = tuple.get(b.name.as("poster_name"));
+			String valPosterName = tuple.get(b.name);
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.a_id,
-	 *     a.a_posted_by,
-	 *     a.a_posted_at,
-	 *     a.a_done_at
-	 * FROM
-	 *     (
-	 *         SELECT
-	 *             todo.id        AS a_id,
-	 *             todo.posted_by AS a_posted_by,
-	 *             todo.posted_at AS a_posted_at,
-	 *             todo.done_at   AS a_done_at
-	 *         FROM
-	 *             todo AS todo
-	 *         WHERE
-	 *             todo.done_flg = 1
-	 *             AND
-	 *             todo.deleted_flg = 0
-	 *     ) AS a
-	 * ORDER BY
-	 *     a.a_id ASC
-	 * </pre>
-	 */
 	@Test
-	public void FROM句に全選択() {
+	public void sec0303_SELECT文をFROM句に指定する() {
 
-		QTodo x = QTodo.todo;
-		ListSubQuery<Tuple> fullQuery = new SQLSubQuery()
+		/* FROM句に指定するSELECT文を組み立てる。 */
+		QTodo x = new QTodo("x");
+		ListSubQuery<Tuple> internalQuery = new SQLSubQuery()
 				.from(x)
-				.where(x.doneFlg.eq(FlagCode.TRUE.code()),
-						x.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+				.where(x.deletedFlg.eq(0))
 				.list(x.id.as("a_id"), x.postedBy.as("a_posted_by"),
-						x.postedAt.as("a_posted_at"), x.doneAt.as("a_done_at"));
+						x.postedAt.as("a_posted_at"),
+						x.doneFlg.as("a_done_flg"), x.doneAt.as("a_done_at"));
 
-		SimplePath<Tuple> a = simplePath("a");
-		NumberPath<Long> aId = longPath(a, "a_id");
-		StringPath aPostedBy = stringPath(a, "a_posted_by");
-		DateTimePath<LocalDateTime> aPostedAt = dateTimePath(a, "a_posted_at");
-		DateTimePath<LocalDateTime> aDoneAt = dateTimePath(a, "a_done_at");
+		/* 外側のSELECT文で取り出すカラムを指定するためのパス(メタデータ)を組み立てる。 */
+		SimplePath<Tuple> a = Expressions.path(Tuple.class, "a");
+		NumberPath<Long> aId = Expressions.numberPath(Long.class, a, "a_id");
+		StringPath aPostedBy = Expressions.stringPath(a, "a_posted_by");
+		DateTimePath<LocalDateTime> aPostedAt = Expressions.dateTimePath(
+				LocalDateTime.class, a, "a_posted_at");
+		NumberPath<Integer> aDoneFlg = Expressions.numberPath(Integer.class, a,
+				"a_done_flg");
+		DateTimePath<LocalDateTime> aDoneAt = Expressions.dateTimePath(
+				LocalDateTime.class, a, "a_done_at");
 
+		/* 外側のSELECT文の抽出条件を組み立てる。 */
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(fullQuery, a);
-		query.orderBy(aId.asc());
+		query.from(internalQuery, a);
+		query.where(aDoneFlg.eq(1));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(aId,
 				aPostedBy, aPostedAt, aDoneAt));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(aId);
 			String valPostedBy = tuple.get(aPostedBy);
