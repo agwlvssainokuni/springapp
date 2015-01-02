@@ -50,6 +50,7 @@ import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.support.Expressions;
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
+import com.mysema.query.types.expr.StringExpressions;
 import com.mysema.query.types.expr.Wildcard;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -247,85 +248,29 @@ public class SelectClauseTest {
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id, 
-	 *     a.lock_version,
-	 *     a.lock_version + 1 AS lv1,
-	 *     a.lock_version - 1 AS lv2,
-	 *     a.id + a.id        AS id3
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 算術計算式を指定する() {
+	public void sec020401_カラムに対する関数適用() {
 
-		QTodo a = new QTodo("a");
-
+		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.orderBy(a.id.asc());
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, a.loginId, a.name, a.loginId.length(),
+						a.loginId.concat(a.name), StringExpressions.lpad(
+								a.loginId, 10, 'X')));
 
-		Expression<Integer> lv1 = a.lockVersion.add(1).as("lv1");
-		Expression<Integer> lv2 = a.lockVersion.subtract(1).as("lv2");
-		Expression<Long> id3 = a.id.add(a.id).as("id3");
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.lockVersion, lv1, lv2, id3));
-
-		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			Integer valLockVersion = tuple.get(a.lockVersion);
-			Integer valLv1 = tuple.get(lv1);
-			Integer valLv2 = tuple.get(lv2);
-			Long valId3 = tuple.get(id3);
-			System.out.println(MessageFormat.format(
-					"{0}: lv={1}, lv + 1={2}, lv - 1={3}, id + id={4}", valId,
-					valLockVersion, valLv1, valLv2, valId3));
-		}
-	}
-
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.description,
-	 *     LENGTH(a.description) AS desc1
-	 *     (a.description || ' ' || a.posted_by) AS desc2
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
-	@Test
-	public void 関数呼出しを指定する() {
-
-		QTodo a = new QTodo("a");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.orderBy(a.id.asc());
-
-		Expression<Integer> desc1 = a.description.length().as("desc1");
-		Expression<String> desc2 = a.description.append(" ").append(a.postedBy)
-				.as("desc2");
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.description, desc1, desc2));
-
-		assertThat(list, is(not(empty())));
-		for (Tuple tuple : list) {
-			Long valId = tuple.get(a.id);
-			String valDescription = tuple.get(a.description);
-			Integer valDesc1 = tuple.get(desc1);
-			String valDesc2 = tuple.get(desc2);
-			System.out.println(MessageFormat.format(
-					"{0}: description={1}, desc1={2}, desc2={3}", valId,
-					valDescription, valDesc1, valDesc2));
+			String valLoginId = tuple.get(a.loginId);
+			String valName = tuple.get(a.name);
+			Integer valLength = tuple.get(a.loginId.length());
+			String valConcat = tuple.get(a.loginId.concat(a.name));
+			String valLpad = tuple.get(StringExpressions.lpad(a.loginId, 10,
+					'X'));
+			out.println(format(
+					"{0}: loginId={1}, name={2}, LENGTH(loginId)={3}, CONCAT(loginId, name)={4}, LPAD(loginId, 10, X)={5}",
+					valId, valLoginId, valName, valLength, valConcat, valLpad));
 		}
 	}
 

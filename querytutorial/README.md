@@ -297,7 +297,35 @@ FROM
 ```
 
 ### 2.4 カラム(または定数値)に対する関数適用
-#### 2.4.1 数値関数(インスタンスメソッド)
+#### 2.4.1 関数適用
+SQL関数は、カラムのメタデータのインスタンスメソッド、または、staticメソッドとして定義されています。これらの呼出しによりSQL関数の適用を表現します。
+
+```Java
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, a.loginId, a.name, a.loginId.length(),
+						a.loginId.concat(a.name), StringExpressions.lpad(
+								a.loginId, 10, 'X')));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.login_id,
+	a.name,
+	LENGTH(a.login_id),
+	CONCAT(a.login_id, a.name),
+	LPAD(a.login_id, 10, 'X')
+FROM
+	author AS a
+```
+
+#### 2.4.2 数値関数(インスタンスメソッド)
 数値カラムのメタデータ(`NumberExpression`クラス)のインスタンスメソッドとして下記の数値関数が定義されています。これを使用してください。
 
 |  #| 関数              | メソッド   |
@@ -309,7 +337,7 @@ FROM
 |  5| CEIL(整数切上げ)  | `ceil()`   |
 |  6| ROUND(四捨五入)   | `round()`  |
 
-#### 2.4.2 数値関数(staticメソッド)
+#### 2.4.3 数値関数(staticメソッド)
 `MathExpressions`クラスのstaticメソッドとして下記の数値関数が定義されています。これを使用してください。
 
 |  #| 関数               | メソッド                               |
@@ -338,7 +366,7 @@ FROM
 | 22| SIGN(符号)         | `sign(カラム)`                         |
 
 
-#### 2.4.3 文字列関数(インスタンスメソッド)
+#### 2.4.4 文字列関数(インスタンスメソッド)
 文字列カラムのメタデータ(`StringExpression`クラス)のインスタンスメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
 |  #| 関数                  | メソッド                    |
@@ -351,7 +379,7 @@ FROM
 |  6| TRIM(空白文字除去)    | `trim()`                    |
 
 
-#### 2.4.4 文字列関数(staticメソッド)
+#### 2.4.5 文字列関数(staticメソッド)
 `StringExpressions`クラスのstaticメソッドとして下記の文字列関数が定義されています。これを使用してください。
 
 |  #| 関数                    | メソッド                                                         |
@@ -361,7 +389,7 @@ FROM
 |  3| LPAD(先頭空白文字追加)  | `lpad(カラム, 長さ(カラム))`, `lpad(カラム, 長さ(カラム), 文字)` |
 |  4| RPAD(末尾空白文字追加)  | `rpad(カラム, 長さ(カラム))`, `rpad(カラム, 長さ(カラム), 文字)` |
 
-#### 2.4.5 日時操作関数(インスタンスメソッド)
+#### 2.4.6 日時操作関数(インスタンスメソッド)
 `DateExpression`クラス、`TimeExpression`クラス、`DateTimeExpression`クラスのインスタンスメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
 |  #| 関数                         | メソッド        |
@@ -377,7 +405,7 @@ FROM
 |  9| 秒(0-59)                     | `second()`      |
 | 10| ミリ秒(0-999)                | `milliSecond()` |
 
-#### 2.4.6 日時操作関数(staticメソッド)
+#### 2.4.7 日時操作関数(staticメソッド)
 `SQLExpressions`クラスのstaticメソッドとして下記の日時操作関数が定義されています。これを使用してください。
 
 |  #| 関数     | メソッド                             |
@@ -401,7 +429,7 @@ FROM
 |  2| CURRENT_TIME(現在時刻)      | `TimeExpression.currentTime(LocalTime.class)`             |
 |  3| CURRENT_TIMESTAMP(現在日時) | `DateTimeExpression.currentDateTime(LocalDateTime.class)` |
 
-#### 2.4.7 集約関数(インスタンスメソッド)
+#### 2.4.8 集約関数(インスタンスメソッド)
 カラムのメタデータのインスタンスメソッドとして下記の集約関数が定義されています。これを使用してください。
 
 |  #| 関数        | メソッド  |
