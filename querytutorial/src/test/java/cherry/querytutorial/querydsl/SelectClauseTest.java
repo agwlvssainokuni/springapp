@@ -274,6 +274,30 @@ public class SelectClauseTest {
 		}
 	}
 
+	@Test
+	public void sec020408_カラムに対する関数適用_集約関数() {
+
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
+				a.postedAt.max()));
+
+		for (Tuple tuple : list) {
+			String valPostedBy = tuple.get(a.postedBy);
+			Long valCount = tuple.get(a.id.count());
+			Long valSum = tuple.get(a.id.sum());
+			LocalDateTime valMinPostedAt = tuple.get(a.postedAt.min());
+			LocalDateTime valMaxPostedAt = tuple.get(a.postedAt.max());
+			out.println(format(
+					"{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}",
+					valPostedBy, valCount, valSum, valMinPostedAt,
+					valMaxPostedAt));
+		}
+	}
+
 /**
 	 * <pre>
 	 * SELECT
@@ -319,51 +343,6 @@ public class SelectClauseTest {
 			System.out.println(MessageFormat.format(
 					"{0}: dueDt={1}, doneFlg={2}, baseDt={3}, doneDesc={4}",
 					valId, valDueDt, valDoneFlg, valBaseDt, valDoneDesc));
-		}
-	}
-
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.posted_by,
-	 *     COUNT(a.id)      AS cnt,
-	 *     MIN(a.posted_at) AS min_posted_at,
-	 *     MAX(a.posted_at) AS max_posted_at
-	 * FROM
-	 *     todo AS a
-	 * GROUP BY
-	 *     a.posted_by
-	 * ORDER BY
-	 *     a.posted_by ASC
-	 * </pre>
-	 */
-	@Test
-	public void 集計関数を指定する() {
-
-		QTodo a = new QTodo("a");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.groupBy(a.postedBy);
-		query.orderBy(a.postedBy.asc());
-
-		Expression<Long> cnt = a.id.count().as("cnt");
-		Expression<LocalDateTime> minPostedAt = a.postedAt.min().as(
-				"min_posted_at");
-		Expression<LocalDateTime> maxPostedAt = a.postedAt.max().as(
-				"max_posted_at");
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.postedBy, cnt, minPostedAt, maxPostedAt));
-
-		assertThat(list, is(not(empty())));
-		for (Tuple tuple : list) {
-			String valPostedBy = tuple.get(a.postedBy);
-			Long valCnt = tuple.get(cnt);
-			LocalDateTime valMinPostedAt = tuple.get(minPostedAt);
-			LocalDateTime valMaxPostedAt = tuple.get(maxPostedAt);
-			System.out.println(MessageFormat.format(
-					"{0}: cnt={1}, minPostedAt={2}, maxPostedAt={3}",
-					valPostedBy, valCnt, valMinPostedAt, valMaxPostedAt));
 		}
 	}
 

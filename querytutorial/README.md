@@ -439,6 +439,30 @@ FROM
 |  3| MAX(最大)   | `max()`   |
 |  4| MIN(最小)   | `min()`   |
 
+```Java
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
+				a.postedAt.max()));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.posted_by,
+	COUNT(a.id),
+	SUM(a.id),
+	MIN(a.posted_at),
+	MAX(a.posted_at)
+FROM
+	todo AS a
+GROUP BY
+	a.posted_by
+```
 
 ### 2.5 CASE式を指定する
 #### 2.5.1 単純CASE式
