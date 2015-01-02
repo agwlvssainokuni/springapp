@@ -199,6 +199,54 @@ public class SelectClauseTest {
 		}
 	}
 
+	@Test
+	public void sec020301_カラムに対する算術計算_加減乗除() {
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, a.id.add(2L), a.id.subtract(2L), a.id
+						.multiply(2L), a.id.divide(2L), a.id.mod(2L)));
+
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			Long valAdd = tuple.get(a.id.add(2L));
+			Long valSubtract = tuple.get(a.id.subtract(2L));
+			Long valMultiply = tuple.get(a.id.multiply(2L));
+			Long valDivide = tuple.get(a.id.divide(2L));
+			Long valMod = tuple.get(a.id.mod(2L));
+			out.println(format(
+					"{0}: +2={1}, -2={2}, *2={3}, /2={4}, mod 2={5}", valId,
+					valAdd, valSubtract, valMultiply, valDivide, valMod));
+		}
+	}
+
+	@Test
+	public void sec020302_カラムに対する算術計算_計算順序() {
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(query,
+				new QTuple(a.id, a.id.add(2L).multiply(2L), a.id.multiply(2L)
+						.add(2L), a.id.add(2L).multiply(2L).subtract(2L)
+						.divide(2L), a.id.add(2L).multiply(a.id.subtract(2L))));
+
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			Long val1 = tuple.get(a.id.add(2L).multiply(2L));
+			Long val2 = tuple.get(a.id.multiply(2L).add(2L));
+			Long val3 = tuple.get(a.id.add(2L).multiply(2L).subtract(2L)
+					.divide(2L));
+			Long val4 = tuple.get(a.id.add(2L).multiply(a.id.subtract(2L)));
+			out.println(format(
+					"{0}: (id+2)*2={1}, id*2+2={2}, ((id+2)*2-2)/2={3}, (id+2)*(id-2)={4}",
+					valId, val1, val2, val3, val4));
+		}
+	}
+
 	/**
 	 * <pre>
 	 * SELECT

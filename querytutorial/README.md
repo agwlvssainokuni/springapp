@@ -249,8 +249,10 @@ FROM
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.id, a.id.add(2), a.id.subtract(2), a.id.multiply(2), a.id.divide(2), a.id.mod(2));
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, a.id.add(2L), a.id.subtract(2L), a.id
+						.multiply(2L), a.id.divide(2L), a.id.mod(2L)));
 ```
 
 上記Javaコードは下記SQLに相当します。
@@ -268,6 +270,31 @@ FROM
 ```
 
 #### 2.3.2 計算順序
+複数の計算を組合わせる場合、「計算のメソッドを呼出した順序」に従って計算されます。いわゆる四則演算の優先度には従いませんので注意してください。
+例えば、「`メタデータA.add(メタデータB).multiply(2)`」は「`(カラムA + カラムB) * 2`」として計算されます。「`カラムA + (カラムB * 2)`」を計算するには「`メタデータA.add(メタデータB.multiply(2))`」の形で指定してください。
+
+```Java
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(query,
+				new QTuple(a.id, a.id.add(2L).multiply(2L), a.id.multiply(2L)
+						.add(2L), a.id.add(2L).multiply(2L).subtract(2L)
+						.divide(2L), a.id.add(2L).multiply(a.id.subtract(2L))));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	(a.id + 2) * 2,
+	a.id * 2 + 2,
+	((a.id + 2) * 2 - 2) / 2,
+	(a.id + 2) * (a.id - 2)
+FROM
+	author AS a
+```
 
 ### 2.4 カラム(または定数値)に対する関数適用
 #### 2.4.1 数値関数(インスタンスメソッド)
