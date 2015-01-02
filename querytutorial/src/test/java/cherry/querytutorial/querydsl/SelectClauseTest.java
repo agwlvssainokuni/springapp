@@ -16,9 +16,6 @@
 
 package cherry.querytutorial.querydsl;
 
-import static com.mysema.query.support.Expressions.as;
-import static com.mysema.query.support.Expressions.cases;
-import static com.mysema.query.support.Expressions.constant;
 import static java.lang.System.out;
 import static java.text.MessageFormat.format;
 import static org.hamcrest.Matchers.empty;
@@ -354,72 +351,24 @@ public class SelectClauseTest {
 	}
 
 	@Test
-	public void CASE式を指定する() {
+	public void sec0206_スカラサブクエリを指定する() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.orderBy(a.id.asc());
 
-		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
-		Expression<String> doneDesc = cases().when(a.doneFlg.eq(1)).then("実施済")
-				.when(a.dueDt.lt(baseDt)).then("未実施(期限内)")
-				.otherwise("未実施(期限切)");
-
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.dueDt, a.doneFlg, baseDt, doneDesc));
-
-		assertThat(list, is(not(empty())));
-		for (Tuple tuple : list) {
-			Long valId = tuple.get(a.id);
-			LocalDate valDueDt = tuple.get(a.dueDt);
-			Integer valDoneFlg = tuple.get(a.doneFlg);
-			LocalDate valBaseDt = tuple.get(baseDt);
-			String valDoneDesc = tuple.get(doneDesc);
-			System.out.println(MessageFormat.format(
-					"{0}: dueDt={1}, doneFlg={2}, baseDt={3}, doneDesc={4}",
-					valId, valDueDt, valDoneFlg, valBaseDt, valDoneDesc));
-		}
-	}
-
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     (
-	 *         SELECT b.name FROM author AS b
-	 *         WHERE
-	 *             b.login_id = a.posted_by
-	 *             AND
-	 *             b.deleted_flg = 0
-	 *     ) AS poster_name
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
-	@Test
-	public void スカラサブクエリを指定する() {
-
-		QTodo a = new QTodo("a");
+		/* スカラサブクエリを組立てる。 */
 		QAuthor b = new QAuthor("b");
+		Expression<String> posterName = new SQLSubQuery().from(b)
+				.where(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0))
+				.unique(b.name);
 
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.orderBy(a.id.asc());
-
-		Expression<String> posterName = new SQLSubQuery()
-				.from(b)
-				.where(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.unique(b.name).as("poster_name");
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
 				a.postedBy, posterName));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
@@ -470,46 +419,6 @@ public class SelectClauseTest {
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
-		}
-	}
-
-/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.due_dt,
-	 *     '2015-02-01',
-	 *     a.due_dt < '2015-02-01' AS due
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
-	@Test
-	public void 定数を列として指定する() {
-
-		QTodo a = new QTodo("a");
-
-		Expression<LocalDate> dt = constant(new LocalDate(2015, 2, 1));
-		Expression<LocalDate> baseDt = as(dt, "base_dt");
-		Expression<Boolean> due = a.dueDt.lt(dt).as("due");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.orderBy(a.id.asc());
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.dueDt, baseDt, due));
-
-		assertThat(list, is(not(empty())));
-		for (Tuple tuple : list) {
-			Long valId = tuple.get(a.id);
-			LocalDate valDueDt = tuple.get(a.dueDt);
-			LocalDate valBaseDt = tuple.get(baseDt);
-			Boolean valDue = tuple.get(due);
-			System.out.println(MessageFormat.format(
-					"{0}: dueDt={1}, baseDt={2}, due={3}", valId, valDueDt,
-					valBaseDt, valDue));
 		}
 	}
 

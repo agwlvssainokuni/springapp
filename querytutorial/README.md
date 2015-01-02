@@ -537,7 +537,7 @@ FROM
 
 
 ### 2.6 スカラサブクエリを指定する
-`SQLSubQuery`クラスを使用してサブクエリを組み立てください。
+`SQLSubQuery`クラスを使用してサブクエリを組み立てください。`SQLSubQuery`の使い方は`SQLQuery`に準じます。
 
 ```Java
 		/* 抽出条件を組み立てる。 */
@@ -547,11 +547,9 @@ FROM
 
 		/* スカラサブクエリを組立てる。 */
 		QAuthor b = new QAuthor("b");
-		Expression<String> posterName = new SQLSubQuery()
-				.from(b)
-				.where(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(0))
-				.unique(b.name).as("poster_name");
+		Expression<String> posterName = new SQLSubQuery().from(b)
+				.where(b.loginId.eq(a.postedBy), b.deletedFlg.eq(0))
+				.unique(b.name);
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
@@ -573,7 +571,7 @@ SELECT
 			b.login_id = a.posted_by
 			AND
 			b.deleted_flg = 0
-	) AS poster_name
+	)
 FROM
 	todo AS a
 ```
