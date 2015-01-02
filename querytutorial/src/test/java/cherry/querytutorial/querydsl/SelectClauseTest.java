@@ -18,9 +18,7 @@ package cherry.querytutorial.querydsl;
 
 import static java.lang.System.out;
 import static java.text.MessageFormat.format;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
@@ -37,7 +35,6 @@ import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.DeletedFlag;
 import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
@@ -373,49 +370,6 @@ public class SelectClauseTest {
 			Long valId = tuple.get(a.id);
 			String valPostedBy = tuple.get(a.postedBy);
 			String valPosterName = tuple.get(posterName);
-			System.out.println(MessageFormat.format(
-					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
-					valPosterName));
-		}
-	}
-
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     b.name AS poster_name
-	 * FROM
-	 *     todo AS a
-	 *     LEFT JOIN author AS b
-	 *     ON
-	 *         b.login_id = a.posted_by
-	 *         AND
-	 *         b.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
-	@Test
-	public void 結合した列を指定する() {
-
-		QTodo a = new QTodo("a");
-		QAuthor b = new QAuthor("b");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.join(b)
-				.on(b.loginId.eq(a.postedBy),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, b.name.as("poster_name")));
-
-		assertThat(list, is(not(empty())));
-		for (Tuple tuple : list) {
-			Long valId = tuple.get(a.id);
-			String valPostedBy = tuple.get(a.postedBy);
-			String valPosterName = tuple.get(b.name.as("poster_name"));
 			System.out.println(MessageFormat.format(
 					"{0}: postedBy={1}, posterName={2}", valId, valPostedBy,
 					valPosterName));
