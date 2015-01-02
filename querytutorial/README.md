@@ -94,8 +94,8 @@ SELECT文
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.id, a.loginId, a.name));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId, a.name));
 ```
 
 上記Javaコードは下記SQLに相当します。
@@ -162,8 +162,10 @@ FROM
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.id.as("alias1"), a.loginId.as("alias2"), a.name.as("alias3")));
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id.as("alias1"), a.loginId.as("alias2"), a.name
+						.as("alias3")));
 ```
 
 上記Javaコードは下記SQLに相当します。
@@ -182,14 +184,14 @@ FROM
 `Expressions.constant(定数値)`メソッドを使用します。
 
 ```Java
-		Expression<Integer> val1 = Expressions.constant(1);
-		Expression<String> val2 = Expressions.constant("string");
+		Expression<Integer> const1 = Expressions.constant(1);
+		Expression<String> const2 = Expressions.constant("string");
 
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.id, val1, val2));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				const1, const2));
 ```
 
 上記Javaコードは下記SQLに相当します。
@@ -208,14 +210,16 @@ FROM
 (カラムにエイリアス(別名)を付与する場合にも使えますが、カラムのエイリアスは前述の通りカラムのメタデータの`as(エイリアス名)`メソッドを使用してください)
 
 ```Java
-		Expression<Integer> val1 = Expressions.constant(1);
-		Expression<String> val2 = Expressions.constant("string");
+		Expression<Integer> const1 = Expressions.constant(1);
+		Expression<String> const2 = Expressions.constant("string");
 
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.id, Expressions.as(val1, "alias1"), Expressions.as(val2, "alias2")));
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, Expressions.as(const1, "alias1"), Expressions
+						.as(const2, "alias2")));
 ```
 
 上記Javaコードは下記SQLに相当します。

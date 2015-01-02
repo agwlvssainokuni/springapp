@@ -19,11 +19,15 @@ package cherry.querytutorial.querydsl;
 import static com.mysema.query.support.Expressions.as;
 import static com.mysema.query.support.Expressions.cases;
 import static com.mysema.query.support.Expressions.constant;
+import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -43,8 +47,10 @@ import cherry.querytutorial.db.gen.query.QTodo;
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
+import com.mysema.query.support.Expressions;
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
+import com.mysema.query.types.expr.Wildcard;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext.xml")
@@ -53,76 +59,143 @@ public class SelectClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     a.posted_at,
-	 *     a.due_dt,
-	 *     a.done_at,
-	 *     a.done_flg,
-	 *     a.description,
-	 *     a.updated_at,
-	 *     a.created_at,
-	 *     a.lock_version,
-	 *     a.deleted_flg
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 全列を取得する() {
+	public void sec020101_カラムを絞って照会する() {
 
-		QTodo a = new QTodo("a");
-
+		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.orderBy(a.id.asc());
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId, a.name));
 
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.all()));
-
-		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
-			System.out.println(tuple.toString());
+			Long valId = tuple.get(a.id);
+			String valLoginId = tuple.get(a.loginId);
+			String valName = tuple.get(a.name);
+			LocalDateTime valUpdatedAt = tuple.get(a.updatedAt);
+			LocalDateTime valCreatedAt = tuple.get(a.createdAt);
+			Integer valLockVersion = tuple.get(a.lockVersion);
+			Integer valDeletedFlg = tuple.get(a.deletedFlg);
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.posted_by,
-	 *     a.posted_at
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void 取得する列を指定する() {
+	public void sec020102_全てのカラムを照会する() {
 
-		QTodo a = new QTodo("a");
-
+		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.orderBy(a.id.asc());
+		List<Tuple> list = queryDslJdbcOperations.query(query,
+				new QTuple(a.all()));
 
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedBy, a.postedAt));
-
-		assertThat(list, is(not(empty())));
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			String valPostedBy = tuple.get(a.postedBy);
-			LocalDateTime valPostedAt = tuple.get(a.postedAt);
-			System.out.println(MessageFormat.format(
-					"{0}: postedBy={1}, postedAt={2}", valId, valPostedBy,
-					valPostedAt));
+			String valLoginId = tuple.get(a.loginId);
+			String valName = tuple.get(a.name);
+			LocalDateTime valUpdatedAt = tuple.get(a.updatedAt);
+			LocalDateTime valCreatedAt = tuple.get(a.createdAt);
+			Integer valLockVersion = tuple.get(a.lockVersion);
+			Integer valDeletedFlg = tuple.get(a.deletedFlg);
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
+		}
+	}
+
+	@Test
+	public void sec020103_アスタリスクを指定して照会する() {
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Object[]> list = queryDslJdbcOperations.query(query, Wildcard.all);
+
+		for (Object[] tuple : list) {
+			Long valId = (Long) tuple[0];
+			String valLoginId = (String) tuple[1];
+			String valName = (String) tuple[2];
+			Timestamp valUpdatedAt = (Timestamp) tuple[3];
+			Timestamp valCreatedAt = (Timestamp) tuple[4];
+			Integer valLockVersion = (Integer) tuple[5];
+			Integer valDeletedFlg = (Integer) tuple[6];
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
+		}
+	}
+
+	@Test
+	public void sec020104_カラムにエイリアスを付与する() {
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id.as("alias1"), a.loginId.as("alias2"), a.name
+						.as("alias3")));
+
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id.as("alias1"));
+			String valLoginId = tuple.get(a.loginId.as("alias2"));
+			String valName = tuple.get(a.name.as("alias3"));
+			out.println(format("{0}: loginId={1}, name={2}", valId, valLoginId,
+					valName));
+			assertThat(tuple.get(a.id), is(nullValue()));
+			assertThat(tuple.get(a.loginId), is(nullValue()));
+			assertThat(tuple.get(a.name), is(nullValue()));
+		}
+	}
+
+	@Test
+	public void sec020201_定数値をカラムとして照会する() {
+
+		Expression<Integer> const1 = Expressions.constant(1);
+		Expression<String> const2 = Expressions.constant("string");
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				const1, const2));
+
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			Integer valConst1 = tuple.get(const1);
+			String valConst2 = tuple.get(const2);
+			out.println(format("{0}: const1={1}, const2={2}", valId, valConst1,
+					valConst2));
+		}
+	}
+
+	@Test
+	public void sec020202_定数値のカラムにエイリアスを付与する() {
+
+		Expression<Integer> const1 = Expressions.constant(1);
+		Expression<String> const2 = Expressions.constant("string");
+
+		QAuthor a = new QAuthor("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		List<Tuple> list = queryDslJdbcOperations.query(
+				query,
+				new QTuple(a.id, Expressions.as(const1, "alias1"), Expressions
+						.as(const2, "alias2")));
+
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			Integer valConst1 = tuple.get(Expressions.as(const1, "alias1"));
+			String valConst2 = tuple.get(Expressions.as(const2, "alias2"));
+			out.println(format("{0}: const1={1}, const2={2}", valId, valConst1,
+					valConst2));
+			assertThat(tuple.get(const1), is(nullValue()));
+			assertThat(tuple.get(const2), is(nullValue()));
 		}
 	}
 
