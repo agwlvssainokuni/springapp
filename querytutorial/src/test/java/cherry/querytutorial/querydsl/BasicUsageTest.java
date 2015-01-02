@@ -16,14 +16,12 @@
 
 package cherry.querytutorial.querydsl;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,6 @@ import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.querytutorial.db.gen.dto.Author;
 import cherry.querytutorial.db.gen.query.QAuthor;
@@ -52,154 +49,86 @@ public class BasicUsageTest {
 	private RowMapperCreator rowMapperCreator;
 
 	@Test
-	public void 全列取得Tuple受け() {
+	public void sec0101_Tupleとして取出す() {
+
+		/* 抽出条件を組み立てる。 */
 		QAuthor a = new QAuthor("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query,
 				new QTuple(a.all()));
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
+
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
-			assertThat(tuple.get(a.id), is(not(nullValue())));
-			assertThat(tuple.get(a.loginId), is(not(nullValue())));
-			assertThat(tuple.get(a.name), is(not(nullValue())));
-			assertThat(tuple.get(a.updatedAt), is(not(nullValue())));
-			assertThat(tuple.get(a.createdAt), is(not(nullValue())));
-			assertThat(tuple.get(a.lockVersion), is(not(nullValue())));
-			assertThat(tuple.get(a.deletedFlg), is(not(nullValue())));
+			Long valId = tuple.get(a.id);
+			String valLoginId = tuple.get(a.loginId);
+			String valName = tuple.get(a.name);
+			LocalDateTime valUpdatedAt = tuple.get(a.updatedAt);
+			LocalDateTime valCreatedAt = tuple.get(a.createdAt);
+			Integer valLockVersion = tuple.get(a.lockVersion);
+			Integer valDeletedFlg = tuple.get(a.deletedFlg);
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
 		}
 	}
 
 	@Test
-	public void 列指定Tuple受け() {
+	public void sec0102_Beanとして取出す_QBean() {
 
+		/* 抽出条件を組み立てる。 */
 		QAuthor a = new QAuthor("a");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
 
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.loginId, a.name));
-
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
-		for (Tuple tuple : list) {
-			assertThat(tuple.get(a.id), is(nullValue()));
-			assertThat(tuple.get(a.loginId), is(not(nullValue())));
-			assertThat(tuple.get(a.name), is(not(nullValue())));
-			assertThat(tuple.get(a.updatedAt), is(nullValue()));
-			assertThat(tuple.get(a.createdAt), is(nullValue()));
-			assertThat(tuple.get(a.lockVersion), is(nullValue()));
-			assertThat(tuple.get(a.deletedFlg), is(nullValue()));
-		}
-	}
-
-	@Test
-	public void 全列取得Bean受け_QBean() {
-
-		QAuthor a = new QAuthor("a");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
-
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Author> list = queryDslJdbcOperations.query(query,
 				new QBean<Author>(Author.class, a.all()));
 
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
+		/* クエリの結果を表示する。 */
 		for (Author entity : list) {
-			assertThat(entity.getId(), is(not(nullValue())));
-			assertThat(entity.getLoginId(), is(not(nullValue())));
-			assertThat(entity.getName(), is(not(nullValue())));
-			assertThat(entity.getUpdatedAt(), is(not(nullValue())));
-			assertThat(entity.getCreatedAt(), is(not(nullValue())));
-			assertThat(entity.getLockVersion(), is(not(nullValue())));
-			assertThat(entity.getDeletedFlg(), is(not(nullValue())));
+			Long valId = entity.getId();
+			String valLoginId = entity.getLoginId();
+			String valName = entity.getName();
+			LocalDateTime valUpdatedAt = entity.getUpdatedAt();
+			LocalDateTime valCreatedAt = entity.getCreatedAt();
+			Integer valLockVersion = entity.getLockVersion();
+			Integer valDeletedFlg = entity.getDeletedFlg();
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
 		}
 	}
 
 	@Test
-	public void 列指定Bean受け_QBean() {
+	public void sec0103_Beanとして取出す_RowMapper() {
 
+		/* 抽出条件を組み立てる。 */
 		QAuthor a = new QAuthor("a");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
 
-		List<Author> list = queryDslJdbcOperations.query(query,
-				new QBean<Author>(Author.class, a.loginId, a.name));
-
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
-		for (Author entity : list) {
-			assertThat(entity.getId(), is(nullValue()));
-			assertThat(entity.getLoginId(), is(not(nullValue())));
-			assertThat(entity.getName(), is(not(nullValue())));
-			assertThat(entity.getUpdatedAt(), is(nullValue()));
-			assertThat(entity.getCreatedAt(), is(nullValue()));
-			assertThat(entity.getLockVersion(), is(nullValue()));
-			assertThat(entity.getDeletedFlg(), is(nullValue()));
-		}
-	}
-
-	@Test
-	public void 全列取得Bean受け_RowMapper() {
-
-		QAuthor a = new QAuthor("a");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
-
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Author> list = queryDslJdbcOperations.query(query,
 				rowMapperCreator.create(Author.class), a.all());
 
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
+		/* クエリの結果を表示する。 */
 		for (Author entity : list) {
-			assertThat(entity.getId(), is(not(nullValue())));
-			assertThat(entity.getLoginId(), is(not(nullValue())));
-			assertThat(entity.getName(), is(not(nullValue())));
-			assertThat(entity.getUpdatedAt(), is(not(nullValue())));
-			assertThat(entity.getCreatedAt(), is(not(nullValue())));
-			assertThat(entity.getLockVersion(), is(not(nullValue())));
-			assertThat(entity.getDeletedFlg(), is(not(nullValue())));
-		}
-	}
-
-	@Test
-	public void 列指定Bean受け_RowMapper() {
-
-		QAuthor a = new QAuthor("a");
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
-
-		List<Author> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(Author.class), a.loginId, a.name);
-
-		assertThat(list, is(not(empty())));
-		assertThat(list.size(), is(3));
-		for (Author entity : list) {
-			assertThat(entity.getId(), is(nullValue()));
-			assertThat(entity.getLoginId(), is(not(nullValue())));
-			assertThat(entity.getName(), is(not(nullValue())));
-			assertThat(entity.getUpdatedAt(), is(nullValue()));
-			assertThat(entity.getCreatedAt(), is(nullValue()));
-			assertThat(entity.getLockVersion(), is(nullValue()));
-			assertThat(entity.getDeletedFlg(), is(nullValue()));
+			Long valId = entity.getId();
+			String valLoginId = entity.getLoginId();
+			String valName = entity.getName();
+			LocalDateTime valUpdatedAt = entity.getUpdatedAt();
+			LocalDateTime valCreatedAt = entity.getCreatedAt();
+			Integer valLockVersion = entity.getLockVersion();
+			Integer valDeletedFlg = entity.getDeletedFlg();
+			out.println(format(
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
+					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
+					valLockVersion, valDeletedFlg));
 		}
 	}
 
