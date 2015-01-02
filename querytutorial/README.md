@@ -510,14 +510,13 @@ FROM
 		query.from(a);
 
 		/* CASE式を組立てる。 */
-		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
-		Expression<String> doneDesc = cases().when(a.doneFlg.eq(1)).then("実施済")
-				.when(a.dueDt.lt(baseDt)).then("未実施(期限内)")
-				.otherwise("未実施(期限切)");
+		Expression<String> doneDesc = Expressions.cases().when(a.doneFlg.eq(1))
+				.then("実施済").when(a.dueDt.lt(new LocalDate(2015, 2, 1)))
+				.then("未実施(期限内)").otherwise("未実施(期限切)");
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.dueDt, a.doneFlg, baseDt, doneDesc));
+				a.dueDt, a.doneFlg, doneDesc));
 ```
 
 上記Javaコードは下記SQLに相当します。
@@ -527,7 +526,6 @@ SELECT
 	a.id,
 	a.due_dt,
 	a.done_flg,
-	DATE('2014-02-01'),
 	CASE
 		WHEN a.done_flg = 1 THEN '実施済'
 		WHEN a.due_dt < '2014-02-01' THEN '未実施(期限内)'

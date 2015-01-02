@@ -298,24 +298,61 @@ public class SelectClauseTest {
 		}
 	}
 
-/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     a.due_dt,
-	 *     a.done_flg,
-	 *     '2015-02-01',
-	 *     CASE
-	 *         WHEN a.done_flg = 1 THEN '実施済'
-	 *         WHEN a.due_dt < '2015-02-01' THEN '未実施(期限内)'
-	 *         ELSE '未実施(期限切)'
-	 *     END
-	 * FROM
-	 *     todo AS a
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
+	@Test
+	public void sec020501_CASE式を指定する_単純CASE式() {
+
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+
+		/* CASE式を組立てる。 */
+		Expression<String> doneDesc = a.doneFlg.when(0).then("未実施").when(1)
+				.then("実施済").otherwise("不定");
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.doneFlg, doneDesc));
+
+		/* クエリの結果を表示する。 */
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
+			String valDoneDesc = tuple.get(doneDesc);
+			out.println(format("{0}: doneFlg={1}, doneDesc(CASE)={2}", valId,
+					valDoneFlg, valDoneDesc));
+		}
+	}
+
+	@Test
+	public void sec020502_CASE式を指定する_検索CASE式() {
+
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+
+		/* CASE式を組立てる。 */
+		Expression<String> doneDesc = Expressions.cases().when(a.doneFlg.eq(1))
+				.then("実施済").when(a.dueDt.lt(new LocalDate(2015, 2, 1)))
+				.then("未実施(期限内)").otherwise("未実施(期限切)");
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.dueDt, a.doneFlg, doneDesc));
+
+		/* クエリの結果を表示する。 */
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			LocalDate valDueDt = tuple.get(a.dueDt);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
+			String valDoneDesc = tuple.get(doneDesc);
+			out.println(format(
+					"{0}: dueDt={1}, doneFlg={2}, doneDesc(CASE)={3}", valId,
+					valDueDt, valDoneFlg, valDoneDesc));
+		}
+	}
+
 	@Test
 	public void CASE式を指定する() {
 
