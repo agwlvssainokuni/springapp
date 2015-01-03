@@ -436,8 +436,9 @@ FROM
 |--:|:------------|:----------|
 |  1| COUNT(件数) | `count()` |
 |  2| SUM(合計)   | `sum()`   |
-|  3| MAX(最大)   | `max()`   |
-|  4| MIN(最小)   | `min()`   |
+|  3| AVG(平均)   | `avg()`   |
+|  4| MAX(最大)   | `max()`   |
+|  5| MIN(最小)   | `min()`   |
 
 ```Java
 		QTodo a = new QTodo("a");
@@ -1039,7 +1040,6 @@ WHERE
 |  1| EXISTS(存在する)       | `exists()`    |
 |  2| NOT EXISTS(存在しない) | `notExists()` |
 
-
 ```Java
 		/* 抽出条件を組み立てる。 */
 		QAuthor a = new QAuthor("a");
@@ -1076,6 +1076,81 @@ WHERE
 ```
 
 ## 5. GROUP BY句とHAVING句の書き方
+### 5.1 GROUP BY
+`SQLSQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+なお、`SQLSubQuery`クラスにも同じメソッドが定義されています。使い方は同じです。
+
+|  #| 句       | メソッド                        |
+|--:|:---------|:--------------------------------|
+|  1| GROUP BY | `groupBy(式)`, `groupBy(式...)` |
+
+`groupBy()`メソッドを複数回呼出すと、指定された式が順に集約の条件として追加されます。また、`groupBy()`メソッドの引数として式を複数受渡しても、指定された式が順に集約の条件として追加されます。すなわち、`query.groupBy(式A).groupBy(式B);`は、`query.groupBy(式A, 式B);`と同じ条件になります。
+
+```Java
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
+				a.postedAt.max()));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.posted_by,
+	COUNT(a.id),
+	SUM(a.id),
+	MIN(a.posted_at),
+	MAX(a.posted_at)
+FROM
+	todo AS a
+GROUP BY
+	a.posted_by
+```
+
+### 5.2 HAVING句の記述方法
+`SQLSQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+なお、`SQLSubQuery`クラスにも同じメソッドが定義されています。使い方は同じです。
+
+|  #| 句       | メソッド                        |
+|--:|:---------|:--------------------------------|
+|  1| HAVING | `having(条件式)`, `having(条件式...)` |
+
+`having(条件式)`メソッドを複数回呼出すと、指定された抽出条件が「AND」で結合されます。また、`having()`メソッドの引数として式を複数受渡しても、抽出条件が「AND」で結合されます。即ち、`query.having(条件式A).having(条件式B);`は、`query.having(条件式A, 条件式B);`と同じ条件になります。
+
+```Java
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		query.having(a.id.count().gt(1),
+				a.postedAt.max().lt(new LocalDateTime(2015, 2, 1, 0, 0)));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
+				a.postedAt.max()));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.posted_by,
+	COUNT(a.id),
+	SUM(a.id),
+	MIN(a.posted_at),
+	MAX(a.posted_at)
+FROM
+	todo AS a
+GROUP BY
+	a.posted_by
+HAVING
+	COUNT(a.id) > 1
+	AND
+	MAX(a.posted_at) < '2015-02-01'
+```
 
 ## 6. ORDER BY句の書き方
 

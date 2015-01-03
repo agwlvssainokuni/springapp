@@ -19,7 +19,6 @@ package cherry.querytutorial.querydsl;
 import static java.lang.System.out;
 import static java.text.MessageFormat.format;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -170,8 +169,7 @@ public class WhereClauseTest {
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valLoginId = tuple.get(a.loginId);
-			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
-					valLoginId));
+			out.println(format("{0}: loginId={1}", valId, valLoginId));
 		}
 	}
 
@@ -194,8 +192,7 @@ public class WhereClauseTest {
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
 			String valLoginId = tuple.get(a.loginId);
-			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
-					valLoginId));
+			out.println(format("{0}: loginId={1}", valId, valLoginId));
 		}
 	}
 
