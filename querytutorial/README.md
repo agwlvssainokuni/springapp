@@ -797,17 +797,283 @@ WHERE
 ```
 
 ## 4. WHERE句の書き方
-### 4.1 条件の組合せ
+### 4.1 抽出条件の記述方法
+`SQLQuery.where(条件式)`メソッドを使用して抽出条件を指定してください。
+なお、`SQLSubQuery`クラスにも同じく`where(条件式)`メソッドがあります。使い方は同じですので、ここでは`SQLQuery`クラスについて説明することとします。
 
-### 4.2 比較
+#### 4.1.1 単一条件
 
-### 4.3 述語
-#### 4.3.1 LIKE
-#### 4.3.2 IS NULL
-#### 4.3.3 BETWEEN
-#### 4.3.4 EXISTS
-#### 4.3.5 IN(定数)
-#### 4.3.6 IN(サブクエリ)
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(a.deletedFlg.eq(0));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.posted_at,
+	a.due_dt,
+	a.done_flg,
+	a.done_at
+FROM
+	todo AS a
+WHERE
+	a.deleted_flg = 0
+```
+
+#### 4.1.2 複合条件
+`where(条件式)`メソッドを複数回呼出すと、指定された抽出条件が「AND」で結合されます。
+また、`where()`メソッドの引数として条件式を複数受渡しても、抽出条件が「AND」で結合されます。即ち、`query.where(条件A).where(条件B);`は、`query.where(条件A, 条件B);`と同じ条件になります。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(a.deletedFlg.eq(0)).where(a.doneFlg.eq(1));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.posted_at,
+	a.due_dt,
+	a.done_flg,
+	a.done_at
+FROM
+	todo AS a
+WHERE
+	a.deleted_flg = 0
+	AND
+	a.done_flg = 1
+```
+
+#### 4.1.3 条件の組合せ
+条件を組合わせるには、下記のメソッド(`BooleanExpression`のインスタンスメソッド)を使用してください。
+
+|  #| 論理演算子         | メソッド                      |
+|--:|:-------------------|:------------------------------|
+|  1| AND(論理積)        | `and(条件式)`                 |
+|  2| OR(論理和)         | `or(条件式)`                  |
+|  3| NOT(論理否定)      | `not()`                       |
+|  4| AND (条件 OR ...)  | `andAnyOf(条件式, 条件式...)` |
+|  5| OR (条件 AND ...)  | `orAllOf(条件式, 条件式...)`  |
+
+
+指定した条件は、「上記メソッドを呼出した順序」に従って結合されます。いわゆる論理演算子の優先度には従いませんので注意してください。
+例えば、「`条件A.or(条件B).and(条件C)`」は「`(条件A OR 条件B) AND 条件C`」として評価されます。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				a.doneFlg.eq(1).or(a.dueDt.goe(new LocalDate(2015, 2, 1)))
+						.and(a.doneAt.isNull()));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.posted_at,
+	a.due_dt,
+	a.done_flg,
+	a.done_at
+FROM
+	todo AS a
+WHERE
+	(
+		a.done_flg = 1
+		OR
+		a.doe_dt >= '2015-02-01'
+	)
+	AND
+	a.done_at IS NULL
+```
+
+「`条件A OR (条件B AND 条件C)`」を指定するには「`条件A.or(条件B.and(条件C))`」の形で指定してください。
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				a.doneFlg.eq(1).or(
+						a.dueDt.goe(new LocalDate(2015, 2, 1)).and(
+								a.doneAt.isNull())));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.posted_at,
+	a.due_dt,
+	a.done_flg,
+	a.done_at
+FROM
+	todo AS a
+WHERE
+	a.done_flg = 1
+	OR
+	(
+		a.doe_dt >= '2015-02-01'
+		AND
+		a.done_at IS NULL
+	)
+```
+
+
+### 4.2 条件式
+#### 4.2.1 比較演算子
+カラムのメタデータのインスタンスメソッドとして下記の比較演算子が定義されています。これを使用してください。
+
+|  #| 比較演算子               | メソッド                                   |
+|--:|:-------------------------|:-------------------------------------------|
+|  1| =(等値)                  | `eq(式)`                                   |
+|  2| <(小なり)                | `lt(式)`                                   |
+|  3| <=(小なりイコール)       | `loe(式)`                                  |
+|  4| >(大なり)                | `gt(式)`                                   |
+|  5| >=(大なりイコール)       | `goe(式)`                                  |
+|  6| =  ALL(...), =  ANY(...) | `eqAll(サブクエリ)`,  `eqAny(サブクエリ)`  |
+|  7| <  ALL(...), =  ANY(...) | `ltAll(サブクエリ)`,  `ltAny(サブクエリ)`  |
+|  8| <= ALL(...), <= ANY(...) | `loeALl(サブクエリ)`, `loeAny(サブクエリ)` |
+|  9| >  ALL(...), >  ANY(...) | `gtALl(サブクエリ)`,  `gtAny(サブクエリ)`  |
+| 10| >= ALL(...), >= ANY(...) | `goeAll(サブクエリ)`, `goeAny(サブクエリ)` |
+
+
+#### 4.2.2 LIKE
+カラムのメタデータのインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+
+|  #| 述語               | メソッド      |
+|--:|:-------------------|:--------------|
+|  1| LIKE(部分一致)     | `like(式)`    |
+|  2| NOT LIKE(部分一致) | `notLike(式)` |
+
+#### 4.2.3 IS NULL
+カラムのメタデータのインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+
+|  #| 述語                    | メソッド      |
+|--:|:------------------------|:--------------|
+|  1| IS NULL(NULL判定)       | `isNull()`    |
+|  2| IS NOT NULL(非NULL判定) | `isNotNull()` |
+
+#### 4.2.4 BETWEEN
+カラムのメタデータのインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+
+|  #| 述語                  | メソッド             |
+|--:|:----------------------|:---------------------|
+|  1| BETWEEN(区間)         | `between(式, 式)`    |
+|  2| NOT BETWEEN(区間判定) | `notBetween(式, 式)` |
+
+#### 4.2.5 IN
+カラムのメタデータのインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+
+|  #| 述語             | メソッド                            |
+|--:|:-----------------|:------------------------------------|
+|  1| IN(含む)         | `in(式...)`, `in(サブクエリ)`       |
+|  2| NOT IN(含まない) | `notIn(式...)`, `notIn(サブクエリ)` |
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QAuthor a = new QAuthor("a");
+		QTodo b = new QTodo("b");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				a.loginId.in(new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
+						.list(b.postedBy)));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.login_id
+FROM
+	author AS a
+WHERE
+	a.login_id IN (
+		SELECT
+			b.posted_by
+		FROM
+			todo AS b
+		WHERE
+			b.done_flg = 1
+	)
+```
+
+#### 4.2.6 EXISTS
+サブクエリ`SQLSubQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
+
+|  #| 述語                   | メソッド      |
+|--:|:-----------------------|:--------------|
+|  1| EXISTS(存在する)       | `exists()`    |
+|  2| NOT EXISTS(存在しない) | `notExists()` |
+
+
+```Java
+		/* 抽出条件を組み立てる。 */
+		QAuthor a = new QAuthor("a");
+		QTodo b = new QTodo("b");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
+						.where(b.postedBy.eq(a.loginId)).exists());
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.id,
+	a.login_id
+FROM
+	author AS a
+WHERE
+	EXISTS (
+		SELECT
+			1
+		FROM
+			todo AS b
+		WHERE
+			b.done_flg = 1
+			AND
+			b.posted_by = a.login_id
+	)
+```
 
 ## 5. GROUP BY句とHAVING句の書き方
 

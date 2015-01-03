@@ -16,11 +16,8 @@
 
 package cherry.querytutorial.querydsl;
 
-import static com.mysema.query.support.Expressions.constant;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
+import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -34,15 +31,12 @@ import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.FlagCode;
 import cherry.querytutorial.db.gen.query.QAuthor;
 import cherry.querytutorial.db.gen.query.QTodo;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
-import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,212 +46,154 @@ public class WhereClauseTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     '2015-02-01',
-	 *     '2015-02-01 00:00',
-	 *     a.posted_at,
-	 *     a.due_dt,
-	 *     a.done_at
-	 * FROM
-	 *     todo AS a
-	 * WHERE
-	 *     a.due_dt &lt; '2015-02-01'
-	 *     OR
-	 *     a.posted_at &lt; '2015-02-01 00:00'
-	 *     OR
-	 *     a.done_at &gt; '2015-02-01 00:00'
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void ANDとORの組合せ_1() {
+	public void sec040101_抽出条件の記述方法_単一条件() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
-
-		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
-		Expression<LocalDateTime> baseDtm = constant(new LocalDateTime(2015, 2,
-				1, 0, 0));
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.dueDt.before(baseDt).or(a.postedAt.before(baseDtm))
-				.or(a.doneAt.after(baseDtm)));
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(a.id.asc());
+		query.from(a).where(a.deletedFlg.eq(0));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				baseDt, baseDtm, a.postedAt, a.dueDt, a.doneAt));
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			LocalDate valBaseDt = tuple.get(baseDt);
-			LocalDateTime valBaseDtm = tuple.get(baseDtm);
 			LocalDateTime valPostedAt = tuple.get(a.postedAt);
 			LocalDate valDueDt = tuple.get(a.dueDt);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			System.out
-					.println(MessageFormat
-							.format("{0}: baseDt={1}, baseDtm={2}, postedAt={3}, dueDt={4}, doneAt={5}",
-									valId, valBaseDt, valBaseDtm, valPostedAt,
-									valDueDt, valDoneAt));
+			out.println(format(
+					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
+					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     a.id,
-	 *     '2015-02-01',
-	 *     '2015-02-01 00:00',
-	 *     a.posted_at,
-	 *     a.due_dt,
-	 *     a.done_at
-	 * FROM
-	 *     todo AS a
-	 * WHERE
-	 *     (
-	 *         a.due_dt &lt; '2015-02-01'
-	 *         OR
-	 *         a.posted_at &lt; '2015-02-01 00:00'
-	 *     )
-	 *     AND
-	 *     a.done_at &gt; '2015-02-01 00:00'
-	 *     OR
-	 *     a.deleted_flg = 0
-	 * ORDER BY
-	 *     a.id ASC
-	 * </pre>
-	 */
 	@Test
-	public void ANDとORの組合せ_2() {
+	public void sec040102_抽出条件の記述方法_複合条件() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
-
-		Expression<LocalDate> baseDt = constant(new LocalDate(2015, 2, 1));
-		Expression<LocalDateTime> baseDtm = constant(new LocalDateTime(2015, 2,
-				1, 0, 0));
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.dueDt.before(baseDt).or(a.postedAt.before(baseDtm))
-				.and(a.doneAt.after(baseDtm))
-				.or(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())));
-		query.orderBy(a.id.asc());
+		query.from(a).where(a.deletedFlg.eq(0)).where(a.doneFlg.eq(1));
 
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
 		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				baseDt, baseDtm, a.postedAt, a.dueDt, a.doneAt));
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
 			Long valId = tuple.get(a.id);
-			LocalDate valBaseDt = tuple.get(baseDt);
-			LocalDateTime valBaseDtm = tuple.get(baseDtm);
 			LocalDateTime valPostedAt = tuple.get(a.postedAt);
 			LocalDate valDueDt = tuple.get(a.dueDt);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			System.out
-					.println(MessageFormat
-							.format("{0}: baseDt={1}, baseDtm={2}, postedAt={3}, dueDt={4}, doneAt={5}",
-									valId, valBaseDt, valBaseDtm, valPostedAt,
-									valDueDt, valDoneAt));
+			out.println(format(
+					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
+					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     b.id,
-	 *     b.login_id
-	 * FROM
-	 *     author AS b
-	 * WHERE
-	 *     b.deleted_flg = 0
-	 *     AND
-	 *     EXISTS (
-	 *         SELECT 1 FROM todo AS a
-	 *         WHERE
-	 *             a.posted_at = b.login_id
-	 *             AND
-	 *             a.done_flg = 1
-	 *             AND
-	 *             a.deleted_flg = 0
-	 *     )
-	 * </pre>
-	 */
 	@Test
-	public void EXISTS_1() {
+	public void sec040103_抽出条件の記述方法_条件の組合せ_1() {
 
+		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
-		QAuthor b = new QAuthor("b");
-
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(b);
-		query.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.where(new SQLSubQuery()
-				.from(a)
-				.where(a.postedBy.eq(b.loginId),
-						a.doneFlg.eq(FlagCode.TRUE.code()),
-						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.exists());
+		query.from(a).where(
+				a.doneFlg.eq(1).or(a.dueDt.goe(new LocalDate(2015, 2, 1)))
+						.and(a.doneAt.isNull()));
 
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
-				b.loginId));
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
-			Long valId = tuple.get(b.id);
-			String valLoginId = tuple.get(b.loginId);
+			Long valId = tuple.get(a.id);
+			LocalDateTime valPostedAt = tuple.get(a.postedAt);
+			LocalDate valDueDt = tuple.get(a.dueDt);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
+			LocalDateTime valDoneAt = tuple.get(a.doneAt);
+			out.println(format(
+					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
+					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+		}
+	}
+
+	@Test
+	public void sec040103_抽出条件の記述方法_条件の組合せ_2() {
+
+		/* 抽出条件を組み立てる。 */
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				a.doneFlg.eq(1).or(
+						a.dueDt.goe(new LocalDate(2015, 2, 1)).and(
+								a.doneAt.isNull())));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+
+		/* クエリの結果を表示する。 */
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			LocalDateTime valPostedAt = tuple.get(a.postedAt);
+			LocalDate valDueDt = tuple.get(a.dueDt);
+			Integer valDoneFlg = tuple.get(a.doneFlg);
+			LocalDateTime valDoneAt = tuple.get(a.doneAt);
+			out.println(format(
+					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
+					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+		}
+	}
+
+	@Test
+	public void sec040205_条件式_IN() {
+
+		/* 抽出条件を組み立てる。 */
+		QAuthor a = new QAuthor("a");
+		QTodo b = new QTodo("b");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a).where(
+				a.loginId.in(new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
+						.list(b.postedBy)));
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId));
+
+		/* クエリの結果を表示する。 */
+		for (Tuple tuple : list) {
+			Long valId = tuple.get(a.id);
+			String valLoginId = tuple.get(a.loginId);
 			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
 					valLoginId));
 		}
 	}
 
-	/**
-	 * <pre>
-	 * SELECT
-	 *     b.id,
-	 *     b.login_id
-	 * FROM
-	 *     author AS b
-	 * WHERE
-	 *     b.deleted_flg = 0
-	 *     AND
-	 *     b.login_id IN (
-	 *         SELECT a.posted_by FROM todo AS a
-	 *         WHERE
-	 *             a.done_flg = 1
-	 *             AND
-	 *             a.deleted_flg = 0
-	 *     )
-	 * </pre>
-	 */
 	@Test
-	public void IN_1() {
+	public void sec040206_条件式_EXISTS() {
 
-		QTodo a = new QTodo("a");
-		QAuthor b = new QAuthor("b");
-
+		/* 抽出条件を組み立てる。 */
+		QAuthor a = new QAuthor("a");
+		QTodo b = new QTodo("b");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(b);
-		query.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.where(b.loginId.in(new SQLSubQuery()
-				.from(a)
-				.where(a.doneFlg.eq(FlagCode.TRUE.code()),
-						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.list(a.postedBy)));
+		query.from(a).where(
+				new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
+						.where(b.postedBy.eq(a.loginId)).exists());
 
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(b.id,
-				b.loginId));
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
+				a.loginId));
 
-		assertThat(list, is(not(empty())));
+		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
-			Long valId = tuple.get(b.id);
-			String valLoginId = tuple.get(b.loginId);
+			Long valId = tuple.get(a.id);
+			String valLoginId = tuple.get(a.loginId);
 			System.out.println(MessageFormat.format("{0}: loginId={1}", valId,
 					valLoginId));
 		}
