@@ -1075,8 +1075,8 @@ WHERE
 	)
 ```
 
-## 5. GROUP BY句とHAVING句の書き方
-### 5.1 GROUP BY
+## 5. その他の書き方
+### 5.1 GROUP BY句
 `SQLSQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
 なお、`SQLSubQuery`クラスにも同じメソッドが定義されています。使い方は同じです。
 
@@ -1111,7 +1111,7 @@ GROUP BY
 	a.posted_by
 ```
 
-### 5.2 HAVING句の記述方法
+### 5.2 HAVING句
 `SQLSQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。
 なお、`SQLSubQuery`クラスにも同じメソッドが定義されています。使い方は同じです。
 
@@ -1152,7 +1152,103 @@ HAVING
 	MAX(a.posted_at) < '2015-02-01'
 ```
 
-## 6. ORDER BY句の書き方
+### 5.3 ORDER BY句
+`SQLSQuery`のインスタンスメソッドとして下記の述語が定義されています。これを使用してください。引数として受渡す順序式は、カラムのメタデータや式のインスタンスメソッド「`asc()`または`desc()`」の返却値として得られます。これはSQLの「`ASC`(昇順)または`DESC`(降順)」に相当します。SQLでは`ASC`, `DESC`を省略できますが(省略時は昇順)、Querydslでは省略できませんので必ず明示してください。
+なお、`SQLSubQuery`クラスにも同じメソッドが定義されています。使い方は同じです。
+
+|  #| 句       | メソッド                        |
+|--:|:---------|:--------------------------------|
+|  1| ORDER BY | `orderBy(順序式)`, `orderBy(順序式...)` |
+
+`orderBy()`メソッドを複数回呼出すと、指定された式が順に並べ替えの条件として追加されます。また、`orderBy()`メソッドの引数として式を複数受渡しても、指定された式が順に並べ替えの条件として追加されます。すなわち、`query.orderBy(式A).orderBy(式B);`は、`query.orderBy(式A, 式B);`と同じ条件になります。
+
+```Java
+		QTodo a = new QTodo("a");
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(a);
+		query.groupBy(a.postedBy);
+		query.orderBy(a.id.count().asc());
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
+				a.postedAt.max()));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	a.posted_by,
+	COUNT(a.id),
+	SUM(a.id),
+	MIN(a.posted_at),
+	MAX(a.posted_at)
+FROM
+	todo AS a
+GROUP BY
+	a.posted_by
+ORDER BY
+	COUNT(a.id) ASC
+```
+
+### 5.4 UNION句
+以下の3つの手順で指定してください。
+
+*	`SQLSubQuery`クラスを使用して、UNION句に指定するSELECT文を組み立てる。
+*	`Expressions`クラスのメソッド(`path()`, `stringPath()`, `numberPath()`, `datePath()`, `timePath()`, `dateTimePath()`)を使用して、外側のSELECT文で取り出すカラムを指定するためのパス(メタデータ)を組み立てる。
+*	`SQLQuery.union(パス, サブクエリ...)`メソッド(または`unionAll()`メソッド)を使用して、外側のSELECT文の抽出条件を組み立てる。
+
+
+```Java
+		/* UNION句でつなげるSELECT文を組み立てる。 */
+		QTodo a = new QTodo("a");
+		ListSubQuery<Tuple> queryA = new SQLSubQuery().from(a).list(a.id,
+				a.postedBy.as("name"));
+		QAuthor b = new QAuthor("b");
+		ListSubQuery<Tuple> queryB = new SQLSubQuery().from(b).list(b.id,
+				b.loginId.as("name"));
+
+		/* 外側のSELECT文で取り出すカラムを指定するためのパス(メタデータ)を組み立てる。 */
+		SimplePath<Tuple> x = Expressions.path(Tuple.class, "x");
+		NumberPath<Long> xId = Expressions.numberPath(Long.class, x, "id");
+		StringPath xName = Expressions.stringPath(x, "name");
+
+		/* 外側のSELECT文の抽出条件を組み立てる。 */
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.union(x, queryA, queryB);
+
+		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(xId,
+				xName));
+```
+
+上記Javaコードは下記SQLに相当します。
+
+```SQL
+SELECT
+	x.id,
+	x.name
+FROM
+	(
+		(
+			SELECT
+				a.id,
+				a.posted_by AS name
+			FROM
+				todo AS a
+		)
+		UNION
+		(
+			SELECT
+				b.id,
+				b.login_id AS name
+			FROM
+				author AS b
+		)
+	) AS x
+```
+
+なお、素のSQLで記述する場合は、上記のFROM句の中身だけで十分ではあります。ただし、Spring frameworkとQuerydslを組合せて使用するために制約が生じるため、上記の形式で記述することとします。
+(直接的な理由はSpring Data JDBC Extensionsが`Union`クラスを使用するクエリに対応していないためです)
 
 INSERT文
 ========
