@@ -44,7 +44,7 @@ import com.mysema.query.types.query.ListSubQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext.xml")
-public class GroupByClauseTest {
+public class AdvancedUsageTest {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
