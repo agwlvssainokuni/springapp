@@ -140,7 +140,7 @@
 	<bean id="sqlParameterSourceCreator"
 		class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
 
-	<bean id="sqlQueryHelper" class="cherry.foundation.querydsl.SQLQueryHelperImpl">
+	<bean id="queryDslSupport" class="cherry.foundation.querydsl.QueryDslSupportImpl">
 		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
 		<property name="paginator" ref="paginator" />
 	</bean>

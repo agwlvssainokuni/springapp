@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.querydsl.QueryConfigurer;
-import cherry.foundation.querydsl.SQLQueryHelper;
+import cherry.foundation.querydsl.QueryDslSupport;
 import cherry.foundation.type.DeletedFlag;
 import cherry.goods.paginate.PagedList;
 import cherry.spring.common.db.gen.query.QAsyncProcess;
@@ -31,12 +31,13 @@ import cherry.spring.common.db.gen.query.QAsyncProcessFileResult;
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.QTuple;
 
 @Service
 public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Autowired
-	private SQLQueryHelper sqlQueryHelper;
+	private QueryDslSupport queryDslSupport;
 
 	private QAsyncProcess a = new QAsyncProcess("a");
 	private QAsyncProcessFile b = new QAsyncProcessFile("b");
@@ -46,8 +47,8 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 	@Override
 	public PagedList<Tuple> searchAsyncProc(String loginId, long pageNo,
 			long pageSz) {
-		return sqlQueryHelper.search(commonClause(loginId), orderByClause(),
-				pageNo, pageSz, getColumns());
+		return queryDslSupport.search(commonClause(loginId), orderByClause(),
+				pageNo, pageSz, new QTuple(getColumns()));
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.foundation.etl.CsvConsumer;
 import cherry.foundation.etl.NoneLimiter;
 import cherry.foundation.querydsl.QueryConfigurer;
-import cherry.foundation.querydsl.SQLQueryHelper;
+import cherry.foundation.querydsl.QueryDslSupport;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.goods.paginate.PagedList;
@@ -43,7 +43,7 @@ import com.mysema.query.types.Expression;
 public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Autowired
-	private SQLQueryHelper sqlQueryHelper;
+	private QueryDslSupport queryDslSupport;
 
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
@@ -53,7 +53,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	public PagedList<User> searchUsers(UsermanSearchForm form, long pageNo,
 			long pageSz) {
 		QUser u = new QUser("u");
-		return sqlQueryHelper.search(commonClause(u, form),
+		return queryDslSupport.search(commonClause(u, form),
 				orderByClause(u, form), pageNo, pageSz,
 				rowMapperCreator.create(User.class), getColumns(u));
 	}
@@ -63,7 +63,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	public long exportUsers(Writer writer, UsermanSearchForm form) {
 		try {
 			QUser u = new QUser("u");
-			return sqlQueryHelper.download(commonClause(u, form),
+			return queryDslSupport.download(commonClause(u, form),
 					orderByClause(u, form), new CsvConsumer(writer, true),
 					new NoneLimiter(), getColumns(u));
 		} catch (IOException ex) {
