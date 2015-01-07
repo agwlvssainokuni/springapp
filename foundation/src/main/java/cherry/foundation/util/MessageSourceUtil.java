@@ -34,7 +34,7 @@ public class MessageSourceUtil {
 		return messageSource;
 	}
 
-	public List<String> getMessageList(BindingResult binding) {
+	public static List<String> getMessageList(BindingResult binding) {
 		Locale locale = LocaleContextHolder.getLocale();
 		List<String> list = new ArrayList<>(binding.getAllErrors().size());
 		for (ObjectError objectError : binding.getAllErrors()) {
