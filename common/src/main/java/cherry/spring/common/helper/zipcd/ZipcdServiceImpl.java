@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,12 +43,9 @@ public class ZipcdServiceImpl implements ZipcdService {
 	public List<ZipcdAddress> search(String zipcd) {
 		QZipcdMaster a = new QZipcdMaster("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a)
-				.where(a.zipcd.eq(zipcd), a.deletedFlg.eq(NOT_DELETED.code()))
-				.orderBy(a.id.asc());
-		return queryDslJdbcOperations.query(query, new QBean<ZipcdAddress>(
-				ZipcdAddress.class, a.cityCd, a.zipcd, a.pref, a.city, a.addr,
-				a.prefKana, a.cityKana, a.addrKana));
+		query.from(a).where(a.zipcd.eq(zipcd), a.deletedFlg.eq(NOT_DELETED.code())).orderBy(a.id.asc());
+		return queryDslJdbcOperations.query(query, new QBean<ZipcdAddress>(ZipcdAddress.class, a.cityCd, a.zipcd,
+				a.pref, a.city, a.addr, a.prefKana, a.cityKana, a.addrKana));
 	}
 
 }

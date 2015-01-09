@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,8 +50,7 @@ public class BizDateTimeTest {
 
 	@After
 	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM bizdatetime_master",
-				new HashMap<String, Object>());
+		namedParameterJdbcOperations.update("DELETE FROM bizdatetime_master", new HashMap<String, Object>());
 	}
 
 	@Test
@@ -93,16 +92,11 @@ public class BizDateTimeTest {
 		record.setOffsetSecond(4);
 		bizdatetimeMasterMapper.insertSelective(record);
 
-		LocalDateTime pre = LocalDateTime.now().plusDays(record.getOffsetDay())
-				.plusHours(record.getOffsetHour())
-				.plusMinutes(record.getOffsetMinute())
-				.plusSeconds(record.getOffsetSecond());
+		LocalDateTime pre = LocalDateTime.now().plusDays(record.getOffsetDay()).plusHours(record.getOffsetHour())
+				.plusMinutes(record.getOffsetMinute()).plusSeconds(record.getOffsetSecond());
 		LocalDateTime now = bizDateTime.now();
-		LocalDateTime post = LocalDateTime.now()
-				.plusDays(record.getOffsetDay())
-				.plusHours(record.getOffsetHour())
-				.plusMinutes(record.getOffsetMinute())
-				.plusSeconds(record.getOffsetSecond());
+		LocalDateTime post = LocalDateTime.now().plusDays(record.getOffsetDay()).plusHours(record.getOffsetHour())
+				.plusMinutes(record.getOffsetMinute()).plusSeconds(record.getOffsetSecond());
 		assertThat(now.isBefore(pre), is(false));
 		assertThat(now.isAfter(post), is(false));
 	}

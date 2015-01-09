@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,19 +70,15 @@ public class SignupRequestHelperTest {
 
 		LocalDateTime before = now();
 		sleep(100L);
-		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString(), now()));
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID().toString(), now()));
 		sleep(100L);
-		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString(), now()));
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID().toString(), now()));
 		sleep(100L);
-		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID()
-				.toString(), now()));
+		assertNotNull(helper.createSignupRequest(mailAddr, UUID.randomUUID().toString(), now()));
 		sleep(100L);
 		LocalDateTime after = now();
 
-		Interval interval = new Interval(before.toDate().getTime(), after
-				.toDate().getTime());
+		Interval interval = new Interval(before.toDate().getTime(), after.toDate().getTime());
 		List<SignupRequest> list = mapper.selectByExample(crit);
 		assertEquals(list.size(), 3);
 		for (SignupRequest r : list) {
@@ -103,8 +99,7 @@ public class SignupRequestHelperTest {
 		ReflectionTestUtils.setField(impl, "namedParameterJdbcOperations", op);
 
 		try {
-			impl.createSignupRequest(mailAddr, UUID.randomUUID().toString(),
-					now());
+			impl.createSignupRequest(mailAddr, UUID.randomUUID().toString(), now());
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
 			// OK
@@ -114,48 +109,38 @@ public class SignupRequestHelperTest {
 	@Test
 	public void testValidateMailAddr00() {
 		String mailAddr = "addr00@example.com";
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		sleep(100L);
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		sleep(100L);
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		sleep(100L);
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		sleep(100L);
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		sleep(100L);
-		assertFalse(helper.validateMailAddr(mailAddr, now(), now()
-				.minusSeconds(5), 5));
+		assertFalse(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(5), 5));
 	}
 
 	@Test
 	public void testValidateMailAddr01() {
 		String mailAddr = "addr01@example.com";
-		assertTrue(helper.validateMailAddr(mailAddr, now(),
-				now().minusSeconds(1), 1));
+		assertTrue(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(1), 1));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(helper.validateMailAddr(mailAddr, now(), now()
-				.minusSeconds(1), 1));
+		assertFalse(helper.validateMailAddr(mailAddr, now(), now().minusSeconds(1), 1));
 	}
 
 	@Test
 	public void testValidateMailAddr10() {
 		String mailAddr = "addr10@example.com";
-		assertTrue(helper.validateMailAddr(mailAddr, now().minusSeconds(1),
-				now().minusSeconds(5), 5));
+		assertTrue(helper.validateMailAddr(mailAddr, now().minusSeconds(1), now().minusSeconds(5), 5));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(helper.validateMailAddr(mailAddr, now().minusSeconds(1),
-				now().minusSeconds(5), 5));
+		assertFalse(helper.validateMailAddr(mailAddr, now().minusSeconds(1), now().minusSeconds(5), 5));
 	}
 
 	@Test
@@ -163,8 +148,7 @@ public class SignupRequestHelperTest {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
-				.minusSeconds(5)));
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now().minusSeconds(5)));
 	}
 
 	@Test
@@ -172,8 +156,7 @@ public class SignupRequestHelperTest {
 		String mailAddr = "token00@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
-				.minusSeconds(5)));
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now().minusSeconds(5)));
 		sleep(100L);
 		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now()));
 	}
@@ -183,10 +166,8 @@ public class SignupRequestHelperTest {
 		String mailAddr = "token02@example.com";
 		SignupRequest entity = newRequest(mailAddr);
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
-				.minusSeconds(5)));
-		assertFalse(helper.validateToken(mailAddr,
-				UUID.randomUUID().toString(), now().minusSeconds(5)));
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now().minusSeconds(5)));
+		assertFalse(helper.validateToken(mailAddr, UUID.randomUUID().toString(), now().minusSeconds(5)));
 	}
 
 	@Test
@@ -196,8 +177,7 @@ public class SignupRequestHelperTest {
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(entity));
-		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now()
-				.minusSeconds(5)));
+		assertTrue(helper.validateToken(mailAddr, entity.getToken(), now().minusSeconds(5)));
 	}
 
 	@Test
@@ -219,8 +199,7 @@ public class SignupRequestHelperTest {
 		assertEquals(1, mapper.insertSelective(entity));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
 		assertEquals(1, mapper.insertSelective(newRequest(mailAddr)));
-		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now()
-				.minusSeconds(5)));
+		assertFalse(helper.validateToken(mailAddr, entity.getToken(), now().minusSeconds(5)));
 	}
 
 	private SignupRequest newRequest(String mailAddr) {

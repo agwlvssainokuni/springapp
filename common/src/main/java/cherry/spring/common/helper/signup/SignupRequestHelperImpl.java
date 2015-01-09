@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.sql.SqlLoader;
 
-public class SignupRequestHelperImpl implements SignupRequestHelper,
-		InitializingBean {
+public class SignupRequestHelperImpl implements SignupRequestHelper, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -70,8 +69,7 @@ public class SignupRequestHelperImpl implements SignupRequestHelper,
 
 	@Transactional
 	@Override
-	public long createSignupRequest(String mailAddr, String token,
-			LocalDateTime appliedAt) {
+	public long createSignupRequest(String mailAddr, String token, LocalDateTime appliedAt) {
 
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("mailAddr", mailAddr);
@@ -79,38 +77,32 @@ public class SignupRequestHelperImpl implements SignupRequestHelper,
 		paramMap.put("appliedAt", appliedAt.toDate());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = namedParameterJdbcOperations.update(createSignupRequest,
-				new MapSqlParameterSource(paramMap), keyHolder);
-		checkState(
-				count == 1,
-				"failed to create signup_request: mailAddr={0}, token={1}, appliedAt={2}, count={3}",
+		int count = namedParameterJdbcOperations.update(createSignupRequest, new MapSqlParameterSource(paramMap),
+				keyHolder);
+		checkState(count == 1, "failed to create signup_request: mailAddr={0}, token={1}, appliedAt={2}, count={3}",
 				mailAddr, token, appliedAt, count);
 		return keyHolder.getKey().longValue();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean validateMailAddr(String mailAddr,
-			LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
+	public boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("mailAddr", mailAddr);
 		paramMap.put("intervalFrom", intervalFrom.toDate());
 		paramMap.put("rangeFrom", rangeFrom.toDate());
 		paramMap.put("numOfReq", numOfReq);
-		return namedParameterJdbcOperations.queryForObject(validateMailAddr,
-				paramMap, Boolean.class);
+		return namedParameterJdbcOperations.queryForObject(validateMailAddr, paramMap, Boolean.class);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean validateToken(String mailAddr, String token,
-			LocalDateTime validFrom) {
+	public boolean validateToken(String mailAddr, String token, LocalDateTime validFrom) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("mailAddr", mailAddr);
 		paramMap.put("token", token);
 		paramMap.put("validFrom", validFrom.toDate());
-		return namedParameterJdbcOperations.queryForObject(validateToken,
-				paramMap, Boolean.class);
+		return namedParameterJdbcOperations.queryForObject(validateToken, paramMap, Boolean.class);
 	}
 
 }

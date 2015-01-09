@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,24 +36,21 @@ public class ZipcdControllerImpl implements ZipcdController {
 	private ZipcdService zipcdService;
 
 	@Override
-	public Response<List<ZipcdAddress>> execute(String zipcd,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public Response<List<ZipcdAddress>> execute(String zipcd, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		return executeImpl(zipcd);
 	}
 
 	@Override
-	public Response<List<ZipcdAddress>> executeByPath(String zipcd,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public Response<List<ZipcdAddress>> executeByPath(String zipcd, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		return executeImpl(zipcd);
 	}
 
 	private Response<List<ZipcdAddress>> executeImpl(String zipcd) {
 
 		List<ZipcdAddress> result = zipcdService.search(zipcd);
-		StatusCode statusCode = result.isEmpty() ? StatusCode.WARN
-				: StatusCode.OK;
+		StatusCode statusCode = result.isEmpty() ? StatusCode.WARN : StatusCode.OK;
 
 		Response<List<ZipcdAddress>> response = new Response<>();
 		response.setStatusCode(statusCode.getValue());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,13 +42,11 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 
 	@Transactional
 	@Override
-	public long createSignupRequest(final String mailAddr, final String token,
-			final LocalDateTime appliedAt) {
+	public long createSignupRequest(final String mailAddr, final String token, final LocalDateTime appliedAt) {
 		final QSignupRequest a = new QSignupRequest("a");
 		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
 			@Override
-			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert)
-					throws SQLException {
+			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) throws SQLException {
 				insert.set(a.mailAddr, mailAddr);
 				insert.set(a.token, token);
 				insert.set(a.appliedAt, appliedAt);
@@ -56,17 +54,14 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 			}
 		};
 		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
-		checkState(
-				id != null,
-				"failed to create QSignupRequest: mailAddr={0}, token={1}, appliedAt={2}",
-				mailAddr, token, appliedAt);
+		checkState(id != null, "failed to create QSignupRequest: mailAddr={0}, token={1}, appliedAt={2}", mailAddr,
+				token, appliedAt);
 		return id.longValue();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean validateMailAddr(String mailAddr,
-			LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
+	public boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
 
 		QSignupRequest a = new QSignupRequest("a");
 
@@ -76,18 +71,15 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 				.where(a.mailAddr.eq(mailAddr), a.appliedAt.goe(rangeFrom),
 						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-		BooleanExpression cases = cases().when(a.id.count().eq(0L)).then(true)
-				.when(a.id.count().goe(numOfReq)).then(false)
-				.when(a.appliedAt.max().goe(intervalFrom)).then(false)
-				.otherwise(true);
+		BooleanExpression cases = cases().when(a.id.count().eq(0L)).then(true).when(a.id.count().goe(numOfReq))
+				.then(false).when(a.appliedAt.max().goe(intervalFrom)).then(false).otherwise(true);
 
 		return queryDslJdbcOperations.queryForObject(query, cases);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean validateToken(String mailAddr, String token,
-			LocalDateTime validFrom) {
+	public boolean validateToken(String mailAddr, String token, LocalDateTime validFrom) {
 
 		QSignupRequest a = new QSignupRequest("a");
 		QSignupRequest b = new QSignupRequest("b");
@@ -95,15 +87,12 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 		SQLQuery query = queryDslJdbcOperations
 				.newSqlQuery()
 				.from(a)
-				.where(a.mailAddr.eq(mailAddr), a.token.eq(token),
-						a.appliedAt.goe(validFrom),
+				.where(a.mailAddr.eq(mailAddr), a.token.eq(token), a.appliedAt.goe(validFrom),
 						a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
 				.where(new SQLSubQuery()
 						.from(b)
-						.where(b.mailAddr.eq(a.mailAddr),
-								b.appliedAt.gt(a.appliedAt),
-								b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-						.notExists());
+						.where(b.mailAddr.eq(a.mailAddr), b.appliedAt.gt(a.appliedAt),
+								b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())).notExists());
 
 		return queryDslJdbcOperations.exists(query);
 	}

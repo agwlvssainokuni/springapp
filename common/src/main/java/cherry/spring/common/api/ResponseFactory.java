@@ -33,8 +33,7 @@ public class ResponseFactory {
 		return response;
 	}
 
-	public static Response<List<String>> createResponse(StatusCode statusCode,
-			BindingResult binding) {
+	public static Response<List<String>> createResponse(StatusCode statusCode, BindingResult binding) {
 		List<String> result = MessageSourceUtil.getMessageList(binding);
 		Response<List<String>> response = new Response<List<String>>();
 		response.setStatusCode(statusCode.getValue());
