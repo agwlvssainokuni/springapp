@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,9 +56,8 @@ public class AdvancedUsageTest {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.groupBy(a.postedBy);
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
-				a.postedAt.max()));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.postedBy, a.id.count(), a.id.sum(),
+				a.postedAt.min(), a.postedAt.max()));
 
 		for (Tuple tuple : list) {
 			String valPostedBy = tuple.get(a.postedBy);
@@ -66,10 +65,8 @@ public class AdvancedUsageTest {
 			Long valSum = tuple.get(a.id.sum());
 			LocalDateTime valMinPostedAt = tuple.get(a.postedAt.min());
 			LocalDateTime valMaxPostedAt = tuple.get(a.postedAt.max());
-			out.println(format(
-					"{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}",
-					valPostedBy, valCount, valSum, valMinPostedAt,
-					valMaxPostedAt));
+			out.println(format("{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}", valPostedBy,
+					valCount, valSum, valMinPostedAt, valMaxPostedAt));
 		}
 	}
 
@@ -80,11 +77,9 @@ public class AdvancedUsageTest {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(a);
 		query.groupBy(a.postedBy);
-		query.having(a.id.count().gt(1),
-				a.postedAt.max().lt(new LocalDateTime(2015, 2, 1, 0, 0)));
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
-				a.postedAt.max()));
+		query.having(a.id.count().gt(1), a.postedAt.max().lt(new LocalDateTime(2015, 2, 1, 0, 0)));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.postedBy, a.id.count(), a.id.sum(),
+				a.postedAt.min(), a.postedAt.max()));
 
 		for (Tuple tuple : list) {
 			String valPostedBy = tuple.get(a.postedBy);
@@ -92,10 +87,8 @@ public class AdvancedUsageTest {
 			Long valSum = tuple.get(a.id.sum());
 			LocalDateTime valMinPostedAt = tuple.get(a.postedAt.min());
 			LocalDateTime valMaxPostedAt = tuple.get(a.postedAt.max());
-			out.println(format(
-					"{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}",
-					valPostedBy, valCount, valSum, valMinPostedAt,
-					valMaxPostedAt));
+			out.println(format("{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}", valPostedBy,
+					valCount, valSum, valMinPostedAt, valMaxPostedAt));
 		}
 	}
 
@@ -107,9 +100,8 @@ public class AdvancedUsageTest {
 		query.from(a);
 		query.groupBy(a.postedBy);
 		query.orderBy(a.id.count().asc());
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				a.postedBy, a.id.count(), a.id.sum(), a.postedAt.min(),
-				a.postedAt.max()));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.postedBy, a.id.count(), a.id.sum(),
+				a.postedAt.min(), a.postedAt.max()));
 
 		for (Tuple tuple : list) {
 			String valPostedBy = tuple.get(a.postedBy);
@@ -117,10 +109,8 @@ public class AdvancedUsageTest {
 			Long valSum = tuple.get(a.id.sum());
 			LocalDateTime valMinPostedAt = tuple.get(a.postedAt.min());
 			LocalDateTime valMaxPostedAt = tuple.get(a.postedAt.max());
-			out.println(format(
-					"{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}",
-					valPostedBy, valCount, valSum, valMinPostedAt,
-					valMaxPostedAt));
+			out.println(format("{0}: COUNT(id)={1}, SUM(id)={2}, MIN(postedAt)={3}, MAX(postedAt)={4}", valPostedBy,
+					valCount, valSum, valMinPostedAt, valMaxPostedAt));
 		}
 	}
 
@@ -129,11 +119,9 @@ public class AdvancedUsageTest {
 
 		/* UNION句でつなげるSELECT文を組み立てる。 */
 		QTodo a = new QTodo("a");
-		ListSubQuery<Tuple> queryA = new SQLSubQuery().from(a).list(a.id,
-				a.postedBy.as("name"));
+		ListSubQuery<Tuple> queryA = new SQLSubQuery().from(a).list(a.id, a.postedBy.as("name"));
 		QAuthor b = new QAuthor("b");
-		ListSubQuery<Tuple> queryB = new SQLSubQuery().from(b).list(b.id,
-				b.loginId.as("name"));
+		ListSubQuery<Tuple> queryB = new SQLSubQuery().from(b).list(b.id, b.loginId.as("name"));
 
 		/* 外側のSELECT文で取り出すカラムを指定するためのパス(メタデータ)を組み立てる。 */
 		SimplePath<Tuple> x = Expressions.path(Tuple.class, "x");
@@ -145,8 +133,7 @@ public class AdvancedUsageTest {
 		query.union(x, queryA, queryB);
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(xId,
-				xName));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(xId, xName));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {

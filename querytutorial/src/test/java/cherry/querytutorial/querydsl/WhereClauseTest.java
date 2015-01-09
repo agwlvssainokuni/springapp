@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,8 +54,8 @@ public class WhereClauseTest {
 		query.from(a).where(a.deletedFlg.eq(0));
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.postedAt, a.dueDt, a.doneFlg,
+				a.doneAt));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -64,9 +64,8 @@ public class WhereClauseTest {
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			out.println(format(
-					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
-					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+			out.println(format("{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}", valId, valPostedAt, valDueDt,
+					valDoneFlg, valDoneAt));
 		}
 	}
 
@@ -79,8 +78,8 @@ public class WhereClauseTest {
 		query.from(a).where(a.deletedFlg.eq(0)).where(a.doneFlg.eq(1));
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.postedAt, a.dueDt, a.doneFlg,
+				a.doneAt));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -89,9 +88,8 @@ public class WhereClauseTest {
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			out.println(format(
-					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
-					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+			out.println(format("{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}", valId, valPostedAt, valDueDt,
+					valDoneFlg, valDoneAt));
 		}
 	}
 
@@ -101,13 +99,11 @@ public class WhereClauseTest {
 		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a).where(
-				a.doneFlg.eq(1).or(a.dueDt.goe(new LocalDate(2015, 2, 1)))
-						.and(a.doneAt.isNull()));
+		query.from(a).where(a.doneFlg.eq(1).or(a.dueDt.goe(new LocalDate(2015, 2, 1))).and(a.doneAt.isNull()));
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.postedAt, a.dueDt, a.doneFlg,
+				a.doneAt));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -116,9 +112,8 @@ public class WhereClauseTest {
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			out.println(format(
-					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
-					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+			out.println(format("{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}", valId, valPostedAt, valDueDt,
+					valDoneFlg, valDoneAt));
 		}
 	}
 
@@ -128,14 +123,11 @@ public class WhereClauseTest {
 		/* 抽出条件を組み立てる。 */
 		QTodo a = new QTodo("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a).where(
-				a.doneFlg.eq(1).or(
-						a.dueDt.goe(new LocalDate(2015, 2, 1)).and(
-								a.doneAt.isNull())));
+		query.from(a).where(a.doneFlg.eq(1).or(a.dueDt.goe(new LocalDate(2015, 2, 1)).and(a.doneAt.isNull())));
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.postedAt, a.dueDt, a.doneFlg, a.doneAt));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.postedAt, a.dueDt, a.doneFlg,
+				a.doneAt));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -144,9 +136,8 @@ public class WhereClauseTest {
 			LocalDate valDueDt = tuple.get(a.dueDt);
 			Integer valDoneFlg = tuple.get(a.doneFlg);
 			LocalDateTime valDoneAt = tuple.get(a.doneAt);
-			out.println(format(
-					"{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}",
-					valId, valPostedAt, valDueDt, valDoneFlg, valDoneAt));
+			out.println(format("{0}: postedAt={1}, dueDt={2}, doneFlg={3}, doneAt={4}", valId, valPostedAt, valDueDt,
+					valDoneFlg, valDoneAt));
 		}
 	}
 
@@ -157,13 +148,10 @@ public class WhereClauseTest {
 		QAuthor a = new QAuthor("a");
 		QTodo b = new QTodo("b");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a).where(
-				a.loginId.in(new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
-						.list(b.postedBy)));
+		query.from(a).where(a.loginId.in(new SQLSubQuery().from(b).where(b.doneFlg.eq(1)).list(b.postedBy)));
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.loginId));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.loginId));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -180,13 +168,10 @@ public class WhereClauseTest {
 		QAuthor a = new QAuthor("a");
 		QTodo b = new QTodo("b");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a).where(
-				new SQLSubQuery().from(b).where(b.doneFlg.eq(1))
-						.where(b.postedBy.eq(a.loginId)).exists());
+		query.from(a).where(new SQLSubQuery().from(b).where(b.doneFlg.eq(1)).where(b.postedBy.eq(a.loginId)).exists());
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id,
-				a.loginId));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.id, a.loginId));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {

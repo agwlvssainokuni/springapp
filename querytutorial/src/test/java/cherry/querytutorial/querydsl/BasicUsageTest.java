@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,8 +57,7 @@ public class BasicUsageTest {
 		query.from(a);
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Tuple> list = queryDslJdbcOperations.query(query,
-				new QTuple(a.all()));
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(a.all()));
 
 		/* クエリの結果を表示する。 */
 		for (Tuple tuple : list) {
@@ -70,9 +69,8 @@ public class BasicUsageTest {
 			Integer valLockVersion = tuple.get(a.lockVersion);
 			Integer valDeletedFlg = tuple.get(a.deletedFlg);
 			out.println(format(
-					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
-					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
-					valLockVersion, valDeletedFlg));
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}", valId,
+					valLoginId, valName, valUpdatedAt, valCreatedAt, valLockVersion, valDeletedFlg));
 		}
 	}
 
@@ -85,8 +83,7 @@ public class BasicUsageTest {
 		query.from(a);
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Author> list = queryDslJdbcOperations.query(query,
-				new QBean<Author>(Author.class, a.all()));
+		List<Author> list = queryDslJdbcOperations.query(query, new QBean<Author>(Author.class, a.all()));
 
 		/* クエリの結果を表示する。 */
 		for (Author entity : list) {
@@ -98,9 +95,8 @@ public class BasicUsageTest {
 			Integer valLockVersion = entity.getLockVersion();
 			Integer valDeletedFlg = entity.getDeletedFlg();
 			out.println(format(
-					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
-					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
-					valLockVersion, valDeletedFlg));
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}", valId,
+					valLoginId, valName, valUpdatedAt, valCreatedAt, valLockVersion, valDeletedFlg));
 		}
 	}
 
@@ -113,8 +109,7 @@ public class BasicUsageTest {
 		query.from(a);
 
 		/* 取出すカラムとデータの取出し方を指定してクエリを発行する。 */
-		List<Author> list = queryDslJdbcOperations.query(query,
-				rowMapperCreator.create(Author.class), a.all());
+		List<Author> list = queryDslJdbcOperations.query(query, rowMapperCreator.create(Author.class), a.all());
 
 		/* クエリの結果を表示する。 */
 		for (Author entity : list) {
@@ -126,9 +121,8 @@ public class BasicUsageTest {
 			Integer valLockVersion = entity.getLockVersion();
 			Integer valDeletedFlg = entity.getDeletedFlg();
 			out.println(format(
-					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}",
-					valId, valLoginId, valName, valUpdatedAt, valCreatedAt,
-					valLockVersion, valDeletedFlg));
+					"{0}: loginId={1}, name={2}, updatedAt={3}, createdAt={4}, lockVersion={5}, deletedFlg={6}", valId,
+					valLoginId, valName, valUpdatedAt, valCreatedAt, valLockVersion, valDeletedFlg));
 		}
 	}
 
