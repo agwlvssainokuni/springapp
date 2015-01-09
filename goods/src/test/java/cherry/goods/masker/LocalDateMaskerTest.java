@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,32 +27,26 @@ public class LocalDateMaskerTest {
 
 	@Test
 	public void testMaskYear() {
-		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
-				1, 1), true, false, false);
+		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970, 1, 1), true, false, false);
 		LocalDate v = LocalDate.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(v),
-				is(new LocalDate(1970, v.getMonthOfYear(), v.getDayOfMonth())));
+		assertThat(masker.mask(v), is(new LocalDate(1970, v.getMonthOfYear(), v.getDayOfMonth())));
 	}
 
 	@Test
 	public void testMaskMonth() {
-		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
-				1, 1), false, true, false);
+		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970, 1, 1), false, true, false);
 		LocalDate v = LocalDate.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(v),
-				is(new LocalDate(v.getYear(), 1, v.getDayOfMonth())));
+		assertThat(masker.mask(v), is(new LocalDate(v.getYear(), 1, v.getDayOfMonth())));
 	}
 
 	@Test
 	public void testMaskDay() {
-		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970,
-				1, 1), false, false, true);
+		LocalDateMasker masker = LocalDateMasker.newMasker(new LocalDate(1970, 1, 1), false, false, true);
 		LocalDate v = LocalDate.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(v),
-				is(new LocalDate(v.getYear(), v.getMonthOfYear(), 1)));
+		assertThat(masker.mask(v), is(new LocalDate(v.getYear(), v.getMonthOfYear(), 1)));
 	}
 
 }

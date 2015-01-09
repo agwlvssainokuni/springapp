@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,7 @@ public class ToMapUtilTest {
 	public void testFromThrowable_00() {
 
 		Exception ex = new Exception("MESSAGE");
-		Map<String, Object> map = ToMapUtil
-				.fromThrowable(ex, Integer.MAX_VALUE);
+		Map<String, Object> map = ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
 
 		assertEquals("MESSAGE", map.get("message"));
 		assertNotNull(map.get("stackTrace"));
@@ -43,9 +42,7 @@ public class ToMapUtilTest {
 		@SuppressWarnings("unchecked")
 		List<String> list = (List<String>) map.get("stackTrace");
 		assertFalse(list.isEmpty());
-		assertEquals(
-				"cherry.goods.util.ToMapUtilTest.testFromThrowable_00(ToMapUtilTest.java:36)",
-				list.get(0));
+		assertEquals("cherry.goods.util.ToMapUtilTest.testFromThrowable_00(ToMapUtilTest.java:36)", list.get(0));
 
 		assertNull(map.get("cause"));
 	}
@@ -80,9 +77,7 @@ public class ToMapUtilTest {
 		@SuppressWarnings("unchecked")
 		List<String> list = (List<String>) map.get("stackTrace");
 		assertFalse(list.isEmpty());
-		assertEquals(
-				"cherry.goods.util.ToMapUtilTest.testFromThrowable_02(ToMapUtilTest.java:74)",
-				list.get(0));
+		assertEquals("cherry.goods.util.ToMapUtilTest.testFromThrowable_02(ToMapUtilTest.java:71)", list.get(0));
 
 		assertNotNull(map.get("cause"));
 		@SuppressWarnings("unchecked")

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,33 +27,26 @@ public class LocalTimeMaskerTest {
 
 	@Test
 	public void testMaskHour() {
-		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
-				0), true, false, false);
+		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0, 0), true, false, false);
 		LocalTime v = LocalTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(
-				masker.mask(v),
-				is(new LocalTime(0, v.getMinuteOfHour(), v.getSecondOfMinute())));
+		assertThat(masker.mask(v), is(new LocalTime(0, v.getMinuteOfHour(), v.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskMinute() {
-		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
-				0), false, true, false);
+		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0, 0), false, true, false);
 		LocalTime v = LocalTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(v),
-				is(new LocalTime(v.getHourOfDay(), 0, v.getSecondOfMinute())));
+		assertThat(masker.mask(v), is(new LocalTime(v.getHourOfDay(), 0, v.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskSecond() {
-		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0,
-				0), false, false, true);
+		LocalTimeMasker masker = LocalTimeMasker.newMasker(new LocalTime(0, 0, 0), false, false, true);
 		LocalTime v = LocalTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(v),
-				is(new LocalTime(v.getHourOfDay(), v.getMinuteOfHour(), 0)));
+		assertThat(masker.mask(v), is(new LocalTime(v.getHourOfDay(), v.getMinuteOfHour(), 0)));
 	}
 
 }

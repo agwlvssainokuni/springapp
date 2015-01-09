@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,37 +29,30 @@ public class SqlDateMaskerTest {
 
 	@Test
 	public void testMaskYear() {
-		SqlDateMasker masker = SqlDateMasker.newMasker(
-				new LocalDate(1970, 1, 1), true, false, false);
+		SqlDateMasker masker = SqlDateMasker.newMasker(new LocalDate(1970, 1, 1), true, false, false);
 		LocalDate v = LocalDate.now();
 		Date vv = new Date(v.toDate().getTime());
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(vv).getTime(),
-				is(new LocalDate(1970, v.getMonthOfYear(), v.getDayOfMonth())
-						.toDate().getTime()));
+		assertThat(masker.mask(vv).getTime(), is(new LocalDate(1970, v.getMonthOfYear(), v.getDayOfMonth()).toDate()
+				.getTime()));
 	}
 
 	@Test
 	public void testMaskMonth() {
-		SqlDateMasker masker = SqlDateMasker.newMasker(
-				new LocalDate(1970, 1, 1), false, true, false);
+		SqlDateMasker masker = SqlDateMasker.newMasker(new LocalDate(1970, 1, 1), false, true, false);
 		LocalDate v = LocalDate.now();
 		Date vv = new Date(v.toDate().getTime());
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(vv).getTime(), is(new LocalDate(v.getYear(), 1,
-				v.getDayOfMonth()).toDate().getTime()));
+		assertThat(masker.mask(vv).getTime(), is(new LocalDate(v.getYear(), 1, v.getDayOfMonth()).toDate().getTime()));
 	}
 
 	@Test
 	public void testMaskDay() {
-		SqlDateMasker masker = SqlDateMasker.newMasker(
-				new LocalDate(1970, 1, 1), false, false, true);
+		SqlDateMasker masker = SqlDateMasker.newMasker(new LocalDate(1970, 1, 1), false, false, true);
 		LocalDate v = LocalDate.now();
 		Date vv = new Date(v.toDate().getTime());
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(masker.mask(vv).getTime(),
-				is(new LocalDate(v.getYear(), v.getMonthOfYear(), 1).toDate()
-						.getTime()));
+		assertThat(masker.mask(vv).getTime(), is(new LocalDate(v.getYear(), v.getMonthOfYear(), 1).toDate().getTime()));
 	}
 
 }

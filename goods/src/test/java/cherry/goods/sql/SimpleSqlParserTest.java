@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,13 @@ import java.io.StringReader;
 import org.junit.Test;
 
 /**
- * {@link SimpleSqlParser} のテスト.
+ * {@link SimpleSqlParser} のテスト。
  */
 public class SimpleSqlParserTest {
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行に1つのSQL (デリミタなし)
 	 */
 	@Test
@@ -52,8 +52,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行に1つのSQL (デリミタあり)
 	 */
 	@Test
@@ -72,16 +72,15 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 2行に2つのSQL (末尾のデリミタなし)
 	 */
 	@Test
 	public void testNextStatement_02() throws IOException {
 
 		// 準備
-		Reader reader = new StringReader(
-				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL");
+		Reader reader = new StringReader("SELECT 111 FROM DUAL;SELECT 222 FROM DUAL");
 
 		// 実行
 		String sql1 = SimpleSqlParser.nextStatement(reader);
@@ -95,16 +94,15 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 2行に2つのSQL (末尾のデリミタあり)
 	 */
 	@Test
 	public void testNextStatement_03() throws IOException {
 
 		// 準備
-		Reader reader = new StringReader(
-				"SELECT 111 FROM DUAL;SELECT 222 FROM DUAL;");
+		Reader reader = new StringReader("SELECT 111 FROM DUAL;SELECT 222 FROM DUAL;");
 
 		// 実行
 		String sql1 = SimpleSqlParser.nextStatement(reader);
@@ -118,8 +116,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文中に引用符 (') あり
 	 */
 	@Test
@@ -138,8 +136,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文中に引用符 (') あり、引用符のエスケープあり
 	 */
 	@Test
@@ -158,8 +156,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文中に引用符 (') あり、引用符中にハイフン (-) あり
 	 */
 	@Test
@@ -178,8 +176,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQLの長さが0
 	 */
 	@Test
@@ -198,8 +196,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文中にハイフン (-) あり
 	 */
 	@Test
@@ -218,8 +216,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文中にコメントあり
 	 */
 	@Test
@@ -238,8 +236,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文の末尾にハイフン (-) あり
 	 */
 	@Test
@@ -258,8 +256,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextStatement(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL文の末尾にコメント
 	 */
 	@Test
@@ -278,8 +276,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行に1つのコメント
 	 */
 	@Test
@@ -298,8 +296,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行に1つのコメント(改行あり)
 	 */
 	@Test
@@ -318,8 +316,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 2行にコメント
 	 */
 	@Test
@@ -340,8 +338,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行目にコメント、2行目にSQL
 	 */
 	@Test
@@ -360,8 +358,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行目にコメント、2行目にSQL
 	 */
 	@Test
@@ -382,16 +380,15 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行目にSQL、2行目にコメント
 	 */
 	@Test
 	public void testNextComment_13() throws IOException {
 
 		// 準備
-		Reader reader = new StringReader(
-				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
+		Reader reader = new StringReader("SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
 		String sql1 = SimpleSqlParser.nextComment(reader);
@@ -403,16 +400,15 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * 1行目にSQL、2行目にコメント
 	 */
 	@Test
 	public void testNextComment_14() throws IOException {
 
 		// 準備
-		Reader reader = new StringReader(
-				"SELECT x FROM dual;\r\n-- COMMENT\r\n");
+		Reader reader = new StringReader("SELECT x FROM dual;\r\n-- COMMENT\r\n");
 
 		// 実行
 		String sql1 = SimpleSqlParser.nextStatement(reader);
@@ -426,8 +422,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * SQL中にハイフンが一つ、その後ろにコメント
 	 */
 	@Test
@@ -446,8 +442,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}.<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link SimpleSqlParser#nextComment(Reader)}。<br />
+	 * 区分: 正常<br />
 	 * コメントの後ろに、SQL中にハイフンが一つ
 	 */
 	@Test
@@ -466,8 +462,8 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: コンストラクタ.<br>
-	 * 区分: 正常<br>
+	 * 対象: コンストラクタ。<br />
+	 * 区分: 正常<br />
 	 * 例外が発生しない
 	 */
 	@Test
@@ -480,14 +476,13 @@ public class SimpleSqlParserTest {
 	}
 
 	/**
-	 * 対象: 内部列挙型.<br>
-	 * 区分: 正常<br>
+	 * 対象: 内部列挙型。<br />
+	 * 区分: 正常<br />
 	 * 文字列から列挙型インスタンスを解決できる
 	 */
 	@Test
 	public void testEnum() {
-		assertEquals(SimpleSqlParser.State.DEFAULT,
-				SimpleSqlParser.State.valueOf("DEFAULT"));
+		assertEquals(SimpleSqlParser.State.DEFAULT, SimpleSqlParser.State.valueOf("DEFAULT"));
 	}
 
 }

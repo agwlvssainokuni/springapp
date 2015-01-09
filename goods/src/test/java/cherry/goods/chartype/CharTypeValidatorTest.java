@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -162,16 +162,14 @@ public class CharTypeValidatorTest {
 	public void testIsValidFullHiragana() {
 		assertThat(CharTypeValidator.isValid('あ', FULL_HIRAGANA), is(true));
 		assertThat(CharTypeValidator.isValid('ア', FULL_HIRAGANA), is(false));
-		assertThat(CharTypeValidator.isValid('\uFF71', FULL_HIRAGANA),
-				is(false));
+		assertThat(CharTypeValidator.isValid('\uFF71', FULL_HIRAGANA), is(false));
 	}
 
 	@Test
 	public void testIsValidFullKatakana() {
 		assertThat(CharTypeValidator.isValid('あ', FULL_KATAKANA), is(false));
 		assertThat(CharTypeValidator.isValid('ア', FULL_KATAKANA), is(true));
-		assertThat(CharTypeValidator.isValid('\uFF71', FULL_KATAKANA),
-				is(false));
+		assertThat(CharTypeValidator.isValid('\uFF71', FULL_KATAKANA), is(false));
 	}
 
 	@Test
@@ -219,8 +217,7 @@ public class CharTypeValidatorTest {
 	@Test
 	public void testValidate0() {
 		int[] acceptable = new int[] {};
-		CharTypeResult result = CharTypeValidator.validate("ABCDEF", ALPHA,
-				acceptable);
+		CharTypeResult result = CharTypeValidator.validate("ABCDEF", ALPHA, acceptable);
 		assertThat(result.isValid(), is(true));
 		assertThat(result.getIndex(), is(-1));
 		assertThat(result.getCodePoint(), is(-1));
@@ -229,8 +226,7 @@ public class CharTypeValidatorTest {
 	@Test
 	public void testValidate1() {
 		int[] acceptable = new int[] {};
-		CharTypeResult result = CharTypeValidator.validate("ABCあDEF", ALPHA,
-				acceptable);
+		CharTypeResult result = CharTypeValidator.validate("ABCあDEF", ALPHA, acceptable);
 		assertThat(result.isValid(), is(false));
 		assertThat(result.getIndex(), is(3));
 		assertThat(result.getCodePoint(), is((int) 'あ'));
@@ -239,8 +235,7 @@ public class CharTypeValidatorTest {
 	@Test
 	public void testValidate2() {
 		int[] acceptable = new int[] {};
-		CharTypeResult result = CharTypeValidator.validate(
-				"ABC\uD842\uDF9FDEF", ALPHA, acceptable);
+		CharTypeResult result = CharTypeValidator.validate("ABC\uD842\uDF9FDEF", ALPHA, acceptable);
 		assertThat(result.isValid(), is(false));
 		assertThat(result.getIndex(), is(3));
 		assertThat(result.getCodePoint(), is(0x20B9F));
@@ -249,8 +244,7 @@ public class CharTypeValidatorTest {
 	@Test
 	public void testValidate3() {
 		int[] acceptable = new int[] { 0x20B9F };
-		CharTypeResult result = CharTypeValidator.validate(
-				"ABC\uD842\uDF9FDEF", ALPHA, acceptable);
+		CharTypeResult result = CharTypeValidator.validate("ABC\uD842\uDF9FDEF", ALPHA, acceptable);
 		assertThat(result.isValid(), is(true));
 		assertThat(result.getIndex(), is(-1));
 		assertThat(result.getCodePoint(), is(-1));

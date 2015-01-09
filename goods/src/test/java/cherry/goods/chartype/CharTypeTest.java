@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -258,12 +258,10 @@ public class CharTypeTest {
 				case 0x8154: // 'ゝ'
 				case 0x8155: // 'ゞ'
 				case 0x815B: // 'ー'
-					assertThat(CharTypeValidator.isFullHiragana(unicode),
-							is(true));
+					assertThat(CharTypeValidator.isFullHiragana(unicode), is(true));
 					break;
 				default:
-					assertThat(CharTypeValidator.isFullHiragana(unicode),
-							is(false));
+					assertThat(CharTypeValidator.isFullHiragana(unicode), is(false));
 					break;
 				}
 			}
@@ -285,12 +283,10 @@ public class CharTypeTest {
 				case 0x8152: // 'ヽ'
 				case 0x8153: // 'ヾ'
 				case 0x815B: // 'ー'
-					assertThat(CharTypeValidator.isFullKatakana(unicode),
-							is(true));
+					assertThat(CharTypeValidator.isFullKatakana(unicode), is(true));
 					break;
 				default:
-					assertThat(CharTypeValidator.isFullKatakana(unicode),
-							is(false));
+					assertThat(CharTypeValidator.isFullKatakana(unicode), is(false));
 					break;
 				}
 			}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,8 +43,7 @@ public class DefaultVersioningStrategyTest {
 			VersionedData<byte[], Integer> vd = strategy.decode(encoded);
 			assertThat(vd.getData(), is(plain));
 			assertThat(vd.getVersion(), is(Integer.valueOf(version)));
-			assertThat(vd.toString(),
-					startsWith("VersionStrategy.VersionedData[data={"));
+			assertThat(vd.toString(), startsWith("VersionStrategy.VersionedData[data={"));
 		}
 	}
 

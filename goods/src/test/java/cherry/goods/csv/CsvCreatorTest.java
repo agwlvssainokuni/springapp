@@ -1,5 +1,5 @@
 /*
- * Copyright 2004,2014 agwlvssainokuni
+ * Copyright 2004,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ import java.io.StringWriter;
 import org.junit.Test;
 
 /**
- * {@link CsvCreator}によるCSVデータ作成テスト.
+ * {@link CsvCreator}によるCSVデータ作成テスト。
  */
 public class CsvCreatorTest {
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * null
 	 */
 	@Test
@@ -51,8 +51,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * 空リスト
 	 */
 	@Test
@@ -73,8 +73,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドがnull
 	 */
 	@Test
@@ -95,8 +95,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドがnull (2フィールド)
 	 */
 	@Test
@@ -117,8 +117,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが空文字 ("")
 	 */
 	@Test
@@ -139,8 +139,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが空文字("") (2フィールド)
 	 */
 	@Test
@@ -161,8 +161,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが引用符 ("\"")
 	 */
 	@Test
@@ -183,8 +183,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが引用符 ("\"") (2フィールド)
 	 */
 	@Test
@@ -205,8 +205,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが文字列 ("field")
 	 */
 	@Test
@@ -227,8 +227,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが文字列 ("field") (2フィールド)
 	 */
 	@Test
@@ -249,8 +249,8 @@ public class CsvCreatorTest {
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが文字列 ("field") (2フィールド) で2レコード
 	 */
 	@Test
@@ -269,13 +269,12 @@ public class CsvCreatorTest {
 		creator.close();
 
 		// 検証
-		assertEquals("\"fieldA\",\"fieldB\"\n\"fieldC\",\"fieldD\"\n",
-				target.toString());
+		assertEquals("\"fieldA\",\"fieldB\"\n\"fieldC\",\"fieldD\"\n", target.toString());
 	}
 
 	/**
-	 * 対象: {@link CsvCreator}<br>
-	 * 区分: 正常<br>
+	 * 対象: {@link CsvCreator}<br />
+	 * 区分: 正常<br />
 	 * フィールドが文字列 ("field") (2フィールド) で2レコード。レコードセパレータはCRLF
 	 */
 	@Test
@@ -294,7 +293,6 @@ public class CsvCreatorTest {
 		creator.close();
 
 		// 検証
-		assertEquals("\"fieldA\",\"fieldB\"\r\n\"fieldC\",\"fieldD\"\r\n",
-				target.toString());
+		assertEquals("\"fieldA\",\"fieldB\"\r\n\"fieldC\",\"fieldD\"\r\n", target.toString());
 	}
 }

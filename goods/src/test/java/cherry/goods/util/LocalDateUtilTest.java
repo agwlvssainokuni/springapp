@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,33 +31,32 @@ public class LocalDateUtilTest {
 	public void testRangeFromLocalDate() {
 		LocalDate now = LocalDate.now();
 		assertThat(LocalDateUtil.rangeFrom((LocalDate) null), is(nullValue()));
-		assertThat(LocalDateUtil.rangeFrom(now), is(new LocalDate(
-				now.getYear(), now.getMonthOfYear(), now.getDayOfMonth())));
+		assertThat(LocalDateUtil.rangeFrom(now),
+				is(new LocalDate(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth())));
 	}
 
 	@Test
 	public void testRangeFromLocalDateTime() {
 		LocalDateTime now = LocalDateTime.now();
-		assertThat(LocalDateUtil.rangeFrom((LocalDateTime) null),
-				is(nullValue()));
-		assertThat(LocalDateUtil.rangeFrom(now), is(new LocalDate(
-				now.getYear(), now.getMonthOfYear(), now.getDayOfMonth())));
+		assertThat(LocalDateUtil.rangeFrom((LocalDateTime) null), is(nullValue()));
+		assertThat(LocalDateUtil.rangeFrom(now),
+				is(new LocalDate(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth())));
 	}
 
 	@Test
 	public void testRangeToLocalDate() {
 		LocalDate now = LocalDate.now();
 		assertThat(LocalDateUtil.rangeTo((LocalDate) null), is(nullValue()));
-		assertThat(LocalDateUtil.rangeTo(now), is(new LocalDate(now.getYear(),
-				now.getMonthOfYear(), now.getDayOfMonth()).plusDays(1)));
+		assertThat(LocalDateUtil.rangeTo(now),
+				is(new LocalDate(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth()).plusDays(1)));
 	}
 
 	@Test
 	public void testRangeToLocalDateTime() {
 		LocalDateTime now = LocalDateTime.now();
 		assertThat(LocalDateUtil.rangeTo((LocalDateTime) null), is(nullValue()));
-		assertThat(LocalDateUtil.rangeTo(now), is(new LocalDate(now.getYear(),
-				now.getMonthOfYear(), now.getDayOfMonth()).plusDays(1)));
+		assertThat(LocalDateUtil.rangeTo(now),
+				is(new LocalDate(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth()).plusDays(1)));
 	}
 
 	@Test

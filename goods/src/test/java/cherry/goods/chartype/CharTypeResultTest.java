@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ public class CharTypeResultTest {
 		assertTrue(result.isValid());
 		assertEquals(-1, result.getIndex());
 		assertEquals(-1, result.getCodePoint());
-		assertEquals("CharTypeResult[valid=true,index=-1,codePoint=-1]",
-				result.toString());
+		assertEquals("CharTypeResult[valid=true,index=-1,codePoint=-1]", result.toString());
 	}
 
 	@Test
@@ -40,8 +39,7 @@ public class CharTypeResultTest {
 		assertFalse(result.isValid());
 		assertEquals(1, result.getIndex());
 		assertEquals(2, result.getCodePoint());
-		assertEquals("CharTypeResult[valid=false,index=1,codePoint=2]",
-				result.toString());
+		assertEquals("CharTypeResult[valid=false,index=1,codePoint=2]", result.toString());
 	}
 
 }

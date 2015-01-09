@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,86 +27,72 @@ public class LocalDateTimeMaskerTest {
 
 	@Test
 	public void testMaskYear() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), true, false, false,
-				false, false, false);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), true, false,
+				false, false, false, false);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat(
-				masker.mask(v),
-				is(new LocalDateTime(1970, v.getMonthOfYear(), v
-						.getDayOfMonth(), v.getHourOfDay(),
-						v.getMinuteOfHour(), v.getSecondOfMinute())));
+		assertThat(masker.mask(v), is(new LocalDateTime(1970, v.getMonthOfYear(), v.getDayOfMonth(), v.getHourOfDay(),
+				v.getMinuteOfHour(), v.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskMonth() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, true, false,
-				false, false, false);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), false, true,
+				false, false, false, false);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
-				is(new LocalDateTime(v.getYear(), 1, v.getDayOfMonth(), v
-						.getHourOfDay(), v.getMinuteOfHour(), v
+				is(new LocalDateTime(v.getYear(), 1, v.getDayOfMonth(), v.getHourOfDay(), v.getMinuteOfHour(), v
 						.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskDay() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, true,
-				false, false, false);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), false,
+				false, true, false, false, false);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
-				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), 1, v
-						.getHourOfDay(), v.getMinuteOfHour(), v
+				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), 1, v.getHourOfDay(), v.getMinuteOfHour(), v
 						.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskHour() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
-				true, false, false);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), false,
+				false, false, true, false, false);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
-				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v
-						.getDayOfMonth(), 0, v.getMinuteOfHour(), v
+				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v.getDayOfMonth(), 0, v.getMinuteOfHour(), v
 						.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskMinute() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
-				false, true, false);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), false,
+				false, false, false, true, false);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
-				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v
-						.getDayOfMonth(), v.getHourOfDay(), 0, v
+				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v.getDayOfMonth(), v.getHourOfDay(), 0, v
 						.getSecondOfMinute())));
 	}
 
 	@Test
 	public void testMaskSecond() {
-		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(
-				new LocalDateTime(1970, 1, 1, 0, 0, 0), false, false, false,
-				false, false, true);
+		LocalDateTimeMasker masker = LocalDateTimeMasker.newMasker(new LocalDateTime(1970, 1, 1, 0, 0, 0), false,
+				false, false, false, false, true);
 		LocalDateTime v = LocalDateTime.now();
 		assertThat(masker.mask(null), is(nullValue()));
 		assertThat(
 				masker.mask(v),
-				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v
-						.getDayOfMonth(), v.getHourOfDay(),
-						v.getMinuteOfHour(), 0)));
+				is(new LocalDateTime(v.getYear(), v.getMonthOfYear(), v.getDayOfMonth(), v.getHourOfDay(), v
+						.getMinuteOfHour(), 0)));
 	}
 
 }

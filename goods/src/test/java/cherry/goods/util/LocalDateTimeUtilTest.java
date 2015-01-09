@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,71 +38,52 @@ public class LocalDateTimeUtilTest {
 	@Test
 	public void testRangeFromLocalDate() {
 		LocalDate now = LocalDate.now();
-		assertThat(LocalDateTimeUtil.rangeFrom((LocalDate) null),
-				is(nullValue()));
-		assertThat(
-				LocalDateTimeUtil.rangeFrom(now),
-				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
-						.getDayOfMonth(), 0, 0, 0, 0)));
+		assertThat(LocalDateTimeUtil.rangeFrom((LocalDate) null), is(nullValue()));
+		assertThat(LocalDateTimeUtil.rangeFrom(now),
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0, 0, 0)));
 	}
 
 	@Test
 	public void testRangeFromLocalDateLocalTime() {
 		LocalDate nowD = LocalDate.now();
 		LocalTime nowT = LocalTime.now();
-		assertThat(
-				LocalDateTimeUtil.rangeFrom((LocalDate) null, (LocalTime) null),
-				is(nullValue()));
+		assertThat(LocalDateTimeUtil.rangeFrom((LocalDate) null, (LocalTime) null), is(nullValue()));
 		assertThat(LocalDateTimeUtil.rangeFrom(nowD, (LocalTime) null),
-				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
-						nowD.getDayOfMonth(), 0, 0, 0, 0)));
-		assertThat(
-				LocalDateTimeUtil.rangeFrom(nowD, nowT),
-				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
-						nowD.getDayOfMonth(), nowT.getHourOfDay(), nowT
-								.getMinuteOfHour(), nowT.getSecondOfMinute(),
-						nowT.getMillisOfSecond())));
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(), nowD.getDayOfMonth(), 0, 0, 0, 0)));
+		assertThat(LocalDateTimeUtil.rangeFrom(nowD, nowT),
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(), nowD.getDayOfMonth(), nowT.getHourOfDay(),
+						nowT.getMinuteOfHour(), nowT.getSecondOfMinute(), nowT.getMillisOfSecond())));
 	}
 
 	@Test
 	public void testRangeFromLocalDateTime() {
 		LocalDateTime now = LocalDateTime.now();
-		assertThat(LocalDateTimeUtil.rangeFrom((LocalDateTime) null),
-				is(nullValue()));
+		assertThat(LocalDateTimeUtil.rangeFrom((LocalDateTime) null), is(nullValue()));
 		assertThat(
 				LocalDateTimeUtil.rangeFrom(now),
-				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
-						.getDayOfMonth(), now.getHourOfDay(), now
-						.getMinuteOfHour(), now.getSecondOfMinute(), now
-						.getMillisOfSecond())));
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay(), now
+						.getMinuteOfHour(), now.getSecondOfMinute(), now.getMillisOfSecond())));
 	}
 
 	@Test
 	public void testRangeToLocalDate() {
 		LocalDate now = LocalDate.now();
 		assertThat(LocalDateTimeUtil.rangeTo((LocalDate) null), is(nullValue()));
-		assertThat(
-				LocalDateTimeUtil.rangeTo(now),
-				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
-						.getDayOfMonth(), 0, 0, 0, 0).plusDays(1)));
+		assertThat(LocalDateTimeUtil.rangeTo(now),
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0, 0, 0).plusDays(1)));
 	}
 
 	@Test
 	public void testRangeToLocalDateLocalTime() {
 		LocalDate nowD = LocalDate.now();
 		LocalTime nowT = LocalTime.now();
-		assertThat(
-				LocalDateTimeUtil.rangeTo((LocalDate) null, (LocalTime) null),
-				is(nullValue()));
+		assertThat(LocalDateTimeUtil.rangeTo((LocalDate) null, (LocalTime) null), is(nullValue()));
 		assertThat(LocalDateTimeUtil.rangeTo(nowD, (LocalTime) null),
-				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
-						nowD.getDayOfMonth(), 0, 0, 0, 0).plusDays(1)));
-		assertThat(
-				LocalDateTimeUtil.rangeTo(nowD, nowT),
-				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
-						nowD.getDayOfMonth(), nowT.getHourOfDay(), nowT
-								.getMinuteOfHour(), nowT.getSecondOfMinute(),
-						nowT.getMillisOfSecond()).plusSeconds(1)));
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(), nowD.getDayOfMonth(), 0, 0, 0, 0)
+						.plusDays(1)));
+		assertThat(LocalDateTimeUtil.rangeTo(nowD, nowT),
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(), nowD.getDayOfMonth(), nowT.getHourOfDay(),
+						nowT.getMinuteOfHour(), nowT.getSecondOfMinute(), nowT.getMillisOfSecond()).plusSeconds(1)));
 	}
 
 	@Test
@@ -111,25 +92,19 @@ public class LocalDateTimeUtilTest {
 
 		LocalDate nowD = LocalDate.now();
 		LocalTime nowT = LocalTime.now();
-		assertThat(
-				LocalDateTimeUtil.rangeTo(nowD, nowT),
-				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(),
-						nowD.getDayOfMonth(), nowT.getHourOfDay(), nowT
-								.getMinuteOfHour(), nowT.getSecondOfMinute(),
-						nowT.getMillisOfSecond()).plusMinutes(1)));
+		assertThat(LocalDateTimeUtil.rangeTo(nowD, nowT),
+				is(new LocalDateTime(nowD.getYear(), nowD.getMonthOfYear(), nowD.getDayOfMonth(), nowT.getHourOfDay(),
+						nowT.getMinuteOfHour(), nowT.getSecondOfMinute(), nowT.getMillisOfSecond()).plusMinutes(1)));
 	}
 
 	@Test
 	public void testRangeToLocalDateTime() {
 		LocalDateTime now = LocalDateTime.now();
-		assertThat(LocalDateTimeUtil.rangeTo((LocalDateTime) null),
-				is(nullValue()));
+		assertThat(LocalDateTimeUtil.rangeTo((LocalDateTime) null), is(nullValue()));
 		assertThat(
 				LocalDateTimeUtil.rangeTo(now),
-				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
-						.getDayOfMonth(), now.getHourOfDay(), now
-						.getMinuteOfHour(), now.getSecondOfMinute(), now
-						.getMillisOfSecond()).plusSeconds(1)));
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay(), now
+						.getMinuteOfHour(), now.getSecondOfMinute(), now.getMillisOfSecond()).plusSeconds(1)));
 	}
 
 	@Test
@@ -139,10 +114,8 @@ public class LocalDateTimeUtilTest {
 		LocalDateTime now = LocalDateTime.now();
 		assertThat(
 				LocalDateTimeUtil.rangeTo(now),
-				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now
-						.getDayOfMonth(), now.getHourOfDay(), now
-						.getMinuteOfHour(), now.getSecondOfMinute(), now
-						.getMillisOfSecond()).plusMinutes(1)));
+				is(new LocalDateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay(), now
+						.getMinuteOfHour(), now.getSecondOfMinute(), now.getMillisOfSecond()).plusMinutes(1)));
 	}
 
 	@Test

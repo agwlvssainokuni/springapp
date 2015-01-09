@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ public class BigDecimalMaskerTest {
 
 	@Test
 	public void testLowerDigit() {
-		BigDecimalMasker masker = BigDecimalMasker.lowerDigit(new BigDecimal(
-				"999999.99"), 2);
+		BigDecimalMasker masker = BigDecimalMasker.lowerDigit(new BigDecimal("999999.99"), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigDecimal.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valOf("0.99")));
@@ -55,8 +54,7 @@ public class BigDecimalMaskerTest {
 
 	@Test
 	public void testUpperDigit() {
-		BigDecimalMasker masker = BigDecimalMasker.upperDigit(new BigDecimal(
-				"999999.99"), 2);
+		BigDecimalMasker masker = BigDecimalMasker.upperDigit(new BigDecimal("999999.99"), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigDecimal.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valOf("0.99")));
@@ -80,8 +78,7 @@ public class BigDecimalMaskerTest {
 
 	@Test
 	public void testFixedUpperDigit() {
-		BigDecimalMasker masker = BigDecimalMasker.fixedUpperDigit(
-				new BigDecimal("999999.99"), 2);
+		BigDecimalMasker masker = BigDecimalMasker.fixedUpperDigit(new BigDecimal("999999.99"), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigDecimal.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valOf("999900.99")));

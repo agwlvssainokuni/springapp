@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ public class BigIntegerMaskerTest {
 
 	@Test
 	public void testLowerDigit() {
-		BigIntegerMasker masker = BigIntegerMasker.lowerDigit(valueOf(999999L),
-				2);
+		BigIntegerMasker masker = BigIntegerMasker.lowerDigit(valueOf(999999L), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigInteger.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valueOf(0L)));
@@ -55,8 +54,7 @@ public class BigIntegerMaskerTest {
 
 	@Test
 	public void testUpperDigit() {
-		BigIntegerMasker masker = BigIntegerMasker.upperDigit(valueOf(999999L),
-				2);
+		BigIntegerMasker masker = BigIntegerMasker.upperDigit(valueOf(999999L), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigInteger.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valueOf(0L)));
@@ -80,8 +78,7 @@ public class BigIntegerMaskerTest {
 
 	@Test
 	public void testFixedUpperDigit() {
-		BigIntegerMasker masker = BigIntegerMasker.fixedUpperDigit(
-				valueOf(999999L), 2);
+		BigIntegerMasker masker = BigIntegerMasker.fixedUpperDigit(valueOf(999999L), 2);
 		assertThat(masker, is(notNullValue()));
 		assertThat(masker.mask(null), is(nullValue(BigInteger.class)));
 		assertThat(masker.mask(valueOf(0L)), is(valueOf(999900L)));
