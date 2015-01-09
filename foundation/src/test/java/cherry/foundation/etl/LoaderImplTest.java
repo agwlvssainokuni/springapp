@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,19 +43,16 @@ public class LoaderImplTest {
 
 	@Test
 	public void testWithHeaderWithRecord() throws IOException {
-		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n"
-				+ "\"name_0\",\"address_0\"\r\n"
-				+ "\"name_1\",\"address_1\"\r\n"
-				+ "\"name_2\",\"address_2\"\r\n");
+		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n" + "\"name_0\",\"address_0\"\r\n"
+				+ "\"name_1\",\"address_1\"\r\n" + "\"name_2\",\"address_2\"\r\n");
 		CsvProvider provider = new CsvProvider(reader, true);
 		try {
 			LoaderImpl impl = new LoaderImpl();
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(0);
-			LoadResult loadResult = impl
-					.load(dataSource,
-							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
-							provider, new NoneLimiter());
+			LoadResult loadResult = impl.load(dataSource,
+					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)", provider,
+					new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
 			assertEquals(3, loadResult.getSuccessCount());
@@ -72,19 +69,16 @@ public class LoaderImplTest {
 
 	@Test
 	public void testWithHeaderWithRecordBatch3() throws IOException {
-		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n"
-				+ "\"name_0\",\"address_0\"\r\n"
-				+ "\"name_1\",\"address_1\"\r\n"
-				+ "\"name_2\",\"address_2\"\r\n");
+		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n" + "\"name_0\",\"address_0\"\r\n"
+				+ "\"name_1\",\"address_1\"\r\n" + "\"name_2\",\"address_2\"\r\n");
 		CsvProvider provider = new CsvProvider(reader, true);
 		try {
 			LoaderImpl impl = new LoaderImpl();
 			impl.setBatchCount(3);
 			impl.setAllowedFailCount(0);
-			LoadResult loadResult = impl
-					.load(dataSource,
-							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
-							provider, new NoneLimiter());
+			LoadResult loadResult = impl.load(dataSource,
+					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)", provider,
+					new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
 			assertEquals(3, loadResult.getSuccessCount());
@@ -101,19 +95,16 @@ public class LoaderImplTest {
 
 	@Test
 	public void testWithHeaderWithRecordBatch1() throws IOException {
-		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n"
-				+ "\"name_0\",\"address_0\"\r\n"
-				+ "\"name_1\",\"address_1\"\r\n"
-				+ "\"name_2\",\"address_2\"\r\n");
+		StringReader reader = new StringReader("\"NAME\",\"ADDRESS\"\r\n" + "\"name_0\",\"address_0\"\r\n"
+				+ "\"name_1\",\"address_1\"\r\n" + "\"name_2\",\"address_2\"\r\n");
 		CsvProvider provider = new CsvProvider(reader, true);
 		try {
 			LoaderImpl impl = new LoaderImpl();
 			impl.setBatchCount(1);
 			impl.setAllowedFailCount(0);
-			LoadResult loadResult = impl
-					.load(dataSource,
-							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
-							provider, new NoneLimiter());
+			LoadResult loadResult = impl.load(dataSource,
+					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)", provider,
+					new NoneLimiter());
 
 			assertEquals(1, loadResult.getTotalCount());
 			assertEquals(1, loadResult.getSuccessCount());
@@ -149,10 +140,9 @@ public class LoaderImplTest {
 			LoaderImpl impl = new LoaderImpl();
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(3);
-			LoadResult loadResult = impl
-					.load(dataSource,
-							"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
-							provider, new NoneLimiter());
+			LoadResult loadResult = impl.load(dataSource,
+					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)", provider,
+					new NoneLimiter());
 
 			assertEquals(3, loadResult.getTotalCount());
 			assertEquals(0, loadResult.getSuccessCount());
@@ -175,9 +165,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(1);
 			try {
-				impl.load(
-						dataSource,
-						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
+				impl.load(dataSource, "INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
 			} catch (DataAccessException ex) {
@@ -200,9 +188,7 @@ public class LoaderImplTest {
 			impl.setBatchCount(0);
 			impl.setAllowedFailCount(0);
 			try {
-				impl.load(
-						dataSource,
-						"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
+				impl.load(dataSource, "INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
 						provider, new NoneLimiter());
 				fail("Exception must be thrown");
 			} catch (DataAccessException ex) {
@@ -217,9 +203,8 @@ public class LoaderImplTest {
 		NamedParameterJdbcTemplate template = getTemplate();
 		Map<String, String> paramMap = new HashMap<>();
 		paramMap.put("name", name);
-		return template.queryForObject(
-				"SELECT address FROM etl_extr_ldr_test WHERE name = :name",
-				paramMap, String.class);
+		return template.queryForObject("SELECT address FROM etl_extr_ldr_test WHERE name = :name", paramMap,
+				String.class);
 	}
 
 	private void cleanupData() {

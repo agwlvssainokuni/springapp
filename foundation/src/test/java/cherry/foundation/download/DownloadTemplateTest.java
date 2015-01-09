@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,8 +49,7 @@ public class DownloadTemplateTest {
 	public void testDownload00() throws IOException {
 		HttpServletResponse response = createMock();
 		LocalDateTime timestamp = LocalDateTime.now();
-		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss")
-				.print(timestamp);
+		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(timestamp);
 
 		DownloadAction action = new DownloadAction() {
 			@Override
@@ -58,20 +57,17 @@ public class DownloadTemplateTest {
 				return 123L;
 			}
 		};
-		downloadOperation.download(response, "text/csv",
-				StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
+		downloadOperation.download(response, "text/csv", StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition",
-				"attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
 	}
 
 	@Test
 	public void testDownload01() throws IOException {
 		HttpServletResponse response = createMock();
 		LocalDateTime timestamp = LocalDateTime.now();
-		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss")
-				.print(timestamp);
+		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(timestamp);
 
 		final IOException ioex = new IOException();
 		DownloadAction action = new DownloadAction() {
@@ -82,24 +78,21 @@ public class DownloadTemplateTest {
 		};
 
 		try {
-			downloadOperation.download(response, "text/csv",
-					StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
+			downloadOperation.download(response, "text/csv", StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
 			fail("Excption must be thrown");
 		} catch (IllegalStateException ex) {
 			assertSame(ex.getCause(), ioex);
 		}
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition",
-				"attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
 	}
 
 	@Test
 	public void testDownload02() throws IOException {
 		HttpServletResponse response = createMock();
 		LocalDateTime timestamp = LocalDateTime.now();
-		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss")
-				.print(timestamp);
+		String ts = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(timestamp);
 
 		DownloadAction action = new DownloadAction() {
 			@Override
@@ -107,12 +100,10 @@ public class DownloadTemplateTest {
 				return 123L;
 			}
 		};
-		downloadOperation.download(response, "text/csv", null, "test_{0}.csv",
-				timestamp, action);
+		downloadOperation.download(response, "text/csv", null, "test_{0}.csv", timestamp, action);
 		verify(response).setContentType("text/csv");
 		verify(response, never()).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition",
-				"attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
 	}
 
 	private HttpServletResponse createMock() throws IOException {

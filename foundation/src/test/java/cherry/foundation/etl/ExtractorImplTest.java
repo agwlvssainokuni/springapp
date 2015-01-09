@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,8 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			long count = impl.extract(dataSource,
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
-					paramMap, consumer, new NoneLimiter());
+			long count = impl.extract(dataSource, "SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
+					consumer, new NoneLimiter());
 
 			assertEquals(3L, count);
 
@@ -61,9 +60,7 @@ public class ExtractorImplTest {
 			cleanupData();
 		}
 
-		assertEquals("\"NAME\",\"ADDRESS\"\r\n"
-				+ "\"name_0\",\"address_0\"\r\n"
-				+ "\"name_1\",\"address_1\"\r\n"
+		assertEquals("\"NAME\",\"ADDRESS\"\r\n" + "\"name_0\",\"address_0\"\r\n" + "\"name_1\",\"address_1\"\r\n"
 				+ "\"name_2\",\"address_2\"\r\n", writer.toString());
 	}
 
@@ -75,9 +72,8 @@ public class ExtractorImplTest {
 			createData(3);
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			long count = impl.extract(dataSource,
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
-					paramMap, consumer, new NoneLimiter());
+			long count = impl.extract(dataSource, "SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
+					consumer, new NoneLimiter());
 
 			assertEquals(3L, count);
 
@@ -85,9 +81,8 @@ public class ExtractorImplTest {
 			cleanupData();
 		}
 
-		assertEquals("\"name_0\",\"address_0\"\r\n"
-				+ "\"name_1\",\"address_1\"\r\n"
-				+ "\"name_2\",\"address_2\"\r\n", writer.toString());
+		assertEquals("\"name_0\",\"address_0\"\r\n" + "\"name_1\",\"address_1\"\r\n" + "\"name_2\",\"address_2\"\r\n",
+				writer.toString());
 	}
 
 	@Test
@@ -97,9 +92,8 @@ public class ExtractorImplTest {
 		try {
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			long count = impl.extract(dataSource,
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
-					paramMap, consumer, new NoneLimiter());
+			long count = impl.extract(dataSource, "SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap,
+					consumer, new NoneLimiter());
 
 			assertEquals(0L, count);
 
@@ -118,9 +112,8 @@ public class ExtractorImplTest {
 			doThrow(exception).when(consumer).begin((Column[]) any());
 			ExtractorImpl impl = new ExtractorImpl();
 			Map<String, ?> paramMap = new HashMap<>();
-			impl.extract(dataSource,
-					"SELECT name, address FROM etl_extr_ldr_test ORDER BY id",
-					paramMap, consumer, new NoneLimiter());
+			impl.extract(dataSource, "SELECT name, address FROM etl_extr_ldr_test ORDER BY id", paramMap, consumer,
+					new NoneLimiter());
 			fail("Exception must be thrown");
 		} catch (IOException ex) {
 			assertEquals(exception, ex);
@@ -133,9 +126,7 @@ public class ExtractorImplTest {
 			Map<String, String> paramMap = new HashMap<>();
 			paramMap.put("name", "name_" + i);
 			paramMap.put("address", "address_" + i);
-			template.update(
-					"INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)",
-					paramMap);
+			template.update("INSERT INTO etl_extr_ldr_test (name, address) VALUES (:name, :address)", paramMap);
 		}
 	}
 

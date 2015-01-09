@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,11 +30,10 @@ public class CsvProviderTest {
 
 	@Test
 	public void testWithHeaderWithRecord() throws IOException {
-		StringReader reader = new StringReader(
-				"\"column_a\",\"column_b\",\"column_c\"\r\n"
-						+ "\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
-						+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
-						+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n");
+		StringReader reader = new StringReader("\"column_a\",\"column_b\",\"column_c\"\r\n"
+				+ "\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
+				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
+				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n");
 		CsvProvider provider = new CsvProvider(reader, true);
 		try {
 			provider.begin();
@@ -63,10 +62,9 @@ public class CsvProviderTest {
 
 	@Test
 	public void testNoHeaderWithRecord() throws IOException {
-		StringReader reader = new StringReader(
-				"\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
-						+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
-						+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n");
+		StringReader reader = new StringReader("\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
+				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
+				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n");
 		CsvProvider provider = new CsvProvider(reader, false);
 		try {
 			provider.begin();

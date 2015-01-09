@@ -16,19 +16,32 @@
 
 package cherry.foundation.bizdtm;
 
+import static org.junit.Assert.assertTrue;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.junit.Test;
 
-public class SimpleBizDateTime implements BizDateTime {
+public class SimpleBizDateTimeTest {
 
-	@Override
-	public LocalDate today() {
-		return LocalDate.now();
+	private BizDateTime bizDateTime = new SimpleBizDateTime();
+
+	@Test
+	public void testToday() {
+		LocalDate dt0 = LocalDate.now();
+		LocalDate today = bizDateTime.today();
+		LocalDate dt1 = LocalDate.now();
+		assertTrue(today.compareTo(dt0) >= 0);
+		assertTrue(today.compareTo(dt1) <= 0);
 	}
 
-	@Override
-	public LocalDateTime now() {
-		return LocalDateTime.now();
+	@Test
+	public void testNow() {
+		LocalDateTime dtm0 = LocalDateTime.now();
+		LocalDateTime now = bizDateTime.now();
+		LocalDateTime dtm1 = LocalDateTime.now();
+		assertTrue(now.compareTo(dtm0) >= 0);
+		assertTrue(now.compareTo(dtm1) <= 0);
 	}
 
 }

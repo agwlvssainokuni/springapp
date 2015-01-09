@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,8 +49,7 @@ public class AsyncCommandHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(asyncProcessStore.createCommand("a", now, "b", "c")).thenReturn(
-				10L);
+		when(asyncProcessStore.createCommand("a", now, "b", "c")).thenReturn(10L);
 
 		Map<String, String> message = new HashMap<>();
 		message.put("asyncId", "10");
@@ -71,8 +70,7 @@ public class AsyncCommandHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(asyncProcessStore.createCommand("a", now, "b", "c", "d", "e"))
-				.thenReturn(10L);
+		when(asyncProcessStore.createCommand("a", now, "b", "c", "d", "e")).thenReturn(10L);
 
 		Map<String, String> message = new HashMap<>();
 		message.put("asyncId", "10");
@@ -110,8 +108,7 @@ public class AsyncCommandHandlerImplTest {
 
 		verify(commandLauncher).launch("a");
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.SUCCESS,
-				result);
+		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.SUCCESS, result);
 	}
 
 	@Test
@@ -138,8 +135,7 @@ public class AsyncCommandHandlerImplTest {
 
 		verify(commandLauncher).launch("a", "b", "c");
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.SUCCESS,
-				result);
+		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.SUCCESS, result);
 	}
 
 	@Test
@@ -164,8 +160,7 @@ public class AsyncCommandHandlerImplTest {
 
 		verify(commandLauncher).launch("a");
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.ERROR,
-				result);
+		verify(asyncProcessStore).finishCommand(10L, now, AsyncStatus.ERROR, result);
 	}
 
 	@Test

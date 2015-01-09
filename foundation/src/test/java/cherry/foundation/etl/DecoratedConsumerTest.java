@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,18 +34,14 @@ public class DecoratedConsumerTest {
 	public void test() throws IOException {
 		try (StringWriter writer = new StringWriter()) {
 			Map<String, Decorator> decoratorMap = new HashMap<>();
-			decoratorMap.put("AA",
-					new MaskerDecorator<String>(StringMasker.tail("*", 0)));
-			Consumer consumer = new DecoratedConsumer(new CsvConsumer(writer,
-					true), decoratorMap);
-			consumer.begin(new Column[] { column(Types.VARCHAR, "AA"),
-					column(Types.VARCHAR, "BB") });
+			decoratorMap.put("AA", new MaskerDecorator<String>(StringMasker.tail("*", 0)));
+			Consumer consumer = new DecoratedConsumer(new CsvConsumer(writer, true), decoratorMap);
+			consumer.begin(new Column[] { column(Types.VARCHAR, "AA"), column(Types.VARCHAR, "BB") });
 			consumer.consume(new String[] { "0A", "0B" });
 			consumer.consume(new String[] { "1A", "1B" });
 			consumer.end();
 			writer.flush();
-			assertEquals("\"AA\",\"BB\"\r\n\"**\",\"0B\"\r\n\"**\",\"1B\"\r\n",
-					writer.toString());
+			assertEquals("\"AA\",\"BB\"\r\n\"**\",\"0B\"\r\n\"**\",\"1B\"\r\n", writer.toString());
 		}
 	}
 

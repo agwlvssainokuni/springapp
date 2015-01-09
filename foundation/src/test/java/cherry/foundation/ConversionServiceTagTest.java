@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,8 +39,7 @@ public class ConversionServiceTagTest {
 
 	@Test
 	public void testConvert() {
-		assertEquals("2014/01/23",
-				ConversionServiceTag.convert(new LocalDate(2014, 1, 23)));
+		assertEquals("2014/01/23", ConversionServiceTag.convert(new LocalDate(2014, 1, 23)));
 		assertEquals("1,234,567", ConversionServiceTag.convert(1234567));
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,10 +47,8 @@ public class RSACryptoSupportTest {
 		KeyPair key = keygen.generateKeyPair();
 		RSACryptoSupport crypto = new RSACryptoSupport();
 		crypto.setAlgorithm("RSA/ECB/PKCS1Padding");
-		crypto.setPublicKeyResource(new InMemoryResource(key.getPublic()
-				.getEncoded()));
-		crypto.setPrivateKeyResource(new InMemoryResource(key.getPrivate()
-				.getEncoded()));
+		crypto.setPublicKeyResource(new InMemoryResource(key.getPublic().getEncoded()));
+		crypto.setPrivateKeyResource(new InMemoryResource(key.getPrivate().getEncoded()));
 		crypto.afterPropertiesSet();
 		return crypto;
 	}

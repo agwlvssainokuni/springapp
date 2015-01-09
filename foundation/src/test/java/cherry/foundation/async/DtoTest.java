@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,8 +62,7 @@ public class DtoTest {
 		assertEquals(5L, info.getNumber());
 		assertEquals("DESC", info.getDescription());
 
-		assertEquals("FileRecordInfo[number=5,ok=false,description=DESC]",
-				info.toString());
+		assertEquals("FileRecordInfo[number=5,ok=false,description=DESC]", info.toString());
 	}
 
 }

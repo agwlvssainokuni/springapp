@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,8 @@ public class AESCryptoSupportTest {
 	public void testDefault() throws Exception {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
@@ -49,10 +47,8 @@ public class AESCryptoSupportTest {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setAlgorithm("AES/CBC/PKCS5Padding");
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
@@ -68,8 +64,7 @@ public class AESCryptoSupportTest {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setAlgorithm("AES/ECB/PKCS5Padding");
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
@@ -92,18 +87,14 @@ public class AESCryptoSupportTest {
 		crypto0.afterPropertiesSet();
 
 		AESCryptoSupport keyCrypto = new AESCryptoSupport();
-		keyCrypto.setSecretKeyResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
-		keyCrypto.setInitVectorResource(new InMemoryResource(RandomUtil
-				.randomBytes(16)));
+		keyCrypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		keyCrypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
 		keyCrypto.afterPropertiesSet();
 
 		AESCryptoSupport crypto1 = new AESCryptoSupport();
 		crypto1.setKeyCrypto(keyCrypto);
-		crypto1.setSecretKeyResource(new InMemoryResource(keyCrypto
-				.encrypt(key)));
-		crypto1.setInitVectorResource(new InMemoryResource(keyCrypto
-				.encrypt(iv)));
+		crypto1.setSecretKeyResource(new InMemoryResource(keyCrypto.encrypt(key)));
+		crypto1.setInitVectorResource(new InMemoryResource(keyCrypto.encrypt(iv)));
 		crypto1.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {

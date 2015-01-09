@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,37 +62,31 @@ public class AsyncFileProcessHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(
-				asyncProcessStore.createFileProcess("a", now, "b", "c", "d",
-						"e", 100L, "f")).thenReturn(10L);
+		when(asyncProcessStore.createFileProcess("a", now, "b", "c", "d", "e", 100L, "f")).thenReturn(10L);
 
 		MultipartFile file = mock(MultipartFile.class);
 		when(file.getName()).thenReturn("c");
 		when(file.getOriginalFilename()).thenReturn("d");
 		when(file.getContentType()).thenReturn("e");
 		when(file.getSize()).thenReturn(100L);
-		when(file.getInputStream()).thenReturn(
-				new ByteArrayInputStream(new byte[0]));
+		when(file.getInputStream()).thenReturn(new ByteArrayInputStream(new byte[0]));
 
 		@SuppressWarnings("rawtypes")
 		ArgumentCaptor<Map> message = ArgumentCaptor.forClass(Map.class);
 
 		long asyncId = impl.launchFileProcess("a", "b", file, "f");
 		assertEquals(10L, asyncId);
-		verify(jmsOperations).convertAndSend(message.capture(),
-				eq(messagePostProcessor));
+		verify(jmsOperations).convertAndSend(message.capture(), eq(messagePostProcessor));
 		assertEquals("10", message.getValue().get("asyncId"));
 		String fileName = (String) message.getValue().get("file");
-		assertTrue(fileName.startsWith((new File(tempDir, "prefix_"))
-				.getAbsolutePath()));
+		assertTrue(fileName.startsWith((new File(tempDir, "prefix_")).getAbsolutePath()));
 		assertTrue(fileName.endsWith(".csv"));
 		assertEquals("c", message.getValue().get("name"));
 		assertEquals("d", message.getValue().get("originalFilename"));
 		assertEquals("e", message.getValue().get("contentType"));
 		assertEquals("100", message.getValue().get("size"));
 		assertEquals("f", message.getValue().get("handlerName"));
-		verify(asyncProcessStore).createFileProcess("a", now, "b", "c", "d",
-				"e", 100L, "f");
+		verify(asyncProcessStore).createFileProcess("a", now, "b", "c", "d", "e", 100L, "f");
 		verify(asyncProcessStore).updateToLaunched(10L, now);
 	}
 
@@ -103,29 +97,24 @@ public class AsyncFileProcessHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(
-				asyncProcessStore.createFileProcess("a", now, "b", "c", "d",
-						"e", 100L, "f", "g", "h")).thenReturn(10L);
+		when(asyncProcessStore.createFileProcess("a", now, "b", "c", "d", "e", 100L, "f", "g", "h")).thenReturn(10L);
 
 		MultipartFile file = mock(MultipartFile.class);
 		when(file.getName()).thenReturn("c");
 		when(file.getOriginalFilename()).thenReturn("d");
 		when(file.getContentType()).thenReturn("e");
 		when(file.getSize()).thenReturn(100L);
-		when(file.getInputStream()).thenReturn(
-				new ByteArrayInputStream(new byte[0]));
+		when(file.getInputStream()).thenReturn(new ByteArrayInputStream(new byte[0]));
 
 		@SuppressWarnings("rawtypes")
 		ArgumentCaptor<Map> message = ArgumentCaptor.forClass(Map.class);
 
 		long asyncId = impl.launchFileProcess("a", "b", file, "f", "g", "h");
 		assertEquals(10L, asyncId);
-		verify(jmsOperations).convertAndSend(message.capture(),
-				eq(messagePostProcessor));
+		verify(jmsOperations).convertAndSend(message.capture(), eq(messagePostProcessor));
 		assertEquals("10", message.getValue().get("asyncId"));
 		String fileName = (String) message.getValue().get("file");
-		assertTrue(fileName.startsWith((new File(tempDir, "prefix_"))
-				.getAbsolutePath()));
+		assertTrue(fileName.startsWith((new File(tempDir, "prefix_")).getAbsolutePath()));
 		assertTrue(fileName.endsWith(".csv"));
 		assertEquals("c", message.getValue().get("name"));
 		assertEquals("d", message.getValue().get("originalFilename"));
@@ -134,8 +123,7 @@ public class AsyncFileProcessHandlerImplTest {
 		assertEquals("f", message.getValue().get("handlerName"));
 		assertEquals("g", message.getValue().get("0"));
 		assertEquals("h", message.getValue().get("1"));
-		verify(asyncProcessStore).createFileProcess("a", now, "b", "c", "d",
-				"e", 100L, "f", "g", "h");
+		verify(asyncProcessStore).createFileProcess("a", now, "b", "c", "d", "e", 100L, "f", "g", "h");
 		verify(asyncProcessStore).updateToLaunched(10L, now);
 	}
 
@@ -146,9 +134,7 @@ public class AsyncFileProcessHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(
-				asyncProcessStore.createFileProcess("a", now, "b", "c", "d",
-						"e", 100L, "f")).thenReturn(10L);
+		when(asyncProcessStore.createFileProcess("a", now, "b", "c", "d", "e", 100L, "f")).thenReturn(10L);
 
 		IOException exception = new IOException();
 		InputStream in = mock(InputStream.class);
@@ -165,8 +151,7 @@ public class AsyncFileProcessHandlerImplTest {
 			impl.launchFileProcess("a", "b", file, "f");
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
-			verify(asyncProcessStore).createFileProcess("a", now, "b", "c",
-					"d", "e", 100L, "f");
+			verify(asyncProcessStore).createFileProcess("a", now, "b", "c", "d", "e", 100L, "f");
 			verify(asyncProcessStore).finishWithException(10L, now, exception);
 		}
 	}
@@ -178,9 +163,7 @@ public class AsyncFileProcessHandlerImplTest {
 
 		LocalDateTime now = LocalDateTime.now();
 		when(bizDateTime.now()).thenReturn(now);
-		when(
-				asyncProcessStore.createFileProcess("a", now, "b", "c", "d",
-						"e", 100L, "f")).thenReturn(10L);
+		when(asyncProcessStore.createFileProcess("a", now, "b", "c", "d", "e", 100L, "f")).thenReturn(10L);
 
 		IOException ioException = new IOException();
 		MultipartFile file = mock(MultipartFile.class);
@@ -224,18 +207,15 @@ public class AsyncFileProcessHandlerImplTest {
 		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
 
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
-				.thenReturn(result);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
 
 		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishFileProcess(10L, now,
-				AsyncStatus.SUCCESS, result);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.SUCCESS, result);
 	}
 
 	@Test
@@ -266,19 +246,15 @@ public class AsyncFileProcessHandlerImplTest {
 		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
 
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f"))
-				.thenReturn(result);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f")).thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
 
-		verify(handler)
-				.handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f");
+		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L, "e", "f");
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishFileProcess(10L, now,
-				AsyncStatus.SUCCESS, result);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.SUCCESS, result);
 	}
 
 	@Test
@@ -307,18 +283,15 @@ public class AsyncFileProcessHandlerImplTest {
 		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
 
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
-				.thenReturn(result);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
 
 		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishFileProcess(10L, now,
-				AsyncStatus.ERROR, result);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.ERROR, result);
 	}
 
 	@Test
@@ -347,18 +320,15 @@ public class AsyncFileProcessHandlerImplTest {
 		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
 
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
-				.thenReturn(result);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
 
 		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.WARN,
-				result);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.WARN, result);
 	}
 
 	@Test
@@ -382,10 +352,8 @@ public class AsyncFileProcessHandlerImplTest {
 
 		IllegalStateException exception = new IllegalStateException();
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenThrow(
-				exception);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenThrow(exception);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
@@ -422,18 +390,15 @@ public class AsyncFileProcessHandlerImplTest {
 		result.setNgRecordInfoList(new ArrayList<FileRecordInfo>());
 
 		FileProcessHandler handler = mock(FileProcessHandler.class);
-		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L))
-				.thenReturn(result);
-		when(applicationContext.getBean("d", FileProcessHandler.class))
-				.thenReturn(handler);
+		when(handler.handleFile(tempFile, "a", "b", "c", 100L, 10L)).thenReturn(result);
+		when(applicationContext.getBean("d", FileProcessHandler.class)).thenReturn(handler);
 
 		impl.handleMessage(message);
 		assertFalse(tempFile.exists());
 
 		verify(handler).handleFile(tempFile, "a", "b", "c", 100L, 10L);
 		verify(asyncProcessStore).updateToProcessing(10L, now);
-		verify(asyncProcessStore).finishFileProcess(10L, now,
-				AsyncStatus.SUCCESS, result);
+		verify(asyncProcessStore).finishFileProcess(10L, now, AsyncStatus.SUCCESS, result);
 	}
 
 	private AsyncFileProcessHandlerImpl createImpl() {

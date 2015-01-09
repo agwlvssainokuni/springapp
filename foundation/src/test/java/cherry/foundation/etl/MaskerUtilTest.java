@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,8 +51,7 @@ public class MaskerUtilTest {
 		Map<String, Decorator> map = MaskerUtil.decoratorMap(maskerMap);
 		assertThat(map.get("AAA_BBB_CCC"), is(notNullValue()));
 		assertThat(map.get("aaaBbbCcc"), is(nullValue(Decorator.class)));
-		assertThat((String) map.get("AAA_BBB_CCC").decorate("abcdef"),
-				is("ab**"));
+		assertThat((String) map.get("AAA_BBB_CCC").decorate("abcdef"), is("ab**"));
 		assertThat(map.get("DDD_EEE_FFF"), is(notNullValue()));
 		assertThat(map.get("dddEeeFff"), is(nullValue(Decorator.class)));
 		assertThat((Integer) map.get("DDD_EEE_FFF").decorate(1234), is(9934));
@@ -66,12 +65,10 @@ public class MaskerUtilTest {
 		Map<String, Masker<?>> map = MaskerUtil.propertyMap(maskerMap);
 		assertThat(map.get("AAA_BBB_CCC"), is(nullValue(Masker.class)));
 		assertThat(map.get("aaaBbbCcc"), is(notNullValue()));
-		assertThat(((Masker<String>) map.get("aaaBbbCcc")).mask("abcdef"),
-				is("ab**"));
+		assertThat(((Masker<String>) map.get("aaaBbbCcc")).mask("abcdef"), is("ab**"));
 		assertThat(map.get("DDD_EEE_FFF"), is(nullValue(Masker.class)));
 		assertThat(map.get("dddEeeFff"), is(notNullValue()));
-		assertThat(((Masker<Integer>) map.get("dddEeeFff")).mask(1234),
-				is(9934));
+		assertThat(((Masker<Integer>) map.get("dddEeeFff")).mask(1234), is(9934));
 	}
 
 	@Test

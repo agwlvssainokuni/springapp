@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,8 +103,7 @@ public class PropertyMessagePostProcessorTest {
 		verify(message).setObjectProperty("key", object);
 	}
 
-	private PropertyMessagePostProcessor createProcessor(String key,
-			Object value) {
+	private PropertyMessagePostProcessor createProcessor(String key, Object value) {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(key, value);
 		PropertyMessagePostProcessor processor = new PropertyMessagePostProcessor();

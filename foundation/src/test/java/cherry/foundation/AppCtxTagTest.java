@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,7 @@ public class AppCtxTagTest {
 
 	@Test
 	public void testGetBean() {
-		ConversionService service = AppCtxTag.getBean("conversionService",
-				ConversionService.class);
+		ConversionService service = AppCtxTag.getBean("conversionService", ConversionService.class);
 		assertNotNull(service);
 	}
 
@@ -44,8 +43,7 @@ public class AppCtxTagTest {
 
 	@Test
 	public void testGetBeanByClass() {
-		ConversionService service = AppCtxTag
-				.getBeanByClass(ConversionService.class);
+		ConversionService service = AppCtxTag.getBeanByClass(ConversionService.class);
 		assertNotNull(service);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,20 +33,16 @@ public class AsyncProcessFacadeImplTest {
 	public void testLaunchFileProcess() {
 		AsyncProcessFacadeImpl impl = createImpl();
 		MultipartFile file = mock(MultipartFile.class);
-		when(
-				asyncFileProcessHandler.launchFileProcess("a", "b", file, "c",
-						"d", "e")).thenReturn(10L);
+		when(asyncFileProcessHandler.launchFileProcess("a", "b", file, "c", "d", "e")).thenReturn(10L);
 		long asyncId = impl.launchFileProcess("a", "b", file, "c", "d", "e");
 		assertEquals(10L, asyncId);
-		verify(asyncFileProcessHandler).launchFileProcess("a", "b", file, "c",
-				"d", "e");
+		verify(asyncFileProcessHandler).launchFileProcess("a", "b", file, "c", "d", "e");
 	}
 
 	@Test
 	public void testLaunchCommand() {
 		AsyncProcessFacadeImpl impl = createImpl();
-		when(asyncCommandHandler.launchCommand("a", "b", "c", "d", "e"))
-				.thenReturn(10L);
+		when(asyncCommandHandler.launchCommand("a", "b", "c", "d", "e")).thenReturn(10L);
 		long asyncId = impl.launchCommand("a", "b", "c", "d", "e");
 		assertEquals(10L, asyncId);
 		verify(asyncCommandHandler).launchCommand("a", "b", "c", "d", "e");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,16 +32,13 @@ public class RelabelConsumerTest {
 		try (StringWriter writer = new StringWriter()) {
 			Map<String, String> labelMap = new HashMap<>();
 			labelMap.put("AA", "ＡＡ");
-			Consumer consumer = new RelabelConsumer(new CsvConsumer(writer,
-					true), labelMap);
-			consumer.begin(new Column[] { column(Types.VARCHAR, "AA"),
-					column(Types.VARCHAR, "BB") });
+			Consumer consumer = new RelabelConsumer(new CsvConsumer(writer, true), labelMap);
+			consumer.begin(new Column[] { column(Types.VARCHAR, "AA"), column(Types.VARCHAR, "BB") });
 			consumer.consume(new String[] { "0A", "0B" });
 			consumer.consume(new String[] { "1A", "1B" });
 			consumer.end();
 			writer.flush();
-			assertEquals("\"ＡＡ\",\"BB\"\r\n\"0A\",\"0B\"\r\n\"1A\",\"1B\"\r\n",
-					writer.toString());
+			assertEquals("\"ＡＡ\",\"BB\"\r\n\"0A\",\"0B\"\r\n\"1A\",\"1B\"\r\n", writer.toString());
 		}
 	}
 

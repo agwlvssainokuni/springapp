@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,11 +37,9 @@ public class CsvConsumerTest {
 		} finally {
 			consumer.end();
 		}
-		assertEquals("\"column0\",\"column1\",\"column2\"\r\n"
-				+ "\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
+		assertEquals("\"column0\",\"column1\",\"column2\"\r\n" + "\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
 				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
-				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n",
-				writer.toString());
+				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n", writer.toString());
 	}
 
 	@Test
@@ -56,10 +54,8 @@ public class CsvConsumerTest {
 		} finally {
 			consumer.end();
 		}
-		assertEquals("\"column0\",\"column1\",\"column2\"\n"
-				+ "\"record_0_0\",\"record_0_1\",\"record_0_2\"\n"
-				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\n"
-				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\n",
+		assertEquals("\"column0\",\"column1\",\"column2\"\n" + "\"record_0_0\",\"record_0_1\",\"record_0_2\"\n"
+				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\n" + "\"record_2_0\",\"record_2_1\",\"record_2_2\"\n",
 				writer.toString());
 	}
 
@@ -77,8 +73,7 @@ public class CsvConsumerTest {
 		}
 		assertEquals("\"record_0_0\",\"record_0_1\",\"record_0_2\"\r\n"
 				+ "\"record_1_0\",\"record_1_1\",\"record_1_2\"\r\n"
-				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n",
-				writer.toString());
+				+ "\"record_2_0\",\"record_2_1\",\"record_2_2\"\r\n", writer.toString());
 	}
 
 	@Test
@@ -90,8 +85,7 @@ public class CsvConsumerTest {
 		} finally {
 			consumer.end();
 		}
-		assertEquals("\"column0\",\"column1\",\"column2\"\r\n",
-				writer.toString());
+		assertEquals("\"column0\",\"column1\",\"column2\"\r\n", writer.toString());
 	}
 
 	@Test
@@ -116,8 +110,7 @@ public class CsvConsumerTest {
 		} finally {
 			consumer.end();
 		}
-		assertEquals("\"column0\",\"column1\",\"column2\"\r\n" + ",,\r\n",
-				writer.toString());
+		assertEquals("\"column0\",\"column1\",\"column2\"\r\n" + ",,\r\n", writer.toString());
 	}
 
 	private Column[] createColumn(int num) {

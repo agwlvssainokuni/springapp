@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,16 +42,14 @@ public class MiscTest {
 		assertEquals(3, loadResult.getTotalCount());
 		assertEquals(2, loadResult.getSuccessCount());
 		assertEquals(1, loadResult.getFailedCount());
-		assertEquals("LoadResult[totalCount=3,successCount=2,failedCount=1]",
-				loadResult.toString());
+		assertEquals("LoadResult[totalCount=3,successCount=2,failedCount=1]", loadResult.toString());
 	}
 
 	@Test
 	public void testLimiterException() {
 		try {
 			LimiterException cause = new LimiterException();
-			assertEquals("message",
-					(new LimiterException("message")).getMessage());
+			assertEquals("message", (new LimiterException("message")).getMessage());
 			assertEquals(cause, (new LimiterException(cause)).getCause());
 			LimiterException ex = new LimiterException("message", cause);
 			assertEquals("message", ex.getMessage());
