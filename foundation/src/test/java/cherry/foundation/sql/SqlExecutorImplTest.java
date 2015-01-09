@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,8 +49,7 @@ public class SqlExecutorImplTest {
 
 	@Test
 	public void DDLをファイルから読込んで実行する() throws IOException {
-		Resource resource = new ClassPathResource("SqlExecutorImplTest.sql",
-				getClass());
+		Resource resource = new ClassPathResource("SqlExecutorImplTest.sql", getClass());
 		try {
 			executor.execute(dataSource, resource, null, true);
 			assertTrue(true);
@@ -58,8 +57,7 @@ public class SqlExecutorImplTest {
 			ex.printStackTrace();
 			fail("例外が発生するのはNG");
 		} finally {
-			executor.execute(dataSource, new StringReader(
-					"DROP TABLE etl_user_test"), null, true);
+			executor.execute(dataSource, new StringReader("DROP TABLE etl_user_test"), null, true);
 		}
 	}
 

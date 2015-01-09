@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,8 +43,7 @@ public class MailFacadeImplTest {
 		MailModel model = new MailModel() {
 		};
 		mailFacade.createMailData("templateName", "to@addr", model);
-		verify(mailDataHandler).createMailData(eq("templateName"),
-				eq("to@addr"), eq(model));
+		verify(mailDataHandler).createMailData(eq("templateName"), eq("to@addr"), eq(model));
 	}
 
 	@Test
@@ -52,12 +51,10 @@ public class MailFacadeImplTest {
 		LocalDateTime now = LocalDateTime.now();
 		MailFacade mailFacade = create(now);
 
-		mailFacade.send("launcherId", "messageName", "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"),
-				"subject", "body");
-		verify(mailSendHandler).sendLater(eq("launcherId"), eq("messageName"),
-				eq("from@addr"), eq(asList("to@addr")), eq(asList("cc@addr")),
-				eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(now));
+		mailFacade.send("launcherId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
+				asList("bcc@addr"), "subject", "body");
+		verify(mailSendHandler).sendLater(eq("launcherId"), eq("messageName"), eq("from@addr"), eq(asList("to@addr")),
+				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(now));
 	}
 
 	@Test
@@ -65,12 +62,10 @@ public class MailFacadeImplTest {
 		LocalDateTime now = LocalDateTime.now();
 		MailFacade mailFacade = create(now);
 
-		mailFacade.sendLater("launcherId", "messageName", "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"),
-				"subject", "body", now);
-		verify(mailSendHandler).sendLater(eq("launcherId"), eq("messageName"),
-				eq("from@addr"), eq(asList("to@addr")), eq(asList("cc@addr")),
-				eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(now));
+		mailFacade.sendLater("launcherId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
+				asList("bcc@addr"), "subject", "body", now);
+		verify(mailSendHandler).sendLater(eq("launcherId"), eq("messageName"), eq("from@addr"), eq(asList("to@addr")),
+				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(now));
 	}
 
 	@Test
@@ -78,12 +73,10 @@ public class MailFacadeImplTest {
 		LocalDateTime now = LocalDateTime.now();
 		MailFacade mailFacade = create(now);
 
-		mailFacade.sendNow("launcherId", "messageName", "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"),
-				"subject", "body");
-		verify(mailSendHandler).sendNow(eq("launcherId"), eq("messageName"),
-				eq("from@addr"), eq(asList("to@addr")), eq(asList("cc@addr")),
-				eq(asList("bcc@addr")), eq("subject"), eq("body"));
+		mailFacade.sendNow("launcherId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
+				asList("bcc@addr"), "subject", "body");
+		verify(mailSendHandler).sendNow(eq("launcherId"), eq("messageName"), eq("from@addr"), eq(asList("to@addr")),
+				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"));
 	}
 
 	private MailFacade create(LocalDateTime now) {

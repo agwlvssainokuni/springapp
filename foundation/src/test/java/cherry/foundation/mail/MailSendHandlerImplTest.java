@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,8 +43,7 @@ public class MailSendHandlerImplTest {
 		LocalDateTime now = LocalDateTime.now();
 		MailSendHandler handler = create(now);
 
-		long messageId = handler.sendLater("loginId", "messageName",
-				"from@addr", asList("to@addr"), asList("cc@addr"),
+		long messageId = handler.sendLater("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
 				asList("bcc@addr"), "subject", "body", now);
 		assertEquals(0L, messageId);
 
@@ -52,8 +51,7 @@ public class MailSendHandlerImplTest {
 		assertEquals(1, list.size());
 		assertEquals(0L, list.get(0).longValue());
 
-		ArgumentCaptor<SimpleMailMessage> message = ArgumentCaptor
-				.forClass(SimpleMailMessage.class);
+		ArgumentCaptor<SimpleMailMessage> message = ArgumentCaptor.forClass(SimpleMailMessage.class);
 		doNothing().when(mailSender).send(message.capture());
 		boolean first = handler.sendMessage(0L);
 
@@ -77,13 +75,11 @@ public class MailSendHandlerImplTest {
 		LocalDateTime now = LocalDateTime.now();
 		MailSendHandler handler = create(now);
 
-		ArgumentCaptor<SimpleMailMessage> message = ArgumentCaptor
-				.forClass(SimpleMailMessage.class);
+		ArgumentCaptor<SimpleMailMessage> message = ArgumentCaptor.forClass(SimpleMailMessage.class);
 		doNothing().when(mailSender).send(message.capture());
 
-		long messageId = handler.sendNow("loginId", "messageName", "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"),
-				"subject", "body");
+		long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
+				asList("bcc@addr"), "subject", "body");
 		assertEquals(0L, messageId);
 
 		assertEquals("from@addr", message.getValue().getFrom());

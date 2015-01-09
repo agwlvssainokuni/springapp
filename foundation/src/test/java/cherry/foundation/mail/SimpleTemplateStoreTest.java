@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,7 @@ public class SimpleTemplateStoreTest {
 	@Test
 	public void testGetTemplate() {
 
-		TemplateStore templateStore = create("name", "from@addr", "to@addr",
-				"cc@addr", "bcc@addr", "subject", "body");
+		TemplateStore templateStore = create("name", "from@addr", "to@addr", "cc@addr", "bcc@addr", "subject", "body");
 
 		MailData mailData = templateStore.getTemplate("name");
 		assertNotNull(mailData);
@@ -49,8 +48,8 @@ public class SimpleTemplateStoreTest {
 		assertNull(templateStore.getTemplate("none"));
 	}
 
-	private TemplateStore create(String name, String fromAddr, String toAddr,
-			String ccAddr, String bccAddr, String subject, String body) {
+	private TemplateStore create(String name, String fromAddr, String toAddr, String ccAddr, String bccAddr,
+			String subject, String body) {
 
 		MailData mailData = new MailData();
 		mailData.setFromAddr(fromAddr);

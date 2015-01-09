@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,12 +32,10 @@ public class SimpleMessageStoreTest {
 	@Test
 	public void testCreateMessage() {
 		SimpleMessageStore store = new SimpleMessageStore();
-		long id0 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now(), "from@addr", asList("to@addr"),
-				asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
 		assertEquals(0L, id0);
-		long id1 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now().plusMinutes(1), "from@addr",
+		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
 				asList("to@addr"), null, null, "subject", "body");
 		assertEquals(1L, id1);
 	}
@@ -46,17 +44,14 @@ public class SimpleMessageStoreTest {
 	public void testListMessage() {
 
 		SimpleMessageStore store = new SimpleMessageStore();
-		long id0 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now(), "from@addr", asList("to@addr"),
-				asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
 		assertEquals(0L, id0);
-		long id1 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now().plusMinutes(1), "from@addr",
+		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
 				asList("to@addr"), null, null, "subject", "body");
 		assertEquals(1L, id1);
 
-		List<Long> list0 = store
-				.listMessage(LocalDateTime.now().plusSeconds(1));
+		List<Long> list0 = store.listMessage(LocalDateTime.now().plusSeconds(1));
 		assertEquals(1, list0.size());
 		assertEquals(0L, list0.get(0).longValue());
 
@@ -70,12 +65,10 @@ public class SimpleMessageStoreTest {
 	public void testGetMessage() {
 
 		SimpleMessageStore store = new SimpleMessageStore();
-		long id0 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now(), "from@addr", asList("to@addr"),
-				asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
 		assertEquals(0L, id0);
-		long id1 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now().plusMinutes(1), "from@addr",
+		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
 				asList("to@addr"), null, null, "subject", "body");
 		assertEquals(1L, id1);
 
@@ -98,12 +91,10 @@ public class SimpleMessageStoreTest {
 	public void testFinishMessage() {
 
 		SimpleMessageStore store = new SimpleMessageStore();
-		long id0 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now(), "from@addr", asList("to@addr"),
-				asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
 		assertEquals(0L, id0);
-		long id1 = store.createMessage("launcherId", "messageName",
-				LocalDateTime.now().plusMinutes(1), "from@addr",
+		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
 				asList("to@addr"), null, null, "subject", "body");
 		assertEquals(1L, id1);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
 /**
- * {@link TraceInterceptor} のテスト.
+ * {@link TraceInterceptor} のテスト。
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:cherry/foundation/log/trace/applicationContext.xml")
@@ -61,13 +61,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test0: ()",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test0: ()", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test0: void",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test0: void", e1.getMessage());
 	}
 
 	@Test
@@ -85,14 +83,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test1: (12345)",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test1: (12345)", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test1: 12345",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test1: 12345", e1.getMessage());
 	}
 
 	@Test
@@ -110,15 +105,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test2: ([12345, 67890])",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test2: ([12345, 67890])", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test2: [12345, 67890]",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test2: [12345, 67890]", e1.getMessage());
 	}
 
 	@Test
@@ -136,15 +127,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test2: (<null>)",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test2: (<null>)", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test2: <null>",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test2: <null>", e1.getMessage());
 	}
 
 	@Test
@@ -162,15 +149,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test3: (12345, 67890)",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test3: (12345, 67890)", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test3: 1234567890",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test3: 1234567890", e1.getMessage());
 	}
 
 	@Test
@@ -188,15 +171,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test4: (12345, <MASKED>)",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test4: (12345, <MASKED>)", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test4: <MASKED>",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test4: <MASKED>", e1.getMessage());
 	}
 
 	@Test
@@ -218,14 +197,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test5: ()",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test5: ()", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXCEPTION", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest0Impl#test5: java.lang.Exception",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest0Impl#test5: java.lang.Exception", e1.getMessage());
 	}
 
 	@Test
@@ -243,15 +219,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: ([1, 2, 3, 4, 5])",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: ([1, 2, 3, 4, 5])", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: [1, 2, 3, 4, 5]",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: [1, 2, 3, 4, 5]", e1.getMessage());
 	}
 
 	@Test
@@ -269,15 +241,11 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: ([array of int size 6])",
-				e0.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: ([array of int size 6])", e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: [array of int size 6]",
-				e1.getMessage());
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: [array of int size 6]", e1.getMessage());
 	}
 
 	@Test
@@ -295,14 +263,12 @@ public class TraceInterceptorTest {
 		ILoggingEvent e0 = event.get(0);
 		assertEquals(Level.TRACE, e0.getLevel());
 		assertEquals("trace.ENTER", e0.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: ([11111, 22222, 33333,...<truncated>...)",
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: ([11111, 22222, 33333,...<truncated>...)",
 				e0.getMessage());
 		ILoggingEvent e1 = event.get(1);
 		assertEquals(Level.TRACE, e1.getLevel());
 		assertEquals("trace.EXIT", e1.getLoggerName());
-		assertEquals(
-				"cherry.foundation.log.trace.TraceTest1Impl#test: [11111, 22222, 33333,...<truncated>...",
+		assertEquals("cherry.foundation.log.trace.TraceTest1Impl#test: [11111, 22222, 33333,...<truncated>...",
 				e1.getMessage());
 	}
 

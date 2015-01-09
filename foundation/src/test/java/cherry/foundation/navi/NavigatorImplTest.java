@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,8 +59,7 @@ public class NavigatorImplTest {
 			assertEquals(String.valueOf(i), node.getName());
 			assertEquals("uri/" + i, node.getUri());
 			assertTrue(node.isLast());
-			assertEquals("Navigator.Node[name=" + i + ",uri=uri/" + i
-					+ ",last=true]", node.toString());
+			assertEquals("Navigator.Node[name=" + i + ",uri=uri/" + i + ",last=true]", node.toString());
 			i += 1;
 		}
 	}
@@ -89,8 +88,7 @@ public class NavigatorImplTest {
 		node.setName("A");
 		node.setUri("U");
 		node.setChildren(new ArrayList<NavigatorImpl.NaviNode>());
-		assertEquals("NavigatorImpl.NaviNode[name=A,uri=U,children=[]]",
-				node.toString());
+		assertEquals("NavigatorImpl.NaviNode[name=A,uri=U,children=[]]", node.toString());
 	}
 
 	private Navigator create(String def) throws IOException {

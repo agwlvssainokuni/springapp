@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,41 +23,40 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 
 /**
- * テスト用ログイベント蓄積機能.
+ * テスト用ログイベント蓄積機能。
  */
 public class OnMemoryAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
-	/** 蓄積したログイベント. */
+	/** 蓄積したログイベント。 */
 	private static List<ILoggingEvent> loggingEvent = null;
 
 	/**
-	 * 蓄積を開始する.
+	 * 蓄積を開始する。
 	 */
 	public static void begin() {
 		loggingEvent = new ArrayList<ILoggingEvent>();
 	}
 
 	/**
-	 * 蓄積を終了する.
+	 * 蓄積を終了する。
 	 */
 	public static void end() {
 		loggingEvent = null;
 	}
 
 	/**
-	 * 蓄積したログイベントを取得する.
+	 * 蓄積したログイベントを取得する。
 	 * 
-	 * @return 蓄積したログイベント
+	 * @return 蓄積したログイベント。
 	 */
 	public static List<ILoggingEvent> getEvents() {
 		return loggingEvent;
 	}
 
 	/**
-	 * ログイベントを蓄積する.
+	 * ログイベントを蓄積する。
 	 * 
-	 * @param event
-	 *            ログイベント
+	 * @param event ログイベント。
 	 */
 	@Override
 	protected void append(ILoggingEvent event) {

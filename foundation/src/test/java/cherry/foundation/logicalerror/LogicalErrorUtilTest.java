@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,49 +34,42 @@ public class LogicalErrorUtilTest {
 	public void testRejectOnOneTimeTokenError() {
 		BindingResult binding = mock(BindingResult.class);
 		LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-		verify(binding).reject(eq("OneTimeTokenError"), eq(new Object[] {}),
-				eq("OneTimeTokenError"));
+		verify(binding).reject(eq("OneTimeTokenError"), eq(new Object[] {}), eq("OneTimeTokenError"));
 	}
 
 	@Test
 	public void testRejectOnOptimisticLockError() {
 		BindingResult binding = mock(BindingResult.class);
 		LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-		verify(binding).reject(eq("OptimisticLockError"), eq(new Object[] {}),
-				eq("OptimisticLockError"));
+		verify(binding).reject(eq("OptimisticLockError"), eq(new Object[] {}), eq("OptimisticLockError"));
 	}
 
 	@Test
 	public void testRejectOnSearchresultEmpty() {
 		BindingResult binding = mock(BindingResult.class);
 		LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
-		verify(binding).reject(eq("SearchResultEmpty"), eq(new Object[] {}),
-				eq("SearchResultEmpty"));
+		verify(binding).reject(eq("SearchResultEmpty"), eq(new Object[] {}), eq("SearchResultEmpty"));
 	}
 
 	@Test
 	public void testReject() {
 		BindingResult binding = mock(BindingResult.class);
 		LogicalErrorUtil.reject(binding, ErrorCode.TestError0, 1, 2);
-		verify(binding).reject(eq("TestError0"),
-				eq(new Object[] { Integer.valueOf(1), Integer.valueOf(2) }),
+		verify(binding).reject(eq("TestError0"), eq(new Object[] { Integer.valueOf(1), Integer.valueOf(2) }),
 				eq("TestError0"));
 	}
 
 	@Test
 	public void testRejectValue() {
 		BindingResult binding = mock(BindingResult.class);
-		LogicalErrorUtil.rejectValue(binding, "property", ErrorCode.TestError0,
-				1, 2);
+		LogicalErrorUtil.rejectValue(binding, "property", ErrorCode.TestError0, 1, 2);
 		verify(binding).rejectValue(eq("property"), eq("TestError0"),
-				eq(new Object[] { Integer.valueOf(1), Integer.valueOf(2) }),
-				eq("TestError0"));
+				eq(new Object[] { Integer.valueOf(1), Integer.valueOf(2) }), eq("TestError0"));
 	}
 
 	@Test
 	public void testResolve() {
-		MessageSourceResolvable resolvable = LogicalErrorUtil
-				.resolve("property");
+		MessageSourceResolvable resolvable = LogicalErrorUtil.resolve("property");
 		assertNotNull(resolvable.getCodes());
 		assertEquals(1, resolvable.getCodes().length);
 		assertEquals("property", resolvable.getCodes()[0]);
@@ -95,8 +88,7 @@ public class LogicalErrorUtilTest {
 
 	@Test
 	public void testEnum() {
-		assertEquals(LogicalError.OneTimeTokenError,
-				LogicalError.valueOf("OneTimeTokenError"));
+		assertEquals(LogicalError.OneTimeTokenError, LogicalError.valueOf("OneTimeTokenError"));
 	}
 
 	public enum ErrorCode implements ILogicalError {

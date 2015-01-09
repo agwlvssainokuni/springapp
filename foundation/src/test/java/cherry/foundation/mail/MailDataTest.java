@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,8 +49,7 @@ public class MailDataTest {
 	@Test
 	public void testToString() {
 		MailData mailData = new MailData();
-		assertEquals(
-				"MailData[fromAddr=<null>,toAddr=<null>,ccAddr=<null>,bccAddr=<null>,subject=<null>,body=<null>]",
+		assertEquals("MailData[fromAddr=<null>,toAddr=<null>,ccAddr=<null>,bccAddr=<null>,subject=<null>,body=<null>]",
 				mailData.toString());
 	}
 

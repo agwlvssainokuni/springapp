@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,8 @@ public class MailDataHandlerImplTest {
 
 	@Test
 	public void testFullAddress() {
-		MailDataHandler handler = create("name", "from@addr", "other@addr",
-				"cc@addr", "bcc@addr", "subject", "body", VelocityMode.NORMAL);
+		MailDataHandler handler = create("name", "from@addr", "other@addr", "cc@addr", "bcc@addr", "subject", "body",
+				VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -62,8 +62,7 @@ public class MailDataHandlerImplTest {
 
 	@Test
 	public void testEmptyTemplate() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null,
-				"", "", VelocityMode.NORMAL);
+		MailDataHandler handler = create("name", "from@addr", null, null, null, "", "", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -79,9 +78,8 @@ public class MailDataHandlerImplTest {
 
 	@Test
 	public void testTemplateEvaluation() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null,
-				"param=${model.param}", "param is ${model.param}",
-				VelocityMode.NORMAL);
+		MailDataHandler handler = create("name", "from@addr", null, null, null, "param=${model.param}",
+				"param is ${model.param}", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -97,9 +95,8 @@ public class MailDataHandlerImplTest {
 
 	@Test
 	public void testTemplateEvaluationFalse() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null,
-				"param=${model.param}", "param is ${model.param}",
-				VelocityMode.MOCK_FALSE);
+		MailDataHandler handler = create("name", "from@addr", null, null, null, "param=${model.param}",
+				"param is ${model.param}", VelocityMode.MOCK_FALSE);
 		Model model = new Model();
 		model.setParam("PARAM");
 		try {
@@ -114,9 +111,8 @@ public class MailDataHandlerImplTest {
 		NORMAL, MOCK_FALSE
 	}
 
-	private MailDataHandler create(String name, String fromAddr, String toAddr,
-			String ccAddr, String bccAddr, String subject, String body,
-			VelocityMode velocityMode) {
+	private MailDataHandler create(String name, String fromAddr, String toAddr, String ccAddr, String bccAddr,
+			String subject, String body, VelocityMode velocityMode) {
 
 		MailData mailData = new MailData();
 		mailData.setFromAddr(fromAddr);
@@ -146,9 +142,7 @@ public class MailDataHandlerImplTest {
 			break;
 		default:
 			velocityEngine = mock(VelocityEngine.class);
-			when(
-					velocityEngine.evaluate((Context) any(), (Writer) any(),
-							anyString(), anyString())).thenReturn(false);
+			when(velocityEngine.evaluate((Context) any(), (Writer) any(), anyString(), anyString())).thenReturn(false);
 			break;
 		}
 

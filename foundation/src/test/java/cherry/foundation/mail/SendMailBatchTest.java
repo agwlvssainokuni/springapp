@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,8 +68,7 @@ public class SendMailBatchTest {
 		};
 
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
-		ScheduledFuture<Boolean> future = service.schedule(callable, 5L,
-				TimeUnit.SECONDS);
+		ScheduledFuture<Boolean> future = service.schedule(callable, 5L, TimeUnit.SECONDS);
 
 		SendMailBatch batch = create(1000L, shutdownTrigger, false);
 		ExitStatus status = batch.execute();
@@ -79,8 +78,7 @@ public class SendMailBatchTest {
 		assertFalse(shutdownTrigger.exists());
 
 		verify(bizDateTime, atLeastOnce()).now();
-		verify(mailSendHandler, atLeastOnce()).listMessage(
-				(LocalDateTime) eq(null));
+		verify(mailSendHandler, atLeastOnce()).listMessage((LocalDateTime) eq(null));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(1L));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(2L));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(3L));
@@ -103,8 +101,7 @@ public class SendMailBatchTest {
 		};
 
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
-		ScheduledFuture<Boolean> future = service.schedule(callable, 5L,
-				TimeUnit.SECONDS);
+		ScheduledFuture<Boolean> future = service.schedule(callable, 5L, TimeUnit.SECONDS);
 
 		SendMailBatch batch = create(1000L, shutdownTrigger, true);
 		ExitStatus status = batch.execute();
@@ -114,8 +111,7 @@ public class SendMailBatchTest {
 		assertFalse(shutdownTrigger.exists());
 
 		verify(bizDateTime, atLeastOnce()).now();
-		verify(mailSendHandler, atLeastOnce()).listMessage(
-				(LocalDateTime) eq(null));
+		verify(mailSendHandler, atLeastOnce()).listMessage((LocalDateTime) eq(null));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(1L));
 		verify(mailSendHandler, never()).sendMessage(eq(2L));
 		verify(mailSendHandler, never()).sendMessage(eq(3L));
@@ -138,17 +134,15 @@ public class SendMailBatchTest {
 		};
 
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
-		ScheduledFuture<Boolean> future = service.schedule(callable, 5L,
-				TimeUnit.SECONDS);
+		ScheduledFuture<Boolean> future = service.schedule(callable, 5L, TimeUnit.SECONDS);
 		final Thread currentThread = Thread.currentThread();
-		ScheduledFuture<Boolean> interrupt = service.schedule(
-				new Callable<Boolean>() {
-					@Override
-					public Boolean call() {
-						currentThread.interrupt();
-						return true;
-					}
-				}, 2L, TimeUnit.SECONDS);
+		ScheduledFuture<Boolean> interrupt = service.schedule(new Callable<Boolean>() {
+			@Override
+			public Boolean call() {
+				currentThread.interrupt();
+				return true;
+			}
+		}, 2L, TimeUnit.SECONDS);
 
 		SendMailBatch batch = create(1000L, shutdownTrigger, false);
 		ExitStatus status = batch.execute();
@@ -159,23 +153,19 @@ public class SendMailBatchTest {
 		assertFalse(shutdownTrigger.exists());
 
 		verify(bizDateTime, atLeastOnce()).now();
-		verify(mailSendHandler, atLeastOnce()).listMessage(
-				(LocalDateTime) eq(null));
+		verify(mailSendHandler, atLeastOnce()).listMessage((LocalDateTime) eq(null));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(1L));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(2L));
 		verify(mailSendHandler, atLeastOnce()).sendMessage(eq(3L));
 	}
 
-	private SendMailBatch create(long intervalMillis, File shutdownTrigger,
-			boolean sendMailException) {
+	private SendMailBatch create(long intervalMillis, File shutdownTrigger, boolean sendMailException) {
 
 		bizDateTime = mock(BizDateTime.class);
 		mailSendHandler = mock(MailSendHandler.class);
-		when(mailSendHandler.listMessage((LocalDateTime) any())).thenReturn(
-				asList(1L, 2L, 3L));
+		when(mailSendHandler.listMessage((LocalDateTime) any())).thenReturn(asList(1L, 2L, 3L));
 		if (sendMailException) {
-			when(mailSendHandler.sendMessage(anyLong())).thenThrow(
-					new MailSendException("sending mail failed"));
+			when(mailSendHandler.sendMessage(anyLong())).thenThrow(new MailSendException("sending mail failed"));
 		}
 
 		SendMailBatch batch = new SendMailBatch();

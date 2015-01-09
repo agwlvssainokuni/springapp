@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,8 +76,7 @@ public class OneTimeTokenValidatorImplTest {
 		String tokenValue = UUID.randomUUID().toString();
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setParameter("__OneTimeToken__", tokenValue);
-		request.getSession().setAttribute("__OneTimeToken__",
-				UUID.randomUUID().toString());
+		request.getSession().setAttribute("__OneTimeToken__", UUID.randomUUID().toString());
 		assertFalse(oneTimeTokenValidator.isValid(request));
 	}
 

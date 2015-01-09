@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package cherry.foundation.log.trace;
 import org.springframework.stereotype.Component;
 
 /**
- * {@link TraceInterceptor} のテスト.
+ * {@link TraceInterceptor} のテスト。
  */
 @Component("traceTest0")
 public class TraceTest0Impl implements TraceTest0 {
