@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,16 +44,14 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	private AsyncProcService asyncProcService;
 
 	@Override
-	public ModelAndView init(long pageNo, long pageSz, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(long pageNo, long pageSz, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 
-		PagedList<Tuple> result = asyncProcService.searchAsyncProc(
-				auth.getName(), pageNo,
+		PagedList<Tuple> result = asyncProcService.searchAsyncProc(auth.getName(), pageNo,
 				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_ASYNCPROC_INIT);
-		mav.addObject(QueryDslUtil.tupleToMap(result,
-				asyncProcService.getColumns()));
+		mav.addObject(QueryDslUtil.tupleToMap(result, asyncProcService.getColumns()));
 		return mav;
 	}
 

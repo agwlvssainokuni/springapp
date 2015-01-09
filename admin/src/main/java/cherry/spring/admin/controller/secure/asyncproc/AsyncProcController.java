@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,8 @@ import cherry.spring.admin.controller.PathDef;
 public interface AsyncProcController {
 
 	@RequestMapping()
-	ModelAndView init(
-			@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") long pageNo,
-			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") long pageSz,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView init(@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") long pageNo,
+			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") long pageSz, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 }

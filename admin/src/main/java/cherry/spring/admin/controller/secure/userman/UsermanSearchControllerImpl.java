@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,20 +72,17 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	}
 
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(UsermanSearchForm form, BindingResult binding,
-			long pageNo, long pageSz, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView execute(UsermanSearchForm form, BindingResult binding, long pageNo, long pageSz,
+			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_USERMAN_SEARCH_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 			return mav;
 		}
 
@@ -98,14 +95,11 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 	}
 
 	@Override
-	public ModelAndView download(final UsermanSearchForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView download(final UsermanSearchForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_USERMAN_SEARCH_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_USERMAN_SEARCH_INIT);
 			return mav;
 		}
 
@@ -117,8 +111,7 @@ public class UsermanSearchControllerImpl implements UsermanSearchController {
 				}
 			}
 		};
-		downloadOperation.download(response, contentType, charset, filename,
-				bizDateTime.now(), action);
+		downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), action);
 
 		return null;
 	}

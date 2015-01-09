@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,26 +55,22 @@ public class LoginControllerTest {
 	@Test
 	public void loginFailed000() {
 		RedirectAttributes redirAttr = mock(RedirectAttributes.class);
-		ModelAndView mav = loginController.loginFailed(null, null, null,
-				redirAttr);
+		ModelAndView mav = loginController.loginFailed(null, null, null, redirAttr);
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + PathDef.URI_LOGIN,
-				((RedirectView) mav.getView()).getUrl());
+		assertEquals("http://localhost" + PathDef.URI_LOGIN, ((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loginFailed", true);
 	}
 
 	@Test
 	public void loggedOut000() {
 		RedirectAttributes redirAttr = mock(RedirectAttributes.class);
-		ModelAndView mav = loginController.loggedOut(null, null, null,
-				redirAttr);
+		ModelAndView mav = loginController.loggedOut(null, null, null, redirAttr);
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + PathDef.URI_LOGIN,
-				((RedirectView) mav.getView()).getUrl());
+		assertEquals("http://localhost" + PathDef.URI_LOGIN, ((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loggedOut", true);
 	}
 

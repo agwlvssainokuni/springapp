@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,18 +45,15 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 
 	@Transactional
 	@Override
-	public PagedList<Tuple> searchAsyncProc(String loginId, long pageNo,
-			long pageSz) {
-		return queryDslSupport.search(commonClause(loginId), orderByClause(),
-				pageNo, pageSz, new QTuple(getColumns()));
+	public PagedList<Tuple> searchAsyncProc(String loginId, long pageNo, long pageSz) {
+		return queryDslSupport.search(commonClause(loginId), orderByClause(), pageNo, pageSz, new QTuple(getColumns()));
 	}
 
 	@Override
 	public Expression<?>[] getColumns() {
-		return new Expression<?>[] { a.id, a.launchedBy, a.description,
-				a.asyncType, a.asyncStatus, a.registeredAt, a.launchedAt,
-				a.startedAt, a.finishedAt, b.originalFilename, b.fileSize,
-				c.totalCount, c.okCount, c.ngCount };
+		return new Expression<?>[] { a.id, a.launchedBy, a.description, a.asyncType, a.asyncStatus, a.registeredAt,
+				a.launchedAt, a.startedAt, a.finishedAt, b.originalFilename, b.fileSize, c.totalCount, c.okCount,
+				c.ngCount };
 	}
 
 	private QueryConfigurer commonClause(final String loginId) {
@@ -64,10 +61,8 @@ public class AsyncProcServiceImpl implements AsyncProcService {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 				query.from(a);
-				query.leftJoin(b).on(b.asyncId.eq(a.id),
-						b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-				query.leftJoin(c).on(c.asyncId.eq(a.id),
-						c.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				query.leftJoin(b).on(b.asyncId.eq(a.id), b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				query.leftJoin(c).on(c.asyncId.eq(a.id), c.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				query.where(a.launchedBy.eq(loginId));
 				query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return query;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,7 @@ public class PwdtoolControllerImpl implements PwdtoolController {
 	 * ツールの画面を表示する。
 	 */
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_PWDTOOL_INIT);
 		return mav;
 	}

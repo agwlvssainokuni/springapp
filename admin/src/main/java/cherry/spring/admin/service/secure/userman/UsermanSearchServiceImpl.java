@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,11 +50,9 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 
 	@Transactional
 	@Override
-	public PagedList<User> searchUsers(UsermanSearchForm form, long pageNo,
-			long pageSz) {
+	public PagedList<User> searchUsers(UsermanSearchForm form, long pageNo, long pageSz) {
 		QUser u = new QUser("u");
-		return queryDslSupport.search(commonClause(u, form),
-				orderByClause(u, form), pageNo, pageSz,
+		return queryDslSupport.search(commonClause(u, form), orderByClause(u, form), pageNo, pageSz,
 				rowMapperCreator.create(User.class), getColumns(u));
 	}
 
@@ -63,22 +61,19 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 	public long exportUsers(Writer writer, UsermanSearchForm form) {
 		try {
 			QUser u = new QUser("u");
-			return queryDslSupport.download(commonClause(u, form),
-					orderByClause(u, form), new CsvConsumer(writer, true),
-					new NoneLimiter(), getColumns(u));
+			return queryDslSupport.download(commonClause(u, form), orderByClause(u, form),
+					new CsvConsumer(writer, true), new NoneLimiter(), getColumns(u));
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
 
 	private Expression<?>[] getColumns(QUser u) {
-		return new Expression<?>[] { u.id, u.loginId, u.registeredAt,
-				u.firstName, u.lastName, u.updatedAt, u.createdAt,
-				u.lockVersion, u.deletedFlg };
+		return new Expression<?>[] { u.id, u.loginId, u.registeredAt, u.firstName, u.lastName, u.updatedAt,
+				u.createdAt, u.lockVersion, u.deletedFlg };
 	}
 
-	private QueryConfigurer commonClause(final QUser u,
-			final UsermanSearchForm form) {
+	private QueryConfigurer commonClause(final QUser u, final UsermanSearchForm form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
@@ -88,12 +83,10 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 					query.where(u.loginId.startsWith(form.getLoginId()));
 				}
 				if (form.getRegisteredFrom() != null) {
-					query.where(u.registeredAt.goe(LocalDateTimeUtil
-							.rangeFrom(form.getRegisteredFrom())));
+					query.where(u.registeredAt.goe(LocalDateTimeUtil.rangeFrom(form.getRegisteredFrom())));
 				}
 				if (form.getRegisteredTo() != null) {
-					query.where(u.registeredAt.lt(LocalDateTimeUtil
-							.rangeTo(form.getRegisteredTo())));
+					query.where(u.registeredAt.lt(LocalDateTimeUtil.rangeTo(form.getRegisteredTo())));
 				}
 				if (StringUtils.isNotBlank(form.getFirstName())) {
 					query.where(u.firstName.startsWith(form.getFirstName()));
@@ -108,8 +101,7 @@ public class UsermanSearchServiceImpl implements UsermanSearchService {
 		};
 	}
 
-	private QueryConfigurer orderByClause(final QUser u,
-			final UsermanSearchForm form) {
+	private QueryConfigurer orderByClause(final QUser u, final UsermanSearchForm form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,19 +60,16 @@ public class UsermanImportFileProcessHandler implements FileProcessHandler {
 	private Loader loader;
 
 	@Override
-	public FileProcessResult handleFile(final File file, String name,
-			String originalFilename, String contentType, long size,
-			long asyncId, String... args) throws IOException {
-		TransactionOperations txOp = new TransactionTemplate(
-				new DataSourceTransactionManager(dataSource));
+	public FileProcessResult handleFile(final File file, String name, String originalFilename, String contentType,
+			long size, long asyncId, String... args) throws IOException {
+		TransactionOperations txOp = new TransactionTemplate(new DataSourceTransactionManager(dataSource));
 		return txOp.execute(new TransactionCallback<FileProcessResult>() {
 			@Override
 			public FileProcessResult doInTransaction(TransactionStatus status) {
-				try (InputStream in = new FileInputStream(file);
-						Reader reader = new InputStreamReader(in, charset)) {
+				try (InputStream in = new FileInputStream(file); Reader reader = new InputStreamReader(in, charset)) {
 
-					LoadResult r = loader.load(dataSource, usermanImportSql,
-							new CsvProvider(reader, true), new NoneLimiter());
+					LoadResult r = loader.load(dataSource, usermanImportSql, new CsvProvider(reader, true),
+							new NoneLimiter());
 
 					FileProcessResult result = new FileProcessResult();
 					result.setTotalCount(r.getTotalCount());

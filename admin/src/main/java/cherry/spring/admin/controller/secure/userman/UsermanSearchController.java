@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,21 +43,16 @@ public interface UsermanSearchController {
 	UsermanSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated UsermanSearchForm form,
-			BindingResult binding,
+	ModelAndView execute(@Validated UsermanSearchForm form, BindingResult binding,
 			@RequestParam(value = PARAM_NO, defaultValue = "0") long pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") long pageSz,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+			@RequestParam(value = PARAM_SZ, defaultValue = "0") long pageSz, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@Validated UsermanSearchForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response);
+	ModelAndView download(@Validated UsermanSearchForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
 
 }
