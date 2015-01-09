@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cherry.spring.entree.service.signup;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -73,16 +74,13 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 	@Transactional
 	@Override
-	public boolean createUser(String mailAddr, String token, String firstName,
-			String lastName, Locale locale) {
+	public boolean createUser(String mailAddr, String token, String firstName, String lastName, Locale locale) {
 
 		LocalDateTime now = bizDateTime.now();
 
-		if (!signupRequestHelper.validateToken(mailAddr, token,
-				now.minusSeconds(validInSec))) {
+		if (!signupRequestHelper.validateToken(mailAddr, token, now.minusSeconds(validInSec))) {
 			if (log.isDebugEnabled()) {
-				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}",
-						mailAddr, token, validInSec);
+				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}", mailAddr, token, validInSec);
 			}
 			return false;
 		}
@@ -96,8 +94,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
 		int count = userMapper.insertSelective(entity);
-		checkState(count == 1, "failed to create user: user={0}, count={1}",
-				entity, count);
+		checkState(count == 1, "failed to create user: user={0}, count={1}", entity, count);
 
 		if (log.isDebugEnabled()) {
 			log.debug("user is created: user={0}", entity);
@@ -109,11 +106,9 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		model.setFirstName(firstName);
 		model.setLastName(lastName);
 
-		MailData msg = mailFacade.createMailData("SIGNUP_REGISTER", mailAddr,
-				model);
-		mailFacade.send("unknown", "SIGNUP_REGISTER", msg.getFromAddr(),
-				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
-				msg.getSubject(), msg.getBody());
+		MailData msg = mailFacade.createMailData("SIGNUP_REGISTER", mailAddr, model);
+		mailFacade.send("unknown", "SIGNUP_REGISTER", msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
+				msg.getBccAddr(), msg.getSubject(), msg.getBody());
 
 		return true;
 	}

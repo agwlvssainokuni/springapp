@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,18 +63,15 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 	@Transactional
 	@Override
-	public boolean createSignupRequest(String mailAddr, Locale locale,
-			UriComponentsSource source) {
+	public boolean createSignupRequest(String mailAddr, Locale locale, UriComponentsSource source) {
 
 		LocalDateTime now = bizdateHelper.now();
 
-		if (!signupRequestHelper.validateMailAddr(mailAddr,
-				now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec),
-				numOfReq)) {
+		if (!signupRequestHelper.validateMailAddr(mailAddr, now.minusSeconds(intervalInSec),
+				now.minusSeconds(rangeInSec), numOfReq)) {
 			if (log.isDebugEnabled()) {
-				log.debug(
-						"Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}",
-						mailAddr, intervalInSec, rangeInSec, numOfReq);
+				log.debug("Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}", mailAddr,
+						intervalInSec, rangeInSec, numOfReq);
 			}
 			return false;
 		}
@@ -82,23 +79,18 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 		UUID token = UUID.randomUUID();
 		LocalDateTime appliedAt = bizdateHelper.now();
 
-		long id = signupRequestHelper.createSignupRequest(mailAddr,
-				token.toString(), appliedAt);
+		long id = signupRequestHelper.createSignupRequest(mailAddr, token.toString(), appliedAt);
 		if (log.isDebugEnabled()) {
-			log.debug(
-					"signup_requests is created, id={0}, mailAddr={1}, token={2}",
-					id, mailAddr, token);
+			log.debug("signup_requests is created, id={0}, mailAddr={1}, token={2}", id, mailAddr, token);
 		}
 
 		Model model = new Model();
 		model.setMailAddr(mailAddr);
 		model.setSignupUri(source.buildUriComponents(token).toUriString());
 
-		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr,
-				model);
-		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(),
-				msg.getToAddr(), msg.getCcAddr(), msg.getBccAddr(),
-				msg.getSubject(), msg.getBody());
+		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr, model);
+		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
+				msg.getBccAddr(), msg.getSubject(), msg.getBody());
 
 		return true;
 	}

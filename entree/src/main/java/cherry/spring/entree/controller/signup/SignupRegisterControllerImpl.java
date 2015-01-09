@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,37 +49,31 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	}
 
 	@Override
-	public ModelAndView init(String token, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView init(String token, Locale locale, SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_INIT);
 		mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(String token, SignupRegisterForm form,
-			BindingResult binding, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(String token, SignupRegisterForm form, BindingResult binding, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SIGNUP_REGISTER_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_INIT);
 			mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 			return mav;
 		}
 
-		if (!signupRegisterService.createUser(form.getEmail(), token,
-				form.getFirstName(), form.getLastName(), locale)) {
+		if (!signupRegisterService.createUser(form.getEmail(), token, form.getFirstName(), form.getLastName(), locale)) {
 			rejectOnSignupEntryUnmatch(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SIGNUP_REGISTER_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_INIT);
 			mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 			return mav;
 		}
 
-		UriComponents uc = fromMethodCall(
-				on(SignupRegisterController.class).finish(token, locale,
-						sitePref, request)).build();
+		UriComponents uc = fromMethodCall(on(SignupRegisterController.class).finish(token, locale, sitePref, request))
+				.build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -87,8 +81,7 @@ public class SignupRegisterControllerImpl implements SignupRegisterController {
 	}
 
 	@Override
-	public ModelAndView finish(String token, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView finish(String token, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_REGISTER_FINISH);
 		mav.addObject(PathDef.PATH_VAR_TOKEN, token);
 		return mav;

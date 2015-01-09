@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,17 +38,16 @@ public interface SignupRegisterController {
 	SignupRegisterForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@PathVariable(PathDef.PATH_VAR_TOKEN) String token, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			@Validated SignupRegisterForm form, BindingResult binding,
-			Locale locale, SitePreference sitePref, HttpServletRequest request,
+	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_TOKEN) String token, @Validated SignupRegisterForm form,
+			BindingResult binding, Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
 	@RequestMapping(PathDef.SUBURI_FINISH)
-	ModelAndView finish(@PathVariable(PathDef.PATH_VAR_TOKEN) String token,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView finish(@PathVariable(PathDef.PATH_VAR_TOKEN) String token, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 }

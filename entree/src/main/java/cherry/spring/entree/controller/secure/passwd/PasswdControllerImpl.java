@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,16 +67,14 @@ public class PasswdControllerImpl implements PasswdController {
 	}
 
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(PasswdForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(PasswdForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_INIT);
@@ -94,8 +92,8 @@ public class PasswdControllerImpl implements PasswdController {
 			return mav;
 		}
 
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				auth.getName(), form.getPassword());
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(auth.getName(),
+				form.getPassword());
 		try {
 			Authentication a = authenticationManager.authenticate(token);
 			checkNotNull(a, "AuthenticationManager#authenticate(token): null");
@@ -108,16 +106,12 @@ public class PasswdControllerImpl implements PasswdController {
 		String password = passwordEncoder.encode(form.getNewPassword());
 		if (!passwdService.changePassword(auth.getName(), password)) {
 			if (log.isDebugEnabled()) {
-				log.debug(
-						"Password has not been updated: loginId={0}, password={1}",
-						auth.getName(), password);
+				log.debug("Password has not been updated: loginId={0}, password={1}", auth.getName(), password);
 			}
 			throw new IllegalStateException("");
 		}
 
-		UriComponents uc = fromMethodCall(
-				on(PasswdController.class).finish(auth, locale, sitePref,
-						request)).build();
+		UriComponents uc = fromMethodCall(on(PasswdController.class).finish(auth, locale, sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -125,8 +119,7 @@ public class PasswdControllerImpl implements PasswdController {
 	}
 
 	@Override
-	public ModelAndView finish(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView finish(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWD_FINISH);
 		return mav;
 	}
@@ -138,14 +131,12 @@ public class PasswdControllerImpl implements PasswdController {
 		if (form.getNewPassword().equals(form.getNewPasswordConf())) {
 			return true;
 		}
-		LogicalErrorUtil.rejectValue(binding, Prop.NewPasswordConf.getName(),
-				LogicalError.PasswdConfirmFailed);
+		LogicalErrorUtil.rejectValue(binding, Prop.NewPasswordConf.getName(), LogicalError.PasswdConfirmFailed);
 		return false;
 	}
 
 	private void rejectOnCurAuthFailed(BindingResult binding) {
-		LogicalErrorUtil.reject(binding, LogicalError.CurAuthFailed,
-				Prop.LoginId.resolve(), Prop.Password.resolve());
+		LogicalErrorUtil.reject(binding, LogicalError.CurAuthFailed, Prop.LoginId.resolve(), Prop.Password.resolve());
 	}
 
 }

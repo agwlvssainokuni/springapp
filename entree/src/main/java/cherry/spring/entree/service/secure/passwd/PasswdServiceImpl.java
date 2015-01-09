@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,8 +46,7 @@ public class PasswdServiceImpl implements PasswdService {
 
 				update.set(u.password, password);
 				update.set(u.lockVersion, u.lockVersion.add(1));
-				update.set(u.updatedAt, DateTimeExpression
-						.currentTimestamp(LocalDateTime.class));
+				update.set(u.updatedAt, DateTimeExpression.currentTimestamp(LocalDateTime.class));
 
 				update.where(u.loginId.eq(loginId));
 				update.where(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));

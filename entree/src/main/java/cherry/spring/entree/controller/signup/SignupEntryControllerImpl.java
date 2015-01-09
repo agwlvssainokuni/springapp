@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,16 +51,14 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	@Override
-	public ModelAndView init(Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public ModelAndView init(Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(SignupEntryForm form, BindingResult binding,
-			final Locale locale, final SitePreference sitePref,
-			final HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(SignupEntryForm form, BindingResult binding, final Locale locale,
+			final SitePreference sitePref, final HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
@@ -71,22 +69,17 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 			@Override
 			public UriComponents buildUriComponents(UUID token) {
 				return fromMethodCall(
-						on(SignupRegisterController.class).init(
-								token.toString(), locale, sitePref, request))
-						.build();
+						on(SignupRegisterController.class).init(token.toString(), locale, sitePref, request)).build();
 			}
 		};
 
-		if (!signupEntryService.createSignupRequest(form.getEmail(), locale,
-				source)) {
+		if (!signupEntryService.createSignupRequest(form.getEmail(), locale, source)) {
 			rejectOnSignupTooManyRequest(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_INIT);
 			return mav;
 		}
 
-		UriComponents uc = fromMethodCall(
-				on(SignupEntryController.class).finish(locale, sitePref,
-						request)).build();
+		UriComponents uc = fromMethodCall(on(SignupEntryController.class).finish(locale, sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -94,8 +87,7 @@ public class SignupEntryControllerImpl implements SignupEntryController {
 	}
 
 	@Override
-	public ModelAndView finish(Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public ModelAndView finish(Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SIGNUP_ENTRY_FINISH);
 		return mav;
 	}
