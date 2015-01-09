@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,7 @@ public class SecureBigIntegerConverterTest {
 
 	@Test
 	public void testCanConvert() {
-		assertThat(cs.canConvert(String.class, SecureBigInteger.class),
-				is(true));
+		assertThat(cs.canConvert(String.class, SecureBigInteger.class), is(true));
 	}
 
 	@Test
@@ -51,8 +50,7 @@ public class SecureBigIntegerConverterTest {
 		for (int i = 0; i < 100; i++) {
 			BigInteger plain = BigInteger.valueOf(random.nextLong());
 			String crypto = SecureBigInteger.plainValueOf(plain).crypto();
-			assertThat(cs.convert(crypto, SecureBigInteger.class).plain(),
-					is(plain));
+			assertThat(cs.convert(crypto, SecureBigInteger.class).plain(), is(plain));
 		}
 	}
 

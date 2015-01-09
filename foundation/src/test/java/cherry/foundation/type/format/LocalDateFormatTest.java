@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,8 +88,7 @@ public class LocalDateFormatTest {
 		assertEquals("2014/01/01", parseAndPrint(name, "2014/01/01"));
 	}
 
-	private String parseAndPrint(String name, String value)
-			throws BindException {
+	private String parseAndPrint(String name, String value) throws BindException {
 		Map<String, String> paramMap = new HashMap<>();
 		paramMap.put(name, value);
 
@@ -98,8 +97,7 @@ public class LocalDateFormatTest {
 		binder.setConversionService(conversionService);
 		binder.bind(new MutablePropertyValues(paramMap));
 
-		BindingResult binding = BindingResultUtils.getBindingResult(
-				binder.close(), "target");
+		BindingResult binding = BindingResultUtils.getBindingResult(binder.close(), "target");
 		return (String) binding.getFieldValue(name);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,8 +46,7 @@ public class SecureStringConverterTest {
 		for (int i = 0; i < 100; i++) {
 			String plain = RandomUtil.randomString(1024);
 			String crypto = SecureString.plainValueOf(plain).crypto();
-			assertThat(cs.convert(crypto, SecureString.class).plain(),
-					is(plain));
+			assertThat(cs.convert(crypto, SecureString.class).plain(), is(plain));
 		}
 	}
 

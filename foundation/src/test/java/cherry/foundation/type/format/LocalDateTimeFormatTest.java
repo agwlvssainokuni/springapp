@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,12 +50,9 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testNone() throws BindException {
 		String name = "attrNone";
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00:00"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00:00"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00"));
 		assertEquals("2014/01/01 01:01:00", parseAndPrint(name, "2014/1/1 1:1"));
 		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01"));
 		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/1/1"));
@@ -64,10 +61,8 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testNoneReq() throws BindException {
 		String name = "attrNoneReq";
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00:00"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00:00"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
 		try {
 			parseAndPrint(name, "2014/01/01 00:00");
 			fail("Exception must be thrown");
@@ -97,12 +92,9 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testFrom() throws BindException {
 		String name = "attrFrom";
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00:00"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00:00"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00"));
 		assertEquals("2014/01/01 01:01:00", parseAndPrint(name, "2014/1/1 1:1"));
 		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01"));
 		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/1/1"));
@@ -111,10 +103,8 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testFromReq() throws BindException {
 		String name = "attrFromReq";
-		assertEquals("2014/01/01 00:00:00",
-				parseAndPrint(name, "2014/01/01 00:00:00"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 00:00:00", parseAndPrint(name, "2014/01/01 00:00:00"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
 		try {
 			parseAndPrint(name, "2014/01/01 00:00");
 			fail("Exception must be thrown");
@@ -144,12 +134,9 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testTo() throws BindException {
 		String name = "attrTo";
-		assertEquals("2014/01/01 23:59:59",
-				parseAndPrint(name, "2014/01/01 23:59:59"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
-		assertEquals("2014/01/01 00:00:59",
-				parseAndPrint(name, "2014/01/01 00:00"));
+		assertEquals("2014/01/01 23:59:59", parseAndPrint(name, "2014/01/01 23:59:59"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 00:00:59", parseAndPrint(name, "2014/01/01 00:00"));
 		assertEquals("2014/01/01 01:01:59", parseAndPrint(name, "2014/1/1 1:1"));
 		assertEquals("2014/01/01 23:59:59", parseAndPrint(name, "2014/01/01"));
 		assertEquals("2014/01/01 23:59:59", parseAndPrint(name, "2014/1/1"));
@@ -158,10 +145,8 @@ public class LocalDateTimeFormatTest {
 	@Test
 	public void testToReq() throws BindException {
 		String name = "attrToReq";
-		assertEquals("2014/01/01 23:59:59",
-				parseAndPrint(name, "2014/01/01 23:59:59"));
-		assertEquals("2014/01/01 01:01:01",
-				parseAndPrint(name, "2014/1/1 1:1:1"));
+		assertEquals("2014/01/01 23:59:59", parseAndPrint(name, "2014/01/01 23:59:59"));
+		assertEquals("2014/01/01 01:01:01", parseAndPrint(name, "2014/1/1 1:1:1"));
 		try {
 			parseAndPrint(name, "2014/01/01 00:00");
 			fail("Exception must be thrown");
@@ -188,8 +173,7 @@ public class LocalDateTimeFormatTest {
 		}
 	}
 
-	private String parseAndPrint(String name, String value)
-			throws BindException {
+	private String parseAndPrint(String name, String value) throws BindException {
 		Map<String, String> paramMap = new HashMap<>();
 		paramMap.put(name, value);
 
@@ -198,8 +182,7 @@ public class LocalDateTimeFormatTest {
 		binder.setConversionService(conversionService);
 		binder.bind(new MutablePropertyValues(paramMap));
 
-		BindingResult binding = BindingResultUtils.getBindingResult(
-				binder.close(), "target");
+		BindingResult binding = BindingResultUtils.getBindingResult(binder.close(), "target");
 		return (String) binding.getFieldValue(name);
 	}
 

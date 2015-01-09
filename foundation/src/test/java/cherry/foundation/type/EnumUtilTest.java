@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,12 +59,10 @@ public class EnumUtilTest {
 	public void testGetLabeledEnum() {
 		assertThat(getLabeledEnum(FlagCode.FALSE).getEnum(), is(FlagCode.FALSE));
 		assertThat(getLabeledEnum(FlagCode.FALSE).getEnumName(), is("FALSE"));
-		assertThat(getLabeledEnum(FlagCode.FALSE).getEnumLabel(),
-				is("FLAG_CODE_FALSE"));
+		assertThat(getLabeledEnum(FlagCode.FALSE).getEnumLabel(), is("FLAG_CODE_FALSE"));
 		assertThat(getLabeledEnum(FlagCode.TRUE).getEnum(), is(FlagCode.TRUE));
 		assertThat(getLabeledEnum(FlagCode.TRUE).getEnumName(), is("TRUE"));
-		assertThat(getLabeledEnum(FlagCode.TRUE).getEnumLabel(),
-				is("FLAG_CODE_TRUE"));
+		assertThat(getLabeledEnum(FlagCode.TRUE).getEnumLabel(), is("FLAG_CODE_TRUE"));
 	}
 
 	@Test
@@ -77,8 +75,7 @@ public class EnumUtilTest {
 
 	@Test
 	public void testGetLabeledEnumListForString() {
-		List<LabeledEnum<FlagCode>> list = getLabeledEnumList(FlagCode.class
-				.getName());
+		List<LabeledEnum<FlagCode>> list = getLabeledEnumList(FlagCode.class.getName());
 		assertThat(list.size(), is(2));
 		assertThat(list.get(0).getEnum(), is(FlagCode.FALSE));
 		assertThat(list.get(1).getEnum(), is(FlagCode.TRUE));
@@ -110,20 +107,17 @@ public class EnumUtilTest {
 		return new MessageSource() {
 
 			@Override
-			public String getMessage(String code, Object[] args,
-					String defaultMessage, Locale locale) {
+			public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
 				return null;
 			}
 
 			@Override
-			public String getMessage(String code, Object[] args, Locale locale)
-					throws NoSuchMessageException {
+			public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
 				return map.get(code);
 			}
 
 			@Override
-			public String getMessage(MessageSourceResolvable resolvable,
-					Locale locale) throws NoSuchMessageException {
+			public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
 				return null;
 			}
 		};

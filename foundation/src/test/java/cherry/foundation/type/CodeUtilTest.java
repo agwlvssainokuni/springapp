@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,8 +84,7 @@ public class CodeUtilTest {
 
 	@Test
 	public void testGetCodeMapDefaultFALSE() {
-		CodeMap<Integer, FlagCode> codeMap = getCodeMap(FlagCode.class,
-				FlagCode.FALSE);
+		CodeMap<Integer, FlagCode> codeMap = getCodeMap(FlagCode.class, FlagCode.FALSE);
 		for (int i = -1024; i <= 1024; i++) {
 			switch (i) {
 			case 1:
@@ -102,12 +101,10 @@ public class CodeUtilTest {
 	public void testGetLabeledCode() {
 		assertThat(getLabeledCode(FlagCode.FALSE).getCode(), is(FlagCode.FALSE));
 		assertThat(getLabeledCode(FlagCode.FALSE).getCodeValue(), is(0));
-		assertThat(getLabeledCode(FlagCode.FALSE).getCodeLabel(),
-				is("FLAG_CODE_FALSE"));
+		assertThat(getLabeledCode(FlagCode.FALSE).getCodeLabel(), is("FLAG_CODE_FALSE"));
 		assertThat(getLabeledCode(FlagCode.TRUE).getCode(), is(FlagCode.TRUE));
 		assertThat(getLabeledCode(FlagCode.TRUE).getCodeValue(), is(1));
-		assertThat(getLabeledCode(FlagCode.TRUE).getCodeLabel(),
-				is("FLAG_CODE_TRUE"));
+		assertThat(getLabeledCode(FlagCode.TRUE).getCodeLabel(), is("FLAG_CODE_TRUE"));
 	}
 
 	@Test
@@ -120,8 +117,7 @@ public class CodeUtilTest {
 
 	@Test
 	public void testGetLabeledCodeListForString() {
-		List<LabeledCode<Integer, FlagCode>> list = getLabeledCodeList(FlagCode.class
-				.getName());
+		List<LabeledCode<Integer, FlagCode>> list = getLabeledCodeList(FlagCode.class.getName());
 		assertThat(list.size(), is(2));
 		assertThat(list.get(0).getCode(), is(FlagCode.FALSE));
 		assertThat(list.get(1).getCode(), is(FlagCode.TRUE));
@@ -173,20 +169,17 @@ public class CodeUtilTest {
 		return new MessageSource() {
 
 			@Override
-			public String getMessage(String code, Object[] args,
-					String defaultMessage, Locale locale) {
+			public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
 				return null;
 			}
 
 			@Override
-			public String getMessage(String code, Object[] args, Locale locale)
-					throws NoSuchMessageException {
+			public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
 				return map.get(code);
 			}
 
 			@Override
-			public String getMessage(MessageSourceResolvable resolvable,
-					Locale locale) throws NoSuchMessageException {
+			public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
 				return null;
 			}
 		};

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,7 @@ public interface ConversionTestMapper {
 			"SELECT",
 			"id, joda_date, joda_time, joda_datetime, sec_str, sec_int, sec_long, sec_bigint, sec_bigdec, flag_code, deleted_flg",
 			"FROM conversion_test" })
-	@Results({
-			@Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
+	@Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
 			@Result(column = "joda_date", property = "jodaDate", jdbcType = JdbcType.DATE),
 			@Result(column = "joda_time", property = "jodaTime", jdbcType = JdbcType.TIME),
 			@Result(column = "joda_datetime", property = "jodaDatetime", jdbcType = JdbcType.TIMESTAMP),

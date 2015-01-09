@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,26 +64,21 @@ public class JdbcDao implements InitializingBean {
 	}
 
 	public List<ConversionTest> selectAll() {
-		return namedParameterJdbcOperations.query(selectAllSql,
-				rowMapperCreator.create(ConversionTest.class));
+		return namedParameterJdbcOperations.query(selectAllSql, rowMapperCreator.create(ConversionTest.class));
 	}
 
 	public List<ConversionTest> selectAllWithMask() {
 		Map<String, Masker<?>> maskerMap = new HashMap<>();
-		maskerMap.put("jodaDate", SqlDateMasker.newMasker(new LocalDate(2000,
-				1, 1), true, true, true));
-		maskerMap.put("jodaTime", SqlTimeMasker.newMasker(
-				new LocalTime(0, 0, 0), true, true, true));
-		maskerMap.put("jodaDatetime", SqlTimestampMasker.newMasker(
-				new LocalDateTime(2000, 1, 1, 0, 0, 0), true, true, true, true,
-				true, true));
+		maskerMap.put("jodaDate", SqlDateMasker.newMasker(new LocalDate(2000, 1, 1), true, true, true));
+		maskerMap.put("jodaTime", SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), true, true, true));
+		maskerMap.put("jodaDatetime", SqlTimestampMasker.newMasker(new LocalDateTime(2000, 1, 1, 0, 0, 0), true, true,
+				true, true, true, true));
 		return namedParameterJdbcOperations.query(selectAllSql,
 				rowMapperCreator.create(ConversionTest.class, maskerMap));
 	}
 
 	public int insert(ConversionTest record, KeyHolder keyHolder) {
-		return namedParameterJdbcOperations.update(insertSql,
-				sqlParameterSourceCreator.create(record), keyHolder);
+		return namedParameterJdbcOperations.update(insertSql, sqlParameterSourceCreator.create(record), keyHolder);
 	}
 
 }
