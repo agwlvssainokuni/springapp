@@ -25,6 +25,7 @@ import cherry.foundation.etl.Limiter;
 import cherry.foundation.etl.LimiterException;
 import cherry.goods.paginate.PagedList;
 
+import com.google.common.base.Predicate;
 import com.mysema.query.types.Expression;
 
 public interface QueryDslSupport {
@@ -33,10 +34,16 @@ public interface QueryDslSupport {
 			RowMapper<T> rowMapper, Expression<?>... expressions);
 
 	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
+			Predicate<Long> cancelPredicate, RowMapper<T> rowMapper, Expression<?>... expressions);
+
+	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
 			Expression<T> expression);
 
+	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
+			Predicate<Long> cancelPredicate, Expression<T> expression);
+
 	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
-			Expression<?>... expressions) throws LimiterException, IOException;
+			Expression<?>... expressions) throws IOException;
 
 	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer, Limiter limiter,
 			Expression<?>... expressions) throws LimiterException, IOException;

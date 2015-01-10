@@ -55,32 +55,45 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, final RowMapper<T> rowMapper, final Expression<?>... expressions) {
-		Predicate<Long> neverCancel = Predicates.alwaysFalse();
+		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
+		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, rowMapper, expressions);
+	}
+
+	@Override
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, Predicate<Long> cancelPredicate, final RowMapper<T> rowMapper,
+			final Expression<?>... expressions) {
 		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
 				return queryDslJdbcOperations.query(query, rowMapper, expressions);
 			}
 		};
-		return searchMain(commonClause, orderByClause, pageNo, pageSz, neverCancel, searchFunction);
+		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
 	}
 
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, final Expression<T> expression) {
-		Predicate<Long> neverCancel = Predicates.alwaysFalse();
+		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
+		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, expression);
+	}
+
+	@Override
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, Predicate<Long> cancelPredicate, final Expression<T> expression) {
 		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
 				return queryDslJdbcOperations.query(query, expression);
 			}
 		};
-		return searchMain(commonClause, orderByClause, pageNo, pageSz, neverCancel, searchFunction);
+		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
 	}
 
 	@Override
 	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
-			Expression<?>... expressions) throws LimiterException, IOException {
+			Expression<?>... expressions) throws IOException {
 		return downloadMain(commonClause, orderByClause, consumer, new NoneLimiter(), expressions);
 	}
 
