@@ -35,6 +35,9 @@ public interface QueryDslSupport {
 	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
 			Expression<T> expression);
 
+	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
+			Expression<?>... expressions) throws LimiterException, IOException;
+
 	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer, Limiter limiter,
 			Expression<?>... expressions) throws LimiterException, IOException;
 
