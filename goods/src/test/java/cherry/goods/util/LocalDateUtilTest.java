@@ -60,6 +60,28 @@ public class LocalDateUtilTest {
 	}
 
 	@Test
+	public void testNormalizeYm() {
+		LocalDate now = LocalDate.now();
+		assertThat(LocalDateUtil.normalizeYm(null), is(nullValue()));
+		assertThat(LocalDateUtil.normalizeYm(now), is(new LocalDate(now.getYear(), now.getMonthOfYear(), 1)));
+	}
+
+	@Test
+	public void testYmRangeFrom() {
+		LocalDate now = LocalDate.now();
+		assertThat(LocalDateUtil.ymRangeFrom(null), is(nullValue()));
+		assertThat(LocalDateUtil.ymRangeFrom(now), is(new LocalDate(now.getYear(), now.getMonthOfYear(), 1)));
+	}
+
+	@Test
+	public void testYmRangeTo() {
+		LocalDate now = LocalDate.now();
+		assertThat(LocalDateUtil.ymRangeTo(null), is(nullValue()));
+		assertThat(LocalDateUtil.ymRangeTo(now),
+				is(new LocalDate(now.getYear(), now.getMonthOfYear(), 1).plusMonths(1)));
+	}
+
+	@Test
 	public void testMisc() {
 		assertThat(new LocalDateUtil(), is(notNullValue()));
 	}
