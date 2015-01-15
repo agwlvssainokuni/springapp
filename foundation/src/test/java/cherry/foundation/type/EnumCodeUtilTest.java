@@ -16,10 +16,10 @@
 
 package cherry.foundation.type;
 
-import static cherry.foundation.type.CodeUtil.getCodeMap;
-import static cherry.foundation.type.CodeUtil.getLabeledCode;
-import static cherry.foundation.type.CodeUtil.getLabeledCodeList;
-import static cherry.foundation.type.CodeUtil.getMap;
+import static cherry.foundation.type.EnumCodeUtil.getCodeMap;
+import static cherry.foundation.type.EnumCodeUtil.getLabeledCode;
+import static cherry.foundation.type.EnumCodeUtil.getLabeledCodeList;
+import static cherry.foundation.type.EnumCodeUtil.getMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -40,23 +40,23 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.CodeUtil.CodeMap;
+import cherry.foundation.type.EnumCodeUtil.CodeMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class CodeUtilTest {
+public class EnumCodeUtilTest {
 
 	@Autowired
 	private MessageSource messageSource;
 
 	@Before
 	public void before() {
-		CodeUtil.setMessageSource(createMessageSource());
+		EnumCodeUtil.setMessageSource(createMessageSource());
 	}
 
 	@After
 	public void after() {
-		CodeUtil.setMessageSource(messageSource);
+		EnumCodeUtil.setMessageSource(messageSource);
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class CodeUtilTest {
 	@Test
 	public void testInstantiate() {
 		try {
-			new CodeUtil();
+			new EnumCodeUtil();
 		} catch (Exception ex) {
 			fail("Exception must not be thrown");
 		}

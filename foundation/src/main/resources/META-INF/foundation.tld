@@ -27,9 +27,7 @@
 		<description>OneTimeToken</description>
 		<name>onetimetoken</name>
 		<function-class>cherry.foundation.onetimetoken.OneTimeTokenTag</function-class>
-		<function-signature>
-			cherry.foundation.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
-		</function-signature>
+		<function-signature>cherry.foundation.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)</function-signature>
 	</function>
 
 	<function>
@@ -40,9 +38,9 @@
 	</function>
 
 	<function>
-		<description>getLabeledCodeList</description>
-		<name>getLabeledCodeList</name>
-		<function-class>cherry.foundation.type.CodeUtil</function-class>
+		<description>getLabeledEnumCodeList</description>
+		<name>getLabeledEnumCodeList</name>
+		<function-class>cherry.foundation.type.EnumCodeUtil</function-class>
 		<function-signature>java.util.List getLabeledCodeList(java.lang.String)</function-signature>
 	</function>
 
