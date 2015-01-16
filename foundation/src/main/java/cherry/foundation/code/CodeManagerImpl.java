@@ -16,6 +16,9 @@
 
 package cherry.foundation.code;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,8 +76,11 @@ public class CodeManagerImpl implements CodeManager {
 	@Transactional(readOnly = true)
 	@Override
 	public CodeEntry findByValue(String codeName, String value, boolean plainLabel) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		CodeEntry entry = codeStore.findByValue(codeName, value);
+		if (plainLabel) {
+			return entry;
+		}
+		return adjustCodeEntry(entry);
 	}
 
 	@Transactional(readOnly = true)
@@ -98,8 +104,15 @@ public class CodeManagerImpl implements CodeManager {
 	@Transactional(readOnly = true)
 	@Override
 	public List<CodeEntry> getCodeList(String codeName, boolean plainLabel) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		List<CodeEntry> list = codeStore.getCodeList(codeName);
+		if (plainLabel) {
+			return list;
+		}
+		List<CodeEntry> result = new ArrayList<>(list.size());
+		for (CodeEntry entry : list) {
+			result.add(adjustCodeEntry(entry));
+		}
+		return result;
 	}
 
 	@Transactional(readOnly = true)
@@ -123,8 +136,28 @@ public class CodeManagerImpl implements CodeManager {
 	@Transactional(readOnly = true)
 	@Override
 	public Map<String, String> getCodeMap(String codeName, boolean plainLabel) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		List<CodeEntry> list = codeStore.getCodeList(codeName);
+		Map<String, String> result = new LinkedHashMap<>();
+		for (CodeEntry entry : list) {
+			if (plainLabel) {
+				result.put(entry.getValue(), entry.getLabel());
+			} else {
+				result.put(entry.getValue(), formatLabel(entry.getValue(), entry.getLabel()));
+			}
+		}
+		return result;
+	}
+
+	private CodeEntry adjustCodeEntry(CodeEntry entry) {
+		CodeEntry result = new CodeEntry();
+		result.setValue(entry.getValue());
+		result.setLabel(formatLabel(entry.getValue(), entry.getLabel()));
+		result.setSortOrder(entry.getSortOrder());
+		return result;
+	}
+
+	private String formatLabel(String value, String label) {
+		return MessageFormat.format(valueTemplate, value, label);
 	}
 
 }
