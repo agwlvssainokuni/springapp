@@ -18,7 +18,6 @@ package cherry.goods.excel;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,44 +29,61 @@ import org.apache.poi.ss.usermodel.Workbook;
  */
 public class ExcelWriter implements Closeable {
 
-	private OutputStream out;
+	/** 書込み先のMicrosoft Excelブック。 */
+	private final Workbook workbook;
 
-	private Workbook workbook;
+	/** 書込み対象のシート。 */
+	private Sheet currentSheet;
 
-	private Sheet sheet;
-
+	/** 書込み対象の行番号。 */
 	private int rownum;
 
-	public ExcelWriter(OutputStream out, Workbook workbook) {
-		this.out = out;
+	/**
+	 * Microsoft Excelファイル書込み機能を生成する。<br />
+	 * アクティブなシートを書込み対象とする。書込み対象のシートを切替える場合は{@link #setCurrentSheet(int)}でシート番号を指定する。
+	 * 
+	 * @param workbook 書込み先のMicrosoft Excelブック。
+	 */
+	public ExcelWriter(Workbook workbook) {
 		this.workbook = workbook;
-		if (this.workbook.getNumberOfSheets() > 0) {
-			setCurrentSheet(this.workbook.getActiveSheetIndex());
-		}
+		setCurrentSheet(this.workbook.getActiveSheetIndex());
 	}
 
+	/**
+	 * @return 書込み先のMicrosoft Excelブックのシートの数。
+	 */
 	public int getNumberOfSheets() {
 		return workbook.getNumberOfSheets();
 	}
 
+	/**
+	 * @param sheetIndex シート番号。
+	 * @return 指定されたシート番号の名前。
+	 */
 	public String getSheetName(int sheetIndex) {
 		return workbook.getSheetName(sheetIndex);
 	}
 
+	/**
+	 * 書込み対象のシートを切替える。<br />
+	 * 
+	 * @param sheetIndex 書込み対象とするシートのシート番号。
+	 */
 	public void setCurrentSheet(int sheetIndex) {
-		sheet = workbook.getSheetAt(sheetIndex);
+		currentSheet = workbook.getSheetAt(sheetIndex);
 		rownum = 0;
 	}
 
-	public void createSheet(String sheetname) {
-		sheet = workbook.createSheet(sheetname);
-		rownum = 0;
-	}
-
+	/**
+	 * レコード書込み。<br />
+	 * 書込み対象のシートへ1レコード(1行)書込む。
+	 * 
+	 * @param record 1レコード(1行)。
+	 */
 	public void write(String[] record) {
-		Row row = sheet.getRow(rownum);
+		Row row = currentSheet.getRow(rownum);
 		if (row == null) {
-			row = sheet.createRow(rownum);
+			row = currentSheet.createRow(rownum);
 		}
 		rownum += 1;
 		for (int i = 0; i < record.length; i++) {
@@ -79,9 +95,15 @@ public class ExcelWriter implements Closeable {
 		}
 	}
 
+	/**
+	 * Microsoft Excelファイル書込み機能を閉じる。<br />
+	 * 具体的には、書込み先のMicrosoft Excelブックを閉じる。
+	 * 
+	 * @throws IOException 書込み先のMicrosoft Excelブックを閉じる際に異常。
+	 */
 	@Override
 	public void close() throws IOException {
-		workbook.write(out);
+		workbook.close();
 	}
 
 }

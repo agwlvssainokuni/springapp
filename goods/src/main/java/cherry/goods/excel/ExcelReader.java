@@ -22,46 +22,70 @@ import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  * Microsoft Excelファイル読込み機能。<br />
  */
 public class ExcelReader implements Closeable {
 
-	private Workbook workbook;
+	/** 読込み元のMicrosoft Excelブック。 */
+	private final Workbook workbook;
 
-	private Sheet sheet;
+	/** 読込み対象のシート。 */
+	private Sheet currentSheet;
 
+	/** 読込み対象の行。 */
 	private Iterator<Row> rowIterator;
 
-	public ExcelReader(InputStream in) throws InvalidFormatException, IOException {
-		workbook = WorkbookFactory.create(in);
-		setCurrentSheet(workbook.getActiveSheetIndex());
+	/**
+	 * Microsoft Excelファイル読込み機能を生成する。<br />
+	 * アクティブなシートを読込み対象とする。読込み対象のシートを切替える場合は{@link #setCurrentSheet(int)}でシート番号を指定する。
+	 * 
+	 * @param workbook 読込み元のMicrosoft Excelブック。
+	 */
+	public ExcelReader(Workbook workbook) {
+		this.workbook = workbook;
+		setCurrentSheet(this.workbook.getActiveSheetIndex());
 	}
 
+	/**
+	 * @return 読込み元のMicrosoft Excelブックのシートの数。
+	 */
 	public int getNumberOfSheets() {
 		return workbook.getNumberOfSheets();
 	}
 
+	/**
+	 * @param sheetIndex シート番号。
+	 * @return 指定されたシート番号の名前。
+	 */
 	public String getSheetName(int sheetIndex) {
 		return workbook.getSheetName(sheetIndex);
 	}
 
+	/**
+	 * 読込み対象のシートを切替える。<br />
+	 * 
+	 * @param sheetIndex 読込み対象とするシートのシート番号。
+	 */
 	public void setCurrentSheet(int sheetIndex) {
-		sheet = workbook.getSheetAt(sheetIndex);
-		rowIterator = sheet.rowIterator();
+		currentSheet = workbook.getSheetAt(sheetIndex);
+		rowIterator = currentSheet.rowIterator();
 	}
 
-	public String[] read() throws IOException {
+	/**
+	 * レコード読込み。<br />
+	 * 読込み対象のシートから1レコード(1行)読込む。
+	 * 
+	 * @return 1レコード(1行)。
+	 */
+	public String[] read() {
 		if (!rowIterator.hasNext()) {
 			return null;
 		}
@@ -77,11 +101,23 @@ public class ExcelReader implements Closeable {
 		return record;
 	}
 
+	/**
+	 * Microsoft Excelファイル読込み機能を閉じる。<br />
+	 * 具体的には、読込み元のMicrosoft Excelブックを閉じる。
+	 * 
+	 * @throws IOException 読込み元のMicrosoft Excelブックを閉じる際に異常。
+	 */
 	@Override
 	public void close() throws IOException {
 		workbook.close();
 	}
 
+	/**
+	 * セルの値を文字列として取得する。<br />
+	 * 
+	 * @param cell 取得対象のセル。
+	 * @return セルの値。
+	 */
 	private String getCellValueAsString(Cell cell) {
 		switch (cell.getCellType()) {
 		case CELL_TYPE_STRING:
