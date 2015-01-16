@@ -51,6 +51,7 @@ subprojects {
 		versionCommonsCodec = "1.10"
 		versionCommonsCsv = "1.1"
 		versionCommonsExec = "1.3"
+		versionApachePoi = "3.11"
 		versionVelocity = "1.7"
 		versionFluentLogger = "0.3.0"
 		versionSlf4j = "1.7.7"
