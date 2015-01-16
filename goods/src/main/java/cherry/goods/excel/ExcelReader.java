@@ -66,7 +66,11 @@ public class ExcelReader implements Closeable {
 			return null;
 		}
 		Row row = rowIterator.next();
-		String[] record = new String[row.getLastCellNum()];
+		int lastCellNum = row.getLastCellNum();
+		if (lastCellNum < 0) {
+			return new String[0];
+		}
+		String[] record = new String[lastCellNum];
 		for (Cell cell : row) {
 			record[cell.getColumnIndex()] = getCellValueAsString(cell);
 		}
