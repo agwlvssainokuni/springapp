@@ -41,7 +41,9 @@ public class ExcelWriter implements Closeable {
 	public ExcelWriter(OutputStream out, Workbook workbook) {
 		this.out = out;
 		this.workbook = workbook;
-		setCurrentSheet(this.workbook.getActiveSheetIndex());
+		if (this.workbook.getNumberOfSheets() > 0) {
+			setCurrentSheet(this.workbook.getActiveSheetIndex());
+		}
 	}
 
 	public int getNumberOfSheets() {
@@ -64,6 +66,10 @@ public class ExcelWriter implements Closeable {
 
 	public void write(String[] record) {
 		Row row = sheet.getRow(rownum);
+		if (row == null) {
+			row = sheet.createRow(rownum);
+		}
+		rownum += 1;
 		for (int i = 0; i < record.length; i++) {
 			if (record[i] == null) {
 				continue;

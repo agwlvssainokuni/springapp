@@ -23,9 +23,7 @@ import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -68,11 +66,11 @@ public class ExcelReader implements Closeable {
 			return null;
 		}
 		Row row = rowIterator.next();
-		List<String> record = new ArrayList<>(row.getLastCellNum());
+		String[] record = new String[row.getLastCellNum()];
 		for (Cell cell : row) {
-			record.set(cell.getColumnIndex(), getCellValueAsString(cell));
+			record[cell.getColumnIndex()] = getCellValueAsString(cell);
 		}
-		return record.toArray(new String[record.size()]);
+		return record;
 	}
 
 	@Override
