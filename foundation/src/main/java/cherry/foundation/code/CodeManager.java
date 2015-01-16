@@ -26,32 +26,32 @@ import cherry.foundation.type.Code;
  */
 public interface CodeManager {
 
+	<T extends Code<String>> boolean isValidValue(T codeEnum, String value);
+
 	boolean isValidValue(String codeName, String value);
-
-	<T extends Code<String>> boolean isValidValue(T codeEum, String value);
-
-	CodeEntry findByValue(String codeName, String value);
-
-	CodeEntry findByValue(String codeName, String value, boolean plainLabel);
 
 	<T extends Code<String>> CodeEntry findByValue(T codeEnum, String value);
 
 	<T extends Code<String>> CodeEntry findByValue(T codeEnum, String value, boolean plainLabel);
 
-	List<CodeEntry> getCodeList(String codeName);
+	CodeEntry findByValue(String codeName, String value);
 
-	List<CodeEntry> getCodeList(String codeName, boolean plainLabel);
+	CodeEntry findByValue(String codeName, String value, boolean plainLabel);
 
 	<T extends Code<String>> List<CodeEntry> getCodeList(T codeEnum);
 
 	<T extends Code<String>> List<CodeEntry> getCodeList(T codeEnum, boolean plainLabel);
 
-	Map<String, String> getCodeMap(String codeName);
+	List<CodeEntry> getCodeList(String codeName);
 
-	Map<String, String> getCodeMap(String codeName, boolean plainLabel);
+	List<CodeEntry> getCodeList(String codeName, boolean plainLabel);
 
 	<T extends Code<String>> Map<String, String> getCodeMap(T codeEnum);
 
 	<T extends Code<String>> Map<String, String> getCodeMap(T codeEnum, boolean plainLabel);
+
+	Map<String, String> getCodeMap(String codeName);
+
+	Map<String, String> getCodeMap(String codeName, boolean plainLabel);
 
 }
