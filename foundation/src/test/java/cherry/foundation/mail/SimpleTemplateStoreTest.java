@@ -48,6 +48,34 @@ public class SimpleTemplateStoreTest {
 		assertNull(templateStore.getTemplate("none"));
 	}
 
+	@Test
+	public void testPutTemplate() {
+
+		TemplateStore templateStore = create("name", "from@addr", "to@addr", "cc@addr", "bcc@addr", "subject", "body");
+
+		MailData mailData = new MailData();
+		mailData.setFromAddr("from2@addr");
+		mailData.setToAddr(Arrays.asList("to2@addr"));
+		mailData.setCcAddr(Arrays.asList("cc2@addr"));
+		mailData.setBccAddr(Arrays.asList("bcc2@addr"));
+		mailData.setSubject("subject2");
+		mailData.setBody("body2");
+
+		templateStore.putTemplate("name2", mailData);
+
+		MailData mailData2 = templateStore.getTemplate("name2");
+		assertNotNull(mailData2);
+		assertEquals("from2@addr", mailData2.getFromAddr());
+		assertEquals(1, mailData2.getToAddr().size());
+		assertEquals("to2@addr", mailData2.getToAddr().get(0));
+		assertEquals(1, mailData2.getCcAddr().size());
+		assertEquals("cc2@addr", mailData2.getCcAddr().get(0));
+		assertEquals(1, mailData2.getBccAddr().size());
+		assertEquals("bcc2@addr", mailData2.getBccAddr().get(0));
+		assertEquals("subject2", mailData2.getSubject());
+		assertEquals("body2", mailData2.getBody());
+	}
+
 	private TemplateStore create(String name, String fromAddr, String toAddr, String ccAddr, String bccAddr,
 			String subject, String body) {
 
