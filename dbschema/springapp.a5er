@@ -17,6 +17,8 @@ Page=メール送信機能
 PageInfo="メール送信機能",4,"A3Landscape",$FFFFFF
 Page=メール文面テンプレート
 PageInfo="メール文面テンプレート",4,"A3Landscape",$FFFFFF
+Page=区分値管理
+PageInfo="区分値管理",4,"A3Landscape",$FFFFFF
 Page=郵便番号
 PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
 Page=SpringApp
@@ -69,6 +71,27 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=code_master
+LName=区分値マスタ
+Comment=
+TableOption=
+Page=区分値管理
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="区分値名称","name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="区分値","value","*区分値【5】","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示名称","label","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示順序","sort_order","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Index==0,name
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150117194950
+Position="区分値管理",500,500
 
 [Relation]
 Entity1=mail_log
