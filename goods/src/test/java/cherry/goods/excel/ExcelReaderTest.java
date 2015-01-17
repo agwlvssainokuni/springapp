@@ -177,4 +177,27 @@ public class ExcelReaderTest {
 		}
 	}
 
+	@Test
+	public void testRead_NUMERIC() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellValue(1234);
+			row0.createCell(1).setCellValue(1234.56);
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("1234", r0[0]);
+				assertEquals("1234.56", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
 }

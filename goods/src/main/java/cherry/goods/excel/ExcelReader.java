@@ -124,13 +124,13 @@ public class ExcelReader implements Closeable {
 	private String getCellValueAsString(Cell cell) {
 		switch (cell.getCellType()) {
 		case CELL_TYPE_NUMERIC:
-			return BigDecimal.valueOf(cell.getNumericCellValue()).toPlainString();
+			return getNumericCellValueAsString(cell);
 		case CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		case CELL_TYPE_FORMULA:
 			switch (cell.getCachedFormulaResultType()) {
 			case CELL_TYPE_NUMERIC:
-				return BigDecimal.valueOf(cell.getNumericCellValue()).toPlainString();
+				return getNumericCellValueAsString(cell);
 			case CELL_TYPE_STRING:
 				return cell.getStringCellValue();
 			case CELL_TYPE_BOOLEAN:
@@ -144,6 +144,21 @@ public class ExcelReader implements Closeable {
 			return String.valueOf(cell.getBooleanCellValue());
 		default:
 			return null;
+		}
+	}
+
+	/**
+	 * 数値セルの値を文字列として取得する。
+	 * 
+	 * @param cell 取得対象のセル。
+	 * @return セルの値。
+	 */
+	private String getNumericCellValueAsString(Cell cell) {
+		BigDecimal value = BigDecimal.valueOf(cell.getNumericCellValue());
+		try {
+			return value.toBigIntegerExact().toString();
+		} catch (ArithmeticException ex) {
+			return value.toPlainString();
 		}
 	}
 
