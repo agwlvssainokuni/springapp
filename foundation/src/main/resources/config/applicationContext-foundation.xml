@@ -185,7 +185,7 @@
 	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
-	<bean class="cherry.foundation.type.CodeUtil" factory-method="setMessageSource">
+	<bean class="cherry.foundation.type.EnumCodeUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 	<!-- 項目暗号化 -->
