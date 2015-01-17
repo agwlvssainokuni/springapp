@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -200,4 +201,195 @@ public class ExcelReaderTest {
 		}
 	}
 
+	@Test
+	public void testRead_STRING() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellValue("CELL 00");
+			row0.createCell(1).setCellValue("CELL 01");
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("CELL 00", r0[0]);
+				assertEquals("CELL 01", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_BLANK() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0);
+			row0.createCell(1);
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("", r0[0]);
+				assertEquals("", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_BOOLEAN() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellValue(true);
+			row0.createCell(1).setCellValue(false);
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("true", r0[0]);
+				assertEquals("false", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_ERROR() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellErrorValue((byte) 0);
+			row0.createCell(1).setCellErrorValue((byte) 0);
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertNull(r0[0]);
+				assertNull(r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_FORMULA_NUMERIC() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellFormula("1200+34");
+			row0.createCell(1).setCellFormula("1200+34.56");
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+			evaluator.evaluateAll();
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("1234", r0[0]);
+				assertEquals("1234.56", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_FORMULA_STRING() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellFormula("\"CELL\"&\"00\"");
+			row0.createCell(1).setCellFormula("\"CELL\"&\"01\"");
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+			evaluator.evaluateAll();
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("CELL00", r0[0]);
+				assertEquals("CELL01", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_FORMULA_BOOLEAN() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellFormula("1=1");
+			row0.createCell(1).setCellFormula("1=0");
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+			evaluator.evaluateAll();
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertEquals("true", r0[0]);
+				assertEquals("false", r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
+
+	@Test
+	public void testRead_FORMULA_ERROR() throws IOException {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			// 準備
+			Sheet sheet = workbook.createSheet();
+			Row row0 = sheet.createRow(0);
+			row0.createCell(0).setCellErrorValue((byte) 0);
+			row0.createCell(1).setCellFormula("A1");
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+			evaluator.evaluateAll();
+
+			// 実行＆検証
+			try (ExcelReader reader = new ExcelReader(workbook)) {
+
+				String[] r0 = reader.read();
+				assertNotNull(r0);
+				assertEquals(2, r0.length);
+				assertNull(r0[0]);
+				assertNull(r0[1]);
+
+				assertNull(reader.read());
+			}
+		}
+	}
 }
