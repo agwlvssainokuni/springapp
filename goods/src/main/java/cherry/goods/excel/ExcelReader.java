@@ -16,12 +16,15 @@
 
 package cherry.goods.excel;
 
+import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK;
+import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_FORMULA;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -120,19 +123,25 @@ public class ExcelReader implements Closeable {
 	 */
 	private String getCellValueAsString(Cell cell) {
 		switch (cell.getCellType()) {
+		case CELL_TYPE_NUMERIC:
+			return BigDecimal.valueOf(cell.getNumericCellValue()).toPlainString();
 		case CELL_TYPE_STRING:
 			return cell.getStringCellValue();
-		case CELL_TYPE_NUMERIC:
-			return String.valueOf((int) cell.getNumericCellValue());
 		case CELL_TYPE_FORMULA:
 			switch (cell.getCachedFormulaResultType()) {
+			case CELL_TYPE_NUMERIC:
+				return BigDecimal.valueOf(cell.getNumericCellValue()).toPlainString();
 			case CELL_TYPE_STRING:
 				return cell.getStringCellValue();
-			case CELL_TYPE_NUMERIC:
-				return String.valueOf((int) cell.getNumericCellValue());
+			case CELL_TYPE_BOOLEAN:
+				return String.valueOf(cell.getBooleanCellValue());
 			default:
 				return null;
 			}
+		case CELL_TYPE_BLANK:
+			return "";
+		case CELL_TYPE_BOOLEAN:
+			return String.valueOf(cell.getBooleanCellValue());
 		default:
 			return null;
 		}
