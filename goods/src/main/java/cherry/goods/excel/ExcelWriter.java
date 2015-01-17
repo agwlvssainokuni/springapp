@@ -80,7 +80,7 @@ public class ExcelWriter implements Closeable {
 	 * 
 	 * @param record 1レコード(1行)。
 	 */
-	public void write(String[] record) {
+	public void write(String... record) {
 		Row row = currentSheet.getRow(rownum);
 		if (row == null) {
 			row = currentSheet.createRow(rownum);
