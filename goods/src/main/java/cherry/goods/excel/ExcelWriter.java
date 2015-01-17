@@ -75,23 +75,50 @@ public class ExcelWriter implements Closeable {
 	}
 
 	/**
+	 * レコード書込み位置 (行番号) を移動させる。<br />
+	 * 
+	 * @param offsetRows 行方向の移動量 (何行空けるかを指定する)。
+	 */
+	public void skipRows(int offsetRows) {
+		rownum += offsetRows;
+	}
+
+	/**
 	 * レコード書込み。<br />
 	 * 書込み対象のシートへ1レコード(1行)書込む。
 	 * 
 	 * @param record 1レコード(1行)。
 	 */
 	public void write(String... record) {
+		write(0, record);
+	}
+
+	/**
+	 * レコード書込み。<br />
+	 * 書込み対象のシートへ1レコード(1行)書込む。
+	 * 
+	 * @param offsetCols 書込み先とする列番号のオフセット (何列目から書込むかを指定する)。
+	 * @param record 1レコード(1行)。
+	 */
+	public void write(int offsetCols, String... record) {
 		Row row = currentSheet.getRow(rownum);
 		if (row == null) {
 			row = currentSheet.createRow(rownum);
 		}
 		rownum += 1;
 		for (int i = 0; i < record.length; i++) {
+			int colnum = i + offsetCols;
+			Cell cell = row.getCell(colnum);
 			if (record[i] == null) {
-				continue;
+				if (cell != null) {
+					row.removeCell(cell);
+				}
+			} else {
+				if (cell == null) {
+					cell = row.createCell(colnum);
+				}
+				cell.setCellValue(record[i]);
 			}
-			Cell cell = row.getCell(i, Row.CREATE_NULL_AS_BLANK);
-			cell.setCellValue(record[i]);
 		}
 	}
 
