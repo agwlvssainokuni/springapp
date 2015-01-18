@@ -180,6 +180,12 @@
 		</property>
 	</bean>
 
+	<!-- 区分地管理機能 -->
+	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
+		<property name="valueTemplate" value="${foundation.codeManager.valueTemplate}" />
+		<property name="codeStore" ref="codeStore" />
+	</bean>
+
 	<!-- 型関係機能設定 -->
 	<!-- 区分値 -->
 	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
