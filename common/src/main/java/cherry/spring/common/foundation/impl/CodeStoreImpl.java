@@ -19,7 +19,6 @@ package cherry.spring.common.foundation.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +39,6 @@ public class CodeStoreImpl implements CodeStore {
 	private final QBean<CodeEntry> qBean = new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder);
 
 	@Transactional(readOnly = true)
-	@Cacheable
 	@Override
 	public boolean isValidValue(String codeName, String value) {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
@@ -50,7 +48,6 @@ public class CodeStoreImpl implements CodeStore {
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable
 	@Override
 	public CodeEntry findByValue(String codeName, String value) {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
@@ -60,7 +57,6 @@ public class CodeStoreImpl implements CodeStore {
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable
 	@Override
 	public List<CodeEntry> getCodeList(String codeName) {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
