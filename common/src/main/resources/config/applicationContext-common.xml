@@ -12,6 +12,7 @@
 	<tx:annotation-driven />
 
 	<bean id="bizDateTime" class="cherry.spring.common.foundation.impl.BizDateTimeImpl" />
+	<bean id="codeStore" class="cherry.spring.common.foundation.impl.CodeStoreImpl" />
 	<bean id="asyncProcessStore" class="cherry.spring.common.foundation.impl.AsyncProcessStoreImpl" />
 	<bean id="mailFacade" class="cherry.foundation.mail.MailFacadeImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
