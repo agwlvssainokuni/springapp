@@ -18,6 +18,7 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<security:csrfMetaTags />
 <title><s:message code="base/common.title" /> / <s:message
 		code="${name}.title" /></title>
 <link rel="stylesheet" media="screen"
