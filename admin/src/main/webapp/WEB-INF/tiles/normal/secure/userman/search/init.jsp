@@ -107,7 +107,8 @@
 					<s:message code="common/pager.message.0"
 						arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 				</div>
-				<app:pagerLink pageSet="${pagedList.pageSet}" />
+				<app:pagerLink pageSet="${pagedList.pageSet}"
+					form="#usermanSearchWithPage" pno="no" />
 			</div>
 			<table id="usermanSearchList" class="app-stripe app-width-full">
 				<thead>
@@ -138,7 +139,8 @@
 				</tbody>
 			</table>
 			<div class="app-pager">
-				<app:pagerLink pageSet="${pagedList.pageSet}" />
+				<app:pagerLink pageSet="${pagedList.pageSet}"
+					form="#usermanSearchWithPage" pno="no" />
 			</div>
 		</div>
 	</c:if>
