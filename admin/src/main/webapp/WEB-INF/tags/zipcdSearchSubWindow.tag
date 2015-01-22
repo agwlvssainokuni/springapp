@@ -77,7 +77,7 @@
 
 		$.ajax({
 			url : "${zipcdUri}",
-			type : "GET",
+			type : "POST",
 			data : {
 				zipcd : zipcd
 			},
