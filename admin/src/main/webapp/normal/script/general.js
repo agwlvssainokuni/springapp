@@ -10,11 +10,17 @@ $(function() {
 		var form = $(this).attr("data-form");
 		var pno = $(this).attr("data-pno");
 		var current = $(this).attr("data-current");
-		$(".page[title = '" + current + "']", this).removeAttr("href");
-		$(".page[title != '" + current + "']", this).click(function(event) {
-			event.preventDefault();
-			$("input[name='" + pno + "']", $(form)).val(this.title - 1);
-			$(form).submit();
+		$("li", this).each(function(index) {
+			var pageNo = $("a", this).attr("title");
+			if (pageNo == current) {
+				$("a", this).removeAttr("href");
+			} else {
+				$("a", this).click(function(event) {
+					event.preventDefault();
+					$("input[name='" + pno + "']", $(form)).val(pageNo - 1);
+					$(form).submit();
+				});
+			}
 		});
 	});
 
