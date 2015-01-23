@@ -1,14 +1,20 @@
 $(function() {
 
-	$(".app-pager-link").each(function(index) {
-		var current = $(".app-current", this).attr("title");
-		var pages = $(".app-page[title != '" + current + "']", this);
-		pages.removeClass("ui-disabled");
-		pages.click(function() {
-			var form = $(".app-pager-form");
-			$("input[name='no']", form).val(this.title - 1);
-			form.submit();
-			return false;
+	$(".pager-link").each(function(index) {
+		var form = $(this).attr("data-form");
+		var pno = $(this).attr("data-pno");
+		var current = $(this).attr("data-current");
+		$("li", this).each(function(index) {
+			var pageNo = $("a", this).attr("title");
+			if (pageNo == current) {
+				$("a", this).removeAttr("href");
+			} else {
+				$("a", this).click(function(event) {
+					event.preventDefault();
+					$("input[name='" + pno + "']", $(form)).val(pageNo - 1);
+					$(form).submit();
+				});
+			}
 		});
 	});
 
@@ -17,4 +23,5 @@ $(function() {
 	$(document).ajaxSend(function(event, jqxhr, settings) {
 		jqxhr.setRequestHeader(header, token);
 	});
+
 });
