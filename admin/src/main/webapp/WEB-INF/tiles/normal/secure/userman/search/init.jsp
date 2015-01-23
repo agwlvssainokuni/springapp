@@ -102,6 +102,8 @@
 			<input type="hidden" id="sz" name="sz" value="${param.sz}">
 		</f:form>
 		<div class="app-portion">
+			<app:pageSize id="usermanSearchPageSz" form="#usermanSearchWithPage"
+				psz="sz" />
 			<div class="app-pager">
 				<div class="app-pager-desc">
 					<s:message code="common/pager.message.0"
