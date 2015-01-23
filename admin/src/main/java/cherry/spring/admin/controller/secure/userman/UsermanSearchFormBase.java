@@ -50,6 +50,10 @@ public abstract class UsermanSearchFormBase implements Serializable {
 	@cherry.foundation.validator.MaxLength(value = 64, groups = { javax.validation.groups.Default.class })
 	private String lastName;
 
+	private long pno = 0L;
+
+	private long psz = 0L;
+
 	@Getter
 	public enum Prop {
 		LoginId("loginId", "usermanSearchForm.loginId"), //
@@ -57,6 +61,8 @@ public abstract class UsermanSearchFormBase implements Serializable {
 		RegisteredTo("registeredTo", "usermanSearchForm.registeredTo"), //
 		FirstName("firstName", "usermanSearchForm.firstName"), //
 		LastName("lastName", "usermanSearchForm.lastName"), //
+		Pno("pno", "usermanSearchForm.pno"), //
+		Psz("psz", "usermanSearchForm.psz"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;
