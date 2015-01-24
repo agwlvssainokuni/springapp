@@ -24,6 +24,8 @@
 			<f:errors path="usermanSearchForm.registeredTo" element="div" />
 			<f:errors path="usermanSearchForm.lastName" element="div" />
 			<f:errors path="usermanSearchForm.firstName" element="div" />
+			<f:errors path="usermanSearchForm.pno" element="div" />
+			<f:errors path="usermanSearchForm.psz" element="div" />
 		</div>
 	</s:hasBindErrors>
 	<c:if test="${pagedList != null && pagedList.list.isEmpty()}">
@@ -92,25 +94,25 @@
 	<c:if test="${resultIsNotEmpty}">
 		<f:form servletRelativeAction="/secure/userman/search/execute"
 			method="POST" modelAttribute="usermanSearchForm"
-			id="usermanSearchWithPage" class="app-pager-form">
-			<f:hidden path="loginId" id="loginId2" />
-			<f:hidden path="registeredFrom" id="registeredFrom2" />
-			<f:hidden path="registeredTo" id="registeredTo2" />
-			<f:hidden path="lastName" id="lastName2" />
-			<f:hidden path="firstName" id="firstName2" />
-			<input type="hidden" id="no" name="no">
-			<input type="hidden" id="sz" name="sz" value="${param.sz}">
+			id="HusermanSearchForm" class="app-pager-form">
+			<f:hidden path="loginId" id="HloginId" />
+			<f:hidden path="registeredFrom" id="HregisteredFrom" />
+			<f:hidden path="registeredTo" id="HregisteredTo" />
+			<f:hidden path="lastName" id="HlastName" />
+			<f:hidden path="firstName" id="HfirstName" />
+			<f:hidden path="pno" id="Hpno" />
+			<f:hidden path="psz" id="Hpsz" />
 		</f:form>
 		<div class="app-portion">
-			<app:pageSize id="usermanSearchPageSz" form="#usermanSearchWithPage"
-				psz="sz" />
+			<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
+				psz="psz" />
 			<div class="app-pager">
 				<div class="app-pager-desc">
 					<s:message code="common/pager.message.0"
 						arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 				</div>
 				<app:pagerLink pageSet="${pagedList.pageSet}"
-					form="#usermanSearchWithPage" pno="no" />
+					form="#HusermanSearchForm" pno="pno" />
 			</div>
 			<table id="usermanSearchList" class="app-stripe app-width-full">
 				<thead>
@@ -142,7 +144,7 @@
 			</table>
 			<div class="app-pager">
 				<app:pagerLink pageSet="${pagedList.pageSet}"
-					form="#usermanSearchWithPage" pno="no" />
+					form="#HusermanSearchForm" pno="pno" />
 			</div>
 		</div>
 	</c:if>

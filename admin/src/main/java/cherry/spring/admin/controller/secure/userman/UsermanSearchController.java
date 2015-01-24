@@ -27,7 +27,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.controller.PathDef;
@@ -35,24 +34,22 @@ import cherry.spring.admin.controller.PathDef;
 @RequestMapping(PathDef.URI_USERMAN_SEARCH)
 public interface UsermanSearchController {
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
 	@ModelAttribute()
 	UsermanSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated UsermanSearchForm form, BindingResult binding,
-			@RequestParam(value = PARAM_NO, defaultValue = "0") long pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") long pageSz, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated UsermanSearchForm form,
+			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@Validated UsermanSearchForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
+	ModelAndView download(@Validated UsermanSearchForm form,
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response);
 
 }
