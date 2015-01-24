@@ -171,6 +171,11 @@ table>thead, tfoot>tr {
 	background-color: royalblue;
 }
 
+table>tbody>tr.app-head {
+	color: white;
+	background-color: royalblue;
+}
+
 table>tbody>tr {
 	color: midnightblue;
 	background-color: lightblue;

@@ -3,8 +3,23 @@ $(function() {
 	$(".app-menu").menu();
 	$(".app-button").button();
 	$(".app-buttonset").buttonset();
+
 	$("table.app-stripe>tbody>tr:even").addClass("app-even");
 	$("table.app-stripe>tbody>tr:odd").addClass("app-odd");
+
+	$("table.app-multihead").each(function(index) {
+		var $head = $("thead", this);
+		var step = $(this).attr("data-multihead");
+		step = (step ? step : 10);
+		$("tbody tr", this).each(function(index) {
+			if (index != 0 && index % step == 0) {
+				var $row = $(this);
+				$("tr", $head).each(function(index) {
+					$(this).clone().addClass("app-head").insertBefore($row);
+				});
+			}
+		});
+	});
 
 	$(".pager-link").each(function(index) {
 		var form = $(this).attr("data-form");
