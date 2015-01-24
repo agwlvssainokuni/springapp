@@ -104,13 +104,11 @@
 			<f:hidden path="psz" id="Hpsz" />
 		</f:form>
 		<div class="app-portion">
+			<app:downloadButton form="#HusermanSearchForm" />
 			<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
 				psz="psz" />
 			<div class="app-pager">
-				<div class="app-pager-desc">
-					<s:message code="common/pager.message.0"
-						arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
-				</div>
+				<app:pagerDescription pageSet="${pagedList.pageSet}" />
 				<app:pagerLink pageSet="${pagedList.pageSet}"
 					form="#HusermanSearchForm" pno="pno" />
 			</div>

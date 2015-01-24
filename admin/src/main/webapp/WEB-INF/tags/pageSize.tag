@@ -7,7 +7,7 @@
 <%@ attribute name="form" required="true" rtexprvalue="true"%>
 <%@ attribute name="psz" required="true" rtexprvalue="true"%>
 <div class="page-size">
-	<label for="${id}"><s:message code="common/pageSize.label" /></label>
+	<label for="${id}"><s:message code="tag/pageSize.label" /></label>
 	<select id="${id}" data-form="${form}" data-psz="${psz}">
 		<option value="10">10 per page</option>
 		<option value="25">25 per page</option>

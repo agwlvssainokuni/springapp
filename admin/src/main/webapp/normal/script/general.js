@@ -36,6 +36,16 @@ $(function() {
 		});
 	});
 
+	$(".download-button").each(function(index) {
+		var form = $("button", this).attr("data-form");
+		$("button", this).click(function(event) {
+			event.preventDefault();
+			$(form).append("<input type='hidden' name='download' />");
+			$(form).submit();
+			$("input[name='download']", $(form)).remove();
+		});
+	});
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$(document).ajaxSend(function(event, jqxhr, settings) {
