@@ -116,7 +116,8 @@
 				<app:pagerLink pageSet="${pagedList.pageSet}"
 					form="#HusermanSearchForm" pno="pno" />
 			</div>
-			<table id="usermanSearchList" class="app-stripe app-width-full">
+			<table id="usermanSearchList"
+				class="app-stripe app-width-full app-multihead">
 				<thead>
 					<tr>
 						<th>#</th>
