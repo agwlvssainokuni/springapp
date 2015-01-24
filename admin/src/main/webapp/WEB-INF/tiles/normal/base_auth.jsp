@@ -43,8 +43,6 @@
 					<button type="submit" class="app-button">
 						<s:message code="base/auth.logout" />
 					</button>
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}">
 				</form>
 			</div>
 			<s:message code="base/common.title" />
