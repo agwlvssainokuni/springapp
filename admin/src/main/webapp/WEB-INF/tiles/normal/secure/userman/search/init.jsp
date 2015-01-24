@@ -104,11 +104,15 @@
 			<f:hidden path="psz" id="Hpsz" />
 		</f:form>
 		<div class="app-portion">
-			<app:downloadButton form="#HusermanSearchForm" />
-			<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
-				psz="psz" />
+			<div class="app-pager">
+				<app:downloadButton form="#HusermanSearchForm" />
+			</div>
 			<div class="app-pager">
 				<app:pagerDescription pageSet="${pagedList.pageSet}" />
+			</div>
+			<div class="app-pager">
+				<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
+					psz="psz" />
 				<app:pagerLink pageSet="${pagedList.pageSet}"
 					form="#HusermanSearchForm" pno="pno" />
 			</div>

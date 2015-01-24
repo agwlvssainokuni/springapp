@@ -17,12 +17,18 @@ textarea {
 	font-size: 12pt;
 }
 
-body,ul,ol,form {
+body, ul, ol, form {
 	margin: 0px;
 	padding: 0px;
 }
 
-td,th {
+fieldset {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+td, th {
 	padding: 5px 5px;
 }
 
@@ -67,8 +73,16 @@ ul.app-flat>li+li {
 	padding: 0px 20px;
 }
 
-.app-pager-desc .app-number {
-	font-weight: bold;
+.download-button, .page-size, .pager-description, .pager-link {
+	display: inline;
+}
+
+.page-size * {
+	vertical-align: middle;
+}
+
+.page-size select {
+	width: 120px;
 }
 
 .app-width-full {
@@ -104,7 +118,7 @@ ul.app-flat>li+li {
 }
 
 /* 領域レイアウト */
-#Header,#Navi,#Content,#Footer {
+#Header, #Navi, #Content, #Footer {
 	/* width: 1280px; */
 	margin-left: auto;
 	margin-right: auto;
@@ -124,18 +138,18 @@ body {
 	background-color: royalblue;
 }
 
-a:link,a:visited {
+a:link, a:visited {
 	color: midnightblue;
 	background-color: transparent;
 }
 
-a:hover,a:active {
+a:hover, a:active {
 	color: midnightblue;
 	background-color: lavender;
 }
 
 /* 領域配色 */
-#PageHeader,#PageFooter {
+#PageHeader, #PageFooter {
 	color: white;
 	background-color: royalblue;
 }
@@ -152,7 +166,7 @@ a:hover,a:active {
 
 /* 表配色 */
 /* 通常表 */
-table>thead,tfoot>tr {
+table>thead, tfoot>tr {
 	color: white;
 	background-color: royalblue;
 }

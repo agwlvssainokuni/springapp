@@ -9,9 +9,9 @@
 <fieldset class="page-size">
 	<label for="${id}"><s:message code="tag/pageSize.label" /></label>
 	<select id="${id}" data-form="${form}" data-psz="${psz}">
-		<option value="10">10 per page</option>
-		<option value="25">25 per page</option>
-		<option value="50">50 per page</option>
-		<option value="100">100 per page</option>
+		<option value="10">10 items</option>
+		<option value="25">25 items</option>
+		<option value="50">50 items</option>
+		<option value="100">100 items</option>
 	</select>
 </fieldset>
