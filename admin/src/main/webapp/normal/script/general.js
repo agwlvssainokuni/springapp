@@ -29,16 +29,18 @@ $(function() {
 		var psz = $("select", this).attr("data-psz");
 		var current = $("input[name='" + psz + "']", $(form)).val();
 		$("select", this).val(current);
-		$("select", this).change(function(event) {
-			event.preventDefault();
-			$("input[name='" + psz + "']", $(form)).val($(this).val());
-			$(form).submit();
+		$("select", this).selectmenu({
+			change : function(event) {
+				event.preventDefault();
+				$("input[name='" + psz + "']", $(form)).val($(this).val());
+				$(form).submit();
+			}
 		});
 	});
 
 	$(".download-button").each(function(index) {
 		var form = $("button", this).attr("data-form");
-		$("button", this).click(function(event) {
+		$("button", this).button().click(function(event) {
 			event.preventDefault();
 			$(form).append("<input type='hidden' name='download' />");
 			$(form).submit();
