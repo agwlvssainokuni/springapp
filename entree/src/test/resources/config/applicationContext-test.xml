@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:security="http://www.springframework.org/schema/security"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<import resource="applicationContext-foundation.xml" />
 	<import resource="applicationContext-foundationMapper.xml" />
@@ -16,8 +15,7 @@
 
 	<jdbc:embedded-database id="dataSource" type="H2" />
 
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
@@ -25,8 +23,7 @@
 		<security:authentication-provider>
 			<security:password-encoder ref="passwordEncoder" />
 			<!-- <security:user-service properties="${entree.userfile}" /> -->
-			<security:jdbc-user-service
-				data-source-ref="dataSource"
+			<security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="SELECT login_id, password, 1 FROM users WHERE login_id=? AND deleted_flg=0"
 				authorities-by-username-query="SELECT ?, 'ROLE_USER' FROM dual" />
 		</security:authentication-provider>
