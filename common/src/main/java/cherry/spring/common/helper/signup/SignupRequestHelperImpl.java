@@ -79,7 +79,7 @@ public class SignupRequestHelperImpl implements SignupRequestHelper, Initializin
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(createSignupRequest, new MapSqlParameterSource(paramMap),
 				keyHolder);
-		checkState(count == 1, "failed to create signup_request: mailAddr={0}, token={1}, appliedAt={2}, count={3}",
+		checkState(count == 1, "failed to create signup_request: mailAddr=%s, token=%s, appliedAt=%s, count=%s",
 				mailAddr, token, appliedAt, count);
 		return keyHolder.getKey().longValue();
 	}

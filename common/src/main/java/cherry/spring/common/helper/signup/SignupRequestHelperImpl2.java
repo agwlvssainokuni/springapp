@@ -54,8 +54,8 @@ public class SignupRequestHelperImpl2 implements SignupRequestHelper {
 			}
 		};
 		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
-		checkState(id != null, "failed to create QSignupRequest: mailAddr={0}, token={1}, appliedAt={2}", mailAddr,
-				token, appliedAt);
+		checkState(id != null, "failed to create QSignupRequest: mailAddr=%s, token=%s, appliedAt=%s", mailAddr, token,
+				appliedAt);
 		return id.longValue();
 	}
 

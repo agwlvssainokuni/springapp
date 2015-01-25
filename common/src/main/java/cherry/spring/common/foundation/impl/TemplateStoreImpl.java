@@ -111,7 +111,7 @@ public class TemplateStoreImpl implements TemplateStore {
 					return insert.executeWithKey(Long.class);
 				}
 			});
-			checkState(id != 0, "Failed to create {0}: {1}", a.getTableName(), mailData.toString());
+			checkState(id != 0, "Failed to create %s: %s", a.getTableName(), mailData.toString());
 		} else {
 			final Long fId = id;
 			long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
@@ -125,7 +125,7 @@ public class TemplateStoreImpl implements TemplateStore {
 					return update.execute();
 				}
 			});
-			checkState(count == 1, "Failed to update {0}: {1}", a.getTableName(), mailData.toString());
+			checkState(count == 1, "Failed to update %s: %s", a.getTableName(), mailData.toString());
 		}
 
 		final Long templateId = id;
@@ -149,7 +149,7 @@ public class TemplateStoreImpl implements TemplateStore {
 		long numOfAddr = (mailData.getToAddr() == null ? 0L : mailData.getToAddr().size())
 				+ (mailData.getCcAddr() == null ? 0L : mailData.getCcAddr().size())
 				+ (mailData.getBccAddr() == null ? 0L : mailData.getBccAddr().size());
-		checkState(count == numOfAddr, "Failed to create {0}: {1}", b.getTableName(), mailData.toString());
+		checkState(count == numOfAddr, "Failed to create %s: %s", b.getTableName(), mailData.toString());
 	}
 
 	private void setupInsertClause(SQLInsertClause insert, QMailTemplateRcpt b, Long templateId, String type,

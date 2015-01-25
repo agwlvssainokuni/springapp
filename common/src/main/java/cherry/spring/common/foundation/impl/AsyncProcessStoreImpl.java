@@ -87,7 +87,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		});
 		checkState(
 				count == 1L,
-				"failed to create QAsyncProcessFile: asyncId={0}, paramName={1}, originalFilename={2}, contentType={3}, fileSize={4}, handlerName={5}",
+				"failed to create QAsyncProcessFile: asyncId=%s, paramName=%s, originalFilename=%s, contentType=%s, fileSize=%s, handlerName=%s",
 				asyncId, name, originalFilename, contentType, size, handlerName);
 
 		final QAsyncProcessFileArg b = new QAsyncProcessFileArg("b");
@@ -100,7 +100,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 					return insert.execute();
 				}
 			});
-			checkState(c == 1L, "failed to create QAsyncProcessFileArg: asyncId={0}, arg={1}", asyncId, arg);
+			checkState(c == 1L, "failed to create QAsyncProcessFileArg: asyncId=%s, arg=%s", asyncId, arg);
 		}
 
 		return asyncId;
@@ -121,7 +121,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return insert.execute();
 			}
 		});
-		checkState(count == 1L, "failed to create QAsyncProcessCommand: asyncId={0}, command={1}", asyncId, command);
+		checkState(count == 1L, "failed to create QAsyncProcessCommand: asyncId=%s, command=%s", asyncId, command);
 
 		final QAsyncProcessCommandArg b = new QAsyncProcessCommandArg("b");
 		for (final String arg : args) {
@@ -133,7 +133,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 					return insert.execute();
 				}
 			});
-			checkState(c == 1L, "failed to create QAsyncProcessCommandArg: asyncId={0}, arg={1}", asyncId, arg);
+			checkState(c == 1L, "failed to create QAsyncProcessCommandArg: asyncId=%s, arg=%s", asyncId, arg);
 		}
 
 		return asyncId;
@@ -154,7 +154,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, launchedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, launchedAt=%s, count=%s",
 				asyncId, AsyncStatus.LAUNCHED.code(), dtm, count);
 	}
 
@@ -174,7 +174,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, startedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, startedAt=%s, count=%s",
 				asyncId, AsyncStatus.PROCESSING.code(), dtm, count);
 	}
 
@@ -197,8 +197,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			}
 		});
 		checkState(count == 1L,
-				"failed to create QAsyncProcessFileResult: asyncId={0}, totalCount={1}, okCount={2}, ngCount={3}",
-				asyncId, result.getTotalCount(), result.getOkCount(), result.getNgCount());
+				"failed to create QAsyncProcessFileResult: asyncId=%s, totalCount=%s, okCount=%s, ngCount=%s", asyncId,
+				result.getTotalCount(), result.getOkCount(), result.getNgCount());
 
 		final QAsyncProcessFileResultDetail b = new QAsyncProcessFileResultDetail("b");
 		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>() : result
@@ -217,7 +217,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				}
 			});
 			checkState(c == 1L,
-					"failed to create QAsyncProcessFileResultDetail: asyncId={0}, recordNumber={1}, description={2}",
+					"failed to create QAsyncProcessFileResultDetail: asyncId=%s, recordNumber=%s, description=%s",
 					asyncId, r.getNumber(), r.getDescription());
 		}
 	}
@@ -241,8 +241,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			}
 		});
 		checkState(count == 1L,
-				"failed to create QAsyncProcessCommandResult: asyncId={0}, exitValue={1}, stdout={2}, stderr={3}",
-				asyncId, result.getExitValue(), result.getStdout(), result.getStderr());
+				"failed to create QAsyncProcessCommandResult: asyncId=%s, exitValue=%s, stdout=%s, stderr=%s", asyncId,
+				result.getExitValue(), result.getStdout(), result.getStderr());
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
@@ -260,7 +260,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return insert.execute();
 			}
 		});
-		checkState(count == 1L, "failed to create QAsyncProcessException: asyncId={0}, exception={1}", asyncId,
+		checkState(count == 1L, "failed to create QAsyncProcessException: asyncId=%s, exception=%s", asyncId,
 				th.getMessage());
 	}
 
@@ -281,7 +281,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
 		checkState(
 				id != null,
-				"failed to create QAsyncProcess: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
+				"failed to create QAsyncProcess: launchedBy=%s, description=%s, asyncType=%s, asyncStatus=%s, registeredAt=%s",
 				launcherId, description, asyncType.code(), AsyncStatus.LAUNCHING.code(), dtm);
 		return id.longValue();
 	}
@@ -300,7 +300,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, finishedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, finishedAt=%s, count=%s",
 				asyncId, status.code(), dtm, count);
 	}
 

@@ -137,7 +137,7 @@ public class MessageStoreImpl implements MessageStore {
 				return update.execute();
 			}
 		});
-		checkState(count == 1L, "failed to update QMailLog: id={0}, mailStatus={1}", messageId, FlagCode.TRUE.code());
+		checkState(count == 1L, "failed to update QMailLog: id=%s, mailStatus=%s", messageId, FlagCode.TRUE.code());
 
 		final QMailQueue b = new QMailQueue("b");
 		long c = queryDslJdbcOperations.delete(b, new SqlDeleteCallback() {
@@ -148,7 +148,7 @@ public class MessageStoreImpl implements MessageStore {
 				return delete.execute();
 			}
 		});
-		checkState(c == 1L, "failed to delete QMailQueue: mailId={0}", messageId);
+		checkState(c == 1L, "failed to delete QMailQueue: mailId=%s", messageId);
 	}
 
 	private long createMailLog(final String launcherId, final LocalDateTime launchedAt, final String messageName,
@@ -171,7 +171,7 @@ public class MessageStoreImpl implements MessageStore {
 		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
 		checkState(
 				id != null,
-				"failed to create QMailLog: launchedBy={0}, launchedAt={1}, mailStatus={2}, messageName={3}, scheduledAt={4}, fromAddr={5}, subject={6}, body={7}",
+				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, subject=%s, body=%s",
 				launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from, subject, body);
 		return id.longValue();
 	}
@@ -191,7 +191,7 @@ public class MessageStoreImpl implements MessageStore {
 					return insert.execute();
 				}
 			});
-			checkState(c == 1L, "failed to create QMailRcpt: mailId={0}, rcptType={1}, rcptAddr={2}", mailId, rcptType,
+			checkState(c == 1L, "failed to create QMailRcpt: mailId=%s, rcptType=%s, rcptAddr=%s", mailId, rcptType,
 					addr);
 		}
 	}
@@ -206,7 +206,7 @@ public class MessageStoreImpl implements MessageStore {
 				return insert.execute();
 			}
 		});
-		checkState(count == 1L, "failed to create QMailQueue: mailId={0}, scheduledAt={1}", mailId, scheduledAt);
+		checkState(count == 1L, "failed to create QMailQueue: mailId=%s, scheduledAt=%s", mailId, scheduledAt);
 	}
 
 }

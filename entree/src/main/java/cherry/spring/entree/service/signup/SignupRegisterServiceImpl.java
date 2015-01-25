@@ -94,7 +94,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
 		int count = userMapper.insertSelective(entity);
-		checkState(count == 1, "failed to create user: user={0}, count={1}", entity, count);
+		checkState(count == 1, "failed to create user: user=%s, count=%s", entity, count);
 
 		if (log.isDebugEnabled()) {
 			log.debug("user is created: user={0}", entity);
