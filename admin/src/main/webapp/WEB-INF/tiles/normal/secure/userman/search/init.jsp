@@ -104,17 +104,27 @@
 			<f:hidden path="psz" id="Hpsz" />
 		</f:form>
 		<div class="app-portion">
-			<div class="app-pager">
-				<app:downloadButton form="#HusermanSearchForm" />
+			<div class="app-pager ui-helper-clearfix">
+				<div class="app-right">
+					<app:downloadButton form="#HusermanSearchForm" />
+				</div>
 			</div>
-			<div class="app-pager">
-				<app:pagerDescription pageSet="${pagedList.pageSet}" />
+			<div class="app-pager ui-helper-clearfix">
+				<div class="app-right">
+					<app:pagerDescription pageSet="${pagedList.pageSet}" />
+				</div>
 			</div>
-			<div class="app-pager">
-				<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
-					psz="psz" />
-				<app:pagerLink pageSet="${pagedList.pageSet}"
-					form="#HusermanSearchForm" pno="pno" />
+			<div class="app-pager ui-helper-clearfix">
+				<div class="app-left">
+					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
+						psz="psz" />
+				</div>
+				<div class="app-right">
+					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
+						psz="psz" />
+					<app:pagerLink pageSet="${pagedList.pageSet}"
+						form="#HusermanSearchForm" pno="pno" />
+				</div>
 			</div>
 			<table id="usermanSearchList"
 				class="app-stripe app-width-full app-multihead">
@@ -145,9 +155,11 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="app-pager">
-				<app:pagerLink pageSet="${pagedList.pageSet}"
-					form="#HusermanSearchForm" pno="pno" />
+			<div class="app-pager ui-helper-clearfix">
+				<div class="app-right">
+					<app:pagerLink pageSet="${pagedList.pageSet}"
+						form="#HusermanSearchForm" pno="pno" />
+				</div>
 			</div>
 		</div>
 	</c:if>

@@ -69,8 +69,15 @@ ul.app-flat>li+li {
 }
 
 .app-pager {
-	text-align: right;
 	padding: 0px 20px;
+}
+
+.app-pager>.app-left {
+	float: left;
+}
+
+.app-pager>.app-right {
+	float: right;
 }
 
 .download-button, .page-size, .pager-description, .pager-link {
