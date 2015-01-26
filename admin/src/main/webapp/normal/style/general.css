@@ -173,22 +173,17 @@ a:hover, a:active {
 
 /* 表配色 */
 /* 通常表 */
-table>thead, tfoot>tr {
-	color: white;
-	background-color: royalblue;
-}
-
-table>tbody>tr.app-head {
-	color: white;
-	background-color: royalblue;
-}
-
-table>tbody>tr {
+tr {
 	color: midnightblue;
 	background-color: lightblue;
 }
 
-table>.app-transparent>tr {
+tr.app-head {
+	color: white;
+	background-color: royalblue;
+}
+
+table.app-transparent>*>tr, .app-transparent>tr, tr.app-transparent {
 	color: midnightblue;
 	background-color: transparent;
 }
@@ -204,8 +199,8 @@ table.app-stripe>tbody>tr.app-odd {
 	background-color: skyblue;
 }
 
-/* 列見出し表 */
-table.app-collabel>tbody>tr>th {
+/* 列見出し */
+th.app-label {
 	color: white;
 	background-color: royalblue;
 	text-align: left;

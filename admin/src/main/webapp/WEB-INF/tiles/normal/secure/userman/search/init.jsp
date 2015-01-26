@@ -43,8 +43,8 @@
 	<div class="app-portion">
 		<f:form servletRelativeAction="/secure/userman/search/execute"
 			method="POST" modelAttribute="usermanSearchForm">
-			<table>
-				<tbody class="app-transparent">
+			<table class="app-transparent">
+				<tbody>
 					<tr>
 						<td><label for="loginId"><s:message
 									code="usermanSearchForm.loginId" /></label></td>
@@ -76,7 +76,7 @@
 								cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 				</tbody>
-				<tfoot class="app-transparent">
+				<tfoot>
 					<tr>
 						<td></td>
 						<td><input type="hidden" id="sz" name="sz"
@@ -129,7 +129,7 @@
 			<table id="usermanSearchList"
 				class="app-stripe app-width-full app-multihead">
 				<thead>
-					<tr>
+					<tr class="app-head">
 						<th>#</th>
 						<th><s:message
 								code="secure/userman/search/init.column.loginId" /></th>

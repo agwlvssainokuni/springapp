@@ -15,7 +15,7 @@ $(function() {
 			if (index != 0 && index % step == 0) {
 				var $row = $(this);
 				$("tr", $head).each(function(index) {
-					$(this).clone().addClass("app-head").insertBefore($row);
+					$(this).clone().insertBefore($row);
 				});
 			}
 		});
