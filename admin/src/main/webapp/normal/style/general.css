@@ -68,16 +68,16 @@ ul.app-flat>li+li {
 	margin-left: 5px;
 }
 
-.app-pager {
-	padding: 0px 20px;
-}
-
-.app-pager>.app-left {
+.app-floatleft {
 	float: left;
 }
 
-.app-pager>.app-right {
+.app-floatright {
 	float: right;
+}
+
+.app-pagerbox {
+	padding: 0px 20px;
 }
 
 .download-button, .page-size, .pager-description, .pager-link {

@@ -94,7 +94,7 @@
 	<c:if test="${resultIsNotEmpty}">
 		<f:form servletRelativeAction="/secure/userman/search/execute"
 			method="POST" modelAttribute="usermanSearchForm"
-			id="HusermanSearchForm" class="app-pager-form">
+			id="HusermanSearchForm">
 			<f:hidden path="loginId" id="HloginId" />
 			<f:hidden path="registeredFrom" id="HregisteredFrom" />
 			<f:hidden path="registeredTo" id="HregisteredTo" />
@@ -104,22 +104,22 @@
 			<f:hidden path="psz" id="Hpsz" />
 		</f:form>
 		<div class="app-portion">
-			<div class="app-pager ui-helper-clearfix">
-				<div class="app-right">
+			<div class="app-pagerbox ui-helper-clearfix">
+				<div class="app-floatright">
 					<app:downloadButton form="#HusermanSearchForm" />
 				</div>
 			</div>
-			<div class="app-pager ui-helper-clearfix">
-				<div class="app-right">
+			<div class="app-pagerbox ui-helper-clearfix">
+				<div class="app-floatright">
 					<app:pagerDescription pageSet="${pagedList.pageSet}" />
 				</div>
 			</div>
-			<div class="app-pager ui-helper-clearfix">
-				<div class="app-left">
+			<div class="app-pagerbox ui-helper-clearfix">
+				<div class="app-floatleft">
 					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
 						psz="psz" />
 				</div>
-				<div class="app-right">
+				<div class="app-floatright">
 					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
 						psz="psz" />
 					<app:pagerLink pageSet="${pagedList.pageSet}"
@@ -155,8 +155,8 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="app-pager ui-helper-clearfix">
-				<div class="app-right">
+			<div class="app-pagerbox ui-helper-clearfix">
+				<div class="app-floatright">
 					<app:pagerLink pageSet="${pagedList.pageSet}"
 						form="#HusermanSearchForm" pno="pno" />
 				</div>
