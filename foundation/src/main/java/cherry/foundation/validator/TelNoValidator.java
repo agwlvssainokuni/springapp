@@ -33,7 +33,10 @@ public class TelNoValidator implements ConstraintValidator<TelNo, String> {
 		if (StringUtils.isEmpty(value)) {
 			return true;
 		}
-		if (value.length() < 11 || value.length() > 13) {
+		if (value.length() < 11) {
+			return false;
+		}
+		if (value.length() > 13) {
 			return false;
 		}
 		return value.matches("^0\\d{1,4}-\\d{1,4}-\\d{3,4}$");
