@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,11 +131,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #elseif ($prop.type == "文字列")
 #if ($prop.required == "○")
-#if ($prop.minlen)
-	@javax.validation.constraints.NotNull(groups = #groups($prop))
-#else
 	@org.hibernate.validator.constraints.NotEmpty(groups = #groups($prop))
-#end
 #end
 #if ($prop.minlen)
 	@cherry.foundation.validator.MinLength(value = $prop.minlen, groups = #groups($prop))
