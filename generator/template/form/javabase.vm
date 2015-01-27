@@ -146,6 +146,10 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ################ サブ型
 #if ($prop.subtype == "メール")
 	@org.hibernate.validator.constraints.Email(groups = #groups($prop))
+#elseif ($prop.subtype == "電話番号")
+	@cherry.foundation.validator.TelNo(groups = #groups($prop))
+#elseif ($prop.subtype == "郵便番号")
+	@cherry.foundation.validator.ZipCode(groups = #groups($prop))
 #elseif ($prop.subtype == "半角")
 	@cherry.foundation.validator.CharTypeBasicLatin(groups = #groups($prop))
 #elseif ($prop.subtype == "半角(カナ含む)")
