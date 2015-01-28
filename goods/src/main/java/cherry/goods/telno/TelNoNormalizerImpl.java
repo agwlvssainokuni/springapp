@@ -32,6 +32,10 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 
 	private Trie<String, Integer> areaCodeTable;
 
+	public void setAreaCodeTable(Trie<String, Integer> areaCodeTable) {
+		this.areaCodeTable = areaCodeTable;
+	}
+
 	@Override
 	public String flatten(String telNo) {
 		if (StringUtils.isEmpty(telNo)) {
