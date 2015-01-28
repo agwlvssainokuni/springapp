@@ -5,6 +5,7 @@ dependencies {
 	compile "com.google.guava:guava:${versionGuava}"
 	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
 	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
+	compile "org.apache.commons:commons-collections4:${versionCommonsCollections4}"
 	compile "commons-codec:commons-codec:${versionCommonsCodec}"
 	compile "org.apache.poi:poi:${versionPoi}"
 	compile "org.apache.poi:poi-ooxml:${versionPoi}"
