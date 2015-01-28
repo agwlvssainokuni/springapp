@@ -57,7 +57,9 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 		}
 		List<String[]> result = new ArrayList<>(list.size());
 		for (Triple<Integer, Integer, Integer> triple : list) {
-			result.add(split(telNo, triple));
+			if (telNo.length() >= triple.getLeft()) {
+				result.add(split(telNo, triple));
+			}
 		}
 		return result;
 	}

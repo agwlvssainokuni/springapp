@@ -119,6 +119,110 @@ public class TelNoNormalizerImplTest {
 		assertEquals("9222", list.get(0)[2]);
 	}
 
+	@Test
+	public void testNormalize0001() {
+
+		List<String[]> list;
+		list = normalizer.normalize("04");
+		assertEquals(1, list.size());
+		assertEquals(1, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+
+		list = normalizer.normalize("042");
+		assertEquals(2, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("2", list.get(0)[1]);
+		assertEquals(1, list.get(1).length);
+		assertEquals("042", list.get(1)[0]);
+
+		list = normalizer.normalize("0420");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("20", list.get(0)[1]);
+
+		list = normalizer.normalize("0421");
+		assertEquals(1, list.size());
+		assertEquals(1, list.get(0).length);
+		assertEquals("0421", list.get(0)[0]);
+
+		list = normalizer.normalize("0422");
+		assertEquals(2, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("2", list.get(0)[1]);
+		assertEquals(1, list.get(1).length);
+		assertEquals("0422", list.get(1)[0]);
+
+		list = normalizer.normalize("0423");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("3", list.get(0)[1]);
+
+		list = normalizer.normalize("0424");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("4", list.get(0)[1]);
+
+		list = normalizer.normalize("0425");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("5", list.get(0)[1]);
+
+		list = normalizer.normalize("0426");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("6", list.get(0)[1]);
+
+		list = normalizer.normalize("0427");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("7", list.get(0)[1]);
+
+		list = normalizer.normalize("0428");
+		assertEquals(2, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("042", list.get(0)[0]);
+		assertEquals("8", list.get(0)[1]);
+		assertEquals(1, list.get(1).length);
+		assertEquals("0428", list.get(1)[0]);
+
+		list = normalizer.normalize("0429");
+		assertEquals(2, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("29", list.get(0)[1]);
+		assertEquals(2, list.get(1).length);
+		assertEquals("042", list.get(1)[0]);
+		assertEquals("9", list.get(1)[1]);
+
+		list = normalizer.normalize("042000");
+		assertEquals(1, list.size());
+		assertEquals(2, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("2000", list.get(0)[1]);
+
+		list = normalizer.normalize("0420009");
+		assertEquals(1, list.size());
+		assertEquals(3, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("2000", list.get(0)[1]);
+		assertEquals("9", list.get(0)[2]);
+
+		list = normalizer.normalize("0420009222");
+		assertEquals(1, list.size());
+		assertEquals(3, list.get(0).length);
+		assertEquals("04", list.get(0)[0]);
+		assertEquals("2000", list.get(0)[1]);
+		assertEquals("9222", list.get(0)[2]);
+	}
+
 	private TelNoNormalizer create() {
 		try {
 			Trie<String, Integer> trie = new PatriciaTrie<>();
