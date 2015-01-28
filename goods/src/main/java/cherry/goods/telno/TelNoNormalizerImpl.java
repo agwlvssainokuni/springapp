@@ -46,6 +46,9 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 
 	@Override
 	public List<String[]> normalize(String telNo) {
+		if (telNo == null) {
+			return null;
+		}
 		List<Triple<Integer, Integer, Integer>> list = decompose(telNo);
 		if (list == null) {
 			List<String[]> result = new ArrayList<>(1);
@@ -62,6 +65,14 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 	private List<Triple<Integer, Integer, Integer>> decompose(String telNo) {
 		if (StringUtils.isEmpty(telNo)) {
 			return null;
+		} else if (telNo.startsWith("0120")) {
+			// 着信課金用電話番号（0120）
+			// 0120-DEF-GHJ
+			return asList(Triple.of(4, 3, 3));
+		} else if (telNo.startsWith("0800")) {
+			// 着信課金用電話番号（0800）
+			// 0800-DEF-GHJK
+			return asList(Triple.of(4, 3, 4));
 		} else if (telNo.startsWith("050")) {
 			// IP電話の電話番号（050）
 			// 050-CDEF-GHJK
@@ -82,14 +93,6 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 			// 発信者課金ポケベル電話番号（020）
 			// 020-CDEF-GHJK
 			return asList(Triple.of(3, 4, 4));
-		} else if (telNo.startsWith("0120")) {
-			// 着信課金用電話番号（0120）
-			// 0120-DEF-GHJ
-			return asList(Triple.of(4, 3, 3));
-		} else if (telNo.startsWith("0800")) {
-			// 着信課金用電話番号（0800）
-			// 0800-DEF-GHJK
-			return asList(Triple.of(4, 3, 4));
 		} else if (telNo.startsWith("0570")) {
 			// 統一番号用電話番号（0570）
 			// 0570-DEF-GHJ
@@ -100,6 +103,9 @@ public class TelNoNormalizerImpl implements TelNoNormalizer {
 			return asList(Triple.of(4, 2, 4));
 		} else {
 			// 固定電話等の電話番号
+			if (telNo.length() <= 2) {
+				return null;
+			}
 			String prefix = (telNo.length() > 6 ? telNo.substring(0, 6) : telNo);
 			SortedMap<String, Integer> map = areaCodeTable.prefixMap(prefix);
 			if (map.isEmpty()) {
