@@ -221,6 +221,11 @@ public class TelNoNormalizerImplTest {
 		assertEquals("04", list.get(0)[0]);
 		assertEquals("2000", list.get(0)[1]);
 		assertEquals("9222", list.get(0)[2]);
+
+		list = normalizer.normalize("0420919222");
+		assertEquals(1, list.size());
+		assertEquals(1, list.get(0).length);
+		assertEquals("0420919222", list.get(0)[0]);
 	}
 
 	private TelNoNormalizer create() {
