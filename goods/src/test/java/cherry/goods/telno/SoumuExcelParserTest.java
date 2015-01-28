@@ -22,11 +22,19 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SoumuExcelParserTest {
 
 	private SoumuExcelParser parser = new SoumuExcelParser();
+
+	@Before
+	public void before() {
+		parser.setNumberLabel("番号");
+		parser.setAreaCodeLabel("市外局番");
+		parser.setLocalCodeLabel("市内局番");
+	}
 
 	@Test
 	public void testParse1() throws Exception {
