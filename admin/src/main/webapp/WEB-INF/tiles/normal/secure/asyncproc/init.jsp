@@ -25,23 +25,27 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<form action="<c:url value="/secure/asyncproc" />" method="POST"
-				class="app-pager-form">
-				<input type="hidden" id="no" name="no"> <input type="hidden"
-					id="sz" name="sz" value="${param.sz}">
-				<security:csrfInput />
-			</form>
+			<f:form method="POST" servletRelativeAction="/secure/asyncproc"
+				modelAttribute="asyncProcForm" id="HasyncProcForm">
+				<f:hidden path="no" />
+				<f:hidden path="sz" />
+			</f:form>
 			<div class="app-portion">
-				<div class="app-pager">
-					<div class="app-pager-desc">
-						<s:message code="common/pager.message.0"
-							arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
+				<div class="app-pagerbox ui-helper-clearfix">
+					<div class="app-floatright">
+						<app:pagerDescription pageSet="${pagedList.pageSet}" />
 					</div>
-					<app:pagerLink pageSet="${pagedList.pageSet}" />
 				</div>
-				<table id="asyncProcList" class="app-stripe app-width-full">
+				<div class="app-pagerbox ui-helper-clearfix">
+					<div class="app-floatright">
+						<app:pageSize id="Hsz" form="#HasyncProcForm" psz="sz" />
+						<app:pagerLink pageSet="${pagedList.pageSet}"
+							form="#HasyncProcForm" pno="no" />
+					</div>
+				</div>
+				<table id="asyncProcList" class="app-stripe app-multihead">
 					<thead>
-						<tr>
+						<tr class="app-head">
 							<th>#</th>
 							<th><s:message code="secure/asyncproc/init.column.id" /></th>
 							<th><s:message
@@ -92,8 +96,11 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="app-pager">
-					<app:pagerLink pageSet="${pagedList.pageSet}" />
+				<div class="app-pagerbox ui-helper-clearfix">
+					<div class="app-floatright">
+						<app:pagerLink pageSet="${pagedList.pageSet}"
+							form="#HasyncProcForm" pno="no" />
+					</div>
 				</div>
 			</div>
 		</c:otherwise>

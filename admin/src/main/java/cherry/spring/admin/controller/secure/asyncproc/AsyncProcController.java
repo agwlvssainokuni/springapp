@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.controller.PathDef;
@@ -31,9 +31,11 @@ import cherry.spring.admin.controller.PathDef;
 @RequestMapping(PathDef.URI_ASYNCPROC)
 public interface AsyncProcController {
 
+	@ModelAttribute
+	AsyncProcForm getForm();
+
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = PathDef.PARAM_NO, defaultValue = "0") long pageNo,
-			@RequestParam(value = PathDef.PARAM_SZ, defaultValue = "0") long pageSz, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(AsyncProcForm form, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 }
