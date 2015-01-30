@@ -14,6 +14,8 @@ dependencies {
 	compile "org.apache.commons:commons-csv:${versionCommonsCsv}"
 	compile "org.apache.commons:commons-exec:${versionCommonsExec}"
 	compile "org.apache.velocity:velocity:${versionVelocity}"
+	compile "org.apache.pdfbox:pdfbox:${versionPdfbox}"
+	compile "com.ibm.icu:icu4j:${versionIcu4j}"
 	compile "org.fluentd:fluent-logger:${versionFluentLogger}"
 	compile "org.slf4j:slf4j-api:${versionSlf4j}"
 	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
