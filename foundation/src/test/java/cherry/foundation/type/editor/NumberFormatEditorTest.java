@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,30 +30,30 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class DateTimeFormatEditorTest {
+public class NumberFormatEditorTest {
 
-	@Value("yyyy/MM/dd")
-	private DateTimeFormatter dateFormatter;
+	@Value("#,##0")
+	private NumberFormat numberFormat;
 
 	@Test
 	public void testFormat() {
-		assertEquals("2015/01/23", dateFormatter.print(new LocalDate(2015, 1, 23)));
+		assertEquals("1,234,567", numberFormat.format(1234567));
 	}
 
 	@Test
 	public void testForNull() {
-		DateTimeFormatEditor editor = new DateTimeFormatEditor();
+		NumberFormatEditor editor = new NumberFormatEditor();
 		editor.setAsText(null);
 		assertEquals("", editor.getAsText());
 		assertNull(editor.getValue());
 	}
 
 	@Test
-	public void testForYYYYMMDD() {
-		DateTimeFormatEditor editor = new DateTimeFormatEditor();
-		editor.setAsText("yyyy/MM/dd");
-		assertEquals("yyyy/MM/dd", editor.getAsText());
-		assertTrue(editor.getValue() instanceof DateTimeFormatter);
+	public void testForNNN() {
+		NumberFormatEditor editor = new NumberFormatEditor();
+		editor.setAsText("#,##0");
+		assertEquals("#,##0", editor.getAsText());
+		assertTrue(editor.getValue() instanceof NumberFormat);
 	}
 
 }
