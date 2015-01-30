@@ -16,6 +16,9 @@
 
 package cherry.foundation.download;
 
+import static com.mysema.query.support.Expressions.constant;
+import static com.mysema.query.support.Expressions.constantAs;
+import static com.mysema.query.support.Expressions.path;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -41,7 +44,6 @@ import cherry.foundation.querydsl.QueryConfigurer;
 import cherry.goods.excel.ExcelReader;
 
 import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.support.Expressions;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -56,7 +58,7 @@ public class TableDownloadTemplateTest {
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
 		tableDownloadOperation.downloadCsv(response, StandardCharsets.UTF_8, "test_{0}.csv", new LocalDateTime(2015, 1,
-				23, 12, 34, 56), null, createCommonClause(), createOrderByClause(), Expressions.constant("TEST00"));
+				23, 12, 34, 56), null, createCommonClause(), createOrderByClause(), constant("TEST00"));
 		// 検証
 		assertEquals("text/csv", response.getContentType());
 		assertEquals("UTF-8", response.getCharacterEncoding());
@@ -71,8 +73,7 @@ public class TableDownloadTemplateTest {
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
 		tableDownloadOperation.downloadCsv(response, StandardCharsets.UTF_8, "test_{0}.csv", new LocalDateTime(2015, 1,
-				23, 12, 34, 56), asList("HEAD0"), createCommonClause(), createOrderByClause(), Expressions
-				.constant("TEST00"));
+				23, 12, 34, 56), asList("HEAD0"), createCommonClause(), createOrderByClause(), constant("TEST00"));
 		// 検証
 		assertEquals("text/csv", response.getContentType());
 		assertEquals("UTF-8", response.getCharacterEncoding());
@@ -87,7 +88,7 @@ public class TableDownloadTemplateTest {
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
 		tableDownloadOperation.downloadXls(response, "test_{0}.xls", new LocalDateTime(2015, 1, 23, 12, 34, 56), null,
-				createCommonClause(), createOrderByClause(), Expressions.constant("TEST00"));
+				createCommonClause(), createOrderByClause(), constant("TEST00"));
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
@@ -104,16 +105,16 @@ public class TableDownloadTemplateTest {
 	}
 
 	@Test
-	public void testDownloadXlsxWithHeader() throws InvalidFormatException, IOException {
+	public void testDownloadXlsWithHeader() throws InvalidFormatException, IOException {
 		// 準備
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
-		tableDownloadOperation.downloadXlsx(response, "test_{0}.xlsx", new LocalDateTime(2015, 1, 23, 12, 34, 56),
-				asList("HEAD0"), createCommonClause(), createOrderByClause(), Expressions.constant("TEST00"));
+		tableDownloadOperation.downloadXls(response, "test_{0}.xls", new LocalDateTime(2015, 1, 23, 12, 34, 56),
+				asList("HEAD0"), createCommonClause(), createOrderByClause(), constant("TEST00"));
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xls\"", response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {
@@ -134,7 +135,7 @@ public class TableDownloadTemplateTest {
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
 		tableDownloadOperation.downloadXlsx(response, "test_{0}.xlsx", new LocalDateTime(2015, 1, 23, 12, 34, 56),
-				null, createCommonClause(), createOrderByClause(), Expressions.constant("TEST00"));
+				null, createCommonClause(), createOrderByClause(), constant("TEST00"));
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
@@ -151,26 +152,29 @@ public class TableDownloadTemplateTest {
 	}
 
 	@Test
-	public void testDownloadXlsWithHeader() throws InvalidFormatException, IOException {
+	public void testDownloadXlsxWithHeader() throws InvalidFormatException, IOException {
 		// 準備
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		// 実行
-		tableDownloadOperation.downloadXls(response, "test_{0}.xls", new LocalDateTime(2015, 1, 23, 12, 34, 56),
-				asList("HEAD0"), createCommonClause(), createOrderByClause(), Expressions.constant("TEST00"));
+		tableDownloadOperation.downloadXls(response, "test_{0}.xlsx", new LocalDateTime(2015, 1, 23, 12, 34, 56),
+				asList("HEAD0"), createCommonClause(), createOrderByClause(), constant("TEST00"),
+				constantAs("TEST01", path(String.class, "head1")));
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xls\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"", response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {
 			String[] record;
 			record = reader.read();
-			assertEquals(1, record.length);
+			assertEquals(2, record.length);
 			assertEquals("HEAD0", record[0]);
+			assertEquals("HEAD1", record[1]);
 			record = reader.read();
-			assertEquals(1, record.length);
+			assertEquals(2, record.length);
 			assertEquals("TEST00", record[0]);
+			assertEquals("TEST01", record[1]);
 			assertNull(reader.read());
 		}
 	}
