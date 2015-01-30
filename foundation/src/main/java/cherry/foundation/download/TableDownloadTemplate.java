@@ -91,13 +91,11 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 		downloadOperation.download(response, excelType, null, filename, timestamp, new DownloadAction() {
 			@Override
 			public long doDownload(OutputStream stream) throws IOException {
-				try (Workbook workbook = ExcelFactory.createBlankXls()) {
-					try (ExcelWriter writer = new ExcelWriter(workbook)) {
-						Consumer consumer = createExcelConsumer(writer, header);
-						return queryDslSupport.download(commonClause, orderByClause, consumer, expressions);
-					} finally {
-						workbook.write(stream);
-					}
+				try (Workbook workbook = ExcelFactory.createBlankXls(); ExcelWriter writer = new ExcelWriter(workbook)) {
+					Consumer consumer = createExcelConsumer(writer, header);
+					long count = queryDslSupport.download(commonClause, orderByClause, consumer, expressions);
+					workbook.write(stream);
+					return count;
 				}
 			}
 		});
@@ -111,13 +109,11 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 		downloadOperation.download(response, excelType, null, filename, timestamp, new DownloadAction() {
 			@Override
 			public long doDownload(OutputStream stream) throws IOException {
-				try (Workbook workbook = ExcelFactory.createBlankXlsx()) {
-					try (ExcelWriter writer = new ExcelWriter(workbook)) {
-						Consumer consumer = createExcelConsumer(writer, header);
-						return queryDslSupport.download(commonClause, orderByClause, consumer, expressions);
-					} finally {
-						workbook.write(stream);
-					}
+				try (Workbook workbook = ExcelFactory.createBlankXlsx(); ExcelWriter writer = new ExcelWriter(workbook)) {
+					Consumer consumer = createExcelConsumer(writer, header);
+					long count = queryDslSupport.download(commonClause, orderByClause, consumer, expressions);
+					workbook.write(stream);
+					return count;
 				}
 			}
 		});
