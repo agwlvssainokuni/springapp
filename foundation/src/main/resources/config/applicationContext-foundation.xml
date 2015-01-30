@@ -132,6 +132,12 @@
 		<property name="headerValue" value="${foundation.download.headerValue}" />
 		<property name="formatter" value="${foundation.download.format}" />
 	</bean>
+	<bean id="tableDownloadOperation" class="cherry.foundation.download.TableDownloadTemplate">
+		<property name="downloadOperation" ref="downloadOperation" />
+		<property name="queryDslSupport" ref="queryDslSupport" />
+		<property name="csvType" value="text/csv" />
+		<property name="excelType" value="application/vnd.ms-excel" />
+	</bean>
 
 	<!-- 多重POST検出機能設定 -->
 	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
