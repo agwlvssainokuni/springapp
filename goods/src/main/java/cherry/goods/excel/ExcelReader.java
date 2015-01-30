@@ -23,7 +23,6 @@ import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Iterator;
 
@@ -106,13 +105,11 @@ public class ExcelReader implements Closeable {
 
 	/**
 	 * Microsoft Excelファイル読込み機能を閉じる。<br />
-	 * 具体的には、読込み元のMicrosoft Excelブックを閉じる。
-	 * 
-	 * @throws IOException 読込み元のMicrosoft Excelブックを閉じる際に異常。
+	 * 具体的には、何もしない。
 	 */
 	@Override
-	public void close() throws IOException {
-		workbook.close();
+	public void close() {
+		// NOTHING
 	}
 
 	/**

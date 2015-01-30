@@ -17,7 +17,6 @@
 package cherry.goods.excel;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -124,13 +123,11 @@ public class ExcelWriter implements Closeable {
 
 	/**
 	 * Microsoft Excelファイル書込み機能を閉じる。<br />
-	 * 具体的には、書込み先のMicrosoft Excelブックを閉じる。
-	 * 
-	 * @throws IOException 書込み先のMicrosoft Excelブックを閉じる際に異常。
+	 * 具体的には、何もしない。
 	 */
 	@Override
-	public void close() throws IOException {
-		workbook.close();
+	public void close() {
+		// NOTHING
 	}
 
 }
