@@ -37,6 +37,8 @@
 		<property name="customEditors">
 			<map>
 				<entry key="java.util.ResourceBundle" value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="java.text.NumberFormat" value="cherry.foundation.type.editor.NumberFormatEditor" />
+				<entry key="com.ibm.icu.text.NumberFormat" value="cherry.foundation.type.editor.Icu4jNumberFormatEditor" />
 				<entry key="org.joda.time.format.DateTimeFormatter" value="cherry.foundation.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
