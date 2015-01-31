@@ -19,6 +19,8 @@ Page=メール文面テンプレート
 PageInfo="メール文面テンプレート",4,"A3Landscape",$FFFFFF
 Page=区分値管理
 PageInfo="区分値管理",4,"A3Landscape",$FFFFFF
+Page=発番
+PageInfo="発番",4,"A3Landscape",$FFFFFF
 Page=郵便番号
 PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
 Page=SpringApp
@@ -71,6 +73,28 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=numbering_master
+LName=発番マスタ
+Comment=
+TableOption=
+Page=発番
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="発番名称","name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="テンプレート","template","*文字列【30】","NOT NULL",,"0000000000","",$FFFFFFFF,""
+Field="最小値","min_value","*整数【64bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="最大値","max_value","*整数【64bit】","NOT NULL",,"9999999999","",$FFFFFFFF,""
+Field="現在値","current_value","*整数【64bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Index==0,name
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150201072259
+Position="発番",500,500
 
 [Entity]
 PName=code_master
