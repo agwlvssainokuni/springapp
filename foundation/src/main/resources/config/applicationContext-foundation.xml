@@ -102,6 +102,26 @@
 			</array>
 		</property>
 	</bean>
+	<!-- YAMLマッピング設定 -->
+	<bean id="yamlObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+				<constructor-arg type="com.fasterxml.jackson.core.JsonFactory">
+					<bean class="com.fasterxml.jackson.dataformat.yaml.YAMLFactory" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="modules">
+			<array>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</array>
+		</property>
+		<property name="featuresToDisable">
+			<array>
+				<util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+			</array>
+		</property>
+	</bean>
 
 	<!-- アプリケーションコンテキスト照会設定 -->
 	<bean class="cherry.foundation.AppCtxHolder" />
