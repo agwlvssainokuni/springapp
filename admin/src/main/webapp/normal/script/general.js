@@ -63,6 +63,19 @@ $(function() {
 		});
 	});
 
+	$(".refresh-button").each(function(index) {
+		var form = $(this).attr("data-form");
+		var selector = $(this).attr("data-selector");
+		$(this).click(function(event) {
+			event.preventDefault();
+			$(selector).each(function(index) {
+				var name = $(this).attr("name");
+				$("input[name='" + name + "']", $(form)).val($(this).val());
+			});
+			$(form).submit();
+		});
+	});
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$(document).ajaxSend(function(event, jqxhr, settings) {
