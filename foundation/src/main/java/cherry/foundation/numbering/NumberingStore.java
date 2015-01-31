@@ -18,7 +18,7 @@ package cherry.foundation.numbering;
 
 public interface NumberingStore {
 
-	String getTemplate(String numberingName);
+	NumberingDefinition getDefinition(String numberingName);
 
 	long loadCurrent(String numberingName);
 
