@@ -38,7 +38,7 @@
 				</div>
 				<div class="app-pagerbox ui-helper-clearfix">
 					<div class="app-floatright">
-						<app:pageSize id="Hsz" form="#HasyncProcForm" psz="sz" />
+						<app:pageSize form="#HasyncProcForm" psz="sz" />
 						<app:pagerLink pageSet="${pagedList.pageSet}"
 							form="#HasyncProcForm" pno="no" />
 					</div>

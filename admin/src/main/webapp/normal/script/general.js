@@ -68,7 +68,12 @@ $(function() {
 		var selector = $("button", this).attr("data-selector");
 		$(selector).each(function(index) {
 			var name = $(this).attr("name");
-			$(this).val($("input[name='" + name + "']", $(form)).val());
+			var val = $("input[name='" + name + "']", $(form)).val();
+			if ($(this).attr("type") == "radio") {
+				$(this).attr("checked", $(this).val() == val);
+			} else {
+				$(this).val(val);
+			}
 		});
 		$("button", this).button().click(function(event) {
 			event.preventDefault();
