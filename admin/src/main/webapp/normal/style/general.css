@@ -80,7 +80,8 @@ ul.app-flat>li+li {
 	padding: 0px 20px;
 }
 
-.download-button, .page-size, .pager-description, .pager-link {
+.download-button, .refresh-button, .page-size, .pager-description,
+	.pager-link {
 	display: inline;
 }
 

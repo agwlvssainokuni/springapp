@@ -64,9 +64,9 @@ $(function() {
 	});
 
 	$(".refresh-button").each(function(index) {
-		var form = $(this).attr("data-form");
-		var selector = $(this).attr("data-selector");
-		$(this).click(function(event) {
+		var form = $("button", this).attr("data-form");
+		var selector = $("button", this).attr("data-selector");
+		$("button", this).click(function(event) {
 			event.preventDefault();
 			$(selector).each(function(index) {
 				var name = $(this).attr("name");
