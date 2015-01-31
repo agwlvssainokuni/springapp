@@ -116,12 +116,17 @@
 			</div>
 			<div class="app-pagerbox ui-helper-clearfix">
 				<div class="app-floatleft">
-					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
-						psz="psz" />
+					<app:pageSorter label="SORT BY" markerClass="usermanSearchFormSort"
+						sortOrder="sortOrder" sortBy="sortBy">
+						<option value="1">カラム1</option>
+						<option value="2">カラム2</option>
+						<option value="3">カラム3</option>
+					</app:pageSorter>
+					<app:refreshButton selector=".usermanSearchFormSort"
+						form="#HusermanSearchForm" />
 				</div>
 				<div class="app-floatright">
-					<app:pageSize id="HusermanSearchFormPsz" form="#HusermanSearchForm"
-						psz="psz" />
+					<app:pageSize form="#HusermanSearchForm" psz="psz" />
 					<app:pagerLink pageSet="${pagedList.pageSet}"
 						form="#HusermanSearchForm" pno="pno" />
 				</div>

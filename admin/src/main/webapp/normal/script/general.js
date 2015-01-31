@@ -66,7 +66,11 @@ $(function() {
 	$(".refresh-button").each(function(index) {
 		var form = $("button", this).attr("data-form");
 		var selector = $("button", this).attr("data-selector");
-		$("button", this).click(function(event) {
+		$(selector).each(function(index) {
+			var name = $(this).attr("name");
+			$(this).val($("input[name='" + name + "']", $(form)).val());
+		});
+		$("button", this).button().click(function(event) {
 			event.preventDefault();
 			$(selector).each(function(index) {
 				var name = $(this).attr("name");
@@ -74,6 +78,10 @@ $(function() {
 			});
 			$(form).submit();
 		});
+	});
+
+	$(".page-sorter").each(function(index) {
+		$("select", this).selectmenu();
 	});
 
 	var token = $("meta[name='_csrf']").attr("content");
