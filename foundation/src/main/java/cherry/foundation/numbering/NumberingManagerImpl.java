@@ -81,29 +81,52 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 	@Transactional
 	@Override
 	public String issueAsString(String numberName) {
-		String[] values = issueAsString(numberName, 1);
-		return values[0];
+
+		checkArgument(numberName != null, "numberName must not be null");
+
+		NumberingDefinition def = getNumberingDefinition(numberName);
+		MessageFormat fmt = new MessageFormat(def.getTemplate());
+		long current = numberingStore.loadAndLock(numberName);
+		int offset = 0;
+		try {
+
+			long v = current + 1;
+			checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
+			checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+			String result = fmt.format(v);
+
+			offset = 1;
+			return result;
+		} finally {
+			numberingStore.saveAndUnlock(numberName, current + offset);
+		}
 	}
 
 	@Transactional
 	@Override
 	public String[] issueAsString(String numberName, int count) {
+
+		checkArgument(numberName != null, "numberName must not be null");
 		checkArgument(count > 0, "count must be > 0");
+
+		NumberingDefinition def = getNumberingDefinition(numberName);
+		MessageFormat fmt = new MessageFormat(def.getTemplate());
+		long current = numberingStore.loadAndLock(numberName);
+		int offset = 0;
 		try {
-			NumberingDefinition def = definitionCache.get(numberName);
-			MessageFormat fmt = new MessageFormat(def.getTemplate());
-			long current = numberingStore.loadCurrent(numberName);
-			String[] values = new String[count];
+
+			String[] result = new String[count];
 			for (int i = 1; i <= count; i++) {
-				long val = current + i;
-				checkState(val >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-				checkState(val <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
-				values[i] = fmt.format(val);
+				long v = current + i;
+				checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
+				checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+				result[i] = fmt.format(v);
 			}
-			numberingStore.saveCurrent(numberName, current + count);
-			return values;
-		} catch (ExecutionException ex) {
-			throw new IllegalStateException(ex);
+
+			offset = count;
+			return result;
+		} finally {
+			numberingStore.saveAndUnlock(numberName, current + offset);
 		}
 	}
 
@@ -122,26 +145,55 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 	@Transactional
 	@Override
 	public long issueAsLong(String numberName) {
-		long[] values = issueAsLong(numberName, 1);
-		return values[0];
+
+		checkArgument(numberName != null, "numberName must not be null");
+
+		NumberingDefinition def = getNumberingDefinition(numberName);
+		long current = numberingStore.loadAndLock(numberName);
+		int offset = 0;
+		try {
+
+			long v = current + 1;
+			checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
+			checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+
+			offset = 1;
+			return v;
+		} finally {
+			numberingStore.saveAndUnlock(numberName, current + offset);
+		}
 	}
 
 	@Transactional
 	@Override
 	public long[] issueAsLong(String numberName, int count) {
+
+		checkArgument(numberName != null, "numberName must not be null");
 		checkArgument(count > 0, "count must be > 0");
+
+		NumberingDefinition def = getNumberingDefinition(numberName);
+		long current = numberingStore.loadAndLock(numberName);
+		int offset = 0;
 		try {
-			NumberingDefinition def = definitionCache.get(numberName);
-			long current = numberingStore.loadCurrent(numberName);
-			long[] values = new long[count];
+
+			long[] result = new long[count];
 			for (int i = 1; i <= count; i++) {
-				long val = current + i;
-				checkState(val >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-				checkState(val <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
-				values[i] = val;
+				long v = current + i;
+				checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
+				checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+				result[i] = v;
 			}
-			numberingStore.saveCurrent(numberName, current + count);
-			return values;
+
+			offset = count;
+			return result;
+		} finally {
+			numberingStore.saveAndUnlock(numberName, current + offset);
+		}
+	}
+
+	private NumberingDefinition getNumberingDefinition(String numberName) {
+		try {
+			return definitionCache.get(numberName);
 		} catch (ExecutionException ex) {
 			throw new IllegalStateException(ex);
 		}

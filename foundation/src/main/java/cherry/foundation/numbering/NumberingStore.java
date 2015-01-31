@@ -18,10 +18,10 @@ package cherry.foundation.numbering;
 
 public interface NumberingStore {
 
-	NumberingDefinition getDefinition(String numberingName);
+	NumberingDefinition getDefinition(String numberName);
 
-	long loadCurrent(String numberingName);
+	long loadAndLock(String numberName);
 
-	void saveCurrent(String numberingName, long current);
+	void saveAndUnlock(String numberName, long current);
 
 }
