@@ -20,6 +20,8 @@
 				and !execution(* cherry.foundation.type..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
 				and !execution(* cherry.goods.crypto..*.*(..))
+				and !execution(* cherry.foundation.telno..*.*(..))
+				and !execution(* cherry.goods.telno..*.*(..))
 				" />
 	</aop:config>
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
@@ -189,7 +191,7 @@
 		</property>
 	</bean>
 
-	<!-- 区分地管理機能 -->
+	<!-- 区分値管理機能 -->
 	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
 		<property name="valueTemplate" value="${foundation.codeManager.valueTemplate}" />
 		<property name="codeStore" ref="codeStore" />
@@ -239,6 +241,35 @@
 				<property name="crypto" ref="aesCrypto" />
 			</bean>
 		</constructor-arg>
+	</bean>
+
+	<!-- 文字列処理 -->
+	<!-- 電話番号正規化 -->
+	<bean id="telNoNormalizer" class="cherry.goods.telno.TelNoNormalizerImpl">
+		<property name="areaCodeTable">
+			<bean class="cherry.foundation.telno.AreaCodeTableFactory">
+				<property name="soumuExcelParser">
+					<bean class="cherry.goods.telno.SoumuExcelParser">
+						<property name="numberLabel" value="番号" />
+						<property name="areaCodeLabel" value="市外局番" />
+						<property name="localCodeLabel" value="市内局番" />
+					</bean>
+				</property>
+				<property name="resources">
+					<list value-type="org.springframework.core.io.Resource">
+						<value>classpath:cherry/goods/telno/soumu/000124070.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124071.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124072.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124073.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124074.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124075.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124076.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124077.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124078.xls</value>
+					</list>
+				</property>
+			</bean>
+		</property>
 	</bean>
 
 </beans>
