@@ -58,4 +58,25 @@
 		</property>
 	</bean>
 
+	<bean id="numberingStore" class="cherry.foundation.numbering.SimpleNumberingStore">
+		<property name="numberingDefinitionMap">
+			<map key-type="java.lang.String" value-type="cherry.foundation.numbering.NumberingDefinition">
+				<entry key="NUMA">
+					<bean class="cherry.foundation.numbering.NumberingDefinition">
+						<property name="template" value="AA{0,number,0000000000}" />
+						<property name="minValue" value="1" />
+						<property name="maxValue" value="9999999999" />
+					</bean>
+				</entry>
+				<entry key="NUMB">
+					<bean class="cherry.foundation.numbering.NumberingDefinition">
+						<property name="template" value="BB{0,number,0000000000}" />
+						<property name="minValue" value="1" />
+						<property name="maxValue" value="9999999999" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
 </beans>

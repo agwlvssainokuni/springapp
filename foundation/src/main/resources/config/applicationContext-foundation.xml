@@ -218,6 +218,13 @@
 		<property name="codeStore" ref="codeStore" />
 	</bean>
 
+	<!-- 発番管理機能 -->
+	<bean id="numberingManager" class="cherry.foundation.numbering.NumberingManagerImpl">
+		<property name="cacheSize" value="${foundation.numberingManager.cacheSize}" />
+		<property name="cacheTimeoutSec" value="${foundation.numberingManager.cacheTimeoutSec}" />
+		<property name="numberingStore" ref="numberingStore" />
+	</bean>
+
 	<!-- 型関係機能設定 -->
 	<!-- 区分値 -->
 	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
