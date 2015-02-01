@@ -28,7 +28,6 @@ import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.data.jdbc.query.SqlInsertWithKeyCallback;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
-import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.mail.SimpleMailMessage;
 
 import cherry.foundation.bizdtm.BizDateTime;
@@ -54,6 +53,10 @@ public class MessageStoreImpl implements MessageStore {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	private final QMailLog ml = new QMailLog("ml");
+	private final QMailRcpt mr = new QMailRcpt("mr");
+	private final QMailQueue mq = new QMailQueue("mq");
+
 	@Override
 	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject, String body) {
@@ -67,32 +70,29 @@ public class MessageStoreImpl implements MessageStore {
 
 	@Override
 	public List<Long> listMessage(LocalDateTime dtm) {
-		QMailQueue a = new QMailQueue("a");
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(a);
-		query.where(a.scheduledAt.goe(dtm));
-		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.query(query, new SingleColumnRowMapper<Long>(Long.class), a.mailId);
+		query.from(mq);
+		query.where(mq.scheduledAt.goe(dtm), mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		return queryDslJdbcOperations.query(query, mq.mailId);
 	}
 
 	@Override
 	public SimpleMailMessage getMessage(long messageId) {
 
-		QMailLog a = new QMailLog("a");
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
-		querya.from(a).forUpdate();
-		querya.where(a.id.eq(messageId));
-		querya.where(a.mailStatus.eq(FlagCode.FALSE.code()));
-		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(a.fromAddr, a.subject, a.body));
+		querya.from(ml).forUpdate();
+		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()),
+				ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(ml.fromAddr, ml.subject, ml.body));
 		if (maillog == null) {
 			return null;
 		}
 
-		QMailRcpt b = new QMailRcpt("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
-		queryb.from(b).where(b.mailId.eq(messageId)).orderBy(b.id.asc());
-		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(b.rcptType, b.rcptAddr));
+		queryb.from(mr);
+		queryb.where(mr.mailId.eq(messageId));
+		queryb.orderBy(mr.id.asc());
+		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(mr.rcptType, mr.rcptAddr));
 		if (mailrcpt.isEmpty()) {
 			return null;
 		}
@@ -101,15 +101,15 @@ public class MessageStoreImpl implements MessageStore {
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
 		for (Tuple rcpt : mailrcpt) {
-			RcptType type = RcptType.valueOf(rcpt.get(b.rcptType));
+			RcptType type = RcptType.valueOf(rcpt.get(mr.rcptType));
 			if (type == RcptType.TO) {
-				to.add(rcpt.get(b.rcptAddr));
+				to.add(rcpt.get(mr.rcptAddr));
 			}
 			if (type == RcptType.CC) {
-				cc.add(rcpt.get(b.rcptAddr));
+				cc.add(rcpt.get(mr.rcptAddr));
 			}
 			if (type == RcptType.BCC) {
-				bcc.add(rcpt.get(b.rcptAddr));
+				bcc.add(rcpt.get(mr.rcptAddr));
 			}
 		}
 
@@ -117,34 +117,32 @@ public class MessageStoreImpl implements MessageStore {
 		msg.setTo(to.toArray(new String[to.size()]));
 		msg.setCc(cc.toArray(new String[cc.size()]));
 		msg.setBcc(bcc.toArray(new String[bcc.size()]));
-		msg.setFrom(maillog.get(a.fromAddr));
-		msg.setSubject(maillog.get(a.subject));
-		msg.setText(maillog.get(a.body));
+		msg.setFrom(maillog.get(ml.fromAddr));
+		msg.setSubject(maillog.get(ml.subject));
+		msg.setText(maillog.get(ml.body));
 		return msg;
 	}
 
 	@Override
 	public void finishMessage(final long messageId) {
 
-		final QMailLog a = new QMailLog("a");
-		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+		long count = queryDslJdbcOperations.update(ml, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.mailStatus, FlagCode.TRUE.code());
-				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq(messageId));
-				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				update.set(ml.mailStatus, FlagCode.TRUE.code());
+				update.set(ml.lockVersion, ml.lockVersion.add(1));
+				update.where(ml.id.eq(messageId));
+				update.where(ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
 		checkState(count == 1L, "failed to update QMailLog: id=%s, mailStatus=%s", messageId, FlagCode.TRUE.code());
 
-		final QMailQueue b = new QMailQueue("b");
-		long c = queryDslJdbcOperations.delete(b, new SqlDeleteCallback() {
+		long c = queryDslJdbcOperations.delete(mq, new SqlDeleteCallback() {
 			@Override
 			public long doInSqlDeleteClause(SQLDeleteClause delete) {
-				delete.where(b.mailId.eq(messageId));
-				delete.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				delete.where(mq.mailId.eq(messageId));
+				delete.where(mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return delete.execute();
 			}
 		});
@@ -153,22 +151,20 @@ public class MessageStoreImpl implements MessageStore {
 
 	private long createMailLog(final String launcherId, final LocalDateTime launchedAt, final String messageName,
 			final LocalDateTime scheduledAt, final String from, final String subject, final String body) {
-		final QMailLog a = new QMailLog("a");
-		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
+		Long id = queryDslJdbcOperations.insertWithKey(ml, new SqlInsertWithKeyCallback<Long>() {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
-				insert.set(a.launchedBy, launcherId);
-				insert.set(a.launchedAt, launchedAt);
-				insert.set(a.mailStatus, FlagCode.FALSE.code());
-				insert.set(a.messageName, messageName);
-				insert.set(a.scheduledAt, scheduledAt);
-				insert.set(a.fromAddr, from);
-				insert.set(a.subject, subject);
-				insert.set(a.body, body);
+				insert.set(ml.launchedBy, launcherId);
+				insert.set(ml.launchedAt, launchedAt);
+				insert.set(ml.mailStatus, FlagCode.FALSE.code());
+				insert.set(ml.messageName, messageName);
+				insert.set(ml.scheduledAt, scheduledAt);
+				insert.set(ml.fromAddr, from);
+				insert.set(ml.subject, subject);
+				insert.set(ml.body, body);
 				return insert.executeWithKey(Long.class);
 			}
-		};
-		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
+		});
 		checkState(
 				id != null,
 				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, subject=%s, body=%s",
@@ -180,14 +176,13 @@ public class MessageStoreImpl implements MessageStore {
 		if (rcptAddr == null || rcptAddr.isEmpty()) {
 			return;
 		}
-		final QMailRcpt a = new QMailRcpt("a");
 		for (final String addr : rcptAddr) {
-			long c = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+			long c = queryDslJdbcOperations.insert(mr, new SqlInsertCallback() {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
-					insert.set(a.mailId, mailId);
-					insert.set(a.rcptType, rcptType);
-					insert.set(a.rcptAddr, addr);
+					insert.set(mr.mailId, mailId);
+					insert.set(mr.rcptType, rcptType);
+					insert.set(mr.rcptAddr, addr);
 					return insert.execute();
 				}
 			});
@@ -197,12 +192,11 @@ public class MessageStoreImpl implements MessageStore {
 	}
 
 	private void createMailQueue(final long mailId, final LocalDateTime scheduledAt) {
-		final QMailQueue a = new QMailQueue("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(mq, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.mailId, mailId);
-				insert.set(a.scheduledAt, scheduledAt);
+				insert.set(mq.mailId, mailId);
+				insert.set(mq.scheduledAt, scheduledAt);
 				return insert.execute();
 			}
 		});

@@ -48,45 +48,47 @@ public class TemplateStoreImpl implements TemplateStore {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	private final QMailTemplate mt = new QMailTemplate("mt");
+	private final QMailTemplateRcpt mtr = new QMailTemplateRcpt("mtr");
+
 	@Transactional
 	@Override
 	public MailData getTemplate(String templateName) {
 
-		QMailTemplate a = new QMailTemplate("a");
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
-		querya.from(a);
-		querya.where(a.templateName.eq(templateName), a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple templ = queryDslJdbcOperations.queryForObject(querya, new QTuple(a.id, a.fromAddr, a.subject, a.body));
+		querya.from(mt);
+		querya.where(mt.templateName.eq(templateName), mt.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		Tuple templ = queryDslJdbcOperations
+				.queryForObject(querya, new QTuple(mt.id, mt.fromAddr, mt.subject, mt.body));
 
-		QMailTemplateRcpt b = new QMailTemplateRcpt("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
-		queryb.from(b);
-		queryb.where(b.templateId.eq(templ.get(a.id)), b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		List<Tuple> templAddr = queryDslJdbcOperations.query(queryb, new QTuple(b.rcptType, b.rcptAddr));
+		queryb.from(mtr);
+		queryb.where(mtr.templateId.eq(templ.get(mt.id)), mtr.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		List<Tuple> templAddr = queryDslJdbcOperations.query(queryb, new QTuple(mtr.rcptType, mtr.rcptAddr));
 
 		List<String> toAddr = new ArrayList<>();
 		List<String> ccAddr = new ArrayList<>();
 		List<String> bccAddr = new ArrayList<>();
 		for (Tuple addr : templAddr) {
-			RcptType type = RcptType.valueOf(addr.get(b.rcptType));
+			RcptType type = RcptType.valueOf(addr.get(mtr.rcptType));
 			if (type == RcptType.TO) {
-				toAddr.add(addr.get(b.rcptAddr));
+				toAddr.add(addr.get(mtr.rcptAddr));
 			}
 			if (type == RcptType.CC) {
-				ccAddr.add(addr.get(b.rcptAddr));
+				ccAddr.add(addr.get(mtr.rcptAddr));
 			}
 			if (type == RcptType.BCC) {
-				bccAddr.add(addr.get(b.rcptAddr));
+				bccAddr.add(addr.get(mtr.rcptAddr));
 			}
 		}
 
 		MailData template = new MailData();
-		template.setFromAddr(templ.get(a.fromAddr));
+		template.setFromAddr(templ.get(mt.fromAddr));
 		template.setToAddr(toAddr);
 		template.setCcAddr(bccAddr);
 		template.setBccAddr(bccAddr);
-		template.setSubject(templ.get(a.subject));
-		template.setBody(templ.get(a.body));
+		template.setSubject(templ.get(mt.subject));
+		template.setBody(templ.get(mt.body));
 		return template;
 	}
 
@@ -94,71 +96,69 @@ public class TemplateStoreImpl implements TemplateStore {
 	@Override
 	public void putTemplate(final String templateName, final MailData mailData) {
 
-		final QMailTemplate a = new QMailTemplate("a");
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
-		querya.from(a);
-		querya.where(a.templateName.eq(templateName), a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		querya.from(mt);
+		querya.where(mt.templateName.eq(templateName), mt.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		querya.forUpdate();
-		Long id = queryDslJdbcOperations.queryForObject(querya, a.id);
+		Long id = queryDslJdbcOperations.queryForObject(querya, mt.id);
 		if (id == null) {
-			id = queryDslJdbcOperations.insertWithKey(a, new SqlInsertWithKeyCallback<Long>() {
+			id = queryDslJdbcOperations.insertWithKey(mt, new SqlInsertWithKeyCallback<Long>() {
 				@Override
 				public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) throws SQLException {
-					insert.set(a.templateName, templateName);
-					insert.set(a.fromAddr, mailData.getFromAddr());
-					insert.set(a.subject, mailData.getSubject());
-					insert.set(a.body, mailData.getBody());
+					insert.set(mt.templateName, templateName);
+					insert.set(mt.fromAddr, mailData.getFromAddr());
+					insert.set(mt.subject, mailData.getSubject());
+					insert.set(mt.body, mailData.getBody());
 					return insert.executeWithKey(Long.class);
 				}
 			});
-			checkState(id != 0, "Failed to create %s: %s", a.getTableName(), mailData.toString());
+			checkState(id != 0, "Failed to create %s: %s", mt.getTableName(), mailData.toString());
 		} else {
 			final Long fId = id;
-			long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+			long count = queryDslJdbcOperations.update(mt, new SqlUpdateCallback() {
 				@Override
 				public long doInSqlUpdateClause(SQLUpdateClause update) {
-					update.set(a.fromAddr, mailData.getFromAddr());
-					update.set(a.subject, mailData.getSubject());
-					update.set(a.body, mailData.getBody());
-					update.set(a.lockVersion, a.lockVersion.add(1));
-					update.where(a.id.eq(fId));
+					update.set(mt.fromAddr, mailData.getFromAddr());
+					update.set(mt.subject, mailData.getSubject());
+					update.set(mt.body, mailData.getBody());
+					update.set(mt.lockVersion, mt.lockVersion.add(1));
+					update.where(mt.id.eq(fId));
 					return update.execute();
 				}
 			});
-			checkState(count == 1, "Failed to update %s: %s", a.getTableName(), mailData.toString());
+			checkState(count == 1, "Failed to update %s: %s", mt.getTableName(), mailData.toString());
 		}
 
 		final Long templateId = id;
-		final QMailTemplateRcpt b = new QMailTemplateRcpt("b");
-		queryDslJdbcOperations.delete(b, new SqlDeleteCallback() {
+		queryDslJdbcOperations.delete(mtr, new SqlDeleteCallback() {
 			@Override
 			public long doInSqlDeleteClause(SQLDeleteClause delete) {
-				delete.where(b.templateId.eq(templateId));
+				delete.where(mtr.templateId.eq(templateId));
 				return delete.execute();
 			}
 		});
-		long count = queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(mtr, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				setupInsertClause(insert, b, templateId, RcptType.TO.name(), mailData.getToAddr());
-				setupInsertClause(insert, b, templateId, RcptType.CC.name(), mailData.getCcAddr());
-				setupInsertClause(insert, b, templateId, RcptType.BCC.name(), mailData.getBccAddr());
+				setupInsertClause(insert, mtr, templateId, RcptType.TO.name(), mailData.getToAddr());
+				setupInsertClause(insert, mtr, templateId, RcptType.CC.name(), mailData.getCcAddr());
+				setupInsertClause(insert, mtr, templateId, RcptType.BCC.name(), mailData.getBccAddr());
 				return insert.execute();
 			}
 		});
 		long numOfAddr = (mailData.getToAddr() == null ? 0L : mailData.getToAddr().size())
 				+ (mailData.getCcAddr() == null ? 0L : mailData.getCcAddr().size())
 				+ (mailData.getBccAddr() == null ? 0L : mailData.getBccAddr().size());
-		checkState(count == numOfAddr, "Failed to create %s: %s", b.getTableName(), mailData.toString());
+		checkState(count == numOfAddr, "Failed to create %s: %s", mtr.getTableName(), mailData.toString());
 	}
 
-	private void setupInsertClause(SQLInsertClause insert, QMailTemplateRcpt b, Long templateId, String type,
+	private void setupInsertClause(SQLInsertClause insert, QMailTemplateRcpt mtr, Long templateId, String type,
 			List<String> list) {
 		if (list != null) {
 			for (String addr : list) {
-				insert.set(b.templateId, templateId);
-				insert.set(b.rcptType, type);
-				insert.set(b.rcptAddr, addr);
+				insert.set(mtr.templateId, templateId);
+				insert.set(mtr.rcptType, type);
+				insert.set(mtr.rcptAddr, addr);
 				insert.addBatch();
 			}
 		}
