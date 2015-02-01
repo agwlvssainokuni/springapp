@@ -23,10 +23,30 @@ import java.util.List;
  */
 public interface CodeStore {
 
+	/**
+	 * 区分値の妥当性 (定義されているか) を検証する。
+	 * 
+	 * @param codeName 区分値を識別する名前。
+	 * @param value 区分値。
+	 * @return 定義されているならばtrue、さもなくばfalse。
+	 */
 	boolean isValidValue(String codeName, String value);
 
+	/**
+	 * 区分値の定義情報 (値と表示名) を取得する。
+	 * 
+	 * @param codeName 区分値を識別する名前。
+	 * @param value 区分値。
+	 * @return 定義情報 (値と表示名)。
+	 */
 	CodeEntry findByValue(String codeName, String value);
 
+	/**
+	 * 区分値の定義情報 (値と表示名) のリストを取得する。
+	 * 
+	 * @param codeName 区分値を識別する名前。
+	 * @return 定義情報 (値と表示名) のリスト。
+	 */
 	List<CodeEntry> getCodeList(String codeName);
 
 }
