@@ -23,7 +23,7 @@ package cherry.foundation.numbering;
 public interface NumberingStore {
 
 	/**
-	 * 発番処理の構成情報を取得する。
+	 * 発番処理の構成情報を取得する。<br />
 	 * 
 	 * @param numberName 番号を識別する名前。
 	 * @return 発番処理の構成情報。
@@ -32,7 +32,7 @@ public interface NumberingStore {
 
 	/**
 	 * 直前に発行した番号を取得する。<br />
-	 * 直前に発行した番号を取得し、かつ、他の処理をブロックする。
+	 * 直前に発行した番号を取得し、かつ、悲観ロックする。
 	 * 
 	 * @param numberName 番号を識別する名前。
 	 * @return 直前に発行した番号を取得する。
@@ -41,6 +41,7 @@ public interface NumberingStore {
 
 	/**
 	 * 発行済みの番号の情報を保存する。<br />
+	 * 発行済みの番号を保存し、かつ、悲観ロックを解除する。ただし、実態としてはトランザクションの終了によってロックが解除されるのものであり、明示的に「解除」する処理は発生しない。
 	 * 
 	 * @param numberName 番号を識別する番号。
 	 * @param current 発行済みの番号。
