@@ -37,9 +37,7 @@ public class BizDateTimeImpl implements BizDateTime {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	private final Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 	private final QBizdatetimeMaster bm = new QBizdatetimeMaster("bm");
-	private final QTuple qTuple = new QTuple(curDtm, bm.offsetDay, bm.offsetHour, bm.offsetMinute, bm.offsetSecond);
 
 	@Override
 	public LocalDate today() {
@@ -53,8 +51,10 @@ public class BizDateTimeImpl implements BizDateTime {
 
 	@Override
 	public LocalDateTime now() {
+		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 		SQLQuery query = createSqlQuery(bm);
-		Tuple tuple = queryDslJdbcOperations.queryForObject(query, qTuple);
+		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(curDtm, bm.offsetDay, bm.offsetHour,
+				bm.offsetMinute, bm.offsetSecond));
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
