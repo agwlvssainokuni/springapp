@@ -266,7 +266,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	private long createAsyncProcess(final String launcherId, final String description, final AsyncType asyncType,
 			final LocalDateTime dtm) {
-		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
+		Long id = queryDslJdbcOperations.insertWithKey(ap, new SqlInsertWithKeyCallback<Long>() {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
 				insert.set(ap.launchedBy, launcherId);
@@ -276,8 +276,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				insert.set(ap.registeredAt, dtm);
 				return insert.executeWithKey(Long.class);
 			}
-		};
-		Long id = queryDslJdbcOperations.insertWithKey(ap, callback);
+		});
 		checkState(
 				id != null,
 				"failed to create QAsyncProcess: launchedBy=%s, description=%s, asyncType=%s, asyncStatus=%s, registeredAt=%s",
