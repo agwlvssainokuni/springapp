@@ -31,12 +31,20 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+/**
+ * 電話番号正規化機能。<br />
+ * <a href="http://www.soumu.go.jp/main_sosiki/joho_tsusin/top/tel_number/number_shitei.html">総務省のサイト</a>
+ * にて公開されている固定電話の局番割当ファイル (Excel形式) を読込む。
+ */
 public class SoumuExcelParser {
 
+	/** [DI]「局番 (6桁)」列の列名。 */
 	private String numberLabel = "番号";
 
+	/** [DI]「市外局番」列の列名。 */
 	private String areaCodeLabel = "市外局番";
 
+	/** [DI]「市内局番」列の列名。 */
 	private String localCodeLabel = "市内局番";
 
 	public void setNumberLabel(String numberLabel) {
@@ -51,6 +59,14 @@ public class SoumuExcelParser {
 		this.localCodeLabel = localCodeLabel;
 	}
 
+	/**
+	 * 固定電話の局番割当ファイルを読込む。
+	 * 
+	 * @param in 局番割当ファイルのストリーム。
+	 * @return 読込み結果を保持する。キーは局番 (6桁)、値は市外局番と市内局番の組み。「
+	 * @throws InvalidFormatException 局番割当ファイルの形式不正。
+	 * @throws IOException 局番割当ファイルの読込み異常。
+	 */
 	public Map<String, Pair<String, String>> parse(InputStream in) throws InvalidFormatException, IOException {
 		Map<String, Pair<String, String>> map = new LinkedHashMap<>();
 		try (Workbook workbook = WorkbookFactory.create(in)) {
@@ -91,6 +107,13 @@ public class SoumuExcelParser {
 		return map;
 	}
 
+	/**
+	 * セルの値 (文字列) を取得する。
+	 * 
+	 * @param row 行。
+	 * @param col 列番号。
+	 * @return セルの値 (文字列)。
+	 */
 	private String getCellValue(Row row, int col) {
 		Cell cell = row.getCell(col);
 		if (cell == null) {

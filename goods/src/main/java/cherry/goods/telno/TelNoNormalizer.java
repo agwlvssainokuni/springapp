@@ -18,10 +18,30 @@ package cherry.goods.telno;
 
 import java.util.List;
 
+/**
+ * 電話番号正規化機能。<br />
+ * 電話番号の表示形式を正規化する。具体的には下記の2機能を提供する。
+ * <ul>
+ * <li>{@link #flatten(String)}: ハイフンを除去する。</li>
+ * <li>{@link #normalize(String)}: 電話番号を市外局番、市内局番、番号に分割する。</li>
+ * </ul>
+ */
 public interface TelNoNormalizer {
 
+	/**
+	 * 電話番号のハイフンを除去する。<br />
+	 * 
+	 * @param telNo 対象とする電話番号。
+	 * @return ハイフンを除去した電話番号。
+	 */
 	String flatten(String telNo);
 
+	/**
+	 * 電話番号 (ハイフンなし) を市外局番、市内局番、番号に分割。<br />
+	 * 
+	 * @param telNo 対象とする電話番号 (ハイフンなし)。
+	 * @return 市外局番、市内局番、番号に分割した電話番号。複数の候補がある場合は複数返却される。
+	 */
 	List<String[]> normalize(String telNo);
 
 }
