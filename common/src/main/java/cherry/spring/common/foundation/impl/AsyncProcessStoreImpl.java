@@ -64,6 +64,16 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	private final QAsyncProcess ap = new QAsyncProcess("ap");
+	private final QAsyncProcessException ae = new QAsyncProcessException("ae");
+	private final QAsyncProcessFile apf = new QAsyncProcessFile("apf");
+	private final QAsyncProcessFileArg apfa = new QAsyncProcessFileArg("apfa");
+	private final QAsyncProcessFileResult apfr = new QAsyncProcessFileResult("apfr");
+	private final QAsyncProcessFileResultDetail apfrd = new QAsyncProcessFileResultDetail("apfrd");
+	private final QAsyncProcessCommand apc = new QAsyncProcessCommand("apc");
+	private final QAsyncProcessCommandArg apca = new QAsyncProcessCommandArg("apca");
+	private final QAsyncProcessCommandResult apcr = new QAsyncProcessCommandResult("apcr");
+
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
 	public long createFileProcess(String launcherId, LocalDateTime dtm, final String description, final String name,
@@ -72,16 +82,15 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		final long asyncId = createAsyncProcess(launcherId, description, AsyncType.FILE, dtm);
 
-		final QAsyncProcessFile a = new QAsyncProcessFile("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(apf, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.asyncId, asyncId);
-				insert.set(a.paramName, adjustSize(name, a.paramName));
-				insert.set(a.originalFilename, adjustSize(originalFilename, a.originalFilename));
-				insert.set(a.contentType, adjustSize(contentType, a.contentType));
-				insert.set(a.fileSize, size);
-				insert.set(a.handlerName, adjustSize(handlerName, a.handlerName));
+				insert.set(apf.asyncId, asyncId);
+				insert.set(apf.paramName, adjustSize(name, apf.paramName));
+				insert.set(apf.originalFilename, adjustSize(originalFilename, apf.originalFilename));
+				insert.set(apf.contentType, adjustSize(contentType, apf.contentType));
+				insert.set(apf.fileSize, size);
+				insert.set(apf.handlerName, adjustSize(handlerName, apf.handlerName));
 				return insert.execute();
 			}
 		});
@@ -90,13 +99,12 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				"failed to create QAsyncProcessFile: asyncId=%s, paramName=%s, originalFilename=%s, contentType=%s, fileSize=%s, handlerName=%s",
 				asyncId, name, originalFilename, contentType, size, handlerName);
 
-		final QAsyncProcessFileArg b = new QAsyncProcessFileArg("b");
 		for (final String arg : args) {
-			long c = queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+			long c = queryDslJdbcOperations.insert(apfa, new SqlInsertCallback() {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
-					insert.set(b.asyncId, asyncId);
-					insert.set(b.argument, adjustSize(arg, b.argument));
+					insert.set(apfa.asyncId, asyncId);
+					insert.set(apfa.argument, adjustSize(arg, apfa.argument));
 					return insert.execute();
 				}
 			});
@@ -112,24 +120,22 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		final long asyncId = createAsyncProcess(launcherId, description, AsyncType.COMMAND, dtm);
 
-		final QAsyncProcessCommand a = new QAsyncProcessCommand("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(apc, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.asyncId, asyncId);
-				insert.set(a.command, adjustSize(command, a.command));
+				insert.set(apc.asyncId, asyncId);
+				insert.set(apc.command, adjustSize(command, apc.command));
 				return insert.execute();
 			}
 		});
 		checkState(count == 1L, "failed to create QAsyncProcessCommand: asyncId=%s, command=%s", asyncId, command);
 
-		final QAsyncProcessCommandArg b = new QAsyncProcessCommandArg("b");
 		for (final String arg : args) {
-			long c = queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+			long c = queryDslJdbcOperations.insert(apca, new SqlInsertCallback() {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
-					insert.set(b.asyncId, asyncId);
-					insert.set(b.argument, adjustSize(arg, b.argument));
+					insert.set(apca.asyncId, asyncId);
+					insert.set(apca.argument, adjustSize(arg, apca.argument));
 					return insert.execute();
 				}
 			});
@@ -141,16 +147,15 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional("jtaTransactionManager")
 	public void updateToLaunched(final long asyncId, final LocalDateTime dtm) {
-		final QAsyncProcess a = new QAsyncProcess("a");
-		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+		long count = queryDslJdbcOperations.update(ap, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.asyncStatus, AsyncStatus.LAUNCHED.code());
-				update.set(a.launchedAt, dtm);
-				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
-				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq(asyncId));
-				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				update.set(ap.asyncStatus, AsyncStatus.LAUNCHED.code());
+				update.set(ap.launchedAt, dtm);
+				update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
+				update.set(ap.lockVersion, ap.lockVersion.add(1));
+				update.where(ap.id.eq(asyncId));
+				update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
@@ -161,16 +166,15 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
 	public void updateToProcessing(final long asyncId, final LocalDateTime dtm) {
-		final QAsyncProcess a = new QAsyncProcess("a");
-		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+		long count = queryDslJdbcOperations.update(ap, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.asyncStatus, AsyncStatus.PROCESSING.code());
-				update.set(a.startedAt, dtm);
-				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
-				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq(asyncId));
-				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				update.set(ap.asyncStatus, AsyncStatus.PROCESSING.code());
+				update.set(ap.startedAt, dtm);
+				update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
+				update.set(ap.lockVersion, ap.lockVersion.add(1));
+				update.where(ap.id.eq(asyncId));
+				update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
@@ -185,14 +189,13 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		finishAsyncProcess(asyncId, dtm, status);
 
-		final QAsyncProcessFileResult a = new QAsyncProcessFileResult("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(apfr, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.asyncId, asyncId);
-				insert.set(a.totalCount, result.getTotalCount());
-				insert.set(a.okCount, result.getOkCount());
-				insert.set(a.ngCount, result.getNgCount());
+				insert.set(apfr.asyncId, asyncId);
+				insert.set(apfr.totalCount, result.getTotalCount());
+				insert.set(apfr.okCount, result.getOkCount());
+				insert.set(apfr.ngCount, result.getNgCount());
 				return insert.execute();
 			}
 		});
@@ -200,19 +203,18 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				"failed to create QAsyncProcessFileResult: asyncId=%s, totalCount=%s, okCount=%s, ngCount=%s", asyncId,
 				result.getTotalCount(), result.getOkCount(), result.getNgCount());
 
-		final QAsyncProcessFileResultDetail b = new QAsyncProcessFileResultDetail("b");
 		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>() : result
 				.getNgRecordInfoList());
 		for (final FileRecordInfo r : list) {
 			if (r.isOk()) {
 				continue;
 			}
-			long c = queryDslJdbcOperations.insert(b, new SqlInsertCallback() {
+			long c = queryDslJdbcOperations.insert(apfrd, new SqlInsertCallback() {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
-					insert.set(b.asyncId, asyncId);
-					insert.set(b.recordNumber, r.getNumber());
-					insert.set(b.description, adjustSize(r.getDescription(), b.description));
+					insert.set(apfrd.asyncId, asyncId);
+					insert.set(apfrd.recordNumber, r.getNumber());
+					insert.set(apfrd.description, adjustSize(r.getDescription(), apfrd.description));
 					return insert.execute();
 				}
 			});
@@ -229,14 +231,13 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		finishAsyncProcess(asyncId, dtm, status);
 
-		final QAsyncProcessCommandResult a = new QAsyncProcessCommandResult("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(apcr, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.asyncId, asyncId);
-				insert.set(a.exitValue, result.getExitValue());
-				insert.set(a.stdout, adjustSize(result.getStdout(), a.stdout));
-				insert.set(a.stderr, adjustSize(result.getStderr(), a.stderr));
+				insert.set(apcr.asyncId, asyncId);
+				insert.set(apcr.exitValue, result.getExitValue());
+				insert.set(apcr.stdout, adjustSize(result.getStdout(), apcr.stdout));
+				insert.set(apcr.stderr, adjustSize(result.getStderr(), apcr.stderr));
 				return insert.execute();
 			}
 		});
@@ -251,12 +252,11 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 		finishAsyncProcess(asyncId, dtm, AsyncStatus.EXCEPTION);
 
-		final QAsyncProcessException a = new QAsyncProcessException("a");
-		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(ae, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(a.asyncId, asyncId);
-				insert.set(a.exception, adjustSize(throwableToString(th), a.exception));
+				insert.set(ae.asyncId, asyncId);
+				insert.set(ae.exception, adjustSize(throwableToString(th), ae.exception));
 				return insert.execute();
 			}
 		});
@@ -266,19 +266,18 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	private long createAsyncProcess(final String launcherId, final String description, final AsyncType asyncType,
 			final LocalDateTime dtm) {
-		final QAsyncProcess a = new QAsyncProcess("a");
 		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
-				insert.set(a.launchedBy, launcherId);
-				insert.set(a.description, adjustSize(description, a.description));
-				insert.set(a.asyncType, asyncType.code());
-				insert.set(a.asyncStatus, AsyncStatus.LAUNCHING.code());
-				insert.set(a.registeredAt, dtm);
+				insert.set(ap.launchedBy, launcherId);
+				insert.set(ap.description, adjustSize(description, ap.description));
+				insert.set(ap.asyncType, asyncType.code());
+				insert.set(ap.asyncStatus, AsyncStatus.LAUNCHING.code());
+				insert.set(ap.registeredAt, dtm);
 				return insert.executeWithKey(Long.class);
 			}
 		};
-		Long id = queryDslJdbcOperations.insertWithKey(a, callback);
+		Long id = queryDslJdbcOperations.insertWithKey(ap, callback);
 		checkState(
 				id != null,
 				"failed to create QAsyncProcess: launchedBy=%s, description=%s, asyncType=%s, asyncStatus=%s, registeredAt=%s",
@@ -287,16 +286,15 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	}
 
 	private void finishAsyncProcess(final long asyncId, final LocalDateTime dtm, final AsyncStatus status) {
-		final QAsyncProcess a = new QAsyncProcess("a");
-		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
+		long count = queryDslJdbcOperations.update(ap, new SqlUpdateCallback() {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(a.asyncStatus, status.code());
-				update.set(a.finishedAt, dtm);
-				update.set(a.updatedAt, currentTimestamp(LocalDateTime.class));
-				update.set(a.lockVersion, a.lockVersion.add(1));
-				update.where(a.id.eq(asyncId));
-				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				update.set(ap.asyncStatus, status.code());
+				update.set(ap.finishedAt, dtm);
+				update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
+				update.set(ap.lockVersion, ap.lockVersion.add(1));
+				update.where(ap.id.eq(asyncId));
+				update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
 			}
 		});
