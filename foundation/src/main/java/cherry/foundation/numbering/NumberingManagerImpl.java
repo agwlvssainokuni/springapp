@@ -93,7 +93,7 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 			long v = current + 1;
 			checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
 			checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
-			String result = fmt.format(v);
+			String result = fmt.format(new Object[] { Long.valueOf(v) });
 
 			offset = 1;
 			return result;
@@ -120,7 +120,7 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 				long v = current + i;
 				checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
 				checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
-				result[i] = fmt.format(v);
+				result[i - 1] = fmt.format(new Object[] { Long.valueOf(v) });
 			}
 
 			offset = count;
@@ -181,7 +181,7 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 				long v = current + i;
 				checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
 				checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
-				result[i] = v;
+				result[i - 1] = v;
 			}
 
 			offset = count;
