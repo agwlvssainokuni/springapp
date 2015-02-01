@@ -42,6 +42,7 @@
 				<entry key="java.text.NumberFormat" value="cherry.foundation.type.editor.NumberFormatEditor" />
 				<entry key="com.ibm.icu.text.NumberFormat" value="cherry.foundation.type.editor.Icu4jNumberFormatEditor" />
 				<entry key="com.ibm.icu.text.Transliterator" value="cherry.foundation.type.editor.Icu4jTransliteratorEditor" />
+				<entry key="org.springframework.format.number.NumberFormatter" value="cherry.foundation.type.editor.NumberFormatterEditor" />
 				<entry key="org.joda.time.format.DateTimeFormatter" value="cherry.foundation.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
