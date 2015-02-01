@@ -21,14 +21,21 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+/**
+ * 発番管理機能。<br />
+ * 発番処理の構成情報を保持する。
+ */
 public class NumberingDefinition implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/** 番号のテンプレート。 */
 	private String template;
 
+	/** 番号の最小値。 */
 	private long minValue;
 
+	/** 番号の最大値。 */
 	private long maxValue;
 
 	@Override

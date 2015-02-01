@@ -16,12 +16,35 @@
 
 package cherry.foundation.numbering;
 
+/**
+ * 発番管理機能。<br />
+ * 発番処理で発生するDBアクセスを抽象化する。
+ */
 public interface NumberingStore {
 
+	/**
+	 * 発番処理の構成情報を取得する。
+	 * 
+	 * @param numberName 番号を識別する名前。
+	 * @return 発番処理の構成情報。
+	 */
 	NumberingDefinition getDefinition(String numberName);
 
+	/**
+	 * 直前に発行した番号を取得する。<br />
+	 * 直前に発行した番号を取得し、かつ、他の処理をブロックする。
+	 * 
+	 * @param numberName 番号を識別する名前。
+	 * @return 直前に発行した番号を取得する。
+	 */
 	long loadAndLock(String numberName);
 
+	/**
+	 * 発行済みの番号の情報を保存する。<br />
+	 * 
+	 * @param numberName 番号を識別する番号。
+	 * @param current 発行済みの番号。
+	 */
 	void saveAndUnlock(String numberName, long current);
 
 }
