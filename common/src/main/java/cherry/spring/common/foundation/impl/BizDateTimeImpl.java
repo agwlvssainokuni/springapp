@@ -37,11 +37,14 @@ public class BizDateTimeImpl implements BizDateTime {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
+	private final Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
+	private final QBizdatetimeMaster bm = new QBizdatetimeMaster("bm");
+	private final QTuple qTuple = new QTuple(curDtm, bm.offsetDay, bm.offsetHour, bm.offsetMinute, bm.offsetSecond);
+
 	@Override
 	public LocalDate today() {
-		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
-		SQLQuery query = createSqlQuery(a);
-		LocalDate ldt = queryDslJdbcOperations.queryForObject(query, a.bizdate);
+		SQLQuery query = createSqlQuery(bm);
+		LocalDate ldt = queryDslJdbcOperations.queryForObject(query, bm.bizdate);
 		if (ldt == null) {
 			return LocalDate.now();
 		}
@@ -50,21 +53,21 @@ public class BizDateTimeImpl implements BizDateTime {
 
 	@Override
 	public LocalDateTime now() {
-		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
-		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
-		SQLQuery query = createSqlQuery(a);
-		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(curDtm, a.offsetDay, a.offsetHour,
-				a.offsetMinute, a.offsetSecond));
+		SQLQuery query = createSqlQuery(bm);
+		Tuple tuple = queryDslJdbcOperations.queryForObject(query, qTuple);
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
-		return tuple.get(curDtm).plusDays(tuple.get(a.offsetDay)).plusHours(tuple.get(a.offsetHour))
-				.plusMinutes(tuple.get(a.offsetMinute)).plusSeconds(tuple.get(a.offsetSecond));
+		return tuple.get(curDtm).plusDays(tuple.get(bm.offsetDay)).plusHours(tuple.get(bm.offsetHour))
+				.plusMinutes(tuple.get(bm.offsetMinute)).plusSeconds(tuple.get(bm.offsetSecond));
 	}
 
-	private SQLQuery createSqlQuery(QBizdatetimeMaster a) {
-		return queryDslJdbcOperations.newSqlQuery().from(a).where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
-				.orderBy(a.id.desc()).limit(1);
+	private SQLQuery createSqlQuery(QBizdatetimeMaster bm) {
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query.from(bm);
+		query.where(bm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.orderBy(bm.id.desc()).limit(1);
+		return query;
 	}
 
 }
