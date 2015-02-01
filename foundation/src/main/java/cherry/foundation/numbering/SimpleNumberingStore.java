@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.map.DefaultedMap;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -42,23 +41,23 @@ public class SimpleNumberingStore implements NumberingStore, InitializingBean {
 	@Override
 	public void afterPropertiesSet() {
 		currentValueMap = DefaultedMap.defaultedMap(new HashMap<String, Long>(), Long.valueOf(0L));
-		lockMap = DefaultedMap.defaultedMap(new HashMap<String, Lock>(), new Factory<Lock>() {
-			@Override
-			public Lock create() {
-				return new ReentrantLock(true);
-			}
-		});
+		lockMap = new HashMap<String, Lock>();
 	}
 
 	@Override
 	public NumberingDefinition getDefinition(String numberName) {
-		checkArgument(numberingDefinitionMap.containsKey(numberName), "{0} must be defined", numberName);
+		checkArgument(numberingDefinitionMap.containsKey(numberName), "%s must be defined", numberName);
 		return numberingDefinitionMap.get(numberName);
 	}
 
 	@Override
-	public long loadAndLock(String numberName) {
-		lockMap.get(numberName).lock();
+	public synchronized long loadAndLock(String numberName) {
+		Lock lock = lockMap.get(numberName);
+		if (lock == null) {
+			lock = new ReentrantLock(true);
+			lockMap.put(numberName, lock);
+		}
+		lock.lock();
 		return currentValueMap.get(numberName).longValue();
 	}
 

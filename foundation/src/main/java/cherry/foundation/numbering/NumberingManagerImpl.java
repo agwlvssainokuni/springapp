@@ -91,8 +91,8 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 		try {
 
 			long v = current + 1;
-			checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-			checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+			checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
+			checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
 			String result = fmt.format(v);
 
 			offset = 1;
@@ -118,8 +118,8 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 			String[] result = new String[count];
 			for (int i = 1; i <= count; i++) {
 				long v = current + i;
-				checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-				checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+				checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
+				checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
 				result[i] = fmt.format(v);
 			}
 
@@ -154,8 +154,8 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 		try {
 
 			long v = current + 1;
-			checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-			checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+			checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
+			checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
 
 			offset = 1;
 			return v;
@@ -179,8 +179,8 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 			long[] result = new long[count];
 			for (int i = 1; i <= count; i++) {
 				long v = current + i;
-				checkState(v >= def.getMinValue(), "{0} must be >= {1}", numberName, def.getMinValue());
-				checkState(v <= def.getMaxValue(), "{0} must be <= {1}", numberName, def.getMaxValue());
+				checkState(v >= def.getMinValue(), "%s must be >= %s", numberName, def.getMinValue());
+				checkState(v <= def.getMaxValue(), "%s must be <= %s", numberName, def.getMaxValue());
 				result[i] = v;
 			}
 
