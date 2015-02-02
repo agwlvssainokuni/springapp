@@ -36,7 +36,6 @@ public class CodeStoreImpl implements CodeStore {
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
 	private final QCodeMaster qcm = new QCodeMaster("a");
-	private final QBean<CodeEntry> qBean = new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder);
 
 	@Transactional(readOnly = true)
 	@Override
@@ -53,7 +52,8 @@ public class CodeStoreImpl implements CodeStore {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(qcm);
 		query.where(qcm.name.eq(codeName), qcm.value.eq(value), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.queryForObject(query, qBean);
+		return queryDslJdbcOperations.queryForObject(query, new QBean<>(CodeEntry.class, qcm.value, qcm.label,
+				qcm.sortOrder));
 	}
 
 	@Transactional(readOnly = true)
@@ -63,7 +63,7 @@ public class CodeStoreImpl implements CodeStore {
 		query.from(qcm);
 		query.where(qcm.name.eq(codeName), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(qcm.sortOrder.asc());
-		return queryDslJdbcOperations.query(query, qBean);
+		return queryDslJdbcOperations.query(query, new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}
 
 }

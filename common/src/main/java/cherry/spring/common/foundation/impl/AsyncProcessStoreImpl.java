@@ -65,7 +65,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	private ObjectMapper objectMapper;
 
 	private final QAsyncProcess ap = new QAsyncProcess("ap");
-	private final QAsyncProcessException ae = new QAsyncProcessException("ae");
+	private final QAsyncProcessException ape = new QAsyncProcessException("ape");
 	private final QAsyncProcessFile apf = new QAsyncProcessFile("apf");
 	private final QAsyncProcessFileArg apfa = new QAsyncProcessFileArg("apfa");
 	private final QAsyncProcessFileResult apfr = new QAsyncProcessFileResult("apfr");
@@ -76,7 +76,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
-	public long createFileProcess(String launcherId, LocalDateTime dtm, final String description, final String name,
+	public long createFileProcess(String launcherId, LocalDateTime dtm, String description, final String name,
 			final String originalFilename, final String contentType, final long size, final String handlerName,
 			String... args) {
 
@@ -115,7 +115,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 	}
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
-	public long createCommand(String launcherId, LocalDateTime dtm, final String description, final String command,
+	public long createCommand(String launcherId, LocalDateTime dtm, String description, final String command,
 			String... args) {
 
 		final long asyncId = createAsyncProcess(launcherId, description, AsyncType.COMMAND, dtm);
@@ -184,7 +184,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishFileProcess(final long asyncId, final LocalDateTime dtm, final AsyncStatus status,
+	public void finishFileProcess(final long asyncId, LocalDateTime dtm, AsyncStatus status,
 			final FileProcessResult result) {
 
 		finishAsyncProcess(asyncId, dtm, status);
@@ -226,8 +226,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishCommand(final long asyncId, final LocalDateTime dtm, final AsyncStatus status,
-			final CommandResult result) {
+	public void finishCommand(final long asyncId, LocalDateTime dtm, AsyncStatus status, final CommandResult result) {
 
 		finishAsyncProcess(asyncId, dtm, status);
 
@@ -248,15 +247,15 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishWithException(final long asyncId, final LocalDateTime dtm, final Throwable th) {
+	public void finishWithException(final long asyncId, LocalDateTime dtm, final Throwable th) {
 
 		finishAsyncProcess(asyncId, dtm, AsyncStatus.EXCEPTION);
 
-		long count = queryDslJdbcOperations.insert(ae, new SqlInsertCallback() {
+		long count = queryDslJdbcOperations.insert(ape, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(ae.asyncId, asyncId);
-				insert.set(ae.exception, adjustSize(throwableToString(th), ae.exception));
+				insert.set(ape.asyncId, asyncId);
+				insert.set(ape.exception, adjustSize(throwableToString(th), ape.exception));
 				return insert.execute();
 			}
 		});
