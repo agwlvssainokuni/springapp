@@ -20,6 +20,8 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
+import cherry.foundation.type.Code;
+
 public class LogicalErrorUtil {
 
 	public static void reject(BindingResult binding, ILogicalError logicalError, Object... args) {
@@ -28,6 +30,10 @@ public class LogicalErrorUtil {
 
 	public static void rejectValue(BindingResult binding, String name, ILogicalError logicError, Object... args) {
 		binding.rejectValue(name, logicError.code(), args, logicError.code());
+	}
+
+	public static MessageSourceResolvable resolve(Code<String> code) {
+		return resolve(code.code());
 	}
 
 	public static MessageSourceResolvable resolve(String code) {

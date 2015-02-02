@@ -17,6 +17,7 @@
 package cherry.spring.common.api;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class Response<T> implements Serializable {
 
 	private int statusCode;
 
-	private String description;
+	private List<String> description;
 
 	private T result;
 

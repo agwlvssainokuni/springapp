@@ -18,27 +18,31 @@ package cherry.spring.common.api;
 
 import java.util.List;
 
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
 import cherry.foundation.util.MessageSourceUtil;
 
-import com.google.common.base.Joiner;
-
 public class ResponseFactory {
 
 	public static <T> Response<T> createResponse(StatusCode statusCode, T result) {
-		Response<T> response = new Response<T>();
+		Response<T> response = new Response<>();
 		response.setStatusCode(statusCode.getValue());
 		response.setResult(result);
 		return response;
 	}
 
-	public static Response<List<String>> createResponse(StatusCode statusCode, BindingResult binding) {
-		List<String> result = MessageSourceUtil.getMessageList(binding);
-		Response<List<String>> response = new Response<List<String>>();
+	public static <T> Response<T> createResponse(StatusCode statusCode, BindingResult binding) {
+		Response<T> response = new Response<>();
 		response.setStatusCode(statusCode.getValue());
-		response.setDescription(Joiner.on(", ").join(result));
-		response.setResult(result);
+		response.setDescription(MessageSourceUtil.getMessageList(binding));
+		return response;
+	}
+
+	public static <T> Response<T> createResponse(StatusCode statusCode, List<MessageSourceResolvable> messages) {
+		Response<T> response = new Response<>();
+		response.setStatusCode(statusCode.getValue());
+		response.setDescription(MessageSourceUtil.getMessageList(messages));
 		return response;
 	}
 
