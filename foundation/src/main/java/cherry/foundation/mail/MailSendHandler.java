@@ -18,6 +18,8 @@ package cherry.foundation.mail;
 
 import java.util.List;
 
+import javax.activation.DataSource;
+
 import org.joda.time.LocalDateTime;
 
 public interface MailSendHandler {
@@ -31,5 +33,7 @@ public interface MailSendHandler {
 	List<Long> listMessage(LocalDateTime dtm);
 
 	boolean sendMessage(long messageId);
+
+	boolean sendMessageWithAttachement(long messageId, DataSource... attachement);
 
 }

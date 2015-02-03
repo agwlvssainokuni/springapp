@@ -18,9 +18,16 @@ package cherry.foundation.mail;
 
 import java.util.List;
 
+import javax.activation.DataSource;
+import javax.mail.internet.MimeMessage;
+
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
-import org.springframework.mail.MailSender;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
@@ -31,7 +38,7 @@ public class MailSendHandlerImpl implements MailSendHandler {
 
 	private MessageStore messageStore;
 
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 
 	public void setBizDateTime(BizDateTime bizDateTime) {
 		this.bizDateTime = bizDateTime;
@@ -41,7 +48,7 @@ public class MailSendHandlerImpl implements MailSendHandler {
 		this.messageStore = messageStore;
 	}
 
-	public void setMailSender(MailSender mailSender) {
+	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
@@ -79,6 +86,36 @@ public class MailSendHandlerImpl implements MailSendHandler {
 		}
 		messageStore.finishMessage(messageId);
 		mailSender.send(msg);
+		return true;
+	}
+
+	@Transactional
+	@Override
+	public boolean sendMessageWithAttachement(long messageId, final DataSource... attachement) {
+		final SimpleMailMessage msg = messageStore.getMessage(messageId);
+		if (msg == null) {
+			return false;
+		}
+		messageStore.finishMessage(messageId);
+		mailSender.send(new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+				helper.setTo(msg.getTo());
+				helper.setCc(msg.getCc());
+				helper.setBcc(msg.getBcc());
+				helper.setSubject(msg.getSubject());
+				helper.setText(msg.getText());
+				for (DataSource ds : attachement) {
+					if (StringUtils.isEmpty(ds.getContentType())) {
+						helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()));
+					} else {
+						helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()),
+								ds.getContentType());
+					}
+				}
+			}
+		});
 		return true;
 	}
 
