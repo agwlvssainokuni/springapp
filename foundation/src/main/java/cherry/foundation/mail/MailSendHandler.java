@@ -28,12 +28,10 @@ public interface MailSendHandler {
 			List<String> bcc, String subject, String body, LocalDateTime scheduledAt);
 
 	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body);
+			List<String> bcc, String subject, String body, DataSource... attachment);
 
 	List<Long> listMessage(LocalDateTime dtm);
 
-	boolean sendMessage(long messageId);
-
-	boolean sendMessageWithAttachement(long messageId, DataSource... attachement);
+	boolean sendMessage(long messageId, DataSource... attachment);
 
 }

@@ -62,12 +62,12 @@ public class MailSendHandlerImpl implements MailSendHandler {
 	@Transactional
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body) {
+			List<String> bcc, String subject, String body, DataSource... attachment) {
 		LocalDateTime now = bizDateTime.now();
 		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, subject, body);
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		messageStore.finishMessage(messageId);
-		mailSender.send(msg);
+		send(msg, attachment);
 		return messageId;
 	}
 
@@ -79,44 +79,40 @@ public class MailSendHandlerImpl implements MailSendHandler {
 
 	@Transactional
 	@Override
-	public boolean sendMessage(long messageId) {
+	public boolean sendMessage(long messageId, DataSource... attachment) {
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		if (msg == null) {
 			return false;
 		}
 		messageStore.finishMessage(messageId);
-		mailSender.send(msg);
+		send(msg, attachment);
 		return true;
 	}
 
-	@Transactional
-	@Override
-	public boolean sendMessageWithAttachement(long messageId, final DataSource... attachement) {
-		final SimpleMailMessage msg = messageStore.getMessage(messageId);
-		if (msg == null) {
-			return false;
-		}
-		messageStore.finishMessage(messageId);
-		mailSender.send(new MimeMessagePreparator() {
-			@Override
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-				helper.setTo(msg.getTo());
-				helper.setCc(msg.getCc());
-				helper.setBcc(msg.getBcc());
-				helper.setSubject(msg.getSubject());
-				helper.setText(msg.getText());
-				for (DataSource ds : attachement) {
-					if (StringUtils.isEmpty(ds.getContentType())) {
-						helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()));
-					} else {
-						helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()),
-								ds.getContentType());
+	private void send(final SimpleMailMessage msg, final DataSource... attachment) {
+		if (attachment.length <= 0) {
+			mailSender.send(msg);
+		} else {
+			mailSender.send(new MimeMessagePreparator() {
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+					helper.setTo(msg.getTo());
+					helper.setCc(msg.getCc());
+					helper.setBcc(msg.getBcc());
+					helper.setSubject(msg.getSubject());
+					helper.setText(msg.getText());
+					for (DataSource ds : attachment) {
+						if (StringUtils.isEmpty(ds.getContentType())) {
+							helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()));
+						} else {
+							helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()),
+									ds.getContentType());
+						}
 					}
 				}
-			}
-		});
-		return true;
+			});
+		}
 	}
 
 }
