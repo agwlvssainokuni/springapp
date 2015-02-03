@@ -16,6 +16,8 @@
 
 package cherry.foundation.mail;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.activation.DataSource;
@@ -23,7 +25,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -100,14 +102,20 @@ public class MailSendHandlerImpl implements MailSendHandler {
 					helper.setTo(msg.getTo());
 					helper.setCc(msg.getCc());
 					helper.setBcc(msg.getBcc());
+					helper.setFrom(msg.getFrom());
 					helper.setSubject(msg.getSubject());
 					helper.setText(msg.getText());
-					for (DataSource ds : attachment) {
+					for (final DataSource ds : attachment) {
+						InputStreamSource in = new InputStreamSource() {
+							@Override
+							public InputStream getInputStream() throws IOException {
+								return ds.getInputStream();
+							}
+						};
 						if (StringUtils.isEmpty(ds.getContentType())) {
-							helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()));
+							helper.addAttachment(ds.getName(), in);
 						} else {
-							helper.addAttachment(ds.getName(), new InputStreamResource(ds.getInputStream()),
-									ds.getContentType());
+							helper.addAttachment(ds.getName(), in, ds.getContentType());
 						}
 					}
 				}
