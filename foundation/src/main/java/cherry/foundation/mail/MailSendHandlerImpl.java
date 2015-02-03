@@ -81,13 +81,13 @@ public class MailSendHandlerImpl implements MailSendHandler {
 
 	@Transactional
 	@Override
-	public boolean sendMessage(long messageId, DataSource... attachment) {
+	public boolean sendMessage(long messageId) {
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		if (msg == null) {
 			return false;
 		}
 		messageStore.finishMessage(messageId);
-		send(msg, attachment);
+		send(msg);
 		return true;
 	}
 

@@ -32,6 +32,6 @@ public interface MailSendHandler {
 
 	List<Long> listMessage(LocalDateTime dtm);
 
-	boolean sendMessage(long messageId, DataSource... attachment);
+	boolean sendMessage(long messageId);
 
 }
