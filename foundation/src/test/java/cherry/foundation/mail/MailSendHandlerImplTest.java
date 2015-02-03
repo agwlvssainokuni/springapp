@@ -29,14 +29,14 @@ import java.util.List;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import cherry.foundation.bizdtm.BizDateTime;
 
 public class MailSendHandlerImplTest {
 
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 
 	@Test
 	public void testSendLater() {
@@ -102,7 +102,7 @@ public class MailSendHandlerImplTest {
 
 		MessageStore messageStore = new SimpleMessageStore();
 
-		mailSender = mock(MailSender.class);
+		mailSender = mock(JavaMailSender.class);
 
 		MailSendHandlerImpl impl = new MailSendHandlerImpl();
 		impl.setBizDateTime(bizDateTime);
