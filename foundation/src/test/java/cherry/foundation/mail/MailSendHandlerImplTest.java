@@ -25,10 +25,16 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
@@ -117,43 +123,86 @@ public class MailSendHandlerImplTest {
 		ArgumentCaptor<MimeMessagePreparator> preparator = ArgumentCaptor.forClass(MimeMessagePreparator.class);
 		doNothing().when(mailSender).send(preparator.capture());
 
-		long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
-				asList("bcc@addr"), "subject", "body", new AttachmentPreparator() {
-					@Override
-					public void prepare(Attachment attachment) throws MessagingException {
-						attachment.add("name0.txt", new ByteArrayResource("attach0".getBytes()));
-						attachment.add("name1.bin", new ByteArrayResource("attach1".getBytes()),
-								"application/octet-stream");
-					}
-				});
+		final File file = File.createTempFile("test_", ".txt", new File("."));
+		file.deleteOnExit();
+		try {
 
-		Session session = Session.getDefaultInstance(new Properties());
-		MimeMessage message = new MimeMessage(session);
-		preparator.getValue().prepare(message);
+			try (OutputStream out = new FileOutputStream(file)) {
+				out.write("attach2".getBytes());
+			}
 
-		assertEquals(0L, messageId);
-		assertEquals(1, message.getRecipients(RecipientType.TO).length);
-		assertEquals(parse("to@addr")[0], message.getRecipients(RecipientType.TO)[0]);
-		assertEquals(1, message.getRecipients(RecipientType.CC).length);
-		assertEquals(parse("cc@addr")[0], message.getRecipients(RecipientType.CC)[0]);
-		assertEquals(1, message.getRecipients(RecipientType.BCC).length);
-		assertEquals(parse("bcc@addr")[0], message.getRecipients(RecipientType.BCC)[0]);
-		assertEquals(1, message.getFrom().length);
-		assertEquals(parse("from@addr")[0], message.getFrom()[0]);
-		assertEquals("subject", message.getSubject());
+			final DataSource dataSource = new DataSource() {
+				@Override
+				public OutputStream getOutputStream() throws IOException {
+					return null;
+				}
 
-		MimeMultipart mm = (MimeMultipart) message.getContent();
-		assertEquals(3, mm.getCount());
-		assertEquals("body", ((MimeMultipart) mm.getBodyPart(0).getContent()).getBodyPart(0).getContent());
+				@Override
+				public String getName() {
+					return "name3.txt";
+				}
 
-		assertEquals("name0.txt", mm.getBodyPart(1).getFileName());
-		assertEquals("text/plain", mm.getBodyPart(1).getContentType());
-		assertEquals("attach0", mm.getBodyPart(1).getContent());
+				@Override
+				public InputStream getInputStream() throws IOException {
+					return new ByteArrayInputStream("attach3".getBytes());
+				}
 
-		assertEquals("name1.bin", mm.getBodyPart(2).getDataHandler().getName());
-		assertEquals("application/octet-stream", mm.getBodyPart(2).getDataHandler().getContentType());
-		assertEquals("attach1",
-				new String(ByteStreams.toByteArray((InputStream) mm.getBodyPart(2).getDataHandler().getContent())));
+				@Override
+				public String getContentType() {
+					return "text/plain";
+				}
+			};
+
+			long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"),
+					asList("cc@addr"), asList("bcc@addr"), "subject", "body", new AttachmentPreparator() {
+						@Override
+						public void prepare(Attachment attachment) throws MessagingException {
+							attachment.add("name0.txt", new ByteArrayResource("attach0".getBytes()));
+							attachment.add("name1.bin", new ByteArrayResource("attach1".getBytes()),
+									"application/octet-stream");
+							attachment.add("name2.txt", file);
+							attachment.add("name3.txt", dataSource);
+						}
+					});
+
+			Session session = Session.getDefaultInstance(new Properties());
+			MimeMessage message = new MimeMessage(session);
+			preparator.getValue().prepare(message);
+
+			assertEquals(0L, messageId);
+			assertEquals(1, message.getRecipients(RecipientType.TO).length);
+			assertEquals(parse("to@addr")[0], message.getRecipients(RecipientType.TO)[0]);
+			assertEquals(1, message.getRecipients(RecipientType.CC).length);
+			assertEquals(parse("cc@addr")[0], message.getRecipients(RecipientType.CC)[0]);
+			assertEquals(1, message.getRecipients(RecipientType.BCC).length);
+			assertEquals(parse("bcc@addr")[0], message.getRecipients(RecipientType.BCC)[0]);
+			assertEquals(1, message.getFrom().length);
+			assertEquals(parse("from@addr")[0], message.getFrom()[0]);
+			assertEquals("subject", message.getSubject());
+
+			MimeMultipart mm = (MimeMultipart) message.getContent();
+			assertEquals(5, mm.getCount());
+			assertEquals("body", ((MimeMultipart) mm.getBodyPart(0).getContent()).getBodyPart(0).getContent());
+
+			assertEquals("name0.txt", mm.getBodyPart(1).getFileName());
+			assertEquals("text/plain", mm.getBodyPart(1).getContentType());
+			assertEquals("attach0", mm.getBodyPart(1).getContent());
+
+			assertEquals("name1.bin", mm.getBodyPart(2).getDataHandler().getName());
+			assertEquals("application/octet-stream", mm.getBodyPart(2).getDataHandler().getContentType());
+			assertEquals("attach1",
+					new String(ByteStreams.toByteArray((InputStream) mm.getBodyPart(2).getDataHandler().getContent())));
+
+			assertEquals("name2.txt", mm.getBodyPart(3).getFileName());
+			assertEquals("text/plain", mm.getBodyPart(3).getContentType());
+			assertEquals("attach2", mm.getBodyPart(3).getContent());
+
+			assertEquals("name3.txt", mm.getBodyPart(4).getFileName());
+			assertEquals("text/plain", mm.getBodyPart(4).getContentType());
+			assertEquals("attach3", mm.getBodyPart(4).getContent());
+		} finally {
+			file.delete();
+		}
 	}
 
 	private MailSendHandler create(LocalDateTime now) {
