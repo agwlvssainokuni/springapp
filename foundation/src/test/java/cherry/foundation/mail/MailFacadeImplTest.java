@@ -17,17 +17,10 @@
 package cherry.foundation.mail;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.activation.DataSource;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -84,24 +77,6 @@ public class MailFacadeImplTest {
 				asList("bcc@addr"), "subject", "body");
 		verify(mailSendHandler).sendNow(eq("launcherId"), eq("messageName"), eq("from@addr"), eq(asList("to@addr")),
 				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"));
-	}
-
-	@Test
-	public void testCreateDataSource() throws IOException {
-		LocalDateTime now = LocalDateTime.now();
-		MailFacade mailFacade = create(now);
-
-		InputStream in = mock(InputStream.class);
-		DataSource ds = mailFacade.createDataSource("filename", in, "contentType");
-		assertEquals("filename", ds.getName());
-		assertEquals(in, ds.getInputStream());
-		assertEquals("contentType", ds.getContentType());
-		try {
-			ds.getOutputStream();
-			fail("Exception must be thrown");
-		} catch (UnsupportedOperationException ex) {
-			// OK
-		}
 	}
 
 	private MailFacade create(LocalDateTime now) {

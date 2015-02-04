@@ -25,12 +25,11 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
-import javax.activation.DataSource;
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
@@ -39,6 +38,7 @@ import javax.mail.internet.MimeMultipart;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -116,16 +116,16 @@ public class MailSendHandlerImplTest {
 
 		ArgumentCaptor<MimeMessagePreparator> preparator = ArgumentCaptor.forClass(MimeMessagePreparator.class);
 		doNothing().when(mailSender).send(preparator.capture());
-		DataSource ds0 = mock(DataSource.class);
-		when(ds0.getName()).thenReturn("name0.txt");
-		when(ds0.getInputStream()).thenReturn(new ByteArrayInputStream("attach0".getBytes()));
-		DataSource ds1 = mock(DataSource.class);
-		when(ds1.getName()).thenReturn("name1.bin");
-		when(ds1.getInputStream()).thenReturn(new ByteArrayInputStream("attach1".getBytes()));
-		when(ds1.getContentType()).thenReturn("application/octet-stream");
 
 		long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
-				asList("bcc@addr"), "subject", "body", ds0, ds1);
+				asList("bcc@addr"), "subject", "body", new AttachmentPreparator() {
+					@Override
+					public void prepare(Attachment attachment) throws MessagingException {
+						attachment.add("name0.txt", new ByteArrayResource("attach0".getBytes()));
+						attachment.add("name1.bin", new ByteArrayResource("attach1".getBytes()),
+								"application/octet-stream");
+					}
+				});
 
 		Session session = Session.getDefaultInstance(new Properties());
 		MimeMessage message = new MimeMessage(session);
@@ -141,12 +141,15 @@ public class MailSendHandlerImplTest {
 		assertEquals(1, message.getFrom().length);
 		assertEquals(parse("from@addr")[0], message.getFrom()[0]);
 		assertEquals("subject", message.getSubject());
+
 		MimeMultipart mm = (MimeMultipart) message.getContent();
 		assertEquals(3, mm.getCount());
 		assertEquals("body", ((MimeMultipart) mm.getBodyPart(0).getContent()).getBodyPart(0).getContent());
+
 		assertEquals("name0.txt", mm.getBodyPart(1).getFileName());
 		assertEquals("text/plain", mm.getBodyPart(1).getContentType());
 		assertEquals("attach0", mm.getBodyPart(1).getContent());
+
 		assertEquals("name1.bin", mm.getBodyPart(2).getDataHandler().getName());
 		assertEquals("application/octet-stream", mm.getBodyPart(2).getDataHandler().getContentType());
 		assertEquals("attach1",
