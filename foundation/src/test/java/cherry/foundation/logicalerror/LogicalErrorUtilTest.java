@@ -73,7 +73,8 @@ public class LogicalErrorUtilTest {
 		assertNotNull(resolvable.getCodes());
 		assertEquals(1, resolvable.getCodes().length);
 		assertEquals("property", resolvable.getCodes()[0]);
-		assertNull(resolvable.getArguments());
+		assertNotNull(resolvable.getArguments());
+		assertEquals(0, resolvable.getArguments().length);
 		assertNull(resolvable.getDefaultMessage());
 	}
 
