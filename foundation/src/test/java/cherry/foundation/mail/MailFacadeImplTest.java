@@ -79,6 +79,18 @@ public class MailFacadeImplTest {
 				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"));
 	}
 
+	@Test
+	public void testSendNowAttached() {
+		LocalDateTime now = LocalDateTime.now();
+		MailFacade mailFacade = create(now);
+
+		AttachmentPreparator preparator = mock(AttachmentPreparator.class);
+		mailFacade.sendNow("launcherId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
+				asList("bcc@addr"), "subject", "body", preparator);
+		verify(mailSendHandler).sendNow(eq("launcherId"), eq("messageName"), eq("from@addr"), eq(asList("to@addr")),
+				eq(asList("cc@addr")), eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(preparator));
+	}
+
 	private MailFacade create(LocalDateTime now) {
 		bizDateTime = mock(BizDateTime.class);
 		when(bizDateTime.now()).thenReturn(now);
