@@ -16,16 +16,11 @@
 
 package cherry.foundation.mail;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -64,12 +59,19 @@ public class MailSendHandlerImpl implements MailSendHandler {
 	@Transactional
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, DataSource... attachment) {
+			List<String> bcc, String subject, String body) {
+		return sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, null);
+	}
+
+	@Transactional
+	@Override
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
 		LocalDateTime now = bizDateTime.now();
 		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, subject, body);
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		messageStore.finishMessage(messageId);
-		send(msg, attachment);
+		send(msg, preparator);
 		return messageId;
 	}
 
@@ -87,12 +89,12 @@ public class MailSendHandlerImpl implements MailSendHandler {
 			return false;
 		}
 		messageStore.finishMessage(messageId);
-		send(msg);
+		send(msg, null);
 		return true;
 	}
 
-	private void send(final SimpleMailMessage msg, final DataSource... attachment) {
-		if (attachment.length <= 0) {
+	private void send(final SimpleMailMessage msg, final AttachmentPreparator preparator) {
+		if (preparator == null) {
 			mailSender.send(msg);
 		} else {
 			mailSender.send(new MimeMessagePreparator() {
@@ -105,19 +107,7 @@ public class MailSendHandlerImpl implements MailSendHandler {
 					helper.setFrom(msg.getFrom());
 					helper.setSubject(msg.getSubject());
 					helper.setText(msg.getText());
-					for (final DataSource ds : attachment) {
-						InputStreamSource in = new InputStreamSource() {
-							@Override
-							public InputStream getInputStream() throws IOException {
-								return ds.getInputStream();
-							}
-						};
-						if (StringUtils.isEmpty(ds.getContentType())) {
-							helper.addAttachment(ds.getName(), in);
-						} else {
-							helper.addAttachment(ds.getName(), in, ds.getContentType());
-						}
-					}
+					preparator.prepare(new Attachment(helper));
 				}
 			});
 		}

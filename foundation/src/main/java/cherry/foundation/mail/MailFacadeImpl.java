@@ -16,12 +16,7 @@
 
 package cherry.foundation.mail;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
-
-import javax.activation.DataSource;
 
 import org.joda.time.LocalDateTime;
 
@@ -66,34 +61,14 @@ public class MailFacadeImpl implements MailFacade {
 
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, DataSource... attachment) {
-		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, attachment);
+			List<String> bcc, String subject, String body) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body);
 	}
 
 	@Override
-	public DataSource createDataSource(final String filename, final InputStream in, final String contentType) {
-		return new DataSource() {
-
-			@Override
-			public OutputStream getOutputStream() throws IOException {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public String getName() {
-				return filename;
-			}
-
-			@Override
-			public InputStream getInputStream() throws IOException {
-				return in;
-			}
-
-			@Override
-			public String getContentType() {
-				return contentType;
-			}
-		};
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, preparator);
 	}
 
 }
