@@ -25,8 +25,8 @@
 				" />
 	</aop:config>
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="${foundation.trace.arrayLengthLimit}" />
-		<property name="objectLengthLimit" value="${foundation.trace.objectLengthLimit}" />
+		<property name="arrayLengthLimit" value="0" />
+		<property name="objectLengthLimit" value="0" />
 		<property name="packagePrefix">
 			<list>
 				<value>cherry</value>
@@ -53,7 +53,7 @@
 			<set>
 				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
-					<property name="pattern" value="${foundation.format.number}" />
+					<property name="pattern" value="#,##0" />
 				</bean>
 			</set>
 		</property>
@@ -64,18 +64,18 @@
 					<property name="formatters">
 						<list>
 							<bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
-								<property name="dateFormatter" value="${foundation.format.date}" />
-								<property name="timeFormatter" value="${foundation.format.time}" />
-								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
+								<property name="dateFormatter" value="yyyy/MM/dd" />
+								<property name="timeFormatter" value="HH:mm:ss" />
+								<property name="dateTimeFormatter" value="yyyy/MM/dd HH:mm:ss" />
 							</bean>
 							<bean class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
-								<property name="dateToPrint" value="${foundation.format.dateToPrint}" />
-								<property name="dateToParse" value="${foundation.format.dateToParse}" />
-								<property name="timeToPrint" value="${foundation.format.timeToPrint}" />
-								<property name="timeToParseHm" value="${foundation.format.timeToParseHm}" />
-								<property name="timeToParseS" value="${foundation.format.timeToParseS}" />
-								<property name="delimiterToPrint" value="${foundation.format.delimiterToPrint}" />
-								<property name="delimiterToParse" value="${foundation.format.delimiterToParse}" />
+								<property name="dateToPrint" value="yyyy/MM/dd" />
+								<property name="dateToParse" value="yyyy/M/d" />
+								<property name="timeToPrint" value="HH:mm:ss" />
+								<property name="timeToParseHm" value="H:m" />
+								<property name="timeToParseS" value=":s" />
+								<property name="delimiterToPrint" value=" " />
+								<property name="delimiterToParse" value=" " />
 							</bean>
 							<bean class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
 							<bean class="cherry.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
@@ -154,9 +154,9 @@
 
 	<!-- ダウンロード設定 -->
 	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
-		<property name="headerName" value="${foundation.download.headerName}" />
-		<property name="headerValue" value="${foundation.download.headerValue}" />
-		<property name="formatter" value="${foundation.download.format}" />
+		<property name="headerName" value="Content-Disposition" />
+		<property name="headerValue" value="attachment; filename=&quot;{0}&quot;" />
+		<property name="formatter" value="yyyyMMddHHmmss" />
 	</bean>
 	<bean id="tableDownloadOperation" class="cherry.foundation.download.TableDownloadTemplate">
 		<property name="downloadOperation" ref="downloadOperation" />
@@ -167,10 +167,10 @@
 
 	<!-- 多重POST検出機能設定 -->
 	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
-		<property name="name" value="${foundation.onetimetoken.name}" />
+		<property name="name" value="__OneTimeToken__" />
 	</bean>
 	<bean id="oneTimeTokenValidator" class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
-		<property name="name" value="${foundation.onetimetoken.name}" />
+		<property name="name" value="__OneTimeToken__" />
 	</bean>
 
 	<!-- DB処理補助機能設定 -->
@@ -188,8 +188,8 @@
 
 	<!-- コマンド実行機能設定 -->
 	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">
-		<property name="charset" value="${foundation.command.charset}" />
-		<property name="redirectErrorStream" value="${foundation.command.redirectErrorStream}" />
+		<property name="charset" value="UTF-8" />
+		<property name="redirectErrorStream" value="true" />
 	</bean>
 
 	<!-- 暗号機能設定 -->
@@ -214,14 +214,14 @@
 
 	<!-- 区分値管理機能 -->
 	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
-		<property name="valueTemplate" value="${foundation.codeManager.valueTemplate}" />
+		<property name="valueTemplate" value="{0} - {1}" />
 		<property name="codeStore" ref="codeStore" />
 	</bean>
 
 	<!-- 発番管理機能 -->
 	<bean id="numberingManager" class="cherry.foundation.numbering.NumberingManagerImpl">
-		<property name="cacheSize" value="${foundation.numberingManager.cacheSize}" />
-		<property name="cacheTimeoutSec" value="${foundation.numberingManager.cacheTimeoutSec}" />
+		<property name="cacheSize" value="10" />
+		<property name="cacheTimeoutSec" value="300" />
 		<property name="numberingStore" ref="numberingStore" />
 	</bean>
 
