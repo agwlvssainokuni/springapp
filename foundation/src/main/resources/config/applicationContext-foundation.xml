@@ -272,6 +272,19 @@
 	</bean>
 
 	<!-- 文字列処理 -->
+	<!-- オブジェクト描画 -->
+	<bean id="objectRenderer" class="cherry.foundation.render.ObjectRendererImpl">
+		<property name="conversionService" ref="conversionService" />
+		<property name="numberFormatter">
+			<list>
+				<value>#,##0.###</value>
+				<value>#,##0.0</value>
+				<value>#,##0.00</value>
+				<value>#,##0.000</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 電話番号正規化 -->
 	<bean id="telNoNormalizer" class="cherry.goods.telno.TelNoNormalizerImpl">
 		<property name="areaCodeTable">
