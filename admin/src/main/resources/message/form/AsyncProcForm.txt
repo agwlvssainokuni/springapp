@@ -1,0 +1,2 @@
+asyncProcForm.pno=Page No
+asyncProcForm.psz=Page Size

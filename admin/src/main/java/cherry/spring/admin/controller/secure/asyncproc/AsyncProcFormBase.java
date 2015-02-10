@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.admin.controller.secure.userman;
+package cherry.spring.admin.controller.secure.asyncproc;
 
 import java.io.Serializable;
 
@@ -31,24 +31,9 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class UsermanSearchFormBase implements Serializable {
+public abstract class AsyncProcFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	@cherry.foundation.validator.MaxLength(value = 512, groups = { javax.validation.groups.Default.class })
-	private String loginId;
-
-	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
-	private org.joda.time.LocalDateTime registeredFrom;
-
-	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
-	private org.joda.time.LocalDateTime registeredTo;
-
-	@cherry.foundation.validator.MaxLength(value = 64, groups = { javax.validation.groups.Default.class })
-	private String firstName;
-
-	@cherry.foundation.validator.MaxLength(value = 64, groups = { javax.validation.groups.Default.class })
-	private String lastName;
 
 	private long pno = 0L;
 
@@ -56,13 +41,8 @@ public abstract class UsermanSearchFormBase implements Serializable {
 
 	@Getter
 	public enum Prop {
-		LoginId("loginId", "usermanSearchForm.loginId"), //
-		RegisteredFrom("registeredFrom", "usermanSearchForm.registeredFrom"), //
-		RegisteredTo("registeredTo", "usermanSearchForm.registeredTo"), //
-		FirstName("firstName", "usermanSearchForm.firstName"), //
-		LastName("lastName", "usermanSearchForm.lastName"), //
-		Pno("pno", "usermanSearchForm.pno"), //
-		Psz("psz", "usermanSearchForm.psz"), //
+		Pno("pno", "asyncProcForm.pno"), //
+		Psz("psz", "asyncProcForm.psz"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;

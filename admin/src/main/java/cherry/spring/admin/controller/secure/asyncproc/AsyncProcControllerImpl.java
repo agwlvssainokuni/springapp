@@ -53,11 +53,11 @@ public class AsyncProcControllerImpl implements AsyncProcController {
 	public ModelAndView init(AsyncProcForm form, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 
-		if (form.getSz() <= 0) {
-			form.setSz(defaultPageSize);
+		if (form.getPsz() <= 0) {
+			form.setPsz(defaultPageSize);
 		}
 
-		PagedList<Tuple> result = asyncProcService.searchAsyncProc(auth.getName(), form.getNo(), form.getSz());
+		PagedList<Tuple> result = asyncProcService.searchAsyncProc(auth.getName(), form.getPno(), form.getPsz());
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_ASYNCPROC_INIT);
 		mav.addObject(QueryDslUtil.tupleToMap(result, asyncProcService.getColumns()));
