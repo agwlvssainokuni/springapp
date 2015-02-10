@@ -9,6 +9,25 @@
 	<short-name>foundation</short-name>
 	<uri>urn:cherry:foundation</uri>
 
+	<tag>
+		<description>ObjectRenderer</description>
+		<name>render</name>
+		<tag-class>cherry.foundation.render.RenderTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
+
 	<function>
 		<description>Navigate</description>
 		<name>navigate</name>
