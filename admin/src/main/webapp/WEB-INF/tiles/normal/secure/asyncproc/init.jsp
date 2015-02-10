@@ -8,6 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="fnd" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1 class="app-subject">
 	<s:message code="secure/asyncproc/init.message.0" />
@@ -77,20 +78,48 @@
 								<td><c:out
 										value="${pagedList.pageSet.current.from + count}" /></td>
 								<s:nestedPath path="pagedList">
-									<td><app:out path="list[${count-1}][id]" /></td>
-									<td><app:out path="list[${count-1}][description]" /></td>
-									<td><app:out path="list[${count-1}][launchedBy]" /></td>
-									<td><app:out path="list[${count-1}][asyncType]" /></td>
-									<td><app:out path="list[${count-1}][asyncStatus]" /></td>
-									<td><app:out path="list[${count-1}][originalFilename]" /></td>
-									<td><app:out path="list[${count-1}][fileSize]" /></td>
-									<td><app:out path="list[${count-1}][totalCount]" /></td>
-									<td><app:out path="list[${count-1}][okCount]" /></td>
-									<td><app:out path="list[${count-1}][ngCount]" /></td>
-									<td><app:out path="list[${count-1}][registeredAt]" /></td>
-									<td><app:out path="list[${count-1}][launchedAt]" /></td>
-									<td><app:out path="list[${count-1}][startedAt]" /></td>
-									<td><app:out path="list[${count-1}][finishedAt]" /></td>
+									<td><s:bind path="list[${count-1}][id]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][description]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][launchedBy]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][asyncType]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][asyncStatus]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][originalFilename]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][fileSize]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][totalCount]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][okCount]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][ngCount]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][registeredAt]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][launchedAt]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][startedAt]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
+									<td><s:bind path="list[${count-1}][finishedAt]">
+											<fnd:render value="${status.actualValue}" />
+										</s:bind></td>
 								</s:nestedPath>
 							</tr>
 						</c:forEach>
