@@ -9,6 +9,7 @@ $(function() {
 			if (pageNo == current) {
 				$("a", this).removeAttr("href");
 			} else {
+				$("a", this).removeClass("ui-disabled");
 				$("a", this).click(function(event) {
 					event.preventDefault();
 					$("input[name='" + pno + "']", $(form)).val(pageNo - 1);

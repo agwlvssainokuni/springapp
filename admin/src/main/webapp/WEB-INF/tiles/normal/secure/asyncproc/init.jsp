@@ -28,8 +28,8 @@
 		<c:otherwise>
 			<f:form method="POST" servletRelativeAction="/secure/asyncproc"
 				modelAttribute="asyncProcForm" id="HasyncProcForm">
-				<f:hidden path="no" />
-				<f:hidden path="sz" />
+				<f:hidden path="pno" />
+				<f:hidden path="psz" />
 			</f:form>
 			<div class="app-portion">
 				<div class="app-pagerbox ui-helper-clearfix">
@@ -39,9 +39,9 @@
 				</div>
 				<div class="app-pagerbox ui-helper-clearfix">
 					<div class="app-floatright">
-						<app:pageSize form="#HasyncProcForm" psz="sz" />
+						<app:pageSize form="#HasyncProcForm" psz="psz" />
 						<app:pagerLink pageSet="${pagedList.pageSet}"
-							form="#HasyncProcForm" pno="no" />
+							form="#HasyncProcForm" pno="pno" />
 					</div>
 				</div>
 				<table id="asyncProcList" class="app-stripe app-multihead">
@@ -128,7 +128,7 @@
 				<div class="app-pagerbox ui-helper-clearfix">
 					<div class="app-floatright">
 						<app:pagerLink pageSet="${pagedList.pageSet}"
-							form="#HasyncProcForm" pno="no" />
+							form="#HasyncProcForm" pno="pno" />
 					</div>
 				</div>
 			</div>

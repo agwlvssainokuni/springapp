@@ -25,17 +25,16 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<form action="<c:url value="/secure/asyncproc" />" method="POST"
-			class="app-pager-form">
-			<input type="hidden" id="no" name="no"> <input type="hidden"
-				id="sz" name="sz" value="${param.sz}">
-			<security:csrfInput />
-		</form>
-		<div data-role="navbar" class="app-pager-link">
-			<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
-			<ul>
+		<f:form method="POST" servletRelativeAction="/secure/asyncproc"
+			modelAttribute="asyncProcForm" id="HasyncProcForm">
+			<f:hidden path="pno" />
+			<f:hidden path="psz" />
+		</f:form>
+		<div data-role="navbar">
+			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno"
+				data-current="${pagedList.pageSet.current.no+1}">
 				<li><a href="#"
-					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled app-page"
+					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled"
 					title="${pagedList.pageSet.prev.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.prev" /></a></li>
 			</ul>
@@ -115,11 +114,11 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div data-role="navbar" class="app-pager-link">
-			<span class="app-current" title="${pagedList.pageSet.current.no+1}"></span>
-			<ul>
+		<div data-role="navbar">
+			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno"
+				data-current="${pagedList.pageSet.current.no+1}">
 				<li><a href="#"
-					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled app-page"
+					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled"
 					title="${pagedList.pageSet.next.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.next" /></a></li>
 			</ul>
