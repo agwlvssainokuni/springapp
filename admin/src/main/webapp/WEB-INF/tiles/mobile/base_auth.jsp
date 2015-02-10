@@ -45,18 +45,19 @@
 			</h1>
 			<form action="<c:url value="/logout" />" method="POST"
 				class="ui-btn-right">
-				<input type="submit" value="<s:message code="base/auth.logout" />">
-				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}">
+				<button type="submit">
+					<s:message code="base/auth.logout" />
+				</button>
+				<security:csrfInput />
 			</form>
 		</div>
-		<div data-role="content">
+		<div role="main" class="ui-content">
 			<tiles:insertAttribute name="content" />
 		</div>
 		<div data-role="footer">
 			<div data-role="navbar" data-iconpos="left">
 				<ul>
-					<li><a hreF="<c:url value="/secure/" />" data-icon="home">
+					<li><a href="<c:url value="/secure/" />" data-icon="home">
 							<s:message code="base/auth.menu.home" />
 					</a></li>
 				</ul>
