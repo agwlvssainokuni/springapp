@@ -53,7 +53,7 @@
 			<set>
 				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
-					<property name="pattern" value="#,##0" />
+					<property name="pattern" value="###0.##" />
 				</bean>
 			</set>
 		</property>
