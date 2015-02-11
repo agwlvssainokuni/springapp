@@ -71,10 +71,13 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #end
 ################ サブ型
 #if ($prop.subtype == "整数")
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Integer ${prop.name};
 #elseif ($prop.subtype == "整数(Long)")
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Long ${prop.name};
 #else
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
 	private java.math.BigDecimal ${prop.name};
 #end
 
