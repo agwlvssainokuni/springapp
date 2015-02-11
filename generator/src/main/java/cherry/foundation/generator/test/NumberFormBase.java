@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,30 +36,39 @@ public abstract class NumberFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Integer int1;
 
 	@javax.validation.constraints.Min(value = 10, groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Integer int2;
 
 	@javax.validation.constraints.Max(value = 10, groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Integer int3;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Long long1;
 
 	@javax.validation.constraints.Min(value = 10, groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Long long2;
 
 	@javax.validation.constraints.Max(value = 10, groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
 	private Long long3;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
 	private java.math.BigDecimal decimal1;
 
 	@javax.validation.constraints.DecimalMin(value = "10", groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
 	private java.math.BigDecimal decimal2;
 
 	@javax.validation.constraints.DecimalMax(value = "10", groups = { javax.validation.groups.Default.class })
+	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
 	private java.math.BigDecimal decimal3;
 
 	@Getter

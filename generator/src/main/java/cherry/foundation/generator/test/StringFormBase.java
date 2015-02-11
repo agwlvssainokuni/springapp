@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public abstract class StringFormBase implements Serializable {
 	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
 	private String string4;
 
-	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
 	@cherry.foundation.validator.MinLength(value = 10, groups = { javax.validation.groups.Default.class })
 	private String string5;
 
