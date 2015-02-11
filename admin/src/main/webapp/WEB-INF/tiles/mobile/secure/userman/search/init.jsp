@@ -39,41 +39,41 @@
 	</h4>
 	<f:form servletRelativeAction="/secure/userman/search/execute"
 		method="POST" modelAttribute="usermanSearchForm">
-		<div data-role="fieldcontain">
+		<div class="ui-field-contain">
 			<f:label path="loginId">
 				<s:message code="usermanSearchForm.loginId" />
 			</f:label>
 			<f:input path="loginId" cssErrorClass="error" />
 		</div>
-		<div data-role="fieldcontain">
+		<div class="ui-field-contain">
 			<f:label path="registeredFrom">
 				<s:message code="usermanSearchForm.registeredFrom" />
 			</f:label>
 			<f:input path="registeredFrom" cssErrorClass="error" />
 		</div>
-		<div data-role="fieldcontain">
+		<div class="ui-field-contain">
 			<f:label path="registeredTo">
 				<s:message code="usermanSearchForm.registeredTo" />
 			</f:label>
 			<f:input path="registeredTo" cssErrorClass="error" />
 		</div>
-		<div data-role="fieldcontain">
+		<div class="ui-field-contain">
 			<f:label path="lastName">
 				<s:message code="usermanSearchForm.lastName" />
 			</f:label>
 			<f:input path="lastName" cssErrorClass="error" />
 		</div>
-		<div data-role="fieldcontain">
+		<div class="ui-field-contain">
 			<f:label path="firstName">
 				<s:message code="usermanSearchForm.firstName" />
 			</f:label>
 			<f:input path="firstName" cssErrorClass="error" />
 		</div>
-		<input type="hidden" id="sz" name="sz" value="${param.sz}">
-		<f:button type="submit">
+		<input type="hidden" name="pno" value="0" />
+		<f:button>
 			<s:message code="secure/userman/search/init.searchButton" />
 		</f:button>
-		<f:button type="submit" name="download">
+		<f:button name="download">
 			<s:message code="secure/userman/search/init.downloadButton" />
 		</f:button>
 	</f:form>

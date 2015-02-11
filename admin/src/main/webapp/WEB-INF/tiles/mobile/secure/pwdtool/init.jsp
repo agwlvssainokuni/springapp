@@ -11,15 +11,15 @@
 <h1>
 	<s:message code="secure/pwdtool/init.message.0" />
 </h1>
-<div data-role="fieldcontain">
+<div class="ui-field-contain">
 	<input id="plainText" type="password" />
 </div>
-<div data-role="fieldcontain">
+<div class="ui-field-contain">
 	<button id="encodeButton">
 		<s:message code="secure/pwdtool/init.encodeButton" />
 	</button>
 </div>
-<div data-role="fieldcontain">
+<div class="ui-field-contain">
 	<input id="encodedText" type="text" />
 </div>
 <script type="text/javascript">

@@ -43,9 +43,8 @@
 			<h1>
 				<s:message code="base/common.title" />
 			</h1>
-			<form action="<c:url value="/logout" />" method="POST"
-				class="ui-btn-right">
-				<button type="submit">
+			<form action="<c:url value="/logout" />" method="POST">
+				<button type="submit" class="ui-btn-right">
 					<s:message code="base/auth.logout" />
 				</button>
 				<security:csrfInput />
@@ -55,7 +54,7 @@
 			<tiles:insertAttribute name="content" />
 		</div>
 		<div data-role="footer">
-			<div data-role="navbar" data-iconpos="left">
+			<div data-role="navbar">
 				<ul>
 					<li><a href="<c:url value="/secure/" />" data-icon="home">
 							<s:message code="base/auth.menu.home" />

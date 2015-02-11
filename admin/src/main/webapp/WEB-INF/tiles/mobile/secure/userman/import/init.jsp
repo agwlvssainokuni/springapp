@@ -20,7 +20,7 @@
 <f:form servletRelativeAction="/secure/userman/import/execute"
 	method="POST" modelAttribute="usermanImportForm"
 	enctype="multipart/form-data">
-	<div data-role="fieldcontain">
+	<div class="ui-field-contain">
 		<f:label path="file">
 			<s:message code="usermanImportForm.file" />
 		</f:label>

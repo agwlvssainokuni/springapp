@@ -26,11 +26,11 @@
 	</div>
 </c:if>
 <form id="loginForm" action="<c:url value="/login/req" />" method="POST">
-	<div data-role="fieldcontain">
+	<div class="ui-field-contain">
 		<label for="loginId"><s:message code="loginForm.loginId" /></label> <input
 			type="text" id="loginId" name="loginId" />
 	</div>
-	<div data-role="fieldcontain">
+	<div class="ui-field-contain">
 		<label for="password"><s:message code="loginForm.password" /></label>
 		<input type="password" id="password" name="password" />
 	</div>
