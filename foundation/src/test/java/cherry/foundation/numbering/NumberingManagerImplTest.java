@@ -216,8 +216,7 @@ public class NumberingManagerImplTest {
 		store.setNumberingDefinitionMap(map);
 		store.afterPropertiesSet();
 		NumberingManagerImpl impl = new NumberingManagerImpl();
-		impl.setCacheSize(10L);
-		impl.setCacheTimeoutSec(10L);
+		impl.setCacheSpec("maximumSize=10,expireAfterAccess=10s");
 		impl.setNumberingStore(store);
 		impl.afterPropertiesSet();
 		return impl;
