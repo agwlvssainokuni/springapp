@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,8 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 
 	private LoadingCache<String, List<CodeEntry>> listCache;
 
+	private final CodeEntry nullEntry = new CodeEntry();
+
 	public void setCodeStore(CodeStore codeStore) {
 		this.codeStore = codeStore;
 	}
@@ -71,7 +74,7 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 		entryCache = CacheBuilder.from(entryCacheSpec).build(new CacheLoader<Pair<String, String>, CodeEntry>() {
 			@Override
 			public CodeEntry load(Pair<String, String> key) {
-				return codeStore.findByValue(key.getLeft(), key.getRight());
+				return ObjectUtils.firstNonNull(codeStore.findByValue(key.getLeft(), key.getRight()), nullEntry);
 			}
 		});
 		listCache = CacheBuilder.from(listCacheSpec).build(new CacheLoader<String, List<CodeEntry>>() {
@@ -91,7 +94,7 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Transactional(readOnly = true)
 	@Override
 	public boolean isValidValue(String codeName, String value) {
-		return getEntry(codeName, value) != null;
+		return getEntry(codeName, value) != nullEntry;
 	}
 
 	@Transactional(readOnly = true)
