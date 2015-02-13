@@ -39,15 +39,6 @@ public class CodeStoreImpl implements CodeStore {
 
 	@Transactional(readOnly = true)
 	@Override
-	public boolean isValidValue(String codeName, String value) {
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(qcm);
-		query.where(qcm.name.eq(codeName), qcm.value.eq(value), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.exists(query);
-	}
-
-	@Transactional(readOnly = true)
-	@Override
 	public CodeEntry findByValue(String codeName, String value) {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(qcm);

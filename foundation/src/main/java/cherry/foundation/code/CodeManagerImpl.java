@@ -42,15 +42,13 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 
 	private String valueTemplate;
 
-	private String valueCacheSpec;
+	private String entryCacheSpec;
 
 	private String listCacheSpec;
 
-	private LoadingCache<Pair<String, String>, Boolean> isValidValueCache;
+	private LoadingCache<Pair<String, String>, CodeEntry> entryCache;
 
-	private LoadingCache<Pair<String, String>, CodeEntry> findByValueCache;
-
-	private LoadingCache<String, List<CodeEntry>> getCodeListCache;
+	private LoadingCache<String, List<CodeEntry>> listCache;
 
 	public void setCodeStore(CodeStore codeStore) {
 		this.codeStore = codeStore;
@@ -60,8 +58,8 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 		this.valueTemplate = valueTemplate;
 	}
 
-	public void setValueCacheSpec(String valueCacheSpec) {
-		this.valueCacheSpec = valueCacheSpec;
+	public void setEntryCacheSpec(String entryCacheSpec) {
+		this.entryCacheSpec = entryCacheSpec;
 	}
 
 	public void setListCacheSpec(String listCacheSpec) {
@@ -70,19 +68,13 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		isValidValueCache = CacheBuilder.from(valueCacheSpec).build(new CacheLoader<Pair<String, String>, Boolean>() {
-			@Override
-			public Boolean load(Pair<String, String> key) {
-				return codeStore.isValidValue(key.getLeft(), key.getRight());
-			}
-		});
-		findByValueCache = CacheBuilder.from(valueCacheSpec).build(new CacheLoader<Pair<String, String>, CodeEntry>() {
+		entryCache = CacheBuilder.from(entryCacheSpec).build(new CacheLoader<Pair<String, String>, CodeEntry>() {
 			@Override
 			public CodeEntry load(Pair<String, String> key) {
 				return codeStore.findByValue(key.getLeft(), key.getRight());
 			}
 		});
-		getCodeListCache = CacheBuilder.from(listCacheSpec).build(new CacheLoader<String, List<CodeEntry>>() {
+		listCache = CacheBuilder.from(listCacheSpec).build(new CacheLoader<String, List<CodeEntry>>() {
 			@Override
 			public List<CodeEntry> load(String key) {
 				return codeStore.getCodeList(key);
@@ -99,11 +91,7 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Transactional(readOnly = true)
 	@Override
 	public boolean isValidValue(String codeName, String value) {
-		try {
-			return isValidValueCache.get(Pair.of(codeName, value));
-		} catch (ExecutionException ex) {
-			throw new IllegalStateException(ex);
-		}
+		return getEntry(codeName, value) != null;
 	}
 
 	@Transactional(readOnly = true)
@@ -127,15 +115,11 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Transactional(readOnly = true)
 	@Override
 	public CodeEntry findByValue(String codeName, String value, boolean plainLabel) {
-		try {
-			CodeEntry entry = findByValueCache.get(Pair.of(codeName, value));
-			if (plainLabel) {
-				return entry;
-			}
-			return adjustCodeEntry(entry);
-		} catch (ExecutionException ex) {
-			throw new IllegalStateException(ex);
+		CodeEntry entry = getEntry(codeName, value);
+		if (plainLabel) {
+			return entry;
 		}
+		return adjustCodeEntry(entry);
 	}
 
 	@Transactional(readOnly = true)
@@ -159,19 +143,15 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Transactional(readOnly = true)
 	@Override
 	public List<CodeEntry> getCodeList(String codeName, boolean plainLabel) {
-		try {
-			List<CodeEntry> list = getCodeListCache.get(codeName);
-			if (plainLabel) {
-				return list;
-			}
-			List<CodeEntry> result = new ArrayList<>(list.size());
-			for (CodeEntry entry : list) {
-				result.add(adjustCodeEntry(entry));
-			}
-			return result;
-		} catch (ExecutionException ex) {
-			throw new IllegalStateException(ex);
+		List<CodeEntry> list = getList(codeName);
+		if (plainLabel) {
+			return list;
 		}
+		List<CodeEntry> result = new ArrayList<>(list.size());
+		for (CodeEntry entry : list) {
+			result.add(adjustCodeEntry(entry));
+		}
+		return result;
 	}
 
 	@Transactional(readOnly = true)
@@ -195,20 +175,16 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Transactional(readOnly = true)
 	@Override
 	public Map<String, String> getCodeMap(String codeName, boolean plainLabel) {
-		try {
-			List<CodeEntry> list = getCodeListCache.get(codeName);
-			Map<String, String> result = new LinkedHashMap<>();
-			for (CodeEntry entry : list) {
-				if (plainLabel) {
-					result.put(entry.getValue(), entry.getLabel());
-				} else {
-					result.put(entry.getValue(), formatLabel(entry.getValue(), entry.getLabel()));
-				}
+		List<CodeEntry> list = getList(codeName);
+		Map<String, String> result = new LinkedHashMap<>();
+		for (CodeEntry entry : list) {
+			if (plainLabel) {
+				result.put(entry.getValue(), entry.getLabel());
+			} else {
+				result.put(entry.getValue(), formatLabel(entry.getValue(), entry.getLabel()));
 			}
-			return result;
-		} catch (ExecutionException ex) {
-			throw new IllegalStateException(ex);
 		}
+		return result;
 	}
 
 	private CodeEntry adjustCodeEntry(CodeEntry entry) {
@@ -221,6 +197,22 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 
 	private String formatLabel(String value, String label) {
 		return MessageFormat.format(valueTemplate, value, label);
+	}
+
+	private CodeEntry getEntry(String codeName, String value) {
+		try {
+			return entryCache.get(Pair.of(codeName, value));
+		} catch (ExecutionException ex) {
+			throw new IllegalStateException(ex);
+		}
+	}
+
+	private List<CodeEntry> getList(String codeName) {
+		try {
+			return listCache.get(codeName);
+		} catch (ExecutionException ex) {
+			throw new IllegalStateException(ex);
+		}
 	}
 
 }

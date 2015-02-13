@@ -29,15 +29,6 @@ public class SimpleCodeStore implements CodeStore {
 	}
 
 	@Override
-	public boolean isValidValue(String codeName, String value) {
-		Map<String, String> map = codeDefMap.get(codeName);
-		if (map == null) {
-			return false;
-		}
-		return map.containsKey(value);
-	}
-
-	@Override
 	public CodeEntry findByValue(String codeName, String value) {
 		Map<String, String> map = codeDefMap.get(codeName);
 		if (map == null) {

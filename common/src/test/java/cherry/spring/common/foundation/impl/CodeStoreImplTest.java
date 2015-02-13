@@ -17,7 +17,6 @@
 package cherry.spring.common.foundation.impl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -84,16 +83,6 @@ public class CodeStoreImplTest {
 	@Test
 	public void testInitialization() {
 		assertNotNull(codeStore);
-	}
-
-	@Test
-	public void testIsValidValue() {
-		assertFalse(codeStore.isValidValue("CODE0", "00"));
-		assertTrue(codeStore.isValidValue("CODE0", "01"));
-		assertTrue(codeStore.isValidValue("CODE0", "02"));
-		assertTrue(codeStore.isValidValue("CODE0", "03"));
-		assertFalse(codeStore.isValidValue("CODE0", "04"));
-		assertFalse(codeStore.isValidValue("CODE1", "01"));
 	}
 
 	@Test

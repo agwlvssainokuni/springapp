@@ -17,9 +17,7 @@
 package cherry.foundation.code;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,16 +26,6 @@ import java.util.Map;
 import org.junit.Test;
 
 public class SimpleCodeStoreTest {
-
-	@Test
-	public void testIsValidValue() {
-		CodeStore codeStore = create();
-		assertFalse(codeStore.isValidValue("NONE", "01"));
-		assertFalse(codeStore.isValidValue("CODE0", "00"));
-		assertTrue(codeStore.isValidValue("CODE0", "01"));
-		assertTrue(codeStore.isValidValue("CODE0", "02"));
-		assertFalse(codeStore.isValidValue("CODE0", "03"));
-	}
 
 	@Test
 	public void testFindByValue() {
