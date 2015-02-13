@@ -215,8 +215,8 @@
 	<!-- 区分値管理機能 -->
 	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
 		<property name="valueTemplate" value="{0} - {1}" />
-		<property name="cacheSize" value="100" />
-		<property name="cacheTimeoutSec" value="3600" />
+		<property name="valueCacheSpec" value="maximumSize=1000,expireAfterAccess=60m" />
+		<property name="listCacheSpec" value="maximumSize=100,expireAfterAccess=60m" />
 		<property name="codeStore" ref="codeStore" />
 	</bean>
 

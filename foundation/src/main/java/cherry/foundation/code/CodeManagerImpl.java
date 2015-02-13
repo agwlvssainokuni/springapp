@@ -22,7 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.InitializingBean;
@@ -43,9 +42,9 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 
 	private String valueTemplate;
 
-	private long cacheSize;
+	private String valueCacheSpec;
 
-	private long cacheTimeoutSec;
+	private String listCacheSpec;
 
 	private LoadingCache<Pair<String, String>, Boolean> isValidValueCache;
 
@@ -61,39 +60,34 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 		this.valueTemplate = valueTemplate;
 	}
 
-	public void setCacheSize(long cacheSize) {
-		this.cacheSize = cacheSize;
+	public void setValueCacheSpec(String valueCacheSpec) {
+		this.valueCacheSpec = valueCacheSpec;
 	}
 
-	public void setCacheTimeoutSec(long cacheTimeoutSec) {
-		this.cacheTimeoutSec = cacheTimeoutSec;
+	public void setListCacheSpec(String listCacheSpec) {
+		this.listCacheSpec = listCacheSpec;
 	}
 
 	@Override
 	public void afterPropertiesSet() {
-		isValidValueCache = CacheBuilder.newBuilder().maximumSize(cacheSize)
-				.expireAfterAccess(cacheTimeoutSec, TimeUnit.SECONDS)
-				.build(new CacheLoader<Pair<String, String>, Boolean>() {
-					@Override
-					public Boolean load(Pair<String, String> key) {
-						return codeStore.isValidValue(key.getLeft(), key.getRight());
-					}
-				});
-		findByValueCache = CacheBuilder.newBuilder().maximumSize(cacheSize)
-				.expireAfterAccess(cacheTimeoutSec, TimeUnit.SECONDS)
-				.build(new CacheLoader<Pair<String, String>, CodeEntry>() {
-					@Override
-					public CodeEntry load(Pair<String, String> key) {
-						return codeStore.findByValue(key.getLeft(), key.getRight());
-					}
-				});
-		getCodeListCache = CacheBuilder.newBuilder().maximumSize(cacheSize)
-				.expireAfterAccess(cacheTimeoutSec, TimeUnit.SECONDS).build(new CacheLoader<String, List<CodeEntry>>() {
-					@Override
-					public List<CodeEntry> load(String key) {
-						return codeStore.getCodeList(key);
-					}
-				});
+		isValidValueCache = CacheBuilder.from(valueCacheSpec).build(new CacheLoader<Pair<String, String>, Boolean>() {
+			@Override
+			public Boolean load(Pair<String, String> key) {
+				return codeStore.isValidValue(key.getLeft(), key.getRight());
+			}
+		});
+		findByValueCache = CacheBuilder.from(valueCacheSpec).build(new CacheLoader<Pair<String, String>, CodeEntry>() {
+			@Override
+			public CodeEntry load(Pair<String, String> key) {
+				return codeStore.findByValue(key.getLeft(), key.getRight());
+			}
+		});
+		getCodeListCache = CacheBuilder.from(listCacheSpec).build(new CacheLoader<String, List<CodeEntry>>() {
+			@Override
+			public List<CodeEntry> load(String key) {
+				return codeStore.getCodeList(key);
+			}
+		});
 	}
 
 	@Transactional(readOnly = true)
