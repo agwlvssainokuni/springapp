@@ -3,6 +3,7 @@ package cherry.foundation.code;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,13 @@ public class CodeManagerImplTest {
 	@Test
 	public void testFindByValue_byENUM() {
 
+		try {
+			codeManager.findByValue(CodeType.NONE, "01");
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Not defined for (NONE, 01)", ex.getMessage());
+		}
+
 		CodeEntry entry01 = codeManager.findByValue(CodeType.CODE0, "01");
 		assertEquals("01", entry01.getValue());
 		assertEquals("01 - LABEL01", entry01.getLabel());
@@ -66,10 +74,24 @@ public class CodeManagerImplTest {
 		assertEquals("02", entry02p.getValue());
 		assertEquals("LABEL02", entry02p.getLabel());
 		assertEquals(0, entry02p.getSortOrder());
+
+		try {
+			codeManager.findByValue(CodeType.CODE0, "03");
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Not defined for (CODE0, 03)", ex.getMessage());
+		}
 	}
 
 	@Test
 	public void testFindByValue_byNAME() {
+
+		try {
+			codeManager.findByValue("NONE", "01");
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Not defined for (NONE, 01)", ex.getMessage());
+		}
 
 		CodeEntry entry01 = codeManager.findByValue("CODE0", "01");
 		assertEquals("01", entry01.getValue());
@@ -88,6 +110,13 @@ public class CodeManagerImplTest {
 		assertEquals("02", entry02p.getValue());
 		assertEquals("LABEL02", entry02p.getLabel());
 		assertEquals(0, entry02p.getSortOrder());
+
+		try {
+			codeManager.findByValue("CODE0", "03");
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Not defined for (CODE0, 03)", ex.getMessage());
+		}
 	}
 
 	@Test

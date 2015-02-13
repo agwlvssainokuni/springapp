@@ -16,6 +16,8 @@
 
 package cherry.foundation.code;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -119,6 +121,7 @@ public class CodeManagerImpl implements CodeManager, InitializingBean {
 	@Override
 	public CodeEntry findByValue(String codeName, String value, boolean plainLabel) {
 		CodeEntry entry = getEntry(codeName, value);
+		checkArgument(entry != nullEntry, "Not defined for (%s, %s)", codeName, value);
 		if (plainLabel) {
 			return entry;
 		}
