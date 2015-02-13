@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.text.MessageFormat;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,9 +35,7 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 
 	private NumberingStore numberingStore;
 
-	private long cacheSize;
-
-	private long cacheTimeoutSec;
+	private String cacheSpec;
 
 	private LoadingCache<String, NumberingDefinition> definitionCache;
 
@@ -46,24 +43,18 @@ public class NumberingManagerImpl implements NumberingManager, InitializingBean 
 		this.numberingStore = numberingStore;
 	}
 
-	public void setCacheSize(long cacheSize) {
-		this.cacheSize = cacheSize;
-	}
-
-	public void setCacheTimeoutSec(long cacheTimeoutSec) {
-		this.cacheTimeoutSec = cacheTimeoutSec;
+	public void setCacheSpec(String cacheSpec) {
+		this.cacheSpec = cacheSpec;
 	}
 
 	@Override
 	public void afterPropertiesSet() {
-		definitionCache = CacheBuilder.newBuilder().maximumSize(cacheSize)
-				.expireAfterAccess(cacheTimeoutSec, TimeUnit.SECONDS)
-				.build(new CacheLoader<String, NumberingDefinition>() {
-					@Override
-					public NumberingDefinition load(String key) {
-						return numberingStore.getDefinition(key);
-					}
-				});
+		definitionCache = CacheBuilder.from(cacheSpec).build(new CacheLoader<String, NumberingDefinition>() {
+			@Override
+			public NumberingDefinition load(String key) {
+				return numberingStore.getDefinition(key);
+			}
+		});
 	}
 
 	@Transactional

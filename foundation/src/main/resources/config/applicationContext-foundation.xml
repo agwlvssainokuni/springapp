@@ -222,8 +222,7 @@
 
 	<!-- 発番管理機能 -->
 	<bean id="numberingManager" class="cherry.foundation.numbering.NumberingManagerImpl">
-		<property name="cacheSize" value="10" />
-		<property name="cacheTimeoutSec" value="3600" />
+		<property name="cacheSpec" value="maximumSize=50,expireAfterAccess=60m" />
 		<property name="numberingStore" ref="numberingStore" />
 	</bean>
 
