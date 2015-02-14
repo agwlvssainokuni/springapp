@@ -294,6 +294,7 @@
 				<bean class="cherry.goods.wakachi.SpaceCharSeparator" />
 				<bean class="cherry.goods.wakachi.UnicodeBlockSeparator" />
 				<bean class="cherry.goods.wakachi.NgramSeparator">
+					<property name="applyToAscii" value="false" />
 					<property name="length" value="2" />
 				</bean>
 			</list>

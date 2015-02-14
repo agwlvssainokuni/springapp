@@ -42,13 +42,10 @@ public class WakachigakiSeparatorTest {
 	@Test
 	public void testSeparate_ASCII_SENTENCE() {
 		List<String> list = separator.separate("abc def ghi");
-		assertEquals(6, list.size());
-		assertEquals("ab", list.get(0));
-		assertEquals("bc", list.get(1));
-		assertEquals("de", list.get(2));
-		assertEquals("ef", list.get(3));
-		assertEquals("gh", list.get(4));
-		assertEquals("hi", list.get(5));
+		assertEquals(3, list.size());
+		assertEquals("abc", list.get(0));
+		assertEquals("def", list.get(1));
+		assertEquals("ghi", list.get(2));
 	}
 
 	@Test
