@@ -22,6 +22,7 @@
 				and !execution(* cherry.goods.crypto..*.*(..))
 				and !execution(* cherry.foundation.telno..*.*(..))
 				and !execution(* cherry.goods.telno..*.*(..))
+				and !execution(* cherry.goods.wakachi..*.*(..))
 				" />
 	</aop:config>
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
@@ -282,6 +283,19 @@
 				<value>#,##0.0</value>
 				<value>#,##0.00</value>
 				<value>#,##0.000</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 分かち書き -->
+	<bean id="wakachigakiSeparator" class="cherry.goods.wakachi.CompositeSeparator">
+		<property name="separators">
+			<list value-type="cherry.goods.wakachi.Separator">
+				<bean class="cherry.goods.wakachi.SpaceCharSeparator" />
+				<bean class="cherry.goods.wakachi.UnicodeBlockSeparator" />
+				<bean class="cherry.goods.wakachi.NgramSeparator">
+					<property name="length" value="2" />
+				</bean>
 			</list>
 		</property>
 	</bean>
