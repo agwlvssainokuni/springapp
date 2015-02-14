@@ -30,6 +30,9 @@ public class NgramSeparator implements Separator {
 	@Override
 	public List<String> separate(String text) {
 		List<String> list = new LinkedList<>();
+		if (text.isEmpty()) {
+			return list;
+		}
 		for (int i = length; i <= text.length(); i++) {
 			list.add(text.substring(i - length, i));
 		}
