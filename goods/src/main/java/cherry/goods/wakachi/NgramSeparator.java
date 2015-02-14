@@ -16,12 +16,21 @@
 
 package cherry.goods.wakachi;
 
+import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
+import static java.lang.Character.UnicodeBlock.of;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class NgramSeparator implements Separator {
 
+	private boolean applyToAscii;
+
 	private int length;
+
+	public void setApplyToAscii(boolean applyToAscii) {
+		this.applyToAscii = applyToAscii;
+	}
 
 	public void setLength(int length) {
 		this.length = length;
@@ -32,6 +41,12 @@ public class NgramSeparator implements Separator {
 		List<String> list = new LinkedList<>();
 		if (text.isEmpty()) {
 			return list;
+		}
+		if (of(text.charAt(0)) == BASIC_LATIN) {
+			if (!applyToAscii) {
+				list.add(text);
+				return list;
+			}
 		}
 		for (int i = length; i <= text.length(); i++) {
 			list.add(text.substring(i - length, i));

@@ -30,6 +30,7 @@ public class NgramSeparatorTest {
 	@Before
 	public void before() {
 		separator = new NgramSeparator();
+		separator.setApplyToAscii(true);
 		separator.setLength(2);
 	}
 
@@ -47,10 +48,24 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
+	public void testSeparate_1FULLCHAR() {
+		List<String> list = separator.separate("あ");
+		assertEquals(1, list.size());
+		assertEquals("あ", list.get(0));
+	}
+
+	@Test
 	public void testSeparate_2CHAR() {
 		List<String> list = separator.separate("ab");
 		assertEquals(1, list.size());
 		assertEquals("ab", list.get(0));
+	}
+
+	@Test
+	public void testSeparate_2FULLCHAR() {
+		List<String> list = separator.separate("あい");
+		assertEquals(1, list.size());
+		assertEquals("あい", list.get(0));
 	}
 
 	@Test
@@ -62,34 +77,78 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_10CHAR() {
-		List<String> list = separator.separate("abcdefghij");
-		assertEquals(9, list.size());
+	public void testSeparate_3FULLCHAR() {
+		List<String> list = separator.separate("あいう");
+		assertEquals(2, list.size());
+		assertEquals("あい", list.get(0));
+		assertEquals("いう", list.get(1));
+	}
+
+	@Test
+	public void testSeparate_5CHAR() {
+		List<String> list = separator.separate("abcde");
+		assertEquals(4, list.size());
 		assertEquals("ab", list.get(0));
 		assertEquals("bc", list.get(1));
 		assertEquals("cd", list.get(2));
 		assertEquals("de", list.get(3));
-		assertEquals("ef", list.get(4));
-		assertEquals("fg", list.get(5));
-		assertEquals("gh", list.get(6));
-		assertEquals("hi", list.get(7));
-		assertEquals("ij", list.get(8));
 	}
 
 	@Test
-	public void testSeparate_3GRAM_10CHAR() {
+	public void testSeparate_5FULLCHAR() {
+		List<String> list = separator.separate("あいうえお");
+		assertEquals(4, list.size());
+		assertEquals("あい", list.get(0));
+		assertEquals("いう", list.get(1));
+		assertEquals("うえ", list.get(2));
+		assertEquals("えお", list.get(3));
+	}
+
+	@Test
+	public void testSeparate_3GRAM_5CHAR() {
 		NgramSeparator sep = new NgramSeparator();
+		sep.setApplyToAscii(true);
 		sep.setLength(3);
-		List<String> list = sep.separate("abcdefghij");
-		assertEquals(8, list.size());
+		List<String> list = sep.separate("abcde");
+		assertEquals(3, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("bcd", list.get(1));
 		assertEquals("cde", list.get(2));
-		assertEquals("def", list.get(3));
-		assertEquals("efg", list.get(4));
-		assertEquals("fgh", list.get(5));
-		assertEquals("ghi", list.get(6));
-		assertEquals("hij", list.get(7));
+	}
+
+	@Test
+	public void testSeparate_3GRAM_5FULLCHAR() {
+		NgramSeparator sep = new NgramSeparator();
+		sep.setApplyToAscii(true);
+		sep.setLength(3);
+		List<String> list = sep.separate("あいうえお");
+		assertEquals(3, list.size());
+		assertEquals("あいう", list.get(0));
+		assertEquals("いうえ", list.get(1));
+		assertEquals("うえお", list.get(2));
+	}
+
+	@Test
+	public void testSeparate_5CHAR_THROUGH_ASCII() {
+		NgramSeparator sep = new NgramSeparator();
+		sep.setApplyToAscii(false);
+		sep.setLength(2);
+		List<String> list = sep.separate("abcde");
+		assertEquals(1, list.size());
+		assertEquals("abcde", list.get(0));
+	}
+
+	@Test
+	public void testSeparate_5FULLCHAR_THROUGH_ASCII() {
+		NgramSeparator sep = new NgramSeparator();
+		sep.setApplyToAscii(false);
+		sep.setLength(2);
+		List<String> list = sep.separate("あいうえお");
+		assertEquals(4, list.size());
+		assertEquals("あい", list.get(0));
+		assertEquals("いう", list.get(1));
+		assertEquals("うえ", list.get(2));
+		assertEquals("えお", list.get(3));
 	}
 
 }
