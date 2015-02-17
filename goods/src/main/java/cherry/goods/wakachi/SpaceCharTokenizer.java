@@ -21,10 +21,10 @@ import static java.lang.Character.isSpaceChar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SpaceCharSeparator implements Separator {
+public class SpaceCharTokenizer implements Tokenizer {
 
 	@Override
-	public List<String> separate(String text) {
+	public List<String> tokenize(String text) {
 		int beginIndex = -1;
 		List<String> list = new LinkedList<>();
 		for (int i = 0; i < text.length(); i++) {

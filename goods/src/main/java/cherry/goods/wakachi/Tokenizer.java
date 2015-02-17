@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * 分かち書き機能。<br />
  */
-public interface Separator {
+public interface Tokenizer {
 
-	List<String> separate(String text);
+	List<String> tokenize(String text);
 
 }

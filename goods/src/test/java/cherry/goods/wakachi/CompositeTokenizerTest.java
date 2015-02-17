@@ -24,30 +24,30 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CompositeSeparatorTest {
+public class CompositeTokenizerTest {
 
-	private CompositeSeparator separator;
+	private CompositeTokenizer tokenizer;
 
 	@Before
 	public void before() {
-		SpaceCharSeparator sep0 = new SpaceCharSeparator();
-		UnicodeBlockSeparator sep1 = new UnicodeBlockSeparator();
-		NgramSeparator sep2 = new NgramSeparator();
-		sep2.setApplyToAscii(false);
-		sep2.setLength(2);
-		separator = new CompositeSeparator();
-		separator.setSeparators(asList(sep0, sep1, sep2));
+		SpaceCharTokenizer tk0 = new SpaceCharTokenizer();
+		UnicodeBlockTokenizer tk1 = new UnicodeBlockTokenizer();
+		NgramTokenizer tk2 = new NgramTokenizer();
+		tk2.setApplyToAscii(false);
+		tk2.setLength(2);
+		tokenizer = new CompositeTokenizer();
+		tokenizer.setTokenizers(asList(tk0, tk1, tk2));
 	}
 
 	@Test
-	public void testSeparate_EMPTY() {
-		List<String> list = separator.separate("");
+	public void testTokenize_EMPTY() {
+		List<String> list = tokenizer.tokenize("");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_ASCII_SENTENCE() {
-		List<String> list = separator.separate("abc def ghi");
+	public void testTokenize_ASCII_SENTENCE() {
+		List<String> list = tokenizer.tokenize("abc def ghi");
 		assertEquals(3, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("def", list.get(1));
@@ -55,8 +55,8 @@ public class CompositeSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_HIRA_KANJI_SENTENCE() {
-		List<String> list = separator.separate("これは、漢字文字列と、ひらがな文字列の、テストケース");
+	public void testTokenize_HIRA_KANJI_SENTENCE() {
+		List<String> list = tokenizer.tokenize("これは、漢字文字列と、ひらがな文字列の、テストケース");
 		assertEquals(21, list.size());
 		assertEquals("これ", list.get(0));
 		assertEquals("れは", list.get(1));

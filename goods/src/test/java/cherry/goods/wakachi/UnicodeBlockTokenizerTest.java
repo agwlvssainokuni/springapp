@@ -23,39 +23,39 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnicodeBlockSeparatorTest {
+public class UnicodeBlockTokenizerTest {
 
-	private UnicodeBlockSeparator separator;
+	private UnicodeBlockTokenizer tokenizer;
 
 	@Before
 	public void before() {
-		separator = new UnicodeBlockSeparator();
+		tokenizer = new UnicodeBlockTokenizer();
 	}
 
 	@Test
-	public void testSeparator_EMPTY() {
-		List<String> list = separator.separate("");
+	public void testTokenize_EMPTY() {
+		List<String> list = tokenizer.tokenize("");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparator_ASCII() {
-		List<String> list = separator.separate("abc");
+	public void testTokenize_ASCII() {
+		List<String> list = tokenizer.tokenize("abc");
 		assertEquals(1, list.size());
 		assertEquals("abc", list.get(0));
 	}
 
 	@Test
-	public void testSeparator_ASCII_HIRA() {
-		List<String> list = separator.separate("abcあいう");
+	public void testTokenize_ASCII_HIRA() {
+		List<String> list = tokenizer.tokenize("abcあいう");
 		assertEquals(2, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("あいう", list.get(1));
 	}
 
 	@Test
-	public void testSeparator_ASCII_HIRA_KANJI() {
-		List<String> list = separator.separate("abcあいう漢字");
+	public void testTokenize_ASCII_HIRA_KANJI() {
+		List<String> list = tokenizer.tokenize("abcあいう漢字");
 		assertEquals(3, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("あいう", list.get(1));

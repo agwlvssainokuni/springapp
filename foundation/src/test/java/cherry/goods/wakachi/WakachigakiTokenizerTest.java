@@ -28,20 +28,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class WakachigakiSeparatorTest {
+public class WakachigakiTokenizerTest {
 
 	@Autowired
-	private Separator separator;
+	private Tokenizer tokenizer;
 
 	@Test
-	public void testSeparate_EMPTY() {
-		List<String> list = separator.separate("");
+	public void testTokenize_EMPTY() {
+		List<String> list = tokenizer.tokenize("");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_ASCII_SENTENCE() {
-		List<String> list = separator.separate("abc def ghi");
+	public void testTokenize_ASCII_SENTENCE() {
+		List<String> list = tokenizer.tokenize("abc def ghi");
 		assertEquals(3, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("def", list.get(1));
@@ -49,8 +49,8 @@ public class WakachigakiSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_HIRA_KANJI_SENTENCE() {
-		List<String> list = separator.separate("これは、漢字文字列と、ひらがな文字列の、テストケース");
+	public void testTokenize_HIRA_KANJI_SENTENCE() {
+		List<String> list = tokenizer.tokenize("これは、漢字文字列と、ひらがな文字列の、テストケース");
 		assertEquals(21, list.size());
 		assertEquals("これ", list.get(0));
 		assertEquals("れは", list.get(1));

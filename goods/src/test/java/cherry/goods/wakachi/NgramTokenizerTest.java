@@ -23,70 +23,70 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class NgramSeparatorTest {
+public class NgramTokenizerTest {
 
-	private NgramSeparator separator;
+	private NgramTokenizer tokenier;
 
 	@Before
 	public void before() {
-		separator = new NgramSeparator();
-		separator.setApplyToAscii(true);
-		separator.setLength(2);
+		tokenier = new NgramTokenizer();
+		tokenier.setApplyToAscii(true);
+		tokenier.setLength(2);
 	}
 
 	@Test
-	public void testSeparate_EMPTY() {
-		List<String> list = separator.separate("");
+	public void testTokenize_EMPTY() {
+		List<String> list = tokenier.tokenize("");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_1CHAR() {
-		List<String> list = separator.separate("a");
+	public void testTokenize_1CHAR() {
+		List<String> list = tokenier.tokenize("a");
 		assertEquals(1, list.size());
 		assertEquals("a", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_1FULLCHAR() {
-		List<String> list = separator.separate("あ");
+	public void testTokenize_1FULLCHAR() {
+		List<String> list = tokenier.tokenize("あ");
 		assertEquals(1, list.size());
 		assertEquals("あ", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_2CHAR() {
-		List<String> list = separator.separate("ab");
+	public void testTokenize_2CHAR() {
+		List<String> list = tokenier.tokenize("ab");
 		assertEquals(1, list.size());
 		assertEquals("ab", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_2FULLCHAR() {
-		List<String> list = separator.separate("あい");
+	public void testTokenize_2FULLCHAR() {
+		List<String> list = tokenier.tokenize("あい");
 		assertEquals(1, list.size());
 		assertEquals("あい", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_3CHAR() {
-		List<String> list = separator.separate("abc");
+	public void testTokenize_3CHAR() {
+		List<String> list = tokenier.tokenize("abc");
 		assertEquals(2, list.size());
 		assertEquals("ab", list.get(0));
 		assertEquals("bc", list.get(1));
 	}
 
 	@Test
-	public void testSeparate_3FULLCHAR() {
-		List<String> list = separator.separate("あいう");
+	public void testTokenize_3FULLCHAR() {
+		List<String> list = tokenier.tokenize("あいう");
 		assertEquals(2, list.size());
 		assertEquals("あい", list.get(0));
 		assertEquals("いう", list.get(1));
 	}
 
 	@Test
-	public void testSeparate_5CHAR() {
-		List<String> list = separator.separate("abcde");
+	public void testTokenize_5CHAR() {
+		List<String> list = tokenier.tokenize("abcde");
 		assertEquals(4, list.size());
 		assertEquals("ab", list.get(0));
 		assertEquals("bc", list.get(1));
@@ -95,8 +95,8 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_5FULLCHAR() {
-		List<String> list = separator.separate("あいうえお");
+	public void testTokenize_5FULLCHAR() {
+		List<String> list = tokenier.tokenize("あいうえお");
 		assertEquals(4, list.size());
 		assertEquals("あい", list.get(0));
 		assertEquals("いう", list.get(1));
@@ -105,11 +105,11 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_3GRAM_5CHAR() {
-		NgramSeparator sep = new NgramSeparator();
-		sep.setApplyToAscii(true);
-		sep.setLength(3);
-		List<String> list = sep.separate("abcde");
+	public void testTokenize_3GRAM_5CHAR() {
+		NgramTokenizer tk = new NgramTokenizer();
+		tk.setApplyToAscii(true);
+		tk.setLength(3);
+		List<String> list = tk.tokenize("abcde");
 		assertEquals(3, list.size());
 		assertEquals("abc", list.get(0));
 		assertEquals("bcd", list.get(1));
@@ -117,11 +117,11 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_3GRAM_5FULLCHAR() {
-		NgramSeparator sep = new NgramSeparator();
-		sep.setApplyToAscii(true);
-		sep.setLength(3);
-		List<String> list = sep.separate("あいうえお");
+	public void testTokenize_3GRAM_5FULLCHAR() {
+		NgramTokenizer tk = new NgramTokenizer();
+		tk.setApplyToAscii(true);
+		tk.setLength(3);
+		List<String> list = tk.tokenize("あいうえお");
 		assertEquals(3, list.size());
 		assertEquals("あいう", list.get(0));
 		assertEquals("いうえ", list.get(1));
@@ -129,21 +129,21 @@ public class NgramSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_5CHAR_THROUGH_ASCII() {
-		NgramSeparator sep = new NgramSeparator();
-		sep.setApplyToAscii(false);
-		sep.setLength(2);
-		List<String> list = sep.separate("abcde");
+	public void testTokenize_5CHAR_THROUGH_ASCII() {
+		NgramTokenizer tk = new NgramTokenizer();
+		tk.setApplyToAscii(false);
+		tk.setLength(2);
+		List<String> list = tk.tokenize("abcde");
 		assertEquals(1, list.size());
 		assertEquals("abcde", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_5FULLCHAR_THROUGH_ASCII() {
-		NgramSeparator sep = new NgramSeparator();
-		sep.setApplyToAscii(false);
-		sep.setLength(2);
-		List<String> list = sep.separate("あいうえお");
+	public void testTokenize_5FULLCHAR_THROUGH_ASCII() {
+		NgramTokenizer tk = new NgramTokenizer();
+		tk.setApplyToAscii(false);
+		tk.setLength(2);
+		List<String> list = tk.tokenize("あいうえお");
 		assertEquals(4, list.size());
 		assertEquals("あい", list.get(0));
 		assertEquals("いう", list.get(1));

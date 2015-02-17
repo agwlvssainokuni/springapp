@@ -288,12 +288,12 @@
 	</bean>
 
 	<!-- 分かち書き -->
-	<bean id="wakachigakiSeparator" class="cherry.goods.wakachi.CompositeSeparator">
-		<property name="separators">
-			<list value-type="cherry.goods.wakachi.Separator">
-				<bean class="cherry.goods.wakachi.SpaceCharSeparator" />
-				<bean class="cherry.goods.wakachi.UnicodeBlockSeparator" />
-				<bean class="cherry.goods.wakachi.NgramSeparator">
+	<bean id="wakachigakiTokenizer" class="cherry.goods.wakachi.CompositeTokenizer">
+		<property name="tokenizers">
+			<list value-type="cherry.goods.wakachi.Tokenizer">
+				<bean class="cherry.goods.wakachi.SpaceCharTokenizer" />
+				<bean class="cherry.goods.wakachi.UnicodeBlockTokenizer" />
+				<bean class="cherry.goods.wakachi.NgramTokenizer">
 					<property name="applyToAscii" value="false" />
 					<property name="length" value="2" />
 				</bean>

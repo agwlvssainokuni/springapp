@@ -20,27 +20,27 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CompositeSeparator implements Separator {
+public class CompositeTokenizer implements Tokenizer {
 
-	private List<Separator> separators;
+	private List<Tokenizer> tokenizers;
 
-	public void setSeparators(List<Separator> separators) {
-		this.separators = separators;
+	public void setTokenizers(List<Tokenizer> tokenizers) {
+		this.tokenizers = tokenizers;
 	}
 
 	@Override
-	public List<String> separate(String text) {
+	public List<String> tokenize(String text) {
 		List<String> list = Arrays.asList(text);
-		for (Separator sep : separators) {
-			list = doSeparate(sep, list);
+		for (Tokenizer tk : tokenizers) {
+			list = doTokenize(tk, list);
 		}
 		return list;
 	}
 
-	private List<String> doSeparate(Separator sep, List<String> src) {
+	private List<String> doTokenize(Tokenizer tk, List<String> src) {
 		List<String> list = new LinkedList<>();
 		for (String text : src) {
-			list.addAll(sep.separate(text));
+			list.addAll(tk.tokenize(text));
 		}
 		return list;
 	}

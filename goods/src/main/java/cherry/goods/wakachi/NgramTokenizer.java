@@ -16,29 +16,43 @@
 
 package cherry.goods.wakachi;
 
-import java.lang.Character.UnicodeBlock;
+import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
+import static java.lang.Character.UnicodeBlock.of;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class UnicodeBlockSeparator implements Separator {
+public class NgramTokenizer implements Tokenizer {
+
+	private boolean applyToAscii;
+
+	private int length;
+
+	public void setApplyToAscii(boolean applyToAscii) {
+		this.applyToAscii = applyToAscii;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
 
 	@Override
-	public List<String> separate(String text) {
-		int beginIndex = -1;
-		UnicodeBlock current = null;
+	public List<String> tokenize(String text) {
 		List<String> list = new LinkedList<>();
-		for (int i = 0; i < text.length(); i++) {
-			UnicodeBlock block = UnicodeBlock.of(text.charAt(i));
-			if (current != block) {
-				if (beginIndex >= 0) {
-					list.add(text.substring(beginIndex, i));
-				}
-				beginIndex = i;
-				current = block;
+		if (text.isEmpty()) {
+			return list;
+		}
+		if (of(text.charAt(0)) == BASIC_LATIN) {
+			if (!applyToAscii) {
+				list.add(text);
+				return list;
 			}
 		}
-		if (beginIndex >= 0) {
-			list.add(text.substring(beginIndex));
+		for (int i = length; i <= text.length(); i++) {
+			list.add(text.substring(i - length, i));
+		}
+		if (list.isEmpty()) {
+			list.add(text);
 		}
 		return list;
 	}

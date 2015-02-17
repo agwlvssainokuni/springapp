@@ -23,57 +23,57 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SpaceCharSeparatorTest {
+public class SpaceCharTokenizerTest {
 
-	private SpaceCharSeparator separator;
+	private SpaceCharTokenizer tokenizer;
 
 	@Before
 	public void before() {
-		separator = new SpaceCharSeparator();
+		tokenizer = new SpaceCharTokenizer();
 	}
 
 	@Test
-	public void testSeparate_EMPTY() {
-		List<String> list = separator.separate("");
+	public void testTokenize_EMPTY() {
+		List<String> list = tokenizer.tokenize("");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_SPACE() {
-		List<String> list = separator.separate(" ");
+	public void testTokenize_SPACE() {
+		List<String> list = tokenizer.tokenize(" ");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_FULLSPACE() {
-		List<String> list = separator.separate("　");
+	public void testTokenize_FULLSPACE() {
+		List<String> list = tokenizer.tokenize("　");
 		assertEquals(0, list.size());
 	}
 
 	@Test
-	public void testSeparate_1ELEM() {
-		List<String> list = separator.separate("aaa");
+	public void testTokenize_1ELEM() {
+		List<String> list = tokenizer.tokenize("aaa");
 		assertEquals(1, list.size());
 		assertEquals("aaa", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_1ELEM_HEAD_SPACE() {
-		List<String> list = separator.separate(" aaa");
+	public void testTokenize_1ELEM_HEAD_SPACE() {
+		List<String> list = tokenizer.tokenize(" aaa");
 		assertEquals(1, list.size());
 		assertEquals("aaa", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_1ELEM_TAIL_SPACE() {
-		List<String> list = separator.separate("aaa ");
+	public void testTokenize_1ELEM_TAIL_SPACE() {
+		List<String> list = tokenizer.tokenize("aaa ");
 		assertEquals(1, list.size());
 		assertEquals("aaa", list.get(0));
 	}
 
 	@Test
-	public void testSeparate_3ELEM() {
-		List<String> list = separator.separate("aaa bbb ccc");
+	public void testTokenize_3ELEM() {
+		List<String> list = tokenizer.tokenize("aaa bbb ccc");
 		assertEquals(3, list.size());
 		assertEquals("aaa", list.get(0));
 		assertEquals("bbb", list.get(1));
@@ -81,8 +81,8 @@ public class SpaceCharSeparatorTest {
 	}
 
 	@Test
-	public void testSeparate_3ELEM_FULLSPACE() {
-		List<String> list = separator.separate("aaa　bbb　ccc");
+	public void testTokenize_3ELEM_FULLSPACE() {
+		List<String> list = tokenizer.tokenize("aaa　bbb　ccc");
 		assertEquals(3, list.size());
 		assertEquals("aaa", list.get(0));
 		assertEquals("bbb", list.get(1));
