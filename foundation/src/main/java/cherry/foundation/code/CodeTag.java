@@ -19,8 +19,17 @@ package cherry.foundation.code;
 import static cherry.foundation.AppCtxHolder.getAppCtx;
 
 import java.util.List;
+import java.util.Map;
 
 public class CodeTag {
+
+	public static CodeEntry getCodeEntry(String codeName, String value) {
+		return getAppCtx().getBean(CodeManager.class).findByValue(codeName, value);
+	}
+
+	public static CodeEntry getCodeEntryPlainLabel(String codeName, String value) {
+		return getAppCtx().getBean(CodeManager.class).findByValue(codeName, value, true);
+	}
 
 	public static List<CodeEntry> getCodeList(String codeName) {
 		return getAppCtx().getBean(CodeManager.class).getCodeList(codeName);
@@ -28,6 +37,14 @@ public class CodeTag {
 
 	public static List<CodeEntry> getCodeListPlainLabel(String codeName) {
 		return getAppCtx().getBean(CodeManager.class).getCodeList(codeName, true);
+	}
+
+	public static Map<String, String> getCodeMap(String codeName) {
+		return getAppCtx().getBean(CodeManager.class).getCodeMap(codeName);
+	}
+
+	public static Map<String, String> getCodeMapPlainLabel(String codeName) {
+		return getAppCtx().getBean(CodeManager.class).getCodeMap(codeName, true);
 	}
 
 }
