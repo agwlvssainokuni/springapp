@@ -76,6 +76,10 @@ ul.app-flat>li+li {
 	float: right;
 }
 
+.app-displaynone {
+	display: none;
+}
+
 .app-pagerbox {
 	padding: 0px 20px;
 }

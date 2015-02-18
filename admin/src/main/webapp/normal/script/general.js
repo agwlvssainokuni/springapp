@@ -15,9 +15,22 @@ $(function() {
 			if (index != 0 && index % step == 0) {
 				var $row = $(this);
 				$("tr", $head).each(function(index) {
-					$(this).clone().insertBefore($row);
+					var $tr = $(this).clone().insertBefore($row);
+					$(":checkbox.app-checkall", $tr).each(function(index) {
+						if ($(this).hasClass("app-checkall-headonly")) {
+							$(this).addClass("app-displaynone");
+						}
+					});
 				});
 			}
+		});
+	});
+
+	$(":checkbox.app-checkall").each(function(index) {
+		var selector = $(this).attr("data-selector");
+		$(selector).prop("checked", $(this).prop("checked"));
+		$(this).change(function(event) {
+			$(selector).prop("checked", $(this).prop("checked"));
 		});
 	});
 
