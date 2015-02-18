@@ -134,6 +134,20 @@ $(function() {
 		$("select", this).selectmenu();
 	});
 
+	if ($("form.app-unloadable").size() > 0) {
+		var unloadable = false;
+		$(window).on("beforeunload", function(event) {
+			if (!unloadable) {
+				unloadable = false;
+				return "ページを切替えて良いか確認してください。";
+			}
+			unloadable = false;
+		});
+		$("form.app-unloadable").submit(function(event) {
+			unloadable = true;
+		});
+	}
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$(document).ajaxSend(function(event, jqxhr, settings) {
