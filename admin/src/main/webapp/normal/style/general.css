@@ -33,7 +33,7 @@ td, th {
 }
 
 .app-subject {
-	margin: 10px 0px;
+	margin: 0px 0px;
 }
 
 h1.app-subject {
@@ -74,6 +74,10 @@ ul.app-flat>li+li {
 
 .app-floatright {
 	float: right;
+}
+
+.app-inlineblock {
+	display: inline-block;
 }
 
 .app-displaynone {
@@ -182,6 +186,18 @@ a:hover, a:active {
 #PageContent {
 	color: midnightblue;
 	background-color: azure;
+}
+
+/* ブロック配色 */
+.app-block {
+	border-width: 1px;
+	border-style: solid;
+	border-color: cornflowerblue;
+}
+
+.app-block-header {
+	background: royalblue;
+	color: ivory;
 }
 
 /* 表配色 */
