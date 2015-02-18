@@ -4,6 +4,38 @@ $(function() {
 	$(".app-button").button();
 	$(".app-buttonset").buttonset();
 
+	$(".app-collapsible").each(function(index) {
+
+		$(">.app-block-header", this).addClass("ui-helper-clearfix");
+		$(">.app-block-header", this).wrapInner("<div class='app-floatleft'></div>");
+		$(">.app-block-header", this).append("<div class='app-floatright'><span class='ui-icon'></span></div>");
+
+		var toggleOpenClose = (function($block) {
+			var iconO = $block.attr("data-icon-open");
+			iconO = (iconO == undefined ? "ui-icon-plus" : iconO);
+			var iconC = $block.attr("data-icon-close");
+			iconC = (iconC == undefined ? "ui-icon-minus" : iconC);
+			return function() {
+				if ($block.prop("opened")) {
+					$(">.app-block-header>div:last>span", $block).removeClass(iconC).addClass(iconO);
+					$(">.app-block-contents", $block).hide();
+					$block.prop("opened", false);
+				} else {
+					$(">.app-block-header>div:last>span", $block).removeClass(iconO).addClass(iconC);
+					$(">.app-block-contents", $block).show();
+					$block.prop("opened", true);
+				}
+			};
+		})($(this));
+
+		$(this).prop("opened", $(this).attr("data-collapsed") == "true");
+		toggleOpenClose();
+
+		$(">.app-block-header>div:last>span", this).click(function(event) {
+			toggleOpenClose();
+		});
+	});
+
 	$("table.app-stripe>tbody>tr:even").addClass("app-even");
 	$("table.app-stripe>tbody>tr:odd").addClass("app-odd");
 
