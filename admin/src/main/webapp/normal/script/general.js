@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014,2015 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 $(function() {
 
 	$(".app-menu").menu();
@@ -11,9 +27,9 @@ $(function() {
 		$(">.app-block-header", this).append("<div class='app-floatright'><span class='ui-icon'></span></div>");
 
 		var toggleOpenClose = (function($block) {
-			var iconO = $block.attr("data-icon-open");
+			var iconO = $block.data("iconOpen");
 			iconO = (iconO == undefined ? "ui-icon-plus" : iconO);
-			var iconC = $block.attr("data-icon-close");
+			var iconC = $block.data("iconClose");
 			iconC = (iconC == undefined ? "ui-icon-minus" : iconC);
 			return function() {
 				if ($block.prop("opened")) {
@@ -28,7 +44,7 @@ $(function() {
 			};
 		})($(this));
 
-		$(this).prop("opened", $(this).attr("data-collapsed") == "true");
+		$(this).prop("opened", $(this).data("collapsed") == "true");
 		toggleOpenClose();
 
 		$(">.app-block-header>div:last>span", this).click(function(event) {
@@ -41,7 +57,7 @@ $(function() {
 
 	$("table.app-multihead").each(function(index) {
 		var $head = $("thead", this);
-		var step = $(this).attr("data-multihead");
+		var step = $(this).data("multihead");
 		step = (step ? step : 10);
 		$("tbody tr", this).each(function(index) {
 			if (index != 0 && index % step == 0) {
@@ -59,7 +75,7 @@ $(function() {
 	});
 
 	$(":checkbox.app-checkall").each(function(index) {
-		var selector = $(this).attr("data-selector");
+		var selector = $(this).data("selector");
 		$(selector).prop("checked", $(this).prop("checked"));
 		$(this).change(function(event) {
 			$(selector).prop("checked", $(this).prop("checked"));
@@ -67,9 +83,9 @@ $(function() {
 	});
 
 	$(".pager-link").each(function(index) {
-		var form = $(this).attr("data-form");
-		var pno = $(this).attr("data-pno");
-		var current = $(this).attr("data-current");
+		var form = $(this).data("form");
+		var pno = $(this).data("pno");
+		var current = $(this).data("current");
 		$("li", this).each(function(index) {
 			var pageNo = $("a", this).attr("title");
 			if (pageNo == current) {
@@ -85,8 +101,8 @@ $(function() {
 	});
 
 	$(".page-size").each(function(index) {
-		var form = $("select", this).attr("data-form");
-		var psz = $("select", this).attr("data-psz");
+		var form = $("select", this).data("form");
+		var psz = $("select", this).data("psz");
 		var current = $("input[name='" + psz + "']", $(form)).val();
 		$("select", this).val(current);
 		$("select", this).selectmenu({
@@ -99,7 +115,7 @@ $(function() {
 	});
 
 	$(".download-button").each(function(index) {
-		var form = $("button", this).attr("data-form");
+		var form = $("button", this).data("form");
 		$("button", this).button().click(function(event) {
 			event.preventDefault();
 			$(form).append("<input type='hidden' name='download' />");
@@ -109,8 +125,8 @@ $(function() {
 	});
 
 	$(".refresh-button").each(function(index) {
-		var form = $("button", this).attr("data-form");
-		var selector = $("button", this).attr("data-selector");
+		var form = $("button", this).data("form");
+		var selector = $("button", this).data("selector");
 		$(selector).each(function(index) {
 			var name = $(this).attr("name");
 			var val = $("input[name='" + name + "']", $(form)).val();
