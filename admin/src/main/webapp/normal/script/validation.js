@@ -93,7 +93,7 @@ Number.prototype.isFullHiragana = function() {
 			|| this == 0x30FF; // 'ヿ' from KATAKANA (not in Win31J)
 };
 
-Number.prototype.isFullHiragana = function() {
+Number.prototype.isFullKatakana = function() {
 	// Katakana (Unicode block)
 	// U+30Ax ゠ ァ ア ィ イ ゥ ウ ェ エ ォ オ カ ガ キ ギ ク
 	// U+30Bx グ ケ ゲ コ ゴ サ ザ シ ジ ス ズ セ ゼ ソ ゾ タ
@@ -175,6 +175,69 @@ String.prototype.isHalfWidth = function() {
 			return false;
 		}
 		if (!ch.isHalfKatakana()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullAlpha = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (!ch.isFullApha()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullNumeric = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (!ch.isFullNumeric()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullAlphaNumeric = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (!ch.isFullNumeric()) {
+			return false;
+		}
+		if (!ch.isFullAlpha()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullHiragana = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (!ch.isFullHiragana()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullKatakana = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (!ch.isFullKatakana()) {
+			return false;
+		}
+	}
+	return true;
+};
+
+String.prototype.isFullWidth = function() {
+	for (var i = 0; i < this.length; i++) {
+		var ch = this.charCodeAt(i);
+		if (ch.isHalfWidth()) {
 			return false;
 		}
 	}
