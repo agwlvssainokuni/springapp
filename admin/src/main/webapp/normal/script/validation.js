@@ -337,10 +337,11 @@ $(function() {
 				$(this).blur((function(ct) {
 					return function(event) {
 						if (ct.validate($(this).val())) {
-							return;
+							$(this).removeClass("ui-state-error");
+						} else {
+							$(this).addClass("ui-state-error");
+							alert(ct.message);
 						}
-						event.preventDefault();
-						alert(ct.message);
 					};
 				})(chartype[i]));
 			}
