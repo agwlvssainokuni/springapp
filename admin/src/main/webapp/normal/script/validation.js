@@ -335,77 +335,95 @@ String.prototype.isDateTimeForm = function() {
 $(function() {
 
 	var chartype = [ {
-		type : "app-chartype-ascii",
+		type : "app-check-ascii",
 		validate : function(v) {
 			return v.isAscii();
 		},
 		message : "Should be ascii"
 	}, {
-		type : "app-chartype-alpha",
+		type : "app-check-alpha",
 		validate : function(v) {
 			return v.isAlpha();
 		},
 		message : "Should be alphabet"
 	}, {
-		type : "app-chartype-numeric",
+		type : "app-check-numeric",
 		validate : function(v) {
 			return v.isNumeric();
 		},
 		message : "Should be numeric"
 	}, {
-		type : "app-chartype-alphanumeric",
+		type : "app-check-alphanumeric",
 		validate : function(v) {
 			return v.isAlphaNumeric();
 		},
 		message : "Should be alphanumeric"
 	}, {
-		type : "app-chartype-halfkatakana",
+		type : "app-check-halfkatakana",
 		validate : function(v) {
 			return v.isHalfKatakana();
 		},
 		message : "Should be half katakana"
 	}, {
-		type : "app-chartype-halfwidth",
+		type : "app-check-halfwidth",
 		validate : function(v) {
 			return v.isHalfWidth();
 		},
 		message : "Should be half width"
 	}, {
-		type : "app-chartype-fullalpha",
+		type : "app-check-fullalpha",
 		validate : function(v) {
 			return v.isFullAlpha();
 		},
 		message : "Should be full alpha"
 	}, {
-		type : "app-chartype-fullnumeric",
+		type : "app-check-fullnumeric",
 		validate : function(v) {
 			return v.isFullNumeric();
 		},
 		message : "Should be full numeric"
 	}, {
-		type : "app-chartype-fullalphanumeric",
+		type : "app-check-fullalphanumeric",
 		validate : function(v) {
 			return v.isFullAlphaNumeric();
 		},
 		message : "Should be full alphanumeric"
 	}, {
-		type : "app-chartype-fullhiragana",
+		type : "app-check-fullhiragana",
 		validate : function(v) {
 			return v.isFullHiragana();
 		},
 		message : "Should be full hiragana"
 	}, {
-		type : "app-chartype-fullkatakana",
+		type : "app-check-fullkatakana",
 		validate : function(v) {
 			return v.isFullKatakana();
 		},
 		message : "Should be full katakana"
 	}, {
-		type : "app-chartype-fullwidth",
+		type : "app-check-fullwidth",
 		validate : function(v) {
 			return v.isFullWidth();
 		},
 		message : "Should be full width"
+	}, {
+		type : "app-check-date",
+		validate : function(v) {
+			return v.isDateForm();
+		},
+		message : "Should be date"
+	}, {
+		type : "app-check-time",
+		validate : function(v) {
+			return v.isTimeForm();
+		},
+		message : "Should be time"
+	}, {
+		type : "app-check-datetime",
+		validate : function(v) {
+			return v.isDateTimeForm();
+		},
+		message : "Should be datetime"
 	} ];
 
 	$("input, textarea").each(function(index) {
