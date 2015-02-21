@@ -128,9 +128,10 @@ String.prototype.isAscii = function() {
 String.prototype.isAlpha = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isAlpha()) {
-			return false;
+		if (ch.isAlpha()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -138,9 +139,10 @@ String.prototype.isAlpha = function() {
 String.prototype.isNumeric = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isNumeric()) {
-			return false;
+		if (ch.isNumeric()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -148,12 +150,13 @@ String.prototype.isNumeric = function() {
 String.prototype.isAlphaNumeric = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isNumeric()) {
-			return false;
+		if (ch.isNumeric()) {
+			continue;
 		}
-		if (!ch.isAlpha()) {
-			return false;
+		if (ch.isAlpha()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -161,9 +164,10 @@ String.prototype.isAlphaNumeric = function() {
 String.prototype.isHalfKatakana = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isHalfKatakana()) {
-			return false;
+		if (ch.isHalfKatakana()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -171,12 +175,13 @@ String.prototype.isHalfKatakana = function() {
 String.prototype.isHalfWidth = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isBasicLatin()) {
-			return false;
+		if (ch.isBasicLatin()) {
+			continue;
 		}
-		if (!ch.isHalfKatakana()) {
-			return false;
+		if (ch.isHalfKatakana()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -184,9 +189,10 @@ String.prototype.isHalfWidth = function() {
 String.prototype.isFullAlpha = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isFullApha()) {
-			return false;
+		if (ch.isFullApha()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -194,9 +200,10 @@ String.prototype.isFullAlpha = function() {
 String.prototype.isFullNumeric = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isFullNumeric()) {
-			return false;
+		if (ch.isFullNumeric()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -204,12 +211,13 @@ String.prototype.isFullNumeric = function() {
 String.prototype.isFullAlphaNumeric = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isFullNumeric()) {
-			return false;
+		if (ch.isFullNumeric()) {
+			continue;
 		}
-		if (!ch.isFullAlpha()) {
-			return false;
+		if (ch.isFullAlpha()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -217,9 +225,10 @@ String.prototype.isFullAlphaNumeric = function() {
 String.prototype.isFullHiragana = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isFullHiragana()) {
-			return false;
+		if (ch.isFullHiragana()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -227,9 +236,10 @@ String.prototype.isFullHiragana = function() {
 String.prototype.isFullKatakana = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (!ch.isFullKatakana()) {
-			return false;
+		if (ch.isFullKatakana()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
@@ -237,9 +247,104 @@ String.prototype.isFullKatakana = function() {
 String.prototype.isFullWidth = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
-		if (ch.isHalfWidth()) {
-			return false;
+		if (!ch.isHalfWidth()) {
+			continue;
 		}
+		return false;
 	}
 	return true;
 };
+
+$(function() {
+
+	var chartype = [ {
+		type : "app-chartype-ascii",
+		validate : function(v) {
+			return v.isAscii();
+		},
+		message : "Should be ascii"
+	}, {
+		type : "app-chartype-alpha",
+		validate : function(v) {
+			return v.isAlpha();
+		},
+		message : "Should be alphabet"
+	}, {
+		type : "app-chartype-numeric",
+		validate : function(v) {
+			return v.isNumeric();
+		},
+		message : "Should be numeric"
+	}, {
+		type : "app-chartype-alphanumeric",
+		validate : function(v) {
+			return v.isAlphaNumeric();
+		},
+		message : "Should be alphanumeric"
+	}, {
+		type : "app-chartype-halfkatakana",
+		validate : function(v) {
+			return v.isHalfKatakana();
+		},
+		message : "Should be half katakana"
+	}, {
+		type : "app-chartype-halfwidth",
+		validate : function(v) {
+			return v.isHalfWidth();
+		},
+		message : "Should be half width"
+	}, {
+		type : "app-chartype-fullalpha",
+		validate : function(v) {
+			return v.isFullAlpha();
+		},
+		message : "Should be full alpha"
+	}, {
+		type : "app-chartype-fullnumeric",
+		validate : function(v) {
+			return v.isFullNumeric();
+		},
+		message : "Should be full numeric"
+	}, {
+		type : "app-chartype-fullalphanumeric",
+		validate : function(v) {
+			return v.isFullAlphaNumeric();
+		},
+		message : "Should be full alphanumeric"
+	}, {
+		type : "app-chartype-fullhiragana",
+		validate : function(v) {
+			return v.isFullHiragana();
+		},
+		message : "Should be full hiragana"
+	}, {
+		type : "app-chartype-fullkatakana",
+		validate : function(v) {
+			return v.isFullKatakana();
+		},
+		message : "Should be full katakana"
+	}, {
+		type : "app-chartype-fullwidth",
+		validate : function(v) {
+			return v.isFullWidth();
+		},
+		message : "Should be full width"
+	} ];
+
+	$("input, textarea").each(function(index) {
+		for (var i = 0; i < chartype.length; i++) {
+			if ($(this).hasClass(chartype[i].type)) {
+				$(this).blur((function(ct) {
+					return function(event) {
+						if (ct.validate($(this).val())) {
+							return;
+						}
+						event.preventDefault();
+						alert(ct.message);
+					};
+				})(chartype[i]));
+			}
+		}
+	});
+
+});
