@@ -347,98 +347,98 @@ $(function() {
 
 	var chartype = [ {
 		type : "app-check-ascii",
-		validate : function(v) {
-			return v.isAscii();
+		validate : function($v) {
+			return $v.val().isAscii();
 		},
 		message : "Should be ascii"
 	}, {
 		type : "app-check-alpha",
-		validate : function(v) {
-			return v.isAlpha();
+		validate : function($v) {
+			return $v.val().isAlpha();
 		},
 		message : "Should be alphabet"
 	}, {
 		type : "app-check-numeric",
-		validate : function(v) {
-			return v.isNumeric();
+		validate : function($v) {
+			return $v.val().isNumeric();
 		},
 		message : "Should be numeric"
 	}, {
 		type : "app-check-alphanumeric",
-		validate : function(v) {
-			return v.isAlphaNumeric();
+		validate : function($v) {
+			return $v.val().isAlphaNumeric();
 		},
 		message : "Should be alphanumeric"
 	}, {
 		type : "app-check-halfkatakana",
-		validate : function(v) {
-			return v.isHalfKatakana();
+		validate : function($v) {
+			return $v.val().isHalfKatakana();
 		},
 		message : "Should be half katakana"
 	}, {
 		type : "app-check-halfwidth",
-		validate : function(v) {
-			return v.isHalfWidth();
+		validate : function($v) {
+			return $v.val().isHalfWidth();
 		},
 		message : "Should be half width"
 	}, {
 		type : "app-check-fullalpha",
-		validate : function(v) {
-			return v.isFullAlpha();
+		validate : function($v) {
+			return $v.val().isFullAlpha();
 		},
 		message : "Should be full alpha"
 	}, {
 		type : "app-check-fullnumeric",
-		validate : function(v) {
-			return v.isFullNumeric();
+		validate : function($v) {
+			return $v.val().isFullNumeric();
 		},
 		message : "Should be full numeric"
 	}, {
 		type : "app-check-fullalphanumeric",
-		validate : function(v) {
-			return v.isFullAlphaNumeric();
+		validate : function($v) {
+			return $v.val().isFullAlphaNumeric();
 		},
 		message : "Should be full alphanumeric"
 	}, {
 		type : "app-check-fullhiragana",
-		validate : function(v) {
-			return v.isFullHiragana();
+		validate : function($v) {
+			return $v.val().isFullHiragana();
 		},
 		message : "Should be full hiragana"
 	}, {
 		type : "app-check-fullkatakana",
-		validate : function(v) {
-			return v.isFullKatakana();
+		validate : function($v) {
+			return $v.val().isFullKatakana();
 		},
 		message : "Should be full katakana"
 	}, {
 		type : "app-check-fullwidth",
-		validate : function(v) {
-			return v.isFullWidth();
+		validate : function($v) {
+			return $v.val().isFullWidth();
 		},
 		message : "Should be full width"
 	}, {
 		type : "app-check-number",
-		validate : function(v) {
-			return v.isNumberFormat();
+		validate : function($v) {
+			return $v.val().isNumberFormat();
 		},
 		message : "Should be number"
 	}, {
 		type : "app-check-date",
-		validate : function(v) {
-			return v.isDateFormat();
+		validate : function($v) {
+			return $v.val().isDateFormat();
 		},
 		message : "Should be date"
 	}, {
 		type : "app-check-time",
-		validate : function(v) {
-			return v.isTimeFormat();
+		validate : function($v) {
+			return $v.val().isTimeFormat();
 		},
 		message : "Should be time"
 	}, {
 		type : "app-check-datetime",
-		validate : function(v) {
-			return v.isDateTimeFormat();
+		validate : function($v) {
+			return $v.val().isDateTimeFormat();
 		},
 		message : "Should be datetime"
 	} ];
@@ -448,7 +448,7 @@ $(function() {
 			if ($(this).hasClass(chartype[i].type)) {
 				$(this).blur((function(ct) {
 					return function(event) {
-						if (ct.validate($(this).val())) {
+						if (ct.validate($(this))) {
 							$(this).removeClass("ui-state-error");
 						} else {
 							$(this).addClass("ui-state-error");
