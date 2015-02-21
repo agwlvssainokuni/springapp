@@ -115,6 +115,44 @@ Number.prototype.isFullKatakana = function() {
 			|| this == 0x309F; // 'ゟ' from HIRAGANA (not in Win31J)
 };
 
+Number.prototype.isLeapYear = function() {
+	if (this % 400 == 0) {
+		return true;
+	} else if (this % 100 == 0) {
+		return false;
+	} else if (this % 4 == 0) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Number.prototype.getNumberOfDaysInMonth = function(month) {
+	switch (month) {
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		return 31;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		return 30;
+	case 2:
+		if (this.isLeapYear()) {
+			return 29;
+		} else {
+			return 28;
+		}
+	default:
+		return 31;
+	}
+};
+
 String.prototype.isAscii = function() {
 	for (var i = 0; i < this.length; i++) {
 		var ch = this.charCodeAt(i);
@@ -253,6 +291,45 @@ String.prototype.isFullWidth = function() {
 		return false;
 	}
 	return true;
+};
+
+String.prototype.isDateForm = function() {
+	if (this.length <= 0) {
+		return true;
+	}
+	var match = /^(\d{4})\/(\d{2})\/(\d{2})$/.exec(this);
+	if (match == null) {
+		return false;
+	}
+	var y = Number(match[1]);
+	var m = Number(match[2]);
+	var d = Number(match[3]);
+	return m >= 1 && m <= 12 && d >= 1 && d <= y.getNumberOfDaysInMonth(m);
+};
+
+String.prototype.isTimeForm = function() {
+	if (this.length <= 0) {
+		return true;
+	}
+	var match = /^([01][0-9]|2[0123]):([0-5][0-9])$/.exec(this);
+	if (match == null) {
+		return false;
+	}
+	return true;
+};
+
+String.prototype.isDateTimeForm = function() {
+	if (this.length <= 0) {
+		return true;
+	}
+	var match = /^(\d{4})\/(\d{2})\/(\d{2}) ([01][0-9]|2[0123]):([0-5][0-9])$/.exec(this);
+	if (match == null) {
+		return false;
+	}
+	var y = Number(match[1]);
+	var m = Number(match[2]);
+	var d = Number(match[3]);
+	return m >= 1 && m <= 12 && d >= 1 && d <= y.getNumberOfDaysInMonth(m);
 };
 
 $(function() {
