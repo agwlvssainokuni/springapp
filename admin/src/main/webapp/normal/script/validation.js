@@ -293,7 +293,18 @@ String.prototype.isFullWidth = function() {
 	return true;
 };
 
-String.prototype.isDateForm = function() {
+String.prototype.isNumberFormat = function() {
+	if (this.length <= 0) {
+		return true;
+	}
+	var match = /^\d+(\.\d*)?$/.exec(this);
+	if (match == null) {
+		return false;
+	}
+	return true;
+};
+
+String.prototype.isDateFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
@@ -307,7 +318,7 @@ String.prototype.isDateForm = function() {
 	return m >= 1 && m <= 12 && d >= 1 && d <= y.getNumberOfDaysInMonth(m);
 };
 
-String.prototype.isTimeForm = function() {
+String.prototype.isTimeFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
@@ -318,7 +329,7 @@ String.prototype.isTimeForm = function() {
 	return true;
 };
 
-String.prototype.isDateTimeForm = function() {
+String.prototype.isDateTimeFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
@@ -407,21 +418,27 @@ $(function() {
 		},
 		message : "Should be full width"
 	}, {
+		type : "app-check-number",
+		validate : function(v) {
+			return v.isNumberFormat();
+		},
+		message : "Should be number"
+	}, {
 		type : "app-check-date",
 		validate : function(v) {
-			return v.isDateForm();
+			return v.isDateFormat();
 		},
 		message : "Should be date"
 	}, {
 		type : "app-check-time",
 		validate : function(v) {
-			return v.isTimeForm();
+			return v.isTimeFormat();
 		},
 		message : "Should be time"
 	}, {
 		type : "app-check-datetime",
 		validate : function(v) {
-			return v.isDateTimeForm();
+			return v.isDateTimeFormat();
 		},
 		message : "Should be datetime"
 	} ];
