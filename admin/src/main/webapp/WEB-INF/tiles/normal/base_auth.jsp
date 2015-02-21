@@ -34,6 +34,8 @@
 	src="<c:url value="/normal/script/general.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/custom.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/normal/script/validation.js" />"></script>
 </head>
 <body>
 	<div id="PageHeader">
