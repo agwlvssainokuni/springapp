@@ -34,6 +34,10 @@
 <script type="text/javascript"
 	src="<c:url value="/normal/script/custom.js" />"></script>
 <script type="text/javascript"
+	src="<c:url value="/normal/script/msgfmt.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/normal/script/validator.js" />"></script>
+<script type="text/javascript"
 	src="<c:url value="/normal/script/validation.js" />"></script>
 </head>
 <body>
