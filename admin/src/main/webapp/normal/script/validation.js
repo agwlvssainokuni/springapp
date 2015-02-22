@@ -297,7 +297,7 @@ String.prototype.isNumberFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
-	var match = /^\d+(\.\d*)?$/.exec(this);
+	var match = /^[-+]?\d+(\.\d*)?$/.exec(this);
 	if (match == null) {
 		return false;
 	}
@@ -489,13 +489,29 @@ $(function() {
 	} ];
 
 	$("input, textarea").each(function(index) {
+
+		var validation = false;
+		for (var i = 0; i < chartype.length; i++) {
+			if ($(this).hasClass(chartype[i].type)) {
+				validation = true;
+			}
+		}
+		for (var i = 0; i < rangecheck.length; i++) {
+			if ($(this).data(rangecheck[i].type) != undefined) {
+				validation = true;
+			}
+		}
+		if (validation) {
+			$(this).blur(function(event) {
+				$(this).removeClass("ui-state-error");
+			});
+		}
+
 		for (var i = 0; i < chartype.length; i++) {
 			if ($(this).hasClass(chartype[i].type)) {
 				$(this).blur((function(ct) {
 					return function(event) {
-						if (ct.validate($(this).val())) {
-							$(this).removeClass("ui-state-error");
-						} else {
+						if (!ct.validate($(this).val())) {
 							$(this).addClass("ui-state-error");
 							alert(ct.message);
 						}
@@ -504,18 +520,15 @@ $(function() {
 			}
 		}
 		for (var i = 0; i < rangecheck.length; i++) {
-			var param = $(this).data(rangecheck[i].type);
-			if (param != undefined) {
+			if ($(this).data(rangecheck[i].type) != undefined) {
 				$(this).blur((function(rc, p) {
 					return function(event) {
-						if (rc.validate($(this).val(), p)) {
-							$(this).removeClass("ui-state-error");
-						} else {
+						if (!rc.validate($(this).val(), p)) {
 							$(this).addClass("ui-state-error");
 							alert(rc.message.msgfmt([ p ]));
 						}
 					}
-				})(rangecheck[i], Number(param)));
+				})(rangecheck[i], Number($(this).data(rangecheck[i].type))));
 			}
 		}
 	});
