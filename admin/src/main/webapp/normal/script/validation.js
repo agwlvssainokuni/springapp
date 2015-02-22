@@ -322,7 +322,7 @@ String.prototype.isTimeFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
-	var match = /^([01][0-9]|2[0123]):([0-5][0-9])$/.exec(this);
+	var match = /^([01][0-9]|2[0123]):([0-5][0-9]):([0-5][0-9])$/.exec(this);
 	if (match == null) {
 		return false;
 	}
@@ -333,7 +333,7 @@ String.prototype.isDateTimeFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
-	var match = /^(\d{4})\/(\d{2})\/(\d{2}) ([01][0-9]|2[0123]):([0-5][0-9])$/.exec(this);
+	var match = /^(\d{4})\/(\d{2})\/(\d{2}) ([01][0-9]|2[0123]):([0-5][0-9]):([0-5][0-9])$/.exec(this);
 	if (match == null) {
 		return false;
 	}
