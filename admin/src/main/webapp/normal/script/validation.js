@@ -343,6 +343,25 @@ String.prototype.isDateTimeFormat = function() {
 	return m >= 1 && m <= 12 && d >= 1 && d <= y.getNumberOfDaysInMonth(m);
 };
 
+String.prototype.msgfmt = function(param) {
+	return this.replace(/(\{([0-9]+)\}|\$\{([-_0-9a-zA-Z]+)\})/g, function(m, dmy0, index, name, o, t) {
+
+		if (index !== undefined && index != "") {
+			var v = param[Number(index)];
+			if (v === undefined) {
+				return "";
+			}
+			return v;
+		}
+
+		var v = param[name];
+		if (v === undefined) {
+			return "";
+		}
+		return v;
+	});
+};
+
 $(function() {
 
 	var chartype = [ {
@@ -443,6 +462,32 @@ $(function() {
 		message : "Should be datetime"
 	} ];
 
+	var rangecheck = [ {
+		type : "minlength",
+		validate : function(v, p) {
+			return (v.length <= 0) || (v.length >= p);
+		},
+		message : "Should be at least {0} characters"
+	}, {
+		type : "maxlength",
+		validate : function(v, p) {
+			return (v.length <= 0) || (v.length <= p);
+		},
+		message : "Should be at most {0} characters"
+	}, {
+		type : "min",
+		validate : function(v, p) {
+			return (v.length <= 0) || !v.isNumberFormat() || (Number(v) >= p);
+		},
+		message : "Should be greater than or equal to {0}"
+	}, {
+		type : "max",
+		validate : function(v, p) {
+			return (v.length <= 0) || !v.isNumberFormat() || (Number(v) <= p);
+		},
+		message : "Should be less than or equal to {0}"
+	} ];
+
 	$("input, textarea").each(function(index) {
 		for (var i = 0; i < chartype.length; i++) {
 			if ($(this).hasClass(chartype[i].type)) {
@@ -456,6 +501,21 @@ $(function() {
 						}
 					};
 				})(chartype[i]));
+			}
+		}
+		for (var i = 0; i < rangecheck.length; i++) {
+			var param = $(this).data(rangecheck[i].type);
+			if (param != undefined) {
+				$(this).blur((function(rc, p) {
+					return function(event) {
+						if (rc.validate($(this).val(), p)) {
+							$(this).removeClass("ui-state-error");
+						} else {
+							$(this).addClass("ui-state-error");
+							alert(rc.message.msgfmt([ p ]));
+						}
+					}
+				})(rangecheck[i], Number(param)));
 			}
 		}
 	});
