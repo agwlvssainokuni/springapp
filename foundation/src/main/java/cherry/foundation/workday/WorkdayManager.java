@@ -25,28 +25,28 @@ import cherry.foundation.type.Code;
  */
 public interface WorkdayManager {
 
-	long getNumberOfWorkday(LocalDate to);
+	int getNumberOfWorkday(LocalDate to);
 
-	<T extends Code<String>> long getNumberOfWorkday(T code, LocalDate to);
+	<T extends Code<String>> int getNumberOfWorkday(T code, LocalDate to);
 
-	long getNumberOfWorkday(String name, LocalDate to);
+	int getNumberOfWorkday(String name, LocalDate to);
 
-	long getNumberOfWorkday(LocalDate from, LocalDate to);
+	int getNumberOfWorkday(LocalDate from, LocalDate to);
 
-	<T extends Code<String>> long getNumberOfWorkday(T code, LocalDate from, LocalDate to);
+	<T extends Code<String>> int getNumberOfWorkday(T code, LocalDate from, LocalDate to);
 
-	long getNumberOfWorkday(String name, LocalDate from, LocalDate to);
+	int getNumberOfWorkday(String name, LocalDate from, LocalDate to);
 
-	LocalDate getNextWorkday(long numberOfWorkday);
+	LocalDate getNextWorkday(int numberOfWorkday);
 
-	<T extends Code<String>> LocalDate getNextWorkday(T code, long numberOfWorkday);
+	<T extends Code<String>> LocalDate getNextWorkday(T code, int numberOfWorkday);
 
-	LocalDate getNextWorkday(String name, long numberOfWorkday);
+	LocalDate getNextWorkday(String name, int numberOfWorkday);
 
-	LocalDate getNextWorkday(LocalDate from, long numberOfWorkday);
+	LocalDate getNextWorkday(LocalDate from, int numberOfWorkday);
 
-	<T extends Code<String>> LocalDate getNextWorkday(T code, LocalDate from, long numberOfWorkday);
+	<T extends Code<String>> LocalDate getNextWorkday(T code, LocalDate from, int numberOfWorkday);
 
-	LocalDate getNextWorkday(String name, LocalDate from, long numberOfWorkday);
+	LocalDate getNextWorkday(String name, LocalDate from, int numberOfWorkday);
 
 }

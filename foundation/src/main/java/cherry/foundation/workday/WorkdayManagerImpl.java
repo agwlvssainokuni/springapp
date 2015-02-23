@@ -44,9 +44,9 @@ public class WorkdayManagerImpl implements WorkdayManager, InitializingBean {
 
 	private String nextWorkdayCacheSpec;
 
-	private LoadingCache<Triple<String, LocalDate, LocalDate>, Long> numberOfWorkdayCache;
+	private LoadingCache<Triple<String, LocalDate, LocalDate>, Integer> numberOfWorkdayCache;
 
-	private LoadingCache<Triple<String, LocalDate, Long>, LocalDate> nextWorkdayCache;
+	private LoadingCache<Triple<String, LocalDate, Integer>, LocalDate> nextWorkdayCache;
 
 	public void setWorkdayStore(WorkdayStore workdayStore) {
 		this.workdayStore = workdayStore;
@@ -71,48 +71,48 @@ public class WorkdayManagerImpl implements WorkdayManager, InitializingBean {
 	@Override
 	public void afterPropertiesSet() {
 		numberOfWorkdayCache = CacheBuilder.from(numberOfWorkdayCacheSpec).build(
-				new CacheLoader<Triple<String, LocalDate, LocalDate>, Long>() {
+				new CacheLoader<Triple<String, LocalDate, LocalDate>, Integer>() {
 					@Override
-					public Long load(Triple<String, LocalDate, LocalDate> key) {
+					public Integer load(Triple<String, LocalDate, LocalDate> key) {
 						return workdayStore.getNumberOfWorkday(key.getLeft(), key.getMiddle(), key.getRight());
 					}
 				});
 		nextWorkdayCache = CacheBuilder.from(nextWorkdayCacheSpec).build(
-				new CacheLoader<Triple<String, LocalDate, Long>, LocalDate>() {
+				new CacheLoader<Triple<String, LocalDate, Integer>, LocalDate>() {
 					@Override
-					public LocalDate load(Triple<String, LocalDate, Long> key) {
+					public LocalDate load(Triple<String, LocalDate, Integer> key) {
 						return workdayStore.getNextWorkday(key.getLeft(), key.getMiddle(), key.getRight());
 					}
 				});
 	}
 
 	@Override
-	public long getNumberOfWorkday(LocalDate to) {
+	public int getNumberOfWorkday(LocalDate to) {
 		return getNumberOfWorkday(defaultName, to);
 	}
 
 	@Override
-	public <T extends Code<String>> long getNumberOfWorkday(T code, LocalDate to) {
+	public <T extends Code<String>> int getNumberOfWorkday(T code, LocalDate to) {
 		return getNumberOfWorkday(code.code(), to);
 	}
 
 	@Override
-	public long getNumberOfWorkday(String name, LocalDate to) {
+	public int getNumberOfWorkday(String name, LocalDate to) {
 		return getNumberOfWorkday(name, bizDateTime.today(), to);
 	}
 
 	@Override
-	public long getNumberOfWorkday(LocalDate from, LocalDate to) {
+	public int getNumberOfWorkday(LocalDate from, LocalDate to) {
 		return getNumberOfWorkday(defaultName, from, to);
 	}
 
 	@Override
-	public <T extends Code<String>> long getNumberOfWorkday(T code, LocalDate from, LocalDate to) {
+	public <T extends Code<String>> int getNumberOfWorkday(T code, LocalDate from, LocalDate to) {
 		return getNumberOfWorkday(code.code(), from, to);
 	}
 
 	@Override
-	public long getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
+	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
 		try {
 			return numberOfWorkdayCache.get(Triple.of(name, from, to));
 		} catch (ExecutionException ex) {
@@ -121,32 +121,32 @@ public class WorkdayManagerImpl implements WorkdayManager, InitializingBean {
 	}
 
 	@Override
-	public LocalDate getNextWorkday(long numberOfWorkday) {
+	public LocalDate getNextWorkday(int numberOfWorkday) {
 		return getNextWorkday(defaultName, numberOfWorkday);
 	}
 
 	@Override
-	public <T extends Code<String>> LocalDate getNextWorkday(T code, long numberOfWorkday) {
+	public <T extends Code<String>> LocalDate getNextWorkday(T code, int numberOfWorkday) {
 		return getNextWorkday(code.code(), numberOfWorkday);
 	}
 
 	@Override
-	public LocalDate getNextWorkday(String name, long numberOfWorkday) {
+	public LocalDate getNextWorkday(String name, int numberOfWorkday) {
 		return getNextWorkday(name, bizDateTime.today(), numberOfWorkday);
 	}
 
 	@Override
-	public LocalDate getNextWorkday(LocalDate from, long numberOfWorkday) {
+	public LocalDate getNextWorkday(LocalDate from, int numberOfWorkday) {
 		return getNextWorkday(defaultName, from, numberOfWorkday);
 	}
 
 	@Override
-	public <T extends Code<String>> LocalDate getNextWorkday(T code, LocalDate from, long numberOfWorkday) {
+	public <T extends Code<String>> LocalDate getNextWorkday(T code, LocalDate from, int numberOfWorkday) {
 		return getNextWorkday(code.code(), from, numberOfWorkday);
 	}
 
 	@Override
-	public LocalDate getNextWorkday(String name, LocalDate from, long numberOfWorkday) {
+	public LocalDate getNextWorkday(String name, LocalDate from, int numberOfWorkday) {
 		try {
 			return nextWorkdayCache.get(Triple.of(name, from, numberOfWorkday));
 		} catch (ExecutionException ex) {
