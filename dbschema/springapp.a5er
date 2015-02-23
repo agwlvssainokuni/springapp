@@ -75,6 +75,39 @@ ShowTag=1
 ShowCommonAttributes=0
 
 [Entity]
+PName=digit
+LName=桁マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=1500
+Top=700
+Field="桁","d","*整数【32bit】","NOT NULL",0,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150224060549
+Position="業務日時",1500,700
+
+[Entity]
+PName=holiday_master
+LName=休日マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=1500
+Top=500
+Field="年月日","dt","*日付","NOT NULL",0,"","",$FFFFFFFF,""
+Field="休日区分","type","*区分値【2】","NOT NULL",,"\q00\q","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150224060537
+Position="業務日時",1500,500
+
+[Entity]
 PName=numbering_master
 LName=発番マスタ
 Comment=
