@@ -12,9 +12,9 @@ VALUES
 (9)
 ;
 
-INSERT INTO holiday_master (dt)
+INSERT INTO dayoff_master (name, dt)
 SELECT
-	DATEADD('DAY', A.d * 100 + B.d * 10 + C.d, CURRENT_DATE)
+	'standard', DATEADD('DAY', A.d * 100 + B.d * 10 + C.d, CURRENT_DATE)
 FROM
 	digit A, digit B, digit C
 WHERE

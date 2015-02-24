@@ -3,10 +3,10 @@ package cherry.spring.common.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BHolidayMaster is a Querydsl bean type
+ * BDayoffMaster is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BHolidayMaster {
+public class BDayoffMaster {
 
     private org.joda.time.LocalDateTime createdAt;
 
@@ -15,6 +15,8 @@ public class BHolidayMaster {
     private org.joda.time.LocalDate dt;
 
     private Integer lockVersion;
+
+    private String name;
 
     private String type;
 
@@ -52,6 +54,14 @@ public class BHolidayMaster {
         this.lockVersion = lockVersion;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getType() {
         return type;
     }
@@ -69,7 +79,7 @@ public class BHolidayMaster {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", dt = " + dt + ", lockVersion = " + lockVersion + ", type = " + type + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", dt = " + dt + ", lockVersion = " + lockVersion + ", name = " + name + ", type = " + type + ", updatedAt = " + updatedAt;
     }
 
 }

@@ -28,7 +28,7 @@
 		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="holiday_master" />
+		<table tableName="dayoff_master" />
 		<table tableName="digit" />
 		<table tableName="async_process">
 			<generatedKey column="id" sqlStatement="JDBC" />
