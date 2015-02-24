@@ -59,7 +59,7 @@ public class WorkdayStoreImpl implements WorkdayStore {
 		query.from(h0);
 		query.where(h0.dt.between(constant(from), constant(to)), h0.deletedFlg.eq(NOT_DELETED.code()));
 		long count = queryDslJdbcOperations.queryForObject(query, h0.dt.count());
-		return (int) ((to.toDate().getTime() - from.toDate().getTime()) / 8400000L + 1L - count);
+		return (int) ((to.toDate().getTime() - from.toDate().getTime()) / 86400000L + 1L - count);
 	}
 
 	@Override
