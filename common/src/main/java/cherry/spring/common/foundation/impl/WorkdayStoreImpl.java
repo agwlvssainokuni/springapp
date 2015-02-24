@@ -31,8 +31,8 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 
 import cherry.foundation.workday.WorkdayStore;
+import cherry.spring.common.db.gen.query.QDayoffMaster;
 import cherry.spring.common.db.gen.query.QDigit;
-import cherry.spring.common.db.gen.query.QHolidayMaster;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -50,14 +50,14 @@ public class WorkdayStoreImpl implements WorkdayStore {
 
 	private final QDigit a = new QDigit("a");
 	private final QDigit b = new QDigit("b");
-	private final QHolidayMaster h0 = new QHolidayMaster("h0");
-	private final QHolidayMaster h1 = new QHolidayMaster("h1");
+	private final QDayoffMaster h0 = new QDayoffMaster("h0");
+	private final QDayoffMaster h1 = new QDayoffMaster("h1");
 
 	@Override
 	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(h0);
-		query.where(h0.dt.between(constant(from), constant(to)), h0.deletedFlg.eq(NOT_DELETED.code()));
+		query.where(h0.name.eq(name), h0.dt.between(constant(from), constant(to)), h0.deletedFlg.eq(NOT_DELETED.code()));
 		long count = queryDslJdbcOperations.queryForObject(query, h0.dt.count());
 		return (int) ((to.toDate().getTime() - from.toDate().getTime()) / 86400000L + 1L - count);
 	}
@@ -77,7 +77,8 @@ public class WorkdayStoreImpl implements WorkdayStore {
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(subquery, d).leftJoin(h0)
 				.on(h0.dt.between(constant(from), ddt), h0.deletedFlg.eq(NOT_DELETED.code()));
-		query.where(new SQLSubQuery().from(h1).where(h1.dt.eq(ddt), h1.deletedFlg.eq(NOT_DELETED.code())).notExists());
+		query.where(h0.name.eq(name),
+				new SQLSubQuery().from(h1).where(h1.dt.eq(ddt), h1.deletedFlg.eq(NOT_DELETED.code())).notExists());
 		query.groupBy(dn);
 		query.having(h0.dt.count().eq(dn.subtract(numberOfWorkday).add(1)));
 		List<LocalDate> list = queryDslJdbcOperations.query(query, ddt.min());
