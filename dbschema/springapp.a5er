@@ -91,20 +91,21 @@ ModifiedDateTime=20150224060549
 Position="業務日時",1500,700
 
 [Entity]
-PName=holiday_master
+PName=dayoff_master
 LName=休日マスタ
 Comment=
 TableOption=
 Page=業務日時
 Left=1500
 Top=500
-Field="年月日","dt","*日付","NOT NULL",0,"","",$FFFFFFFF,""
+Field="識別名","name","*文字列【10】","NOT NULL",0,"\qstandard\q","",$FFFFFFFF,""
+Field="年月日","dt","*日付","NOT NULL",1,"","",$FFFFFFFF,""
 Field="休日区分","type","*区分値【2】","NOT NULL",,"\q00\q","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20150224060537
+ModifiedDateTime=20150224231722
 Position="業務日時",1500,500
 
 [Entity]
