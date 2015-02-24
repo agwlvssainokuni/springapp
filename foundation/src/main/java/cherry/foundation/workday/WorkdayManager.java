@@ -22,19 +22,73 @@ import cherry.foundation.type.Code;
 
 /**
  * 営業日管理機能。<br />
+ * 以下の2つの機能を提供する。
+ * <ul>
+ * <li>営業日数算出機能: 所定のカレンダーに基づき、起点日から終点日までの営業日数を算出する。営業日数には起点日を含む。即ち、起点と終点に同じ日付を指定すると、(当日が営業日ならば)「1」が得られる。</li>
+ * <li>N営業日後算出機能: 所定のカレンダーに基づき、起点日から指定の営業日数後の営業日を算出する。営業日数には起点日を含む。即ち、営業に数に「1」を指定すると、(当日が営業日ならば)起点日と同じ日付が得られる。</li>
+ * </ul>
  */
 public interface WorkdayManager {
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * 標準のカレンダーに基づき、今日(業務日付)から指定した終点日までの営業日数を算出する。
+	 * 
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	int getNumberOfWorkday(LocalDate to);
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * カレンダーを指定して、今日(業務日付)から指定した終点日までの営業日数を算出する。
+	 * 
+	 * @param code カレンダーの識別名を保持する区分値。
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	<T extends Code<String>> int getNumberOfWorkday(T code, LocalDate to);
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * カレンダーを指定して、今日(業務日付)から指定した終点日までの営業日数を算出する。
+	 * 
+	 * @param name カレンダーの識別名。
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	int getNumberOfWorkday(String name, LocalDate to);
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * 標準のカレンダーに基づき、指定した起点日から終点日までの営業日数を算出する。
+	 * 
+	 * @param from 起点日。
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	int getNumberOfWorkday(LocalDate from, LocalDate to);
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * カレンダーを指定して、指定した起点日から終点日までの営業日数を算出する。
+	 * 
+	 * @param code カレンダーの識別名を保持する区分値。
+	 * @param from 起点日。
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	<T extends Code<String>> int getNumberOfWorkday(T code, LocalDate from, LocalDate to);
 
+	/**
+	 * 営業日数算出機能。<br />
+	 * カレンダーを指定して、指定した起点日から終点日までの営業日数を算出する。
+	 * 
+	 * @param name カレンダーの識別名。
+	 * @param from 起点日。
+	 * @param to 終点日。
+	 * @return 営業日数。
+	 */
 	int getNumberOfWorkday(String name, LocalDate from, LocalDate to);
 
 	LocalDate getNextWorkday(int numberOfWorkday);
