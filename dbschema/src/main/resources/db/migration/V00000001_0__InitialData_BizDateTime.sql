@@ -11,3 +11,12 @@ VALUES
 (8),
 (9)
 ;
+
+INSERT INTO holiday_master (dt)
+SELECT
+	DATEADD('DAY', A.d * 100 + B.d * 10 + C.d, CURRENT_DATE)
+FROM
+	digit A, digit B, digit C
+WHERE
+	DAY_OF_WEEK(DATEADD('DAY', A.d * 100 + B.d * 10 + C.d, CURRENT_DATE)) IN (1, 7)
+;
