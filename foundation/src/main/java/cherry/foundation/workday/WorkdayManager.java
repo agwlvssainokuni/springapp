@@ -91,16 +91,65 @@ public interface WorkdayManager {
 	 */
 	int getNumberOfWorkday(String name, LocalDate from, LocalDate to);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * 標準のカレンダーに基づき、今日(業務日付)から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	LocalDate getNextWorkday(int numberOfWorkday);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * カレンダーを指定して、今日(業務日付)から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param code カレンダーの識別名を保持する区分値。
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	<T extends Code<String>> LocalDate getNextWorkday(T code, int numberOfWorkday);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * カレンダーを指定して、今日(業務日付)から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param name カレンダーの識別名。
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	LocalDate getNextWorkday(String name, int numberOfWorkday);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * 標準のカレンダーに基づき、指定した起点日から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param from 起点日。
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	LocalDate getNextWorkday(LocalDate from, int numberOfWorkday);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * カレンダーを指定して、指定した起点日から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param code カレンダーの識別名を保持する区分値。
+	 * @param from 起点日。
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	<T extends Code<String>> LocalDate getNextWorkday(T code, LocalDate from, int numberOfWorkday);
 
+	/**
+	 * N営業日後算出機能。<br />
+	 * カレンダーを指定して、指定した起点日から指定の営業日後の営業日を算出する。
+	 * 
+	 * @param name カレンダーの識別名。
+	 * @param from 起点日。
+	 * @param numberOfWorkday 営業日数。
+	 * @return <code>numberOfWorkday</code>営業日後の営業日。
+	 */
 	LocalDate getNextWorkday(String name, LocalDate from, int numberOfWorkday);
 
 }
