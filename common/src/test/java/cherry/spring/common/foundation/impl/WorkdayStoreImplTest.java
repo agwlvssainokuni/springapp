@@ -38,7 +38,7 @@ public class WorkdayStoreImplTest {
 	public void testGetNumberOfWorkday() {
 		for (int i = 0; i < 50; i++) {
 			LocalDate dt = LocalDate.now().plusDays(i);
-			int numOfDays = workdayStore.getNumberOfWorkday("name", LocalDate.now(), dt);
+			int numOfDays = workdayStore.getNumberOfWorkday("standard", LocalDate.now(), dt);
 			System.out.println(MessageFormat.format("{0,date,yyyy/MM/dd} {1,number,0000}", dt.toDate(), numOfDays));
 		}
 	}
@@ -46,7 +46,7 @@ public class WorkdayStoreImplTest {
 	@Test
 	public void testGetNextWorkday() {
 		for (int i = 1; i <= 50; i++) {
-			LocalDate dt = workdayStore.getNextWorkday("name", LocalDate.now(), i);
+			LocalDate dt = workdayStore.getNextWorkday("standard", LocalDate.now(), i);
 			System.out.println(MessageFormat.format("{0,number,0000} {1,date,yyyy/MM/dd}", i, dt.toDate()));
 		}
 	}

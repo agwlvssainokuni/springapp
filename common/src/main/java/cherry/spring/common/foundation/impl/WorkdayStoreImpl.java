@@ -76,9 +76,9 @@ public class WorkdayStoreImpl implements WorkdayStore {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(subquery, d).leftJoin(h0)
-				.on(h0.dt.between(constant(from), ddt), h0.deletedFlg.eq(NOT_DELETED.code()));
-		query.where(h0.name.eq(name),
-				new SQLSubQuery().from(h1).where(h1.dt.eq(ddt), h1.deletedFlg.eq(NOT_DELETED.code())).notExists());
+				.on(h0.name.eq(name), h0.dt.between(constant(from), ddt), h0.deletedFlg.eq(NOT_DELETED.code()));
+		query.where(new SQLSubQuery().from(h1)
+				.where(h1.name.eq(name), h1.dt.eq(ddt), h1.deletedFlg.eq(NOT_DELETED.code())).notExists());
 		query.groupBy(dn);
 		query.having(h0.dt.count().eq(dn.subtract(numberOfWorkday).add(1)));
 		List<LocalDate> list = queryDslJdbcOperations.query(query, ddt.min());
