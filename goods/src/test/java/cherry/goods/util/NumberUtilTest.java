@@ -37,6 +37,7 @@ import static cherry.goods.util.NumberUtil.roundUp2;
 import static cherry.goods.util.NumberUtil.roundUp3;
 import static cherry.goods.util.NumberUtil.roundUp4;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -152,6 +153,11 @@ public class NumberUtilTest {
 		assertEquals(new BigDecimal("-5.6"), floor2(new BigDecimal("-5.5555")));
 		assertEquals(new BigDecimal("-5.56"), floor3(new BigDecimal("-5.5555")));
 		assertEquals(new BigDecimal("-5.556"), floor4(new BigDecimal("-5.5555")));
+	}
+
+	@Test
+	public void testInstantiate() {
+		assertNotNull(new NumberUtil());
 	}
 
 }
