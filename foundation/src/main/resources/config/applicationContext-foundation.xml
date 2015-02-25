@@ -18,6 +18,7 @@
 			pointcut="execution(* cherry..*.*(..))
 				and !execution(* cherry.foundation.log..*.*(..))
 				and !execution(* cherry.foundation.type..*.*(..))
+				and !execution(* cherry.foundation.springmvc..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
 				and !execution(* cherry.goods.crypto..*.*(..))
 				and !execution(* cherry.foundation.telno..*.*(..))
