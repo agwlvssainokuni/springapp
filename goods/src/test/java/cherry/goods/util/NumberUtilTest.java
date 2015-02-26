@@ -36,14 +36,29 @@ import static cherry.goods.util.NumberUtil.roundUp1;
 import static cherry.goods.util.NumberUtil.roundUp2;
 import static cherry.goods.util.NumberUtil.roundUp3;
 import static cherry.goods.util.NumberUtil.roundUp4;
+import static cherry.goods.util.NumberUtil.setScale;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 
 import org.junit.Test;
 
 public class NumberUtilTest {
+
+	@Test
+	public void testSetScale() {
+		assertEquals(new BigDecimal("4444.44"), setScale(new BigDecimal("4444.4444"), 2, RoundingMode.DOWN));
+		assertEquals(Double.valueOf(4444.44), setScale(Double.valueOf(4444.4444), 2, RoundingMode.DOWN));
+		assertEquals(Double.valueOf(4444.44), setScale(Float.valueOf(4444.4444f), 2, RoundingMode.DOWN));
+		assertEquals(Byte.valueOf((byte) 44), setScale(Byte.valueOf((byte) 44), 2, RoundingMode.DOWN));
+		assertEquals(Short.valueOf((short) 4444), setScale(Short.valueOf((short) 4444), 2, RoundingMode.DOWN));
+		assertEquals(Integer.valueOf(44444), setScale(Integer.valueOf(44444), 2, RoundingMode.DOWN));
+		assertEquals(Long.valueOf(44444L), setScale(Long.valueOf(44444L), 2, RoundingMode.DOWN));
+		assertEquals(BigInteger.valueOf(44444L), setScale(BigInteger.valueOf(44444L), 2, RoundingMode.DOWN));
+	}
 
 	@Test
 	public void testHalfUp() {
