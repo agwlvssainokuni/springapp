@@ -69,7 +69,7 @@ public class CustomNumberFormatAnnotationFormatterFactory implements AnnotationF
 
 	private int adjust(int scale) {
 		if (scale < 0) {
-			return scale;
+			return 0;
 		} else if (scale >= numberFormatter.size()) {
 			return numberFormatter.size() - 1;
 		} else {
