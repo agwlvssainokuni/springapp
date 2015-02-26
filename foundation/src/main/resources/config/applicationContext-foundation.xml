@@ -57,6 +57,16 @@
 				<bean class="org.springframework.format.number.NumberFormatter">
 					<property name="pattern" value="###0.##" />
 				</bean>
+				<bean class="cherry.foundation.type.format.CustomNumberFormatAnnotationFormatterFactory">
+					<property name="numberFormatter">
+						<list>
+							<value>###0.###</value>
+							<value>###0.0</value>
+							<value>###0.00</value>
+							<value>###0.000</value>
+						</list>
+					</property>
+				</bean>
 			</set>
 		</property>
 		<property name="formatterRegistrars">
