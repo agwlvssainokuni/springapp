@@ -17,6 +17,8 @@
 package cherry.foundation.type.format;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -56,6 +58,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-44", parseAndPrint(name, "-44.4444"));
 		assertEquals("-55", parseAndPrint(name, "-55"));
 		assertEquals("-55", parseAndPrint(name, "-55.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -69,6 +79,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -82,6 +100,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -95,6 +121,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -108,6 +142,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -121,6 +163,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.44", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.00", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.55", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -134,6 +184,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.44", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.00", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.55", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -147,6 +205,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -160,6 +226,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555", parseAndPrint(name, "-5555"));
 		assertEquals("-5555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -173,6 +247,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.4", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.0", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.5", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -186,6 +268,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.44", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.00", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.55", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -199,6 +289,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.000", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	@Test
@@ -212,6 +310,14 @@ public class CustomNumberFormatTest {
 		assertEquals("-4444.444", parseAndPrint(name, "-4444.4444"));
 		assertEquals("-5555.000", parseAndPrint(name, "-5555"));
 		assertEquals("-5555.555", parseAndPrint(name, "-5555.5555"));
+		try {
+			parseAndPrint(name, "aaa");
+			fail("Exception must be thrown");
+		} catch (BindException ex) {
+			assertEquals(1, ex.getErrorCount());
+			assertTrue(ex.hasFieldErrors(name));
+			assertEquals("typeMismatch", ex.getFieldError(name).getCode());
+		}
 	}
 
 	private String parseAndPrint(String name, String value) throws BindException {
