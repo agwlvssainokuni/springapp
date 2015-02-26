@@ -71,13 +71,22 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #end
 ################ サブ型
 #if ($prop.subtype == "整数")
-	@org.springframework.format.annotation.NumberFormat(pattern = "#[[###0]]#")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Integer ${prop.name};
 #elseif ($prop.subtype == "整数(Long)")
-	@org.springframework.format.annotation.NumberFormat(pattern = "#[[###0]]#")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Long ${prop.name};
+#elseif ($prop.subtype == "小数1桁")
+	@cherry.foundation.type.format.CustomNumberFormat(1)
+	private java.math.BigDecimal ${prop.name};
+#elseif ($prop.subtype == "小数2桁")
+	@cherry.foundation.type.format.CustomNumberFormat(2)
+	private java.math.BigDecimal ${prop.name};
+#elseif ($prop.subtype == "小数3桁")
+	@cherry.foundation.type.format.CustomNumberFormat(3)
+	private java.math.BigDecimal ${prop.name};
 #else
-	@org.springframework.format.annotation.NumberFormat(pattern = "#[[###0.0#]]#")
+	@cherry.foundation.type.format.CustomNumberFormat(2)
 	private java.math.BigDecimal ${prop.name};
 #end
 

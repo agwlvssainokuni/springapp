@@ -36,39 +36,39 @@ public abstract class NumberFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Integer int1;
 
 	@javax.validation.constraints.Min(value = 10, groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Integer int2;
 
 	@javax.validation.constraints.Max(value = 10, groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Integer int3;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Long long1;
 
 	@javax.validation.constraints.Min(value = 10, groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Long long2;
 
 	@javax.validation.constraints.Max(value = 10, groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0")
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Long long3;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
+	@cherry.foundation.type.format.CustomNumberFormat(2)
 	private java.math.BigDecimal decimal1;
 
 	@javax.validation.constraints.DecimalMin(value = "10", groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
+	@cherry.foundation.type.format.CustomNumberFormat(2)
 	private java.math.BigDecimal decimal2;
 
 	@javax.validation.constraints.DecimalMax(value = "10", groups = { javax.validation.groups.Default.class })
-	@org.springframework.format.annotation.NumberFormat(pattern = "###0.0#")
+	@cherry.foundation.type.format.CustomNumberFormat(2)
 	private java.math.BigDecimal decimal3;
 
 	@Getter
