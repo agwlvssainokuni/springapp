@@ -28,21 +28,29 @@ import cherry.foundation.batch.tools.Launcher;
 
 public class Main {
 
-	public static void main(String... origArgs) {
+	public static void main(String... args) {
+		System.exit(doMain(args).getCode());
+	}
+
+	public static ExitStatus doMain(String... origArgs) {
 
 		Options options = new Options();
 		options.addOption("j", "jobid", true, "Job Id");
 		options.addOption("h", "help", false, "Help");
 
 		CommandLine cmdline = parse(options, origArgs);
+		if (cmdline == null) {
+			printHelp(options);
+			return ExitStatus.FATAL;
+		}
 		if (cmdline.hasOption("h")) {
 			printHelp(options);
-			System.exit(ExitStatus.NORMAL.getCode());
+			return ExitStatus.NORMAL;
 		}
 
 		String[] args = cmdline.getArgs();
 		if (args.length <= 0) {
-			System.exit(ExitStatus.FATAL.getCode());
+			return ExitStatus.FATAL;
 		}
 
 		String batchId = args[0];
@@ -57,7 +65,7 @@ public class Main {
 
 		Launcher launcher = new Launcher(batchId);
 		ExitStatus status = launcher.launch(newArgs);
-		System.exit(status.getCode());
+		return status;
 	}
 
 	private static CommandLine parse(Options options, String... args) {
@@ -65,8 +73,6 @@ public class Main {
 			CommandLineParser parser = new GnuParser();
 			return parser.parse(options, args);
 		} catch (ParseException ex) {
-			printHelp(options);
-			System.exit(ExitStatus.FATAL.getCode());
 			return null;
 		}
 	}
