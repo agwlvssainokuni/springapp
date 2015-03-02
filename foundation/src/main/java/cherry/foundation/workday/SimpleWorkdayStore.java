@@ -16,6 +16,7 @@
 
 package cherry.foundation.workday;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 /**
@@ -25,7 +26,7 @@ public class SimpleWorkdayStore implements WorkdayStore {
 
 	@Override
 	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
-		return (int) ((to.toDate().getTime() - from.toDate().getTime()) / 86400000L) + 1;
+		return Days.daysBetween(from, to).getDays() + 1;
 	}
 
 	@Override

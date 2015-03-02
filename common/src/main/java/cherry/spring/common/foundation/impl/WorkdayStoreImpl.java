@@ -25,6 +25,7 @@ import static com.mysema.query.support.Expressions.path;
 
 import java.util.List;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -59,7 +60,7 @@ public class WorkdayStoreImpl implements WorkdayStore {
 		query.from(h0);
 		query.where(h0.name.eq(name), h0.dt.between(constant(from), constant(to)), h0.deletedFlg.eq(NOT_DELETED.code()));
 		long count = queryDslJdbcOperations.queryForObject(query, h0.dt.count());
-		return (int) ((to.toDate().getTime() - from.toDate().getTime()) / 86400000L + 1L - count);
+		return Days.daysBetween(from, to).getDays() + 1 - (int) count;
 	}
 
 	@Override
