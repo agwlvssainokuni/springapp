@@ -62,9 +62,9 @@ public class CustomNumberFormatAnnotationFormatterFactory implements AnnotationF
 	@Override
 	public Parser<Number> getParser(CustomNumberFormat annotation, Class<?> fieldType) {
 		int value = adjust(annotation.value());
-		final int scale = (annotation.scale() < 0 ? value : annotation.scale());
 		final NumberFormatter formatter = (isNotEmpty(annotation.pattern()) ? new NumberFormatter(annotation.pattern())
 				: numberFormatter.get(value));
+		final int scale = (annotation.scale() < 0 ? value : annotation.scale());
 		return new Parser<Number>() {
 			@Override
 			public Number parse(String text, Locale locale) throws ParseException {
