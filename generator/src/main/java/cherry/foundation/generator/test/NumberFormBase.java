@@ -60,15 +60,15 @@ public abstract class NumberFormBase implements Serializable {
 	private Long long3;
 
 	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.type.format.CustomNumberFormat(2)
+	@cherry.foundation.type.format.CustomNumberFormat(pattern = "###0.##", scale = 2)
 	private java.math.BigDecimal decimal1;
 
 	@javax.validation.constraints.DecimalMin(value = "10", groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.type.format.CustomNumberFormat(2)
+	@cherry.foundation.type.format.CustomNumberFormat(pattern = "###0.##", scale = 2)
 	private java.math.BigDecimal decimal2;
 
 	@javax.validation.constraints.DecimalMax(value = "10", groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.type.format.CustomNumberFormat(2)
+	@cherry.foundation.type.format.CustomNumberFormat(pattern = "###0.##", scale = 2)
 	private java.math.BigDecimal decimal3;
 
 	@Getter

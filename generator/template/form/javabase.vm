@@ -86,7 +86,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 	@cherry.foundation.type.format.CustomNumberFormat(3)
 	private java.math.BigDecimal ${prop.name};
 #else
-	@cherry.foundation.type.format.CustomNumberFormat(2)
+	@cherry.foundation.type.format.CustomNumberFormat(pattern = "#[[###0.##]]#", scale = 2)
 	private java.math.BigDecimal ${prop.name};
 #end
 
