@@ -16,7 +16,8 @@
 
 package cherry.goods.util;
 
-import static cherry.goods.util.CheckDigitUtil.modulus10weight3;
+import static cherry.goods.util.CheckDigitUtil.modulus10w3and1;
+import static cherry.goods.util.CheckDigitUtil.modulus11w10to2;
 import static java.math.BigInteger.valueOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,22 +28,41 @@ import org.junit.Test;
 public class CheckDigitUtilTest {
 
 	@Test
-	public void testModulus10weight3() {
-		// [ISBN]
+	public void testModulus10w3and1() {
+		// [ISBN-13]
 		// 達人に学ぶ SQL徹底指南書
-		assertEquals(0, modulus10weight3(valueOf(978479811516L)));
+		assertEquals(0, modulus10w3and1(valueOf(978479811516L)));
 		// コンピュータアーキテクチャ技術入門
-		assertEquals(7, modulus10weight3(valueOf(978477416426L)));
+		assertEquals(7, modulus10w3and1(valueOf(978477416426L)));
 		// Chef実践入門
-		assertEquals(4, modulus10weight3(valueOf(978477416500L)));
+		assertEquals(4, modulus10w3and1(valueOf(978477416500L)));
 		// チーム開発実践入門
-		assertEquals(1, modulus10weight3(valueOf(978477416428L)));
+		assertEquals(1, modulus10w3and1(valueOf(978477416428L)));
 		// AngularJSリファレンス
-		assertEquals(6, modulus10weight3(valueOf(978484433668L)));
+		assertEquals(6, modulus10w3and1(valueOf(978484433668L)));
 		// 実践ハイパフォーマンスMySQL 第3版
-		assertEquals(9, modulus10weight3(valueOf(978487311638L)));
+		assertEquals(9, modulus10w3and1(valueOf(978487311638L)));
 		// データビジュアライゼーションのためのD3.js徹底入門
-		assertEquals(4, modulus10weight3(valueOf(978479736886L)));
+		assertEquals(4, modulus10w3and1(valueOf(978479736886L)));
+	}
+
+	@Test
+	public void testModulus11w10to2() {
+		// [ISBN-10]
+		// 達人に学ぶ SQL徹底指南書
+		assertEquals(9, modulus11w10to2(valueOf(479811516L)));
+		// コンピュータアーキテクチャ技術入門
+		assertEquals(7, modulus11w10to2(valueOf(477416426L)));
+		// Chef実践入門
+		assertEquals(10, modulus11w10to2(valueOf(477416500L)));
+		// チーム開発実践入門
+		assertEquals(3, modulus11w10to2(valueOf(477416428L)));
+		// AngularJSリファレンス
+		assertEquals(1, modulus11w10to2(valueOf(484433668L)));
+		// 実践ハイパフォーマンスMySQL 第3版
+		assertEquals(4, modulus11w10to2(valueOf(487311638L)));
+		// データビジュアライゼーションのためのD3.js徹底入門
+		assertEquals(1, modulus11w10to2(valueOf(479736886L)));
 	}
 
 	@Test
