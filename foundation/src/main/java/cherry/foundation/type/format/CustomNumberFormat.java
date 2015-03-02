@@ -27,4 +27,8 @@ public @interface CustomNumberFormat {
 
 	int value() default 0;
 
+	String pattern() default "";
+
+	int scale() default -1;
+
 }

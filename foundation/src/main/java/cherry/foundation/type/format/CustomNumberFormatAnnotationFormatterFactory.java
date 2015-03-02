@@ -17,6 +17,7 @@
 package cherry.foundation.type.format;
 
 import static java.util.Arrays.asList;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -52,28 +53,33 @@ public class CustomNumberFormatAnnotationFormatterFactory implements AnnotationF
 
 	@Override
 	public Printer<Number> getPrinter(CustomNumberFormat annotation, Class<?> fieldType) {
-		int scale = adjust(annotation.value());
-		return numberFormatter.get(scale);
+		int value = adjust(annotation.value());
+		NumberFormatter formatter = (isNotEmpty(annotation.pattern()) ? new NumberFormatter(annotation.pattern())
+				: numberFormatter.get(value));
+		return formatter;
 	}
 
 	@Override
 	public Parser<Number> getParser(CustomNumberFormat annotation, Class<?> fieldType) {
-		final int scale = adjust(annotation.value());
+		int value = adjust(annotation.value());
+		final int scale = (annotation.scale() < 0 ? value : annotation.scale());
+		final NumberFormatter formatter = (isNotEmpty(annotation.pattern()) ? new NumberFormatter(annotation.pattern())
+				: numberFormatter.get(value));
 		return new Parser<Number>() {
 			@Override
 			public Number parse(String text, Locale locale) throws ParseException {
-				return NumberUtil.setScale(numberFormatter.get(scale).parse(text, locale), scale, RoundingMode.DOWN);
+				return NumberUtil.setScale(formatter.parse(text, locale), scale, RoundingMode.DOWN);
 			}
 		};
 	}
 
-	private int adjust(int scale) {
-		if (scale < 0) {
+	private int adjust(int value) {
+		if (value < 0) {
 			return 0;
-		} else if (scale >= numberFormatter.size()) {
+		} else if (value >= numberFormatter.size()) {
 			return numberFormatter.size() - 1;
 		} else {
-			return scale;
+			return value;
 		}
 	}
 
