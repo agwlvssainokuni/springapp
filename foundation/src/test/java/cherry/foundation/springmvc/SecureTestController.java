@@ -16,6 +16,15 @@
 
 package cherry.foundation.springmvc;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,31 +35,61 @@ import org.springframework.web.servlet.view.RedirectView;
 public class SecureTestController {
 
 	@RequestMapping()
-	public ModelAndView index() {
+	public ModelAndView index(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response) {
+		assertNotNull(auth);
+		assertNotNull(locale);
+		assertNotNull(sitePref);
+		assertNotNull(request);
+		assertNotNull(response);
 		return new ModelAndView("secure/test/index");
 	}
 
 	@RequestMapping(params = "redirect")
-	public ModelAndView redirect() {
+	public ModelAndView redirect(Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, HttpServletResponse response) {
+		assertNotNull(auth);
+		assertNotNull(locale);
+		assertNotNull(sitePref);
+		assertNotNull(request);
+		assertNotNull(response);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView("/secure/text"));
 		return mav;
 	}
 
 	@RequestMapping(params = "download")
-	public ModelAndView download() {
+	public ModelAndView download(Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, HttpServletResponse response) {
+		assertNotNull(auth);
+		assertNotNull(locale);
+		assertNotNull(sitePref);
+		assertNotNull(request);
+		assertNotNull(response);
 		return null;
 	}
 
 	@RequestMapping(params = "nullview")
-	public ModelAndView nullview() {
+	public ModelAndView nullview(Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, HttpServletResponse response) {
+		assertNotNull(auth);
+		assertNotNull(locale);
+		assertNotNull(sitePref);
+		assertNotNull(request);
+		assertNotNull(response);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(null);
 		return mav;
 	}
 
 	@RequestMapping(params = "exception")
-	public ModelAndView exception() {
+	public ModelAndView exception(Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, HttpServletResponse response) {
+		assertNotNull(auth);
+		assertNotNull(locale);
+		assertNotNull(sitePref);
+		assertNotNull(request);
+		assertNotNull(response);
 		throw new IllegalStateException("SecureTestController exception");
 	}
 

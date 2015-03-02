@@ -18,6 +18,9 @@ package cherry.foundation.springmvc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.springframework.security.core.context.SecurityContextHolder.createEmptyContext;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
+import static org.springframework.security.core.context.SecurityContextHolder.setContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,9 +55,9 @@ public class OperationLogHandlerInterceptorTest {
 	public void before() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
+		SecurityContext context = createEmptyContext();
 		context.setAuthentication(new UsernamePasswordAuthenticationToken("user01", "password"));
-		SecurityContextHolder.setContext(context);
+		setContext(context);
 	}
 
 	@After
@@ -64,33 +67,39 @@ public class OperationLogHandlerInterceptorTest {
 
 	@Test
 	public void testSimpleGet() throws Exception {
-		mockMvc.perform(get("/secure/test")).andExpect(status().isOk());
+		mockMvc.perform(get("/secure/test").principal(getContext().getAuthentication())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void testPostWithMultiParam() throws Exception {
-		mockMvc.perform(post("/secure/test").param("loginId", "u").param("password", "p")).andExpect(status().isOk());
+		mockMvc.perform(
+				post("/secure/test").param("loginId", "u").param("password", "p")
+						.principal(getContext().getAuthentication())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void testRedirect() throws Exception {
-		mockMvc.perform(get("/secure/test").param("redirect", "")).andExpect(status().is3xxRedirection());
+		mockMvc.perform(get("/secure/test").param("redirect", "").principal(getContext().getAuthentication()))
+				.andExpect(status().is3xxRedirection());
 	}
 
 	@Test
 	public void testDownload() throws Exception {
-		mockMvc.perform(get("/secure/test").param("download", "")).andExpect(status().isOk());
+		mockMvc.perform(get("/secure/test").param("download", "").principal(getContext().getAuthentication()))
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void testNullview() throws Exception {
-		mockMvc.perform(get("/secure/test").param("nullview", "")).andExpect(status().isOk());
+		mockMvc.perform(get("/secure/test").param("nullview", "").principal(getContext().getAuthentication()))
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void testException() throws Exception {
 		try {
-			mockMvc.perform(get("/secure/test").param("exception", "")).andExpect(status().is5xxServerError());
+			mockMvc.perform(get("/secure/test").param("exception", "").principal(getContext().getAuthentication()))
+					.andExpect(status().is5xxServerError());
 			fail("Exception must be thrown");
 		} catch (NestedServletException ex) {
 			assertEquals("SecureTestController exception", ex.getCause().getMessage());
