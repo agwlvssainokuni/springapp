@@ -41,7 +41,8 @@ public class Log {
 	 * @return ログ文言定義 (現在の定義を返却する)。
 	 */
 	public static List<ResourceBundle> setMessageDef(ResourceBundle... msgDef) {
-		messageDef = Arrays.asList(msgDef);
+		messageDef = new ArrayList<>();
+		messageDef.addAll(Arrays.asList(msgDef));
 		return messageDef;
 	}
 
