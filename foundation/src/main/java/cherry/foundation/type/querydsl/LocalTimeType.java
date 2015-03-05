@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 import com.mysema.query.sql.types.AbstractDateTimeType;
@@ -53,7 +52,7 @@ public class LocalTimeType extends AbstractDateTimeType<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 	@Override
