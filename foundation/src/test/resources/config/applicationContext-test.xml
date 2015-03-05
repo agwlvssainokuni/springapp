@@ -24,6 +24,21 @@
 
 	<mybatis-spring:scan base-package="cherry.foundation.type.db.mapper" />
 
+	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
+		<constructor-arg>
+			<list>
+				<value>cherry/goods/log/log1</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.goods.log.Log" factory-method="addMessageDef">
+		<constructor-arg>
+			<list>
+				<value>cherry/goods/log/log2</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/login/**" />

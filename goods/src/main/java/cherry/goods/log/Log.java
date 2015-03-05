@@ -111,11 +111,6 @@ public class Log {
 				logger.warn(createMessage(id, args));
 			}
 			break;
-		case ERROR:
-			if (logger.isErrorEnabled()) {
-				logger.error(createMessage(id, args));
-			}
-			break;
 		default:
 			if (logger.isErrorEnabled()) {
 				logger.error(createMessage(id, args));
@@ -141,11 +136,6 @@ public class Log {
 		case WARN:
 			if (logger.isWarnEnabled()) {
 				logger.warn(createMessage(id, args), ex);
-			}
-			break;
-		case ERROR:
-			if (logger.isErrorEnabled()) {
-				logger.error(createMessage(id, args), ex);
 			}
 			break;
 		default:
