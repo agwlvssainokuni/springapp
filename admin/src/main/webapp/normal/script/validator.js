@@ -425,7 +425,7 @@ String.prototype.isNumberFormat = function() {
 	if (this.length <= 0) {
 		return true;
 	}
-	var match = /^[-+]?\d+(\.\d*)?$/.exec(this);
+	var match = /^[-+]?(\d+(\.\d*)?|\.\d+)$/.exec(this);
 	if (match == null) {
 		return false;
 	}
