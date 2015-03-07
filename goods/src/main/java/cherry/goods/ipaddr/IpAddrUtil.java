@@ -456,7 +456,7 @@ public class IpAddrUtil {
 	 */
 	private static void constructCompressed(StringBuilder builder, String[] field, Range range) {
 
-		if ((range.begin == -1) || (range.begin == range.end)) {
+		if (range.begin == -1 || range.begin == range.end) {
 			// 省略なし
 			appendCompressed(builder, field[0]);
 			for (int i = 1; i < field.length; i++) {
