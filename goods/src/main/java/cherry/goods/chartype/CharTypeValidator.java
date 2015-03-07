@@ -255,10 +255,9 @@ public class CharTypeValidator {
 			if (isLowSurrogate(seq.charAt(i))) {
 				continue;
 			}
-			if (isValid(codePointAt(seq, i), mode, acceptable)) {
-				continue;
+			if (!isValid(codePointAt(seq, i), mode, acceptable)) {
+				return new CharTypeResult(false, i, codePointAt(seq, i));
 			}
-			return new CharTypeResult(false, i, codePointAt(seq, i));
 		}
 		return new CharTypeResult();
 	}
