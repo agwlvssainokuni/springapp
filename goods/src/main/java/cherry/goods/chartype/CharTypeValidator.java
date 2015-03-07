@@ -86,22 +86,22 @@ public class CharTypeValidator {
 
 	static {
 		int shift = 0;
-		BASIC_LATIN = (1 << (shift++));
-		HALF_WIDTH = (1 << (shift++));
-		FULL_WIDTH = (1 << (shift++));
-		SPACE = (1 << (shift++));
-		NUMERIC = (1 << (shift++));
-		ALPHA = (1 << (shift++));
-		UPPER = (1 << (shift++));
-		LOWER = (1 << (shift++));
-		FULL_SPACE = (1 << (shift++));
-		FULL_NUMERIC = (1 << (shift++));
-		FULL_ALPHA = (1 << (shift++));
-		FULL_UPPER = (1 << (shift++));
-		FULL_LOWER = (1 << (shift++));
-		FULL_HIRAGANA = (1 << (shift++));
-		FULL_KATAKANA = (1 << (shift++));
-		HALF_KATAKANA = (1 << (shift++));
+		BASIC_LATIN = 1 << (shift++);
+		HALF_WIDTH = 1 << (shift++);
+		FULL_WIDTH = 1 << (shift++);
+		SPACE = 1 << (shift++);
+		NUMERIC = 1 << (shift++);
+		ALPHA = 1 << (shift++);
+		UPPER = 1 << (shift++);
+		LOWER = 1 << (shift++);
+		FULL_SPACE = 1 << (shift++);
+		FULL_NUMERIC = 1 << (shift++);
+		FULL_ALPHA = 1 << (shift++);
+		FULL_UPPER = 1 << (shift++);
+		FULL_LOWER = 1 << (shift++);
+		FULL_HIRAGANA = 1 << (shift++);
+		FULL_KATAKANA = 1 << (shift++);
+		HALF_KATAKANA = 1 << (shift++);
 	}
 
 	/**
