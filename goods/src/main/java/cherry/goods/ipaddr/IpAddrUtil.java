@@ -171,7 +171,7 @@ public class IpAddrUtil {
 
 		for (String field : addr.split("\\.")) {
 			result = result.shiftLeft(8);
-			long value = Long.valueOf(field);
+			long value = Long.parseLong(field);
 			result = result.add(BigInteger.valueOf(value));
 		}
 
