@@ -28,7 +28,6 @@ subprojects {
 
 	findbugs { ignoreFailures = true }
 	findbugsMain {
-		excludes = ["cherry/spring/common/db/gen/**"]
 		reports {
 			xml.enabled true
 			html.enabled false
@@ -38,6 +37,7 @@ subprojects {
 	pmd { ignoreFailures = true }
 	pmdMain {
 		exclude "cherry/spring/common/db/gen/**"
+		exclude "cherry/querytutorial/db/gen/**"
 		reports {
 			xml.enabled true
 			html.enabled false
