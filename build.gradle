@@ -87,7 +87,7 @@ subprojects {
 		versionLogback = "1.1.2"
 		versionMyBatis = "3.2.8"
 		versionMyBatisSpring = "1.2.2"
-		versionQuerydsl = "3.6.1"
+		versionQuerydsl = "3.6.2"
 		versionJackson = "2.5.0"
 		versionAspectJ = "1.8.2"
 		versionAopalliance = "1.0"
