@@ -47,7 +47,7 @@ subprojects {
 
 	jdepend {
 		ignoreFailures = true
-		sourceSets = main
+		sourceSets = ["main"]
 	}
 	jdependMain {
 		reports {
