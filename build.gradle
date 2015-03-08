@@ -45,10 +45,7 @@ subprojects {
 		}
 	}
 
-	jdepend {
-		ignoreFailures = true
-		sourceSets = ["main"]
-	}
+	jdepend { ignoreFailures = true }
 	jdependMain {
 		reports {
 			xml.enabled true
