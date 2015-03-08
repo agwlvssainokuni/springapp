@@ -45,13 +45,15 @@ subprojects {
 		}
 	}
 
-	jdepend { ignoreFailures = true }
+	jdepend {
+		ignoreFailures = true
+		sourceSets = main
+	}
 	jdependMain {
 		reports {
 			xml.enabled true
 			text.enabled false
 		}
-
 	}
 
 	jacocoTestReport {
