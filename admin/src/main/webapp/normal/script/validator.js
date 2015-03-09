@@ -145,7 +145,13 @@ Number.prototype.isFullHiragana = function() {
 			|| this == 0x30FB // '・' from KATAKANA
 			|| this == 0x30FC // 'ー' from KATAKANA
 			// \u30FD 'ヽ' and \u30FE 'ヾ' if iteration mark for KATAKANA
-			|| this == 0x30FF; // 'ヿ' from KATAKANA (not in Win31J)
+			|| this == 0x30FF // 'ヿ' from KATAKANA (not in Win31J)
+			|| this == 0x3001 // '、'
+			|| this == 0x3002 // '。'
+			|| this == 0x300C // '「'
+			|| this == 0x300D // '」'
+			|| this == 0x300E // '『'
+			|| this == 0x300F; // '』'
 };
 
 /**
@@ -172,7 +178,13 @@ Number.prototype.isFullKatakana = function() {
 			|| this == 0x309B // '゛' from HIRAGANA
 			|| this == 0x309C // '゜' from HIRAGANA
 			// \u309D 'ゝ' and \u309E 'ゞ' is iteration mark for HIRAGANA
-			|| this == 0x309F; // 'ゟ' from HIRAGANA (not in Win31J)
+			|| this == 0x309F // 'ゟ' from HIRAGANA (not in Win31J)
+			|| this == 0x3001 // '、'
+			|| this == 0x3002 // '。'
+			|| this == 0x300C // '「'
+			|| this == 0x300D // '」'
+			|| this == 0x300E // '『'
+			|| this == 0x300F; // '』'
 };
 
 /**
