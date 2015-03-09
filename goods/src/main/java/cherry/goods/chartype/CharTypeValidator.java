@@ -409,7 +409,13 @@ public class CharTypeValidator {
 				codePoint == '\u30FB' || // '・' from KATAKANA
 				codePoint == '\u30FC' || // 'ー' from KATAKANA
 				// \u30FD 'ヽ' and \u30FE 'ヾ' if iteration mark for KATAKANA
-				codePoint == '\u30FF'; // 'ヿ' from KATAKANA (not in Win31J)
+				codePoint == '\u30FF' || // 'ヿ' from KATAKANA (not in Win31J)
+				codePoint == '\u3001' || // '、'
+				codePoint == '\u3002' || // '。'
+				codePoint == '\u300C' || // '「'
+				codePoint == '\u300D' || // '」'
+				codePoint == '\u300E' || // '『'
+				codePoint == '\u300F'; // '』'
 	}
 
 	/**
@@ -429,7 +435,13 @@ public class CharTypeValidator {
 				codePoint == '\u309B' || // '゛' from HIRAGANA
 				codePoint == '\u309C' || // '゜' from HIRAGANA
 				// \u309D 'ゝ' and \u309E 'ゞ' is iteration mark for HIRAGANA
-				codePoint == '\u309F'; // 'ゟ' from HIRAGANA (not in Win31J)
+				codePoint == '\u309F' || // 'ゟ' from HIRAGANA (not in Win31J)
+				codePoint == '\u3001' || // '、'
+				codePoint == '\u3002' || // '。'
+				codePoint == '\u300C' || // '「'
+				codePoint == '\u300D' || // '」'
+				codePoint == '\u300E' || // '『'
+				codePoint == '\u300F'; // '』'
 	}
 
 	/**
