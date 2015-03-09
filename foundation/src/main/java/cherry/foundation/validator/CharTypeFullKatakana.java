@@ -35,7 +35,7 @@ import cherry.foundation.validator.CharType.Mode;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@CharType(Mode.FullKatakana)
+@CharType(value = Mode.FullKatakana, acceptable = "「」『』、。")
 @ReportAsSingleViolation
 public @interface CharTypeFullKatakana {
 
