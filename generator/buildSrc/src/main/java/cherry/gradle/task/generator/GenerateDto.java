@@ -49,7 +49,7 @@ import cherry.parser.worksheet.TypeDef;
 import cherry.parser.worksheet.WorkbookParser;
 
 @Setter
-public class GenerateForm extends DefaultTask {
+public class GenerateDto extends DefaultTask {
 
 	private boolean verbose = true;
 
@@ -59,11 +59,9 @@ public class GenerateForm extends DefaultTask {
 
 	private String velocityConfig = "velocity.properties";
 
-	private String templateJava = "form/java.vm";
+	private String templateJava = "dto/java.vm";
 
-	private String templateJavaBase = "form/javabase.vm";
-
-	private String templateProperties = "form/properties.vm";
+	private String templateJavaBase = "dto/javabase.vm";
 
 	private String templateEncoding = "UTF-8";
 
@@ -72,10 +70,6 @@ public class GenerateForm extends DefaultTask {
 	private String javaBaseDir = "src/generated/java";
 
 	private String javaEncoding = "UTF-8";
-
-	private String propBaseDir = "src/generated/resources/message/form";
-
-	private String propEncoding = "UTF-8";
 
 	private String attrDirSpec0 = null;
 
@@ -108,7 +102,6 @@ public class GenerateForm extends DefaultTask {
 		message("Loading templates.");
 		Template javaTempl = engine.getTemplate(templateJava, templateEncoding);
 		Template javaBaseTempl = engine.getTemplate(templateJavaBase, templateEncoding);
-		Template propTempl = engine.getTemplate(templateProperties, templateEncoding);
 
 		message("Generating.");
 
@@ -129,20 +122,14 @@ public class GenerateForm extends DefaultTask {
 			File pkgDir = new File(javaDir, typeDef.getDirName());
 			pkgDir.mkdirs();
 
-			File propDir = new File(baseDir, format(propBaseDir, dirSpec0, dirSpec1, dirSpec2, dirSpec3, dirSpec4));
-			propDir.mkdirs();
-
 			File javaFile = new File(pkgDir, typeDef.getClassName() + ".java");
 			File javaBaseFile = new File(pkgDir, typeDef.getClassName() + "Base.java");
-			File propFile = new File(propDir, typeDef.getClassName() + ".txt");
 
 			if (overwrite || !javaFile.exists()) {
 				createFile(context, javaTempl, javaFile, javaEncoding);
 			}
 
 			createFile(context, javaBaseTempl, javaBaseFile, javaEncoding);
-
-			createFile(context, propTempl, propFile, propEncoding);
 		}
 
 		message("Completed.");
