@@ -6,6 +6,13 @@ for (int count = 1; project.hasProperty("definitionFile.${count}"); count++) {
 	defFile.add(file(project.getProperty("definitionFile.${count}")))
 }
 
+task generateDto(type: cherry.gradle.task.generator.GenerateDto) {
+	definitionFiles = defFile
+	baseDir = file("../")
+	javaBaseDir = "{0}/src/main/java"
+	attrDirSpec0 = "PROJNAME"
+}
+
 task generateForm(type: cherry.gradle.task.generator.GenerateForm) {
 	definitionFiles = defFile
 	baseDir = file("../")
