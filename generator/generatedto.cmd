@@ -17,4 +17,4 @@ call gradle generateDto %props%
 
 pause
 
-@echo off
+@echo on

@@ -31,8 +31,13 @@ public abstract class ${typeDef.className}Base implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 #foreach ($prop in $typeDef.itemDef)
+#if ($prop.type && $prop.name)
 
+#if ($prop.purpose)
 	/** ${prop.purpose} */
 	private ${prop.type} ${prop.name};
 #end
+#end
+#end
+
 }

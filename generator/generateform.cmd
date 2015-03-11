@@ -17,4 +17,4 @@ call gradle generateForm %props%
 
 pause
 
-@echo off
+@echo on
