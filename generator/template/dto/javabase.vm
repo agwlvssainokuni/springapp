@@ -35,8 +35,8 @@ public abstract class ${typeDef.className}Base implements Serializable {
 
 #if ($prop.purpose)
 	/** ${prop.purpose} */
-	private ${prop.type} ${prop.name};
 #end
+	private ${prop.type} ${prop.name};
 #end
 #end
 
