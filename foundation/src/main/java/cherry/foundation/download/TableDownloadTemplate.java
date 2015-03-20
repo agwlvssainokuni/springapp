@@ -71,7 +71,7 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 	@Override
 	public void downloadCsv(HttpServletResponse response, final Charset charset, String filename,
 			LocalDateTime timestamp, final List<String> header, final QueryConfigurer commonClause,
-			final QueryConfigurer orderByClause, final Expression<?>... expressions) throws IOException {
+			final QueryConfigurer orderByClause, final Expression<?>... expressions) {
 		downloadOperation.download(response, csvType, charset, filename, timestamp, new DownloadAction() {
 			@Override
 			public long doDownload(OutputStream stream) throws IOException {
@@ -87,7 +87,7 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 	@Override
 	public void downloadXls(HttpServletResponse response, String filename, LocalDateTime timestamp,
 			final List<String> header, final QueryConfigurer commonClause, final QueryConfigurer orderByClause,
-			final Expression<?>... expressions) throws IOException {
+			final Expression<?>... expressions) {
 		downloadOperation.download(response, excelType, null, filename, timestamp, new DownloadAction() {
 			@Override
 			public long doDownload(OutputStream stream) throws IOException {
@@ -105,7 +105,7 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 	@Override
 	public void downloadXlsx(HttpServletResponse response, String filename, LocalDateTime timestamp,
 			final List<String> header, final QueryConfigurer commonClause, final QueryConfigurer orderByClause,
-			final Expression<?>... expressions) throws IOException {
+			final Expression<?>... expressions) {
 		downloadOperation.download(response, excelType, null, filename, timestamp, new DownloadAction() {
 			@Override
 			public long doDownload(OutputStream stream) throws IOException {

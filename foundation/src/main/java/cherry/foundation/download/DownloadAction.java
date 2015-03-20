@@ -19,8 +19,21 @@ package cherry.foundation.download;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * ダウンロードフレームワーク。<br />
+ * ダウンロード処理の実体を定義するインタフェースを規定する。
+ */
 public interface DownloadAction {
 
+	/**
+	 * ダウンロードに供するデータを形成する処理を定義する。<br />
+	 * 引数に渡されたストリームに対して、ダウンロードに供するデータを書き込む。また、書き込んだデータの総量を数値として返却する。<br />
+	 * なお、返却値の意味づけはダウンロード処理の仕様として個々に規定することとする。典型的な事例としては、CSV形式データや表計算形式データは「レコード数」、バイナリデータは「オクテット数」を想定する。
+	 * 
+	 * @param stream ダウンロードに供するデータを書き込む先のストリーム。
+	 * @return 書き込んだデータの総量を表す数値。
+	 * @throws IOException データの書き込みにおける異常を意味する。
+	 */
 	long doDownload(OutputStream stream) throws IOException;
 
 }
