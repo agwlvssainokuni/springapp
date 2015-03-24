@@ -18,6 +18,7 @@ package cherry.goods.chartype;
 
 import static cherry.goods.chartype.CharTypeValidator.ALPHA;
 import static cherry.goods.chartype.CharTypeValidator.BASIC_LATIN;
+import static cherry.goods.chartype.CharTypeValidator.CP932;
 import static cherry.goods.chartype.CharTypeValidator.FULL_ALPHA;
 import static cherry.goods.chartype.CharTypeValidator.FULL_HIRAGANA;
 import static cherry.goods.chartype.CharTypeValidator.FULL_KATAKANA;
@@ -177,6 +178,14 @@ public class CharTypeValidatorTest {
 		assertThat(CharTypeValidator.isValid('あ', HALF_KATAKANA), is(false));
 		assertThat(CharTypeValidator.isValid('ア', HALF_KATAKANA), is(false));
 		assertThat(CharTypeValidator.isValid('\uFF71', HALF_KATAKANA), is(true));
+	}
+
+	@Test
+	public void testIsValidCp932() {
+		assertThat(CharTypeValidator.isValid('あ', CP932), is(true));
+		assertThat(CharTypeValidator.isValid('ア', CP932), is(true));
+		assertThat(CharTypeValidator.isValid('\uFF71', CP932), is(true));
+		assertThat(CharTypeValidator.isValid('\uFFFF', CP932), is(false));
 	}
 
 	@Test

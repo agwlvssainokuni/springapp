@@ -19,6 +19,9 @@ package cherry.goods.chartype;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import cherry.goods.chartype.TableReader.Entry;
@@ -314,6 +317,21 @@ public class CharTypeTest {
 				assertThat(CharTypeValidator.isHalfKatakana(unicode), is(true));
 			} else {
 				assertThat(CharTypeValidator.isHalfKatakana(unicode), is(false));
+			}
+		}
+	}
+
+	@Test
+	public void testIsCp932() {
+		Map<Integer, Boolean> map = new HashMap<>();
+		for (Entry entry : tableReader.getEntries()) {
+			map.put(entry.getUnicode(), Boolean.TRUE);
+		}
+		for (int i = 0; i <= 0xFFFF; i++) {
+			if (map.containsKey(Integer.valueOf(i))) {
+				assertThat(CharTypeValidator.isCp932(i), is(true));
+			} else {
+				assertThat(CharTypeValidator.isCp932(i), is(false));
 			}
 		}
 	}
