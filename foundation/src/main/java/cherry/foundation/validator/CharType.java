@@ -18,6 +18,7 @@ package cherry.foundation.validator;
 
 import static cherry.goods.chartype.CharTypeValidator.ALPHA;
 import static cherry.goods.chartype.CharTypeValidator.BASIC_LATIN;
+import static cherry.goods.chartype.CharTypeValidator.CP932;
 import static cherry.goods.chartype.CharTypeValidator.FULL_ALPHA;
 import static cherry.goods.chartype.CharTypeValidator.FULL_HIRAGANA;
 import static cherry.goods.chartype.CharTypeValidator.FULL_KATAKANA;
@@ -84,7 +85,9 @@ public @interface CharType {
 		/** 全角カタカナ */
 		FullKatakana(FULL_KATAKANA),
 		/** 半角カタカナ */
-		HalfKatakana(HALF_KATAKANA);
+		HalfKatakana(HALF_KATAKANA),
+		/** CP932 */
+		Cp932(CP932);
 
 		private final int mode;
 

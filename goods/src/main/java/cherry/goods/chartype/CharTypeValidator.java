@@ -47,6 +47,7 @@ import java.lang.Character.UnicodeBlock;
  * <li>全角ひらがな ({@link #isFullHiragana(int)})</li>
  * <li>全角カタカナ ({@link #isFullKatakana(int)})</li>
  * <li>半角カタカナ ({@link #isHalfKatakana(int)})</li>
+ * <li>CP932 ({@link #isCp932(int)})</li>
  * </ul>
  */
 public class CharTypeValidator {
