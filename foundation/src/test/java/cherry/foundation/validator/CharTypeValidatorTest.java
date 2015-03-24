@@ -17,6 +17,7 @@
 package cherry.foundation.validator;
 
 import static cherry.foundation.validator.CharType.Mode.Alpha;
+import static cherry.foundation.validator.CharType.Mode.FullWidth;
 import static cherry.foundation.validator.CharType.Mode.Lower;
 import static cherry.foundation.validator.CharType.Mode.None;
 import static cherry.foundation.validator.CharType.Mode.Numeric;
@@ -63,6 +64,7 @@ public class CharTypeValidatorTest {
 		val.put("upper", "ABC");
 		val.put("lower", "abc");
 		val.put("surrogate", "\uD842\uDF9F");
+		val.put("cp932fw", "あいうえお");
 
 		TestDto dto = new TestDto();
 
@@ -79,6 +81,7 @@ public class CharTypeValidatorTest {
 		assertThat(dto.getUpper(), is("ABC"));
 		assertThat(dto.getLower(), is("abc"));
 		assertThat(dto.getSurrogate(), is("\uD842\uDF9F"));
+		assertThat(dto.getCp932fw(), is("あいうえお"));
 	}
 
 	@Test
@@ -91,6 +94,7 @@ public class CharTypeValidatorTest {
 		val.put("alpha", "ABCabc0");
 		val.put("upper", "ABCa");
 		val.put("lower", "abcA");
+		val.put("cp932fw", "あいうえお\u30A0");
 
 		TestDto dto = new TestDto();
 
@@ -100,7 +104,7 @@ public class CharTypeValidatorTest {
 		binder.bind(new MutablePropertyValues(val));
 		binder.validate();
 		BindingResult result = binder.getBindingResult();
-		assertThat(result.getErrorCount(), is(6));
+		assertThat(result.getErrorCount(), is(7));
 	}
 
 	@Test
@@ -132,6 +136,10 @@ public class CharTypeValidatorTest {
 
 		@CharType(value = None, acceptable = "\uD842\uDF9F" /* \u20B9F */)
 		private String surrogate;
+
+		@CharTypeCp932
+		@CharType(FullWidth)
+		private String cp932fw;
 	}
 
 }
