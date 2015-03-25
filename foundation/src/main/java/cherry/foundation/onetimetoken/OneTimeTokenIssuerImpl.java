@@ -38,4 +38,16 @@ public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
 		return token;
 	}
 
+	@Override
+	public OneTimeToken getOrNewToken(HttpServletRequest request) {
+		String value = (String) request.getSession().getAttribute(name);
+		if (value == null) {
+			return newToken(request);
+		}
+		OneTimeToken token = new OneTimeToken();
+		token.setName(name);
+		token.setValue(value);
+		return token;
+	}
+
 }

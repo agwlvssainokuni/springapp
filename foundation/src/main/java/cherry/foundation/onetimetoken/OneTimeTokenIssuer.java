@@ -22,4 +22,6 @@ public interface OneTimeTokenIssuer {
 
 	OneTimeToken newToken(HttpServletRequest request);
 
+	OneTimeToken getOrNewToken(HttpServletRequest request);
+
 }

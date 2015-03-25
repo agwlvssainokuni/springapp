@@ -39,13 +39,34 @@ public class OneTimeTokenIssuerImplTest {
 
 	@Test
 	public void testNewToken() {
+
 		HttpServletRequest request = new MockHttpServletRequest();
+
 		OneTimeToken token = oneTimeTokenIssuer.newToken(request);
 		assertEquals("__OneTimeToken__", token.getName());
 		assertNotNull(token.getValue());
-
 		assertNotNull(request.getSession(false));
 		assertEquals(token.getValue(), request.getSession().getAttribute(token.getName()));
+	}
+
+	@Test
+	public void testGetOrNewToken() {
+
+		HttpServletRequest request = new MockHttpServletRequest();
+
+		OneTimeToken token1 = oneTimeTokenIssuer.getOrNewToken(request);
+		assertEquals("__OneTimeToken__", token1.getName());
+		assertNotNull(token1.getValue());
+		assertNotNull(request.getSession(false));
+		assertEquals(token1.getValue(), request.getSession().getAttribute(token1.getName()));
+
+		OneTimeToken token2 = oneTimeTokenIssuer.getOrNewToken(request);
+		assertEquals("__OneTimeToken__", token2.getName());
+		assertNotNull(token2.getValue());
+		assertNotNull(request.getSession(false));
+		assertEquals(token2.getValue(), request.getSession().getAttribute(token2.getName()));
+
+		assertEquals(token1.getValue(), token2.getValue());
 	}
 
 }
