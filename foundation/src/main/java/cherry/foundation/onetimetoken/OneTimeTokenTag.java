@@ -38,7 +38,7 @@ public class OneTimeTokenTag extends RequestContextAwareTag {
 	protected int doStartTagInternal() throws Exception {
 		OneTimeTokenIssuer issuer = getRequestContext().getWebApplicationContext().getBean(OneTimeTokenIssuer.class);
 		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-		OneTimeToken token = issuer.newToken(request);
+		OneTimeToken token = issuer.getOrNewToken(request);
 		pageContext.getOut().write(handleToken(token));
 		return SKIP_BODY;
 	}
