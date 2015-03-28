@@ -1,3 +1,4 @@
+apply plugin: "java"
 apply plugin: "eclipse"
 
 allprojects { version = "1.0" }
@@ -63,11 +64,21 @@ subprojects {
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
 		provided
+		compileExt
 		compileOnly
 	}
 
 	sourceSets.main.compileClasspath += [configurations.provided]
+	sourceSets.main.runtimeClasspath += [configurations.provided]
+	sourceSets.test.compileClasspath += [configurations.provided]
+	sourceSets.test.runtimeClasspath += [configurations.provided]
 	eclipse.classpath.plusConfigurations += [configurations.provided]
+
+	sourceSets.main.compileClasspath += [configurations.compileExt]
+	sourceSets.main.runtimeClasspath += [configurations.compileExt]
+	sourceSets.test.compileClasspath += [configurations.compileExt]
+	sourceSets.test.runtimeClasspath += [configurations.compileExt]
+	eclipse.classpath.plusConfigurations += [configurations.compileExt]
 
 	sourceSets.main.compileClasspath += [configurations.compileOnly]
 	sourceSets.test.compileClasspath += [configurations.compileOnly]
@@ -102,9 +113,9 @@ subprojects {
 		versionJackson = "2.5.0"
 		versionAspectJ = "1.8.2"
 		versionAopalliance = "1.0"
-		versionSpring = "4.1.5.RELEASE"
+		versionSpring = "4.1.6.RELEASE"
 		versionSpringLdap = "2.0.2.RELEASE"
-		versionSpringSecurity = "3.2.6.RELEASE"
+		versionSpringSecurity = "4.0.0.RELEASE"
 		versionSpringMobile = "1.1.3.RELEASE"
 		versionSpringDataCommons = "1.9.2.RELEASE"
 		versionSpringDataJdbcCore = "1.1.0.RELEASE"
