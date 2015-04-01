@@ -16,8 +16,13 @@
 
 package cherry.foundation.mail;
 
+import java.util.List;
+
 public interface MailDataHandler {
 
 	MailData createMailData(String templateName, String to, MailModel mailModel);
+
+	MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
+			String subject, String body, MailModel mailModel);
 
 }
