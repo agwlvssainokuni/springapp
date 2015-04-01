@@ -22,20 +22,36 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+/**
+ * メール送信機能。<br />
+ * 送信するメールデータ、または、送信するメールデータの元とするメールテンプレートを保持する。以下の項目を持つ。
+ * <ul>
+ * <li>差出人 (From)</li>
+ * <li>宛先 (To, Cc, Bcc)</li>
+ * <li>件名 (Subject)</li>
+ * <li>本文</li>
+ * </ul>
+ */
 public class MailData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/** 差出人 (From) を保持する。 */
 	private String fromAddr;
 
+	/** 宛先 (To) を保持する。 */
 	private List<String> toAddr;
 
+	/** 宛先 (Cc) を保持する。 */
 	private List<String> ccAddr;
 
+	/** 宛先 (Bcc) を保持する。 */
 	private List<String> bccAddr;
 
+	/** 件名 (Subject) を保持する。 */
 	private String subject;
 
+	/** 本文を保持する。 */
 	private String body;
 
 	@Override

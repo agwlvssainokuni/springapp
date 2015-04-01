@@ -16,5 +16,9 @@
 
 package cherry.foundation.mail;
 
+/**
+ * メール送信機能。<br />
+ * メールテンプレートの件名、本文に埋め込むデータを表す。
+ */
 public interface MailModel {
 }
