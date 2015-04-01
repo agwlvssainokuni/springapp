@@ -24,6 +24,9 @@ public interface MailFacade {
 
 	MailData createMailData(String templateName, String to, MailModel mailModel);
 
+	MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
+			String subject, String body, MailModel mailModel);
+
 	long send(String launcherId, String messageName, String from, List<String> to, List<String> cc, List<String> bcc,
 			String subject, String body);
 

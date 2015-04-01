@@ -48,6 +48,12 @@ public class MailFacadeImpl implements MailFacade {
 	}
 
 	@Override
+	public MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
+			String subject, String body, MailModel mailModel) {
+		return mailDataHandler.createMailData(fromAddr, toAddr, ccAddr, bccAddr, subject, body, mailModel);
+	}
+
+	@Override
 	public long send(String launcherId, String messageName, String from, List<String> to, List<String> cc,
 			List<String> bcc, String subject, String body) {
 		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, subject, body, bizDateTime.now());

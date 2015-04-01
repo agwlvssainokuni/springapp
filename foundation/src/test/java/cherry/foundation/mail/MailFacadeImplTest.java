@@ -36,7 +36,7 @@ public class MailFacadeImplTest {
 	private MailSendHandler mailSendHandler;
 
 	@Test
-	public void testCreateMailData() {
+	public void testCreateMailDataByName() {
 		LocalDateTime now = LocalDateTime.now();
 		MailFacade mailFacade = create(now);
 
@@ -44,6 +44,19 @@ public class MailFacadeImplTest {
 		};
 		mailFacade.createMailData("templateName", "to@addr", model);
 		verify(mailDataHandler).createMailData(eq("templateName"), eq("to@addr"), eq(model));
+	}
+
+	@Test
+	public void testCreateMailDataByValue() {
+		LocalDateTime now = LocalDateTime.now();
+		MailFacade mailFacade = create(now);
+
+		MailModel model = new MailModel() {
+		};
+		mailFacade.createMailData("from@addr", asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject",
+				"body", model);
+		verify(mailDataHandler).createMailData(eq("from@addr"), eq(asList("to@addr")), eq(asList("cc@addr")),
+				eq(asList("bcc@addr")), eq("subject"), eq("body"), eq(model));
 	}
 
 	@Test
