@@ -82,7 +82,7 @@ public interface MailSendHandler {
 	 * キューに蓄積されているメールデータの識別番号のリストを取得する。<br />
 	 * キューに蓄積する際に指定された送信予定日時が、当メソッドの引数に指定された日時以降のものを取得する。
 	 * 
-	 * @param dtm 現在日時。
+	 * @param dtm 基準日時。
 	 * @return メールデータの識別番号のリスト。
 	 */
 	List<Long> listMessage(LocalDateTime dtm);

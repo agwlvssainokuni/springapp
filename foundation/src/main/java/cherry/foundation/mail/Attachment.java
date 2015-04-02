@@ -24,6 +24,10 @@ import javax.mail.MessagingException;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+/**
+ * メール送信機能。<br />
+ * 添付ファイルを指定する対象を表す。
+ */
 public class Attachment {
 
 	private MimeMessageHelper mimeMessageHelper;
@@ -32,18 +36,47 @@ public class Attachment {
 		this.mimeMessageHelper = mimeMessageHelper;
 	}
 
+	/**
+	 * データソースとして表されるデータを添付ファイルとして添付する。<br />
+	 * 
+	 * @param filename 添付ファイル名称。
+	 * @param dataSource 添付ファイルのデータ。
+	 * @throws MessagingException メールデータを構成する処理で異常が発生したことを表す。
+	 */
 	public void add(String filename, DataSource dataSource) throws MessagingException {
 		mimeMessageHelper.addAttachment(filename, dataSource);
 	}
 
+	/**
+	 * ファイルとして表されるデータを添付ファイルとして添付する。<br />
+	 * 
+	 * @param filename 添付ファイル名称。
+	 * @param file 添付ファイルのデータ。
+	 * @throws MessagingException メールデータを構成する処理で異常が発生したことを表す。
+	 */
 	public void add(String filename, File file) throws MessagingException {
 		mimeMessageHelper.addAttachment(filename, file);
 	}
 
+	/**
+	 * ストリームとして表されるデータを添付ファイルとして添付する。<br />
+	 * 
+	 * @param filename 添付ファイル名称。
+	 * @param source 添付ファイルのデータ。
+	 * @throws MessagingException メールデータを構成する処理で異常が発生したことを表す。
+	 */
 	public void add(String filename, InputStreamSource source) throws MessagingException {
 		mimeMessageHelper.addAttachment(filename, source);
 	}
 
+	/**
+	 * ストリームとして表されるデータを添付ファイルとして添付する。<br />
+	 * 
+	 * @param filename 添付ファイル名称。
+	 * @param source　添付ファイルのデータ。
+	 * @param contentType データの型 (Content-Type)。
+	 * @throws MessagingException メールデータを構成する処理で異常が発生したことを表す。
+	 */
 	public void add(String filename, InputStreamSource source, String contentType) throws MessagingException {
 		mimeMessageHelper.addAttachment(filename, source, contentType);
 	}

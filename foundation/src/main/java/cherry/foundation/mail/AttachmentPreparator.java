@@ -18,8 +18,18 @@ package cherry.foundation.mail;
 
 import javax.mail.MessagingException;
 
+/**
+ * メール送信機能。<br />
+ * 添付ファイルを構成する処理を表す。
+ */
 public interface AttachmentPreparator {
 
+	/**
+	 * 添付ファイルを構成する処理を定義する。<br />
+	 * 
+	 * @param attachment 添付ファイルを指定する対象を表す。
+	 * @throws MessagingException メールデータを構成する処理で異常が発生したことを表す。
+	 */
 	void prepare(Attachment attachment) throws MessagingException;
 
 }

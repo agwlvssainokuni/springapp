@@ -16,10 +16,27 @@
 
 package cherry.foundation.mail;
 
+/**
+ * メール送信機能。<br />
+ * 
+ * メールテンプレートを管理する機能を表すインタフェース。
+ */
 public interface TemplateStore {
 
+	/**
+	 * メールテンプレートを取得する。<br />
+	 * 
+	 * @param templateName メールテンプレート名称。
+	 * @return メールテンプレート。
+	 */
 	MailData getTemplate(String templateName);
 
+	/**
+	 * メールテンプレートを保管する。<br />
+	 * 
+	 * @param templateName メールテンプレート名称。
+	 * @param mailData メールテンプレート。
+	 */
 	void putTemplate(String templateName, MailData mailData);
 
 }
