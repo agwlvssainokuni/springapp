@@ -88,6 +88,7 @@ public class BMailRcpt {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailId = " + mailId + ", rcptAddr = " + rcptAddr + ", rcptType = " + rcptType + ", updatedAt = " + updatedAt;
     }

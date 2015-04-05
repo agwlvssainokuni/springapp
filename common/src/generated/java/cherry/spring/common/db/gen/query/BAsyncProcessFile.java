@@ -118,6 +118,7 @@ public class BAsyncProcessFile {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "asyncId = " + asyncId + ", contentType = " + contentType + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fileSize = " + fileSize + ", handlerName = " + handlerName + ", id = " + id + ", lockVersion = " + lockVersion + ", originalFilename = " + originalFilename + ", paramName = " + paramName + ", updatedAt = " + updatedAt;
     }

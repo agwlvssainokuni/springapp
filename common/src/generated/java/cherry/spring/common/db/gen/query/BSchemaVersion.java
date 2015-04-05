@@ -118,6 +118,7 @@ public class BSchemaVersion {
         this.versionRank = versionRank;
     }
 
+    @Override
     public String toString() {
          return "checksum = " + checksum + ", description = " + description + ", executionTime = " + executionTime + ", installedBy = " + installedBy + ", installedOn = " + installedOn + ", installedRank = " + installedRank + ", script = " + script + ", success = " + success + ", type = " + type + ", version = " + version + ", versionRank = " + versionRank;
     }

@@ -58,6 +58,7 @@ public class BDigit {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", d = " + d + ", deletedFlg = " + deletedFlg + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
     }

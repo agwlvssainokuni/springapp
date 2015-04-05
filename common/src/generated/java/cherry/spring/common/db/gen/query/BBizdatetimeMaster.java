@@ -108,6 +108,7 @@ public class BBizdatetimeMaster {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "bizdate = " + bizdate + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", offsetDay = " + offsetDay + ", offsetHour = " + offsetHour + ", offsetMinute = " + offsetMinute + ", offsetSecond = " + offsetSecond + ", updatedAt = " + updatedAt;
     }

@@ -88,6 +88,7 @@ public class BAsyncProcessFileResultDetail {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", id = " + id + ", lockVersion = " + lockVersion + ", recordNumber = " + recordNumber + ", updatedAt = " + updatedAt;
     }

@@ -138,6 +138,7 @@ public class BZipcdMaster {
         this.zipcd = zipcd;
     }
 
+    @Override
     public String toString() {
          return "addr = " + addr + ", addrKana = " + addrKana + ", city = " + city + ", cityCd = " + cityCd + ", cityKana = " + cityKana + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", pref = " + pref + ", prefKana = " + prefKana + ", updatedAt = " + updatedAt + ", zipcd = " + zipcd;
     }

@@ -98,6 +98,7 @@ public class BMailTemplate {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", lockVersion = " + lockVersion + ", subject = " + subject + ", templateName = " + templateName + ", updatedAt = " + updatedAt;
     }

@@ -78,6 +78,7 @@ public class BAsyncProcessCommand {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "asyncId = " + asyncId + ", command = " + command + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
     }

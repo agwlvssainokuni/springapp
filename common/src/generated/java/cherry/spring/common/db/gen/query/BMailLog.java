@@ -148,6 +148,7 @@ public class BMailLog {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", mailStatus = " + mailStatus + ", messageName = " + messageName + ", scheduledAt = " + scheduledAt + ", sentAt = " + sentAt + ", subject = " + subject + ", updatedAt = " + updatedAt;
     }

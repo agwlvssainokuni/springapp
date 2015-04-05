@@ -88,6 +88,7 @@ public class BSignupRequest {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "appliedAt = " + appliedAt + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", token = " + token + ", updatedAt = " + updatedAt;
     }

@@ -78,6 +78,7 @@ public class BDayoffMaster {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", dt = " + dt + ", lockVersion = " + lockVersion + ", name = " + name + ", type = " + type + ", updatedAt = " + updatedAt;
     }

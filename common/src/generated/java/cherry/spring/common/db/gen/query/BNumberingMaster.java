@@ -108,6 +108,7 @@ public class BNumberingMaster {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", currentValue = " + currentValue + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", maxValue = " + maxValue + ", minValue = " + minValue + ", name = " + name + ", template = " + template + ", updatedAt = " + updatedAt;
     }

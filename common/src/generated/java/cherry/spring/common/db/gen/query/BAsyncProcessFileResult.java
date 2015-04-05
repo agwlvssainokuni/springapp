@@ -98,6 +98,7 @@ public class BAsyncProcessFileResult {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", ngCount = " + ngCount + ", okCount = " + okCount + ", totalCount = " + totalCount + ", updatedAt = " + updatedAt;
     }

@@ -88,6 +88,7 @@ public class BMailTemplateRcpt {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", rcptAddr = " + rcptAddr + ", rcptType = " + rcptType + ", templateId = " + templateId + ", updatedAt = " + updatedAt;
     }

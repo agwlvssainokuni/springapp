@@ -98,6 +98,7 @@ public class BCodeMaster {
         this.value = value;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", label = " + label + ", lockVersion = " + lockVersion + ", name = " + name + ", sortOrder = " + sortOrder + ", updatedAt = " + updatedAt + ", value = " + value;
     }

@@ -78,6 +78,7 @@ public class BMailQueue {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailId = " + mailId + ", scheduledAt = " + scheduledAt + ", updatedAt = " + updatedAt;
     }

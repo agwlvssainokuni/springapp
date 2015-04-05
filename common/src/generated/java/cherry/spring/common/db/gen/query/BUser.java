@@ -108,6 +108,7 @@ public class BUser {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", firstName = " + firstName + ", id = " + id + ", lastName = " + lastName + ", lockVersion = " + lockVersion + ", loginId = " + loginId + ", password = " + password + ", registeredAt = " + registeredAt + ", updatedAt = " + updatedAt;
     }
