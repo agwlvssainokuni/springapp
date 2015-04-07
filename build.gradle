@@ -4,6 +4,7 @@ apply plugin: "eclipse"
 allprojects { version = "1.0" }
 
 subprojects {
+
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "deliveryResources"
@@ -19,14 +20,33 @@ subprojects {
 	compileJava.options.encoding = "UTF-8"
 	compileTestJava.options.encoding = "UTF-8"
 
+	configurations {
+		provided
+		compileOnly
+		compileExt
+		compile.extendsFrom(compileExt)
+	}
+
 	sourceSets.main {
 		java { srcDir "src/generated/java" }
 		resources {
 			srcDir "src/main/java"
 			srcDir "src/generated/java"
 		}
+		compileClasspath += [configurations.provided]
+		compileClasspath += [configurations.compileOnly]
+		runtimeClasspath += [configurations.provided]
 	}
-	sourceSets.test.resources.srcDir "src/test/java"
+	sourceSets.test {
+		resources { srcDir "src/test/java" }
+		compileClasspath += [configurations.provided]
+		compileClasspath += [configurations.compileOnly]
+		runtimeClasspath += [configurations.provided]
+	}
+	eclipse {
+		classpath.plusConfigurations += [configurations.provided]
+		classpath.plusConfigurations += [configurations.compileOnly]
+	}
 
 	findbugs { ignoreFailures = true }
 	findbugsMain {
@@ -61,30 +81,11 @@ subprojects {
 		}
 	}
 
+	repositories { mavenCentral() }
+
 	configurations {
 		all*.exclude group: "commons-logging", module: "commons-logging"
-		provided
-		compileExt
-		compileOnly
 	}
-
-	sourceSets.main.compileClasspath += [configurations.provided]
-	sourceSets.main.runtimeClasspath += [configurations.provided]
-	sourceSets.test.compileClasspath += [configurations.provided]
-	sourceSets.test.runtimeClasspath += [configurations.provided]
-	eclipse.classpath.plusConfigurations += [configurations.provided]
-
-	sourceSets.main.compileClasspath += [configurations.compileExt]
-	sourceSets.main.runtimeClasspath += [configurations.compileExt]
-	sourceSets.test.compileClasspath += [configurations.compileExt]
-	sourceSets.test.runtimeClasspath += [configurations.compileExt]
-	eclipse.classpath.plusConfigurations += [configurations.compileExt]
-
-	sourceSets.main.compileClasspath += [configurations.compileOnly]
-	sourceSets.test.compileClasspath += [configurations.compileOnly]
-	eclipse.classpath.plusConfigurations += [configurations.compileOnly]
-
-	repositories { mavenCentral() }
 
 	ext {
 		versionH2db = "1.4.186"
