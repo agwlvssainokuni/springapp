@@ -383,7 +383,7 @@ public class IpAddrUtil {
 			result[i] = null;
 		}
 		for (int i = size - suffix.length; i < size; i++) {
-			result[i] = suffix[i - (size - suffix.length)];
+			result[i] = suffix[i - size + suffix.length];
 		}
 		return result;
 	}
