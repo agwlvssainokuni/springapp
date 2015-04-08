@@ -63,8 +63,8 @@ public class EachSideStrategy implements PaginateStrategy {
 			from = lowerTrim;
 		}
 		long to = pageNo + upperSide;
-		if (to >= (pageCount - 1L) - upperTrim) {
-			to = (pageCount - 1L) - upperTrim;
+		if (to >= pageCount - 1L - upperTrim) {
+			to = pageCount - 1L - upperTrim;
 		}
 		return new Range(from, to);
 	}

@@ -62,10 +62,10 @@ public class TotalCountStrategy implements PaginateStrategy {
 		if (from <= lowerTrim) {
 			from = lowerTrim;
 		}
-		long to = from + (totalCount - 1L);
-		if (to >= (pageCount - 1L) - upperTrim) {
-			to = (pageCount - 1L) - upperTrim;
-			from = to - (totalCount - 1L);
+		long to = from + totalCount - 1L;
+		if (to >= pageCount - 1L - upperTrim) {
+			to = pageCount - 1L - upperTrim;
+			from = to - totalCount + 1L;
 			if (from <= lowerTrim) {
 				from = lowerTrim;
 			}
