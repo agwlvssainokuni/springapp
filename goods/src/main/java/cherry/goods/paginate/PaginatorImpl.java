@@ -101,22 +101,22 @@ public class PaginatorImpl implements Paginator {
 		List<Page> list = new ArrayList<>();
 		for (Long no : paginateStrategy.calculate(curNo, pageCount)) {
 
-			Page page = createPage(no, pageCount, itemCount, pageSize);
+			Page page = createPage(no.longValue(), pageCount, itemCount, pageSize);
 			list.add(page);
 
-			if (no == curNo) {
+			if (no.longValue() == curNo) {
 				pageSet.setCurrent(page);
 			}
-			if (no == prevNo) {
+			if (no.longValue() == prevNo) {
 				pageSet.setPrev(page);
 			}
-			if (no == nextNo) {
+			if (no.longValue() == nextNo) {
 				pageSet.setNext(page);
 			}
-			if (no == firstNo) {
+			if (no.longValue() == firstNo) {
 				pageSet.setFirst(page);
 			}
-			if (no == lastNo) {
+			if (no.longValue() == lastNo) {
 				pageSet.setLast(page);
 			}
 		}
