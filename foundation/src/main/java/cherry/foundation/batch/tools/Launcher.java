@@ -16,11 +16,10 @@
 
 package cherry.foundation.batch.tools;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -50,9 +49,6 @@ public class Launcher {
 	/** 起動すべきバッチプログラムの識別名を保持する。 */
 	private String batchId;
 
-	/** 実行状況管理の対象とするバッチジョブの識別名を保持する。 */
-	private String statusBatchId = null;
-
 	/**
 	 * バッチプログラム起動機能を生成する。
 	 * 
@@ -61,16 +57,6 @@ public class Launcher {
 	public Launcher(String batchId) {
 		this.batchId = batchId;
 		MDC.put("batchId", batchId);
-	}
-
-	/**
-	 * 実行状況管理の対象とするバッチジョブの識別名を設定する。<br />
-	 * 有意な値 (nullでない値) を設定することで実行状況管理の対象となる。値を設定しないと実行状況管理の対象とはならない。
-	 * 
-	 * @param statusBatchId 実行状況管理の対象とするバッチジョブの識別名。
-	 */
-	public void setStatusBatchId(String statusBatchId) {
-		this.statusBatchId = statusBatchId;
 	}
 
 	/**
@@ -88,52 +74,45 @@ public class Launcher {
 				log.info(msg.resolve("{0}", arg));
 			}
 
-			@SuppressWarnings("resource")
-			ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
-			IBatch batch = appCtx.getBean(batchId, IBatch.class);
-
-			BatchStatusStore statusStore = null; // TODO Beanを取得する。
+			IBatch batch = getBatch(batchId);
 
 			log.info(msg.resolve("BATCH {0} STARTED", batchId));
 
-			if (StringUtils.isNotEmpty(statusBatchId)) {
-				// TODO バッチジョブ実行状況管理：バッチジョブ開始を記録
+			ExitStatus status = batch.execute(args);
+
+			switch (status) {
+			case NORMAL:
+				log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+				break;
+			case WARN:
+				log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+				break;
+			case ERROR:
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+				break;
+			default:
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+				break;
 			}
 
-			try {
+			return status;
 
-				ExitStatus status = batch.execute(args);
-
-				if (StringUtils.isNotEmpty(statusBatchId)) {
-					// TODO バッチジョブ実行状況管理：バッチジョブ終了(status)を記録
-				}
-
-				switch (status) {
-				case NORMAL:
-					log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-					break;
-				case WARN:
-					log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-					break;
-				case ERROR:
-					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-					break;
-				default:
-					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-					break;
-				}
-
-				return status;
-			} catch (Exception ex) {
-				if (StringUtils.isNotEmpty(statusBatchId)) {
-					// TODO バッチジョブ実行状況管理：バッチジョブ終了(FATAL)を記録
-				}
-				throw ex;
-			}
 		} catch (Exception ex) {
 			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
 			return ExitStatus.FATAL;
 		}
+	}
+
+	/**
+	 * バッチプログラムの実装本体を取出す。
+	 * 
+	 * @param id バッチプログラムの識別名。
+	 * @return バッチプログラムの実装本体。
+	 */
+	private IBatch getBatch(String id) {
+		@SuppressWarnings("resource")
+		ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
+		return appCtx.getBean(id, IBatch.class);
 	}
 
 	/**
