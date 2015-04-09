@@ -17,30 +17,11 @@
 package cherry.foundation.batch.mgmt;
 
 import cherry.foundation.batch.ExitStatus;
-import cherry.foundation.batch.IBatch;
 
-public class StartBatch implements IBatch {
+public interface BatchStatusService {
 
-	private BatchStatusService batchStatusService;
+	boolean updateToRunning(String batchId);
 
-	public void setBatchStatusService(BatchStatusService batchStatusService) {
-		this.batchStatusService = batchStatusService;
-	}
-
-	@Override
-	public ExitStatus execute(String... args) {
-
-		if (args.length < 1) {
-			return ExitStatus.ERROR;
-		}
-
-		String batchId = args[0];
-
-		if (batchStatusService.updateToRunning(batchId)) {
-			return ExitStatus.NORMAL;
-		} else {
-			return ExitStatus.WARN;
-		}
-	}
+	boolean updateToFinished(String batchId, ExitStatus status, int exitCode);
 
 }

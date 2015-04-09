@@ -16,27 +16,17 @@
 
 package cherry.foundation.batch.mgmt;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import cherry.foundation.batch.ExitStatus;
 import cherry.foundation.batch.IBatch;
-import cherry.foundation.bizdtm.BizDateTime;
 
 public class FinishBatch implements IBatch {
 
-	private BizDateTime bizDateTime;
+	private BatchStatusService batchStatusService;
 
-	private BatchStatusStore batchStatusStore;
-
-	public void setBizDateTime(BizDateTime bizDateTime) {
-		this.bizDateTime = bizDateTime;
+	public void setBatchStatusService(BatchStatusService batchStatusService) {
+		this.batchStatusService = batchStatusService;
 	}
 
-	public void setBatchStatusStore(BatchStatusStore batchStatusStore) {
-		this.batchStatusStore = batchStatusStore;
-	}
-
-	@Transactional
 	@Override
 	public ExitStatus execute(String... args) {
 
@@ -54,13 +44,11 @@ public class FinishBatch implements IBatch {
 			exitCode = Integer.parseInt(args[2]);
 		}
 
-		if (!batchStatusStore.isBatchRunning(batchId)) {
+		if (batchStatusService.updateToFinished(batchId, status, exitCode)) {
+			return ExitStatus.NORMAL;
+		} else {
 			return ExitStatus.WARN;
 		}
-
-		batchStatusStore.updateToFinished(batchId, bizDateTime.now(), status, exitCode);
-
-		return ExitStatus.NORMAL;
 	}
 
 }
