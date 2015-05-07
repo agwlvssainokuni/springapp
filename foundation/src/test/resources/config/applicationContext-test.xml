@@ -44,7 +44,13 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
 			<mvc:mapping path="/secure/**" />
-			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor" />
+			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor">
+				<property name="paramPattern">
+					<list>
+						<value>(target|tgt)id</value>
+					</list>
+				</property>
+			</bean>
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />

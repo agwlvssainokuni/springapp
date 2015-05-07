@@ -96,6 +96,14 @@ public class OperationLogHandlerInterceptorTest {
 	}
 
 	@Test
+	public void testParamInMdc() throws Exception {
+		mockMvc.perform(get("/secure/test").param("targetId", "TGT").principal(getContext().getAuthentication()))
+				.andExpect(status().isOk());
+		mockMvc.perform(get("/secure/test").param("tgtId", "T1", "T2").principal(getContext().getAuthentication()))
+				.andExpect(status().isOk());
+	}
+
+	@Test
 	public void testException() throws Exception {
 		try {
 			mockMvc.perform(get("/secure/test").param("exception", "").principal(getContext().getAuthentication()))
