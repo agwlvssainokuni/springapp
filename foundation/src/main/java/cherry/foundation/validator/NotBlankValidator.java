@@ -23,21 +23,14 @@ import org.apache.commons.lang3.StringUtils;
 
 public class NotBlankValidator implements ConstraintValidator<NotBlank, String> {
 
-	private boolean stripStart;
-
-	private boolean stripEnd;
-
 	@Override
 	public void initialize(NotBlank annotation) {
-		stripStart = annotation.stripStart();
-		stripEnd = annotation.stripEnd();
+		// 何もしない
 	}
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		String v = value;
-		v = stripStart ? StringUtils.stripStart(v, null) : v;
-		v = stripEnd ? StringUtils.stripEnd(v, null) : v;
-		return StringUtils.isNotEmpty(v);
+		return StringUtils.isNotBlank(value);
 	}
+
 }

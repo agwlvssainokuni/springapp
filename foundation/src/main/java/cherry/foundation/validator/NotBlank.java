@@ -34,10 +34,6 @@ import javax.validation.Payload;
 @Constraint(validatedBy = { NotBlankValidator.class })
 public @interface NotBlank {
 
-	boolean stripStart() default true;
-
-	boolean stripEnd() default true;
-
 	String message() default "{cherry.foundation.validator.NotBlank.message}";
 
 	Class<?>[] groups() default {};
