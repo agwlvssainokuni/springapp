@@ -73,7 +73,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor, Initi
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
 		SecurityContext context = SecurityContextHolder.getContext();
 		MDC.put(LOGIN_ID, context.getAuthentication().getName());
@@ -118,7 +118,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor, Initi
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+			ModelAndView modelAndView) {
 
 		StringBuilder builder = createBasicInfo(request);
 
@@ -134,14 +134,13 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor, Initi
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
 		StringBuilder builder = createBasicInfo(request);
 		if (ex == null) {
 			loggerExit.info(builder.toString());
 		} else {
-			loggerExit.info(builder.toString(), ex);
+			loggerExit.error(builder.toString(), ex);
 		}
 
 		MDC.remove(LOGIN_ID);
