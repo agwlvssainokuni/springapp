@@ -16,8 +16,10 @@
 
 package cherry.foundation.bizdtm;
 
+import static cherry.foundation.bizdtm.BizYearUtil.numberOfDays;
+
+import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.tuple.Pair;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 public class BizYearManagerImpl implements BizYearManager {
@@ -36,7 +38,7 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public int getBizYear(LocalDate dt) {
-		return getBizYearByDate(dt.getYear(), dt);
+		return bizYearByDate(dt).getLeft().intValue();
 	}
 
 	@Override
@@ -46,12 +48,12 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public LocalDate getFirstOfBizYear(int bizYear) {
-		return bizYearStore.getRangeOfBizYear(bizYear).getLeft();
+		return bizYearStore.rangeOfBizYear(bizYear).getMinimum();
 	}
 
 	@Override
 	public LocalDate getFirstOfBizYear(LocalDate dt) {
-		return getRangeOfBizYearByDate(dt.getYear(), dt).getLeft();
+		return bizYearByDate(dt).getRight().getMinimum();
 	}
 
 	@Override
@@ -61,12 +63,12 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public LocalDate getLastOfBizYear(int bizYear) {
-		return bizYearStore.getRangeOfBizYear(bizYear).getRight();
+		return bizYearStore.rangeOfBizYear(bizYear).getMaximum();
 	}
 
 	@Override
 	public LocalDate getLastOfBizYear(LocalDate dt) {
-		return getRangeOfBizYearByDate(dt.getYear(), dt).getRight();
+		return bizYearByDate(dt).getRight().getMaximum();
 	}
 
 	@Override
@@ -76,10 +78,8 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public int getNthDayOfBizYear(LocalDate dt) {
-		Pair<LocalDate, LocalDate> pair = getRangeOfBizYearByDate(dt.getYear(), dt);
-		Interval interval = new Interval(pair.getLeft().toDateTimeAtStartOfDay(), dt.plusDays(1)
-				.toDateTimeAtStartOfDay());
-		return (int) interval.toDuration().getStandardDays();
+		Range<LocalDate> range = bizYearByDate(dt).getRight();
+		return numberOfDays(range.getMinimum(), dt);
 	}
 
 	@Override
@@ -89,18 +89,14 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public int getNumberOfDaysOfBizYear(int bizYear) {
-		Pair<LocalDate, LocalDate> pair = bizYearStore.getRangeOfBizYear(bizYear);
-		Interval interval = new Interval(pair.getLeft().toDateTimeAtStartOfDay(), pair.getRight().plusDays(1)
-				.toDateTimeAtStartOfDay());
-		return (int) interval.toDuration().getStandardDays();
+		Range<LocalDate> range = bizYearStore.rangeOfBizYear(bizYear);
+		return numberOfDays(range.getMinimum(), range.getMaximum());
 	}
 
 	@Override
 	public int getNumberOfDaysOfBizYear(LocalDate dt) {
-		Pair<LocalDate, LocalDate> pair = getRangeOfBizYearByDate(dt.getYear(), dt);
-		Interval interval = new Interval(pair.getLeft().toDateTimeAtStartOfDay(), pair.getRight().plusDays(1)
-				.toDateTimeAtStartOfDay());
-		return (int) interval.toDuration().getStandardDays();
+		Range<LocalDate> range = bizYearByDate(dt).getRight();
+		return numberOfDays(range.getMinimum(), range.getMaximum());
 	}
 
 	@Override
@@ -108,30 +104,19 @@ public class BizYearManagerImpl implements BizYearManager {
 		return getNumberOfDaysOfBizYear(bizDateTime.today());
 	}
 
-	private int getBizYearByDate(int year, LocalDate dt) {
-		Pair<LocalDate, LocalDate> pair = bizYearStore.getRangeOfBizYear(year);
-		Interval interval = new Interval(pair.getLeft().toDateTimeAtStartOfDay(), pair.getRight().plusDays(1)
-				.toDateTimeAtStartOfDay());
-		if (interval.isAfter(dt.toDateTimeAtStartOfDay())) {
-			return getBizYearByDate(year - 1, dt);
-		}
-		if (interval.isBefore(dt.toDateTimeAtStartOfDay())) {
-			return getBizYearByDate(year + 1, dt);
-		}
-		return year;
+	private Pair<Integer, Range<LocalDate>> bizYearByDate(LocalDate dt) {
+		return bizYearByDate(dt.getYear(), dt);
 	}
 
-	private Pair<LocalDate, LocalDate> getRangeOfBizYearByDate(int year, LocalDate dt) {
-		Pair<LocalDate, LocalDate> pair = bizYearStore.getRangeOfBizYear(year);
-		Interval interval = new Interval(pair.getLeft().toDateTimeAtStartOfDay(), pair.getRight().plusDays(1)
-				.toDateTimeAtStartOfDay());
-		if (interval.isAfter(dt.toDateTimeAtStartOfDay())) {
-			return getRangeOfBizYearByDate(year - 1, dt);
+	private Pair<Integer, Range<LocalDate>> bizYearByDate(int year, LocalDate dt) {
+		Range<LocalDate> range = bizYearStore.rangeOfBizYear(year);
+		if (range.isAfter(dt)) {
+			return bizYearByDate(year - 1, dt);
 		}
-		if (interval.isBefore(dt.toDateTimeAtStartOfDay())) {
-			return getRangeOfBizYearByDate(year + 1, dt);
+		if (range.isBefore(dt)) {
+			return bizYearByDate(year + 1, dt);
 		}
-		return pair;
+		return Pair.of(year, range);
 	}
 
 }

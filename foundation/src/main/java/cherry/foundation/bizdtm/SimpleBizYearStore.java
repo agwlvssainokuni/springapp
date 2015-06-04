@@ -16,7 +16,9 @@
 
 package cherry.foundation.bizdtm;
 
-import org.apache.commons.lang3.tuple.Pair;
+import static cherry.foundation.bizdtm.BizYearUtil.between;
+
+import org.apache.commons.lang3.Range;
 import org.joda.time.LocalDate;
 
 public class SimpleBizYearStore implements BizYearStore {
@@ -34,10 +36,10 @@ public class SimpleBizYearStore implements BizYearStore {
 	}
 
 	@Override
-	public Pair<LocalDate, LocalDate> getRangeOfBizYear(int bizYear) {
+	public Range<LocalDate> rangeOfBizYear(int bizYear) {
 		LocalDate firstDate = new LocalDate(bizYear, monthOfFirst, dayOfFirst);
 		LocalDate lastDate = firstDate.plusYears(1).minusDays(1);
-		return Pair.of(firstDate, lastDate);
+		return between(firstDate, lastDate);
 	}
 
 }
