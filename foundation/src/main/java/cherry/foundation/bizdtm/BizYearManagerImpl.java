@@ -26,14 +26,14 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	private BizDateTime bizDateTime;
 
-	private BizYearStore bizYearStore;
+	private BizYearStrategy bizYearStrategy;
 
 	public void setBizDateTime(BizDateTime bizDateTime) {
 		this.bizDateTime = bizDateTime;
 	}
 
-	public void setBizYearStore(BizYearStore bizYearStore) {
-		this.bizYearStore = bizYearStore;
+	public void setBizYearStrategy(BizYearStrategy bizYearStore) {
+		this.bizYearStrategy = bizYearStore;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public LocalDate getFirstOfBizYear(int bizYear) {
-		return bizYearStore.rangeOfBizYear(bizYear).getMinimum();
+		return bizYearStrategy.rangeOfBizYear(bizYear).getMinimum();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public LocalDate getLastOfBizYear(int bizYear) {
-		return bizYearStore.rangeOfBizYear(bizYear).getMaximum();
+		return bizYearStrategy.rangeOfBizYear(bizYear).getMaximum();
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class BizYearManagerImpl implements BizYearManager {
 
 	@Override
 	public int getNumberOfDaysOfBizYear(int bizYear) {
-		Range<LocalDate> range = bizYearStore.rangeOfBizYear(bizYear);
+		Range<LocalDate> range = bizYearStrategy.rangeOfBizYear(bizYear);
 		return numberOfDays(range.getMinimum(), range.getMaximum());
 	}
 
@@ -109,7 +109,7 @@ public class BizYearManagerImpl implements BizYearManager {
 	}
 
 	private Pair<Integer, Range<LocalDate>> bizYearByDate(int year, LocalDate dt) {
-		Range<LocalDate> range = bizYearStore.rangeOfBizYear(year);
+		Range<LocalDate> range = bizYearStrategy.rangeOfBizYear(year);
 		if (range.isAfter(dt)) {
 			return bizYearByDate(year - 1, dt);
 		}

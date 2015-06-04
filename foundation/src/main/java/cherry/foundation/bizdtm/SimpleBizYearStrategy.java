@@ -16,11 +16,30 @@
 
 package cherry.foundation.bizdtm;
 
+import static cherry.foundation.bizdtm.BizYearUtil.between;
+
 import org.apache.commons.lang3.Range;
 import org.joda.time.LocalDate;
 
-public interface BizYearStore {
+public class SimpleBizYearStrategy implements BizYearStrategy {
 
-	Range<LocalDate> rangeOfBizYear(int bizYear);
+	private int monthOfFirst;
+
+	private int dayOfFirst;
+
+	public void setMonthOfFirst(int monthOfFirst) {
+		this.monthOfFirst = monthOfFirst;
+	}
+
+	public void setDayOfFirst(int dayOfFirst) {
+		this.dayOfFirst = dayOfFirst;
+	}
+
+	@Override
+	public Range<LocalDate> rangeOfBizYear(int bizYear) {
+		LocalDate firstDate = new LocalDate(bizYear, monthOfFirst, dayOfFirst);
+		LocalDate lastDate = firstDate.plusYears(1).minusDays(1);
+		return between(firstDate, lastDate);
+	}
 
 }
