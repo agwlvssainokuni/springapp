@@ -16,6 +16,9 @@
 
 package cherry.goods.crypto;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +28,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import javax.crypto.Cipher;
+import javax.crypto.EncryptedPrivateKeyInfo;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -66,6 +75,36 @@ public class KeyUtil {
 	public static PrivateKey createRsaPrivateKey(byte[] b) throws InvalidKeySpecException {
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(b);
 		return rsaKeyFactory.generatePrivate(keySpec);
+	}
+
+	/**
+	 * バイト列からRSA秘密鍵を生成する。
+	 * 
+	 * @param b 生成バイト列。
+	 * @param password 秘密鍵ファイルを保護するためのパスワード。
+	 * @return RSA秘密鍵。
+	 * @throws NoSuchAlgorithmException 秘密鍵ファイルの暗号化アルゴリズムがサポートされていないことを表す。
+	 * @throws NoSuchPaddingException 秘密鍵ファイルの暗号化アルゴリズムがサポートされていないことを表す。
+	 * @throws InvalidKeyException 秘密鍵ファイルの復号鍵が不適切であることを表す。
+	 * @throws InvalidAlgorithmParameterException 秘密鍵ファイルの復号パラメタが不適切であることを表す。
+	 * @throws InvalidKeySpecException 読込んだ鍵データの形式が正しくないことを表す。
+	 */
+	public static PrivateKey createRsaPrivateKey(byte[] b, char[] password) throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, InvalidKeySpecException {
+		try {
+
+			EncryptedPrivateKeyInfo encryptedKeyInfo = new EncryptedPrivateKeyInfo(b);
+			PBEKeySpec pbeKeySpec = new PBEKeySpec(password);
+
+			SecretKey pbeKey = SecretKeyFactory.getInstance(encryptedKeyInfo.getAlgName()).generateSecret(pbeKeySpec);
+			Cipher cipher = Cipher.getInstance(encryptedKeyInfo.getAlgName());
+			cipher.init(Cipher.DECRYPT_MODE, pbeKey, encryptedKeyInfo.getAlgParameters());
+
+			PKCS8EncodedKeySpec keySpec = encryptedKeyInfo.getKeySpec(cipher);
+			return rsaKeyFactory.generatePrivate(keySpec);
+		} catch (IOException ex) {
+			throw new IllegalArgumentException(ex);
+		}
 	}
 
 	/**
