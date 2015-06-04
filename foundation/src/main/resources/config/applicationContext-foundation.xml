@@ -221,8 +221,13 @@
 
 	<!-- 暗号機能設定 -->
 	<bean id="rsaCrypto" class="cherry.foundation.crypto.RSACryptoSupport">
-		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey.pk8" />
 		<property name="publicKeyResource" value="classpath:crypto/rsa/pubkey.der" />
+		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey.pk8" />
+	</bean>
+	<bean id="rsaCrypto1" class="cherry.foundation.crypto.RSACryptoSupport">
+		<property name="publicKeyResource" value="classpath:crypto/rsa/pubkey1.der" />
+		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey1.pk8" />
+		<property name="privateKeyPassword" value="password" />
 	</bean>
 	<bean id="aesCrypto" class="cherry.goods.crypto.VersionedCrypto">
 		<property name="defaultVersion" value="0" />
@@ -233,6 +238,13 @@
 						<property name="secretKeyResource" value="classpath:crypto/0/key.bin" />
 						<property name="initVectorResource" value="classpath:crypto/0/iv.bin" />
 						<property name="keyCrypto" ref="rsaCrypto" />
+					</bean>
+				</entry>
+				<entry key="1">
+					<bean class="cherry.foundation.crypto.AESCryptoSupport">
+						<property name="secretKeyResource" value="classpath:crypto/1/key.bin" />
+						<property name="initVectorResource" value="classpath:crypto/1/iv.bin" />
+						<property name="keyCrypto" ref="rsaCrypto1" />
 					</bean>
 				</entry>
 			</map>

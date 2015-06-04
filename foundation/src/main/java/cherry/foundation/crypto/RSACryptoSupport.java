@@ -36,12 +36,19 @@ public class RSACryptoSupport extends RSACrypto implements InitializingBean {
 	/** RSA暗号アルゴリズムで使用する秘密鍵が定義されたファイルのパスを保持する。 */
 	private Resource privateKeyResource;
 
+	/** RSA暗号アルゴリズムで使用する秘密鍵のパスワードを保持する。 */
+	private String privateKeyPassword;
+
 	public void setPublicKeyResource(Resource publicKeyResource) {
 		this.publicKeyResource = publicKeyResource;
 	}
 
 	public void setPrivateKeyResource(Resource privateKeyResource) {
 		this.privateKeyResource = privateKeyResource;
+	}
+
+	public void setPrivateKeyPassword(String privateKeyPassword) {
+		this.privateKeyPassword = privateKeyPassword;
 	}
 
 	/**
@@ -54,7 +61,11 @@ public class RSACryptoSupport extends RSACrypto implements InitializingBean {
 			setPublicKeyBytes(ByteStreams.toByteArray(in));
 		}
 		try (InputStream in = privateKeyResource.getInputStream()) {
-			setPrivateKeyBytes(ByteStreams.toByteArray(in));
+			if (privateKeyPassword == null) {
+				setPrivateKeyBytes(ByteStreams.toByteArray(in));
+			} else {
+				setPrivateKeyBytes(ByteStreams.toByteArray(in), privateKeyPassword.toCharArray());
+			}
 		}
 	}
 

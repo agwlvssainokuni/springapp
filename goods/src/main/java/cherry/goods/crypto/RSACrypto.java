@@ -16,6 +16,7 @@
 
 package cherry.goods.crypto;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -51,6 +52,11 @@ public class RSACrypto implements Crypto {
 
 	public void setPrivateKeyBytes(byte[] privateKeyBytes) throws InvalidKeySpecException {
 		this.privateKey = KeyUtil.createRsaPrivateKey(privateKeyBytes);
+	}
+
+	public void setPrivateKeyBytes(byte[] privateKeyBytes, char[] password) throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, InvalidKeySpecException {
+		this.privateKey = KeyUtil.createRsaPrivateKey(privateKeyBytes, password);
 	}
 
 	@Override
