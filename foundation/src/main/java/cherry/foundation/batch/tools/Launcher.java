@@ -74,7 +74,9 @@ public class Launcher {
 				log.info(msg.resolve("{0}", arg));
 			}
 
-			IBatch batch = getBatch(batchId);
+			@SuppressWarnings("resource")
+			ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
+			IBatch batch = appCtx.getBean(batchId, IBatch.class);
 
 			log.info(msg.resolve("BATCH {0} STARTED", batchId));
 
@@ -101,18 +103,6 @@ public class Launcher {
 			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
 			return ExitStatus.FATAL;
 		}
-	}
-
-	/**
-	 * バッチプログラムの実装本体を取出す。
-	 * 
-	 * @param id バッチプログラムの識別名。
-	 * @return バッチプログラムの実装本体。
-	 */
-	private IBatch getBatch(String id) {
-		@SuppressWarnings("resource")
-		ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
-		return appCtx.getBean(id, IBatch.class);
 	}
 
 	/**
