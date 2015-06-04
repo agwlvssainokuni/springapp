@@ -29,6 +29,8 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import cherry.foundation.batch.ExitStatus;
 import cherry.foundation.batch.IBatch;
 
+import com.google.common.base.Optional;
+
 /**
  * バッチプログラムを起動する機能を提供する。
  */
@@ -80,29 +82,67 @@ public class Launcher {
 
 			log.info(msg.resolve("BATCH {0} STARTED", batchId));
 
-			ExitStatus status = batch.execute(args);
+			try {
 
-			switch (status) {
-			case NORMAL:
-				log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-				break;
-			case WARN:
-				log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-				break;
-			case ERROR:
-				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-				break;
-			default:
-				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
-				break;
+				ExitStatus status = batch.execute(args);
+
+				switch (status) {
+				case NORMAL:
+					log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+					break;
+				case WARN:
+					log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+					break;
+				case ERROR:
+					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+					break;
+				default:
+					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
+					break;
+				}
+
+				return status;
+
+			} catch (Exception ex) {
+
+				Optional<ExitStatus> status = translateExceptionToExitStatus(appCtx, ex);
+				if (!status.isPresent()) {
+					log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
+					return ExitStatus.FATAL;
+				}
+
+				switch (status.get()) {
+				case NORMAL:
+					log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status.get()), ex);
+					break;
+				case WARN:
+					log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status.get()), ex);
+					break;
+				case ERROR:
+					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status.get()), ex);
+					break;
+				default:
+					log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status.get()), ex);
+					break;
+				}
+
+				return status.get();
 			}
-
-			return status;
-
 		} catch (Exception ex) {
 			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
 			return ExitStatus.FATAL;
 		}
+	}
+
+	private Optional<ExitStatus> translateExceptionToExitStatus(ApplicationContext appCtx, Exception ex) {
+		for (ExceptionExitStatusTranslator translator : appCtx.getBeansOfType(ExceptionExitStatusTranslator.class)
+				.values()) {
+			Optional<ExitStatus> status = translator.translate(ex);
+			if (status.isPresent()) {
+				return status;
+			}
+		}
+		return Optional.absent();
 	}
 
 	/**
