@@ -10,6 +10,37 @@
 	<uri>urn:cherry:foundation</uri>
 
 	<tag>
+		<description>GetBean</description>
+		<name>getBean</name>
+		<tag-class>cherry.foundation.GetBeanTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>beanName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>beanTypeName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>beanType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Class</type>
+		</attribute>
+	</tag>
+
+	<tag>
 		<description>ObjectRenderer</description>
 		<name>render</name>
 		<tag-class>cherry.foundation.render.RenderTag</tag-class>
