@@ -27,6 +27,7 @@ public class SimpleBizYearStrategyTest {
 	@Test
 	public void test0101() {
 		SimpleBizYearStrategy strategy = new SimpleBizYearStrategy();
+		strategy.setYearOfFirstOffset(0);
 		strategy.setMonthOfFirst(1);
 		strategy.setDayOfFirst(1);
 		for (int year = 1900; year < 3000; year++) {
@@ -39,6 +40,7 @@ public class SimpleBizYearStrategyTest {
 	@Test
 	public void test0401() {
 		SimpleBizYearStrategy strategy = new SimpleBizYearStrategy();
+		strategy.setYearOfFirstOffset(0);
 		strategy.setMonthOfFirst(4);
 		strategy.setDayOfFirst(1);
 		for (int year = 1900; year < 3000; year++) {
@@ -51,12 +53,13 @@ public class SimpleBizYearStrategyTest {
 	@Test
 	public void test0901() {
 		SimpleBizYearStrategy strategy = new SimpleBizYearStrategy();
+		strategy.setYearOfFirstOffset(-1);
 		strategy.setMonthOfFirst(9);
 		strategy.setDayOfFirst(1);
 		for (int year = 1900; year < 3000; year++) {
 			Range<LocalDate> range = strategy.rangeOfBizYear(year);
-			assertEquals(new LocalDate(year, 9, 1), range.getMinimum());
-			assertEquals(new LocalDate(year + 1, 8, 31), range.getMaximum());
+			assertEquals(new LocalDate(year - 1, 9, 1), range.getMinimum());
+			assertEquals(new LocalDate(year, 8, 31), range.getMaximum());
 		}
 	}
 

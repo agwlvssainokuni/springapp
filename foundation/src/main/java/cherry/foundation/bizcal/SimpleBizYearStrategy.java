@@ -23,9 +23,15 @@ import org.joda.time.LocalDate;
 
 public class SimpleBizYearStrategy implements BizYearStrategy {
 
+	private int yearOfFirstOffset;
+
 	private int monthOfFirst;
 
 	private int dayOfFirst;
+
+	public void setYearOfFirstOffset(int yearOfFirstOffset) {
+		this.yearOfFirstOffset = yearOfFirstOffset;
+	}
 
 	public void setMonthOfFirst(int monthOfFirst) {
 		this.monthOfFirst = monthOfFirst;
@@ -37,7 +43,7 @@ public class SimpleBizYearStrategy implements BizYearStrategy {
 
 	@Override
 	public Range<LocalDate> rangeOfBizYear(int bizYear) {
-		LocalDate firstDate = new LocalDate(bizYear, monthOfFirst, dayOfFirst);
+		LocalDate firstDate = new LocalDate(bizYear + yearOfFirstOffset, monthOfFirst, dayOfFirst);
 		LocalDate lastDate = firstDate.plusYears(1).minusDays(1);
 		return between(firstDate, lastDate);
 	}
