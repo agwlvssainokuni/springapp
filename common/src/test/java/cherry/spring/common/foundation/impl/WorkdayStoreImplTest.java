@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.workday.WorkdayStore;
+import cherry.foundation.bizcal.WorkdayStore;
 import cherry.spring.common.db.gen.dto.DayoffMaster;
 import cherry.spring.common.db.gen.dto.DayoffMasterCriteria;
 import cherry.spring.common.db.gen.mapper.DayoffMasterMapper;

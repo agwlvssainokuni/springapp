@@ -31,7 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 
-import cherry.foundation.workday.WorkdayStore;
+import cherry.foundation.bizcal.WorkdayStore;
 import cherry.spring.common.db.gen.query.QDayoffMaster;
 import cherry.spring.common.db.gen.query.QDigit;
 

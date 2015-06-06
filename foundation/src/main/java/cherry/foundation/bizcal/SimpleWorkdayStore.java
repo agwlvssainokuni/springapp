@@ -14,17 +14,24 @@
  * limitations under the License.
  */
 
-package cherry.foundation.workday;
+package cherry.foundation.bizcal;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 /**
  * 営業日管理機能。<br />
  */
-public interface WorkdayStore {
+public class SimpleWorkdayStore implements WorkdayStore {
 
-	int getNumberOfWorkday(String name, LocalDate from, LocalDate to);
+	@Override
+	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
+		return Days.daysBetween(from, to).getDays() + 1;
+	}
 
-	LocalDate getNextWorkday(String name, LocalDate from, int numberOfWorkday);
+	@Override
+	public LocalDate getNextWorkday(String name, LocalDate from, int numberOfWorkday) {
+		return from.plusDays(numberOfWorkday - 1);
+	}
 
 }

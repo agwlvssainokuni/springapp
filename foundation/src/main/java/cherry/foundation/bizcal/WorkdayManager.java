@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.workday;
+package cherry.foundation.bizcal;
 
 import org.joda.time.LocalDate;
 
