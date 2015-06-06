@@ -19,7 +19,6 @@ package cherry.foundation.bizcal;
 import java.util.Comparator;
 
 import org.apache.commons.lang3.Range;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 public class BizYearUtil {
@@ -31,11 +30,6 @@ public class BizYearUtil {
 				return o1.compareTo(o2);
 			}
 		});
-	}
-
-	public static int numberOfDays(LocalDate from, LocalDate to) {
-		Interval interval = new Interval(from.toDateTimeAtStartOfDay(), to.plusDays(1).toDateTimeAtCurrentTime());
-		return (int) interval.toDuration().getStandardDays();
 	}
 
 }

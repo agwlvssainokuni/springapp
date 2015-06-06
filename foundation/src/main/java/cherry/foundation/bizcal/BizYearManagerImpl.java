@@ -16,10 +16,9 @@
 
 package cherry.foundation.bizcal;
 
-import static cherry.foundation.bizcal.BizYearUtil.numberOfDays;
-
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.tuple.Pair;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import cherry.foundation.bizdtm.BizDateTime;
@@ -81,7 +80,7 @@ public class BizYearManagerImpl implements BizYearManager {
 	@Override
 	public int getNthDayOfBizYear(LocalDate dt) {
 		Range<LocalDate> range = bizYearByDate(dt).getRight();
-		return numberOfDays(range.getMinimum(), dt);
+		return Days.daysBetween(range.getMinimum(), dt).getDays() + 1;
 	}
 
 	@Override
@@ -92,13 +91,13 @@ public class BizYearManagerImpl implements BizYearManager {
 	@Override
 	public int getNumberOfDaysOfBizYear(int bizYear) {
 		Range<LocalDate> range = bizYearStrategy.rangeOfBizYear(bizYear);
-		return numberOfDays(range.getMinimum(), range.getMaximum());
+		return Days.daysBetween(range.getMinimum(), range.getMaximum()).getDays() + 1;
 	}
 
 	@Override
 	public int getNumberOfDaysOfBizYear(LocalDate dt) {
 		Range<LocalDate> range = bizYearByDate(dt).getRight();
-		return numberOfDays(range.getMinimum(), range.getMaximum());
+		return Days.daysBetween(range.getMinimum(), range.getMaximum()).getDays() + 1;
 	}
 
 	@Override
