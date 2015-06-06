@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.foundation.bizdtm;
+package cherry.foundation.bizcal;
 
-import static cherry.foundation.bizdtm.BizYearUtil.numberOfDays;
+import static cherry.foundation.bizcal.BizYearUtil.numberOfDays;
 
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.LocalDate;
+
+import cherry.foundation.bizdtm.BizDateTime;
 
 public class BizYearManagerImpl implements BizYearManager {
 

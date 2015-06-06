@@ -14,28 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.foundation.bizdtm;
-
-import java.util.Comparator;
+package cherry.foundation.bizcal;
 
 import org.apache.commons.lang3.Range;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-public class BizYearUtil {
+public interface BizYearStrategy {
 
-	public static Range<LocalDate> between(LocalDate from, LocalDate to) {
-		return Range.between(from, to, new Comparator<LocalDate>() {
-			@Override
-			public int compare(LocalDate o1, LocalDate o2) {
-				return o1.compareTo(o2);
-			}
-		});
-	}
-
-	public static int numberOfDays(LocalDate from, LocalDate to) {
-		Interval interval = new Interval(from.toDateTimeAtStartOfDay(), to.plusDays(1).toDateTimeAtCurrentTime());
-		return (int) interval.toDuration().getStandardDays();
-	}
+	Range<LocalDate> rangeOfBizYear(int bizYear);
 
 }
