@@ -20,8 +20,16 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.security.AlgorithmParameters;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+
+import javax.crypto.Cipher;
+import javax.crypto.EncryptedPrivateKeyInfo;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
@@ -30,24 +38,59 @@ public class RSACryptoTest {
 
 	@Test
 	public void testEncDec() throws Exception {
-		RSACrypto helper = createCrypto();
+		RSACrypto impl = create1();
 		for (int i = 0; i < 100; i++) {
 			byte[] plain = RandomUtils.nextBytes(245);
-			byte[] crypto = helper.encrypt(plain);
+			byte[] crypto = impl.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
-			assertThat(helper.decrypt(crypto), is(plain));
+			assertThat(impl.decrypt(crypto), is(plain));
 		}
 	}
 
-	private RSACrypto createCrypto() throws Exception {
+	@Test
+	public void testEncDecWithPbeKey() throws Exception {
+		RSACrypto impl = create2("password".toCharArray());
+		for (int i = 0; i < 100; i++) {
+			byte[] plain = RandomUtils.nextBytes(245);
+			byte[] crypto = impl.encrypt(plain);
+			assertThat(crypto, is(not(plain)));
+			assertThat(impl.decrypt(crypto), is(plain));
+		}
+	}
+
+	private RSACrypto create1() throws Exception {
 		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
 		keygen.initialize(2048);
 		KeyPair key = keygen.generateKeyPair();
-		RSACrypto helper = new RSACrypto();
-		helper.setAlgorithm("RSA/ECB/PKCS1Padding");
-		helper.setPublicKeyBytes(key.getPublic().getEncoded());
-		helper.setPrivateKeyBytes(key.getPrivate().getEncoded());
-		return helper;
+		RSACrypto impl = new RSACrypto();
+		impl.setAlgorithm("RSA/ECB/PKCS1Padding");
+		impl.setPublicKeyBytes(key.getPublic().getEncoded());
+		impl.setPrivateKeyBytes(key.getPrivate().getEncoded());
+		return impl;
+	}
+
+	private RSACrypto create2(char[] password) throws Exception {
+
+		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
+		keygen.initialize(2048);
+		KeyPair key = keygen.generateKeyPair();
+
+		String pbeAlgName = "PBEWithMD5AndDES";
+		PBEKeySpec pbeKeySpec = new PBEKeySpec(password);
+		PBEParameterSpec pbeParamSpec = new PBEParameterSpec(RandomUtils.nextBytes(8), 20);
+		SecretKey pbeKey = SecretKeyFactory.getInstance(pbeAlgName).generateSecret(pbeKeySpec);
+		AlgorithmParameters pbeParam = AlgorithmParameters.getInstance(pbeAlgName);
+		pbeParam.init(pbeParamSpec);
+		Cipher cipher = Cipher.getInstance(pbeAlgName);
+		cipher.init(Cipher.ENCRYPT_MODE, pbeKey, pbeParam);
+		EncryptedPrivateKeyInfo encryptedKeyInfo = new EncryptedPrivateKeyInfo(pbeParam, cipher.doFinal(key
+				.getPrivate().getEncoded()));
+
+		RSACrypto impl = new RSACrypto();
+		impl.setAlgorithm("RSA/ECB/PKCS1Padding");
+		impl.setPublicKeyBytes(key.getPublic().getEncoded());
+		impl.setPrivateKeyBytes(encryptedKeyInfo.getEncoded(), password);
+		return impl;
 	}
 
 }
