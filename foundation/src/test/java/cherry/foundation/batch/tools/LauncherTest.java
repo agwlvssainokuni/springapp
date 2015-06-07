@@ -59,9 +59,37 @@ public class LauncherTest {
 	}
 
 	@Test
-	public void testExitWithException() {
-		Launcher launcher = new Launcher("test01Batch");
-		ExitStatus status = launcher.launch("NONE");
+	public void testTranslateToNormal() {
+		Launcher launcher = new Launcher("test02Batch");
+		ExitStatus status = launcher.launch("NORMAL");
+		assertEquals(ExitStatus.NORMAL, status);
+	}
+
+	@Test
+	public void testTranslateToWarn() {
+		Launcher launcher = new Launcher("test02Batch");
+		ExitStatus status = launcher.launch("WARN");
+		assertEquals(ExitStatus.WARN, status);
+	}
+
+	@Test
+	public void testTranslateToError() {
+		Launcher launcher = new Launcher("test02Batch");
+		ExitStatus status = launcher.launch("ERROR");
+		assertEquals(ExitStatus.ERROR, status);
+	}
+
+	@Test
+	public void testTranslateToFatal() {
+		Launcher launcher = new Launcher("test02Batch");
+		ExitStatus status = launcher.launch("FATAL");
+		assertEquals(ExitStatus.FATAL, status);
+	}
+
+	@Test
+	public void testTranslateNone() {
+		Launcher launcher = new Launcher("test02Batch");
+		ExitStatus status = launcher.launch();
 		assertEquals(ExitStatus.FATAL, status);
 	}
 

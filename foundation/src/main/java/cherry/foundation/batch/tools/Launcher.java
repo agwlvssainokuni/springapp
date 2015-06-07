@@ -107,8 +107,7 @@ public class Launcher {
 
 				Optional<ExitStatus> status = translateExceptionToExitStatus(appCtx, ex);
 				if (!status.isPresent()) {
-					log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
-					return ExitStatus.FATAL;
+					throw ex;
 				}
 
 				switch (status.get()) {
