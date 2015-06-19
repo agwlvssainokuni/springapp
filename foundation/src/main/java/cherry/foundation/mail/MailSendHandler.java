@@ -37,13 +37,14 @@ public interface MailSendHandler {
 	 * @param to 宛先 (To) のメールアドレス。
 	 * @param cc 宛先 (Cc) のメールアドレス。
 	 * @param bcc 宛先 (Bcc) のメールアドレス。
+	 * @param replyTo 返信先 (Reply-To) のメールアドレス。
 	 * @param subject 件名 (Subject)。
 	 * @param body 本文。
 	 * @param scheduledAt 送信予定日時。
 	 * @return メールデータの識別番号。
 	 */
 	long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, LocalDateTime scheduledAt);
+			List<String> bcc, String replyTo, String subject, String body, LocalDateTime scheduledAt);
 
 	/**
 	 * メールを即時送信する。<br />
@@ -54,12 +55,13 @@ public interface MailSendHandler {
 	 * @param to 宛先 (To) のメールアドレス。
 	 * @param cc 宛先 (Cc) のメールアドレス。
 	 * @param bcc 宛先 (Bcc) のメールアドレス。
+	 * @param replyTo 返信先 (Reply-To) のメールアドレス。
 	 * @param subject 件名 (Subject)。
 	 * @param body 本文。
 	 * @return メールデータの識別番号。
 	 */
 	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body);
+			List<String> bcc, String replyTo, String subject, String body);
 
 	/**
 	 * メールを即時送信する。<br />
@@ -70,13 +72,14 @@ public interface MailSendHandler {
 	 * @param to 宛先 (To) のメールアドレス。
 	 * @param cc 宛先 (Cc) のメールアドレス。
 	 * @param bcc 宛先 (Bcc) のメールアドレス。
+	 * @param replyTo 返信先 (Reply-To) のメールアドレス。
 	 * @param subject 件名 (Subject)。
 	 * @param body 本文。
 	 * @param preparator 添付ファイルを構成する処理を受け渡す。
 	 * @return メールデータの識別番号。
 	 */
 	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, AttachmentPreparator preparator);
+			List<String> bcc, String replyTo, String subject, String body, AttachmentPreparator preparator);
 
 	/**
 	 * キューに蓄積されているメールデータの識別番号のリストを取得する。<br />

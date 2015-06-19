@@ -90,7 +90,7 @@ public class SignupEntryServiceImpl implements SignupEntryService {
 
 		MailData msg = mailFacade.createMailData("SIGNUP_ENTRY", mailAddr, model);
 		mailFacade.send("unknown", "SIGNUP_ENTRY", msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
-				msg.getBccAddr(), msg.getSubject(), msg.getBody());
+				msg.getBccAddr(), msg.getReplyToAddr(), msg.getSubject(), msg.getBody());
 
 		return true;
 	}

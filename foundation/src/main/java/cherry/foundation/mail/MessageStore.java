@@ -37,12 +37,13 @@ public interface MessageStore {
 	 * @param to 宛先 (To) のメールアドレス。
 	 * @param cc 宛先 (Cc) のメールアドレス。
 	 * @param bcc 宛先 (Bcc) のメールアドレス。
+	 * @param replyTo 返信先 (Reply-To) のメールアドレス。
 	 * @param subject 件名 (Subject)。
 	 * @param body 本文。
 	 * @return メールデータの識別番号。
 	 */
 	long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from, List<String> to,
-			List<String> cc, List<String> bcc, String subject, String body);
+			List<String> cc, List<String> bcc, String replyTo, String subject, String body);
 
 	/**
 	 * キューに蓄積されているメールデータの識別番号のリストを取得する。<br />

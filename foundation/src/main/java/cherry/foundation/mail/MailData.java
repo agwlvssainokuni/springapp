@@ -28,6 +28,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * <ul>
  * <li>差出人 (From)</li>
  * <li>宛先 (To, Cc, Bcc)</li>
+ * <li>返信先 (Reply-To)</li>
  * <li>件名 (Subject)</li>
  * <li>本文</li>
  * </ul>
@@ -47,6 +48,9 @@ public class MailData implements Serializable {
 
 	/** 宛先 (Bcc) を保持する。 */
 	private List<String> bccAddr;
+
+	/** 返信先 (Reply-To) を保持する。 */
+	private String replyToAddr;
 
 	/** 件名 (Subject) を保持する。 */
 	private String subject;
@@ -89,6 +93,14 @@ public class MailData implements Serializable {
 
 	public void setBccAddr(List<String> bccAddr) {
 		this.bccAddr = bccAddr;
+	}
+
+	public String getReplyToAddr() {
+		return replyToAddr;
+	}
+
+	public void setReplyToAddr(String replyToAddr) {
+		this.replyToAddr = replyToAddr;
 	}
 
 	public String getSubject() {

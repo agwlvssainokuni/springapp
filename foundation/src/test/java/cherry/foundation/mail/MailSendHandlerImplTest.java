@@ -63,7 +63,7 @@ public class MailSendHandlerImplTest {
 		MailSendHandler handler = create(now);
 
 		long messageId = handler.sendLater("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
-				asList("bcc@addr"), "subject", "body", now);
+				asList("bcc@addr"), "replyTo@addr", "subject", "body", now);
 		assertEquals(0L, messageId);
 
 		List<Long> list = handler.listMessage(now);
@@ -82,6 +82,7 @@ public class MailSendHandlerImplTest {
 		assertEquals("cc@addr", message.getValue().getCc()[0]);
 		assertEquals(1, message.getValue().getBcc().length);
 		assertEquals("bcc@addr", message.getValue().getBcc()[0]);
+		assertEquals("replyTo@addr", message.getValue().getReplyTo());
 		assertEquals("subject", message.getValue().getSubject());
 		assertEquals("body", message.getValue().getText());
 
@@ -98,7 +99,7 @@ public class MailSendHandlerImplTest {
 		doNothing().when(mailSender).send(message.capture());
 
 		long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"), asList("cc@addr"),
-				asList("bcc@addr"), "subject", "body");
+				asList("bcc@addr"), "replyTo@addr", "subject", "body");
 		assertEquals(0L, messageId);
 
 		assertEquals("from@addr", message.getValue().getFrom());
@@ -108,6 +109,7 @@ public class MailSendHandlerImplTest {
 		assertEquals("cc@addr", message.getValue().getCc()[0]);
 		assertEquals(1, message.getValue().getBcc().length);
 		assertEquals("bcc@addr", message.getValue().getBcc()[0]);
+		assertEquals("replyTo@addr", message.getValue().getReplyTo());
 		assertEquals("subject", message.getValue().getSubject());
 		assertEquals("body", message.getValue().getText());
 
@@ -154,7 +156,8 @@ public class MailSendHandlerImplTest {
 			};
 
 			long messageId = handler.sendNow("loginId", "messageName", "from@addr", asList("to@addr"),
-					asList("cc@addr"), asList("bcc@addr"), "subject", "body", new AttachmentPreparator() {
+					asList("cc@addr"), asList("bcc@addr"), "replyTo@addr", "subject", "body",
+					new AttachmentPreparator() {
 						@Override
 						public void prepare(Attachment attachment) throws MessagingException {
 							attachment.add("name0.txt", new ByteArrayResource("attach0".getBytes()));
@@ -178,6 +181,7 @@ public class MailSendHandlerImplTest {
 			assertEquals(parse("bcc@addr")[0], message.getRecipients(RecipientType.BCC)[0]);
 			assertEquals(1, message.getFrom().length);
 			assertEquals(parse("from@addr")[0], message.getFrom()[0]);
+			assertEquals(parse("replyTo@addr")[0], message.getReplyTo()[0]);
 			assertEquals("subject", message.getSubject());
 
 			MimeMultipart mm = (MimeMultipart) message.getContent();

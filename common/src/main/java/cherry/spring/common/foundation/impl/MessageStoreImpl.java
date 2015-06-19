@@ -59,7 +59,7 @@ public class MessageStoreImpl implements MessageStore {
 
 	@Override
 	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject, String body) {
+			List<String> to, List<String> cc, List<String> bcc, String replyTo, String subject, String body) {
 		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName, scheduledAt, from, subject, body);
 		createMailRcpt(mailId, RcptType.TO.name(), to);
 		createMailRcpt(mailId, RcptType.CC.name(), cc);

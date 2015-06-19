@@ -32,6 +32,7 @@ public class MailDataTest {
 		mailData.setToAddr(Arrays.asList("to@addr"));
 		mailData.setCcAddr(Arrays.asList("cc@addr"));
 		mailData.setBccAddr(Arrays.asList("bcc@addr"));
+		mailData.setReplyToAddr("replyTo@addr");
 		mailData.setSubject("subject");
 		mailData.setBody("body");
 
@@ -42,6 +43,7 @@ public class MailDataTest {
 		assertEquals("cc@addr", mailData.getCcAddr().get(0));
 		assertEquals(1, mailData.getBccAddr().size());
 		assertEquals("bcc@addr", mailData.getBccAddr().get(0));
+		assertEquals("replyTo@addr", mailData.getReplyToAddr());
 		assertEquals("subject", mailData.getSubject());
 		assertEquals("body", mailData.getBody());
 	}
@@ -49,7 +51,8 @@ public class MailDataTest {
 	@Test
 	public void testToString() {
 		MailData mailData = new MailData();
-		assertEquals("MailData[fromAddr=<null>,toAddr=<null>,ccAddr=<null>,bccAddr=<null>,subject=<null>,body=<null>]",
+		assertEquals(
+				"MailData[fromAddr=<null>,toAddr=<null>,ccAddr=<null>,bccAddr=<null>,replyToAddr=<null>,subject=<null>,body=<null>]",
 				mailData.toString());
 	}
 

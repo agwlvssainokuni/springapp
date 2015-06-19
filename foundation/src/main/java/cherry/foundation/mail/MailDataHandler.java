@@ -44,12 +44,13 @@ public interface MailDataHandler {
 	 * @param toAddr 宛先 (To) のメールアドレス。
 	 * @param ccAddr 宛先 (Cc) のメールアドレス。
 	 * @param bccAddr 宛先 (Bcc) のメールアドレス。
+	 * @param replyToAddr 返信先 (Reply-To) のメールアドレス。
 	 * @param subject 件名 (Subject) のテンプレート。
 	 * @param body 本文のテンプレート。
 	 * @param mailModel テンプレートに埋め込むデータ。
 	 * @return 送信するメールデータ。
 	 */
 	MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
-			String subject, String body, MailModel mailModel);
+			String replyToAddr, String subject, String body, MailModel mailModel);
 
 }

@@ -52,23 +52,25 @@ public class MailSendHandlerImpl implements MailSendHandler {
 	@Transactional
 	@Override
 	public long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, LocalDateTime scheduledAt) {
-		return messageStore.createMessage(launcherId, messageName, scheduledAt, from, to, cc, bcc, subject, body);
+			List<String> bcc, String replyTo, String subject, String body, LocalDateTime scheduledAt) {
+		return messageStore.createMessage(launcherId, messageName, scheduledAt, from, to, cc, bcc, replyTo, subject,
+				body);
 	}
 
 	@Transactional
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body) {
-		return sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, null);
+			List<String> bcc, String replyTo, String subject, String body) {
+		return sendNow(launcherId, messageName, from, to, cc, bcc, replyTo, subject, body, null);
 	}
 
 	@Transactional
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
+			List<String> bcc, String replyTo, String subject, String body, AttachmentPreparator preparator) {
 		LocalDateTime now = bizDateTime.now();
-		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, subject, body);
+		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, replyTo, subject,
+				body);
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		messageStore.finishMessage(messageId);
 		send(msg, preparator);
@@ -101,10 +103,11 @@ public class MailSendHandlerImpl implements MailSendHandler {
 				@Override
 				public void prepare(MimeMessage mimeMessage) throws Exception {
 					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+					helper.setFrom(msg.getFrom());
 					helper.setTo(msg.getTo());
 					helper.setCc(msg.getCc());
 					helper.setBcc(msg.getBcc());
-					helper.setFrom(msg.getFrom());
+					helper.setReplyTo(msg.getReplyTo());
 					helper.setSubject(msg.getSubject());
 					helper.setText(msg.getText());
 					preparator.prepare(new Attachment(helper));

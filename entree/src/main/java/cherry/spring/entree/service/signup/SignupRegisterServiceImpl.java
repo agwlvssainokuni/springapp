@@ -108,7 +108,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 
 		MailData msg = mailFacade.createMailData("SIGNUP_REGISTER", mailAddr, model);
 		mailFacade.send("unknown", "SIGNUP_REGISTER", msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
-				msg.getBccAddr(), msg.getSubject(), msg.getBody());
+				msg.getBccAddr(), msg.getReplyToAddr(), msg.getSubject(), msg.getBody());
 
 		return true;
 	}

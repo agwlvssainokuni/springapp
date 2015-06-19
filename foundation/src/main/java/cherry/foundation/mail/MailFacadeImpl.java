@@ -49,32 +49,34 @@ public class MailFacadeImpl implements MailFacade {
 
 	@Override
 	public MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
-			String subject, String body, MailModel mailModel) {
-		return mailDataHandler.createMailData(fromAddr, toAddr, ccAddr, bccAddr, subject, body, mailModel);
+			String replyToAddr, String subject, String body, MailModel mailModel) {
+		return mailDataHandler.createMailData(fromAddr, toAddr, ccAddr, bccAddr, replyToAddr, subject, body, mailModel);
 	}
 
 	@Override
 	public long send(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body) {
-		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, subject, body, bizDateTime.now());
+			List<String> bcc, String replyTo, String subject, String body) {
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, replyTo, subject, body,
+				bizDateTime.now());
 	}
 
 	@Override
 	public long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, LocalDateTime scheduledAt) {
-		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, subject, body, scheduledAt);
+			List<String> bcc, String replyTo, String subject, String body, LocalDateTime scheduledAt) {
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, replyTo, subject, body,
+				scheduledAt);
 	}
 
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body) {
-		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body);
+			List<String> bcc, String replyTo, String subject, String body) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, replyTo, subject, body);
 	}
 
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
-			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
-		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, preparator);
+			List<String> bcc, String replyTo, String subject, String body, AttachmentPreparator preparator) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, replyTo, subject, body, preparator);
 	}
 
 }

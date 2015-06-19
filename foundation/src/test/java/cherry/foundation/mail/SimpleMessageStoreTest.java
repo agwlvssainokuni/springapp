@@ -33,10 +33,10 @@ public class SimpleMessageStoreTest {
 	public void testCreateMessage() {
 		SimpleMessageStore store = new SimpleMessageStore();
 		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "replyTo@addr", "subject", "body");
 		assertEquals(0L, id0);
 		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
-				asList("to@addr"), null, null, "subject", "body");
+				asList("to@addr"), null, null, null, "subject", "body");
 		assertEquals(1L, id1);
 	}
 
@@ -45,10 +45,10 @@ public class SimpleMessageStoreTest {
 
 		SimpleMessageStore store = new SimpleMessageStore();
 		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "replyTo@addr", "subject", "body");
 		assertEquals(0L, id0);
 		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
-				asList("to@addr"), null, null, "subject", "body");
+				asList("to@addr"), null, null, null, "subject", "body");
 		assertEquals(1L, id1);
 
 		List<Long> list0 = store.listMessage(LocalDateTime.now().plusSeconds(1));
@@ -66,10 +66,10 @@ public class SimpleMessageStoreTest {
 
 		SimpleMessageStore store = new SimpleMessageStore();
 		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "replyTo@addr", "subject", "body");
 		assertEquals(0L, id0);
 		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
-				asList("to@addr"), null, null, "subject", "body");
+				asList("to@addr"), null, null, null, "subject", "body");
 		assertEquals(1L, id1);
 
 		SimpleMailMessage msg0 = store.getMessage(0L);
@@ -81,6 +81,7 @@ public class SimpleMessageStoreTest {
 		assertEquals("cc@addr", msg0.getCc()[0]);
 		assertEquals(1, msg0.getBcc().length);
 		assertEquals("bcc@addr", msg0.getBcc()[0]);
+		assertEquals("replyTo@addr", msg0.getReplyTo());
 		assertEquals("subject", msg0.getSubject());
 		assertEquals("body", msg0.getText());
 
@@ -92,10 +93,10 @@ public class SimpleMessageStoreTest {
 
 		SimpleMessageStore store = new SimpleMessageStore();
 		long id0 = store.createMessage("launcherId", "messageName", LocalDateTime.now(), "from@addr",
-				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "subject", "body");
+				asList("to@addr"), asList("cc@addr"), asList("bcc@addr"), "replyTo@addr", "subject", "body");
 		assertEquals(0L, id0);
 		long id1 = store.createMessage("launcherId", "messageName", LocalDateTime.now().plusMinutes(1), "from@addr",
-				asList("to@addr"), null, null, "subject", "body");
+				asList("to@addr"), null, null, null, "subject", "body");
 		assertEquals(1L, id1);
 
 		assertNotNull(store.getMessage(0L));

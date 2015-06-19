@@ -35,7 +35,7 @@ public class SimpleMessageStore implements MessageStore {
 
 	@Override
 	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject, String body) {
+			List<String> to, List<String> cc, List<String> bcc, String replyTo, String subject, String body) {
 
 		long messageId = nextMessageId.getAndIncrement();
 
@@ -44,6 +44,7 @@ public class SimpleMessageStore implements MessageStore {
 		message.setTo(toArray(to));
 		message.setCc(toArray(cc));
 		message.setBcc(toArray(bcc));
+		message.setReplyTo(replyTo);
 		message.setSubject(subject);
 		message.setText(body);
 

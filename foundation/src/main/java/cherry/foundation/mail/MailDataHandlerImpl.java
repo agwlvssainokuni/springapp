@@ -52,18 +52,19 @@ public class MailDataHandlerImpl implements MailDataHandler {
 		}
 
 		return createMailData(template.getFromAddr(), toAddr, template.getCcAddr(), template.getBccAddr(),
-				template.getSubject(), template.getBody(), mailModel);
+				template.getReplyToAddr(), template.getSubject(), template.getBody(), mailModel);
 	}
 
 	@Override
 	public MailData createMailData(String fromAddr, List<String> toAddr, List<String> ccAddr, List<String> bccAddr,
-			String subject, String body, MailModel mailModel) {
+			String replyToAddr, String subject, String body, MailModel mailModel) {
 
 		MailData message = new MailData();
 		message.setFromAddr(fromAddr);
 		message.setToAddr(toAddr);
 		message.setCcAddr(ccAddr);
 		message.setBccAddr(bccAddr);
+		message.setReplyToAddr(replyToAddr);
 
 		VelocityContext context = createContext(mailModel);
 		message.setSubject(evaluate(subject, context));

@@ -42,8 +42,8 @@ public class MailDataHandlerImplTest {
 
 	@Test
 	public void testFullAddress() {
-		MailDataHandler handler = create("name", "from@addr", "other@addr", "cc@addr", "bcc@addr", "subject", "body",
-				VelocityMode.NORMAL);
+		MailDataHandler handler = create("name", "from@addr", "other@addr", "cc@addr", "bcc@addr", "replyTo@addr",
+				"subject", "body", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -56,13 +56,14 @@ public class MailDataHandlerImplTest {
 		assertEquals("cc@addr", mailData.getCcAddr().get(0));
 		assertEquals(1, mailData.getBccAddr().size());
 		assertEquals("bcc@addr", mailData.getBccAddr().get(0));
+		assertEquals("replyTo@addr", mailData.getReplyToAddr());
 		assertEquals("subject", mailData.getSubject());
 		assertEquals("body", mailData.getBody());
 	}
 
 	@Test
 	public void testEmptyTemplate() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null, "", "", VelocityMode.NORMAL);
+		MailDataHandler handler = create("name", "from@addr", null, null, null, null, "", "", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
 		MailData mailData = handler.createMailData("name", "to@addr", model);
@@ -72,13 +73,14 @@ public class MailDataHandlerImplTest {
 		assertEquals("to@addr", mailData.getToAddr().get(0));
 		assertNull(mailData.getCcAddr());
 		assertNull(mailData.getBccAddr());
+		assertNull(mailData.getReplyToAddr());
 		assertEquals("", mailData.getSubject());
 		assertEquals("", mailData.getBody());
 	}
 
 	@Test
 	public void testTemplateEvaluation() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null, "param=${model.param}",
+		MailDataHandler handler = create("name", "from@addr", null, null, null, null, "param=${model.param}",
 				"param is ${model.param}", VelocityMode.NORMAL);
 		Model model = new Model();
 		model.setParam("PARAM");
@@ -89,13 +91,14 @@ public class MailDataHandlerImplTest {
 		assertEquals("to@addr", mailData.getToAddr().get(0));
 		assertNull(mailData.getCcAddr());
 		assertNull(mailData.getBccAddr());
+		assertNull(mailData.getReplyToAddr());
 		assertEquals("param=PARAM", mailData.getSubject());
 		assertEquals("param is PARAM", mailData.getBody());
 	}
 
 	@Test
 	public void testTemplateEvaluationFalse() {
-		MailDataHandler handler = create("name", "from@addr", null, null, null, "param=${model.param}",
+		MailDataHandler handler = create("name", "from@addr", null, null, null, null, "param=${model.param}",
 				"param is ${model.param}", VelocityMode.MOCK_FALSE);
 		Model model = new Model();
 		model.setParam("PARAM");
@@ -112,7 +115,7 @@ public class MailDataHandlerImplTest {
 	}
 
 	private MailDataHandler create(String name, String fromAddr, String toAddr, String ccAddr, String bccAddr,
-			String subject, String body, VelocityMode velocityMode) {
+			String replyToAddr, String subject, String body, VelocityMode velocityMode) {
 
 		MailData mailData = new MailData();
 		mailData.setFromAddr(fromAddr);
@@ -125,6 +128,7 @@ public class MailDataHandlerImplTest {
 		if (isNotEmpty(bccAddr)) {
 			mailData.setBccAddr(asList(bccAddr));
 		}
+		mailData.setReplyToAddr(replyToAddr);
 		mailData.setSubject(subject);
 		mailData.setBody(body);
 
