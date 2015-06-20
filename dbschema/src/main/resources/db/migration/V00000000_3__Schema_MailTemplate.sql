@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/27 7:16:22
+-- Date/Time    : 2015/06/21 7:37:23
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -9,6 +9,7 @@ create table mail_template (
   id BIGINT not null AUTO_INCREMENT
   , template_name VARCHAR(30) not null
   , from_addr VARCHAR(300) not null
+  , reply_to_addr VARCHAR(300)
   , subject VARCHAR(1000) not null
   , body VARCHAR(5000) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
@@ -41,6 +42,7 @@ comment on table mail_template is 'メールテンプレート';
 comment on column mail_template.id is 'ID';
 comment on column mail_template.template_name is 'テンプレート名';
 comment on column mail_template.from_addr is '差出人';
+comment on column mail_template.reply_to_addr is '返信先';
 comment on column mail_template.subject is '件名';
 comment on column mail_template.body is '本文';
 comment on column mail_template.updated_at is '更新日時';

@@ -712,6 +712,7 @@ Top=500
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="テンプレート名","template_name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
 Field="差出人","from_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="返信先","reply_to_addr","*文字列【300】",,,"","",$FFFFFFFF,""
 Field="件名","subject","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
 Field="本文","body","*文字列【5000】","NOT NULL",,"","",$FFFFFFFF,""
 Index==0,template_name
@@ -719,7 +720,7 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141227070740
+ModifiedDateTime=20150621073626
 Position="メール文面テンプレート",500,500
 
 [Entity]
