@@ -67,6 +67,10 @@ public class MailTemplateSqlProvider {
             VALUES("FROM_ADDR", "#{fromAddr,jdbcType=VARCHAR}");
         }
         
+        if (record.getReplyToAddr() != null) {
+            VALUES("REPLY_TO_ADDR", "#{replyToAddr,jdbcType=VARCHAR}");
+        }
+        
         if (record.getSubject() != null) {
             VALUES("SUBJECT", "#{subject,jdbcType=VARCHAR}");
         }
@@ -109,6 +113,7 @@ public class MailTemplateSqlProvider {
         }
         SELECT("TEMPLATE_NAME");
         SELECT("FROM_ADDR");
+        SELECT("REPLY_TO_ADDR");
         SELECT("SUBJECT");
         SELECT("BODY");
         SELECT("UPDATED_AT");
@@ -148,6 +153,10 @@ public class MailTemplateSqlProvider {
         
         if (record.getFromAddr() != null) {
             SET("FROM_ADDR = #{record.fromAddr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getReplyToAddr() != null) {
+            SET("REPLY_TO_ADDR = #{record.replyToAddr,jdbcType=VARCHAR}");
         }
         
         if (record.getSubject() != null) {
@@ -191,6 +200,7 @@ public class MailTemplateSqlProvider {
         SET("ID = #{record.id,jdbcType=BIGINT}");
         SET("TEMPLATE_NAME = #{record.templateName,jdbcType=VARCHAR}");
         SET("FROM_ADDR = #{record.fromAddr,jdbcType=VARCHAR}");
+        SET("REPLY_TO_ADDR = #{record.replyToAddr,jdbcType=VARCHAR}");
         SET("SUBJECT = #{record.subject,jdbcType=VARCHAR}");
         SET("BODY = #{record.body,jdbcType=VARCHAR}");
         SET("UPDATED_AT = #{record.updatedAt,jdbcType=TIMESTAMP}");
@@ -219,6 +229,10 @@ public class MailTemplateSqlProvider {
         
         if (record.getFromAddr() != null) {
             SET("FROM_ADDR = #{fromAddr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getReplyToAddr() != null) {
+            SET("REPLY_TO_ADDR = #{replyToAddr,jdbcType=VARCHAR}");
         }
         
         if (record.getSubject() != null) {

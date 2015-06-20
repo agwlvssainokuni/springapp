@@ -20,6 +20,8 @@ public class BMailTemplate {
 
     private Integer lockVersion;
 
+    private String replyToAddr;
+
     private String subject;
 
     private String templateName;
@@ -74,6 +76,14 @@ public class BMailTemplate {
         this.lockVersion = lockVersion;
     }
 
+    public String getReplyToAddr() {
+        return replyToAddr;
+    }
+
+    public void setReplyToAddr(String replyToAddr) {
+        this.replyToAddr = replyToAddr;
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -100,7 +110,7 @@ public class BMailTemplate {
 
     @Override
     public String toString() {
-         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", lockVersion = " + lockVersion + ", subject = " + subject + ", templateName = " + templateName + ", updatedAt = " + updatedAt;
+         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", lockVersion = " + lockVersion + ", replyToAddr = " + replyToAddr + ", subject = " + subject + ", templateName = " + templateName + ", updatedAt = " + updatedAt;
     }
 
 }
