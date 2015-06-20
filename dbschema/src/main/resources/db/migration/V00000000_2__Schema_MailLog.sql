@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/27 7:16:05
+-- Date/Time    : 2015/06/21 7:52:07
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -42,6 +42,7 @@ create table mail_log (
   , scheduled_at TIMESTAMP not null
   , sent_at TIMESTAMP
   , from_addr VARCHAR(300) not null
+  , reply_to_addr VARCHAR(300)
   , subject VARCHAR(1000) not null
   , body VARCHAR(5000) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
@@ -85,6 +86,7 @@ comment on column mail_log.message_name is 'メールメッセージ名';
 comment on column mail_log.scheduled_at is '送信予定日時';
 comment on column mail_log.sent_at is '送信実績日時';
 comment on column mail_log.from_addr is '差出人アドレス';
+comment on column mail_log.reply_to_addr is '返信先アドレス';
 comment on column mail_log.subject is '件名';
 comment on column mail_log.body is '本文';
 comment on column mail_log.updated_at is '更新日時';

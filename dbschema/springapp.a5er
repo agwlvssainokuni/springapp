@@ -247,6 +247,7 @@ Field="メールメッセージ名","message_name","*文字列【30】","NOT NUL
 Field="送信予定日時","scheduled_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
 Field="送信実績日時","sent_at","*日時",,,"","",$FFFFFFFF,""
 Field="差出人アドレス","from_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="返信先アドレス","reply_to_addr","*文字列【300】",,,"","",$FFFFFFFF,""
 Field="件名","subject","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
 Field="本文","body","*文字列【5000】","NOT NULL",,"","",$FFFFFFFF,""
 Index==0,launched_by
@@ -255,7 +256,7 @@ EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20141227070631
+ModifiedDateTime=20150621075115
 Position="メール送信機能",500,500
 
 [Relation]
