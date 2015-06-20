@@ -60,7 +60,8 @@ public class MessageStoreImpl implements MessageStore {
 	@Override
 	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
 			List<String> to, List<String> cc, List<String> bcc, String replyTo, String subject, String body) {
-		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName, scheduledAt, from, subject, body);
+		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName, scheduledAt, from, replyTo, subject,
+				body);
 		createMailRcpt(mailId, RcptType.TO.name(), to);
 		createMailRcpt(mailId, RcptType.CC.name(), cc);
 		createMailRcpt(mailId, RcptType.BCC.name(), bcc);
@@ -83,7 +84,8 @@ public class MessageStoreImpl implements MessageStore {
 		querya.from(ml).forUpdate();
 		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()),
 				ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(ml.fromAddr, ml.subject, ml.body));
+		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(ml.fromAddr, ml.replyToAddr,
+				ml.subject, ml.body));
 		if (maillog == null) {
 			return null;
 		}
@@ -118,6 +120,7 @@ public class MessageStoreImpl implements MessageStore {
 		msg.setCc(cc.toArray(new String[cc.size()]));
 		msg.setBcc(bcc.toArray(new String[bcc.size()]));
 		msg.setFrom(maillog.get(ml.fromAddr));
+		msg.setReplyTo(maillog.get(ml.replyToAddr));
 		msg.setSubject(maillog.get(ml.subject));
 		msg.setText(maillog.get(ml.body));
 		return msg;
@@ -150,7 +153,8 @@ public class MessageStoreImpl implements MessageStore {
 	}
 
 	private long createMailLog(final String launcherId, final LocalDateTime launchedAt, final String messageName,
-			final LocalDateTime scheduledAt, final String from, final String subject, final String body) {
+			final LocalDateTime scheduledAt, final String from, final String replyTo, final String subject,
+			final String body) {
 		Long id = queryDslJdbcOperations.insertWithKey(ml, new SqlInsertWithKeyCallback<Long>() {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
@@ -160,6 +164,7 @@ public class MessageStoreImpl implements MessageStore {
 				insert.set(ml.messageName, messageName);
 				insert.set(ml.scheduledAt, scheduledAt);
 				insert.set(ml.fromAddr, from);
+				insert.set(ml.replyToAddr, replyTo);
 				insert.set(ml.subject, subject);
 				insert.set(ml.body, body);
 				return insert.executeWithKey(Long.class);
@@ -167,8 +172,8 @@ public class MessageStoreImpl implements MessageStore {
 		});
 		checkState(
 				id != null,
-				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, subject=%s, body=%s",
-				launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from, subject, body);
+				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, replyToAddr=%s, subject=%s, body=%s",
+				launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from, replyTo, subject, body);
 		return id.longValue();
 	}
 

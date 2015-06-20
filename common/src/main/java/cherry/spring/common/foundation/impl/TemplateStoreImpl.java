@@ -58,8 +58,8 @@ public class TemplateStoreImpl implements TemplateStore {
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
 		querya.from(mt);
 		querya.where(mt.templateName.eq(templateName), mt.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple templ = queryDslJdbcOperations
-				.queryForObject(querya, new QTuple(mt.id, mt.fromAddr, mt.subject, mt.body));
+		Tuple templ = queryDslJdbcOperations.queryForObject(querya, new QTuple(mt.id, mt.fromAddr, mt.replyToAddr,
+				mt.subject, mt.body));
 
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
 		queryb.from(mtr);
@@ -87,6 +87,7 @@ public class TemplateStoreImpl implements TemplateStore {
 		template.setToAddr(toAddr);
 		template.setCcAddr(bccAddr);
 		template.setBccAddr(bccAddr);
+		template.setReplyToAddr(templ.get(mt.replyToAddr));
 		template.setSubject(templ.get(mt.subject));
 		template.setBody(templ.get(mt.body));
 		return template;
@@ -107,6 +108,7 @@ public class TemplateStoreImpl implements TemplateStore {
 				public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) throws SQLException {
 					insert.set(mt.templateName, templateName);
 					insert.set(mt.fromAddr, mailData.getFromAddr());
+					insert.set(mt.replyToAddr, mailData.getReplyToAddr());
 					insert.set(mt.subject, mailData.getSubject());
 					insert.set(mt.body, mailData.getBody());
 					return insert.executeWithKey(Long.class);
@@ -119,6 +121,7 @@ public class TemplateStoreImpl implements TemplateStore {
 				@Override
 				public long doInSqlUpdateClause(SQLUpdateClause update) {
 					update.set(mt.fromAddr, mailData.getFromAddr());
+					update.set(mt.replyToAddr, mailData.getReplyToAddr());
 					update.set(mt.subject, mailData.getSubject());
 					update.set(mt.body, mailData.getBody());
 					update.set(mt.lockVersion, mt.lockVersion.add(1));
