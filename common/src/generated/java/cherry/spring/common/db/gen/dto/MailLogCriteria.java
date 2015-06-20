@@ -706,6 +706,76 @@ public class MailLogCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andReplyToAddrIsNull() {
+            addCriterion("REPLY_TO_ADDR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrIsNotNull() {
+            addCriterion("REPLY_TO_ADDR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrEqualTo(String value) {
+            addCriterion("REPLY_TO_ADDR =", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrNotEqualTo(String value) {
+            addCriterion("REPLY_TO_ADDR <>", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrGreaterThan(String value) {
+            addCriterion("REPLY_TO_ADDR >", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrGreaterThanOrEqualTo(String value) {
+            addCriterion("REPLY_TO_ADDR >=", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrLessThan(String value) {
+            addCriterion("REPLY_TO_ADDR <", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrLessThanOrEqualTo(String value) {
+            addCriterion("REPLY_TO_ADDR <=", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrLike(String value) {
+            addCriterion("REPLY_TO_ADDR like", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrNotLike(String value) {
+            addCriterion("REPLY_TO_ADDR not like", value, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrIn(List<String> values) {
+            addCriterion("REPLY_TO_ADDR in", values, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrNotIn(List<String> values) {
+            addCriterion("REPLY_TO_ADDR not in", values, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrBetween(String value1, String value2) {
+            addCriterion("REPLY_TO_ADDR between", value1, value2, "replyToAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyToAddrNotBetween(String value1, String value2) {
+            addCriterion("REPLY_TO_ADDR not between", value1, value2, "replyToAddr");
+            return (Criteria) this;
+        }
+
         public Criteria andSubjectIsNull() {
             addCriterion("SUBJECT is null");
             return (Criteria) this;

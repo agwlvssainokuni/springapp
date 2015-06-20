@@ -28,6 +28,8 @@ public class BMailLog {
 
     private String messageName;
 
+    private String replyToAddr;
+
     private org.joda.time.LocalDateTime scheduledAt;
 
     private org.joda.time.LocalDateTime sentAt;
@@ -116,6 +118,14 @@ public class BMailLog {
         this.messageName = messageName;
     }
 
+    public String getReplyToAddr() {
+        return replyToAddr;
+    }
+
+    public void setReplyToAddr(String replyToAddr) {
+        this.replyToAddr = replyToAddr;
+    }
+
     public org.joda.time.LocalDateTime getScheduledAt() {
         return scheduledAt;
     }
@@ -150,7 +160,7 @@ public class BMailLog {
 
     @Override
     public String toString() {
-         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", mailStatus = " + mailStatus + ", messageName = " + messageName + ", scheduledAt = " + scheduledAt + ", sentAt = " + sentAt + ", subject = " + subject + ", updatedAt = " + updatedAt;
+         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", mailStatus = " + mailStatus + ", messageName = " + messageName + ", replyToAddr = " + replyToAddr + ", scheduledAt = " + scheduledAt + ", sentAt = " + sentAt + ", subject = " + subject + ", updatedAt = " + updatedAt;
     }
 
 }
