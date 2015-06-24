@@ -32,22 +32,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class JodaTimeMinValidatorTest {
 
 	@Autowired
-	private ConversionService conversionService;
-
-	@Autowired
-	private Validator validator;
+	private DataBinderHelper dataBinderHelper;
 
 	@Test
 	public void testOK() {
@@ -62,12 +56,7 @@ public class JodaTimeMinValidatorTest {
 
 		TestDto dto = new TestDto();
 
-		WebDataBinder binder = new WebDataBinder(dto);
-		binder.setConversionService(conversionService);
-		binder.addValidators(validator);
-		binder.bind(new MutablePropertyValues(val));
-		binder.validate();
-		BindingResult result = binder.getBindingResult();
+		BindingResult result = dataBinderHelper.bindAndValidate(dto, new MutablePropertyValues(val));
 		assertEquals(0, result.getErrorCount());
 		assertNull(dto.getVal0());
 		assertEquals(new LocalDate(1900, 1, 1), dto.getVal1());
@@ -88,12 +77,7 @@ public class JodaTimeMinValidatorTest {
 
 		TestDto dto = new TestDto();
 
-		WebDataBinder binder = new WebDataBinder(dto);
-		binder.setConversionService(conversionService);
-		binder.addValidators(validator);
-		binder.bind(new MutablePropertyValues(val));
-		binder.validate();
-		BindingResult result = binder.getBindingResult();
+		BindingResult result = dataBinderHelper.bindAndValidate(dto, new MutablePropertyValues(val));
 		assertEquals(4, result.getErrorCount());
 	}
 

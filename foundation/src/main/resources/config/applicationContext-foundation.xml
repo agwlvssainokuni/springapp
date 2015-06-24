@@ -102,6 +102,12 @@
 	<!-- 単項目バリデーション設定 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
+	<!-- 単項目バリデーションヘルパ -->
+	<bean id="dataBinderHelper" class="cherry.foundation.validator.DataBinderHelperImpl">
+		<property name="conversionService" ref="conversionService" />
+		<property name="validator" ref="validator" />
+	</bean>
+
 	<!-- JSONマッピング設定 -->
 	<bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 		<property name="modules">
