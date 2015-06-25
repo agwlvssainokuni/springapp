@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.querydsl;
+package cherry.foundation.querydsl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

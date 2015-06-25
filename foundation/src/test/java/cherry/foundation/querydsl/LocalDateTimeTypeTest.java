@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.querydsl;
+package cherry.foundation.querydsl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.sql.Types;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ import com.mysema.query.sql.dml.SQLInsertClause;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class LocalDateTypeTest {
+public class LocalDateTimeTypeTest {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
@@ -60,11 +60,11 @@ public class LocalDateTypeTest {
 	@Test
 	public void testSaveAndLoad() {
 
-		final LocalDate orig = LocalDate.now();
+		final LocalDateTime orig = LocalDateTime.now();
 		long count = queryDslJdbcOperations.insert(ct, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(ct.jodaDate, orig);
+				insert.set(ct.jodaDatetime, orig);
 				return insert.execute();
 			}
 		});
@@ -72,18 +72,18 @@ public class LocalDateTypeTest {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(ct);
-		LocalDate result = queryDslJdbcOperations.queryForObject(query, ct.jodaDate);
+		LocalDateTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaDatetime);
 		assertEquals(orig, result);
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1d() {
 
-		final LocalDate orig = LocalDate.now().plusDays(1);
+		final LocalDateTime orig = LocalDateTime.now().plusDays(1);
 		long count = queryDslJdbcOperations.insert(ct, new SqlInsertCallback() {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(ct.jodaDate, orig);
+				insert.set(ct.jodaDatetime, orig);
 				return insert.execute();
 			}
 		});
@@ -91,7 +91,7 @@ public class LocalDateTypeTest {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(ct);
-		LocalDate result = queryDslJdbcOperations.queryForObject(query, ct.jodaDate);
+		LocalDateTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaDatetime);
 		assertEquals(orig, result);
 	}
 
@@ -108,18 +108,18 @@ public class LocalDateTypeTest {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query.from(ct);
-		LocalDate result = queryDslJdbcOperations.queryForObject(query, ct.jodaDate);
+		LocalDateTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaDatetime);
 		assertNull(result);
 	}
 
 	@Test
 	public void testMisc() {
 
-		LocalDateType type = new LocalDateType(Types.DATE);
+		LocalDateTimeType type = new LocalDateTimeType(Types.TIMESTAMP);
 		assertEquals(1, type.getSQLTypes().length);
-		assertEquals(Types.DATE, type.getSQLTypes()[0]);
+		assertEquals(Types.TIMESTAMP, type.getSQLTypes()[0]);
 
-		assertEquals("2015-01-23", type.getLiteral(new LocalDate(2015, 1, 23)));
+		assertEquals("2015-01-23 12:34:56", type.getLiteral(new LocalDateTime(2015, 1, 23, 12, 34, 56)));
 	}
 
 }

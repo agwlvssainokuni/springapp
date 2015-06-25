@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.querydsl;
+package cherry.foundation.querydsl;
 
 import com.mysema.query.sql.MySQLTemplates;
 import com.mysema.query.sql.types.Type;

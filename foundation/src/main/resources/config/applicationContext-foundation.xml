@@ -18,6 +18,7 @@
 			pointcut="execution(* cherry..*.*(..))
 				and !execution(* cherry.foundation.log..*.*(..))
 				and !execution(* cherry.foundation.type..*.*(..))
+				and !execution(* cherry.foundation.querydsl..*.*(..))
 				and !execution(* cherry.foundation.springmvc..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
 				and !execution(* cherry.goods.crypto..*.*(..))
@@ -183,12 +184,12 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="sqlTemplates" class="cherry.foundation.type.querydsl.CustomH2Templates">
+	<bean id="sqlTemplates" class="cherry.foundation.querydsl.CustomH2Templates">
 		<property name="customTypes">
 			<list>
-				<bean class="cherry.foundation.type.querydsl.LocalDateTimeType" />
-				<bean class="cherry.foundation.type.querydsl.LocalDateType" />
-				<bean class="cherry.foundation.type.querydsl.LocalTimeType" />
+				<bean class="cherry.foundation.querydsl.LocalDateTimeType" />
+				<bean class="cherry.foundation.querydsl.LocalDateType" />
+				<bean class="cherry.foundation.querydsl.LocalTimeType" />
 			</list>
 		</property>
 	</bean>

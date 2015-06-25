@@ -14,50 +14,50 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.querydsl;
+package cherry.foundation.querydsl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.sql.Types;
 
-import org.joda.time.LocalTime;
+import org.joda.time.DateTime;
 
 import com.mysema.query.sql.types.AbstractDateTimeType;
 
-public class LocalTimeType extends AbstractDateTimeType<LocalTime> {
+public class DateTimeType extends AbstractDateTimeType<DateTime> {
 
-	public LocalTimeType() {
-		super(Types.TIME);
+	public DateTimeType() {
+		super(Types.TIMESTAMP);
 	}
 
-	public LocalTimeType(int type) {
+	public DateTimeType(int type) {
 		super(type);
 	}
 
 	@Override
-	public String getLiteral(LocalTime value) {
-		return timeFormatter.print(value);
+	public String getLiteral(DateTime value) {
+		return dateTimeFormatter.print(value);
 	}
 
 	@Override
-	public Class<LocalTime> getReturnedClass() {
-		return LocalTime.class;
+	public Class<DateTime> getReturnedClass() {
+		return DateTime.class;
 	}
 
 	@Override
-	public LocalTime getValue(ResultSet rs, int startIndex) throws SQLException {
-		Time time = rs.getTime(startIndex);
-		if (time == null) {
+	public DateTime getValue(ResultSet rs, int startIndex) throws SQLException {
+		Timestamp timestamp = rs.getTimestamp(startIndex);
+		if (timestamp == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return new DateTime(timestamp.getTime());
 	}
 
 	@Override
-	public void setValue(PreparedStatement st, int startIndex, LocalTime value) throws SQLException {
-		st.setTime(startIndex, new Time(value.getMillisOfDay()));
+	public void setValue(PreparedStatement st, int startIndex, DateTime value) throws SQLException {
+		st.setTimestamp(startIndex, new Timestamp(value.toDate().getTime()), value.toCalendar(null));
 	}
 
 }
