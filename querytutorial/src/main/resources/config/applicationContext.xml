@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -19,6 +18,8 @@
 		<aop:advisor advice-ref="traceInterceptor"
 			pointcut="execution(* cherry..*.*(..))
 				and !execution(* cherry.foundation.log..*.*(..))
+				and !execution(* cherry.foundation.mybatis..*.*(..))
+				and !execution(* cherry.foundation.querydsl..*.*(..))
 				and !execution(* cherry.foundation.type..*.*(..))
 				" />
 	</aop:config>
@@ -46,14 +47,45 @@
 
 	<!-- トランザクション制御 -->
 	<tx:annotation-driven />
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<!-- Querydsl -->
-	<bean class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
-		<constructor-arg ref="dataSource" type="javax.sql.DataSource" />
+	<bean id="jdbcOperations" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="queryDslJdbcOperations" class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+		<constructor-arg ref="jdbcOperations" />
+		<constructor-arg ref="sqlTemplates" />
+	</bean>
+	<bean id="queryFactory" class="com.mysema.query.sql.SQLQueryFactory">
+		<constructor-arg>
+			<bean class="cherry.foundation.querydsl.ConfigurationFactory">
+				<property name="templates" ref="sqlTemplates" />
+				<property name="listeners">
+					<list>
+						<bean class="cherry.foundation.querydsl.SpringConnectionClosingListener">
+							<property name="dataSource" ref="dataSource" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="cherry.foundation.querydsl.SpringConnectionProvider">
+				<property name="dataSource" ref="dataSource" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="sqlTemplates" class="cherry.foundation.querydsl.CustomH2Templates">
+		<property name="customTypes">
+			<list>
+				<bean class="cherry.foundation.querydsl.LocalDateTimeType" />
+				<bean class="cherry.foundation.querydsl.LocalDateType" />
+				<bean class="cherry.foundation.querydsl.LocalTimeType" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- MyBatis -->
@@ -62,17 +94,17 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="typeHandlers">
 			<list>
-				<bean class="cherry.foundation.type.mybatis.DeletedFlagTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.FlagCodeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaDateTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureBigDecimalTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureBigIntegerTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureIntegerTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureLongTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureStringTypeHandler" />
+				<bean class="cherry.foundation.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.foundation.mybatis.FlagCodeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigDecimalTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureLongTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureStringTypeHandler" />
 			</list>
 		</property>
 	</bean>
@@ -80,27 +112,22 @@
 	<!-- 業務日時 -->
 	<bean id="bizDateTime" class="cherry.foundation.bizdtm.SimpleBizDateTime" />
 
-	<bean id="rowMapperCreator"
-		class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
+	<bean id="rowMapperCreator" class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
 		<property name="conversionService" ref="conversionService" />
 	</bean>
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 		<property name="customEditors">
 			<map>
-				<entry key="java.util.ResourceBundle"
-					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
-				<entry key="org.joda.time.format.DateTimeFormatter"
-					value="cherry.foundation.type.editor.DateTimeFormatEditor" />
+				<entry key="java.util.ResourceBundle" value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="org.joda.time.format.DateTimeFormatter" value="cherry.foundation.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
 	</bean>
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="registerDefaultFormatters" value="false" />
 		<property name="formatters">
 			<set>
-				<bean
-					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
 					<property name="pattern" value="#,##0" />
 				</bean>
@@ -112,16 +139,13 @@
 				<bean class="cherry.foundation.type.format.DelegateFormatterRegistrar">
 					<property name="formatters">
 						<list>
-							<bean
-								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+							<bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
 								<property name="dateFormatter" value="yyyy/MM/dd" />
 								<property name="timeFormatter" value="HH:mm:ss" />
 								<property name="dateTimeFormatter" value="yyyy/MM/dd HH:mm:ss" />
 							</bean>
-							<bean
-								class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
-							<bean
-								class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
+							<bean class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
+							<bean class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
 						</list>
 					</property>
 				</bean>
