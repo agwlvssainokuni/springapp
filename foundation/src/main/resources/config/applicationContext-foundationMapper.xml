@@ -6,17 +6,17 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="typeHandlers">
 			<list>
-				<bean class="cherry.foundation.type.mybatis.DeletedFlagTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.FlagCodeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaDateTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalDateTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.JodaLocalTimeTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureBigDecimalTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureBigIntegerTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureIntegerTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureLongTypeHandler" />
-				<bean class="cherry.foundation.type.mybatis.SecureStringTypeHandler" />
+				<bean class="cherry.foundation.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.foundation.mybatis.FlagCodeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigDecimalTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureLongTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureStringTypeHandler" />
 			</list>
 		</property>
 	</bean>

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
@@ -33,13 +33,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureBigInteger;
+import cherry.foundation.type.SecureBigDecimal;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class SecureBigIntegerTypeHandlerTest {
+public class SecureBigDecimalTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
@@ -56,9 +56,9 @@ public class SecureBigIntegerTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		BigInteger plain = BigInteger.valueOf(random.nextLong());
+		BigDecimal plain = BigDecimal.valueOf(random.nextDouble());
 		ConversionTest record = new ConversionTest();
-		record.setSecBigint(SecureBigInteger.plainValueOf(plain));
+		record.setSecBigdec(SecureBigDecimal.plainValueOf(plain));
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -67,7 +67,7 @@ public class SecureBigIntegerTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getSecBigint().plain(), is(plain));
+		assertThat(r.getSecBigdec().plain(), is(plain));
 	}
 
 }

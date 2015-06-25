@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import org.apache.ibatis.type.MappedTypes;
 

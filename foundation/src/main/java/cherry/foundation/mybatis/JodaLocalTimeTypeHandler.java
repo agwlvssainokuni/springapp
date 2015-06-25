@@ -14,53 +14,53 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
+import org.joda.time.LocalTime;
 
-import cherry.foundation.type.DeletedFlag;
-
-@MappedTypes(DeletedFlag.class)
-public class DeletedFlagTypeHandler extends BaseTypeHandler<DeletedFlag> {
+@MappedTypes(LocalTime.class)
+public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, DeletedFlag parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setInt(i, parameter.code());
+		ps.setTime(i, new Time(parameter.getMillisOfDay()));
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(ResultSet rs, String columnName) throws SQLException {
-		int code = rs.getInt(columnName);
-		if (rs.wasNull()) {
+	public LocalTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
+		Time time = rs.getTime(columnName);
+		if (time == null) {
 			return null;
 		}
-		return new DeletedFlag(code);
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-		int code = rs.getInt(columnIndex);
-		if (rs.wasNull()) {
+	public LocalTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+		Time time = rs.getTime(columnIndex);
+		if (time == null) {
 			return null;
 		}
-		return new DeletedFlag(code);
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-		int code = cs.getInt(columnIndex);
-		if (cs.wasNull()) {
+	public LocalTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+		Time time = cs.getTime(columnIndex);
+		if (time == null) {
 			return null;
 		}
-		return new DeletedFlag(code);
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 }

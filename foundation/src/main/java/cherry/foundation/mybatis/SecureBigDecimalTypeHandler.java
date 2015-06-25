@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -25,42 +25,42 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-import cherry.foundation.type.SecureLong;
+import cherry.foundation.type.SecureBigDecimal;
 
-@MappedTypes(SecureLong.class)
-public class SecureLongTypeHandler extends BaseTypeHandler<SecureLong> {
+@MappedTypes(SecureBigDecimal.class)
+public class SecureBigDecimalTypeHandler extends BaseTypeHandler<SecureBigDecimal> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, SecureLong parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, SecureBigDecimal parameter, JdbcType jdbcType)
 			throws SQLException {
 		ps.setString(i, parameter.crypto());
 	}
 
 	@Override
-	public SecureLong getNullableResult(ResultSet rs, String columnName) throws SQLException {
+	public SecureBigDecimal getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		String crypto = rs.getString(columnName);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureLong.cryptoValueOf(crypto);
+		return SecureBigDecimal.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureLong getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+	public SecureBigDecimal getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		String crypto = rs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureLong.cryptoValueOf(crypto);
+		return SecureBigDecimal.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureLong getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+	public SecureBigDecimal getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		String crypto = cs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureLong.cryptoValueOf(crypto);
+		return SecureBigDecimal.cryptoValueOf(crypto);
 	}
 
 }

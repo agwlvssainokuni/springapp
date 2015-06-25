@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,13 +31,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureLong;
+import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class SecureLongTypeHandlerTest {
+public class DeletedFlagTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
@@ -46,18 +45,15 @@ public class SecureLongTypeHandlerTest {
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
-	private SecureRandom random = new SecureRandom();
-
 	@After
 	public void after() {
 		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
 	}
 
 	@Test
-	public void testSaveAndLoad() {
-		long plain = random.nextLong();
+	public void testSaveAndLoad_NOT_DELETED() {
 		ConversionTest record = new ConversionTest();
-		record.setSecLong(SecureLong.plainValueOf(plain));
+		record.setDeletedFlg(DeletedFlag.NOT_DELETED);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -66,7 +62,37 @@ public class SecureLongTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getSecLong().plain(), is(plain));
+		assertThat(r.getDeletedFlg(), is(DeletedFlag.NOT_DELETED));
+	}
+
+	@Test
+	public void testSaveAndLoad_1() {
+		ConversionTest record = new ConversionTest();
+		record.setDeletedFlg(new DeletedFlag(1));
+
+		int count = mapper.insert(record);
+		assertThat(count, is(1));
+		assertThat(record.getId(), is(not(0)));
+
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(1)));
+	}
+
+	@Test
+	public void testSaveAndLoad_100() {
+		ConversionTest record = new ConversionTest();
+		record.setDeletedFlg(new DeletedFlag(100));
+
+		int count = mapper.insert(record);
+		assertThat(count, is(1));
+		assertThat(record.getId(), is(not(0)));
+
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(100)));
 	}
 
 }

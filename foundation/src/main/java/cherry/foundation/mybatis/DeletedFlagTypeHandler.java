@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -25,42 +25,42 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-import cherry.foundation.type.SecureInteger;
+import cherry.foundation.type.DeletedFlag;
 
-@MappedTypes(SecureInteger.class)
-public class SecureIntegerTypeHandler extends BaseTypeHandler<SecureInteger> {
+@MappedTypes(DeletedFlag.class)
+public class DeletedFlagTypeHandler extends BaseTypeHandler<DeletedFlag> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, SecureInteger parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, DeletedFlag parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setString(i, parameter.crypto());
+		ps.setInt(i, parameter.code());
 	}
 
 	@Override
-	public SecureInteger getNullableResult(ResultSet rs, String columnName) throws SQLException {
-		String crypto = rs.getString(columnName);
-		if (crypto == null) {
+	public DeletedFlag getNullableResult(ResultSet rs, String columnName) throws SQLException {
+		int code = rs.getInt(columnName);
+		if (rs.wasNull()) {
 			return null;
 		}
-		return SecureInteger.cryptoValueOf(crypto);
+		return new DeletedFlag(code);
 	}
 
 	@Override
-	public SecureInteger getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-		String crypto = rs.getString(columnIndex);
-		if (crypto == null) {
+	public DeletedFlag getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+		int code = rs.getInt(columnIndex);
+		if (rs.wasNull()) {
 			return null;
 		}
-		return SecureInteger.cryptoValueOf(crypto);
+		return new DeletedFlag(code);
 	}
 
 	@Override
-	public SecureInteger getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-		String crypto = cs.getString(columnIndex);
-		if (crypto == null) {
+	public DeletedFlag getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+		int code = cs.getInt(columnIndex);
+		if (cs.wasNull()) {
 			return null;
 		}
-		return SecureInteger.cryptoValueOf(crypto);
+		return new DeletedFlag(code);
 	}
 
 }

@@ -14,53 +14,53 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 
-@MappedTypes(LocalTime.class)
-public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
+@MappedTypes(LocalDate.class)
+public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setTime(i, new Time(parameter.getMillisOfDay()));
+		ps.setDate(i, new Date(parameter.toDate().getTime()));
 	}
 
 	@Override
-	public LocalTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
-		Time time = rs.getTime(columnName);
-		if (time == null) {
+	public LocalDate getNullableResult(ResultSet rs, String columnName) throws SQLException {
+		Date date = rs.getDate(columnName);
+		if (date == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return new LocalDate(date.getTime());
 	}
 
 	@Override
-	public LocalTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-		Time time = rs.getTime(columnIndex);
-		if (time == null) {
+	public LocalDate getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+		Date date = rs.getDate(columnIndex);
+		if (date == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return new LocalDate(date.getTime());
 	}
 
 	@Override
-	public LocalTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-		Time time = cs.getTime(columnIndex);
-		if (time == null) {
+	public LocalDate getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+		Date date = cs.getDate(columnIndex);
+		if (date == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return new LocalDate(date.getTime());
 	}
 
 }

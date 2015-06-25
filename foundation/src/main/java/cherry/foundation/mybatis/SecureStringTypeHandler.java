@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,42 +24,43 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import org.joda.time.LocalDate;
 
-@MappedTypes(LocalDate.class)
-public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
+import cherry.foundation.type.SecureString;
+
+@MappedTypes(SecureString.class)
+public class SecureStringTypeHandler extends BaseTypeHandler<SecureString> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, SecureString parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setDate(i, new Date(parameter.toDate().getTime()));
+		ps.setString(i, parameter.crypto());
 	}
 
 	@Override
-	public LocalDate getNullableResult(ResultSet rs, String columnName) throws SQLException {
-		Date date = rs.getDate(columnName);
-		if (date == null) {
+	public SecureString getNullableResult(ResultSet rs, String columnName) throws SQLException {
+		String crypto = rs.getString(columnName);
+		if (crypto == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return SecureString.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public LocalDate getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-		Date date = rs.getDate(columnIndex);
-		if (date == null) {
+	public SecureString getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+		String crypto = rs.getString(columnIndex);
+		if (crypto == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return SecureString.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public LocalDate getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-		Date date = cs.getDate(columnIndex);
-		if (date == null) {
+	public SecureString getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+		String crypto = cs.getString(columnIndex);
+		if (crypto == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return SecureString.cryptoValueOf(crypto);
 	}
 
 }

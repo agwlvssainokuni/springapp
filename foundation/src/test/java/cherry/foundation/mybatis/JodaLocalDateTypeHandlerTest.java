@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.List;
 
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +37,7 @@ import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class JodaLocalTimeTypeHandlerTest {
+public class JodaLocalDateTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
@@ -52,9 +52,9 @@ public class JodaLocalTimeTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		LocalTime orig = LocalTime.now();
+		LocalDate orig = LocalDate.now();
 		ConversionTest record = new ConversionTest();
-		record.setJodaTime(orig);
+		record.setJodaDate(orig);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -63,14 +63,14 @@ public class JodaLocalTimeTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(orig));
+		assertThat(r.getJodaDate(), is(orig));
 	}
 
 	@Test
-	public void testSaveAndLoad_plus1h() {
-		LocalTime orig = LocalTime.now().plusHours(1);
+	public void testSaveAndLoad_plus1d() {
+		LocalDate orig = LocalDate.now().plusDays(1);
 		ConversionTest record = new ConversionTest();
-		record.setJodaTime(orig);
+		record.setJodaDate(orig);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -79,7 +79,7 @@ public class JodaLocalTimeTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(orig));
+		assertThat(r.getJodaDate(), is(orig));
 	}
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -25,42 +25,42 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-import cherry.foundation.type.SecureString;
+import cherry.foundation.type.SecureInteger;
 
-@MappedTypes(SecureString.class)
-public class SecureStringTypeHandler extends BaseTypeHandler<SecureString> {
+@MappedTypes(SecureInteger.class)
+public class SecureIntegerTypeHandler extends BaseTypeHandler<SecureInteger> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, SecureString parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, SecureInteger parameter, JdbcType jdbcType)
 			throws SQLException {
 		ps.setString(i, parameter.crypto());
 	}
 
 	@Override
-	public SecureString getNullableResult(ResultSet rs, String columnName) throws SQLException {
+	public SecureInteger getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		String crypto = rs.getString(columnName);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureString.cryptoValueOf(crypto);
+		return SecureInteger.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureString getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+	public SecureInteger getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		String crypto = rs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureString.cryptoValueOf(crypto);
+		return SecureInteger.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureString getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+	public SecureInteger getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		String crypto = cs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureString.cryptoValueOf(crypto);
+		return SecureInteger.cryptoValueOf(crypto);
 	}
 
 }

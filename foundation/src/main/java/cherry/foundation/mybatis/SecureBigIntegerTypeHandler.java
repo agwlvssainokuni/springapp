@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -25,42 +25,42 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-import cherry.foundation.type.SecureBigDecimal;
+import cherry.foundation.type.SecureBigInteger;
 
-@MappedTypes(SecureBigDecimal.class)
-public class SecureBigDecimalTypeHandler extends BaseTypeHandler<SecureBigDecimal> {
+@MappedTypes(SecureBigInteger.class)
+public class SecureBigIntegerTypeHandler extends BaseTypeHandler<SecureBigInteger> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, SecureBigDecimal parameter, JdbcType jdbcType)
+	public void setNonNullParameter(PreparedStatement ps, int i, SecureBigInteger parameter, JdbcType jdbcType)
 			throws SQLException {
 		ps.setString(i, parameter.crypto());
 	}
 
 	@Override
-	public SecureBigDecimal getNullableResult(ResultSet rs, String columnName) throws SQLException {
+	public SecureBigInteger getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		String crypto = rs.getString(columnName);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureBigDecimal.cryptoValueOf(crypto);
+		return SecureBigInteger.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureBigDecimal getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+	public SecureBigInteger getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		String crypto = rs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureBigDecimal.cryptoValueOf(crypto);
+		return SecureBigInteger.cryptoValueOf(crypto);
 	}
 
 	@Override
-	public SecureBigDecimal getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+	public SecureBigInteger getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		String crypto = cs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
 		}
-		return SecureBigDecimal.cryptoValueOf(crypto);
+		return SecureBigInteger.cryptoValueOf(crypto);
 	}
 
 }

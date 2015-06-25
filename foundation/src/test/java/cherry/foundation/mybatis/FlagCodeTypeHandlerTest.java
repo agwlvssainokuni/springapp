@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,13 +31,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.SecureInteger;
+import cherry.foundation.type.FlagCode;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class SecureIntegerTypeHandlerTest {
+public class FlagCodeTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
@@ -46,18 +45,15 @@ public class SecureIntegerTypeHandlerTest {
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
-	private SecureRandom random = new SecureRandom();
-
 	@After
 	public void after() {
 		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
 	}
 
 	@Test
-	public void testSaveAndLoad() {
-		int plain = random.nextInt();
+	public void testSaveAndLoad_FALSE() {
 		ConversionTest record = new ConversionTest();
-		record.setSecInt(SecureInteger.plainValueOf(plain));
+		record.setFlagCode(FlagCode.FALSE);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -66,7 +62,22 @@ public class SecureIntegerTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getSecInt().plain(), is(plain));
+		assertThat(r.getFlagCode(), is(FlagCode.FALSE));
+	}
+
+	@Test
+	public void testSaveAndLoad_TRUE() {
+		ConversionTest record = new ConversionTest();
+		record.setFlagCode(FlagCode.TRUE);
+
+		int count = mapper.insert(record);
+		assertThat(count, is(1));
+		assertThat(record.getId(), is(not(0)));
+
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertThat(r.getFlagCode(), is(FlagCode.TRUE));
 	}
 
 }

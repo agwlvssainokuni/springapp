@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,18 +33,21 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.type.SecureBigInteger;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class JodaLocalDateTypeHandlerTest {
+public class SecureBigIntegerTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+	private SecureRandom random = new SecureRandom();
 
 	@After
 	public void after() {
@@ -52,9 +56,9 @@ public class JodaLocalDateTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		LocalDate orig = LocalDate.now();
+		BigInteger plain = BigInteger.valueOf(random.nextLong());
 		ConversionTest record = new ConversionTest();
-		record.setJodaDate(orig);
+		record.setSecBigint(SecureBigInteger.plainValueOf(plain));
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -63,23 +67,7 @@ public class JodaLocalDateTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDate(), is(orig));
-	}
-
-	@Test
-	public void testSaveAndLoad_plus1d() {
-		LocalDate orig = LocalDate.now().plusDays(1);
-		ConversionTest record = new ConversionTest();
-		record.setJodaDate(orig);
-
-		int count = mapper.insert(record);
-		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
-
-		List<ConversionTest> list = mapper.selectAll();
-		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDate(), is(orig));
+		assertThat(r.getSecBigint().plain(), is(plain));
 	}
 
 }

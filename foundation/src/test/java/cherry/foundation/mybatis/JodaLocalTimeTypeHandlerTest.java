@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.type.mybatis;
+package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.List;
 
+import org.joda.time.LocalTime;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,13 +32,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.type.FlagCode;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class FlagCodeTypeHandlerTest {
+public class JodaLocalTimeTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
@@ -51,9 +51,10 @@ public class FlagCodeTypeHandlerTest {
 	}
 
 	@Test
-	public void testSaveAndLoad_FALSE() {
+	public void testSaveAndLoad() {
+		LocalTime orig = LocalTime.now();
 		ConversionTest record = new ConversionTest();
-		record.setFlagCode(FlagCode.FALSE);
+		record.setJodaTime(orig);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -62,13 +63,14 @@ public class FlagCodeTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getFlagCode(), is(FlagCode.FALSE));
+		assertThat(r.getJodaTime(), is(orig));
 	}
 
 	@Test
-	public void testSaveAndLoad_TRUE() {
+	public void testSaveAndLoad_plus1h() {
+		LocalTime orig = LocalTime.now().plusHours(1);
 		ConversionTest record = new ConversionTest();
-		record.setFlagCode(FlagCode.TRUE);
+		record.setJodaTime(orig);
 
 		int count = mapper.insert(record);
 		assertThat(count, is(1));
@@ -77,7 +79,7 @@ public class FlagCodeTypeHandlerTest {
 		List<ConversionTest> list = mapper.selectAll();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getFlagCode(), is(FlagCode.TRUE));
+		assertThat(r.getJodaTime(), is(orig));
 	}
 
 }
