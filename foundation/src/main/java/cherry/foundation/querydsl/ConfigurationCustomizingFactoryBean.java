@@ -19,19 +19,19 @@ package cherry.foundation.querydsl;
 import java.util.List;
 
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
 
 import com.mysema.query.sql.Configuration;
 import com.mysema.query.sql.SQLListener;
-import com.mysema.query.sql.SQLTemplates;
 
-public class ConfigurationFactory implements FactoryBean<Configuration> {
+public class ConfigurationCustomizingFactoryBean implements FactoryBean<Configuration>, InitializingBean {
 
-	private SQLTemplates templates;
+	private Configuration configuration;
 
 	private List<SQLListener> listeners;
 
-	public void setTemplates(SQLTemplates templates) {
-		this.templates = templates;
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
 	}
 
 	public void setListeners(List<SQLListener> listeners) {
@@ -39,11 +39,14 @@ public class ConfigurationFactory implements FactoryBean<Configuration> {
 	}
 
 	@Override
-	public Configuration getObject() throws Exception {
-		Configuration configuration = new Configuration(templates);
+	public void afterPropertiesSet() throws Exception {
 		for (SQLListener l : listeners) {
 			configuration.addListener(l);
 		}
+	}
+
+	@Override
+	public Configuration getObject() throws Exception {
 		return configuration;
 	}
 
@@ -54,7 +57,7 @@ public class ConfigurationFactory implements FactoryBean<Configuration> {
 
 	@Override
 	public boolean isSingleton() {
-		return false;
+		return true;
 	}
 
 }

@@ -61,8 +61,12 @@
 	</bean>
 	<bean id="queryFactory" class="com.mysema.query.sql.SQLQueryFactory">
 		<constructor-arg>
-			<bean class="cherry.foundation.querydsl.ConfigurationFactory">
-				<property name="templates" ref="sqlTemplates" />
+			<bean class="cherry.foundation.querydsl.ConfigurationCustomizingFactoryBean">
+				<property name="configuration">
+					<bean class="com.mysema.query.sql.Configuration">
+						<constructor-arg ref="sqlTemplates" />
+					</bean>
+				</property>
 				<property name="listeners">
 					<list>
 						<bean class="cherry.foundation.querydsl.SpringConnectionClosingListener">
