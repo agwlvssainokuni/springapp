@@ -50,6 +50,10 @@ public class CustomizingConfigurationFactoryBean implements FactoryBean<Configur
 		this.customTypes = customTypes;
 	}
 
+	public void setNumericTypeSpecs(List<String> numericTypeSpecs) {
+		this.numericTypeSpecs = numericTypeSpecs;
+	}
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		if (listeners != null) {
