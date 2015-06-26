@@ -25,7 +25,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.mysema.query.sql.SQLTemplates;
 import com.mysema.query.sql.types.Type;
 
-public class SQLTemplatesCustomizingFactoryBean implements FactoryBean<SQLTemplates>, InitializingBean {
+public class CustomizingSQLTemplatesFactoryBean implements FactoryBean<SQLTemplates>, InitializingBean {
 
 	private SQLTemplates templates;
 

@@ -28,7 +28,7 @@ import com.mysema.query.sql.Configuration;
 import com.mysema.query.sql.SQLListener;
 import com.mysema.query.sql.types.Type;
 
-public class ConfigurationCustomizingFactoryBean implements FactoryBean<Configuration>, InitializingBean {
+public class CustomizingConfigurationFactoryBean implements FactoryBean<Configuration>, InitializingBean {
 
 	private Configuration configuration;
 
