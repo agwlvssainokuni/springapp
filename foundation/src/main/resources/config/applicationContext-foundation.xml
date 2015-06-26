@@ -168,7 +168,7 @@
 	</bean>
 	<bean id="queryFactory" class="com.mysema.query.sql.SQLQueryFactory">
 		<constructor-arg>
-			<bean class="cherry.foundation.querydsl.ConfigurationCustomizingFactoryBean">
+			<bean class="cherry.foundation.querydsl.CustomizingConfigurationFactoryBean">
 				<property name="configuration">
 					<bean class="com.mysema.query.sql.Configuration">
 						<constructor-arg ref="sqlTemplates" />
@@ -189,7 +189,10 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="sqlTemplates" class="cherry.foundation.querydsl.CustomH2Templates">
+	<bean id="sqlTemplates" class="cherry.foundation.querydsl.CustomizingSQLTemplatesFactoryBean">
+		<property name="templates">
+			<bean class="com.mysema.query.sql.H2Templates" />
+		</property>
 		<property name="customTypes">
 			<list>
 				<bean class="cherry.foundation.querydsl.LocalDateTimeType" />
