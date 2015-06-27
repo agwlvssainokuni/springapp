@@ -24,13 +24,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.SQLSubQuery;
+import com.mysema.query.types.expr.Wildcard;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class SQLQueryFactoryTest {
 
 	@Autowired
@@ -41,7 +44,9 @@ public class SQLQueryFactoryTest {
 		SQLQuery query = queryFactory.query();
 		SQLSubQuery subquery = queryFactory.subQuery();
 		query.where(subquery.exists());
-		assertEquals(1, query.count());
+		Object[] object = query.uniqueResult(Wildcard.all);
+		assertEquals(1, object.length);
+		assertEquals(Long.valueOf(1L), object[0]);
 	}
 
 	@Test

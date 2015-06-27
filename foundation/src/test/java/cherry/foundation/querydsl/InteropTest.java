@@ -23,15 +23,14 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
-import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
@@ -39,12 +38,13 @@ import cherry.foundation.type.db.query.QConversionTest;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.sql.dml.SQLDeleteClause;
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.types.QTuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class InteropTest {
 
 	@Autowired
@@ -53,17 +53,10 @@ public class InteropTest {
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
-	private final QConversionTest ct = new QConversionTest("ct");
+	@Autowired
+	private SQLQueryFactory queryFactory;
 
-	@After
-	public void after() {
-		queryDslJdbcOperations.delete(ct, new SqlDeleteCallback() {
-			@Override
-			public long doInSqlDeleteClause(SQLDeleteClause delete) {
-				return delete.execute();
-			}
-		});
-	}
+	private final QConversionTest ct = new QConversionTest("ct");
 
 	@Test
 	public void testQuerydslToMyBatis() {
@@ -92,6 +85,25 @@ public class InteropTest {
 	}
 
 	@Test
+	public void testQuerydslToMyBatisViaQueryFactory() {
+
+		LocalDateTime ldt = LocalDateTime.now();
+		LocalDate ld = LocalDate.now();
+		LocalTime lt = LocalTime.now();
+
+		long count = queryFactory.insert(ct).set(ct.jodaDatetime, ldt).set(ct.jodaDate, ld).set(ct.jodaTime, lt)
+				.execute();
+		assertEquals(1L, count);
+
+		List<ConversionTest> list = mapper.selectAll();
+		assertEquals(1, list.size());
+		ConversionTest record = list.get(0);
+		assertEquals(ldt, record.getJodaDatetime());
+		assertEquals(ld, record.getJodaDate());
+		assertEquals(lt, record.getJodaTime());
+	}
+
+	@Test
 	public void testMyBatisToQuerydsl() {
 
 		LocalDateTime ldt = LocalDateTime.now();
@@ -109,6 +121,26 @@ public class InteropTest {
 		query.from(ct);
 		Tuple tuple = queryDslJdbcOperations.queryForObject(query,
 				new QTuple(ct.jodaDatetime, ct.jodaDate, ct.jodaTime));
+		assertEquals(ldt, tuple.get(ct.jodaDatetime));
+		assertEquals(ld, tuple.get(ct.jodaDate));
+		assertEquals(lt, tuple.get(ct.jodaTime));
+	}
+
+	@Test
+	public void testMyBatisToQuerydslViaQueryFactory() {
+
+		LocalDateTime ldt = LocalDateTime.now();
+		LocalDate ld = LocalDate.now();
+		LocalTime lt = LocalTime.now();
+
+		ConversionTest record = new ConversionTest();
+		record.setJodaDatetime(ldt);
+		record.setJodaDate(ld);
+		record.setJodaTime(lt);
+		int count = mapper.insert(record);
+		assertEquals(1, count);
+
+		Tuple tuple = queryFactory.from(ct).uniqueResult(ct.jodaDatetime, ct.jodaDate, ct.jodaTime);
 		assertEquals(ldt, tuple.get(ct.jodaDatetime));
 		assertEquals(ld, tuple.get(ct.jodaDate));
 		assertEquals(lt, tuple.get(ct.jodaTime));
