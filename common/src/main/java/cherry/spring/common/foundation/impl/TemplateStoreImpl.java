@@ -85,7 +85,7 @@ public class TemplateStoreImpl implements TemplateStore {
 		MailData template = new MailData();
 		template.setFromAddr(templ.get(mt.fromAddr));
 		template.setToAddr(toAddr);
-		template.setCcAddr(bccAddr);
+		template.setCcAddr(ccAddr);
 		template.setBccAddr(bccAddr);
 		template.setReplyToAddr(templ.get(mt.replyToAddr));
 		template.setSubject(templ.get(mt.subject));
