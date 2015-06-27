@@ -23,7 +23,7 @@ public class OneTimeTokenValidatorImpl implements OneTimeTokenValidator {
 
 	private String name;
 
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 
