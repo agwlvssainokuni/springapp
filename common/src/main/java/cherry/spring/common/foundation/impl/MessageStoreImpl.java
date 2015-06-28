@@ -23,11 +23,6 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
-import org.springframework.data.jdbc.query.SqlDeleteCallback;
-import org.springframework.data.jdbc.query.SqlInsertCallback;
-import org.springframework.data.jdbc.query.SqlInsertWithKeyCallback;
-import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.mail.SimpleMailMessage;
 
 import cherry.foundation.bizdtm.BizDateTime;
@@ -40,10 +35,9 @@ import cherry.spring.common.db.gen.query.QMailRcpt;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.sql.dml.SQLDeleteClause;
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
-import com.mysema.query.types.QTuple;
 
 public class MessageStoreImpl implements MessageStore {
 
@@ -51,7 +45,7 @@ public class MessageStoreImpl implements MessageStore {
 	private BizDateTime bizDateTime;
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
 
 	private final QMailLog ml = new QMailLog("ml");
 	private final QMailRcpt mr = new QMailRcpt("mr");
@@ -71,30 +65,26 @@ public class MessageStoreImpl implements MessageStore {
 
 	@Override
 	public List<Long> listMessage(LocalDateTime dtm) {
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(mq);
+		SQLQuery query = queryFactory.from(mq);
 		query.where(mq.scheduledAt.goe(dtm), mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.query(query, mq.mailId);
+		return query.list(mq.mailId);
 	}
 
 	@Override
 	public SimpleMailMessage getMessage(long messageId) {
 
-		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
-		querya.from(ml).forUpdate();
+		SQLQuery querya = queryFactory.from(ml).forUpdate();
 		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()),
 				ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(ml.fromAddr, ml.replyToAddr,
-				ml.subject, ml.body));
+		Tuple maillog = querya.uniqueResult(ml.fromAddr, ml.replyToAddr, ml.subject, ml.body);
 		if (maillog == null) {
 			return null;
 		}
 
-		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
-		queryb.from(mr);
+		SQLQuery queryb = queryFactory.from(mr);
 		queryb.where(mr.mailId.eq(messageId));
 		queryb.orderBy(mr.id.asc());
-		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(mr.rcptType, mr.rcptAddr));
+		List<Tuple> mailrcpt = queryb.list(mr.rcptType, mr.rcptAddr);
 		if (mailrcpt.isEmpty()) {
 			return null;
 		}
@@ -127,49 +117,33 @@ public class MessageStoreImpl implements MessageStore {
 	}
 
 	@Override
-	public void finishMessage(final long messageId) {
+	public void finishMessage(long messageId) {
 
-		long count = queryDslJdbcOperations.update(ml, new SqlUpdateCallback() {
-			@Override
-			public long doInSqlUpdateClause(SQLUpdateClause update) {
-				update.set(ml.mailStatus, FlagCode.TRUE.code());
-				update.set(ml.lockVersion, ml.lockVersion.add(1));
-				update.where(ml.id.eq(messageId));
-				update.where(ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-				return update.execute();
-			}
-		});
+		SQLUpdateClause update = queryFactory.update(ml);
+		update.set(ml.mailStatus, FlagCode.TRUE.code());
+		update.set(ml.lockVersion, ml.lockVersion.add(1));
+		update.where(ml.id.eq(messageId), ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		long count = update.execute();
 		checkState(count == 1L, "failed to update QMailLog: id=%s, mailStatus=%s", messageId, FlagCode.TRUE.code());
 
-		long c = queryDslJdbcOperations.delete(mq, new SqlDeleteCallback() {
-			@Override
-			public long doInSqlDeleteClause(SQLDeleteClause delete) {
-				delete.where(mq.mailId.eq(messageId));
-				delete.where(mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-				return delete.execute();
-			}
-		});
+		long c = queryFactory.delete(mq)
+				.where(mq.mailId.eq(messageId), mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())).execute();
 		checkState(c == 1L, "failed to delete QMailQueue: mailId=%s", messageId);
 	}
 
-	private long createMailLog(final String launcherId, final LocalDateTime launchedAt, final String messageName,
-			final LocalDateTime scheduledAt, final String from, final String replyTo, final String subject,
-			final String body) {
-		Long id = queryDslJdbcOperations.insertWithKey(ml, new SqlInsertWithKeyCallback<Long>() {
-			@Override
-			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
-				insert.set(ml.launchedBy, launcherId);
-				insert.set(ml.launchedAt, launchedAt);
-				insert.set(ml.mailStatus, FlagCode.FALSE.code());
-				insert.set(ml.messageName, messageName);
-				insert.set(ml.scheduledAt, scheduledAt);
-				insert.set(ml.fromAddr, from);
-				insert.set(ml.replyToAddr, replyTo);
-				insert.set(ml.subject, subject);
-				insert.set(ml.body, body);
-				return insert.executeWithKey(Long.class);
-			}
-		});
+	private long createMailLog(String launcherId, LocalDateTime launchedAt, String messageName,
+			LocalDateTime scheduledAt, String from, String replyTo, String subject, String body) {
+		SQLInsertClause insert = queryFactory.insert(ml);
+		insert.set(ml.launchedBy, launcherId);
+		insert.set(ml.launchedAt, launchedAt);
+		insert.set(ml.mailStatus, FlagCode.FALSE.code());
+		insert.set(ml.messageName, messageName);
+		insert.set(ml.scheduledAt, scheduledAt);
+		insert.set(ml.fromAddr, from);
+		insert.set(ml.replyToAddr, replyTo);
+		insert.set(ml.subject, subject);
+		insert.set(ml.body, body);
+		Long id = insert.executeWithKey(Long.class);
 		checkState(
 				id != null,
 				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, replyToAddr=%s, subject=%s, body=%s",
@@ -177,34 +151,26 @@ public class MessageStoreImpl implements MessageStore {
 		return id.longValue();
 	}
 
-	private void createMailRcpt(final long mailId, final String rcptType, List<String> rcptAddr) {
+	private void createMailRcpt(long mailId, String rcptType, List<String> rcptAddr) {
 		if (rcptAddr == null || rcptAddr.isEmpty()) {
 			return;
 		}
-		for (final String addr : rcptAddr) {
-			long c = queryDslJdbcOperations.insert(mr, new SqlInsertCallback() {
-				@Override
-				public long doInSqlInsertClause(SQLInsertClause insert) {
-					insert.set(mr.mailId, mailId);
-					insert.set(mr.rcptType, rcptType);
-					insert.set(mr.rcptAddr, addr);
-					return insert.execute();
-				}
-			});
+		for (String addr : rcptAddr) {
+			SQLInsertClause insert = queryFactory.insert(mr);
+			insert.set(mr.mailId, mailId);
+			insert.set(mr.rcptType, rcptType);
+			insert.set(mr.rcptAddr, addr);
+			long c = insert.execute();
 			checkState(c == 1L, "failed to create QMailRcpt: mailId=%s, rcptType=%s, rcptAddr=%s", mailId, rcptType,
 					addr);
 		}
 	}
 
-	private void createMailQueue(final long mailId, final LocalDateTime scheduledAt) {
-		long count = queryDslJdbcOperations.insert(mq, new SqlInsertCallback() {
-			@Override
-			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(mq.mailId, mailId);
-				insert.set(mq.scheduledAt, scheduledAt);
-				return insert.execute();
-			}
-		});
+	private void createMailQueue(long mailId, LocalDateTime scheduledAt) {
+		SQLInsertClause insert = queryFactory.insert(mq);
+		insert.set(mq.mailId, mailId);
+		insert.set(mq.scheduledAt, scheduledAt);
+		long count = insert.execute();
 		checkState(count == 1L, "failed to create QMailQueue: mailId=%s, scheduledAt=%s", mailId, scheduledAt);
 	}
 
