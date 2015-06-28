@@ -23,10 +23,9 @@ import java.util.Locale;
 import org.springframework.beans.PropertyValues;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 
@@ -63,22 +62,22 @@ public class DataBinderHelperImpl implements DataBinderHelper, MessageSourceAwar
 
 	@Override
 	public List<String> resolveAllMessage(BindingResult binding, Locale locale) {
-		return doResolveObjectError(binding.getAllErrors(), locale);
+		return doResolveMessage(binding.getAllErrors(), locale);
 	}
 
 	@Override
 	public List<String> resolveGlobalMessage(BindingResult binding, Locale locale) {
-		return doResolveObjectError(binding.getGlobalErrors(), locale);
+		return doResolveMessage(binding.getGlobalErrors(), locale);
 	}
 
 	@Override
 	public List<String> resolveFieldMessage(BindingResult binding, Locale locale) {
-		return doResolveFieldError(binding.getFieldErrors(), locale);
+		return doResolveMessage(binding.getFieldErrors(), locale);
 	}
 
 	@Override
 	public List<String> resolveFieldMessage(BindingResult binding, String field, Locale locale) {
-		return doResolveFieldError(binding.getFieldErrors(field), locale);
+		return doResolveMessage(binding.getFieldErrors(field), locale);
 	}
 
 	private BindingResult doBindAndValidate(WebDataBinder binder, PropertyValues pvs) {
@@ -89,18 +88,10 @@ public class DataBinderHelperImpl implements DataBinderHelper, MessageSourceAwar
 		return binder.getBindingResult();
 	}
 
-	private List<String> doResolveObjectError(List<ObjectError> errors, Locale locale) {
-		List<String> list = new ArrayList<>(errors.size());
-		for (ObjectError err : errors) {
-			list.add(messageSource.getMessage(err, locale));
-		}
-		return list;
-	}
-
-	private List<String> doResolveFieldError(List<FieldError> errors, Locale locale) {
-		List<String> list = new ArrayList<>(errors.size());
-		for (ObjectError err : errors) {
-			list.add(messageSource.getMessage(err, locale));
+	private <E extends MessageSourceResolvable> List<String> doResolveMessage(List<E> messages, Locale locale) {
+		List<String> list = new ArrayList<>(messages.size());
+		for (MessageSourceResolvable msg : messages) {
+			list.add(messageSource.getMessage(msg, locale));
 		}
 		return list;
 	}
