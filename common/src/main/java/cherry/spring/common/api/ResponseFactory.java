@@ -21,29 +21,12 @@ import java.util.List;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
-import cherry.foundation.util.MessageSourceUtil;
+public interface ResponseFactory {
 
-public class ResponseFactory {
+	<T> Response<T> createResponse(StatusCode statusCode, T result);
 
-	public static <T> Response<T> createResponse(StatusCode statusCode, T result) {
-		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
-		response.setResult(result);
-		return response;
-	}
+	<T> Response<T> createResponse(StatusCode statusCode, BindingResult binding);
 
-	public static <T> Response<T> createResponse(StatusCode statusCode, BindingResult binding) {
-		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
-		response.setDescription(MessageSourceUtil.getMessageList(binding));
-		return response;
-	}
-
-	public static <T> Response<T> createResponse(StatusCode statusCode, List<MessageSourceResolvable> messages) {
-		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
-		response.setDescription(MessageSourceUtil.getMessageList(messages));
-		return response;
-	}
+	<T, E extends MessageSourceResolvable> Response<T> createResponse(StatusCode statusCode, List<E> messages);
 
 }
