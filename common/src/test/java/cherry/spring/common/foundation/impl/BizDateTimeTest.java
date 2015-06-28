@@ -16,42 +16,38 @@
 
 package cherry.spring.common.foundation.impl;
 
+import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.spring.common.db.gen.dto.BizdatetimeMaster;
 import cherry.spring.common.db.gen.mapper.BizdatetimeMasterMapper;
 
+import com.mysema.query.sql.SQLQueryFactory;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class BizDateTimeTest {
 
 	@Autowired
 	private BizDateTime bizDateTime;
 
 	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
-
-	@Autowired
 	private BizdatetimeMasterMapper bizdatetimeMasterMapper;
 
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM bizdatetime_master", new HashMap<String, Object>());
-	}
+	@Autowired
+	private SQLQueryFactory queryFactory;
 
 	@Test
 	public void testTodayWithoutMaster() {
@@ -92,13 +88,12 @@ public class BizDateTimeTest {
 		record.setOffsetSecond(4);
 		bizdatetimeMasterMapper.insertSelective(record);
 
-		LocalDateTime pre = LocalDateTime.now().plusDays(record.getOffsetDay()).plusHours(record.getOffsetHour())
+		LocalDateTime curDtm = queryFactory.query().uniqueResult(currentTimestamp(LocalDateTime.class));
+		LocalDateTime expected = curDtm.plusDays(record.getOffsetDay()).plusHours(record.getOffsetHour())
 				.plusMinutes(record.getOffsetMinute()).plusSeconds(record.getOffsetSecond());
+
 		LocalDateTime now = bizDateTime.now();
-		LocalDateTime post = LocalDateTime.now().plusDays(record.getOffsetDay()).plusHours(record.getOffsetHour())
-				.plusMinutes(record.getOffsetMinute()).plusSeconds(record.getOffsetSecond());
-		assertThat(now.isBefore(pre), is(false));
-		assertThat(now.isAfter(post), is(false));
+		assertThat(now, is(expected));
 	}
 
 }

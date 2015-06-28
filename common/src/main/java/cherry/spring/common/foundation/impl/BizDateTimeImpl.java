@@ -21,7 +21,7 @@ import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.type.DeletedFlag;
@@ -29,32 +29,33 @@ import cherry.spring.common.db.gen.query.QBizdatetimeMaster;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.types.Expression;
-import com.mysema.query.types.QTuple;
+import com.mysema.query.sql.SQLQueryFactory;
+import com.mysema.query.types.expr.DateTimeExpression;
 
 public class BizDateTimeImpl implements BizDateTime {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
 
 	private final QBizdatetimeMaster bm = new QBizdatetimeMaster("bm");
 
+	@Transactional
 	@Override
 	public LocalDate today() {
 		SQLQuery query = createSqlQuery(bm);
-		LocalDate ldt = queryDslJdbcOperations.queryForObject(query, bm.bizdate);
+		LocalDate ldt = query.uniqueResult(bm.bizdate);
 		if (ldt == null) {
 			return LocalDate.now();
 		}
 		return ldt;
 	}
 
+	@Transactional
 	@Override
 	public LocalDateTime now() {
-		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
+		DateTimeExpression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 		SQLQuery query = createSqlQuery(bm);
-		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(curDtm, bm.offsetDay, bm.offsetHour,
-				bm.offsetMinute, bm.offsetSecond));
+		Tuple tuple = query.uniqueResult(curDtm, bm.offsetDay, bm.offsetHour, bm.offsetMinute, bm.offsetSecond);
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
@@ -63,11 +64,7 @@ public class BizDateTimeImpl implements BizDateTime {
 	}
 
 	private SQLQuery createSqlQuery(QBizdatetimeMaster bm) {
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(bm);
-		query.where(bm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		query.orderBy(bm.id.desc()).limit(1);
-		return query;
+		return queryFactory.from(bm).where(bm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())).orderBy(bm.id.desc());
 	}
 
 }
