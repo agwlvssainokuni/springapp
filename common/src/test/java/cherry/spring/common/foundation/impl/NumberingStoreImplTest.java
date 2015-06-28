@@ -22,22 +22,22 @@ import static org.junit.Assert.assertNotNull;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.numbering.NumberingManager;
 import cherry.foundation.type.Code;
 import cherry.spring.common.db.gen.dto.NumberingMaster;
-import cherry.spring.common.db.gen.dto.NumberingMasterCriteria;
 import cherry.spring.common.db.gen.mapper.NumberingMasterMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class NumberingStoreImplTest {
 
 	@Autowired
@@ -73,14 +73,6 @@ public class NumberingStoreImplTest {
 		entity.setMaxValue(99999999L);
 		entity.setCurrentValue(0L);
 		mapper.insertSelective(entity);
-	}
-
-	@After
-	public void after() {
-		NumberingMasterCriteria c = new NumberingMasterCriteria();
-		c.or().andNameEqualTo("NUMA");
-		c.or().andNameEqualTo("NUMB");
-		mapper.deleteByExample(c);
 	}
 
 	@Test
