@@ -19,7 +19,6 @@ package cherry.spring.common.foundation.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.code.CodeEntry;
@@ -28,33 +27,31 @@ import cherry.foundation.type.DeletedFlag;
 import cherry.spring.common.db.gen.query.QCodeMaster;
 
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.types.QBean;
 
 public class CodeStoreImpl implements CodeStore {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
 
 	private final QCodeMaster qcm = new QCodeMaster("a");
 
 	@Transactional(readOnly = true)
 	@Override
 	public CodeEntry findByValue(String codeName, String value) {
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(qcm);
+		SQLQuery query = queryFactory.from(qcm);
 		query.where(qcm.name.eq(codeName), qcm.value.eq(value), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.queryForObject(query, new QBean<>(CodeEntry.class, qcm.value, qcm.label,
-				qcm.sortOrder));
+		return query.uniqueResult(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public List<CodeEntry> getCodeList(String codeName) {
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(qcm);
+		SQLQuery query = queryFactory.from(qcm);
 		query.where(qcm.name.eq(codeName), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		query.orderBy(qcm.sortOrder.asc());
-		return queryDslJdbcOperations.query(query, new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
+		return query.list(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}
 
 }

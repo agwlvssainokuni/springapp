@@ -23,22 +23,22 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.code.CodeEntry;
 import cherry.foundation.code.CodeStore;
 import cherry.spring.common.db.gen.dto.CodeMaster;
-import cherry.spring.common.db.gen.dto.CodeMasterCriteria;
 import cherry.spring.common.db.gen.mapper.CodeMasterMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class CodeStoreImplTest {
 
 	@Autowired
@@ -71,13 +71,6 @@ public class CodeStoreImplTest {
 		entity.setLabel("LABEL03");
 		entity.setSortOrder(3);
 		mapper.insertSelective(entity);
-	}
-
-	@After
-	public void after() {
-		CodeMasterCriteria c = new CodeMasterCriteria();
-		c.createCriteria().andNameEqualTo("CODE0");
-		mapper.deleteByExample(c);
 	}
 
 	@Test
