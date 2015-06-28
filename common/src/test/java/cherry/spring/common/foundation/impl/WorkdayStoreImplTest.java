@@ -19,21 +19,21 @@ package cherry.spring.common.foundation.impl;
 import static org.joda.time.LocalDate.now;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizcal.WorkdayStore;
 import cherry.spring.common.db.gen.dto.DayoffMaster;
-import cherry.spring.common.db.gen.dto.DayoffMasterCriteria;
 import cherry.spring.common.db.gen.mapper.DayoffMasterMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class WorkdayStoreImplTest {
 
 	@Autowired
@@ -48,13 +48,6 @@ public class WorkdayStoreImplTest {
 		createDayoffMaster("TEST", 4);
 		createDayoffMaster("TEST", 8);
 		createDayoffMaster("TEST", 9);
-	}
-
-	@After
-	public void after() {
-		DayoffMasterCriteria c = new DayoffMasterCriteria();
-		c.createCriteria().andNameEqualTo("TEST");
-		mapper.deleteByExample(c);
 	}
 
 	@Test
