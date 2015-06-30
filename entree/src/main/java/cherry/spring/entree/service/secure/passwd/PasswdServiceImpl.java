@@ -18,14 +18,13 @@ package cherry.spring.entree.service.secure.passwd;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
-import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.spring.common.db.gen.query.QUser;
 
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.expr.DateTimeExpression;
 
@@ -33,29 +32,19 @@ import com.mysema.query.types.expr.DateTimeExpression;
 public class PasswdServiceImpl implements PasswdService {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
+
+	private final QUser u = new QUser("u");
 
 	@Transactional
 	@Override
-	public boolean changePassword(final String loginId, final String password) {
-
-		final QUser u = new QUser("u");
-		long count = queryDslJdbcOperations.update(u, new SqlUpdateCallback() {
-			@Override
-			public long doInSqlUpdateClause(SQLUpdateClause update) {
-
-				update.set(u.password, password);
-				update.set(u.lockVersion, u.lockVersion.add(1));
-				update.set(u.updatedAt, DateTimeExpression.currentTimestamp(LocalDateTime.class));
-
-				update.where(u.loginId.eq(loginId));
-				update.where(u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-
-				return update.execute();
-			}
-		});
-
-		return count == 1L;
+	public boolean changePassword(String loginId, String password) {
+		SQLUpdateClause update = queryFactory.update(u);
+		update.set(u.password, password);
+		update.set(u.lockVersion, u.lockVersion.add(1));
+		update.set(u.updatedAt, DateTimeExpression.currentTimestamp(LocalDateTime.class));
+		update.where(u.loginId.eq(loginId), u.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		return update.execute() == 1L;
 	}
 
 }

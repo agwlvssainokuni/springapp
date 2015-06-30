@@ -22,93 +22,66 @@ import static org.junit.Assert.assertNull;
 import java.sql.Types;
 
 import org.joda.time.LocalTime;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
-import org.springframework.data.jdbc.query.SqlDeleteCallback;
-import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.db.query.QConversionTest;
 
 import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.sql.dml.SQLDeleteClause;
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLInsertClause;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class LocalTimeTypeTest {
 
 	@Autowired
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
 
 	private final QConversionTest ct = new QConversionTest("ct");
-
-	@After
-	public void after() {
-		queryDslJdbcOperations.delete(ct, new SqlDeleteCallback() {
-			@Override
-			public long doInSqlDeleteClause(SQLDeleteClause delete) {
-				return delete.execute();
-			}
-		});
-	}
 
 	@Test
 	public void testSaveAndLoad() {
 
-		final LocalTime orig = LocalTime.now();
-		long count = queryDslJdbcOperations.insert(ct, new SqlInsertCallback() {
-			@Override
-			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(ct.jodaTime, orig);
-				return insert.execute();
-			}
-		});
+		LocalTime orig = LocalTime.now();
+		SQLInsertClause insert = queryFactory.insert(ct);
+		insert.set(ct.jodaTime, orig);
+		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(ct);
-		LocalTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaTime);
+		SQLQuery query = queryFactory.from(ct);
+		LocalTime result = query.uniqueResult(ct.jodaTime);
 		assertEquals(orig, result);
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1h() {
 
-		final LocalTime orig = LocalTime.now().plusHours(1);
-		long count = queryDslJdbcOperations.insert(ct, new SqlInsertCallback() {
-			@Override
-			public long doInSqlInsertClause(SQLInsertClause insert) {
-				insert.set(ct.jodaTime, orig);
-				return insert.execute();
-			}
-		});
+		LocalTime orig = LocalTime.now().plusHours(1);
+		SQLInsertClause insert = queryFactory.insert(ct);
+		insert.set(ct.jodaTime, orig);
+		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(ct);
-		LocalTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaTime);
+		SQLQuery query = queryFactory.from(ct);
+		LocalTime result = query.uniqueResult(ct.jodaTime);
 		assertEquals(orig, result);
 	}
 
 	@Test
 	public void testSaveAndLoad_null() {
 
-		long count = queryDslJdbcOperations.insert(ct, new SqlInsertCallback() {
-			@Override
-			public long doInSqlInsertClause(SQLInsertClause insert) {
-				return insert.execute();
-			}
-		});
+		SQLInsertClause insert = queryFactory.insert(ct);
+		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query.from(ct);
-		LocalTime result = queryDslJdbcOperations.queryForObject(query, ct.jodaTime);
+		SQLQuery query = queryFactory.from(ct);
+		LocalTime result = query.uniqueResult(ct.jodaTime);
 		assertNull(result);
 	}
 
