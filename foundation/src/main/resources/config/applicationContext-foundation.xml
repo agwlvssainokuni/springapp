@@ -216,6 +216,25 @@
 		<property name="paginator" ref="paginator" />
 	</bean>
 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeHandlers">
+			<list>
+				<bean class="cherry.foundation.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.foundation.mybatis.FlagCodeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalDateTypeHandler" />
+				<bean class="cherry.foundation.mybatis.JodaLocalTimeTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigDecimalTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureBigIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureLongTypeHandler" />
+				<bean class="cherry.foundation.mybatis.SecureStringTypeHandler" />
+			</list>
+		</property>
+	</bean>
+
 	<!-- ダウンロード設定 -->
 	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
 		<property name="headerName" value="Content-Disposition" />

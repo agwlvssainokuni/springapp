@@ -9,7 +9,6 @@
 	<context:property-placeholder location="classpath:env.properties" ignore-unresolvable="true" />
 
 	<import resource="applicationContext-foundation.xml" />
-	<import resource="applicationContext-foundationMapper.xml" />
 	<import resource="applicationContext-common.xml" />
 	<import resource="applicationContext-commonMapper.xml" />
 	<import resource="applicationContext-entree.xml" />

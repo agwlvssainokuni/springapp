@@ -8,7 +8,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<import resource="applicationContext-foundation.xml" />
-	<import resource="applicationContext-foundationMapper.xml" />
 
 	<jdbc:embedded-database id="dataSource" type="H2" />
 
