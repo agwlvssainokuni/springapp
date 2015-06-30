@@ -33,7 +33,7 @@ war {
 }
 
 def messageDir = "src/main/resources/message"
-task mergeformmessage {
+task mergeformmessage << {
 	ant.concat(destfile: "${messageDir}/form/form.properties", encoding: "UTF-8", outputencoding: "UTF-8") {
 		fileset(dir: "${messageDir}/form/") {
 			include(name: "**.txt")
