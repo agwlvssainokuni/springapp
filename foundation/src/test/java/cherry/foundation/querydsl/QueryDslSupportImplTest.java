@@ -21,6 +21,8 @@ import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.etl.Column;
+import cherry.foundation.etl.Consumer;
 import cherry.foundation.etl.CsvConsumer;
 import cherry.foundation.etl.Limiter;
 import cherry.foundation.etl.LimiterException;
@@ -86,7 +92,7 @@ public class QueryDslSupportImplTest {
 	}
 
 	@Test
-	public void testSearch1() {
+	public void testSearch1_OK() {
 
 		PagedList<ConversionTest> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
 				rowMapperCreator.create(ConversionTest.class), ct.id, ct.jodaDate, ct.jodaDatetime);
@@ -103,6 +109,17 @@ public class QueryDslSupportImplTest {
 			assertEquals(localDateTime.plusDays(i), item.getJodaDatetime());
 			i -= 1;
 		}
+	}
+
+	@Test(expected = DataAccessException.class)
+	public void testSearch1_SQLException() {
+		queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5, new RowMapper<ConversionTest>() {
+			@Override
+			public ConversionTest mapRow(ResultSet rs, int rowNum) throws SQLException {
+				rs.getObject(0);
+				return null;
+			}
+		}, ct.id, ct.jodaDate, ct.jodaDatetime);
 	}
 
 	@Test
@@ -200,7 +217,7 @@ public class QueryDslSupportImplTest {
 	}
 
 	@Test
-	public void testDownload1() throws IOException {
+	public void testDownload1_OK() throws IOException {
 		try (StringWriter w = new StringWriter()) {
 
 			CsvConsumer consumer = new CsvConsumer(w, false);
@@ -212,6 +229,29 @@ public class QueryDslSupportImplTest {
 				list.add("\"" + localDate.plusDays(i).toString() + "\"\r\n");
 			}
 			assertEquals(Joiner.on("").join(list), w.toString());
+		}
+	}
+
+	@Test(expected = IOException.class)
+	public void testDownload1_IOException() throws IOException {
+		try (StringWriter w = new StringWriter()) {
+			queryDslSupport.download(commonClause(ct), orderByClause(ct), new Consumer() {
+
+				@Override
+				public void begin(Column[] col) throws IOException {
+					throw new IOException();
+				}
+
+				@Override
+				public void consume(Object[] record) throws IOException {
+					// 何もしない
+				}
+
+				@Override
+				public void end() throws IOException {
+					// 何もしない
+				}
+			}, ct.jodaDate);
 		}
 	}
 
