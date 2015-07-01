@@ -162,10 +162,6 @@
 	<bean id="namedParameterJdbcOperations" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="jdbcOperations" />
 	</bean>
-	<bean id="queryDslJdbcOperations" class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
-		<constructor-arg ref="jdbcOperations" />
-		<constructor-arg ref="sqlTemplates" />
-	</bean>
 	<bean id="queryFactory" class="com.mysema.query.sql.SQLQueryFactory">
 		<constructor-arg>
 			<bean class="cherry.foundation.querydsl.CustomizingConfigurationFactoryBean">
@@ -212,7 +208,10 @@
 	<bean id="sqlParameterSourceCreator" class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
 
 	<bean id="queryDslSupport" class="cherry.foundation.querydsl.QueryDslSupportImpl">
-		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
+		<property name="queryFactory" ref="queryFactory" />
+		<property name="exceptionTranslator">
+			<bean factory-bean="jdbcOperations" factory-method="getExceptionTranslator" />
+		</property>
 		<property name="paginator" ref="paginator" />
 	</bean>
 

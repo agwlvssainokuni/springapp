@@ -5,6 +5,7 @@ dependencies {
 	compile project(":foundation")
 	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "com.h2database:h2:${versionH2db}"
+	compile "org.springframework.data:spring-data-jdbc-core:${versionSpringDataJdbcCore}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"

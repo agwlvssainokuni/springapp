@@ -17,11 +17,16 @@
 package cherry.foundation.querydsl;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
+import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.etl.Consumer;
 import cherry.foundation.etl.ExtractorResultSetExtractor;
@@ -36,22 +41,30 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.types.Expression;
 
 public class QueryDslSupportImpl implements QueryDslSupport {
 
-	private QueryDslJdbcOperations queryDslJdbcOperations;
+	private SQLQueryFactory queryFactory;
+
+	private SQLExceptionTranslator exceptionTranslator;
 
 	private Paginator paginator;
 
-	public void setQueryDslJdbcOperations(QueryDslJdbcOperations queryDslJdbcOperations) {
-		this.queryDslJdbcOperations = queryDslJdbcOperations;
+	public void setQueryFactory(SQLQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
+
+	public void setExceptionTranslator(SQLExceptionTranslator exceptionTranslator) {
+		this.exceptionTranslator = exceptionTranslator;
 	}
 
 	public void setPaginator(Paginator paginator) {
 		this.paginator = paginator;
 	}
 
+	@Transactional
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, final RowMapper<T> rowMapper, final Expression<?>... expressions) {
@@ -59,6 +72,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, rowMapper, expressions);
 	}
 
+	@Transactional
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, Predicate<Long> cancelPredicate, final RowMapper<T> rowMapper,
@@ -66,12 +80,14 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 		Function<SQLQuery, List<T>> searchFunction = new Function<SQLQuery, List<T>>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
-				return queryDslJdbcOperations.query(query, rowMapper, expressions);
+				ResultSetExtractor<List<T>> extractor = new RowMapperResultSetExtractor<>(rowMapper);
+				return getResults("search", query, extractor, expressions);
 			}
 		};
 		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
 	}
 
+	@Transactional
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, final Expression<T> expression) {
@@ -79,24 +95,27 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, expression);
 	}
 
+	@Transactional
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, Predicate<Long> cancelPredicate, final Expression<T> expression) {
 		Function<SQLQuery, List<T>> searchFunction = new Function<SQLQuery, List<T>>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
-				return queryDslJdbcOperations.query(query, expression);
+				return query.list(expression);
 			}
 		};
 		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
 	}
 
+	@Transactional
 	@Override
 	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
 			Expression<?>... expressions) throws IOException {
 		return downloadMain(commonClause, orderByClause, consumer, new NoneLimiter(), expressions);
 	}
 
+	@Transactional
 	@Override
 	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
 			Limiter limiter, Expression<?>... expressions) throws LimiterException, IOException {
@@ -106,9 +125,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	private <T> PagedList<T> searchMain(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, Predicate<Long> cancelPredicate, Function<SQLQuery, List<T>> searchFunction) {
 
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query = commonClause.configure(query);
-		long count = queryDslJdbcOperations.count(query);
+		long count = commonClause.configure(queryFactory.query()).count();
 
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		if (cancelPredicate.apply(count)) {
@@ -117,6 +134,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 			return result;
 		}
 
+		SQLQuery query = commonClause.configure(queryFactory.query());
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = orderByClause.configure(query);
 		List<T> list = searchFunction.apply(query);
@@ -130,20 +148,30 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	private long downloadMain(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
 			Limiter limiter, Expression<?>... expressions) throws LimiterException, IOException {
 
-		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(consumer, limiter);
-
 		limiter.start();
 		try {
 
-			SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-			query = commonClause.configure(query);
+			SQLQuery query = commonClause.configure(queryFactory.query());
 			query = orderByClause.configure(query);
 
-			return queryDslJdbcOperations.queryForObject(query, extractor, expressions);
+			ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(consumer, limiter);
+			return getResults("download", query, extractor, expressions);
+
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
 		} finally {
 			limiter.stop();
+		}
+	}
+
+	private <T> T getResults(String task, SQLQuery query, ResultSetExtractor<T> extractor, Expression<?>... expressions) {
+		ResultSet rs = query.getResults(expressions);
+		try {
+			return extractor.extractData(rs);
+		} catch (SQLException ex) {
+			throw exceptionTranslator.translate(task, query.getSQL(expressions).getSQL(), ex);
+		} finally {
+			JdbcUtils.closeResultSet(rs);
 		}
 	}
 
