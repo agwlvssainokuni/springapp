@@ -21,11 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,12 +30,9 @@ import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import cherry.foundation.type.DeletedFlag;
 import cherry.spring.common.db.gen.dto.SignupRequest;
@@ -49,6 +41,7 @@ import cherry.spring.common.db.gen.dto.SignupRequestCriteria.Criteria;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 public class SignupRequestHelperTest {
 
@@ -83,26 +76,6 @@ public class SignupRequestHelperTest {
 		assertEquals(list.size(), 3);
 		for (SignupRequest r : list) {
 			assertTrue(interval.contains(r.getAppliedAt().toDate().getTime()));
-		}
-	}
-
-	@Test
-	public void testCreateSignupRequest99() {
-		String mailAddr = "req99@example.com";
-
-		NamedParameterJdbcOperations op = mock(NamedParameterJdbcOperations.class);
-		SqlParameterSource paramSource = any(SqlParameterSource.class);
-		KeyHolder keyHolder = any(KeyHolder.class);
-		when(op.update(anyString(), paramSource, keyHolder)).thenReturn(0);
-
-		SignupRequestHelperImpl impl = new SignupRequestHelperImpl();
-		ReflectionTestUtils.setField(impl, "namedParameterJdbcOperations", op);
-
-		try {
-			impl.createSignupRequest(mailAddr, UUID.randomUUID().toString(), now());
-			fail("Exception must be thrown");
-		} catch (IllegalStateException ex) {
-			// OK
 		}
 	}
 
