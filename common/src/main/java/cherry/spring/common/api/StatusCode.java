@@ -16,7 +16,9 @@
 
 package cherry.spring.common.api;
 
-public enum StatusCode {
+import cherry.foundation.type.Code;
+
+public enum StatusCode implements Code<Integer> {
 	OK(0), WARN(1), ERROR(2);
 
 	private int value;
@@ -25,7 +27,7 @@ public enum StatusCode {
 		this.value = value;
 	}
 
-	public int getValue() {
+	public Integer code() {
 		return value;
 	}
 

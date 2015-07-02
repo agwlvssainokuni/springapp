@@ -19,8 +19,10 @@ package cherry.spring.common.api;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -37,8 +39,23 @@ public class Response<T> implements Serializable {
 
 	private int statusCode;
 
-	private List<String> description;
+	private List<Item> description;
 
 	private T result;
+
+	@Setter
+	@Getter
+	@EqualsAndHashCode
+	@ToString
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Item implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		private String code;
+
+		private String message;
+	}
 
 }

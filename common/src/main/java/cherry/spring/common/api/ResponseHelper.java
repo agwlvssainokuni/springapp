@@ -21,12 +21,12 @@ import java.util.List;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
-public interface ResponseFactory {
+public interface ResponseHelper {
 
 	<T> Response<T> createResponse(StatusCode statusCode, T result);
 
 	<T> Response<T> createResponse(StatusCode statusCode, BindingResult binding);
 
-	<T, E extends MessageSourceResolvable> Response<T> createResponse(StatusCode statusCode, List<E> messages);
+	<T> Response<T> createResponse(StatusCode statusCode, List<? extends MessageSourceResolvable> messages);
 
 }

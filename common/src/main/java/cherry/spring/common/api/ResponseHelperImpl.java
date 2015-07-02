@@ -21,14 +21,18 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
-public class ResponseFactoryImpl implements ResponseFactory {
+@Component
+public class ResponseHelperImpl implements ResponseHelper, MessageSourceAware {
 
 	private MessageSource messageSource;
 
+	@Override
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
@@ -36,7 +40,7 @@ public class ResponseFactoryImpl implements ResponseFactory {
 	@Override
 	public <T> Response<T> createResponse(StatusCode statusCode, T result) {
 		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
+		response.setStatusCode(statusCode.code());
 		response.setResult(result);
 		return response;
 	}
@@ -44,24 +48,26 @@ public class ResponseFactoryImpl implements ResponseFactory {
 	@Override
 	public <T> Response<T> createResponse(StatusCode statusCode, BindingResult binding) {
 		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
+		response.setStatusCode(statusCode.code());
 		response.setDescription(getMessageList(binding.getAllErrors()));
 		return response;
 	}
 
 	@Override
-	public <T, E extends MessageSourceResolvable> Response<T> createResponse(StatusCode statusCode, List<E> messages) {
+	public <T> Response<T> createResponse(StatusCode statusCode, List<? extends MessageSourceResolvable> messages) {
 		Response<T> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
+		response.setStatusCode(statusCode.code());
 		response.setDescription(getMessageList(messages));
 		return response;
 	}
 
-	private <E extends MessageSourceResolvable> List<String> getMessageList(List<E> messages) {
+	private List<Response.Item> getMessageList(List<? extends MessageSourceResolvable> messages) {
 		Locale locale = LocaleContextHolder.getLocale();
-		List<String> list = new ArrayList<>(messages.size());
+		List<Response.Item> list = new ArrayList<>(messages.size());
 		for (MessageSourceResolvable resolvable : messages) {
-			list.add(messageSource.getMessage(resolvable, locale));
+			String code = resolvable.getCodes()[resolvable.getCodes().length - 1];
+			String message = messageSource.getMessage(resolvable, locale);
+			list.add(new Response.Item(code, message));
 		}
 		return list;
 	}

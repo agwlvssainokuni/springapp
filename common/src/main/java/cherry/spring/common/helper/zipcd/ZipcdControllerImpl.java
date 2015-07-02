@@ -27,6 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
 import cherry.spring.common.api.Response;
+import cherry.spring.common.api.ResponseHelper;
 import cherry.spring.common.api.StatusCode;
 
 @Controller
@@ -34,6 +35,9 @@ public class ZipcdControllerImpl implements ZipcdController {
 
 	@Autowired
 	private ZipcdService zipcdService;
+
+	@Autowired
+	private ResponseHelper responseHelper;
 
 	@Override
 	public Response<List<ZipcdAddress>> execute(String zipcd, Authentication auth, Locale locale,
@@ -52,10 +56,7 @@ public class ZipcdControllerImpl implements ZipcdController {
 		List<ZipcdAddress> result = zipcdService.search(zipcd);
 		StatusCode statusCode = result.isEmpty() ? StatusCode.WARN : StatusCode.OK;
 
-		Response<List<ZipcdAddress>> response = new Response<>();
-		response.setStatusCode(statusCode.getValue());
-		response.setResult(result);
-		return response;
+		return responseHelper.createResponse(statusCode, result);
 	}
 
 }
