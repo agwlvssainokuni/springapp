@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 import cherry.foundation.batch.ExitStatus;
 import cherry.foundation.batch.IBatch;
 
-@Component("test02Batch")
-public class Test02Batch implements IBatch {
+@Component("test03Batch")
+public class Test03Batch implements IBatch {
 
 	@Override
 	public ExitStatus execute(String... args) {

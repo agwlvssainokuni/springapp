@@ -32,12 +32,12 @@ public class MainTest {
 
 	@Test
 	public void testNormal() {
-		assertEquals(ExitStatus.NORMAL, Main.doMain("test02Batch", "NORMAL"));
+		assertEquals(ExitStatus.NORMAL, Main.doMain("test03Batch", "NORMAL"));
 	}
 
 	@Test
 	public void testNormalWithJobId() {
-		assertEquals(ExitStatus.NORMAL, Main.doMain("-j", "JOB01", "test02Batch", "NORMAL"));
+		assertEquals(ExitStatus.NORMAL, Main.doMain("-j", "JOB01", "test03Batch", "NORMAL"));
 	}
 
 	@Test
