@@ -41,7 +41,6 @@ import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.spring.common.db.gen.dto.User;
 import cherry.spring.common.db.gen.mapper.UserMapper;
-import cherry.spring.common.helper.signup.SignupRequestHelper;
 
 @Service
 public class SignupRegisterServiceImpl implements SignupRegisterService {

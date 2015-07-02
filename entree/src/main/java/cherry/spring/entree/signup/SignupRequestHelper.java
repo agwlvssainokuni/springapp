@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.signup;
+package cherry.spring.entree.signup;
 
 import org.joda.time.LocalDateTime;
 

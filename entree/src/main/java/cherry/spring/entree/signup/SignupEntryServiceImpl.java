@@ -36,7 +36,6 @@ import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
-import cherry.spring.common.helper.signup.SignupRequestHelper;
 
 @Service
 public class SignupEntryServiceImpl implements SignupEntryService {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.signup;
+package cherry.spring.entree.signup;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.mysema.query.support.Expressions.cases;

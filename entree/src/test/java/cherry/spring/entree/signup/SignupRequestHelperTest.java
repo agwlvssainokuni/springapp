@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.signup;
+package cherry.spring.entree.signup;
 
 import static org.joda.time.LocalDateTime.now;
 import static org.junit.Assert.assertEquals;
@@ -47,6 +47,8 @@ import cherry.spring.common.db.gen.dto.SignupRequest;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria;
 import cherry.spring.common.db.gen.dto.SignupRequestCriteria.Criteria;
 import cherry.spring.common.db.gen.mapper.SignupRequestMapper;
+import cherry.spring.entree.signup.SignupRequestHelper;
+import cherry.spring.entree.signup.SignupRequestHelperImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
