@@ -40,8 +40,7 @@ public class PasswdForm extends PasswdFormBase {
 		masked.setPassword("<MASKED>");
 		masked.setNewPassword("<MASKED>");
 		masked.setNewPasswordConf("<MASKED>");
-		return ToStringBuilder.reflectionToString(masked,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+		return ToStringBuilder.reflectionToString(masked, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }
