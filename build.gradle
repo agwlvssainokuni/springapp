@@ -132,7 +132,7 @@ subprojects {
 		versionLombok = "1.16.4"
 		versionJunit = "4.12"
 		versionHamcrest = "1.3"
-		versionMockito = "2.0.26-beta"
+		versionMockito = "2.0.2-beta"
 	}
 
 	deliveryResources {
