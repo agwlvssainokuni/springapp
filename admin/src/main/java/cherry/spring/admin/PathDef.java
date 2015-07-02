@@ -34,6 +34,8 @@ public class PathDef {
 
 	public static final String URI_GALLERY = "/secure/gallery";
 
+	public static final String URI_GALLERY_ZIPCD = "/secure/gallery/zipcd";
+
 	public static final String SUBURI_EXECUTE = "execute";
 
 	public static final String SUBURI_FINISH = "finish";

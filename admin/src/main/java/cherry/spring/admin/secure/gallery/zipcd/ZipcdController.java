@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.zipcd;
+package cherry.spring.admin.secure.gallery.zipcd;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,9 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cherry.spring.admin.PathDef;
 import cherry.spring.common.api.Response;
 
-@RequestMapping("${common.helper.zipcd.uripath}")
+@RequestMapping(PathDef.URI_GALLERY_ZIPCD)
 public interface ZipcdController {
 
 	@RequestMapping()

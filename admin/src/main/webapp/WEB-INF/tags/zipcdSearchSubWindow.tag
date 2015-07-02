@@ -17,7 +17,7 @@
 		<tbody></tbody>
 	</table>
 </div>
-<c:url var="zipcdUri" value="/secure/common/zipcd" />
+<c:url var="zipcdUri" value="/secure/gallery/zipcd" />
 <s:message var="title" code="parts/zipcdSearchSubWindow.title" />
 <s:message var="alertNotFound"
 	code="parts/zipcdSearchSubWindow.alert.notFound" />
@@ -65,10 +65,8 @@
 			tbody.empty();
 			for (var i = 0; i < data.result.length; i++) {
 				var record = data.result[i];
-				tbody.append("<tr><td><button>" + "${selectButton}"
-						+ "</button></td><td>" + record.zipcd + "</td><td>"
-						+ record.pref + "</td><td>" + record.city + "</td><td>"
-						+ record.addr + "</td></tr>");
+				tbody.append("<tr><td><button>" + "${selectButton}" + "</button></td><td>" + record.zipcd + "</td><td>"
+						+ record.pref + "</td><td>" + record.city + "</td><td>" + record.addr + "</td></tr>");
 				$("tr:last button", tbody).click(onClick(record));
 			}
 

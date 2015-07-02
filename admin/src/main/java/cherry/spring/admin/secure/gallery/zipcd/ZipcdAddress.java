@@ -14,12 +14,37 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.zipcd;
+package cherry.spring.admin.secure.gallery.zipcd;
 
-import java.util.List;
+import java.io.Serializable;
 
-public interface ZipcdService {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	List<ZipcdAddress> search(String zipcd);
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
+public class ZipcdAddress implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private String zipcd;
+
+	private Integer cityCd;
+
+	private String pref;
+
+	private String city;
+
+	private String addr;
+
+	private String prefKana;
+
+	private String cityKana;
+
+	private String addrKana;
 
 }

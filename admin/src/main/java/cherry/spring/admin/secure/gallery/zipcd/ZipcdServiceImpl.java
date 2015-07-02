@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.zipcd;
+package cherry.spring.admin.secure.gallery.zipcd;
 
 import java.util.List;
 
