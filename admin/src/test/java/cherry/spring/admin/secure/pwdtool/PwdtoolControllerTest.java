@@ -33,7 +33,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.admin.PathDef;
-import cherry.spring.admin.secure.pwdtool.PwdtoolController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

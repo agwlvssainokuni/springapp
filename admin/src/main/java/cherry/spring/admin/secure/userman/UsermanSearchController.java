@@ -38,18 +38,14 @@ public interface UsermanSearchController {
 	UsermanSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated UsermanSearchForm form,
-			BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated UsermanSearchForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@Validated UsermanSearchForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response);
+	ModelAndView download(@Validated UsermanSearchForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
 
 }
