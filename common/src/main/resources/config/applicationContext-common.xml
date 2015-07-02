@@ -45,6 +45,4 @@
 		</property>
 	</bean>
 
-	<bean id="signupRequestHelper" class="cherry.spring.common.helper.signup.SignupRequestHelperImpl" />
-
 </beans>

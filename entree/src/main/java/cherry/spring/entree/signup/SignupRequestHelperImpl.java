@@ -16,93 +16,64 @@
 
 package cherry.spring.entree.signup;
 
+import static cherry.foundation.type.DeletedFlag.NOT_DELETED;
 import static com.google.common.base.Preconditions.checkState;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import static com.mysema.query.support.Expressions.cases;
 
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.sql.SqlLoader;
+import cherry.spring.common.db.gen.query.QSignupRequest;
 
-public class SignupRequestHelperImpl implements SignupRequestHelper, InitializingBean {
+import com.mysema.query.sql.SQLQueryFactory;
+import com.mysema.query.sql.dml.SQLInsertClause;
+
+@Component
+public class SignupRequestHelperImpl implements SignupRequestHelper {
 
 	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+	private SQLQueryFactory queryFactory;
 
-	@Autowired
-	private SqlLoader sqlLoader;
-
-	private String createSignupRequest;
-
-	private String validateMailAddr;
-
-	private String validateToken;
-
-	public void setCreateSignupRequest(String createSignupRequest) {
-		this.createSignupRequest = createSignupRequest;
-	}
-
-	public void setValidateMailAddr(String validateMailAddr) {
-		this.validateMailAddr = validateMailAddr;
-	}
-
-	public void setValidateToken(String validateToken) {
-		this.validateToken = validateToken;
-	}
-
-	@Override
-	public void afterPropertiesSet() throws IOException {
-		BeanWrapper bw = new BeanWrapperImpl(this);
-		bw.setPropertyValues(sqlLoader.load(getClass()));
-	}
+	private final QSignupRequest a = new QSignupRequest("a");
+	private final QSignupRequest b = new QSignupRequest("b");
 
 	@Transactional
 	@Override
 	public long createSignupRequest(String mailAddr, String token, LocalDateTime appliedAt) {
-
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("mailAddr", mailAddr);
-		paramMap.put("token", token);
-		paramMap.put("appliedAt", appliedAt.toDate());
-
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = namedParameterJdbcOperations.update(createSignupRequest, new MapSqlParameterSource(paramMap),
-				keyHolder);
-		checkState(count == 1, "failed to create signup_request: mailAddr=%s, token=%s, appliedAt=%s, count=%s",
-				mailAddr, token, appliedAt, count);
-		return keyHolder.getKey().longValue();
+		SQLInsertClause insert = queryFactory.insert(a);
+		insert.set(a.mailAddr, mailAddr);
+		insert.set(a.token, token);
+		insert.set(a.appliedAt, appliedAt);
+		Long id = insert.executeWithKey(Long.class);
+		checkState(id != null, "failed to create %s: mailAddr=%s, token=%s, appliedAt=%s", a.getTableName(), mailAddr,
+				token, appliedAt);
+		return id.longValue();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("mailAddr", mailAddr);
-		paramMap.put("intervalFrom", intervalFrom.toDate());
-		paramMap.put("rangeFrom", rangeFrom.toDate());
-		paramMap.put("numOfReq", numOfReq);
-		return namedParameterJdbcOperations.queryForObject(validateMailAddr, paramMap, Boolean.class);
+		return queryFactory
+				.from(a)
+				.where(a.mailAddr.eq(mailAddr), a.appliedAt.goe(rangeFrom), a.deletedFlg.eq(NOT_DELETED.code()))
+				.uniqueResult(
+						cases().when(a.id.count().eq(0L)).then(true).when(a.id.count().goe(numOfReq)).then(false)
+								.when(a.appliedAt.max().goe(intervalFrom)).then(false).otherwise(true));
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public boolean validateToken(String mailAddr, String token, LocalDateTime validFrom) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("mailAddr", mailAddr);
-		paramMap.put("token", token);
-		paramMap.put("validFrom", validFrom.toDate());
-		return namedParameterJdbcOperations.queryForObject(validateToken, paramMap, Boolean.class);
+		return queryFactory
+				.from(a)
+				.where(a.mailAddr.eq(mailAddr), a.appliedAt.goe(validFrom), a.deletedFlg.eq(NOT_DELETED.code()),
+						a.token.eq(token))
+				.where(queryFactory
+						.subQuery(b)
+						.where(b.mailAddr.eq(a.mailAddr), b.appliedAt.gt(a.appliedAt),
+								b.deletedFlg.eq(NOT_DELETED.code())).notExists()).exists();
 	}
 
 }
