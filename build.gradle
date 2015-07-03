@@ -88,8 +88,8 @@ subprojects {
 	}
 
 	ext {
-		versionH2db = "1.4.186"
-		versionFlyway = "3.1"
+		versionH2db = "1.4.187"
+		versionFlyway = "3.2.1"
 		versionJodaTime = "2.7"
 		versionGuava = "18.0"
 		versionCommonsPool = "1.6"
