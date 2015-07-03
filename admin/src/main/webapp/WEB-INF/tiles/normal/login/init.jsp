@@ -21,7 +21,8 @@
 		<s:message code="login/init.message.2" />
 	</div>
 </c:if>
-<form id="loginForm" action="<c:url value="/login/req" />" method="POST">
+<form id="loginForm" action="<c:url value="/login/execute" />"
+	method="POST">
 	<table>
 		<tbody class="app-transparent">
 			<tr>

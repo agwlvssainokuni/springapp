@@ -25,8 +25,8 @@
 		</div>
 	</div>
 </c:if>
-<form id="loginForm" action="<c:url value="/login/req" />" method="POST"
-	role="form" class="form-horizontal">
+<form id="loginForm" action="<c:url value="/login/execute" />"
+	method="POST" role="form" class="form-horizontal">
 	<div class="form-group">
 		<label for="loginId" class="col-sm-2 control-label"><s:message
 				code="loginForm.loginId" /></label>

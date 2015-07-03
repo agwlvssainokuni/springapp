@@ -17,10 +17,10 @@
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
-		<security:form-login login-page="/login" login-processing-url="/login/req"
-			authentication-failure-url="/login?loginFailed" default-target-url="/secure/" always-use-default-target="false"
+		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
+			authentication-failure-url="/login/start?loginFailed" default-target-url="/secure/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />
-		<security:logout logout-url="/logout" logout-success-url="/login?loggedOut" invalidate-session="true" />
+		<security:logout logout-url="/logout" logout-success-url="/login/start?loggedOut" invalidate-session="true" />
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
 

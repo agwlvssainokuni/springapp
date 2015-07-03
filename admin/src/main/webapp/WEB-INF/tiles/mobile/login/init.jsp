@@ -25,7 +25,8 @@
 		</div>
 	</div>
 </c:if>
-<form id="loginForm" action="<c:url value="/login/req" />" method="POST">
+<form id="loginForm" action="<c:url value="/login/execute" />"
+	method="POST">
 	<div class="ui-field-contain">
 		<label for="loginId"><s:message code="loginForm.loginId" /></label> <input
 			type="text" id="loginId" name="loginId" />

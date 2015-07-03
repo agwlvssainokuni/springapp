@@ -18,7 +18,7 @@ package cherry.spring.entree;
 
 public class PathDef {
 
-	public static final String URI_LOGIN = "/login";
+	public static final String URI_LOGIN = "/login/start";
 
 	public static final String URI_HOME = "/secure";
 
@@ -27,6 +27,8 @@ public class PathDef {
 	public static final String URI_SIGNUP_ENTRY = "/signup";
 
 	public static final String URI_SIGNUP_REGISTER = "/signup/{token}";
+
+	public static final String SUBURI_START = "start";
 
 	public static final String SUBURI_EXECUTE = "execute";
 
