@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>springapp</groupId>
 	<artifactId>querytutorial</artifactId>
 	<version>1.0</version>
 	<properties>
-		<versionH2db>1.4.181</versionH2db>
+		<versionH2db>1.4.187</versionH2db>
+		<versionFlyway>3.2.1</versionFlyway>
 		<versionMyBatisGenerator>1.3.2</versionMyBatisGenerator>
-		<versionQuerydsl>3.6.0</versionQuerydsl>
+		<versionQuerydsl>3.6.5</versionQuerydsl>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>3.0</version>
+				<version>${versionFlyway}</version>
 				<configuration>
 					<url>jdbc:h2:file:./target/gendb</url>
 					<user>sa</user>
@@ -59,7 +59,7 @@
 				<version>${versionQuerydsl}</version>
 				<configuration>
 					<jdbcDriver>org.h2.Driver</jdbcDriver>
-					<jdbcUrl>jdbc:h2:./target/gendb</jdbcUrl>
+					<jdbcUrl>jdbc:h2:file:./target/gendb</jdbcUrl>
 					<jdbcUser>sa</jdbcUser>
 					<packageName>cherry.querytutorial.db.gen.query</packageName>
 					<targetFolder>${project.basedir}/src/generated/java</targetFolder>
