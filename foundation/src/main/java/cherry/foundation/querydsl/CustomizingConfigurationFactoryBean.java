@@ -16,10 +16,11 @@
 
 package cherry.foundation.querydsl;
 
-import static java.lang.Integer.parseInt;
-
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -69,15 +70,14 @@ public class CustomizingConfigurationFactoryBean implements FactoryBean<Configur
 		if (numericTypeSpecs != null) {
 			for (String spec : numericTypeSpecs) {
 				List<String> l = Splitter.onPattern(",").trimResults().splitToList(spec);
-				if (l.size() == 3) {
-					configuration.registerNumeric(parseInt(l.get(0)), parseInt(l.get(1)), Class.forName(l.get(2)));
-				} else if (l.size() == 5) {
-					configuration.registerNumeric(parseInt(l.get(0)), parseInt(l.get(1)), parseInt(l.get(2)),
-							parseInt(l.get(3)), Class.forName(l.get(4)));
-				} else {
+				if (l.size() != 3) {
 					throw new IllegalArgumentException(
-							"numericTypeSpecs must be \"{total},{decimal},{javaType}\" or \"{beginTotal},{endTotal},{beginDecimal},{endDecimal},{javaType}\"");
+							"numericTypeSpecs must be \"{total},{decimal},{javaType}\" or \"{beginTotal}-{endTotal},{beginDecimal}-{endDecimal},{javaType}\"");
 				}
+				Pair<Integer, Integer> total = parsePair(l.get(0));
+				Pair<Integer, Integer> decimal = parsePair(l.get(1));
+				configuration.registerNumeric(total.getLeft(), total.getRight(), decimal.getLeft(), decimal.getRight(),
+						Class.forName(l.get(2)));
 			}
 		}
 	}
@@ -95,6 +95,19 @@ public class CustomizingConfigurationFactoryBean implements FactoryBean<Configur
 	@Override
 	public boolean isSingleton() {
 		return true;
+	}
+
+	private Pair<Integer, Integer> parsePair(String s) {
+		Matcher mSingle = Pattern.compile("^(\\d+)$").matcher(s);
+		if (mSingle.matches()) {
+			return Pair.of(new Integer(mSingle.group(1)), new Integer(mSingle.group(1)));
+		}
+		Matcher mRange = Pattern.compile("^(\\d+)-(\\d+)$").matcher(s);
+		if (mRange.matches()) {
+			return Pair.of(new Integer(mRange.group(1)), new Integer(mRange.group(2)));
+		}
+		throw new IllegalArgumentException(
+				"numericTypeSpecs must be \"{total},{decimal},{javaType}\" or \"{beginTotal},{endTotal},{beginDecimal},{endDecimal},{javaType}\"");
 	}
 
 }
