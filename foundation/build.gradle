@@ -2,17 +2,7 @@ apply plugin: "eclipse-wtp"
 
 dependencies {
 	compile project(":goods")
-	compile "joda-time:joda-time:${versionJodaTime}"
-	compile "com.google.guava:guava:${versionGuava}"
-	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
-	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
-	compile "org.apache.commons:commons-collections4:${versionCommonsCollections4}"
-	compile "org.apache.commons:commons-compress:${versionCommonsCompress}"
-	compile "commons-codec:commons-codec:${versionCommonsCodec}"
-	compile "org.apache.commons:commons-csv:${versionCommonsCsv}"
-	compile "org.apache.commons:commons-exec:${versionCommonsExec}"
 	compile "org.apache.velocity:velocity:${versionVelocity}"
-	compile "org.apache.pdfbox:pdfbox:${versionPdfbox}"
 	compile "com.ibm.icu:icu4j:${versionIcu4j}"
 	compile "org.mybatis:mybatis:${versionMyBatis}"
 	compile "org.mybatis:mybatis-spring:${versionMyBatisSpring}"
