@@ -5,7 +5,7 @@
 #  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
 
 [Manager]
-ProjectName=SqlApp
+ProjectName=SqlMan
 Author=agwlvssainokuni
 MaxEntityRowShow=1000
 ReadOnlyRecommend=0
@@ -136,14 +136,14 @@ Fields1=id
 Fields2=id
 Cardinarity1=
 Cardinarity2=
-Position="SQL管理",0,1463,5878,1012,R,R
+Position="SQL管理",0,1463,5878,1038,R,R
 Dependence=1
 Caption=
 PName=
 LineMode=0
 Bar1=146
 Bar2=588
-Bar3=101
+Bar3=104
 TermPos1=R
 TermPos2=R
 

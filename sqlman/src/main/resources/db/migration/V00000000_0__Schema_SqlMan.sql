@@ -1,5 +1,5 @@
--- Project Name : SqlApp
--- Date/Time    : 2015/07/04 19:53:52
+-- Project Name : SqlMan
+-- Date/Time    : 2015/07/05 6:13:29
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
