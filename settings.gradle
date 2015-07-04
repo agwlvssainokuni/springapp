@@ -1,1 +1,1 @@
-include "goods", "foundation", "dbschema", "common", "admin", "entree", "batch", "querytutorial"
+include "goods", "foundation", "dbschema", "common", "admin", "entree", "batch", "sqlman", "querytutorial"

@@ -1,0 +1,28 @@
+apply plugin: "war"
+apply plugin: "eclipse-wtp"
+apply plugin: "jetty"
+
+dependencies {
+	compile project(":goods")
+	compile project(":foundation")
+	compile "org.apache.tiles:tiles-core:${versionTiles}"
+	compile "org.apache.tiles:tiles-api:${versionTiles}"
+	compile "org.apache.tiles:tiles-servlet:${versionTiles}"
+	compile "org.apache.tiles:tiles-jsp:${versionTiles}"
+	compile "org.apache.tiles:tiles-el:${versionTiles}"
+	compile "org.apache.tiles:tiles-extras:${versionTiles}"
+	compile "javax.servlet:jstl:${versionJstl}"
+	runtime "org.flywaydb:flyway-core:${versionFlyway}"
+	runtime "ch.qos.logback:logback-core:${versionLogback}"
+	runtime "ch.qos.logback:logback-classic:${versionLogback}"
+	providedCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
+	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
+	providedCompile "javax.jms:jms-api:${versionJavaJms}"
+	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testRuntime "com.h2database:h2:${versionH2db}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
+}
