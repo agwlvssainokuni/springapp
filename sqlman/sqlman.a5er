@@ -1,0 +1,195 @@
+﻿# A5:ER FORMAT:09
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=SqlApp
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=SQL管理
+PageInfo="SQL管理",4,"A3Landscape",$FFFFFF
+Domain=ID=@INT
+Domain=識別名=@VARCHAR(32)
+Domain=表示名=@VARCHAR(50)
+Domain=説明文=@VARCHAR(500)
+Domain=SQL句=@VARCHAR(500)
+Domain=SQL文=@VARCHAR(5000)
+Domain=パラメタMAP(JSON)=@VARCHAR(5000)
+Domain=日時=@DATETIME
+Domain=フラグ=@INT
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=4
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="ロックバージョン","lock_version","*フラグ","NOT NULL",,"1","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Relation]
+Entity1=sql_metadata
+Entity2=sql_load
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="SQL管理",0,8085,5047,1657,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=808
+Bar2=505
+Bar3=166
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=sql_load
+LName=SQL管理機能・CSV取込み
+Comment=
+TableOption=
+Page=SQL管理
+Left=1500
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
+Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150704194527
+Position="SQL管理",1500,1500
+
+[Relation]
+Entity1=sql_metadata
+Entity2=sql_statement
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="SQL管理",0,4546,7568,2926,R,R
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20150704194629
+LineMode=0
+Bar1=455
+Bar2=757
+Bar3=293
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=sql_statement
+LName=SQL管理機能・ステートメント指定
+Comment=
+TableOption=
+Page=SQL管理
+Left=1500
+Top=1100
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
+Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
+Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150704195314
+Position="SQL管理",1500,1100
+
+[Relation]
+Entity1=sql_metadata
+Entity2=sql_clause
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="SQL管理",0,1463,5878,1012,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=146
+Bar2=588
+Bar3=101
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=sql_clause
+LName=SQL管理機能・句指定
+Comment=
+TableOption=
+Page=SQL管理
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
+Field="SELECT句","select_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
+Field="FROM句","from_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
+Field="WHERE句","where_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="GROUP BY句","group_by_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="HAVING句","having_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="ORDER BY句","order_by_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150704195104
+Position="SQL管理",1500,500
+
+[Entity]
+PName=sql_metadata
+LName=SQL管理機能・メタデータ
+Comment=
+TableOption=
+Page=SQL管理
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="SQL種別","sql_type","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示名","name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="説明文","description","*説明文","NOT NULL",,"","",$FFFFFFFF,""
+Field="所有者","owned_by","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="公開フラグ","published_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
+Field="登録日時","registered_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="変更日時","changed_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150704195256
+Position="SQL管理",500,500
