@@ -1,0 +1,4 @@
+sqlLoadForm.databaseName=DATABASE
+sqlLoadForm.sql=SQL
+sqlLoadForm.file=CSV FILE
+sqlLoadForm.lockVersion=LOCK VERSION

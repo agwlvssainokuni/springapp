@@ -1,0 +1,11 @@
+sqlSearchForm.name=NAME
+sqlSearchForm.registeredFrom=REGISTERED(FROM)
+sqlSearchForm.registeredFromDt=REGISTERED(FROM) DATE PART
+sqlSearchForm.registeredFromTm=REGISTERED(FROM) TIME PART
+sqlSearchForm.registeredTo=REGISTERED(TO)
+sqlSearchForm.registeredToDt=REGISTERED(TO) DATE PART
+sqlSearchForm.registeredToTm=REGISTERED(TO) TIME PART
+sqlSearchForm.sqlType=SQL TYPE
+sqlSearchForm.published=PUBLISHED
+sqlSearchForm.pageNo=PAGE NO
+sqlSearchForm.pageSz=PAGE SZ

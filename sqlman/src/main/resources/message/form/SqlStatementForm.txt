@@ -1,0 +1,4 @@
+sqlStatementForm.databaseName=DATABASE
+sqlStatementForm.sql=SQL
+sqlStatementForm.paramMap=PARAM(JSON)
+sqlStatementForm.lockVersion=LOCK VERSION
