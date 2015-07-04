@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.login;
+package cherry.sqlman.admin;
 
 import java.util.Locale;
 
@@ -22,15 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("loginDefaultControllerImpl")
-public class DefaultControllerImpl implements DefaultController {
+import cherry.sqlman.PathDef;
 
-	@Override
-	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		return new ModelAndView();
-	}
+@RequestMapping(PathDef.URI_ADMIN_HOME)
+public interface AdminHomeController {
+
+	@RequestMapping()
+	ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 }

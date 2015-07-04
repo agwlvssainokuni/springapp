@@ -14,21 +14,33 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.admin;
+package cherry.sqlman;
 
-import java.util.Locale;
+import static cherry.goods.log.Level.ERROR;
+import static cherry.goods.log.Level.INFO;
+import static cherry.goods.log.Level.WARN;
+import cherry.goods.log.ILogId;
+import cherry.goods.log.Level;
 
-import javax.servlet.http.HttpServletRequest;
+public enum LogId implements ILogId {
+	// ここから
+	// ここまで
+	DMY_INFO(INFO), DMY_WARN(WARN), DMY_ERROR(ERROR);
 
-import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+	private Level level;
 
-@RequestMapping("/admin/**")
-public interface DefaultController {
+	private LogId(Level level) {
+		this.level = level;
+	}
 
-	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@Override
+	public String getId() {
+		return name();
+	}
+
+	@Override
+	public Level getLevel() {
+		return level;
+	}
 
 }

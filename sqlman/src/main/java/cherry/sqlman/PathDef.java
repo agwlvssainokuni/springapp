@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.secure;
+package cherry.sqlman;
 
-import java.util.Locale;
+public class PathDef {
 
-import javax.servlet.http.HttpServletRequest;
+	// 利用者画面
+	public static final String URI_HOME = "/secure";
 
-import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+	public static final String VIEW_HOME = "secure/home";
 
-@RequestMapping("/secure/**")
-public interface DefaultController {
+	// 管理者画面
+	public static final String URI_ADMIN_HOME = "/admin";
 
-	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	public static final String VIEW_ADMIN_HOME = "admin/home";
+
+	// ログイン画面
+	public static final String URI_LOGIN = "/login/start";
+
+	public static final String METHOD_LOGIN_FAILED = "loginFailed";
+
+	public static final String METHOD_LOGGED_OUT = "loggedOut";
 
 }

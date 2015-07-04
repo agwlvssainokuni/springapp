@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.login;
+package cherry.sqlman;
 
 import java.util.Locale;
 
@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping("/login/**")
+@RequestMapping({ "/secure/**", "/admin/**" })
 public interface DefaultController {
 
 	@RequestMapping()

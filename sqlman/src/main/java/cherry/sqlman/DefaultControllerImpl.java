@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.secure;
+package cherry.sqlman;
 
 import java.util.Locale;
 
@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("secureDefaultControllerImpl")
+@Controller
 public class DefaultControllerImpl implements DefaultController {
 
 	@Override
