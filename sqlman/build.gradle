@@ -2,6 +2,16 @@ apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
 
+buildscript {
+	repositories { mavenCentral() }
+	dependencies { classpath "com.h2database:h2:${versionH2db}" }
+}
+
+[jettyRun, jettyRunWar]*.with {
+	jettyConfig = file("jetty-config.xml")
+	additionalRuntimeJars = buildscript.configurations.classpath
+}
+
 dependencies {
 	compile project(":goods")
 	compile project(":foundation")
