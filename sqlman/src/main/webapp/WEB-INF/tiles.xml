@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="*/login/**" template="/WEB-INF/tiles/{1}/base_layout_1.jsp">
+		<put-attribute name="name" value="login/{2}" />
+		<put-attribute name="content" value="/WEB-INF/tiles/{1}/login/{2}.jsp" />
+	</definition>
+
+	<definition name="*/secure/**" template="/WEB-INF/tiles/{1}/base_layout_2.jsp">
+		<put-attribute name="name" value="secure/{2}" />
+		<put-attribute name="content" value="/WEB-INF/tiles/{1}/secure/{2}.jsp" />
+	</definition>
+
+	<definition name="*/admin/**" template="/WEB-INF/tiles/{1}/base_layout_2.jsp">
+		<put-attribute name="name" value="admin/{2}" />
+		<put-attribute name="content" value="/WEB-INF/tiles/{1}/admin/{2}.jsp" />
+	</definition>
+
+</tiles-definitions>
