@@ -16,9 +16,16 @@
 
 package cherry.sqlman;
 
-public enum LogicError {
+import cherry.foundation.logicalerror.ILogicalError;
+
+public enum LogicError implements ILogicalError {
 	/** SQL実行：SQL文不正。 */
 	BadSqlGrammer,
 	// ダミー
-	DUMMY
+	DUMMY;
+
+	@Override
+	public String code() {
+		return name();
+	}
 }

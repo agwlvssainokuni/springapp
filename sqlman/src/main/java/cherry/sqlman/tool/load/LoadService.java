@@ -16,15 +16,13 @@
 
 package cherry.sqlman.tool.load;
 
-import cherry.sqlman.db.gen.query.BSqlLoad;
-
 public interface LoadService {
 
-	BSqlLoad findById(int id);
+	SqlLoadForm findById(int id);
 
-	int create(BSqlLoad record, String ownedBy);
+	int create(SqlLoadForm form, String ownedBy);
 
-	boolean update(BSqlLoad record);
+	boolean update(int id, SqlLoadForm form);
 
 	boolean delete(int id, int lockVersion);
 

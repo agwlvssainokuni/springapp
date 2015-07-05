@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool.shared;
+package cherry.sqlman.tool.metadata;
 
-import java.util.Map;
+import cherry.goods.paginate.PagedList;
+import cherry.sqlman.SqlType;
+import cherry.sqlman.db.gen.query.BSqlMetadata;
 
-import cherry.foundation.etl.Consumer;
-import cherry.goods.paginate.PageSet;
+public interface MetadataService {
 
-public interface ExecQueryService {
+	SqlMetadataForm findById(int id, String loginId);
 
-	PageSet query(String databaseName, QueryBuilder queryBuilder, Map<String, ?> paramMap, Consumer consumer);
+	int create(SqlType sqlType, String ownedBy);
 
-	PageSet query(String databaseName, QueryBuilder queryBuilder, Map<String, ?> paramMap, long pageNo, long pageSz,
-			Consumer consumer);
+	boolean update(int id, SqlMetadataForm form);
+
+	boolean delete(int id, int lockVersion);
+
+	PagedList<BSqlMetadata> search(MetadataCondition cond, long pageNo, long pageSz);
 
 }

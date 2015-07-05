@@ -16,15 +16,13 @@
 
 package cherry.sqlman.tool.statement;
 
-import cherry.sqlman.db.gen.query.BSqlStatement;
-
 public interface StatementService {
 
-	BSqlStatement findById(int id);
+	SqlStatementForm findById(int id);
 
-	int create(BSqlStatement record, String ownedBy);
+	int create(SqlStatementForm form, String ownedBy);
 
-	boolean update(BSqlStatement record);
+	boolean update(int id, SqlStatementForm form);
 
 	boolean delete(int id, int lockVersion);
 

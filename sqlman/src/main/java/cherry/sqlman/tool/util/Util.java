@@ -1,5 +1,5 @@
 /*
- * Copyright 2014,2015 agwlvssainokuni
+ * Copyright 2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool;
+package cherry.sqlman.tool.util;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+public class Util {
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class SqlMetadataForm extends SqlMetadataFormBase {
-
-	private static final long serialVersionUID = 1L;
+	public static Throwable getRootCause(Throwable ex) {
+		Throwable result = ex;
+		while (result.getCause() != null) {
+			result = result.getCause();
+		}
+		return result;
+	}
 
 }

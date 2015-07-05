@@ -16,15 +16,13 @@
 
 package cherry.sqlman.tool.clause;
 
-import cherry.sqlman.db.gen.query.BSqlClause;
-
 public interface ClauseService {
 
-	BSqlClause findById(int id);
+	SqlClauseForm findById(int id);
 
-	int create(BSqlClause record, String ownedBy);
+	int create(SqlClauseForm form, String ownedBy);
 
-	boolean update(BSqlClause record);
+	boolean update(int id, SqlClauseForm form);
 
 	boolean delete(int id, int lockVersion);
 

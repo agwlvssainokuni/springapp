@@ -38,8 +38,8 @@ import cherry.sqlman.PathDef;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
 import cherry.sqlman.db.gen.query.BSqlMetadata;
-import cherry.sqlman.tool.shared.MetadataCondition;
-import cherry.sqlman.tool.shared.MetadataService;
+import cherry.sqlman.tool.metadata.MetadataCondition;
+import cherry.sqlman.tool.metadata.MetadataService;
 
 @Controller
 public class SqlSearchControllerImpl implements SqlSearchController {

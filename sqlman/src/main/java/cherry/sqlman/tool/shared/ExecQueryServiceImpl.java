@@ -49,7 +49,8 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	private Paginator paginator;
 
 	@Override
-	public PageSet query(String databaseName, final String sql, final Map<String, ?> paramMap, final Consumer consumer) {
+	public PageSet query(String databaseName, final QueryBuilder queryBuilder, final Map<String, ?> paramMap,
+			final Consumer consumer) {
 
 		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
 		PlatformTransactionManager txMgr = new DataSourceTransactionManager(dataSource);
@@ -62,7 +63,8 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 			public PageSet doInTransaction(TransactionStatus status) {
 				try {
 
-					long numOfItems = extractor.extract(dataSource, sql, paramMap, consumer, new NoneLimiter());
+					long numOfItems = extractor.extract(dataSource, queryBuilder.build(), paramMap, consumer,
+							new NoneLimiter());
 					PageSet pageSet = paginator.paginate(0L, numOfItems, (numOfItems <= 0L ? 1L : numOfItems));
 
 					return pageSet;

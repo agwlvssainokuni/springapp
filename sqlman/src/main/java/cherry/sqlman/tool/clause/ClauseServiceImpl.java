@@ -19,18 +19,16 @@ package cherry.sqlman.tool.clause;
 import static cherry.foundation.querydsl.QueryDslUtil.currentTimestamp;
 import static com.google.common.base.Preconditions.checkState;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.bizdtm.BizDateTime;
 import cherry.sqlman.SqlType;
 import cherry.sqlman.db.gen.query.BSqlClause;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
 import cherry.sqlman.db.gen.query.QSqlClause;
-import cherry.sqlman.tool.shared.MetadataService;
+import cherry.sqlman.tool.metadata.MetadataService;
 
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQueryFactory;
 
 @Service
@@ -42,61 +40,71 @@ public class ClauseServiceImpl implements ClauseService {
 	@Autowired
 	private MetadataService metadataService;
 
-	@Autowired
-	private BizDateTime bizDateTime;
-
 	private final QSqlClause c = new QSqlClause("c");
 
 	@Transactional(readOnly = true)
 	@Override
-	public BSqlClause findById(int id) {
-		return queryFactory.from(c).where(c.id.eq(id)).uniqueResult(c);
+	public SqlClauseForm findById(int id) {
+
+		Tuple tuple = queryFactory
+				.from(c)
+				.where(c.id.eq(id))
+				.uniqueResult(c.databaseName, c.selectClause, c.fromClause, c.whereClause, c.groupByClause,
+						c.havingClause, c.orderByClause, c.paramMap, c.lockVersion);
+		if (tuple == null) {
+			return null;
+		}
+
+		SqlClauseForm form = new SqlClauseForm();
+		form.setDatabaseName(tuple.get(c.databaseName));
+		form.setSelect(tuple.get(c.selectClause));
+		form.setFrom(tuple.get(c.fromClause));
+		form.setWhere(tuple.get(c.whereClause));
+		form.setGroupBy(tuple.get(c.groupByClause));
+		form.setHaving(tuple.get(c.havingClause));
+		form.setOrderBy(tuple.get(c.orderByClause));
+		form.setParamMap(tuple.get(c.paramMap));
+		form.setLockVersion(tuple.get(c.lockVersion));
+		return form;
 	}
 
 	@Transactional
 	@Override
-	public int create(BSqlClause record, String ownedBy) {
+	public int create(SqlClauseForm form, String ownedBy) {
 
-		LocalDateTime now = bizDateTime.now();
+		int id = metadataService.create(SqlType.CLAUSE, ownedBy);
 
-		BSqlMetadata md = new BSqlMetadata();
-		md.setSqlType(SqlType.CLAUSE.code());
-		md.setName(now.toString());
-		md.setDescription(now.toString());
-		md.setOwnedBy(ownedBy);
-		int id = metadataService.create(md);
-
-		BSqlClause r = new BSqlClause();
-		r.setId(id);
-		r.setDatabaseName(record.getDatabaseName());
-		r.setSelectClause(record.getSelectClause());
-		r.setFromClause(record.getFromClause());
-		r.setWhereClause(record.getWhereClause());
-		r.setGroupByClause(record.getGroupByClause());
-		r.setHavingClause(record.getHavingClause());
-		r.setOrderByClause(record.getOrderByClause());
-		r.setParamMap(record.getParamMap());
-		long count = queryFactory.insert(c).populate(r).execute();
-		checkState(count == 1L, "failed to create %s: %s", c.getTableName(), r);
+		BSqlClause record = new BSqlClause();
+		record.setId(id);
+		record.setDatabaseName(form.getDatabaseName());
+		record.setSelectClause(form.getSelect());
+		record.setFromClause(form.getFrom());
+		record.setWhereClause(form.getWhere());
+		record.setGroupByClause(form.getGroupBy());
+		record.setHavingClause(form.getHaving());
+		record.setOrderByClause(form.getOrderBy());
+		record.setParamMap(form.getParamMap());
+		long count = queryFactory.insert(c).populate(record).execute();
+		checkState(count == 1L, "failed to create %s: %s", c.getTableName(), record);
 
 		return id;
 	}
 
 	@Transactional
 	@Override
-	public boolean update(BSqlClause record) {
-		BSqlClause r = new BSqlClause();
-		r.setDatabaseName(record.getDatabaseName());
-		r.setSelectClause(record.getSelectClause());
-		r.setFromClause(record.getFromClause());
-		r.setWhereClause(record.getWhereClause());
-		r.setGroupByClause(record.getGroupByClause());
-		r.setHavingClause(record.getHavingClause());
-		r.setOrderByClause(record.getOrderByClause());
-		r.setParamMap(record.getParamMap());
-		long count = queryFactory.update(c).populate(r).set(c.lockVersion, c.lockVersion.add(1))
-				.set(c.updatedAt, currentTimestamp())
-				.where(c.id.eq(record.getId()), c.lockVersion.eq(record.getLockVersion())).execute();
+	public boolean update(int id, SqlClauseForm form) {
+		BSqlClause record = new BSqlClause();
+		record.setDatabaseName(form.getDatabaseName());
+		record.setSelectClause(form.getSelect());
+		record.setFromClause(form.getFrom());
+		record.setWhereClause(form.getWhere());
+		record.setGroupByClause(form.getGroupBy());
+		record.setHavingClause(form.getHaving());
+		record.setOrderByClause(form.getOrderBy());
+		record.setParamMap(form.getParamMap());
+		long count = queryFactory.update(c).populate(record).set(c.lockVersion, c.lockVersion.add(1))
+				.set(c.updatedAt, currentTimestamp()).where(c.id.eq(id), c.lockVersion.eq(form.getLockVersion()))
+				.execute();
 		return count == 1L;
 	}
 

@@ -14,21 +14,36 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool.shared;
+package cherry.sqlman.tool.metadata;
 
-import cherry.goods.paginate.PagedList;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
+import java.util.List;
 
-public interface MetadataService {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	BSqlMetadata findById(int id, String loginId);
+import org.joda.time.LocalDateTime;
 
-	int create(BSqlMetadata record);
+import cherry.sqlman.Published;
+import cherry.sqlman.SqlType;
 
-	boolean update(BSqlMetadata record);
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class MetadataCondition {
 
-	boolean delete(int id, int lockVersion);
+	private String name;
 
-	PagedList<BSqlMetadata> search(MetadataCondition cond, long pageNo, long pageSz);
+	private List<SqlType> sqlType;
+
+	private List<Published> published;
+
+	private LocalDateTime registeredFrom;
+
+	private LocalDateTime registeredTo;
+
+	private String loginId;
 
 }

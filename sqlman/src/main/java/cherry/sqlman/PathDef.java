@@ -25,9 +25,17 @@ public class PathDef {
 
 	public static final String URI_TOOL_SEARCH = "/tool/search";
 
+	public static final String URI_TOOL_CLAUSE = "/tool/clause";
+
+	public static final String URI_TOOL_CLAUSE_ID = "/tool/clause/{id}";
+
 	public static final String VIEW_TOOL_HOME = "tool/home";
 
 	public static final String VIEW_TOOL_SEARCH = "tool/search/page";
+
+	public static final String VIEW_TOOL_CLAUSE = "tool/clause/page";
+
+	public static final String VIEW_TOOL_CLAUSE_ID = "tool/clause/pageId";
 
 	// 管理者画面
 	public static final String URI_ADMIN = "/admin/**";
@@ -38,6 +46,20 @@ public class PathDef {
 
 	// サブURI
 	public static final String SUBURI_EXECUTE = "execute";
+
+	public static final String SUBURI_METADATA = "metadata";
+
+	// メソッド識別パラメタ
+	public static final String METHOD_DOWNLOAD = "download";
+
+	public static final String METHOD_CREATE = "create";
+
+	public static final String METHOD_UPDATE = "update";
+
+	// リクエストパラメタ
+	public static final String PARAM_REF = "ref";
+
+	public static final String PATHVAR_ID = "id";
 
 	// ログイン画面
 	public static final String URI_LOGIN = "/login/start";

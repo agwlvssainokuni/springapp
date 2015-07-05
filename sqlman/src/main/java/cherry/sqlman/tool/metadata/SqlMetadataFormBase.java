@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool;
+package cherry.sqlman.tool.metadata;
 
 import java.io.Serializable;
 

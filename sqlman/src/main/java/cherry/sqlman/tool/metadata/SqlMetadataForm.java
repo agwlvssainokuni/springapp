@@ -14,36 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool.shared;
-
-import java.util.List;
+package cherry.sqlman.tool.metadata;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.joda.time.LocalDateTime;
-
-import cherry.sqlman.Published;
-import cherry.sqlman.SqlType;
-
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = false)
-public class MetadataCondition {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqlMetadataForm extends SqlMetadataFormBase {
 
-	private String name;
-
-	private List<SqlType> sqlType;
-
-	private List<Published> published;
-
-	private LocalDateTime registeredFrom;
-
-	private LocalDateTime registeredTo;
-
-	private String loginId;
+	private static final long serialVersionUID = 1L;
 
 }
