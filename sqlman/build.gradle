@@ -1,6 +1,7 @@
 apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
+apply plugin: "jettyEclipse"
 
 dependencies {
 	compile project(":goods")
@@ -37,12 +38,23 @@ war {
 }
 
 buildscript {
-	repositories { mavenCentral() }
-	dependencies { classpath "com.h2database:h2:${versionH2db}" }
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath "com.sahlbach.gradle:gradle-jetty-eclipse-plugin:1.9.+"
+		classpath "com.h2database:h2:${versionH2db}"
+	}
 }
 
 [jettyRun, jettyRunWar]*.with {
 	jettyConfig = file("jetty-config.xml")
+	additionalRuntimeJars = buildscript.configurations.classpath
+}
+
+jettyEclipse {
+	jettyConfig = file("jetty-eclipse-config.xml")
 	additionalRuntimeJars = buildscript.configurations.classpath
 }
 
