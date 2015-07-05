@@ -17,6 +17,7 @@
 package cherry.sqlman.secure;
 
 import static cherry.foundation.querydsl.QueryDslUtil.currentTimestamp;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,9 @@ public class MetadataServiceImpl implements MetadataService {
 		r.setName(record.getName());
 		r.setDescription(record.getDescription());
 		r.setOwnedBy(record.getOwnedBy());
-		return queryFactory.insert(m).populate(r).executeWithKey(m.id);
+		Integer id = queryFactory.insert(m).populate(r).executeWithKey(m.id);
+		checkState(id != null, "failed to create %s: %s", m.getTableName(), r);
+		return id.intValue();
 	}
 
 	@Transactional
