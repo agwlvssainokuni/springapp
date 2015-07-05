@@ -26,11 +26,15 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" media="screen"
 	href="<c:url value="/normal/style/general.css"/>" />
+<link rel="stylesheet" media="screen"
+	href="<c:url value="/normal/style/sqlman.css"/>" />
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/normal/script/general.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/normal/script/sqlman.js" />"></script>
 </head>
 <body role="document">
 	<div class="navbar navbar-default" role="navigation">
