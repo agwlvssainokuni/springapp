@@ -18,14 +18,14 @@
 <foundation:getBean var="dataSourceDef"
 	beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
-	<s:message code="tool/clause/pageId.message.0" />
+	<s:message code="tool/clause/page.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#metadataForm"><s:message
-						code="tool/clause/pageId.message.1" /></a>
+						code="tool/clause/page.message.1" /></a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -89,7 +89,7 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/clause/pageId.updateButton" />
+								<s:message code="tool/clause/page.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -101,7 +101,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#clauseForm"><s:message
-						code="tool/clause/pageId.message.2" /></a>
+						code="tool/clause/page.message.2" /></a>
 			</h3>
 		</div>
 		<div id="clauseForm"
@@ -222,13 +222,13 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/clause/pageId.execButton" />
+								<s:message code="tool/clause/page.execButton" />
 							</f:button>
 							<f:button type="submit" name="download" class="btn btn-default">
-								<s:message code="tool/clause/pageId.downloadButton" />
+								<s:message code="tool/clause/page.downloadButton" />
 							</f:button>
 							<f:button type="submit" name="update" class="btn btn-default">
-								<s:message code="tool/clause/pageId.updateButton" />
+								<s:message code="tool/clause/page.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -241,7 +241,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<a data-toggle="collapse" href="#clauseResult"><s:message
-							code="tool/clause/pageId.message.3" /></a>
+							code="tool/clause/page.message.3" /></a>
 				</h3>
 			</div>
 			<div id="clauseResult" class="panel-collapse collapse in">

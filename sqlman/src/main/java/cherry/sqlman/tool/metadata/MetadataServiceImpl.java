@@ -85,6 +85,8 @@ public class MetadataServiceImpl implements MetadataService {
 		record.setName(now.toString());
 		record.setDescription(now.toString());
 		record.setOwnedBy(ownedBy);
+		record.setRegisteredAt(now);
+		record.setChangedAt(now);
 		Integer id = queryFactory.insert(m).populate(record).executeWithKey(m.id);
 		checkState(id != null, "failed to create %s: %s", m.getTableName(), record);
 		return id.intValue();

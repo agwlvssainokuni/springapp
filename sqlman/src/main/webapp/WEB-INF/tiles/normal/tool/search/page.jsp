@@ -200,7 +200,7 @@
 										<td><s:bind path="registeredAt">${status.value}</s:bind></td>
 										<td><s:bind path="publishedFlg">
 												<s:message
-													code="tool/search/page.column.publishedFlg.${status.actualValue.code()}" />
+													code="tool/search/page.column.publishedFlg.${status.actualValue}" />
 											</s:bind></td>
 										<td><s:bind path="ownedBy">${status.value}</s:bind></td>
 										<td><s:bind path="description">${status.value}</s:bind></td>
