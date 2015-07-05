@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.querydsl.QueryConfigurer;
 import cherry.foundation.querydsl.QueryDslSupport;
-import cherry.foundation.type.FlagCode;
 import cherry.goods.paginate.PagedList;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
@@ -121,10 +120,10 @@ public class MetadataServiceImpl implements MetadataService {
 				}
 
 				BooleanBuilder bb = new BooleanBuilder();
-				if (cond.getPublishedFlg().isEmpty() || cond.getPublishedFlg().contains(FlagCode.TRUE)) {
+				if (cond.getPublished().isEmpty() || cond.getPublished().contains(Published.PUBLIC)) {
 					bb.or(m.publishedFlg.ne(Published.PRIVATE.code()));
 				}
-				if (cond.getPublishedFlg().isEmpty() || cond.getPublishedFlg().contains(FlagCode.FALSE)) {
+				if (cond.getPublished().isEmpty() || cond.getPublished().contains(Published.PRIVATE)) {
 					bb.or(m.publishedFlg.eq(Published.PRIVATE.code()).and(m.ownedBy.eq(cond.getLoginId())));
 				}
 				query.where(bb);

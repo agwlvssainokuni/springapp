@@ -19,14 +19,25 @@ package cherry.sqlman;
 public class PathDef {
 
 	// 利用者画面
-	public static final String URI_HOME = "/tool";
+	public static final String URI_TOOL = "/tool/**";
 
-	public static final String VIEW_HOME = "tool/home";
+	public static final String URI_TOOL_HOME = "/tool";
+
+	public static final String URI_TOOL_SEARCH = "/tool/search";
+
+	public static final String VIEW_TOOL_HOME = "tool/home";
+
+	public static final String VIEW_TOOL_SEARCH = "tool/search/page";
 
 	// 管理者画面
+	public static final String URI_ADMIN = "/admin/**";
+
 	public static final String URI_ADMIN_HOME = "/admin";
 
 	public static final String VIEW_ADMIN_HOME = "admin/home";
+
+	// サブURI
+	public static final String SUBURI_EXECUTE = "execute";
 
 	// ログイン画面
 	public static final String URI_LOGIN = "/login/start";

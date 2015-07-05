@@ -32,7 +32,7 @@ public class HomeControllerImpl implements HomeController {
 
 	@Override
 	public ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		return new ModelAndView(PathDef.VIEW_HOME);
+		return new ModelAndView(PathDef.VIEW_TOOL_HOME);
 	}
 
 }

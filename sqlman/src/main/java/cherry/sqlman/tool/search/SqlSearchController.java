@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool;
+package cherry.sqlman.tool.search;
 
 import java.util.Locale;
 
@@ -22,15 +22,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.sqlman.PathDef;
 
-@RequestMapping(PathDef.URI_TOOL_HOME)
-public interface HomeController {
+@SessionAttributes(types = SqlSearchForm.class)
+@RequestMapping(PathDef.URI_TOOL_SEARCH)
+public interface SqlSearchController {
 
 	@RequestMapping()
-	ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication authentication, Locale locale, SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@Validated SqlSearchForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

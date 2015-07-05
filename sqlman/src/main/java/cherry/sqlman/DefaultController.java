@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping({ "/secure/**", "/admin/**" })
+@RequestMapping({ PathDef.URI_TOOL, PathDef.URI_ADMIN })
 public interface DefaultController {
 
 	@RequestMapping()

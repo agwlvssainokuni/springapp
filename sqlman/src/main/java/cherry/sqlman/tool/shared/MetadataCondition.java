@@ -25,7 +25,7 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
-import cherry.foundation.type.FlagCode;
+import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
 
 @Getter
@@ -38,7 +38,7 @@ public class MetadataCondition {
 
 	private List<SqlType> sqlType;
 
-	private List<FlagCode> publishedFlg;
+	private List<Published> published;
 
 	private LocalDateTime registeredFrom;
 

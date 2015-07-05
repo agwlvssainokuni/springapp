@@ -35,6 +35,7 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
+				<value>message/code</value>
 				<value>message/error</value>
 				<value>message/form</value>
 				<value>message/page</value>
