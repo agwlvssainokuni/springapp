@@ -29,6 +29,10 @@ public class PathDef {
 
 	public static final String URI_TOOL_CLAUSE_ID = "/tool/clause/{id}";
 
+	public static final String URI_TOOL_STATEMENT = "/tool/statement";
+
+	public static final String URI_TOOL_STATEMENT_ID = "/tool/statement/{id}";
+
 	public static final String VIEW_TOOL_HOME = "tool/home";
 
 	public static final String VIEW_TOOL_SEARCH = "tool/search/page";
@@ -36,6 +40,10 @@ public class PathDef {
 	public static final String VIEW_TOOL_CLAUSE = "tool/clause/page";
 
 	public static final String VIEW_TOOL_CLAUSE_ID = "tool/clause/pageId";
+
+	public static final String VIEW_TOOL_STATEMENT = "tool/statement/page";
+
+	public static final String VIEW_TOOL_STATEMENT_ID = "tool/statement/pageId";
 
 	// 管理者画面
 	public static final String URI_ADMIN = "/admin/**";

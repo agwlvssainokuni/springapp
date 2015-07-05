@@ -52,33 +52,6 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Override
 	public PageSet query(String databaseName, final QueryBuilder queryBuilder, final Map<String, ?> paramMap,
-			final Consumer consumer) {
-
-		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-		PlatformTransactionManager txMgr = new DataSourceTransactionManager(dataSource);
-		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
-		txDef.setReadOnly(true);
-
-		TransactionOperations txOp = new TransactionTemplate(txMgr, txDef);
-		return txOp.execute(new TransactionCallback<PageSet>() {
-			@Override
-			public PageSet doInTransaction(TransactionStatus status) {
-				try {
-
-					long numOfItems = extractor.extract(dataSource, queryBuilder.build(), paramMap, consumer,
-							new NoneLimiter());
-					PageSet pageSet = paginator.paginate(0L, numOfItems, (numOfItems <= 0L ? 1L : numOfItems));
-
-					return pageSet;
-				} catch (IOException ex) {
-					throw new IllegalStateException(ex);
-				}
-			}
-		});
-	}
-
-	@Override
-	public PageSet query(String databaseName, final QueryBuilder queryBuilder, final Map<String, ?> paramMap,
 			final long pageNo, final long pageSz, final Consumer consumer) {
 
 		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
@@ -101,6 +74,36 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 					if (numOfItems != pageSet.getCurrent().getCount()) {
 						throw new IllegalStateException();
 					}
+
+					return pageSet;
+				} catch (IOException ex) {
+					throw new IllegalStateException(ex);
+				}
+			}
+		});
+	}
+
+	@Override
+	public PageSet query(String databaseName, QueryBuilder queryBuilder, Map<String, ?> paramMap, Consumer consumer) {
+		return query(databaseName, queryBuilder.build(), paramMap, consumer);
+	}
+
+	@Override
+	public PageSet query(String databaseName, final String sql, final Map<String, ?> paramMap, final Consumer consumer) {
+
+		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(dataSource);
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setReadOnly(true);
+
+		TransactionOperations txOp = new TransactionTemplate(txMgr, txDef);
+		return txOp.execute(new TransactionCallback<PageSet>() {
+			@Override
+			public PageSet doInTransaction(TransactionStatus status) {
+				try {
+
+					long numOfItems = extractor.extract(dataSource, sql, paramMap, consumer, new NoneLimiter());
+					PageSet pageSet = paginator.paginate(0L, numOfItems, (numOfItems <= 0L ? 1L : numOfItems));
 
 					return pageSet;
 				} catch (IOException ex) {
