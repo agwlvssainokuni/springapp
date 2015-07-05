@@ -14,36 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.sqlman;
+package cherry.sqlman.secure.shared;
 
-import cherry.foundation.type.Code;
+import java.util.List;
 
-public enum Published implements Code<Integer> {
-	//
-	PUBLIC(1),
-	//
-	PRIVATE(0);
+import javax.sql.DataSource;
 
-	private final Integer value;
+public interface DataSourceDef {
 
-	private Published(Integer value) {
-		this.value = value;
-	}
+	String getDefaultName();
 
-	public Integer code() {
-		return this.value;
-	}
+	List<String> getNames();
 
-	public boolean isPublished() {
-		return this != PRIVATE;
-	}
-
-	public static Published valueOf(boolean v) {
-		return v ? PUBLIC : PRIVATE;
-	}
-
-	public static Published valueOf(int v) {
-		return v != PRIVATE.code().intValue() ? PUBLIC : PRIVATE;
-	}
+	DataSource getDataSource(String name);
 
 }
