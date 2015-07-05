@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -44,6 +45,7 @@ import cherry.sqlman.tool.metadata.SqlMetadataForm;
 import cherry.sqlman.tool.shared.ResultSet;
 import cherry.sqlman.tool.util.Util;
 
+@Controller
 public class SqlStatementIdControllerImpl extends SqlStatementSupport implements SqlStatementIdController {
 
 	@Autowired
