@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.sqlman;
+package cherry.sqlman.tool;
 
-public class PathDef {
+import java.util.Locale;
 
-	// 利用者画面
-	public static final String URI_HOME = "/tool";
+import javax.servlet.http.HttpServletRequest;
 
-	public static final String VIEW_HOME = "tool/home";
+import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
-	// 管理者画面
-	public static final String URI_ADMIN_HOME = "/admin";
+import cherry.sqlman.PathDef;
 
-	public static final String VIEW_ADMIN_HOME = "admin/home";
+@Controller
+public class HomeControllerImpl implements HomeController {
 
-	// ログイン画面
-	public static final String URI_LOGIN = "/login/start";
-
-	public static final String METHOD_LOGIN_FAILED = "loginFailed";
-
-	public static final String METHOD_LOGGED_OUT = "loggedOut";
+	@Override
+	public ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
+		return new ModelAndView(PathDef.VIEW_HOME);
+	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.sqlman;
+package cherry.sqlman.tool;
 
-public class PathDef {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	// 利用者画面
-	public static final String URI_HOME = "/tool";
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqlMetadataForm extends SqlMetadataFormBase {
 
-	public static final String VIEW_HOME = "tool/home";
-
-	// 管理者画面
-	public static final String URI_ADMIN_HOME = "/admin";
-
-	public static final String VIEW_ADMIN_HOME = "admin/home";
-
-	// ログイン画面
-	public static final String URI_LOGIN = "/login/start";
-
-	public static final String METHOD_LOGIN_FAILED = "loginFailed";
-
-	public static final String METHOD_LOGGED_OUT = "loggedOut";
+	private static final long serialVersionUID = 1L;
 
 }

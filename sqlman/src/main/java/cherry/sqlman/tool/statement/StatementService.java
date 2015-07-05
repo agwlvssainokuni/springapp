@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.sqlman;
+package cherry.sqlman.tool.statement;
 
-public class PathDef {
+import cherry.sqlman.db.gen.query.BSqlStatement;
 
-	// 利用者画面
-	public static final String URI_HOME = "/tool";
+public interface StatementService {
 
-	public static final String VIEW_HOME = "tool/home";
+	BSqlStatement findById(int id);
 
-	// 管理者画面
-	public static final String URI_ADMIN_HOME = "/admin";
+	int create(BSqlStatement record, String ownedBy);
 
-	public static final String VIEW_ADMIN_HOME = "admin/home";
+	boolean update(BSqlStatement record);
 
-	// ログイン画面
-	public static final String URI_LOGIN = "/login/start";
-
-	public static final String METHOD_LOGIN_FAILED = "loginFailed";
-
-	public static final String METHOD_LOGGED_OUT = "loggedOut";
+	boolean delete(int id, int lockVersion);
 
 }

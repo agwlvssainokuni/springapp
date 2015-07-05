@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.sqlman;
+package cherry.sqlman.tool.shared;
 
-public class PathDef {
+import java.util.Map;
 
-	// 利用者画面
-	public static final String URI_HOME = "/tool";
+import cherry.foundation.etl.Consumer;
+import cherry.goods.paginate.PageSet;
 
-	public static final String VIEW_HOME = "tool/home";
+public interface ExecQueryService {
 
-	// 管理者画面
-	public static final String URI_ADMIN_HOME = "/admin";
+	PageSet query(String databaseName, String sql, Map<String, ?> paramMap, Consumer consumer);
 
-	public static final String VIEW_ADMIN_HOME = "admin/home";
-
-	// ログイン画面
-	public static final String URI_LOGIN = "/login/start";
-
-	public static final String METHOD_LOGIN_FAILED = "loginFailed";
-
-	public static final String METHOD_LOGGED_OUT = "loggedOut";
+	PageSet query(String databaseName, QueryBuilder queryBuilder, Map<String, ?> paramMap, long pageNo, long pageSz,
+			Consumer consumer);
 
 }

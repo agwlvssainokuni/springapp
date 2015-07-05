@@ -52,10 +52,10 @@
 	</security:authentication-manager>
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
-		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/tool/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/admin/**" access="isAuthenticated()" />
 		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
-			authentication-failure-url="/login/start?loginFailed" default-target-url="/secure/" always-use-default-target="false"
+			authentication-failure-url="/login/start?loginFailed" default-target-url="/tool/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout" logout-success-url="/login/start?loggedOut" invalidate-session="true" />
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
@@ -74,7 +74,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
-			<mvc:mapping path="/secure/**" />
+			<mvc:mapping path="/tool/**" />
 			<mvc:mapping path="/admin/**" />
 			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
@@ -160,6 +160,8 @@
 			</bean>
 		</property>
 	</bean>
+
+	<bean id="bizDateTime" class="cherry.foundation.bizdtm.SimpleBizDateTime" />
 
 	<bean id="codeStore" class="cherry.foundation.code.SimpleCodeStore" />
 

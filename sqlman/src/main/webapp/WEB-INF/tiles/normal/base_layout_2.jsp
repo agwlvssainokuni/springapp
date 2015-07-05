@@ -49,10 +49,10 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a hreF="<c:url value="/secure/" />"><span
+					<li><a hreF="<c:url value="/tool/" />"><span
 							class="glyphicon glyphicon-home"></span> <s:message
 								code="base/auth.menu.home" /></a></li>
-					<li><a hreF="<c:url value="/secure/passwd" />"><span
+					<li><a hreF="<c:url value="/tool/passwd" />"><span
 							class="glyphicon glyphicon-user"></span> <s:message
 								code="base/auth.menu.passwd" /></a></li>
 				</ul>
