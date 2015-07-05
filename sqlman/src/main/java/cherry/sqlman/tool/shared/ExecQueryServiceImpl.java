@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -37,6 +38,7 @@ import cherry.foundation.etl.NoneLimiter;
 import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.Paginator;
 
+@Service
 public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Autowired

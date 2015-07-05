@@ -6,7 +6,7 @@
 <%@ attribute name="id" required="true" rtexprvalue="true"
 	type="java.lang.String"%>
 <%@ attribute name="resultSet" required="true" rtexprvalue="true"
-	type="cherry.sqlapp.service.sqltool.exec.ResultSet"%>
+	type="cherry.sqlman.tool.shared.ResultSet"%>
 <%@ attribute name="pageSet" required="true" rtexprvalue="true"
 	type="cherry.goods.paginate.PageSet"%>
 <table id="${id}" class="table table-striped">
