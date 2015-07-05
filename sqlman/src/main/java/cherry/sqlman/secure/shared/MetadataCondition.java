@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.secure;
+package cherry.sqlman.secure.shared;
 
 import java.util.List;
 

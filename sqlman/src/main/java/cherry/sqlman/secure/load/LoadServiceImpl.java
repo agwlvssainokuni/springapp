@@ -29,7 +29,7 @@ import cherry.sqlman.SqlType;
 import cherry.sqlman.db.gen.query.BSqlLoad;
 import cherry.sqlman.db.gen.query.BSqlMetadata;
 import cherry.sqlman.db.gen.query.QSqlLoad;
-import cherry.sqlman.secure.MetadataService;
+import cherry.sqlman.secure.shared.MetadataService;
 
 import com.mysema.query.sql.SQLQueryFactory;
 
