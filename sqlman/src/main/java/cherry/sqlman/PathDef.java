@@ -33,6 +33,10 @@ public class PathDef {
 
 	public static final String URI_TOOL_STATEMENT_ID = "/tool/statement/{id}";
 
+	public static final String URI_TOOL_LOAD = "/tool/load";
+
+	public static final String URI_TOOL_LOAD_ID = "/tool/load/{id}";
+
 	public static final String VIEW_TOOL_HOME = "tool/home";
 
 	public static final String VIEW_TOOL_SEARCH = "tool/search/page";
@@ -45,6 +49,10 @@ public class PathDef {
 
 	public static final String VIEW_TOOL_STATEMENT_ID = "tool/statement/pageId";
 
+	public static final String VIEW_TOOL_LOAD = "tool/load/page";
+
+	public static final String VIEW_TOOL_LOAD_ID = "tool/load/pageId";
+
 	// 管理者画面
 	public static final String URI_ADMIN = "/admin/**";
 
@@ -53,6 +61,8 @@ public class PathDef {
 	public static final String VIEW_ADMIN_HOME = "admin/home";
 
 	// サブURI
+	public static final String SUBURI_START = "start";
+
 	public static final String SUBURI_EXECUTE = "execute";
 
 	public static final String SUBURI_METADATA = "metadata";
