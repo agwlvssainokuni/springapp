@@ -72,7 +72,7 @@ public class LoadServiceImpl implements LoadService {
 		record.setId(id);
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
-		long count = queryFactory.update(l).populate(record).execute();
+		long count = queryFactory.insert(l).populate(record).execute();
 		checkState(count == 1L, "failed to create %s: %s", l.getTableName(), record);
 
 		return id;
