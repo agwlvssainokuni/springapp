@@ -54,6 +54,6 @@ public interface SqlLoadController {
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
 	ModelAndView create(@Validated SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+			SitePreference sitePref, HttpServletRequest request, SessionStatus status);
 
 }

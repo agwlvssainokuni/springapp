@@ -135,7 +135,6 @@ public class SqlClauseControllerImpl extends SqlClauseSupport implements SqlClau
 
 		UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).init(id, auth, locale, sitePref, request))
 				.build();
-
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;

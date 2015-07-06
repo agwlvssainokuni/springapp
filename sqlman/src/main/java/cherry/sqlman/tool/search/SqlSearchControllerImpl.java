@@ -16,6 +16,9 @@
 
 package cherry.sqlman.tool.search;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -29,7 +32,10 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.goods.paginate.PagedList;
@@ -56,7 +62,8 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 	@Autowired
 	private BizDateTime bizDateTime;
 
-	private SqlSearchForm getForm() {
+	@Override
+	public SqlSearchForm getForm() {
 		LocalDate today = bizDateTime.today();
 		SqlSearchForm form = new SqlSearchForm();
 
@@ -76,7 +83,16 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_SEARCH);
-		mav.addObject(getForm());
+		return mav;
+	}
+
+	@Override
+	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status) {
+		status.setComplete();
+		UriComponents uc = fromMethodCall(on(SqlSearchController.class).init(auth, locale, sitePref, request)).build();
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 

@@ -122,7 +122,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 
 	@Override
 	public ModelAndView update(int id, SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, HttpServletRequest request, SessionStatus status) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
@@ -130,6 +130,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 		}
 
 		if (loadService.update(id, form)) {
+			status.setComplete();
 			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).init(id, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();

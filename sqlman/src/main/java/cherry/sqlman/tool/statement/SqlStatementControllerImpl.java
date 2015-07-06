@@ -139,7 +139,6 @@ public class SqlStatementControllerImpl extends SqlStatementSupport implements S
 
 		UriComponents uc = fromMethodCall(on(SqlStatementIdController.class).init(id, auth, locale, sitePref, request))
 				.build();
-
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;

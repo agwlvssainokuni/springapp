@@ -85,7 +85,6 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 		status.setComplete();
 
 		UriComponents uc = fromMethodCall(on(SqlLoadController.class).init(auth, locale, sitePref, request)).build();
-
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
@@ -103,12 +102,10 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 		try {
 
 			FileProcessResult result = handleFile(form.getFile(), form.getDatabaseName(), form.getSql());
-
 			redirAttr.addFlashAttribute(result);
 
 			UriComponents uc = fromMethodCall(on(SqlLoadController.class).init(auth, locale, sitePref, request))
 					.build();
-
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
@@ -121,7 +118,7 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 
 	@Override
 	public ModelAndView create(SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, HttpServletRequest request, SessionStatus status) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD);
@@ -129,10 +126,10 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 		}
 
 		int id = loadService.create(form, auth.getName());
+		status.setComplete();
 
-		UriComponents uc = fromMethodCall(
-				on(SqlLoadIdController.class).start(id, auth, locale, sitePref, request, null)).build();
-
+		UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).init(id, auth, locale, sitePref, request))
+				.build();
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;

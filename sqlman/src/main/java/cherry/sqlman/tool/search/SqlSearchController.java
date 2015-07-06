@@ -24,18 +24,27 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.sqlman.PathDef;
 
-@SessionAttributes(types = SqlSearchForm.class)
 @RequestMapping(PathDef.URI_TOOL_SEARCH)
+@SessionAttributes(types = SqlSearchForm.class)
 public interface SqlSearchController {
 
+	@ModelAttribute()
+	SqlSearchForm getForm();
+
 	@RequestMapping()
-	ModelAndView init(Authentication authentication, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(PathDef.SUBURI_START)
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqlSearchForm form, BindingResult binding, Authentication auth, Locale locale,
