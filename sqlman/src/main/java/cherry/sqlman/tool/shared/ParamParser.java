@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 public class ParamParser {
 
 	@Autowired
-	@Qualifier("objectMapper")
+	@Qualifier("yamlObjectMapper")
 	private ObjectMapper objectMapper;
 
 	public Map<String, ?> parseMap(String pmap) {

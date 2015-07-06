@@ -1,4 +1,4 @@
 sqlStatementForm.databaseName=DATABASE
 sqlStatementForm.sql=SQL
-sqlStatementForm.paramMap=PARAM(JSON)
+sqlStatementForm.paramMap=PARAM(YAML)
 sqlStatementForm.lockVersion=LOCK VERSION
