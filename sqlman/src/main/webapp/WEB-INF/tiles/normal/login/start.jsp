@@ -13,14 +13,15 @@
 </h2>
 <c:if test="${loginFailed != null && loginFailed}">
 	<div class="form-group has-error">
-		<div class="col-sm-10 col-sm-offset-2 help-block bg-danger">
+		<div class="col-sm-10 col-sm-offset-2 alert alert-warning"
+			role="alert">
 			<s:message code="login/start.message.1" />
 		</div>
 	</div>
 </c:if>
 <c:if test="${loggedOut != null && loggedOut}">
 	<div class="form-group has-success">
-		<div class="col-sm-10 col-sm-offset-2 help-block bg-success">
+		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">
 			<s:message code="login/start.message.2" />
 		</div>
 	</div>

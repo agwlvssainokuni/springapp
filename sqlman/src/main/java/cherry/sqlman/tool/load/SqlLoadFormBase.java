@@ -42,6 +42,7 @@ public abstract class SqlLoadFormBase implements Serializable {
 	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class })
 	private String sql;
 
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
 	private org.springframework.web.multipart.MultipartFile file;
 
 	private Integer lockVersion;

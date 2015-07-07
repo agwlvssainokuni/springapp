@@ -26,6 +26,14 @@
 		</div>
 		<div id="loadForm" class="panel-collapse collapse in">
 			<div class="panel-body">
+				<c:if test="${fileProcessResult != null}">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class=" alert alert-success" role="alert">
+							<s:message code="tool/load/page.message.3"
+								arguments="${fileProcessResult.totalCount},${fileProcessResult.okCount},${fileProcessResult.ngCount}" />
+						</div>
+					</div>
+				</c:if>
 				<s:hasBindErrors name="sqlLoadForm">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="alert alert-danger" role="alert">
