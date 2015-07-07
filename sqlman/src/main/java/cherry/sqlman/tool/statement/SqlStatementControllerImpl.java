@@ -112,7 +112,7 @@ public class SqlStatementControllerImpl extends SqlStatementSupport implements S
 			SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT);
 			return mav;
 		}
 

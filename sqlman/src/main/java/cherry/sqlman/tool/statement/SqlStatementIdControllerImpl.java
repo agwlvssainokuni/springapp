@@ -153,7 +153,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}

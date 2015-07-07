@@ -118,6 +118,7 @@
 							<f:errors path="sqlLoadForm" element="div" />
 							<f:errors path="sqlLoadForm.databaseName" element="div" />
 							<f:errors path="sqlLoadForm.sql" element="div" />
+							<f:errors path="sqlLoadForm.file" element="div" />
 							<f:errors path="sqlLoadForm.lockVersion" element="div" />
 						</div>
 					</div>
