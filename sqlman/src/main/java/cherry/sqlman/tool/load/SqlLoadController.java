@@ -42,11 +42,11 @@ public interface SqlLoadController {
 	SqlLoadForm getForm(@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref, Authentication auth);
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_START)
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status);
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,

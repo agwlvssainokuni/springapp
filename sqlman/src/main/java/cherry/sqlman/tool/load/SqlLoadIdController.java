@@ -47,11 +47,11 @@ public interface SqlLoadIdController {
 
 	@RequestMapping()
 	ModelAndView init(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+			SitePreference sitePref, HttpServletRequest request, SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_START)
 	ModelAndView start(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, SessionStatus status);
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlLoadForm form, BindingResult binding,
@@ -60,7 +60,8 @@ public interface SqlLoadIdController {
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_UPDATE)
 	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request, SessionStatus status);
+			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_METADATA)
 	ModelAndView metadata(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlMetadataForm mdForm,

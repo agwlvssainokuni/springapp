@@ -40,11 +40,11 @@ public interface SqlSearchController {
 	SqlSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_START)
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status);
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqlSearchForm form, BindingResult binding, Authentication auth, Locale locale,

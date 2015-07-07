@@ -81,18 +81,18 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 	}
 
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_SEARCH);
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+			SessionStatus status) {
+		status.setComplete();
+		UriComponents uc = fromMethodCall(on(SqlSearchController.class).start(auth, locale, sitePref, request)).build();
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status) {
-		status.setComplete();
-		UriComponents uc = fromMethodCall(on(SqlSearchController.class).init(auth, locale, sitePref, request)).build();
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
+	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_SEARCH);
 		return mav;
 	}
 
