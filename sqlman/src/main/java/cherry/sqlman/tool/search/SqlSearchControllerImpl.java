@@ -44,8 +44,6 @@ import cherry.sqlman.PathDef;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
 import cherry.sqlman.db.gen.query.BSqlMetadata;
-import cherry.sqlman.tool.metadata.MetadataCondition;
-import cherry.sqlman.tool.metadata.MetadataService;
 
 @Controller
 public class SqlSearchControllerImpl implements SqlSearchController {
@@ -57,7 +55,7 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 	private int defaultPageSize;
 
 	@Autowired
-	private MetadataService metadataService;
+	private SearchService searchService;
 
 	@Autowired
 	private BizDateTime bizDateTime;
@@ -105,26 +103,13 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 			return mav;
 		}
 
-		MetadataCondition cond = createSqlCondition(form, auth.getName());
 		long pageNo = form.getPageNo();
 		long pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form.getPageSz());
-
-		PagedList<BSqlMetadata> result = metadataService.search(cond, pageNo, pageSz);
+		PagedList<BSqlMetadata> result = searchService.search(form, auth.getName(), pageNo, pageSz);
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_SEARCH);
 		mav.addObject(result);
 		return mav;
-	}
-
-	private MetadataCondition createSqlCondition(SqlSearchForm form, String loginId) {
-		MetadataCondition cond = new MetadataCondition();
-		cond.setName(form.getName());
-		cond.setSqlType(form.getSqlType());
-		cond.setPublished(form.getPublished());
-		cond.setRegisteredFrom(LocalDateTimeUtil.rangeFrom(form.getRegisteredFromDt(), form.getRegisteredFromTm()));
-		cond.setRegisteredTo(LocalDateTimeUtil.rangeTo(form.getRegisteredToDt(), form.getRegisteredToTm()));
-		cond.setLoginId(loginId);
-		return cond;
 	}
 
 }

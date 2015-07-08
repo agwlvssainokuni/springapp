@@ -19,27 +19,18 @@ package cherry.sqlman.tool.metadata;
 import static cherry.foundation.querydsl.QueryDslUtil.currentTimestamp;
 import static com.google.common.base.Preconditions.checkState;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
-import cherry.foundation.querydsl.QueryConfigurer;
-import cherry.foundation.querydsl.QueryDslSupport;
-import cherry.goods.paginate.PagedList;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
 import cherry.sqlman.db.gen.query.BSqlMetadata;
 import cherry.sqlman.db.gen.query.QSqlMetadata;
 
-import com.mysema.query.BooleanBuilder;
 import com.mysema.query.Tuple;
-import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
 
 @Service
@@ -47,9 +38,6 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Autowired
 	private SQLQueryFactory queryFactory;
-
-	@Autowired
-	private QueryDslSupport queryDslSupport;
 
 	@Autowired
 	private BizDateTime bizDateTime;
@@ -111,60 +99,6 @@ public class MetadataServiceImpl implements MetadataService {
 	public boolean delete(int id, int lockVersion) {
 		long count = queryFactory.delete(m).where(m.id.eq(id), m.lockVersion.eq(lockVersion)).execute();
 		return count == 1L;
-	}
-
-	@Transactional
-	@Override
-	public PagedList<BSqlMetadata> search(MetadataCondition cond, long pageNo, long pageSz) {
-		return queryDslSupport.search(commonClause(m, cond), orderByClause(m, cond), pageNo, pageSz, m);
-	}
-
-	private QueryConfigurer commonClause(final QSqlMetadata m, final MetadataCondition cond) {
-		return new QueryConfigurer() {
-			@Override
-			public SQLQuery configure(SQLQuery query) {
-				query.from(m);
-
-				if (StringUtils.isNotEmpty(cond.getName())) {
-					query.where(m.name.startsWith(cond.getName()));
-				}
-
-				if (cond.getRegisteredFrom() != null) {
-					query.where(m.registeredAt.goe(cond.getRegisteredFrom()));
-				}
-				if (cond.getRegisteredTo() != null) {
-					query.where(m.registeredAt.lt(cond.getRegisteredTo()));
-				}
-
-				BooleanBuilder bb = new BooleanBuilder();
-				if (cond.getPublished().isEmpty() || cond.getPublished().contains(Published.PUBLIC)) {
-					bb.or(m.publishedFlg.ne(Published.PRIVATE.code()));
-				}
-				if (cond.getPublished().isEmpty() || cond.getPublished().contains(Published.PRIVATE)) {
-					bb.or(m.publishedFlg.eq(Published.PRIVATE.code()).and(m.ownedBy.eq(cond.getLoginId())));
-				}
-				query.where(bb);
-
-				if (!cond.getSqlType().isEmpty()) {
-					List<String> code = new ArrayList<>();
-					for (SqlType c : cond.getSqlType()) {
-						code.add(c.code());
-					}
-					query.where(m.sqlType.in(code));
-				}
-
-				return query;
-			}
-		};
-	}
-
-	private QueryConfigurer orderByClause(final QSqlMetadata m, final MetadataCondition cond) {
-		return new QueryConfigurer() {
-			@Override
-			public SQLQuery configure(SQLQuery query) {
-				return query.orderBy(m.id.asc());
-			}
-		};
 	}
 
 }

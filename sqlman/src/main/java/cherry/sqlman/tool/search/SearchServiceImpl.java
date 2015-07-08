@@ -1,0 +1,104 @@
+/*
+ * Copyright 2014,2015 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cherry.sqlman.tool.search;
+
+import static cherry.goods.util.LocalDateTimeUtil.rangeFrom;
+import static cherry.goods.util.LocalDateTimeUtil.rangeTo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cherry.foundation.querydsl.QueryConfigurer;
+import cherry.foundation.querydsl.QueryDslSupport;
+import cherry.goods.paginate.PagedList;
+import cherry.sqlman.Published;
+import cherry.sqlman.SqlType;
+import cherry.sqlman.db.gen.query.BSqlMetadata;
+import cherry.sqlman.db.gen.query.QSqlMetadata;
+
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.sql.SQLQuery;
+
+@Service
+public class SearchServiceImpl implements SearchService {
+
+	@Autowired
+	private QueryDslSupport queryDslSupport;
+
+	private final QSqlMetadata m = new QSqlMetadata("m");
+
+	@Transactional
+	@Override
+	public PagedList<BSqlMetadata> search(SqlSearchForm form, String loginId, long pageNo, long pageSz) {
+		return queryDslSupport.search(commonClause(m, form, loginId), orderByClause(m, form, loginId), pageNo, pageSz,
+				m);
+	}
+
+	private QueryConfigurer commonClause(final QSqlMetadata m, final SqlSearchForm form, final String loginId) {
+		return new QueryConfigurer() {
+			@Override
+			public SQLQuery configure(SQLQuery query) {
+				query.from(m);
+
+				if (StringUtils.isNotEmpty(form.getName())) {
+					query.where(m.name.startsWith(form.getName()));
+				}
+
+				if (form.getRegisteredFromDt() != null) {
+					query.where(m.registeredAt.goe(rangeFrom(form.getRegisteredFromDt(), form.getRegisteredFromTm())));
+				}
+				if (form.getRegisteredToDt() != null) {
+					query.where(m.registeredAt.lt(rangeTo(form.getRegisteredToDt(), form.getRegisteredToTm())));
+				}
+
+				BooleanBuilder bb = new BooleanBuilder();
+				if (form.getPublished().isEmpty() || form.getPublished().contains(Published.PUBLIC)) {
+					bb.or(m.publishedFlg.ne(Published.PRIVATE.code()));
+				}
+				if (form.getPublished().isEmpty() || form.getPublished().contains(Published.PRIVATE)) {
+					bb.or(m.publishedFlg.eq(Published.PRIVATE.code()).and(m.ownedBy.eq(loginId)));
+				}
+				query.where(bb);
+
+				if (!form.getSqlType().isEmpty()) {
+					List<String> code = new ArrayList<>();
+					for (SqlType c : form.getSqlType()) {
+						code.add(c.code());
+					}
+					query.where(m.sqlType.in(code));
+				}
+
+				return query;
+			}
+		};
+	}
+
+	private QueryConfigurer orderByClause(final QSqlMetadata m, final SqlSearchForm form, final String loginId) {
+		return new QueryConfigurer() {
+			@Override
+			public SQLQuery configure(SQLQuery query) {
+				return query.orderBy(m.id.asc());
+			}
+		};
+	}
+
+}

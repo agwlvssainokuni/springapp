@@ -16,9 +16,7 @@
 
 package cherry.sqlman.tool.metadata;
 
-import cherry.goods.paginate.PagedList;
 import cherry.sqlman.SqlType;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
 
 public interface MetadataService {
 
@@ -29,7 +27,5 @@ public interface MetadataService {
 	boolean update(int id, SqlMetadataForm form);
 
 	boolean delete(int id, int lockVersion);
-
-	PagedList<BSqlMetadata> search(MetadataCondition cond, long pageNo, long pageSz);
 
 }
