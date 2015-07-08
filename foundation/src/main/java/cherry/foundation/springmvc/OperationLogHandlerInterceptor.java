@@ -16,6 +16,7 @@
 
 package cherry.foundation.springmvc;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,16 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor, Initi
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-		SecurityContext context = SecurityContextHolder.getContext();
-		MDC.put(LOGIN_ID, context.getAuthentication().getName());
+		Principal principal = request.getUserPrincipal();
+		if (principal == null) {
+			SecurityContext context = SecurityContextHolder.getContext();
+			if (context != null) {
+				principal = context.getAuthentication();
+			}
+		}
+		if (principal != null) {
+			MDC.put(LOGIN_ID, principal.getName());
+		}
 
 		StringBuilder builder = createBasicInfo(request);
 
