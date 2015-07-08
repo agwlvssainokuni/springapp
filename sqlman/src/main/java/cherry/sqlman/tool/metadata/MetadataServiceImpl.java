@@ -59,7 +59,7 @@ public class MetadataServiceImpl implements MetadataService {
 		form.setName(tuple.get(m.name));
 		form.setDescription(tuple.get(m.description));
 		form.setPublishedFlg(Published.valueOf(tuple.get(m.publishedFlg)).isPublished());
-		form.setOwnedBy(loginId);
+		form.setOwnedBy(tuple.get(m.ownedBy));
 		form.setLockVersion(tuple.get(m.lockVersion));
 		return form;
 	}
