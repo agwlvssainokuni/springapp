@@ -17,13 +17,17 @@
 package cherry.sqlman.tool.metadata;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDateTime;
+import org.joda.time.ReadablePartial;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +91,100 @@ public class MetadataServiceImplTest {
 				assertNull(form2);
 			}
 		}
+	}
 
+	@Test
+	public void testCreate() {
+
+		LocalDateTime now1 = bizDateTime.now();
+		int id = metadataService.create(SqlType.CLAUSE, "owner");
+		LocalDateTime now2 = bizDateTime.now();
+
+		BSqlMetadata record = findById(id);
+		assertNotNull(record);
+		assertEquals(id, record.getId().intValue());
+		assertEquals(SqlType.CLAUSE.code(), record.getSqlType());
+		assertEquals(Published.PRIVATE.code(), record.getPublishedFlg());
+		assertEquals("owner", record.getOwnedBy());
+		assertThat(record.getName(), greaterThanOrEqualTo(now1.toString()));
+		assertThat(record.getName(), lessThanOrEqualTo(now2.toString()));
+		assertThat(record.getDescription(), greaterThanOrEqualTo(now1.toString()));
+		assertThat(record.getDescription(), lessThanOrEqualTo(now2.toString()));
+		assertThat(record.getRegisteredAt(), greaterThanOrEqualTo((ReadablePartial) now1));
+		assertThat(record.getRegisteredAt(), lessThanOrEqualTo((ReadablePartial) now2));
+		assertThat(record.getChangedAt(), greaterThanOrEqualTo((ReadablePartial) now1));
+		assertThat(record.getChangedAt(), lessThanOrEqualTo((ReadablePartial) now2));
+		assertEquals(1, record.getLockVersion().intValue());
+	}
+
+	@Test
+	public void testUpdate_ID_LOCKVERSION() {
+
+		int id = create("name", "description", Published.PRIVATE, SqlType.CLAUSE, "owner");
+		BSqlMetadata record0 = findById(id);
+
+		SqlMetadataForm form1 = new SqlMetadataForm();
+		form1.setName("name1");
+		form1.setDescription("description1");
+		form1.setPublishedFlg(Published.PUBLIC.isPublished());
+		form1.setLockVersion(record0.getLockVersion());
+
+		LocalDateTime now1 = bizDateTime.now();
+		boolean updated1 = metadataService.update(id, form1);
+		LocalDateTime now2 = bizDateTime.now();
+		assertTrue(updated1);
+		BSqlMetadata record1 = findById(id);
+		assertEquals("name1", record1.getName());
+		assertEquals("description1", record1.getDescription());
+		assertEquals(Published.PUBLIC.code(), record1.getPublishedFlg());
+		assertEquals(record0.getLockVersion().intValue() + 1, record1.getLockVersion().intValue());
+		assertThat(record1.getChangedAt(), greaterThanOrEqualTo((ReadablePartial) now1));
+		assertThat(record1.getChangedAt(), lessThanOrEqualTo((ReadablePartial) now2));
+
+		// id違い
+		SqlMetadataForm form2 = new SqlMetadataForm();
+		form2.setName("name2");
+		form2.setDescription("description2");
+		form2.setPublishedFlg(Published.PRIVATE.isPublished());
+		form2.setLockVersion(1);
+		boolean updated2 = metadataService.update(id + 1, form1);
+		assertFalse(updated2);
+		BSqlMetadata record2 = findById(id);
+		assertEquals(record1.toString(), record2.toString());
+
+		// lockVersion違い
+		SqlMetadataForm form3 = new SqlMetadataForm();
+		form3.setName("name3");
+		form3.setDescription("description3");
+		form3.setPublishedFlg(Published.PRIVATE.isPublished());
+		form3.setLockVersion(2);
+		boolean updated3 = metadataService.update(id, form1);
+		assertFalse(updated3);
+		BSqlMetadata record3 = findById(id);
+		assertEquals(record1.toString(), record3.toString());
+	}
+
+	@Test
+	public void testDelete_ID_LOCKVERSION() {
+		int id1 = metadataService.create(SqlType.CLAUSE, "owner");
+		BSqlMetadata record1 = findById(id1);
+		boolean result1 = metadataService.delete(id1, record1.getLockVersion().intValue());
+		assertTrue(result1);
+		assertNull(findById(id1));
+
+		// id違い
+		int id2 = metadataService.create(SqlType.CLAUSE, "owner");
+		BSqlMetadata record2 = findById(id2);
+		boolean result2 = metadataService.delete(id2 + 1, record2.getLockVersion().intValue());
+		assertFalse(result2);
+		assertNotNull(findById(id2));
+
+		// id違い
+		int id3 = metadataService.create(SqlType.CLAUSE, "owner");
+		BSqlMetadata record3 = findById(id2);
+		boolean result3 = metadataService.delete(id3, record3.getLockVersion().intValue() + 1);
+		assertFalse(result3);
+		assertNotNull(findById(id3));
 	}
 
 	private int create(String name, String description, Published published, SqlType sqlType, String ownedBy) {
@@ -101,6 +198,10 @@ public class MetadataServiceImplTest {
 		record.setRegisteredAt(now);
 		record.setChangedAt(now);
 		return queryFactory.insert(m).populate(record).executeWithKey(m.id);
+	}
+
+	private BSqlMetadata findById(int id) {
+		return queryFactory.from(m).where(m.id.eq(id)).uniqueResult(m);
 	}
 
 }
