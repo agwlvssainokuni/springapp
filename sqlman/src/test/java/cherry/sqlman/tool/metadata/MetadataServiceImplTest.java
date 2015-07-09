@@ -59,8 +59,6 @@ public class MetadataServiceImplTest {
 	@Autowired
 	private BizDateTime bizDateTime;
 
-	private final QSqlMetadata m = new QSqlMetadata("m");
-
 	@Test
 	public void testFindById_ID_PUBPRV_OWNER() {
 		String ownerId = "owner";
@@ -68,13 +66,17 @@ public class MetadataServiceImplTest {
 		for (String loginId : asList(ownerId, otherId)) {
 			for (Published pubprv : asList(Published.PRIVATE, Published.PUBLIC)) {
 
-				int id = create("name", "description", pubprv, SqlType.CLAUSE, ownerId);
+				LocalDateTime now1 = bizDateTime.now();
+				int id = metadataService.create(SqlType.CLAUSE, ownerId);
+				LocalDateTime now2 = bizDateTime.now();
 				SqlMetadataForm form1 = metadataService.findById(id, loginId);
 				if (ownerId.equals(loginId) || pubprv == Published.PUBLIC) {
 
 					assertNotNull(form1);
-					assertEquals("name", form1.getName());
-					assertEquals("description", form1.getDescription());
+					assertThat(form1.getName(), greaterThanOrEqualTo(now1.toString()));
+					assertThat(form1.getName(), lessThanOrEqualTo(now2.toString()));
+					assertThat(form1.getDescription(), greaterThanOrEqualTo(now1.toString()));
+					assertThat(form1.getDescription(), lessThanOrEqualTo(now2.toString()));
 					if (pubprv.isPublished()) {
 						assertTrue(form1.isPublishedFlg());
 					} else {
@@ -120,7 +122,7 @@ public class MetadataServiceImplTest {
 	@Test
 	public void testUpdate_ID_LOCKVERSION() {
 
-		int id = create("name", "description", Published.PRIVATE, SqlType.CLAUSE, "owner");
+		int id = metadataService.create(SqlType.CLAUSE, "owner");
 		BSqlMetadata record0 = findById(id);
 
 		SqlMetadataForm form1 = new SqlMetadataForm();
@@ -187,20 +189,8 @@ public class MetadataServiceImplTest {
 		assertNotNull(findById(id3));
 	}
 
-	private int create(String name, String description, Published published, SqlType sqlType, String ownedBy) {
-		LocalDateTime now = bizDateTime.now();
-		BSqlMetadata record = new BSqlMetadata();
-		record.setName(name);
-		record.setDescription(description);
-		record.setPublishedFlg(published.code());
-		record.setSqlType(sqlType.code());
-		record.setOwnedBy(ownedBy);
-		record.setRegisteredAt(now);
-		record.setChangedAt(now);
-		return queryFactory.insert(m).populate(record).executeWithKey(m.id);
-	}
-
 	private BSqlMetadata findById(int id) {
+		QSqlMetadata m = new QSqlMetadata("m");
 		return queryFactory.from(m).where(m.id.eq(id)).uniqueResult(m);
 	}
 
