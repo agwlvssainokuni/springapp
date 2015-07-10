@@ -93,7 +93,10 @@ public class StatementServiceImpl implements StatementService {
 	@Transactional
 	@Override
 	public boolean delete(int id, int lockVersion) {
-		long count = queryFactory.delete(s).where(s.id.eq(id), s.lockVersion.eq(lockVersion)).execute();
+		if (!metadataService.delete(id, lockVersion)) {
+			return false;
+		}
+		long count = queryFactory.delete(s).where(s.id.eq(id)).execute();
 		return count == 1L;
 	}
 

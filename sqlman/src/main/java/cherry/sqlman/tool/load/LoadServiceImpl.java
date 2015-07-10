@@ -93,7 +93,10 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public boolean delete(int id, int lockVersion) {
-		long count = queryFactory.delete(l).where(l.id.eq(id), l.lockVersion.eq(lockVersion)).execute();
+		if (!metadataService.delete(id, lockVersion)) {
+			return false;
+		}
+		long count = queryFactory.delete(l).where(l.id.eq(id)).execute();
 		return count == 1L;
 	}
 

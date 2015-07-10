@@ -111,7 +111,10 @@ public class ClauseServiceImpl implements ClauseService {
 	@Transactional
 	@Override
 	public boolean delete(int id, int lockVersion) {
-		long count = queryFactory.delete(c).where(c.id.eq(id), c.lockVersion.eq(lockVersion)).execute();
+		if (!metadataService.delete(id, lockVersion)) {
+			return false;
+		}
+		long count = queryFactory.delete(c).where(c.id.eq(id)).execute();
 		return count == 1L;
 	}
 
