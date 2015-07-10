@@ -16,13 +16,18 @@
 
 package cherry.sqlman.tool.search;
 
+import static cherry.foundation.querydsl.QueryDslUtil.tupleToMap;
 import static cherry.goods.util.LocalDateTimeUtil.rangeFrom;
 import static cherry.goods.util.LocalDateTimeUtil.rangeTo;
+import static com.mysema.query.sql.ColumnMetadata.getColumnMetadata;
+import static com.mysema.query.support.Expressions.cases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,25 +37,59 @@ import cherry.foundation.querydsl.QueryDslSupport;
 import cherry.goods.paginate.PagedList;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
+import cherry.sqlman.db.gen.query.QSqlClause;
+import cherry.sqlman.db.gen.query.QSqlLoad;
 import cherry.sqlman.db.gen.query.QSqlMetadata;
+import cherry.sqlman.db.gen.query.QSqlStatement;
 
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.SQLSubQuery;
+import com.mysema.query.types.Expression;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.QTuple;
+import com.mysema.query.types.expr.StringExpression;
 
 @Service
-public class SearchServiceImpl implements SearchService {
+public class SearchServiceImpl implements SearchService, InitializingBean {
 
 	@Autowired
 	private QueryDslSupport queryDslSupport;
 
 	private final QSqlMetadata m = new QSqlMetadata("m");
 
+	private Expression<?>[] expressions;
+
+	@Override
+	public void afterPropertiesSet() {
+
+		QSqlClause c = new QSqlClause("c");
+		QSqlStatement s = new QSqlStatement("s");
+		QSqlLoad l = new QSqlLoad("l");
+
+		StringExpression databaseName = cases() //
+				.when(m.sqlType.eq(SqlType.CLAUSE.code())) //
+				.then(new SQLSubQuery().from(c).where(c.id.eq(m.id)).unique(c.databaseName)) //
+				.when(m.sqlType.eq(SqlType.STATEMENT.code())) //
+				.then(new SQLSubQuery().from(s).where(s.id.eq(m.id)).unique(s.databaseName)) //
+				.when(m.sqlType.eq(SqlType.LOAD.code())) //
+				.then(new SQLSubQuery().from(l).where(l.id.eq(m.id)).unique(l.databaseName)) //
+				.otherwise(StringUtils.EMPTY).as(getColumnMetadata(c.databaseName).getName());
+
+		List<Expression<?>> list = new ArrayList<>(m.all().length + 1);
+		for (Path<?> e : m.all()) {
+			list.add(e);
+		}
+		list.add(databaseName);
+
+		expressions = list.toArray(new Expression<?>[list.size()]);
+	}
+
 	@Transactional
 	@Override
-	public PagedList<BSqlMetadata> search(SqlSearchForm form, String loginId, long pageNo, long pageSz) {
-		return queryDslSupport.search(commonClause(m, form, loginId), orderByClause(m, form, loginId), pageNo, pageSz,
-				m);
+	public PagedList<Map<String, ?>> search(SqlSearchForm form, String loginId, long pageNo, long pageSz) {
+		return tupleToMap(queryDslSupport.search(commonClause(m, form, loginId), orderByClause(m, form, loginId),
+				pageNo, pageSz, new QTuple(expressions)), expressions);
 	}
 
 	private QueryConfigurer commonClause(final QSqlMetadata m, final SqlSearchForm form, final String loginId) {

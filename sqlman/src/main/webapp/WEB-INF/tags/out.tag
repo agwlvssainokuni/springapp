@@ -9,5 +9,5 @@
 <%@ attribute name="path" required="true" rtexprvalue="true"
 	type="java.lang.String"%>
 <s:bind path="${path}">
-	<foundation:render value="${status.value}" />
+	<foundation:render value="${status.actualValue}" />
 </s:bind>

@@ -16,11 +16,12 @@
 
 package cherry.sqlman.tool.search;
 
+import java.util.Map;
+
 import cherry.goods.paginate.PagedList;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
 
 public interface SearchService {
 
-	PagedList<BSqlMetadata> search(SqlSearchForm form, String loginId, long pageNo, long pageSz);
+	PagedList<Map<String, ?>> search(SqlSearchForm form, String loginId, long pageNo, long pageSz);
 
 }

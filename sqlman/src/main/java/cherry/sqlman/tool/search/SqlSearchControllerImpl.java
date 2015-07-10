@@ -21,6 +21,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +44,6 @@ import cherry.goods.util.LocalDateTimeUtil;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.Published;
 import cherry.sqlman.SqlType;
-import cherry.sqlman.db.gen.query.BSqlMetadata;
 
 @Controller
 public class SqlSearchControllerImpl implements SqlSearchController {
@@ -105,7 +105,7 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 
 		long pageNo = form.getPageNo();
 		long pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form.getPageSz());
-		PagedList<BSqlMetadata> result = searchService.search(form, auth.getName(), pageNo, pageSz);
+		PagedList<Map<String, ?>> result = searchService.search(form, auth.getName(), pageNo, pageSz);
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_SEARCH);
 		mav.addObject(result);

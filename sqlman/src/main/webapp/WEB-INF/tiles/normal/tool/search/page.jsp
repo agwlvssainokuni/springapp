@@ -172,6 +172,7 @@
 								<th>#</th>
 								<th><s:message code="tool/search/page.column.name" /></th>
 								<th><s:message code="tool/search/page.column.sqlType" /></th>
+								<th><s:message code="tool/search/page.column.databaseName" /></th>
 								<th><s:message code="tool/search/page.column.registeredAt" /></th>
 								<th><s:message code="tool/search/page.column.publishedFlg" /></th>
 								<th><s:message code="tool/search/page.column.ownedBy" /></th>
@@ -180,30 +181,31 @@
 						</thead>
 						<tbody>
 							<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
-								<s:nestedPath path="pagedList.list[${count - 1}]">
+								<s:nestedPath path="pagedList">
 									<s:url var="uri" value="/tool/{type}/{id}">
 										<s:param name="type">
-											<s:bind path="sqlType">${status.value}</s:bind>
+											<s:bind path="list[${count-1}][sqlType]">${status.value}</s:bind>
 										</s:param>
 										<s:param name="id">
-											<s:bind path="id">${status.value}</s:bind>
+											<s:bind path="list[${count-1}][id]">${status.value}</s:bind>
 										</s:param>
 									</s:url>
 									<tr>
 										<td class="text-right"><c:out
 												value="${pagedList.pageSet.current.from + count}" /></td>
-										<td><s:bind path="name">
+										<td><s:bind path="list[${count-1}][name]">
 												<a href="${uri}" title="${status.value}"><c:out
 														value="${status.value}" /></a>
 											</s:bind></td>
-										<td><s:bind path="sqlType">${status.value}</s:bind></td>
-										<td><s:bind path="registeredAt">${status.value}</s:bind></td>
-										<td><s:bind path="publishedFlg">
+										<td><app:out path="list[${count-1}][sqlType]" /></td>
+										<td><app:out path="list[${count-1}][databaseName]" /></td>
+										<td><app:out path="list[${count-1}][registeredAt]" /></td>
+										<td><s:bind path="list[${count-1}][publishedFlg]">
 												<s:message
-													code="tool/search/page.column.publishedFlg.${status.actualValue}" />
+													code="tool/search/page.column.publishedFlg.${status.value}" />
 											</s:bind></td>
-										<td><s:bind path="ownedBy">${status.value}</s:bind></td>
-										<td><s:bind path="description">${status.value}</s:bind></td>
+										<td><app:out path="list[${count-1}][ownedBy]" /></td>
+										<td><app:out path="list[${count-1}][description]" /></td>
 									</tr>
 								</s:nestedPath>
 							</c:forEach>
