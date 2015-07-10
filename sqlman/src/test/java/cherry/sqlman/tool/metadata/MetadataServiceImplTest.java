@@ -66,17 +66,14 @@ public class MetadataServiceImplTest {
 		for (String loginId : asList(ownerId, otherId)) {
 			for (Published pubprv : asList(Published.PRIVATE, Published.PUBLIC)) {
 
-				LocalDateTime now1 = bizDateTime.now();
-				int id = metadataService.create(SqlType.CLAUSE, ownerId);
-				LocalDateTime now2 = bizDateTime.now();
+				LocalDateTime now = bizDateTime.now();
+				int id = create("name", "description", pubprv, SqlType.CLAUSE, now, ownerId);
 				SqlMetadataForm form1 = metadataService.findById(id, loginId);
 				if (ownerId.equals(loginId) || pubprv == Published.PUBLIC) {
 
 					assertNotNull(form1);
-					assertThat(form1.getName(), greaterThanOrEqualTo(now1.toString()));
-					assertThat(form1.getName(), lessThanOrEqualTo(now2.toString()));
-					assertThat(form1.getDescription(), greaterThanOrEqualTo(now1.toString()));
-					assertThat(form1.getDescription(), lessThanOrEqualTo(now2.toString()));
+					assertEquals("name", form1.getName());
+					assertEquals("description", form1.getDescription());
 					if (pubprv.isPublished()) {
 						assertTrue(form1.isPublishedFlg());
 					} else {
@@ -192,6 +189,19 @@ public class MetadataServiceImplTest {
 	private BSqlMetadata findById(int id) {
 		QSqlMetadata m = new QSqlMetadata("m");
 		return queryFactory.from(m).where(m.id.eq(id)).uniqueResult(m);
+	}
+
+	private int create(String name, String desc, Published pubprv, SqlType sqlType, LocalDateTime now, String owner) {
+		QSqlMetadata m = new QSqlMetadata("m");
+		BSqlMetadata record = new BSqlMetadata();
+		record.setName(name);
+		record.setDescription(desc);
+		record.setPublishedFlg(pubprv.code());
+		record.setSqlType(sqlType.code());
+		record.setRegisteredAt(now);
+		record.setChangedAt(now);
+		record.setOwnedBy(owner);
+		return queryFactory.insert(m).populate(record).executeWithKey(m.id);
 	}
 
 }
