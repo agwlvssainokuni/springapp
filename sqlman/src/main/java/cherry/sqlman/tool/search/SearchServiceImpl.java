@@ -42,7 +42,6 @@ import cherry.sqlman.db.gen.query.QSqlLoad;
 import cherry.sqlman.db.gen.query.QSqlMetadata;
 import cherry.sqlman.db.gen.query.QSqlStatement;
 
-import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLSubQuery;
 import com.mysema.query.types.Expression;
@@ -109,14 +108,14 @@ public class SearchServiceImpl implements SearchService, InitializingBean {
 					query.where(m.registeredAt.lt(rangeTo(form.getRegisteredToDt(), form.getRegisteredToTm())));
 				}
 
-				BooleanBuilder bb = new BooleanBuilder();
-				if (form.getPublished().isEmpty() || form.getPublished().contains(Published.PUBLIC)) {
-					bb.or(m.publishedFlg.ne(Published.PRIVATE.code()));
+				query.where(m.ownedBy.eq(loginId).or(m.publishedFlg.ne(Published.PRIVATE.code())));
+				if (!form.getPublished().isEmpty()) {
+					List<Integer> code = new ArrayList<>();
+					for (Published p : form.getPublished()) {
+						code.add(p.code());
+					}
+					query.where(m.publishedFlg.in(code));
 				}
-				if (form.getPublished().isEmpty() || form.getPublished().contains(Published.PRIVATE)) {
-					bb.or(m.publishedFlg.eq(Published.PRIVATE.code()).and(m.ownedBy.eq(loginId)));
-				}
-				query.where(bb);
 
 				if (!form.getSqlType().isEmpty()) {
 					List<String> code = new ArrayList<>();
