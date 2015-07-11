@@ -16,36 +16,10 @@
 
 package cherry.sqlman.tool.shared;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+public interface ParamParser {
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-@Component
-public class ParamParser {
-
-	@Autowired
-	@Qualifier("yamlObjectMapper")
-	private ObjectMapper objectMapper;
-
-	public Map<String, ?> parseMap(String pmap) {
-		if (StringUtils.isBlank(pmap)) {
-			return new HashMap<>();
-		}
-		try {
-			JavaType type = TypeFactory.defaultInstance().constructMapType(Map.class, String.class, Object.class);
-			return objectMapper.readValue(pmap, type);
-		} catch (IOException ex) {
-			return new HashMap<>();
-		}
-	}
+	Map<String, ?> parseMap(String pmap);
 
 }
