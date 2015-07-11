@@ -17,7 +17,12 @@
 package cherry.sqlman.tool.shared;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,7 +32,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -72,6 +81,18 @@ public class ParamParserImplTest {
 		assertEquals("[name1, name2]", result1.keySet().toString());
 		Map<String, ?> result2 = paramParser.parseMap("name2: 1234\nname1: value1");
 		assertEquals("[name2, name1]", result2.keySet().toString());
+	}
+
+	@Test
+	public void testIOException() throws Exception {
+		ObjectMapper mapper = mock(ObjectMapper.class);
+		when(mapper.readValue(anyString(), (JavaType) any())).thenThrow(new IOException());
+		ParamParserImpl parser = new ParamParserImpl();
+		ReflectionTestUtils.setField(parser, "objectMapper", mapper);
+
+		Map<String, Object> expected = new LinkedHashMap<>();
+		Map<String, ?> result = parser.parseMap("name1: value1");
+		assertEquals(expected, result);
 	}
 
 }
