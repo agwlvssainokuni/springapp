@@ -39,8 +39,10 @@ import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
-import cherry.spring.common.db.gen.dto.User;
-import cherry.spring.common.db.gen.mapper.UserMapper;
+import cherry.spring.common.db.gen.query.BUser;
+import cherry.spring.common.db.gen.query.QUser;
+
+import com.mysema.query.sql.SQLQueryFactory;
 
 @Service
 public class SignupRegisterServiceImpl implements SignupRegisterService {
@@ -48,7 +50,7 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	private UserMapper userMapper;
+	private SQLQueryFactory queryFactory;
 
 	@Autowired
 	private SignupRequestHelper signupRequestHelper;
@@ -71,6 +73,8 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 	@Value("${entree.app.signup.register.pwdChars}")
 	private String pwdChars;
 
+	private final QUser u = new QUser("u");
+
 	@Transactional
 	@Override
 	public boolean createUser(String mailAddr, String token, String firstName, String lastName, Locale locale) {
@@ -87,12 +91,12 @@ public class SignupRegisterServiceImpl implements SignupRegisterService {
 		String rawPassword = RandomStringUtils.random(pwdLength, pwdChars);
 		String password = passwordEncoder.encode(rawPassword);
 
-		User entity = new User();
+		BUser entity = new BUser();
 		entity.setLoginId(mailAddr);
 		entity.setPassword(password);
 		entity.setFirstName(firstName);
 		entity.setLastName(lastName);
-		int count = userMapper.insertSelective(entity);
+		long count = queryFactory.insert(u).populate(entity).execute();
 		checkState(count == 1, "failed to create user: user=%s, count=%s", entity, count);
 
 		if (log.isDebugEnabled()) {

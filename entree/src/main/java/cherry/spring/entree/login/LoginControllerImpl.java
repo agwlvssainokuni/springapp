@@ -48,7 +48,6 @@ public class LoginControllerImpl implements LoginController {
 		redirAttr.addFlashAttribute(PathDef.METHOD_LOGIN_FAILED, true);
 
 		UriComponents uc = fromMethodCall(on(LoginController.class).init(locale, sitePref, request)).build();
-
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
@@ -61,7 +60,6 @@ public class LoginControllerImpl implements LoginController {
 		redirAttr.addFlashAttribute(PathDef.METHOD_LOGGED_OUT, true);
 
 		UriComponents uc = fromMethodCall(on(LoginController.class).init(locale, sitePref, request)).build();
-
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
