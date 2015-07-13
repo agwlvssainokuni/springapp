@@ -100,11 +100,11 @@ public class CustomizingConfigurationFactoryBean implements FactoryBean<Configur
 	private Pair<Integer, Integer> parsePair(String s) {
 		Matcher mSingle = Pattern.compile("^(\\d+)$").matcher(s);
 		if (mSingle.matches()) {
-			return Pair.of(new Integer(mSingle.group(1)), new Integer(mSingle.group(1)));
+			return Pair.of(Integer.valueOf(mSingle.group(1)), Integer.valueOf(mSingle.group(1)));
 		}
 		Matcher mRange = Pattern.compile("^(\\d+)-(\\d+)$").matcher(s);
 		if (mRange.matches()) {
-			return Pair.of(new Integer(mRange.group(1)), new Integer(mRange.group(2)));
+			return Pair.of(Integer.valueOf(mRange.group(1)), Integer.valueOf(mRange.group(2)));
 		}
 		throw new IllegalArgumentException(
 				"numericTypeSpecs must be \"{total},{decimal},{javaType}\" or \"{beginTotal},{endTotal},{beginDecimal},{endDecimal},{javaType}\"");
