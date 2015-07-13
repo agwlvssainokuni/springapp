@@ -26,6 +26,7 @@ dependencies {
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
+	testRuntime "org.glassfish:javax.el:${versionJavaEl}"
 }
 
 eclipse.wtp.facet {
