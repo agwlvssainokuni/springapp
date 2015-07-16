@@ -38,11 +38,14 @@ public class Main {
 	@Option(name = "-p", aliases = { "--port" }, metaVar = "PORT")
 	private int serverPort = 8080;
 
+	@Option(name = "-c", aliases = { "--config" }, metaVar = "CONFIG")
+	private File jettyConfigXml;
+
 	@Option(name = "-x", aliases = { "--context-path" }, metaVar = "PATH")
 	private String contextPath = "/";
 
-	@Option(name = "-c", aliases = { "--config" }, metaVar = "CONFIG")
-	private File jettyConfigXml;
+	@Option(name = "-w", aliases = { "--war" }, metaVar = "WAR")
+	private File warFile;
 
 	public Server prepareServer() throws Exception {
 
@@ -55,7 +58,11 @@ public class Main {
 		WebAppContext webAppContext = new WebAppContext();
 		webAppContext.setContextPath(contextPath);
 		webAppContext.setParentLoaderPriority(false);
-		webAppContext.setWar(Main.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm());
+		if (warFile == null) {
+			webAppContext.setWar(Main.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm());
+		} else {
+			webAppContext.setWar(warFile.toURI().toURL().toExternalForm());
+		}
 		webAppContext.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
 				new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
 				new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });

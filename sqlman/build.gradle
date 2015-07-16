@@ -1,6 +1,5 @@
 apply plugin: "war"
 apply plugin: "eclipse-wtp"
-apply plugin: "jetty"
 apply plugin: "jettyEclipse"
 
 configurations { container }
@@ -62,10 +61,7 @@ jar { exclude "Main.class" }
 
 war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
-	// for executable war
 	from("build/classes/main") { include "Main.class" }
-	manifest.attributes "Main-Class": "Main"
-	manifest.attributes "Class-Path": configurations.container.files.collect({"deps/" + it.name}).join(" ")
 }
 
 task executable(type: Copy, dependsOn: war) {
@@ -90,13 +86,8 @@ buildscript {
 	}
 }
 
-[jettyRun, jettyRunWar]*.with {
-	jettyConfig = file("jetty-config.xml")
-	additionalRuntimeJars = buildscript.configurations.classpath
-}
-
 jettyEclipse {
-	jettyConfig = file("jetty-eclipse-config.xml")
+	jettyConfig = file("jetty-config.xml")
 	additionalRuntimeJars = buildscript.configurations.classpath
 }
 
