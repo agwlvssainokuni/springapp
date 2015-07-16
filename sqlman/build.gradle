@@ -44,6 +44,7 @@ dependencies {
 	container "org.eclipse.jetty:jetty-jsp:${versionJetty}"
 	container "org.eclipse.jetty:jetty-annotations:${versionJetty}"
 	container "com.h2database:h2:${versionH2db}"
+	container "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
 	testRuntime "com.h2database:h2:${versionH2db}"
 	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"

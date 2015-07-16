@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
+import static java.text.MessageFormat.format;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.List;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.jndi.Resource;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
@@ -31,7 +38,6 @@ import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
-import org.eclipse.jetty.xml.XmlConfiguration;
 import org.h2.jdbcx.JdbcDataSource;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -40,7 +46,13 @@ import org.kohsuke.args4j.ParserProperties;
 
 public class Main {
 
-	private static final String DB_JNDI = "java:/datasources/SqlMan";
+	private static final String SYSTEM_DATASOURCE_JNDI = "java:/datasources/SqlMan";
+
+	private static final String DATASOURCE_JNDI_TEMPLATE = "java:/datasources/SqlMan.db{0}";
+	private static final String DATASOURCE_DRIVER_CLASS_NAME = "driverClassName";
+	private static final String DATASOURCE_URL = "url";
+	private static final String DATASOURCE_USER = "user";
+	private static final String DATASOURCE_PASSWORD = "password";
 
 	@Option(name = "-p", aliases = { "--port" }, metaVar = "PORT")
 	private int serverPort = 8080;
@@ -55,7 +67,7 @@ public class Main {
 	private String dbPassword = "";
 
 	@Option(name = "-c", aliases = { "--config" }, metaVar = "CONFIG")
-	private File jettyConfigXml = null;
+	private List<File> configFile;
 
 	@Option(name = "-x", aliases = { "--context-path" }, metaVar = "PATH")
 	private String contextPath = "/";
@@ -68,10 +80,22 @@ public class Main {
 		Server server = new Server(serverPort);
 		server.setStopAtShutdown(true);
 
-		server.addBean(new Resource(DB_JNDI, createDataSource(dbUrl, dbUser, dbPassword)));
-		if (jettyConfigXml != null) {
-			XmlConfiguration xmlConfig = new XmlConfiguration(jettyConfigXml.toURI().toURL());
-			xmlConfig.configure(server);
+		server.addBean(new Resource(SYSTEM_DATASOURCE_JNDI, createSystemDataSource(dbUrl, dbUser, dbPassword)));
+		if (configFile != null) {
+			int count = 1;
+			for (File file : configFile) {
+				Properties props = new Properties();
+				try (InputStream in = new FileInputStream(file)) {
+					props.load(in);
+				}
+				String driverClassName = props.getProperty(DATASOURCE_DRIVER_CLASS_NAME);
+				String url = props.getProperty(DATASOURCE_URL);
+				String user = props.getProperty(DATASOURCE_USER);
+				String password = props.getProperty(DATASOURCE_PASSWORD);
+				String jndiName = format(DATASOURCE_JNDI_TEMPLATE, count);
+				server.addBean(new Resource(jndiName, createDataSource(driverClassName, url, user, password)));
+				count += 1;
+			}
 		}
 
 		server.setHandler(createWebAppContext(contextPath, warFile));
@@ -79,10 +103,19 @@ public class Main {
 		return server;
 	}
 
-	private DataSource createDataSource(String url, String user, String password) {
+	private DataSource createSystemDataSource(String url, String user, String password) {
 		JdbcDataSource dataSource = new JdbcDataSource();
 		dataSource.setUrl(url);
 		dataSource.setUser(user);
+		dataSource.setPassword(password);
+		return dataSource;
+	}
+
+	private DataSource createDataSource(String driverClassName, String url, String user, String password) {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(driverClassName);
+		dataSource.setUrl(url);
+		dataSource.setUsername(user);
 		dataSource.setPassword(password);
 		return dataSource;
 	}

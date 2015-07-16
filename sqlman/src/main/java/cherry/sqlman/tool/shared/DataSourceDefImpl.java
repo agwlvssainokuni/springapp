@@ -22,18 +22,39 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-public class DataSourceDefImpl implements DataSourceDef {
+import org.springframework.beans.factory.InitializingBean;
+
+public class DataSourceDefImpl implements DataSourceDef, InitializingBean {
 
 	private String defaultName;
 
+	private String systemName;
+
 	private Map<String, DataSource> dataSourceMap;
+
+	private List<String> names;
 
 	public void setDefaultName(String defaultName) {
 		this.defaultName = defaultName;
 	}
 
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
+	}
+
 	public void setDataSourceMap(Map<String, DataSource> dataSourceMap) {
 		this.dataSourceMap = dataSourceMap;
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		names = new ArrayList<>(dataSourceMap.size());
+		DataSource systemDataSource = dataSourceMap.get(systemName);
+		for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
+			if (!entry.getValue().equals(systemDataSource) || entry.getKey().equals(systemName)) {
+				names.add(entry.getKey());
+			}
+		}
 	}
 
 	@Override
@@ -43,7 +64,7 @@ public class DataSourceDefImpl implements DataSourceDef {
 
 	@Override
 	public List<String> getNames() {
-		return new ArrayList<>(dataSourceMap.keySet());
+		return names;
 	}
 
 	@Override
