@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.File;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
@@ -36,23 +35,22 @@ public class Main {
 
 		WebAppContext webAppContext = new WebAppContext();
 		webAppContext.setContextPath("/");
+		webAppContext.setParentLoaderPriority(false);
 		webAppContext.setWar(Main.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm());
 		webAppContext.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
 				new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
 				new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });
 
-		XmlConfiguration xmlConfig;
-		try (InputStream in = new FileInputStream("jetty-eclipse-config.xml")) {
-			xmlConfig = new XmlConfiguration(in);
-		}
+		File file = new File("jetty-eclipse-config.xml");
+		XmlConfiguration xmlConfig = new XmlConfiguration(file.toURI().toURL());
 
 		Server server = new Server(8080);
 		server.setStopAtShutdown(true);
+
 		xmlConfig.configure(server);
 
 		server.setHandler(webAppContext);
 		server.start();
 		server.join();
 	}
-
 }
