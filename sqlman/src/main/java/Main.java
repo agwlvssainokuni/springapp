@@ -49,7 +49,7 @@ public class Main {
 	private static final String SYSTEM_DATASOURCE_JNDI = "java:/datasources/SqlMan";
 
 	private static final String DATASOURCE_JNDI_TEMPLATE = "java:/datasources/SqlMan.db{0}";
-	private static final String DATASOURCE_DRIVER_CLASS_NAME = "driverClassName";
+	private static final String DATASOURCE_DRIVER = "driver";
 	private static final String DATASOURCE_URL = "url";
 	private static final String DATASOURCE_USER = "user";
 	private static final String DATASOURCE_PASSWORD = "password";
@@ -88,12 +88,12 @@ public class Main {
 				try (InputStream in = new FileInputStream(file)) {
 					props.load(in);
 				}
-				String driverClassName = props.getProperty(DATASOURCE_DRIVER_CLASS_NAME);
+				String driver = props.getProperty(DATASOURCE_DRIVER);
 				String url = props.getProperty(DATASOURCE_URL);
 				String user = props.getProperty(DATASOURCE_USER);
 				String password = props.getProperty(DATASOURCE_PASSWORD);
 				String jndiName = format(DATASOURCE_JNDI_TEMPLATE, count);
-				server.addBean(new Resource(jndiName, createDataSource(driverClassName, url, user, password)));
+				server.addBean(new Resource(jndiName, createDataSource(driver, url, user, password)));
 				count += 1;
 			}
 		}
@@ -111,9 +111,9 @@ public class Main {
 		return dataSource;
 	}
 
-	private DataSource createDataSource(String driverClassName, String url, String user, String password) {
+	private DataSource createDataSource(String driver, String url, String user, String password) {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(driverClassName);
+		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
 		dataSource.setUsername(user);
 		dataSource.setPassword(password);
