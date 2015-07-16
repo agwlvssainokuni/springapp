@@ -15,8 +15,12 @@
  */
 
 import java.io.File;
+import java.net.MalformedURLException;
+
+import javax.sql.DataSource;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.plus.jndi.Resource;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
@@ -28,6 +32,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.eclipse.jetty.xml.XmlConfiguration;
+import org.h2.jdbcx.JdbcDataSource;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -35,40 +40,66 @@ import org.kohsuke.args4j.ParserProperties;
 
 public class Main {
 
+	private static final String DB_JNDI = "java:/datasources/SqlMan";
+
 	@Option(name = "-p", aliases = { "--port" }, metaVar = "PORT")
 	private int serverPort = 8080;
 
+	@Option(name = "-d", aliases = { "--db-url" }, metaVar = "URL")
+	private String dbUrl = "jdbc:h2:file:./sqlman";
+
+	@Option(name = "-U", aliases = { "--db-user" }, metaVar = "USER")
+	private String dbUser = "sa";
+
+	@Option(name = "-P", aliases = { "--db-password" }, metaVar = "PASSWORD")
+	private String dbPassword = "";
+
 	@Option(name = "-c", aliases = { "--config" }, metaVar = "CONFIG")
-	private File jettyConfigXml;
+	private File jettyConfigXml = null;
 
 	@Option(name = "-x", aliases = { "--context-path" }, metaVar = "PATH")
 	private String contextPath = "/";
 
 	@Option(name = "-w", aliases = { "--war" }, metaVar = "WAR")
-	private File warFile;
+	private File warFile = null;
 
 	public Server prepareServer() throws Exception {
 
 		Server server = new Server(serverPort);
 		server.setStopAtShutdown(true);
 
-		XmlConfiguration xmlConfig = new XmlConfiguration(jettyConfigXml.toURI().toURL());
-		xmlConfig.configure(server);
+		server.addBean(new Resource(DB_JNDI, createDataSource(dbUrl, dbUser, dbPassword)));
+		if (jettyConfigXml != null) {
+			XmlConfiguration xmlConfig = new XmlConfiguration(jettyConfigXml.toURI().toURL());
+			xmlConfig.configure(server);
+		}
 
+		server.setHandler(createWebAppContext(contextPath, warFile));
+
+		return server;
+	}
+
+	private DataSource createDataSource(String url, String user, String password) {
+		JdbcDataSource dataSource = new JdbcDataSource();
+		dataSource.setUrl(url);
+		dataSource.setUser(user);
+		dataSource.setPassword(password);
+		return dataSource;
+	}
+
+	private WebAppContext createWebAppContext(String path, File war) throws MalformedURLException {
 		WebAppContext webAppContext = new WebAppContext();
-		webAppContext.setContextPath(contextPath);
+		webAppContext.setContextPath(path);
 		webAppContext.setParentLoaderPriority(false);
-		if (warFile == null) {
+		if (war == null) {
 			webAppContext.setWar(Main.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm());
 		} else {
-			webAppContext.setWar(warFile.toURI().toURL().toExternalForm());
+			webAppContext.setWar(war.toURI().toURL().toExternalForm());
 		}
 		webAppContext.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
 				new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
 				new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });
-		server.setHandler(webAppContext);
-
-		return server;
+		return webAppContext;
 	}
 
 	public void startServer() {
