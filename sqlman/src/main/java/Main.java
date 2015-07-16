@@ -28,29 +28,68 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.eclipse.jetty.xml.XmlConfiguration;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.ParserProperties;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+	@Option(name = "-p", aliases = { "--port" }, metaVar = "PORT")
+	private int serverPort = 8080;
+
+	@Option(name = "-x", aliases = { "--context-path" }, metaVar = "PATH")
+	private String contextPath = "/";
+
+	@Option(name = "-c", aliases = { "--config" }, metaVar = "CONFIG")
+	private File jettyConfigXml;
+
+	public Server prepareServer() throws Exception {
+
+		Server server = new Server(serverPort);
+		server.setStopAtShutdown(true);
+
+		XmlConfiguration xmlConfig = new XmlConfiguration(jettyConfigXml.toURI().toURL());
+		xmlConfig.configure(server);
 
 		WebAppContext webAppContext = new WebAppContext();
-		webAppContext.setContextPath("/");
+		webAppContext.setContextPath(contextPath);
 		webAppContext.setParentLoaderPriority(false);
 		webAppContext.setWar(Main.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm());
 		webAppContext.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
 				new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
 				new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });
-
-		File file = new File("jetty-eclipse-config.xml");
-		XmlConfiguration xmlConfig = new XmlConfiguration(file.toURI().toURL());
-
-		Server server = new Server(8080);
-		server.setStopAtShutdown(true);
-
-		xmlConfig.configure(server);
-
 		server.setHandler(webAppContext);
-		server.start();
-		server.join();
+
+		return server;
 	}
+
+	public void startServer() {
+		try {
+			Server server = prepareServer();
+			server.start();
+			server.join();
+		} catch (Exception ex) {
+			throw new IllegalStateException(ex);
+		}
+	}
+
+	public void doMain(String[] args) {
+
+		ParserProperties props = ParserProperties.defaults().withUsageWidth(80);
+		CmdLineParser parser = new CmdLineParser(this, props);
+		try {
+			parser.parseArgument(args);
+		} catch (CmdLineException ex) {
+			parser.printUsage(System.err);
+		}
+
+		startServer();
+	}
+
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		m.doMain(args);
+	}
+
 }

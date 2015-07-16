@@ -16,7 +16,10 @@ eclipse {
 	classpath.plusConfigurations += [configurations.container]
 }
 
-ext { versionJetty = "9.2.12.v20150709" }
+ext {
+	versionArgs4j = "2.32"
+	versionJetty = "9.2.12.v20150709"
+}
 
 dependencies {
 	compile project(":goods")
@@ -36,6 +39,7 @@ dependencies {
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	container "args4j:args4j:${versionArgs4j}"
 	container "org.eclipse.jetty:jetty-webapp:${versionJetty}"
 	container "org.eclipse.jetty:jetty-plus:${versionJetty}"
 	container "org.eclipse.jetty:jetty-jsp:${versionJetty}"

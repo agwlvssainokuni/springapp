@@ -2,7 +2,6 @@
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.eclipse.org/configure.dtd">
 <Configure class="org.eclipse.jetty.server.Server">
 	<New class="org.eclipse.jetty.plus.jndi.Resource">
-		<Arg />
 		<Arg>java:/datasources/SqlMan</Arg>
 		<Arg>
 			<New class="org.h2.jdbcx.JdbcDataSource">
