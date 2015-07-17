@@ -3,7 +3,7 @@ SpringApp
 
 プロジェクト概要
 ----------------
-Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、プロジェクトのテンプレートの形でまとめます。
+Spring framework、MyBatis、Querydsl、Gradle、Logbackをどう使っていくかを、プロジェクトのテンプレートの形でまとめます。
 
 検証課題
 --------
@@ -51,6 +51,9 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 			*	JSTL
 			*	Apache Tiles 3
 			*	Jackson 2
+				*	JSON
+				*	XML
+				*	YAML
 		*	データバインディング
 			*	型変換のカスタマイズ
 				*	Parser
@@ -99,8 +102,24 @@ Spring framework、MyBatis、Gradle、Logbackをどう使っていくかを、�
 	*	Spring framework統合
 		*	org.mybatis.spring.SqlSessionFactoryBean
 	*	MyBatis Generator
-		*	ANTタスクをGradleから呼び出し
-			*	org.mybatis.generator.ant.GeneratorAntTask
+		*	Mavenタスクで生成
+			*	org.mybatis.generator:mybatis-generator-maven-plugin
+		*	DBをFlywayでセットアップ
+*	Querydsl
+	*	標準API
+		*	SQLQueryFactory
+		*	SQLQuery, SQLInsertClause, SQLUpdateClause, SQLDeleteClause
+	*	カスタマイズ設定
+		*	Joda-Timeライブラリ対応
+			*	標準APIにJoda-Time対応はあるが、タイムゾーンの扱いを調整する場合に自前で用意。
+	*	Spring framework統合 (自前でDB接続制御を追加)
+		*	Provider<Connection>
+			*	DataSourceUtils.getConnection(DataSource) を呼ぶ。
+		*	SQLDetailedListener
+			*	DataSourceUtils.releaseConnection(Connection, DataSource) を呼ぶ。
+	*	Querydsl codegen
+		*	Mavenタスクで生成。
+			*	com.mysema.querydsl:querydsl-maven-plugin
 		*	DBをFlywayでセットアップ
 *	Logback
 	*	コンソール出力
