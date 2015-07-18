@@ -67,6 +67,15 @@ war {
 	from("build/classes/main") { include "Main.class" }
 	manifest.attributes "Main-Class": "Main"
 	manifest.attributes "Class-Path": configurations.container.files.collect { "deps/" + it.name }.join(" ")
+	// Jettyのライブラリを全てWARに展開する場合。
+	//	from(configurations.container.collect { project.zipTree(it) }) {
+	//		exclude "META-INF/LICENSE*"
+	//		exclude "META-INF/NOTICE*"
+	//		exclude "META-INF/eclipse.inf"
+	//		exclude "OSGI-OPT/**"
+	//		exclude "about.html"
+	//		exclude "jetty-dir.css"
+	//	}
 }
 
 task executable(type: Copy, dependsOn: war) {
