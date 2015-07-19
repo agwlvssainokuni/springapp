@@ -17,8 +17,8 @@ eclipse {
 
 ext {
 	versionArgs4j = "2.32"
-	// versionJetty = "9.2.12.v20150709"
-	versionJetty = "9.3.1.v20150714"
+	versionJetty = "9.2.12.v20150709"
+	//	versionJetty = "9.3.1.v20150714"
 }
 
 dependencies {
@@ -86,7 +86,7 @@ task executable(type: Copy, dependsOn: war) {
 assemble.dependsOn(executable)
 
 buildscript {
-	ext { versionJetty = "9.3.1.v20150714" }
+	ext { versionJetty = "9.2.12.v20150709" }
 	repositories {
 		mavenCentral()
 		jcenter()
