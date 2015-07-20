@@ -51,9 +51,13 @@ public class PathDef {
 
 	public static final String VIEW_TOOL_STATEMENT_ID = "tool/statement/pageId";
 
+	public static final String VIEW_TOOL_STATEMENT_ID_EDIT = "tool/statement/editId";
+
 	public static final String VIEW_TOOL_LOAD = "tool/load/page";
 
 	public static final String VIEW_TOOL_LOAD_ID = "tool/load/pageId";
+
+	public static final String VIEW_TOOL_LOAD_ID_EDIT = "tool/load/editId";
 
 	// 管理者画面
 	public static final String URI_ADMIN = "/admin/**";

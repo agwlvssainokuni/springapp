@@ -118,11 +118,18 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 	}
 
 	@Override
+	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
+		return mav;
+	}
+
+	@Override
 	public ModelAndView update(int id, SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request, SessionStatus status) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
 			return mav;
 		}
 
@@ -135,7 +142,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 			return mav;
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
@@ -146,7 +153,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
@@ -159,7 +166,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 			return mav;
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
