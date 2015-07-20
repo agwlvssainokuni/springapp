@@ -35,30 +35,30 @@ public abstract class SqlClauseFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String databaseName;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String select;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String from;
 
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String where;
 
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String groupBy;
 
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String having;
 
-	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String orderBy;
 
-	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class, cherry.foundation.validator.groups.G3.class })
 	private String paramMap;
 
 	private Integer lockVersion;

@@ -35,14 +35,14 @@ public abstract class SqlLoadFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String databaseName;
 
-	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
-	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class })
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
+	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G2.class })
 	private String sql;
 
-	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class, cherry.foundation.validator.groups.G3.class })
 	private org.springframework.web.multipart.MultipartFile file;
 
 	private Integer lockVersion;

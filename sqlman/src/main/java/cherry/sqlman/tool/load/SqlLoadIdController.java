@@ -32,6 +32,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cherry.foundation.validator.groups.G2;
+import cherry.foundation.validator.groups.G3;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
 
@@ -54,18 +56,18 @@ public interface SqlLoadIdController {
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			RedirectAttributes redirAttr);
+	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G3.class) SqlLoadForm form,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 	@RequestMapping(PathDef.SUBURI_EDIT)
 	ModelAndView edit(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_UPDATE)
-	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status);
+	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G2.class) SqlLoadForm form,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, SessionStatus status);
 
 	@RequestMapping(PathDef.SUBURI_METADATA)
 	ModelAndView metadata(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlMetadataForm mdForm,

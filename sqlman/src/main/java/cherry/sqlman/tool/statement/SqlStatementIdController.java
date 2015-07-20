@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.foundation.validator.groups.G2;
+import cherry.foundation.validator.groups.G3;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
 
@@ -47,12 +49,12 @@ public interface SqlStatementIdController {
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlStatementForm form,
+	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G3.class) SqlStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlStatementForm form,
+	ModelAndView download(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G3.class) SqlStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, HttpServletResponse response);
 
@@ -61,7 +63,7 @@ public interface SqlStatementIdController {
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_UPDATE)
-	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlStatementForm form,
+	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G2.class) SqlStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
