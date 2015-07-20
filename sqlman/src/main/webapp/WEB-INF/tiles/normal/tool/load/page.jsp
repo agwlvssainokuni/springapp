@@ -57,7 +57,7 @@
 							<s:message code="sqlLoadForm.databaseName" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="col-sm-2 form-control">
+							<f:select path="databaseName" cssClass="form-control">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
@@ -70,7 +70,7 @@
 							<s:message code="sqlLoadForm.sql" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
+							<f:textarea path="sql" cssClass="form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">

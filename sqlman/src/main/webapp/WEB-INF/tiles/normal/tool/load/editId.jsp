@@ -53,7 +53,7 @@
 							<s:message code="sqlMetadataForm.name" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="name" cssClass="col-sm-2 form-control" />
+							<f:input path="name" cssClass="form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">
@@ -64,7 +64,7 @@
 							<s:message code="sqlMetadataForm.description" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="description" cssClass="col-sm-2 form-control" />
+							<f:textarea path="description" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -72,8 +72,7 @@
 							<s:message code="sqlMetadataForm.ownedBy" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="ownedBy" cssClass="col-sm-2 form-control"
-								disabled="true" />
+							<f:input path="ownedBy" cssClass="form-control" readonly="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -81,7 +80,7 @@
 							<s:message code="sqlMetadataForm.publishedFlg" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:checkbox path="publishedFlg" cssClass="col-sm-2 form-control" />
+							<f:checkbox path="publishedFlg" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -89,6 +88,8 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
+							<a href="${baseUri}" class="btn btn-default"><s:message
+									code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -123,9 +124,8 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
-					modelAttribute="sqlLoadForm" enctype="multipart/form-data"
-					cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/update" method="POST"
+					modelAttribute="sqlLoadForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
@@ -135,7 +135,7 @@
 							<s:message code="sqlLoadForm.databaseName" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="col-sm-2 form-control">
+							<f:select path="databaseName" cssClass="form-control">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
@@ -148,28 +148,16 @@
 							<s:message code="sqlLoadForm.sql" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="file">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="file" cssClass="col-sm-2 control-label">
-							<s:message code="sqlLoadForm.file" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="file" type="file" cssClass="form-control" />
+							<f:textarea path="sql" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/load/page.execButton" />
-							</f:button>
-							<f:button type="submit" name="update" class="btn btn-default">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
+							<a href="${baseUri}" class="btn btn-default"><s:message
+									code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>

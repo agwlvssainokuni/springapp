@@ -135,7 +135,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 
 		if (loadService.update(id, form)) {
 			status.setComplete();
-			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
@@ -159,7 +159,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 		}
 
 		if (metadataService.update(id, mdForm)) {
-			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
