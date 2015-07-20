@@ -13,8 +13,6 @@
 <s:url var="baseUri" value="/tool/statement/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<c:set var="hasResultList"
-	value="${resultSet != null && pageSet != null}" />
 <foundation:getBean var="dataSourceDef"
 	beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
@@ -55,7 +53,7 @@
 							<s:message code="sqlMetadataForm.name" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="name" cssClass="col-sm-2 form-control" />
+							<f:input path="name" cssClass="form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">
@@ -66,7 +64,7 @@
 							<s:message code="sqlMetadataForm.description" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="description" cssClass="col-sm-2 form-control" />
+							<f:textarea path="description" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -74,8 +72,7 @@
 							<s:message code="sqlMetadataForm.ownedBy" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="ownedBy" cssClass="col-sm-2 form-control"
-								disabled="true" />
+							<f:input path="ownedBy" cssClass="form-control" readonly="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -83,7 +80,7 @@
 							<s:message code="sqlMetadataForm.publishedFlg" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:checkbox path="publishedFlg" cssClass="col-sm-2 form-control" />
+							<f:checkbox path="publishedFlg" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -91,6 +88,8 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/statement/page.updateButton" />
 							</f:button>
+							<a href="${baseUri}" class="btn btn-default"><s:message
+									code="tool/statement/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -104,8 +103,7 @@
 						code="tool/statement/page.message.2" /></a>
 			</h3>
 		</div>
-		<div id="statementForm"
-			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+		<div id="statementForm" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqlStatementForm">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -118,7 +116,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
+				<f:form servletRelativeAction="${baseUri}/update" method="POST"
 					modelAttribute="sqlStatementForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="lockVersion" />
@@ -130,7 +128,7 @@
 							<s:message code="sqlStatementForm.databaseName" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="col-sm-2 form-control">
+							<f:select path="databaseName" cssClass="form-control">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
@@ -143,7 +141,7 @@
 							<s:message code="sqlStatementForm.sql" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
+							<f:textarea path="sql" cssClass="form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">
@@ -154,40 +152,20 @@
 							<s:message code="sqlStatementForm.paramMap" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+							<f:textarea path="paramMap" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/statement/page.execButton" />
-							</f:button>
-							<f:button type="submit" name="download" class="btn btn-default">
-								<s:message code="tool/statement/page.downloadButton" />
-							</f:button>
-							<f:button type="submit" name="update" class="btn btn-default">
 								<s:message code="tool/statement/page.updateButton" />
 							</f:button>
+							<a href="${baseUri}" class="btn btn-default"><s:message
+									code="tool/statement/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
 			</div>
 		</div>
 	</div>
-	<c:if test="${hasResultList}">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					<a data-toggle="collapse" href="#statementResult"><s:message
-							code="tool/statement/page.message.3" /></a>
-				</h3>
-			</div>
-			<div id="statementResult" class="panel-collapse collapse in">
-				<div class="panel-body">
-					<app:resultSet id="resultSetList" resultSet="${resultSet}"
-						pageSet="${pageSet}" />
-				</div>
-			</div>
-		</div>
-	</c:if>
 </div>

@@ -52,7 +52,7 @@
 							<s:message code="sqlStatementForm.databaseName" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="col-sm-2 form-control">
+							<f:select path="databaseName" cssClass="form-control">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
@@ -65,7 +65,7 @@
 							<s:message code="sqlStatementForm.sql" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
+							<f:textarea path="sql" cssClass="form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">
@@ -76,7 +76,7 @@
 							<s:message code="sqlStatementForm.paramMap" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+							<f:textarea path="paramMap" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">

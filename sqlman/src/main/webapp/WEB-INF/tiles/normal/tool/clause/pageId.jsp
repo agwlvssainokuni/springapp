@@ -29,46 +29,48 @@
 			</h3>
 		</div>
 		<div id="metadataForm" class="panel-collapse collapse">
-			<div class="panel-body form-horizontal" role="form">
+			<div class="panel-body">
 				<s:nestedPath path="sqlMetadataForm">
-					<div class="form-group">
-						<f:label path="name" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.name" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="name" cssClass="form-control" readonly="true" />
+					<div class="form-horizontal" role="form">
+						<div class="form-group">
+							<f:label path="name" cssClass="col-sm-2 control-label">
+								<s:message code="sqlMetadataForm.name" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:input path="name" cssClass="form-control" readonly="true" />
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<f:label path="description" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.description" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="description" cssClass="form-control"
-								readonly="true" />
+						<div class="form-group">
+							<f:label path="description" cssClass="col-sm-2 control-label">
+								<s:message code="sqlMetadataForm.description" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="description" cssClass="form-control"
+									readonly="true" />
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<f:label path="ownedBy" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.ownedBy" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="ownedBy" cssClass="form-control" readonly="true" />
+						<div class="form-group">
+							<f:label path="ownedBy" cssClass="col-sm-2 control-label">
+								<s:message code="sqlMetadataForm.ownedBy" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:input path="ownedBy" cssClass="form-control" readonly="true" />
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<f:label path="publishedFlg" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.publishedFlg" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:checkbox path="publishedFlg" cssClass="form-control"
-								disabled="true" />
+						<div class="form-group">
+							<f:label path="publishedFlg" cssClass="col-sm-2 control-label">
+								<s:message code="sqlMetadataForm.publishedFlg" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:checkbox path="publishedFlg" cssClass="form-control"
+									disabled="true" />
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<a href="${baseUri}/edit" class="btn btn-default"><s:message
-									code="tool/clause/page.editButton" /></a>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<a href="${baseUri}/edit" class="btn btn-default"><s:message
+										code="tool/clause/page.editButton" /></a>
+							</div>
 						</div>
 					</div>
 				</s:nestedPath>
@@ -93,8 +95,8 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<div class="form-horizontal" role="form">
-					<s:nestedPath path="sqlClauseForm">
+				<s:nestedPath path="sqlClauseForm">
+					<div class="form-horizontal" role="form">
 						<div class="form-group">
 							<f:label path="databaseName" cssClass="col-sm-2 control-label">
 								<s:message code="sqlClauseForm.databaseName" />
@@ -158,8 +160,8 @@
 									readonly="true" />
 							</div>
 						</div>
-					</s:nestedPath>
-				</div>
+					</div>
+				</s:nestedPath>
 				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqlClauseForm" cssClass="form-horizontal"
 					role="form">
@@ -174,7 +176,7 @@
 							<s:message code="sqlClauseForm.paramMap" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+							<f:textarea path="paramMap" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
