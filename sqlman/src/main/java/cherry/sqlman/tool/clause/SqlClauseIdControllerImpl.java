@@ -125,24 +125,32 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 	}
 
 	@Override
+	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
+		mav.addObject(PathDef.PATHVAR_ID, id);
+		return mav;
+	}
+
+	@Override
 	public ModelAndView update(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
 
 		if (clauseService.update(id, form)) {
-			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).init(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).edit(id, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
@@ -153,20 +161,20 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}
 
 		if (metadataService.update(id, mdForm)) {
-			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).init(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).edit(id, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
 			mav.addObject(PathDef.PATHVAR_ID, id);
 			return mav;
 		}

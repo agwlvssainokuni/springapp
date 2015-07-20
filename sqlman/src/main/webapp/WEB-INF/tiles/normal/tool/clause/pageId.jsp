@@ -28,45 +28,24 @@
 						code="tool/clause/page.message.1" /></a>
 			</h3>
 		</div>
-		<c:set var="hasError">
-			<s:hasBindErrors name="sqlMetadataForm">in</s:hasBindErrors>
-		</c:set>
-		<div id="metadataForm" class="panel-collapse collapse ${hasError}">
-			<div class="panel-body">
-				<s:hasBindErrors name="sqlMetadataForm">
-					<div class="col-sm-offset-2 col-sm-10">
-						<div class="alert alert-danger" role="alert">
-							<f:errors path="sqlMetadataForm" element="div" />
-							<f:errors path="sqlMetadataForm.name" element="div" />
-							<f:errors path="sqlMetadataForm.description" element="div" />
-							<f:errors path="sqlMetadataForm.lockVersion" element="div" />
-						</div>
-					</div>
-				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
-					modelAttribute="sqlMetadataForm" cssClass="form-horizontal"
-					role="form">
-					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
+		<div id="metadataForm" class="panel-collapse collapse">
+			<div class="panel-body form-horizontal" role="form">
+				<s:nestedPath path="sqlMetadataForm">
+					<div class="form-group">
 						<f:label path="name" cssClass="col-sm-2 control-label">
 							<s:message code="sqlMetadataForm.name" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="name" cssClass="col-sm-2 form-control" />
+							<f:input path="name" cssClass="form-control" readonly="true" />
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
+					<div class="form-group">
 						<f:label path="description" cssClass="col-sm-2 control-label">
 							<s:message code="sqlMetadataForm.description" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="description" cssClass="col-sm-2 form-control" />
+							<f:textarea path="description" cssClass="form-control"
+								readonly="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -74,8 +53,7 @@
 							<s:message code="sqlMetadataForm.ownedBy" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="ownedBy" cssClass="col-sm-2 form-control"
-								disabled="true" />
+							<f:input path="ownedBy" cssClass="form-control" readonly="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -83,17 +61,17 @@
 							<s:message code="sqlMetadataForm.publishedFlg" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:checkbox path="publishedFlg" cssClass="col-sm-2 form-control" />
+							<f:checkbox path="publishedFlg" cssClass="form-control"
+								disabled="true" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/clause/page.updateButton" />
-							</f:button>
+							<a href="${baseUri}/edit" class="btn btn-default"><s:message
+									code="tool/clause/page.editButton" /></a>
 						</div>
 					</div>
-				</f:form>
+				</s:nestedPath>
 			</div>
 		</div>
 	</div>
@@ -111,103 +89,83 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="alert alert-danger" role="alert">
 							<f:errors path="sqlClauseForm" element="div" />
-							<f:errors path="sqlClauseForm.databaseName" element="div" />
-							<f:errors path="sqlClauseForm.select" element="div" />
-							<f:errors path="sqlClauseForm.from" element="div" />
-							<f:errors path="sqlClauseForm.where" element="div" />
-							<f:errors path="sqlClauseForm.groupBy" element="div" />
-							<f:errors path="sqlClauseForm.having" element="div" />
-							<f:errors path="sqlClauseForm.orderBy" element="div" />
 							<f:errors path="sqlClauseForm.paramMap" element="div" />
-							<f:errors path="sqlClauseForm.lockVersion" element="div" />
 						</div>
 					</div>
 				</s:hasBindErrors>
+				<div class="form-horizontal" role="form">
+					<s:nestedPath path="sqlClauseForm">
+						<div class="form-group">
+							<f:label path="databaseName" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.databaseName" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:select path="databaseName" cssClass="form-control"
+									disabled="true">
+									<f:options items="${dataSourceDef.names}" />
+								</f:select>
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="select" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.select" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="select" cssClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="from" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.from" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="from" cssClass="form-control" readonly="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="where" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.where" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="where" cssClass="form-control" readonly="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="groupBy" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.groupBy" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="groupBy" cssClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="having" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.having" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="having" cssClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<f:label path="orderBy" cssClass="col-sm-2 control-label">
+								<s:message code="sqlClauseForm.orderBy" />
+							</f:label>
+							<div class="col-sm-10">
+								<f:textarea path="orderBy" cssClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+					</s:nestedPath>
+				</div>
 				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqlClauseForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="pageNo" value="0" />
 					<f:hidden path="pageSz" />
 					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="databaseName" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.databaseName" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="col-sm-2 form-control">
-								<f:options items="${dataSourceDef.names}" />
-							</f:select>
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="select">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="select" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.select" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="select" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="from">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="from" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.from" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="from" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="where">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="where" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.where" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="where" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="groupBy">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="groupBy" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.groupBy" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="groupBy" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="having">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="having" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.having" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="having" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="orderBy">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="orderBy" cssClass="col-sm-2 control-label">
-							<s:message code="sqlClauseForm.orderBy" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:textarea path="orderBy" cssClass="col-sm-2 form-control" />
-						</div>
-					</div>
 					<c:set var="hasError">
 						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
@@ -227,9 +185,8 @@
 							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="tool/clause/page.downloadButton" />
 							</f:button>
-							<f:button type="submit" name="update" class="btn btn-default">
-								<s:message code="tool/clause/page.updateButton" />
-							</f:button>
+							<a href="${baseUri}/edit" class="btn btn-default"><s:message
+									code="tool/clause/page.editButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -250,13 +207,6 @@
 					<f:hidden id="pageNo2" path="pageNo" />
 					<f:hidden id="pageSz2" path="pageSz" />
 					<f:hidden id="lockVersion2" path="lockVersion" />
-					<f:hidden id="databaseName2" path="databaseName" />
-					<f:hidden id="select2" path="select" />
-					<f:hidden id="from2" path="from" />
-					<f:hidden id="where2" path="where" />
-					<f:hidden id="groupBy2" path="groupBy" />
-					<f:hidden id="having2" path="having" />
-					<f:hidden id="orderBy2" path="orderBy" />
 					<f:hidden id="paramMap2" path="paramMap" />
 				</f:form>
 				<div class="panel-body">

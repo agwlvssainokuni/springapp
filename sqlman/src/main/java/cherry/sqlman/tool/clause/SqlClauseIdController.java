@@ -56,7 +56,11 @@ public interface SqlClauseIdController {
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, HttpServletResponse response);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_UPDATE)
+	@RequestMapping(PathDef.SUBURI_EDIT)
+	ModelAndView edit(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(PathDef.SUBURI_UPDATE)
 	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlClauseForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 

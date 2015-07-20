@@ -45,6 +45,8 @@ public class PathDef {
 
 	public static final String VIEW_TOOL_CLAUSE_ID = "tool/clause/pageId";
 
+	public static final String VIEW_TOOL_CLAUSE_ID_EDIT = "tool/clause/editId";
+
 	public static final String VIEW_TOOL_STATEMENT = "tool/statement/page";
 
 	public static final String VIEW_TOOL_STATEMENT_ID = "tool/statement/pageId";
@@ -64,6 +66,10 @@ public class PathDef {
 	public static final String SUBURI_START = "start";
 
 	public static final String SUBURI_EXECUTE = "execute";
+
+	public static final String SUBURI_EDIT = "edit";
+
+	public static final String SUBURI_UPDATE = "update";
 
 	public static final String SUBURI_METADATA = "metadata";
 
