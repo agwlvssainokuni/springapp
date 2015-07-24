@@ -286,15 +286,19 @@
 				<entry key="0">
 					<bean class="cherry.foundation.crypto.AESCryptoSupport">
 						<property name="secretKeyResource" value="classpath:crypto/0/key.bin" />
-						<property name="initVectorResource" value="classpath:crypto/0/iv.bin" />
 						<property name="keyCrypto" ref="rsaCrypto" />
+						<property name="random">
+							<bean class="java.security.SecureRandom" />
+						</property>
 					</bean>
 				</entry>
 				<entry key="1">
 					<bean class="cherry.foundation.crypto.AESCryptoSupport">
 						<property name="secretKeyResource" value="classpath:crypto/1/key.bin" />
-						<property name="initVectorResource" value="classpath:crypto/1/iv.bin" />
 						<property name="keyCrypto" ref="rsaCrypto1" />
+						<property name="random">
+							<bean class="java.security.SecureRandom" />
+						</property>
 					</bean>
 				</entry>
 			</map>

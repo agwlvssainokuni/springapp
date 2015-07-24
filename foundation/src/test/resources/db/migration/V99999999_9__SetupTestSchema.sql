@@ -19,11 +19,11 @@ CREATE TABLE conversion_test (
 	joda_date		DATE,
 	joda_time		TIME,
 	joda_datetime	TIMESTAMP,
-	sec_str		VARCHAR(104),
-	sec_int		VARCHAR(40),
-	sec_long	VARCHAR(40),
-	sec_bigint	VARCHAR(104),
-	sec_bigdec	VARCHAR(104),
+	sec_str		VARCHAR(136),
+	sec_int		VARCHAR(72),
+	sec_long	VARCHAR(72),
+	sec_bigint	VARCHAR(136),
+	sec_bigdec	VARCHAR(136),
 	flag_code	INTEGER,
 	deleted_flg	INTEGER
 );
