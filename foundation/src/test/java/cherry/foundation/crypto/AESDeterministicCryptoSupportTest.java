@@ -23,12 +23,12 @@ import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
-public class AESCommonIVCryptoSupportTest {
+public class AESDeterministicCryptoSupportTest {
 
 	@Test
 	public void testDefault() throws Exception {
 
-		AESCommonIVCryptoSupport crypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto = new AESDeterministicCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
@@ -44,7 +44,7 @@ public class AESCommonIVCryptoSupportTest {
 	@Test
 	public void testCBC() throws Exception {
 
-		AESCommonIVCryptoSupport crypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto = new AESDeterministicCryptoSupport();
 		crypto.setAlgorithm("AES/CBC/PKCS5Padding");
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
@@ -61,7 +61,7 @@ public class AESCommonIVCryptoSupportTest {
 	@Test
 	public void testECB() throws Exception {
 
-		AESCommonIVCryptoSupport crypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto = new AESDeterministicCryptoSupport();
 		crypto.setAlgorithm("AES/ECB/PKCS5Padding");
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
@@ -80,17 +80,17 @@ public class AESCommonIVCryptoSupportTest {
 		byte[] key = RandomUtils.nextBytes(16);
 		byte[] iv = RandomUtils.nextBytes(16);
 
-		AESCommonIVCryptoSupport crypto0 = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto0 = new AESDeterministicCryptoSupport();
 		crypto0.setSecretKeyResource(new InMemoryResource(key));
 		crypto0.setInitVectorResource(new InMemoryResource(iv));
 		crypto0.afterPropertiesSet();
 
-		AESCommonIVCryptoSupport keyCrypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport keyCrypto = new AESDeterministicCryptoSupport();
 		keyCrypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		keyCrypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		keyCrypto.afterPropertiesSet();
 
-		AESCommonIVCryptoSupport crypto1 = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto1 = new AESDeterministicCryptoSupport();
 		crypto1.setKeyCrypto(keyCrypto);
 		crypto1.setSecretKeyResource(new InMemoryResource(keyCrypto.encrypt(key)));
 		crypto1.setInitVectorResource(new InMemoryResource(keyCrypto.encrypt(iv)));

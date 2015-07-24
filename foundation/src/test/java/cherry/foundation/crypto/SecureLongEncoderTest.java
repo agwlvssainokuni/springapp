@@ -68,7 +68,7 @@ public class SecureLongEncoderTest {
 	}
 
 	private SecureLongEncoder createSecureLongEncoder() throws Exception {
-		AESCommonIVCryptoSupport crypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto = new AESDeterministicCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();

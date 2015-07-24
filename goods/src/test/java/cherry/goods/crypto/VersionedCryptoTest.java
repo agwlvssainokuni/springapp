@@ -122,9 +122,8 @@ public class VersionedCryptoTest {
 	}
 
 	private Crypto createAESCrypto() throws IOException {
-		AESCommonIVCrypto crypto = new AESCommonIVCrypto();
+		AESCrypto crypto = new AESCrypto();
 		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
-		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 		return crypto;
 	}
 

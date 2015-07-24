@@ -22,12 +22,12 @@ import static org.junit.Assert.assertThat;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
-public class AESCommonIVCryptoTest {
+public class AESDeterministicCryptoTest {
 
 	@Test
 	public void testDefault() throws Exception {
 
-		AESCommonIVCrypto crypto = new AESCommonIVCrypto();
+		AESDeterministicCrypto crypto = new AESDeterministicCrypto();
 		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
 		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 
@@ -42,7 +42,7 @@ public class AESCommonIVCryptoTest {
 	@Test
 	public void testCBC() throws Exception {
 
-		AESCommonIVCrypto crypto = new AESCommonIVCrypto();
+		AESDeterministicCrypto crypto = new AESDeterministicCrypto();
 		crypto.setAlgorithm("AES/CBC/PKCS5Padding");
 		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
 		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
@@ -58,7 +58,7 @@ public class AESCommonIVCryptoTest {
 	@Test
 	public void testECB() throws Exception {
 
-		AESCommonIVCrypto crypto = new AESCommonIVCrypto();
+		AESDeterministicCrypto crypto = new AESDeterministicCrypto();
 		crypto.setAlgorithm("AES/ECB/PKCS5Padding");
 		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
 
@@ -76,15 +76,15 @@ public class AESCommonIVCryptoTest {
 		byte[] key = RandomUtils.nextBytes(16);
 		byte[] iv = RandomUtils.nextBytes(16);
 
-		AESCommonIVCrypto crypto0 = new AESCommonIVCrypto();
+		AESDeterministicCrypto crypto0 = new AESDeterministicCrypto();
 		crypto0.setSecretKeyBytes(key);
 		crypto0.setInitVectorBytes(iv);
 
-		AESCommonIVCrypto keyCrypto = new AESCommonIVCrypto();
+		AESDeterministicCrypto keyCrypto = new AESDeterministicCrypto();
 		keyCrypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
 		keyCrypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 
-		AESCommonIVCrypto crypto1 = new AESCommonIVCrypto();
+		AESDeterministicCrypto crypto1 = new AESDeterministicCrypto();
 		crypto1.setKeyCrypto(keyCrypto);
 		crypto1.setSecretKeyBytes(keyCrypto.encrypt(key));
 		crypto1.setInitVectorBytes(keyCrypto.encrypt(iv));

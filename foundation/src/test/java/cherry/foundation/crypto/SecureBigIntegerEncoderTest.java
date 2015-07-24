@@ -69,7 +69,7 @@ public class SecureBigIntegerEncoderTest {
 	}
 
 	private SecureBigIntegerEncoder createSecureBigIntegerEncoder() throws Exception {
-		AESCommonIVCryptoSupport crypto = new AESCommonIVCryptoSupport();
+		AESDeterministicCryptoSupport crypto = new AESDeterministicCryptoSupport();
 		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();

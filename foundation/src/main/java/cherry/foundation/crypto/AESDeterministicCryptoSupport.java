@@ -22,14 +22,14 @@ import java.io.InputStream;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 
-import cherry.goods.crypto.AESCommonIVCrypto;
+import cherry.goods.crypto.AESDeterministicCrypto;
 
 import com.google.common.io.ByteStreams;
 
 /**
  * AES暗号アルゴリズムによる暗号化/復号化の機能を提供する。
  */
-public class AESCommonIVCryptoSupport extends AESCommonIVCrypto implements InitializingBean {
+public class AESDeterministicCryptoSupport extends AESDeterministicCrypto implements InitializingBean {
 
 	/** AES暗号アルゴリズムで使用する共通鍵が定義されたファイルのパスを保持する。 */
 	private Resource secretKeyResource;
