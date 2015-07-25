@@ -46,11 +46,21 @@
 	</bean>
 
 	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider>
+		<security:authentication-provider user-service-ref="userDetailsService">
 			<security:password-encoder ref="passwordEncoder" />
-			<security:user-service properties="${sqlman.userfile}" />
 		</security:authentication-provider>
 	</security:authentication-manager>
+	<security:user-service id="userInFile" properties="${sqlman.userfile}" />
+	<bean id="userDetailsService" class="cherry.sqlman.security.CompositeUserDetailsService">
+		<property name="delegates">
+			<list>
+				<ref bean="userInFile" />
+				<bean class="cherry.sqlman.security.UserDetailsServiceImpl">
+					<property name="queryFactory" ref="queryFactory" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/tool/**" access="isAuthenticated()" />
