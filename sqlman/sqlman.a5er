@@ -82,15 +82,14 @@ Page=SQL管理
 Left=500
 Top=2000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="ログインID","login_id","*識別名","NOT NULL",,"","",$FFFFFFFF,""
-Field="パスワード","password","*パスワード","NOT NULL",,"","",$FFFFFFFF,""
 Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,login_id
+Field="パスワード","password","*パスワード","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,mail_addr
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20150726003913
+ModifiedDateTime=20150726011054
 Position="SQL管理",500,2000
 
 [Relation]
