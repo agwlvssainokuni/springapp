@@ -64,8 +64,8 @@
 	</bean>
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
-		<security:intercept-url pattern="/tool/**" access="isAuthenticated() and hasAnyRole(ROLE_USER, ROLE_ADMIN)" />
-		<security:intercept-url pattern="/admin/**" access="isAuthenticated() and hasAnyRole(ROLE_ADMIN)" />
+		<security:intercept-url pattern="/tool/**" access="isAuthenticated() and hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+		<security:intercept-url pattern="/admin/**" access="isAuthenticated() and hasRole('ROLE_ADMIN')" />
 		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
 			authentication-failure-url="/login/start?loginFailed" default-target-url="/tool/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />
