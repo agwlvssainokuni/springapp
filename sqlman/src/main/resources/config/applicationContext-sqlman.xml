@@ -57,14 +57,15 @@
 				<ref bean="userInFile" />
 				<bean class="cherry.sqlman.security.UserDetailsServiceImpl">
 					<property name="queryFactory" ref="queryFactory" />
+					<property name="role" value="ROLE_USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
-		<security:intercept-url pattern="/tool/**" access="isAuthenticated()" />
-		<security:intercept-url pattern="/admin/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/tool/**" access="isAuthenticated() and hasAnyRole(ROLE_USER, ROLE_ADMIN)" />
+		<security:intercept-url pattern="/admin/**" access="isAuthenticated() and hasAnyRole(ROLE_ADMIN)" />
 		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
 			authentication-failure-url="/login/start?loginFailed" default-target-url="/tool/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />

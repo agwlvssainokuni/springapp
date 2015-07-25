@@ -16,26 +16,44 @@
 
 package cherry.sqlman.security;
 
+import static java.util.Arrays.asList;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.sqlman.db.gen.query.QUserAccount;
+
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQueryFactory;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private SQLQueryFactory queryFactory;
 
+	private String role;
+
+	private final QUserAccount ua = new QUserAccount("ua");
+
 	public void setQueryFactory(SQLQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Transactional
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		queryFactory.query();
-		throw new UsernameNotFoundException("Not found for " + username);
+		Tuple user = queryFactory.from(ua).where(ua.mailAddr.eq(username)).uniqueResult(ua.mailAddr, ua.password);
+		if (user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return new User(user.get(ua.mailAddr), user.get(ua.password), asList(new SimpleGrantedAuthority(role)));
 	}
 
 }

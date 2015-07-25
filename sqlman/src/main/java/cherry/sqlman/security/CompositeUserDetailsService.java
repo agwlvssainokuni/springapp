@@ -41,10 +41,10 @@ public class CompositeUserDetailsService implements UserDetailsService {
 			try {
 				return service.loadUserByUsername(username);
 			} catch (UsernameNotFoundException ex) {
-				log.debug("Not found for {0}, going next: {1}", username, ex.getMessage());
+				log.debug("Not found for {0}, going next", username);
 			}
 		}
-		throw new UsernameNotFoundException("Not found for " + username);
+		throw new UsernameNotFoundException(username);
 	}
 
 }
