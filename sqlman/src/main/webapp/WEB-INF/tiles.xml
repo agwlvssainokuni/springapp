@@ -9,6 +9,11 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/{1}/login/{2}.jsp" />
 	</definition>
 
+	<definition name="*/password/**" template="/WEB-INF/tiles/{1}/base_layout_1.jsp">
+		<put-attribute name="name" value="password/{2}" />
+		<put-attribute name="content" value="/WEB-INF/tiles/{1}/password/{2}.jsp" />
+	</definition>
+
 	<definition name="*/tool/**" template="/WEB-INF/tiles/{1}/base_layout_2.jsp">
 		<put-attribute name="name" value="tool/{2}" />
 		<put-attribute name="content" value="/WEB-INF/tiles/{1}/tool/{2}.jsp" />

@@ -96,4 +96,14 @@ public class PathDef {
 
 	public static final String METHOD_LOGGED_OUT = "loggedOut";
 
+	// パスワード発行画面
+	public static final String URI_PASSWORD = "/password";
+
+	public static final String VIEW_PASSWORD_START = "password/start";
+
+	public static final String VIEW_PASSWORD_EDIT = "password/edit";
+
+	// リクエストパラメタ
+	public static final String PARAM_TOKEN = "token";
+
 }
