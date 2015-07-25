@@ -20,6 +20,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
@@ -78,6 +82,25 @@ public class AESCryptoTest {
 			byte[] dec1 = crypto1.decrypt(enc1);
 			assertThat(dec0, is(plain));
 			assertThat(dec1, is(plain));
+		}
+	}
+
+	@Test
+	public void testRandomizing() {
+		int size = 10000;
+		for (int i = 0; i < 10; i++) {
+
+			byte[] key = RandomUtils.nextBytes(16);
+			byte[] plain = RandomUtils.nextBytes(1024);
+			AESCrypto crypto = new AESCrypto();
+			crypto.setSecretKeyBytes(key);
+
+			Set<String> set = new HashSet<>();
+			for (int j = 0; j < size; j++) {
+				byte[] enc = crypto.encrypt(plain);
+				set.add(Hex.encodeHexString(enc));
+			}
+			assertThat(set.size(), is(size));
 		}
 	}
 
