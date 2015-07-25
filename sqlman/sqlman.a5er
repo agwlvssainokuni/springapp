@@ -8,7 +8,7 @@
 ProjectName=SqlMan
 Author=agwlvssainokuni
 MaxEntityRowShow=1000
-ReadOnlyRecommend=0
+ReadOnlyRecommend=1
 Page=SQL管理
 PageInfo="SQL管理",4,"A3Landscape",$FFFFFF
 Domain=ID=@INT
@@ -20,6 +20,9 @@ Domain=SQL文=@VARCHAR(5000)
 Domain=パラメタMAP(JSON)=@VARCHAR(5000)
 Domain=日時=@DATETIME
 Domain=フラグ=@INT
+Domain=パスワード=@VARCHAR(255)
+Domain=メールアドレス=@VARCHAR(300)
+Domain=トークン=@VARCHAR(50)
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -48,6 +51,47 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Entity]
+PName=password_request
+LName=パスワード申請
+Comment=
+TableOption=
+Page=SQL管理
+Left=1500
+Top=2000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Field="トークン","token","*トークン","NOT NULL",,"","",$FFFFFFFF,""
+Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Index==0,mail_addr
+Index==1,token
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150726004036
+Position="SQL管理",1500,2000
+
+[Entity]
+PName=user_account
+LName=利用者アカウント
+Comment=
+TableOption=
+Page=SQL管理
+Left=500
+Top=2000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="ログインID","login_id","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","password","*パスワード","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,login_id
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150726003913
+Position="SQL管理",500,2000
 
 [Relation]
 Entity1=sql_metadata

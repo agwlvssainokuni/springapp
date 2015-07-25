@@ -1,8 +1,41 @@
 -- Project Name : SqlMan
--- Date/Time    : 2015/07/05 6:13:29
+-- Date/Time    : 2015/07/26 0:43:40
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- パスワード申請
+create table password_request (
+  id INTEGER not null AUTO_INCREMENT
+  , mail_addr VARCHAR(300) not null
+  , token VARCHAR(50) not null
+  , applied_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , lock_version INTEGER default 1 not null
+  , constraint password_request_PKC primary key (id)
+) ;
+
+create index password_request_IX1
+  on password_request(mail_addr);
+
+create unique index password_request_IX2
+  on password_request(token);
+
+-- 利用者アカウント
+create table user_account (
+  id INTEGER not null AUTO_INCREMENT
+  , login_id VARCHAR(32) not null
+  , password VARCHAR(255) not null
+  , mail_addr VARCHAR(300) not null
+  , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , lock_version INTEGER default 1 not null
+  , constraint user_account_PKC primary key (id)
+) ;
+
+create unique index user_account_IX1
+  on user_account(login_id);
 
 -- SQL管理機能・CSV取込み
 create table sql_load (
@@ -59,6 +92,24 @@ create table sql_metadata (
   , lock_version INTEGER default 1 not null
   , constraint sql_metadata_PKC primary key (id)
 ) ;
+
+comment on table password_request is 'パスワード申請';
+comment on column password_request.id is 'ID';
+comment on column password_request.mail_addr is 'メールアドレス';
+comment on column password_request.token is 'トークン';
+comment on column password_request.applied_at is '申請日時';
+comment on column password_request.updated_at is '更新日時';
+comment on column password_request.created_at is '作成日時';
+comment on column password_request.lock_version is 'ロックバージョン';
+
+comment on table user_account is '利用者アカウント';
+comment on column user_account.id is 'ID';
+comment on column user_account.login_id is 'ログインID';
+comment on column user_account.password is 'パスワード';
+comment on column user_account.mail_addr is 'メールアドレス';
+comment on column user_account.updated_at is '更新日時';
+comment on column user_account.created_at is '作成日時';
+comment on column user_account.lock_version is 'ロックバージョン';
 
 comment on table sql_load is 'SQL管理機能・CSV取込み';
 comment on column sql_load.id is 'ID';
