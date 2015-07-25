@@ -14,8 +14,6 @@ public class BUserAccount {
 
     private Integer lockVersion;
 
-    private String loginId;
-
     private String mailAddr;
 
     private String password;
@@ -46,14 +44,6 @@ public class BUserAccount {
         this.lockVersion = lockVersion;
     }
 
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
-    }
-
     public String getMailAddr() {
         return mailAddr;
     }
@@ -80,7 +70,7 @@ public class BUserAccount {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", loginId = " + loginId + ", mailAddr = " + mailAddr + ", password = " + password + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", password = " + password + ", updatedAt = " + updatedAt;
     }
 
 }

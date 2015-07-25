@@ -30,8 +30,6 @@ public class QUserAccount extends com.mysema.query.sql.RelationalPathBase<BUserA
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
-    public final StringPath loginId = createString("loginId");
-
     public final StringPath mailAddr = createString("mailAddr");
 
     public final StringPath password = createString("password");
@@ -61,13 +59,12 @@ public class QUserAccount extends com.mysema.query.sql.RelationalPathBase<BUserA
     }
 
     public void addMetadata() {
-        addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(loginId, ColumnMetadata.named("LOGIN_ID").withIndex(2).ofType(Types.VARCHAR).withSize(32).notNull());
-        addMetadata(mailAddr, ColumnMetadata.named("MAIL_ADDR").withIndex(4).ofType(Types.VARCHAR).withSize(300).notNull());
+        addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(mailAddr, ColumnMetadata.named("MAIL_ADDR").withIndex(2).ofType(Types.VARCHAR).withSize(300).notNull());
         addMetadata(password, ColumnMetadata.named("PASSWORD").withIndex(3).ofType(Types.VARCHAR).withSize(255).notNull());
-        addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
+        addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(4).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 
 }
