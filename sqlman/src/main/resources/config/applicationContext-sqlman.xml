@@ -189,7 +189,7 @@
 			<bean class="cherry.foundation.mail.SimpleTemplateStore">
 				<property name="mailDataMap">
 					<map key-type="java.lang.String" value-type="cherry.foundation.mail.MailData">
-						<entry key="REQUEST">
+						<entry key="PASSWORD_REQUEST">
 							<bean class="cherry.foundation.mail.MailData">
 								<property name="fromAddr" value="sqlman@example.com" />
 								<property name="subject" value="パスワード発行リクエスト" />
