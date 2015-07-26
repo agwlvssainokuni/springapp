@@ -193,7 +193,13 @@
 							<bean class="cherry.foundation.mail.MailData">
 								<property name="fromAddr" value="sqlman@example.com" />
 								<property name="subject" value="パスワード発行リクエスト" />
-								<property name="body" value="${model.mailAddr}, 入力URI: ${model.uri}]]" />
+								<property name="body">
+									<value>
+<![CDATA[${model.mailAddr},
+入力URI: ${model.uri}
+]]>
+									</value>
+								</property>
 							</bean>
 						</entry>
 					</map>
