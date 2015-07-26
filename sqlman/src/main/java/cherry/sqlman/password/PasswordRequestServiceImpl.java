@@ -85,7 +85,8 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 	@Override
 	public boolean createRequest(String mailAddr, Locale locale, UriComponentsSource source) {
 
-		if (queryFactory.from(ua).where(ua.mailAddr.eq(mailAddr)).notExists()) {
+		boolean mailAddrExists = queryFactory.from(ua).where(ua.mailAddr.eq(mailAddr)).exists();
+		if (!mailAddrExists) {
 			if (log.isDebugEnabled()) {
 				log.debug("{0} does not exist: mailAddr={1}", ua.getTableName(), mailAddr);
 			}
@@ -93,10 +94,17 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 
 			LocalDateTime now = bizDateTime.now();
 
-			if (!validateMailAddr(mailAddr, now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec), numOfReq)) {
+			boolean requestAcceptable = queryFactory
+					.from(pr0)
+					.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(now.minusSeconds(rangeInSec)))
+					.uniqueResult(
+							cases().when(pr0.id.count().eq(0L)).then(true).when(pr0.id.count().goe(numOfReq))
+									.then(false).when(pr0.appliedAt.max().goe(now.minusSeconds(intervalInSec)))
+									.then(false).otherwise(true));
+			if (!requestAcceptable) {
 				if (log.isDebugEnabled()) {
-					log.debug("Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}", mailAddr,
-							intervalInSec, rangeInSec, numOfReq);
+					log.debug("Not acceptable: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}",
+							mailAddr, intervalInSec, rangeInSec, numOfReq);
 				}
 				return false;
 			}
@@ -131,42 +139,29 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 
 		LocalDateTime now = bizDateTime.now();
 
-		Integer prId = validateToken(mailAddr, token, now.minusSeconds(validInSec));
-		if (prId == null) {
+		Integer requestId = queryFactory
+				.from(pr0)
+				.forUpdate()
+				.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(now.minusSeconds(validInSec)))
+				.where(pr0.token.eq(token), pr0.doneFlg.ne(FlagCode.TRUE.code()))
+				.where(queryFactory.subQuery(pr1).where(pr1.mailAddr.eq(pr0.mailAddr), pr1.appliedAt.gt(pr0.appliedAt))
+						.notExists()).uniqueResult(pr0.id);
+		if (requestId == null) {
 			if (log.isDebugEnabled()) {
-				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}", mailAddr, token, validInSec);
+				log.debug("Request unmatch: mailAddr={0}, token={1}, validInSec={2}", mailAddr, token, validInSec);
 			}
 			return false;
 		}
 
 		long count0 = queryFactory.update(pr0).set(pr0.doneFlg, FlagCode.TRUE.code())
-				.set(pr0.lockVersion, pr0.lockVersion.add(1)).where(pr0.id.eq(prId)).execute();
-		checkState(count0 == 1L, "failed to update {0}: id={1}", pr0.getTableName(), prId);
+				.set(pr0.lockVersion, pr0.lockVersion.add(1)).where(pr0.id.eq(requestId)).execute();
+		checkState(count0 == 1L, "failed to update {0}: id={1}", pr0.getTableName(), requestId);
 
 		long count1 = queryFactory.update(ua).set(ua.password, passwordEncoder.encode(password))
 				.set(ua.lockVersion, ua.lockVersion.add(1)).where(ua.mailAddr.eq(mailAddr)).execute();
 		checkState(count1 == 1L, "failed to update {0}: mailAddr={1}", ua.getTableName(), mailAddr);
 
 		return true;
-	}
-
-	private boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
-		return queryFactory
-				.from(pr0)
-				.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(rangeFrom))
-				.uniqueResult(
-						cases().when(pr0.id.count().eq(0L)).then(true).when(pr0.id.count().goe(numOfReq)).then(false)
-								.when(pr0.appliedAt.max().goe(intervalFrom)).then(false).otherwise(true));
-	}
-
-	private Integer validateToken(String mailAddr, String token, LocalDateTime validFrom) {
-		return queryFactory
-				.from(pr0)
-				.forUpdate()
-				.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(validFrom))
-				.where(pr0.token.eq(token), pr0.doneFlg.ne(FlagCode.TRUE.code()))
-				.where(queryFactory.subQuery(pr1).where(pr1.mailAddr.eq(pr0.mailAddr), pr1.appliedAt.gt(pr0.appliedAt))
-						.notExists()).uniqueResult(pr0.id);
 	}
 
 	@Setter
