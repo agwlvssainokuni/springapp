@@ -12,6 +12,8 @@ public class BPasswordRequest {
 
     private org.joda.time.LocalDateTime createdAt;
 
+    private Integer doneFlg;
+
     private Integer id;
 
     private Integer lockVersion;
@@ -36,6 +38,14 @@ public class BPasswordRequest {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getDoneFlg() {
+        return doneFlg;
+    }
+
+    public void setDoneFlg(Integer doneFlg) {
+        this.doneFlg = doneFlg;
     }
 
     public Integer getId() {
@@ -80,7 +90,7 @@ public class BPasswordRequest {
 
     @Override
     public String toString() {
-         return "appliedAt = " + appliedAt + ", createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", token = " + token + ", updatedAt = " + updatedAt;
+         return "appliedAt = " + appliedAt + ", createdAt = " + createdAt + ", doneFlg = " + doneFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailAddr = " + mailAddr + ", token = " + token + ", updatedAt = " + updatedAt;
     }
 
 }

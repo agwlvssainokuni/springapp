@@ -37,6 +37,7 @@ import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.MailFacade;
 import cherry.foundation.mail.MailModel;
+import cherry.foundation.type.FlagCode;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 import cherry.sqlman.db.gen.query.BPasswordRequest;
@@ -106,6 +107,7 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 			pr.setMailAddr(mailAddr);
 			pr.setToken(token.toString());
 			pr.setAppliedAt(now);
+			pr.setDoneFlg(FlagCode.FALSE.code());
 			Integer id = queryFactory.insert(pr0).populate(pr).executeWithKey(pr0.id);
 			if (log.isDebugEnabled()) {
 				log.debug("{0} is created, id={1}, mailAddr={2}, token={3}", pr0.getTableName(), id, mailAddr, token);
@@ -129,16 +131,21 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 
 		LocalDateTime now = bizDateTime.now();
 
-		if (!validateToken(mailAddr, token, now.minusSeconds(validInSec))) {
+		Integer prId = validateToken(mailAddr, token, now.minusSeconds(validInSec));
+		if (prId == null) {
 			if (log.isDebugEnabled()) {
 				log.debug("Invalid: mailAddr={0}, token={1}, validInSec={2}", mailAddr, token, validInSec);
 			}
 			return false;
 		}
 
-		long count = queryFactory.update(ua).set(ua.password, passwordEncoder.encode(password))
+		long count0 = queryFactory.update(pr0).set(pr0.doneFlg, FlagCode.TRUE.code())
+				.set(pr0.lockVersion, pr0.lockVersion.add(1)).where(pr0.id.eq(prId)).execute();
+		checkState(count0 == 1L, "failed to update {0}: id={1}", pr0.getTableName(), prId);
+
+		long count1 = queryFactory.update(ua).set(ua.password, passwordEncoder.encode(password))
 				.set(ua.lockVersion, ua.lockVersion.add(1)).where(ua.mailAddr.eq(mailAddr)).execute();
-		checkState(count == 1L, "failed to update {0}: mailAddr={1}", ua.getTableName(), mailAddr);
+		checkState(count1 == 1L, "failed to update {0}: mailAddr={1}", ua.getTableName(), mailAddr);
 
 		return true;
 	}
@@ -152,12 +159,14 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 								.when(pr0.appliedAt.max().goe(intervalFrom)).then(false).otherwise(true));
 	}
 
-	private boolean validateToken(String mailAddr, String token, LocalDateTime validFrom) {
+	private Integer validateToken(String mailAddr, String token, LocalDateTime validFrom) {
 		return queryFactory
 				.from(pr0)
-				.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(validFrom), pr0.token.eq(token))
+				.forUpdate()
+				.where(pr0.mailAddr.eq(mailAddr), pr0.appliedAt.goe(validFrom))
+				.where(pr0.token.eq(token), pr0.doneFlg.ne(FlagCode.TRUE.code()))
 				.where(queryFactory.subQuery(pr1).where(pr1.mailAddr.eq(pr0.mailAddr), pr1.appliedAt.gt(pr0.appliedAt))
-						.notExists()).exists();
+						.notExists()).uniqueResult(pr0.id);
 	}
 
 	@Setter
