@@ -88,37 +88,37 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 			if (log.isDebugEnabled()) {
 				log.debug("{0} does not exist: mailAddr={1}", ua.getTableName(), mailAddr);
 			}
-			return false;
-		}
+		} else {
 
-		LocalDateTime now = bizDateTime.now();
+			LocalDateTime now = bizDateTime.now();
 
-		if (!validateMailAddr(mailAddr, now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec), numOfReq)) {
-			if (log.isDebugEnabled()) {
-				log.debug("Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}", mailAddr,
-						intervalInSec, rangeInSec, numOfReq);
+			if (!validateMailAddr(mailAddr, now.minusSeconds(intervalInSec), now.minusSeconds(rangeInSec), numOfReq)) {
+				if (log.isDebugEnabled()) {
+					log.debug("Invalid: mailAddr={0}, intervalInSec={1}, rangeInSec={2}, numOfReq={3}", mailAddr,
+							intervalInSec, rangeInSec, numOfReq);
+				}
+				return false;
 			}
-			return false;
+
+			UUID token = UUID.randomUUID();
+
+			BPasswordRequest pr = new BPasswordRequest();
+			pr.setMailAddr(mailAddr);
+			pr.setToken(token.toString());
+			pr.setAppliedAt(now);
+			Integer id = queryFactory.insert(pr0).populate(pr).executeWithKey(pr0.id);
+			if (log.isDebugEnabled()) {
+				log.debug("{0} is created, id={1}, mailAddr={2}, token={3}", pr0.getTableName(), id, mailAddr, token);
+			}
+
+			Model model = new Model();
+			model.setMailAddr(mailAddr);
+			model.setUri(source.buildUriComponents(token).toUriString());
+
+			MailData msg = mailFacade.createMailData(MAILID_PASSWORD_REQUEST, mailAddr, model);
+			mailFacade.send(mailAddr, MAILID_PASSWORD_REQUEST, msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
+					msg.getBccAddr(), msg.getReplyToAddr(), msg.getSubject(), msg.getBody());
 		}
-
-		UUID token = UUID.randomUUID();
-
-		BPasswordRequest pr = new BPasswordRequest();
-		pr.setMailAddr(mailAddr);
-		pr.setToken(token.toString());
-		pr.setAppliedAt(now);
-		Integer id = queryFactory.insert(pr0).populate(pr).executeWithKey(pr0.id);
-		if (log.isDebugEnabled()) {
-			log.debug("{0} is created, id={1}, mailAddr={2}, token={3}", pr0.getTableName(), id, mailAddr, token);
-		}
-
-		Model model = new Model();
-		model.setMailAddr(mailAddr);
-		model.setUri(source.buildUriComponents(token).toUriString());
-
-		MailData msg = mailFacade.createMailData(MAILID_PASSWORD_REQUEST, mailAddr, model);
-		mailFacade.send(mailAddr, MAILID_PASSWORD_REQUEST, msg.getFromAddr(), msg.getToAddr(), msg.getCcAddr(),
-				msg.getBccAddr(), msg.getReplyToAddr(), msg.getSubject(), msg.getBody());
 
 		return true;
 	}
@@ -137,7 +137,7 @@ public class PasswordRequestServiceImpl implements PasswordRequestService {
 		}
 
 		long count = queryFactory.update(ua).set(ua.password, passwordEncoder.encode(password))
-				.where(ua.mailAddr.eq(mailAddr)).execute();
+				.set(ua.lockVersion, ua.lockVersion.add(1)).where(ua.mailAddr.eq(mailAddr)).execute();
 		checkState(count == 1L, "failed to update {0}: mailAddr={1}", ua.getTableName(), mailAddr);
 
 		return true;

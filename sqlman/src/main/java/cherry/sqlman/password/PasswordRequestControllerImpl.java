@@ -33,6 +33,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+import cherry.sqlman.LogicError;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.password.PasswordRequestService.UriComponentsSource;
 
@@ -72,6 +74,7 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 		};
 
 		if (!passwordRequestService.createRequest(form.getMailAddr(), locale, source)) {
+			LogicalErrorUtil.reject(binding, LogicError.TooManyPasswordRequest);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_START);
 			return mav;
 		}
@@ -100,11 +103,13 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 		}
 
 		if (!form.getPassword().equals(form.getPasswordConf())) {
+			LogicalErrorUtil.reject(binding, LogicError.PasswordConfUnmatch);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
 			return mav;
 		}
 
 		if (!passwordRequestService.updatePassword(token, form.getMailAddr(), form.getPassword(), locale)) {
+			LogicalErrorUtil.reject(binding, LogicError.PasswordRequestUnmatch);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
 			return mav;
 		}

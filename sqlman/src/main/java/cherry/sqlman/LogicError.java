@@ -21,6 +21,12 @@ import cherry.foundation.logicalerror.ILogicalError;
 public enum LogicError implements ILogicalError {
 	/** SQL実行：SQL文不正。 */
 	BadSqlGrammer,
+	/** パスワード要求：パスワード要求許容範囲超過。 */
+	TooManyPasswordRequest,
+	/** パスワード要求：パスワード要求不適合。 */
+	PasswordRequestUnmatch,
+	/** パスワード設定：パスワード確認入力不適合。 */
+	PasswordConfUnmatch,
 	// ダミー
 	DUMMY;
 
