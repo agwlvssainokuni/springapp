@@ -56,9 +56,11 @@
 					<li><a hreF="<c:url value="/tool/" />"><span
 							class="glyphicon glyphicon-home"></span> <s:message
 								code="base/auth.menu.home" /></a></li>
-					<li><a hreF="<c:url value="/tool/passwd" />"><span
-							class="glyphicon glyphicon-user"></span> <s:message
-								code="base/auth.menu.passwd" /></a></li>
+					<security:authorize access="hasRole('ROLE_USER')">
+						<li><a hreF="<c:url value="/tool/password" />"><span
+								class="glyphicon glyphicon-user"></span> <s:message
+									code="base/auth.menu.password" /></a></li>
+					</security:authorize>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value="/logout" />"
