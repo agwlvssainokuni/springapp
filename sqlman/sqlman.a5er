@@ -63,14 +63,15 @@ Top=2000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="メールアドレス","mail_addr","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="トークン","token","*トークン","NOT NULL",,"","",$FFFFFFFF,""
-Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="申請日時","applied_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="処理済フラグ","done_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
 Index==0,mail_addr
 Index==1,token
 EffectMode=None
 Tag=トランザクション
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20150726004036
+ModifiedDateTime=20150726163326
 Position="SQL管理",1500,2000
 
 [Entity]

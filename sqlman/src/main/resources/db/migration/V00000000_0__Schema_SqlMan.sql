@@ -1,5 +1,5 @@
 -- Project Name : SqlMan
--- Date/Time    : 2015/07/26 1:11:16
+-- Date/Time    : 2015/07/26 16:34:04
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -9,7 +9,8 @@ create table password_request (
   id INTEGER not null AUTO_INCREMENT
   , mail_addr VARCHAR(300) not null
   , token VARCHAR(50) not null
-  , applied_at TIMESTAMP default CURRENT_TIMESTAMP not null
+  , applied_at TIMESTAMP not null
+  , done_flg INTEGER default 0 not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -97,6 +98,7 @@ comment on column password_request.id is 'ID';
 comment on column password_request.mail_addr is 'メールアドレス';
 comment on column password_request.token is 'トークン';
 comment on column password_request.applied_at is '申請日時';
+comment on column password_request.done_flg is '処理済フラグ';
 comment on column password_request.updated_at is '更新日時';
 comment on column password_request.created_at is '作成日時';
 comment on column password_request.lock_version is 'ロックバージョン';
