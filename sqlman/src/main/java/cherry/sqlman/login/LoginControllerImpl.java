@@ -24,7 +24,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,17 +36,17 @@ import cherry.sqlman.PathDef;
 public class LoginControllerImpl implements LoginController {
 
 	@Override
-	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView start(Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		return new ModelAndView();
 	}
 
 	@Override
-	public ModelAndView loggedOut(Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr) {
 
 		redirAttr.addFlashAttribute(PathDef.METHOD_LOGGED_OUT, true);
 
-		UriComponents uc = fromMethodCall(on(LoginController.class).start(auth, locale, sitePref, request)).build();
+		UriComponents uc = fromMethodCall(on(LoginController.class).start(locale, sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -55,12 +54,12 @@ public class LoginControllerImpl implements LoginController {
 	}
 
 	@Override
-	public ModelAndView loginFailed(Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr) {
 
 		redirAttr.addFlashAttribute(PathDef.METHOD_LOGIN_FAILED, true);
 
-		UriComponents uc = fromMethodCall(on(LoginController.class).start(auth, locale, sitePref, request)).build();
+		UriComponents uc = fromMethodCall(on(LoginController.class).start(locale, sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));

@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,14 +31,14 @@ import cherry.sqlman.PathDef;
 public interface LoginController {
 
 	@RequestMapping()
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView start(Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
-	ModelAndView loggedOut(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
 	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
-	ModelAndView loginFailed(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
 }
