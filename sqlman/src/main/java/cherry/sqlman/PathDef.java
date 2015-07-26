@@ -23,6 +23,8 @@ public class PathDef {
 
 	public static final String URI_TOOL_HOME = "/tool";
 
+	public static final String URI_TOOL_PASSWORD = "/tool/password";
+
 	public static final String URI_TOOL_SEARCH = "/tool/search";
 
 	public static final String URI_TOOL_CLAUSE = "/tool/clause";
@@ -38,6 +40,8 @@ public class PathDef {
 	public static final String URI_TOOL_LOAD_ID = "/tool/load/{id}";
 
 	public static final String VIEW_TOOL_HOME = "tool/home";
+
+	public static final String VIEW_TOOL_PASSWORD = "tool/password/page";
 
 	public static final String VIEW_TOOL_SEARCH = "tool/search/page";
 

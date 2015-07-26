@@ -34,12 +34,16 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
+import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 import cherry.sqlman.LogicError;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.password.PasswordRequestService.UriComponentsSource;
 
 @Controller
 public class PasswordRequestControllerImpl implements PasswordRequestController {
+
+	@Autowired
+	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
 	private PasswordRequestService passwordRequestService;
@@ -103,7 +107,14 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 		}
 
 		if (!form.getPassword().equals(form.getPasswordConf())) {
-			LogicalErrorUtil.reject(binding, LogicError.PasswordConfUnmatch);
+			LogicalErrorUtil.rejectValue(binding, PasswordRequestFormBase.Prop.PasswordConf.getName(),
+					LogicError.PasswordConfUnmatch);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
+			return mav;
+		}
+
+		if (!oneTimeTokenValidator.isValid(request)) {
+			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
 			return mav;
 		}
