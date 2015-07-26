@@ -20,9 +20,11 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,9 +34,13 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.sqlman.PathDef;
+import cherry.sqlman.password.PasswordRequestService.UriComponentsSource;
 
 @Controller
 public class PasswordRequestControllerImpl implements PasswordRequestController {
+
+	@Autowired
+	private PasswordRequestService passwordRequestService;
 
 	@Override
 	public PasswordRequestForm getForm() {
@@ -48,10 +54,24 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 	}
 
 	@Override
-	public ModelAndView execute(PasswordRequestForm form, BindingResult binding, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(PasswordRequestForm form, BindingResult binding, final Locale locale,
+			final SitePreference sitePref, final HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_START);
+			return mav;
+		}
+
+		UriComponentsSource source = new UriComponentsSource() {
+			@Override
+			public UriComponents buildUriComponents(UUID token) {
+				return fromMethodCall(
+						on(PasswordRequestController.class).edit(token.toString(), locale, sitePref, request))
+						.replaceQueryParam(PathDef.PARAM_TOKEN, token.toString()).build();
+			}
+		};
+
+		if (!passwordRequestService.createRequest(form.getMailAddr(), locale, source)) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_START);
 			return mav;
 		}
@@ -80,6 +100,11 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 		}
 
 		if (!form.getPassword().equals(form.getPasswordConf())) {
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
+			return mav;
+		}
+
+		if (!passwordRequestService.updatePassword(token, form.getMailAddr(), form.getPassword(), locale)) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_PASSWORD_EDIT);
 			return mav;
 		}
