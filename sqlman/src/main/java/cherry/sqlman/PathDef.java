@@ -68,6 +68,8 @@ public class PathDef {
 
 	public static final String URI_ADMIN_HOME = "/admin";
 
+	public static final String URI_ADMIN_MAILMGMT = "/admin/mailmgmt";
+
 	public static final String VIEW_ADMIN_HOME = "admin/home";
 
 	// サブURI
