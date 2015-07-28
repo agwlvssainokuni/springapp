@@ -8,6 +8,75 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2>
+<h2 class="page-header">
 	<s:message code="admin/mailmgmt.message.0" />
 </h2>
+<div class="form-horizontal">
+	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-2">
+			<button id="sendBtn" class="btn btn-default btn-block" type="submit"
+				data-action="<c:url value="/admin/mailmgmt/execute"/>">
+				<s:message code="admin/mailmgmt.sendButton" />
+			</button>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="sendResultModal" tabindex="-1" role="dialog"
+	aria-labelledby="sendResultLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<h4 class="modal-title" id="sendResultLabel">
+					<s:message code="admin/mailmgmt.modal.title" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-2 col-sm-offset-4">
+							<s:message code="admin/mailmgmt.modal.label.total" />
+						</div>
+						<div class="col-sm-2 text-right" id="totalCount"></div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 col-sm-offset-4">
+							<s:message code="admin/mailmgmt.modal.label.total" />
+						</div>
+						<div class="col-sm-2 text-right" id="okCount"></div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 col-sm-offset-4">
+							<s:message code="admin/mailmgmt.modal.label.total" />
+						</div>
+						<div class="col-sm-2 text-right" id="ngCount"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">
+					<s:message code="admin/mailmgmt.modal.closeButton" />
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#sendBtn").click(function(event) {
+		event.preventDefault();
+		$.ajax($(this).data("action"), {
+			type : "POST",
+			dataType : "json",
+			success : function(data, textStatus, textStatus) {
+				$("#sendResultModal #totalCount").text(data.totalCount);
+				$("#sendResultModal #okCount").text(data.okCount);
+				$("#sendResultModal #ngCount").text(data.ngCount);
+				$("#sendResultModal").modal("show");
+			}
+		});
+		return false;
+	});
+</script>
