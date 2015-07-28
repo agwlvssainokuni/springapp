@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<h2>
+<h2 class="page-header">
 	<s:message code="password/edit.message.0" />
 </h2>
 <c:if test="${execute != null && execute}">

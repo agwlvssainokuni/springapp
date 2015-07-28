@@ -8,7 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2>
+<h2 class="page-header">
 	<s:message code="login/start.message.0" />
 </h2>
 <c:if test="${loginFailed != null && loginFailed}">
