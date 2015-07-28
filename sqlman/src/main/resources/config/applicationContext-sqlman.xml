@@ -194,11 +194,9 @@
 								<property name="fromAddr" value="sqlman@example.com" />
 								<property name="subject" value="パスワード発行リクエスト" />
 								<property name="body">
-									<value>
-<![CDATA[${model.mailAddr},
+									<value><![CDATA[${model.mailAddr},
 入力URI: ${model.uri}
-]]>
-									</value>
+]]></value>
 								</property>
 							</bean>
 						</entry>
