@@ -51,7 +51,7 @@ subprojects {
 	findbugs { ignoreFailures = true }
 	findbugsMain {
 		def pkgPath = file("build/classes/main/cherry/spring/common/db/gen").path
-		classes = classes.filter { it.path.startsWith(pkgPath) }
+		classes = classes.filter { !it.path.startsWith(pkgPath) }
 		// excludeFilter = rootProject.file("findbugs-exclude.xml")
 		reports {
 			xml.enabled true
