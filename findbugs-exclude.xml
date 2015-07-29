@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+	<Match>
+		<Package name="cherry.spring.common.db.gen.dto" />
+	</Match>
+	<Match>
+		<Package name="cherry.spring.common.db.gen.mapper" />
+	</Match>
+	<Match>
+		<Package name="cherry.spring.common.db.gen.query" />
+	</Match>
+</FindBugsFilter>
