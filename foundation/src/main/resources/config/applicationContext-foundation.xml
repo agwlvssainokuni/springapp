@@ -147,6 +147,11 @@
 	<!-- アプリケーションコンテキスト照会設定 -->
 	<bean class="cherry.foundation.AppCtxHolder" />
 
+	<!-- 汎用起動機構 -->
+	<bean id="invoker" class="cherry.foundation.invoker.InvokerImpl">
+		<property name="objectMapper" ref="objectMapper" />
+	</bean>
+
 	<!-- パスワードハッシュ設定 -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
