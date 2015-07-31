@@ -18,6 +18,6 @@ package cherry.foundation.invoker;
 
 public interface Invoker {
 
-	String invoke(String className, String methodName, String... args);
+	String invoke(String beanName, String className, String methodName, String... args);
 
 }

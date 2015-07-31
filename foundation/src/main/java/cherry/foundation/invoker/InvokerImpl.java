@@ -50,14 +50,19 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	}
 
 	@Override
-	public String invoke(String className, String methodName, String... args) {
+	public String invoke(String beanName, String className, String methodName, String... args) {
 		try {
 
-			Class<?> klass = getClass().getClassLoader().loadClass(className);
-			Object target = appCtx.getBean(klass);
+			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
+			Object targetBean;
+			if (StringUtils.isEmpty(beanName)) {
+				targetBean = appCtx.getBean(beanClass);
+			} else {
+				targetBean = appCtx.getBean(beanName, beanClass);
+			}
 
 			Method method = null;
-			for (Method m : klass.getDeclaredMethods()) {
+			for (Method m : beanClass.getDeclaredMethods()) {
 				if (StringUtils.equals(m.getName(), methodName)) {
 					method = m;
 					break;
@@ -72,7 +77,7 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 				param[i] = resolve(args[i], paramType[i]);
 			}
 
-			Object result = method.invoke(target, param);
+			Object result = method.invoke(targetBean, param);
 			return convert(result);
 		} catch (ClassNotFoundException ex) {
 			throw new IllegalArgumentException(format("{0}#{1}() not found", className, methodName), ex);
