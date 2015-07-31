@@ -93,7 +93,7 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 
 	private String convert(Object result) throws JsonProcessingException {
 		if (result == null) {
-			return "null";
+			return null;
 		}
 		if (conversionService.canConvert(result.getClass(), String.class)) {
 			return conversionService.convert(result, String.class);

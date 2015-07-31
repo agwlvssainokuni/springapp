@@ -43,7 +43,7 @@ public class ToBeInvokedImpl implements ToBeInvoked {
 	@Override
 	public Long method2(Long a, Long b) {
 		log.debug("method2");
-		return Long.valueOf(a.longValue() + b.longValue());
+		return submethod(a, b);
 	}
 
 	@Override
@@ -67,10 +67,17 @@ public class ToBeInvokedImpl implements ToBeInvoked {
 		return c;
 	}
 
+	private Long submethod(Long a, Long b) {
+		if (a == null || b == null) {
+			return null;
+		}
+		return Long.valueOf(a.longValue() + b.longValue());
+	}
+
 	private Dto1 submethod(Dto1 a, Dto1 b) {
 		Dto1 c = new Dto1();
-		c.setVal1(Long.valueOf(a.getVal1().longValue() + b.getVal1().longValue()));
-		c.setVal2(Long.valueOf(a.getVal2().longValue() + b.getVal2().longValue()));
+		c.setVal1(submethod(a.getVal1(), b.getVal1()));
+		c.setVal2(submethod(a.getVal2(), b.getVal2()));
 		return c;
 	}
 

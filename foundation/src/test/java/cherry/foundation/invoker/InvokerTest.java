@@ -18,6 +18,7 @@ package cherry.foundation.invoker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,41 +35,50 @@ public class InvokerTest {
 
 	@Test
 	public void testNoArgNoRet() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method0");
-		assertEquals("null", result);
+		assertNull(invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method0"));
 	}
 
 	@Test
 	public void testPrimitive() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method1", "123", "456");
-		assertEquals("579", result);
+		assertEquals("579", invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method1", "123", "456"));
 	}
 
 	@Test
 	public void testLong() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method2", "123", "456");
-		assertEquals("579", result);
+		assertEquals("579", invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method2", "123", "456"));
+		assertNull(invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method2", null, "456"));
+		assertNull(invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method2", "123", null));
+		assertNull(invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method2", null, null));
 	}
 
 	@Test
 	public void testJodaTime() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method3", "2015/01/23", "12:34:56");
-		assertEquals("2015/01/23 12:34:56", result);
+		assertEquals("2015/01/23 12:34:56",
+				invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method3", "2015/01/23", "12:34:56"));
 	}
 
 	@Test
 	public void testFlatDto() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method4", "{\"val1\":12,\"val2\":34}",
-				"{\"val1\":56,\"val2\":78}");
-		assertEquals("{\"val1\":68,\"val2\":112}", result);
+		assertEquals("{\"val1\":68,\"val2\":112}", invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method4",
+				"{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"));
 	}
 
 	@Test
 	public void testNestedDto() {
-		String result = invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method5",
+		assertEquals("{\"val1\":{\"val1\":6,\"val2\":8},\"val2\":{\"val1\":10,\"val2\":12}}", invoker.invoke(
+				"cherry.foundation.invoker.ToBeInvoked", "method5",
 				"{\"val1\":{\"val1\":1,\"val2\":2},\"val2\":{\"val1\":3,\"val2\":4}}",
-				"{\"val1\":{\"val1\":5,\"val2\":6},\"val2\":{\"val1\":7,\"val2\":8}}");
-		assertEquals("{\"val1\":{\"val1\":6,\"val2\":8},\"val2\":{\"val1\":10,\"val2\":12}}", result);
+				"{\"val1\":{\"val1\":5,\"val2\":6},\"val2\":{\"val1\":7,\"val2\":8}}"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testClassNotFound() {
+		invoker.invoke("cherry.foundation.invoker.NoClass", "method0");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testMethoNotFound() {
+		invoker.invoke("cherry.foundation.invoker.ToBeInvoked", "method");
 	}
 
 	@Test
