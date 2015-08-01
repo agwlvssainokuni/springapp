@@ -16,9 +16,11 @@
 
 package cherry.foundation.invoker;
 
+import java.util.List;
+
 public interface Invoker {
 
-	String invoke(String beanName, String className, String methodName, int methodIndex, String... args)
-			throws ClassNotFoundException, NoSuchMethodException;
+	String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args,
+			List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException;
 
 }

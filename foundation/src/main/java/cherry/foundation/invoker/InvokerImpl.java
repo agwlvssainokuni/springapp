@@ -52,8 +52,8 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	}
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, int methodIndex, String... args)
-			throws ClassNotFoundException, NoSuchMethodException {
+	public String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args,
+			List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException {
 		try {
 
 			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
@@ -77,13 +77,29 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 			Class<?>[] paramType = method.getParameterTypes();
 			Object[] param = new Object[paramType.length];
 			for (int i = 0; i < paramType.length; i++) {
-				param[i] = resolve(args[i], paramType[i]);
+				String arg = getOrNull(args, i);
+				String argType = getOrNull(argTypes, i);
+				if (StringUtils.isNotEmpty(argType)) {
+					param[i] = resolve(arg, getClass().getClassLoader().loadClass(argType));
+				} else {
+					param[i] = resolve(arg, paramType[i]);
+				}
 			}
 
 			Object result = method.invoke(targetBean, param);
 			return convert(result);
 		} catch (InvocationTargetException | IllegalAccessException | IOException ex) {
 			throw new IllegalStateException(ex);
+		}
+	}
+
+	private String getOrNull(List<String> list, int index) {
+		if (list == null) {
+			return null;
+		} else if (list.size() <= index) {
+			return null;
+		} else {
+			return list.get(index);
 		}
 	}
 
