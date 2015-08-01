@@ -32,31 +32,25 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="beanName" class="col-sm-2 control-label">Bean名称</label>
-				<div class="col-sm-10">
-					<input type="text" id="beanName" name="beanName"
-						class="form-control" />
-				</div>
-			</div>
-			<div class="form-group">
 				<label for="className" class="col-sm-2 control-label">クラス名称</label>
-				<div class="col-sm-10">
+				<div class="col-sm-7">
 					<input type="text" id="className" name="className"
-						class="form-control" />
+						class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
+				</div>
+				<div class="col-sm-3">
+					<input type="text" id="beanName" name="beanName"
+						class="form-control" placeholder="Bean名称(非必須)" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="methodName" class="col-sm-2 control-label">メソッド名称</label>
-				<div class="col-sm-10">
+				<div class="col-sm-7">
 					<input type="text" id="methodName" name="methodName"
 						class="form-control" />
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="methodIndex" class="col-sm-2 control-label">メソッド番号</label>
-				<div class="col-sm-10">
-					<input type="text" id="methodIndex" name="methodIndex" value="0"
-						class="form-control" />
+				<div class="col-sm-3">
+					<input type="text" id="methodIndex" name="methodIndex"
+						class="form-control" placeholder="同名のメソッドがある場合に指定" />
 				</div>
 			</div>
 			<div class="form-group">
