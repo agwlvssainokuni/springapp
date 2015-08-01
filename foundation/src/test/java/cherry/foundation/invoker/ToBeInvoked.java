@@ -38,6 +38,10 @@ public interface ToBeInvoked {
 
 	Dto2 method5(Dto2 a, Dto2 b);
 
+	long method6(long a, long b);
+
+	int method6(int a, int b);
+
 	@Setter
 	@Getter
 	@ToString

@@ -67,6 +67,16 @@ public class ToBeInvokedImpl implements ToBeInvoked {
 		return c;
 	}
 
+	@Override
+	public long method6(long a, long b) {
+		return a - b;
+	}
+
+	@Override
+	public int method6(int a, int b) {
+		return b - a;
+	}
+
 	private Long submethod(Long a, Long b) {
 		if (a == null || b == null) {
 			return null;

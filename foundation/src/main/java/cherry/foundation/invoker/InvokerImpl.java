@@ -21,6 +21,8 @@ import static java.text.MessageFormat.format;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,8 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	}
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, String... args) {
+	public String invoke(String beanName, String className, String methodName, int methodIndex, String... args)
+			throws ClassNotFoundException, NoSuchMethodException {
 		try {
 
 			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
@@ -61,16 +64,16 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 				targetBean = appCtx.getBean(beanName, beanClass);
 			}
 
-			Method method = null;
+			List<Method> methodList = new ArrayList<>();
 			for (Method m : beanClass.getDeclaredMethods()) {
 				if (StringUtils.equals(m.getName(), methodName)) {
-					method = m;
-					break;
+					methodList.add(m);
 				}
 			}
-			if (method == null) {
-				throw new IllegalArgumentException(format("{0}#{1}() not found", className, methodName));
+			if (methodList.isEmpty()) {
+				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
 			}
+			Method method = (methodList.size() == 1 ? methodList.get(0) : methodList.get(methodIndex));
 			Class<?>[] paramType = method.getParameterTypes();
 			Object[] param = new Object[paramType.length];
 			for (int i = 0; i < paramType.length; i++) {
@@ -79,8 +82,6 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 
 			Object result = method.invoke(targetBean, param);
 			return convert(result);
-		} catch (ClassNotFoundException ex) {
-			throw new IllegalArgumentException(format("{0}#{1}() not found", className, methodName), ex);
 		} catch (InvocationTargetException | IllegalAccessException | IOException ex) {
 			throw new IllegalStateException(ex);
 		}

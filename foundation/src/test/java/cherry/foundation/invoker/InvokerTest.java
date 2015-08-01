@@ -34,52 +34,58 @@ public class InvokerTest {
 	private Invoker invoker;
 
 	@Test
-	public void testNoArgNoRet() {
-		assertNull(invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method0"));
-		assertNull(invoker.invoke("toBeInvokedImpl", "cherry.foundation.invoker.ToBeInvoked", "method0"));
+	public void testNoArgNoRet() throws Exception {
+		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method0", 0));
+		assertNull(invoker.invoke("toBeInvokedImpl", ToBeInvoked.class.getName(), "method0", 0));
 	}
 
 	@Test
-	public void testPrimitive() {
-		assertEquals("579", invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method1", "123", "456"));
+	public void testPrimitive() throws Exception {
+		assertEquals("579", invoker.invoke(null, ToBeInvoked.class.getName(), "method1", 0, "123", "456"));
 	}
 
 	@Test
-	public void testLong() {
-		assertEquals("579", invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method2", "123", "456"));
-		assertNull(invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method2", null, "456"));
-		assertNull(invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method2", "123", null));
-		assertNull(invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method2", null, null));
+	public void testLong() throws Exception {
+		assertEquals("579", invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, "123", "456"));
+		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, null, "456"));
+		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, "123", null));
+		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, null, null));
 	}
 
 	@Test
-	public void testJodaTime() {
+	public void testJodaTime() throws Exception {
 		assertEquals("2015/01/23 12:34:56",
-				invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method3", "2015/01/23", "12:34:56"));
+				invoker.invoke(null, ToBeInvoked.class.getName(), "method3", 0, "2015/01/23", "12:34:56"));
 	}
 
 	@Test
-	public void testFlatDto() {
-		assertEquals("{\"val1\":68,\"val2\":112}", invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked",
-				"method4", "{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"));
+	public void testFlatDto() throws Exception {
+		assertEquals("{\"val1\":68,\"val2\":112}", invoker.invoke(null, ToBeInvoked.class.getName(), "method4", 0,
+				"{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"));
 	}
 
 	@Test
-	public void testNestedDto() {
+	public void testNestedDto() throws Exception {
 		assertEquals("{\"val1\":{\"val1\":6,\"val2\":8},\"val2\":{\"val1\":10,\"val2\":12}}", invoker.invoke(null,
-				"cherry.foundation.invoker.ToBeInvoked", "method5",
+				ToBeInvoked.class.getName(), "method5", 0,
 				"{\"val1\":{\"val1\":1,\"val2\":2},\"val2\":{\"val1\":3,\"val2\":4}}",
 				"{\"val1\":{\"val1\":5,\"val2\":6},\"val2\":{\"val1\":7,\"val2\":8}}"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testClassNotFound() {
-		invoker.invoke(null, "cherry.foundation.invoker.NoClass", "method0");
+	@Test
+	public void testMethodIndex() throws Exception {
+		assertEquals("-1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", 0, "1", "2"));
+		assertEquals("1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", 1, "1", "2"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testMethoNotFound() {
-		invoker.invoke(null, "cherry.foundation.invoker.ToBeInvoked", "method");
+	@Test(expected = ClassNotFoundException.class)
+	public void testClassNotFound() throws Exception {
+		invoker.invoke(null, "cherry.foundation.invoker.NoClass", "method0", 0);
+	}
+
+	@Test(expected = NoSuchMethodException.class)
+	public void testMethoNotFound() throws Exception {
+		invoker.invoke(null, ToBeInvoked.class.getName(), "method", 0);
 	}
 
 	@Test
