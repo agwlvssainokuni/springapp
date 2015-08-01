@@ -30,6 +30,6 @@ public interface InvokerController {
 	String invoke(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
-			@RequestParam("args") List<String> args);
+			@RequestParam("args") List<String> args, @RequestParam("argTypes") List<String> argTypes);
 
 }

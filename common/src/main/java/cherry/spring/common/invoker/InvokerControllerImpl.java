@@ -40,9 +40,10 @@ public class InvokerControllerImpl implements InvokerController {
 	private ObjectMapper objectMapper;
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args) {
+	public String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args,
+			List<String> argTypes) {
 		try {
-			return invoker.invoke(beanName, className, methodName, methodIndex, args.toArray(new String[args.size()]));
+			return invoker.invoke(beanName, className, methodName, methodIndex, args, argTypes);
 		} catch (ClassNotFoundException | NoSuchMethodException ex) {
 			return fromThrowableToString(ex);
 		} catch (IllegalStateException ex) {
