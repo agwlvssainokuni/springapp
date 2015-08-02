@@ -66,7 +66,8 @@
 				<label for="invokerUri" class="col-sm-2 control-label">実行URI</label>
 				<div class="col-sm-10">
 					<input type="text" id="invokerUri" name="invokerUri"
-						class="form-control" value="<c:url value="/invoker" />" />
+						class="form-control" placeholder="汎用実行機能のURIを指定してください"
+						value="<c:url value="/invoker" />" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -84,7 +85,7 @@
 				<label for="methodName" class="col-sm-2 control-label">メソッド名称</label>
 				<div class="col-sm-7">
 					<input type="text" id="methodName" name="methodName"
-						class="form-control" />
+						class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
 				</div>
 				<div class="col-sm-3">
 					<input type="text" id="methodIndex" name="methodIndex"
