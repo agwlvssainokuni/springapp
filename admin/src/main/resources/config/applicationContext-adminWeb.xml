@@ -30,6 +30,9 @@
 				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
 					<constructor-arg value="/logout/**" />
 				</bean>
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/invoker/**" />
+				</bean>
 			</list>
 		</property>
 	</bean>

@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +66,7 @@
 				<label for="invokerUri" class="col-sm-2 control-label">実行URI</label>
 				<div class="col-sm-10">
 					<input type="text" id="invokerUri" name="invokerUri"
-						class="form-control" />
+						class="form-control" value="<c:url value="/invoker" />" />
 				</div>
 			</div>
 			<div class="form-group">
