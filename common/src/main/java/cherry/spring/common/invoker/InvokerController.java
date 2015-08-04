@@ -32,4 +32,11 @@ public interface InvokerController {
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") List<String> args, @RequestParam("argTypes") List<String> argTypes);
 
+	@RequestMapping(params = "json")
+	@ResponseBody()
+	String invokeJson(@RequestParam(value = "beanName", required = false) String beanName,
+			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
+			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
+			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
+
 }

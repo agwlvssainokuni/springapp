@@ -17,9 +17,11 @@
 package cherry.spring.common.invoker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import cherry.foundation.invoker.Invoker;
 import cherry.goods.util.ToMapUtil;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -49,6 +53,40 @@ public class InvokerControllerImpl implements InvokerController {
 		} catch (IllegalStateException ex) {
 			return fromThrowableToString(ex.getCause());
 		}
+	}
+
+	@Override
+	public String invokeJson(String beanName, String className, String methodName, int methodIndex, String args,
+			String argTypes) {
+		try {
+			return invoker.invoke(beanName, className, methodName, methodIndex, resolveArgs(args),
+					resolveArgTypes(argTypes));
+		} catch (ClassNotFoundException | NoSuchMethodException ex) {
+			return fromThrowableToString(ex);
+		} catch (IOException ex) {
+			return fromThrowableToString(ex);
+		} catch (IllegalStateException ex) {
+			return fromThrowableToString(ex.getCause());
+		}
+	}
+
+	private List<String> resolveArgs(String param) throws JsonProcessingException, IOException {
+		if (StringUtils.isEmpty(param)) {
+			return null;
+		}
+		List<String> list = new ArrayList<>();
+		for (Object value : objectMapper.readValue(param, List.class)) {
+			list.add(objectMapper.writeValueAsString(value));
+		}
+		return list;
+	}
+
+	private List<String> resolveArgTypes(String param) throws JsonProcessingException, IOException {
+		if (StringUtils.isEmpty(param)) {
+			return null;
+		}
+		return objectMapper.readValue(param, new TypeReference<List<String>>() {
+		});
 	}
 
 	private String fromThrowableToString(Throwable ex) {
