@@ -19,7 +19,6 @@ package cherry.foundation.invoker;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +35,8 @@ public class InvokerTest {
 
 	@Test
 	public void testNoArgNoRet() throws Exception {
-		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method0", 0, null, null));
-		assertNull(invoker.invoke("toBeInvokedImpl", ToBeInvoked.class.getName(), "method0", 0, null, null));
+		assertEquals("null", invoker.invoke(null, ToBeInvoked.class.getName(), "method0", 0, null, null));
+		assertEquals("null", invoker.invoke("toBeInvokedImpl", ToBeInvoked.class.getName(), "method0", 0, null, null));
 	}
 
 	@Test
@@ -48,15 +47,15 @@ public class InvokerTest {
 	@Test
 	public void testLong() throws Exception {
 		assertEquals("579", invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, asList("123", "456"), null));
-		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, asList(null, "456"), null));
-		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, asList("123"), null));
-		assertNull(invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, null, null));
+		assertEquals("null", invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, asList(null, "456"), null));
+		assertEquals("null", invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, asList("123"), null));
+		assertEquals("null", invoker.invoke(null, ToBeInvoked.class.getName(), "method2", 0, null, null));
 	}
 
 	@Test
 	public void testJodaTime() throws Exception {
-		assertEquals("2015/01/23 12:34:56",
-				invoker.invoke(null, ToBeInvoked.class.getName(), "method3", 0, asList("2015/01/23", "12:34:56"), null));
+		assertEquals("\"2015-01-23T12:34:56.000\"", invoker.invoke(null, ToBeInvoked.class.getName(), "method3", 0,
+				asList("\"2015-01-23\"", "\"12:34:56\""), null));
 	}
 
 	@Test

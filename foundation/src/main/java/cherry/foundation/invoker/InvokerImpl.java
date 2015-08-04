@@ -25,18 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.convert.ConversionService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InvokerImpl implements Invoker, ApplicationContextAware {
-
-	@Autowired
-	private ConversionService conversionService;
 
 	private ObjectMapper objectMapper;
 
@@ -107,19 +102,10 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 		if (arg == null) {
 			return null;
 		}
-		if (conversionService.canConvert(arg.getClass(), paramType)) {
-			return conversionService.convert(arg, paramType);
-		}
 		return objectMapper.readValue(arg, paramType);
 	}
 
 	private String convert(Object result) throws JsonProcessingException {
-		if (result == null) {
-			return null;
-		}
-		if (conversionService.canConvert(result.getClass(), String.class)) {
-			return conversionService.convert(result, String.class);
-		}
 		return objectMapper.writeValueAsString(result);
 	}
 
