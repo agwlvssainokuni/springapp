@@ -47,8 +47,8 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	}
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args,
-			List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException {
+	public String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
+			List<String> args, List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException {
 		try {
 
 			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
@@ -59,12 +59,7 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 				targetBean = appCtx.getBean(beanName, beanClass);
 			}
 
-			List<Method> methodList = new ArrayList<>();
-			for (Method m : beanClass.getDeclaredMethods()) {
-				if (StringUtils.equals(m.getName(), methodName)) {
-					methodList.add(m);
-				}
-			}
+			List<Method> methodList = getMethodList(beanClass, methodName, numOfArgs);
 			if (methodList.isEmpty()) {
 				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
 			}
@@ -86,6 +81,24 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 		} catch (InvocationTargetException | IllegalAccessException | IOException ex) {
 			throw new IllegalStateException(ex);
 		}
+	}
+
+	@Override
+	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) throws ClassNotFoundException {
+		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
+		return getMethodList(beanClass, methodName, numOfArgs);
+	}
+
+	private List<Method> getMethodList(Class<?> beanClass, String methodName, int numOfArgs) {
+		List<Method> list = new ArrayList<>();
+		for (Method m : beanClass.getDeclaredMethods()) {
+			if (StringUtils.equals(m.getName(), methodName)) {
+				if (numOfArgs < 0 || numOfArgs == m.getParameterTypes().length) {
+					list.add(m);
+				}
+			}
+		}
+		return list;
 	}
 
 	private String getOrNull(List<String> list, int index) {
