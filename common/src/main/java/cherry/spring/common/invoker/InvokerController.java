@@ -27,16 +27,24 @@ public interface InvokerController {
 
 	@RequestMapping()
 	@ResponseBody()
-	String invoke(@RequestParam(value = "beanName", required = false) String beanName,
-			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
-			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
-			@RequestParam("args") List<String> args, @RequestParam("argTypes") List<String> argTypes);
-
-	@RequestMapping(params = "json")
-	@ResponseBody()
 	String invokeJson(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
+			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
+
+	@RequestMapping(params = "yaml")
+	@ResponseBody()
+	String invokeYaml(@RequestParam(value = "beanName", required = false) String beanName,
+			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
+			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
+			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
+			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
+
+	@RequestMapping(params = "signature")
+	@ResponseBody()
+	List<String> resolveMethod(@RequestParam("className") String className,
+			@RequestParam("methodName") String methodName,
+			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs);
 
 }

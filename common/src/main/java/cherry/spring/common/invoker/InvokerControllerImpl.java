@@ -16,86 +16,52 @@
 
 package cherry.spring.common.invoker;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import cherry.foundation.invoker.Invoker;
-import cherry.goods.util.ToMapUtil;
+import cherry.foundation.invoker.InvokerService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Joiner;
 
 @Controller
 public class InvokerControllerImpl implements InvokerController {
 
 	@Autowired
-	private Invoker invoker;
+	@Qualifier("jsonInvokerService")
+	private InvokerService jsonInvokerService;
 
 	@Autowired
-	@Qualifier("objectMapper")
-	private ObjectMapper objectMapper;
+	@Qualifier("yamlInvokerService")
+	private InvokerService yamlInvokerService;
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, int methodIndex, List<String> args,
-			List<String> argTypes) {
-		try {
-			return invoker.invoke(beanName, className, methodName, methodIndex, args, argTypes);
-		} catch (ClassNotFoundException | NoSuchMethodException ex) {
-			return fromThrowableToString(ex);
-		} catch (IllegalStateException ex) {
-			return fromThrowableToString(ex.getCause());
-		}
+	public String invokeJson(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
+			String args, String argTypes) {
+		return jsonInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
 	}
 
 	@Override
-	public String invokeJson(String beanName, String className, String methodName, int methodIndex, String args,
-			String argTypes) {
-		try {
-			return invoker.invoke(beanName, className, methodName, methodIndex, resolveArgs(args),
-					resolveArgTypes(argTypes));
-		} catch (ClassNotFoundException | NoSuchMethodException ex) {
-			return fromThrowableToString(ex);
-		} catch (IOException ex) {
-			return fromThrowableToString(ex);
-		} catch (IllegalStateException ex) {
-			return fromThrowableToString(ex.getCause());
-		}
+	public String invokeYaml(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
+			String args, String argTypes) {
+		return yamlInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
 	}
 
-	private List<String> resolveArgs(String param) throws JsonProcessingException, IOException {
-		if (StringUtils.isEmpty(param)) {
-			return null;
-		}
+	@Override
+	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
-		for (Object value : objectMapper.readValue(param, List.class)) {
-			list.add(objectMapper.writeValueAsString(value));
+		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
+			List<String> names = new ArrayList<>(m.getParameterTypes().length);
+			for (Class<?> t : m.getParameterTypes()) {
+				names.add(t.getSimpleName());
+			}
+			list.add(Joiner.on(",").join(names));
 		}
 		return list;
-	}
-
-	private List<String> resolveArgTypes(String param) throws JsonProcessingException, IOException {
-		if (StringUtils.isEmpty(param)) {
-			return null;
-		}
-		return objectMapper.readValue(param, new TypeReference<List<String>>() {
-		});
-	}
-
-	private String fromThrowableToString(Throwable ex) {
-		Map<String, ?> map = ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
-		try {
-			return objectMapper.writeValueAsString(map);
-		} catch (IOException ex2) {
-			return ex.getMessage();
-		}
 	}
 
 }
