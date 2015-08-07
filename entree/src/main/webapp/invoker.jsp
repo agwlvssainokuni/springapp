@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,14 +7,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>汎用起動機能</title>
-<link rel="stylesheet" media="screen"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-<link rel="stylesheet" media="screen"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.11.0.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 
@@ -50,9 +45,9 @@
 						success : function(data, textStatus, jqXHR) {
 							$("#methodIndex option.withValue").remove();
 							for (var i = 0; i < data.length; i++) {
-								$("#methodIndex").append(
-										$("<option/>").addClass("withValue").attr("value", i).attr("label",
-												"(" + data[i] + ")"));
+								var opt = $("<option/>").addClass("withValue").attr("value", i).attr("label",
+										"(" + data[i] + ")")
+								$("#methodIndex").append(opt);
 							}
 							$("#methodIndex option.withValue:first").attr("selected", "selected");
 						},
@@ -79,27 +74,23 @@
 			<div class="form-group">
 				<label for="invokerUri" class="col-sm-1 control-label">実行URI</label>
 				<div class="col-sm-11">
-					<input type="text" id="invokerUri" name="invokerUri"
-						class="form-control" placeholder="汎用実行機能のURIを指定してください"
+					<input type="text" id="invokerUri" name="invokerUri" class="form-control" placeholder="汎用実行機能のURIを指定してください"
 						value="<c:url value="/invoker" />" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="className" class="col-sm-1 control-label">クラス</label>
 				<div class="col-sm-7">
-					<input type="text" id="className" name="className"
-						class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
+					<input type="text" id="className" name="className" class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
 				</div>
 				<div class="col-sm-4">
-					<input type="text" id="beanName" name="beanName"
-						class="form-control" placeholder="Bean名称(非必須)" />
+					<input type="text" id="beanName" name="beanName" class="form-control" placeholder="Bean名称(非必須)" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="methodName" class="col-sm-1 control-label">メソッド</label>
 				<div class="col-sm-7">
-					<input type="text" id="methodName" name="methodName"
-						class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
+					<input type="text" id="methodName" name="methodName" class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
 				</div>
 				<div class="col-sm-4">
 					<select id="methodIndex" name="methodIndex" class="form-control">
@@ -110,18 +101,15 @@
 			<div class="form-group">
 				<label for="args1" class="col-sm-1 control-label">引数</label>
 				<div class="col-sm-7">
-					<textarea rows="3" cols="1" id="args" name="args"
-						class="form-control" placeholder="引数リストをJSON形式で指定"></textarea>
+					<textarea rows="3" cols="1" id="args" name="args" class="form-control" placeholder="引数リストをJSON形式で指定"></textarea>
 				</div>
 				<div class="col-sm-4">
-					<textarea rows="3" cols="1" id="argTypes" name="argTypes"
-						class="form-control" placeholder="引数の型のリストをJSON形式で指定(非必須)"></textarea>
+					<textarea rows="3" cols="1" id="argTypes" name="argTypes" class="form-control" placeholder="引数の型のリストをJSON形式で指定(非必須)"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-11 col-sm-offset-1">
-					<button class="btn btn-default btn-block" type="button"
-						id="invokeBtn">実行</button>
+					<button class="btn btn-default btn-block" type="button" id="invokeBtn">実行</button>
 				</div>
 			</div>
 		</div>
@@ -129,15 +117,13 @@
 			<div class="form-group">
 				<label for="result" class="col-sm-1 control-label">実行結果</label>
 				<div class="col-sm-11">
-					<textarea rows="5" cols="1" id="result" name="result"
-						class="form-control"></textarea>
+					<textarea rows="5" cols="1" id="result" name="result" class="form-control"></textarea>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="container" role="main">
-		<address class="text-center">Copyright &copy;, 2015,
-			agwlvssainokuni</address>
+		<address class="text-center">Copyright &copy;, 2015, agwlvssainokuni</address>
 	</div>
 </body>
 </html>
