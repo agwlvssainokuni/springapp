@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/invoker")
 public interface InvokerController {
 
-	@RequestMapping()
+	@RequestMapping({ "", "json" })
 	@ResponseBody()
 	String invokeJson(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
@@ -33,7 +33,7 @@ public interface InvokerController {
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
 
-	@RequestMapping(params = "yaml")
+	@RequestMapping({ "yaml" })
 	@ResponseBody()
 	String invokeYaml(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
@@ -41,7 +41,7 @@ public interface InvokerController {
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
 
-	@RequestMapping(params = "signature")
+	@RequestMapping(value = { "", "json", "yaml" }, params = { "signature" })
 	@ResponseBody()
 	List<String> resolveMethod(@RequestParam("className") String className,
 			@RequestParam("methodName") String methodName,

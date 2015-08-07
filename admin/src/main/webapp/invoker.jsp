@@ -39,6 +39,29 @@
 			});
 		});
 
+		$("#methodName").blur(
+				function(event) {
+					$.ajax($("#invokerUri").val() + "?signature", {
+						method : "POST",
+						data : {
+							className : $("#className").val(),
+							methodName : $("#methodName").val()
+						},
+						success : function(data, textStatus, jqXHR) {
+							$("#methodIndex option.withValue").remove();
+							for (var i = 0; i < data.length; i++) {
+								$("#methodIndex").append(
+										$("<option/>").addClass("withValue").attr("value", i).attr("label",
+												"(" + data[i] + ")"));
+							}
+							$("#methodIndex option.withValue:first").attr("selected", "selected");
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							alert(errorThrown);
+						}
+					});
+				});
+
 	});
 </script>
 </head>
@@ -79,8 +102,9 @@
 						class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
 				</div>
 				<div class="col-sm-4">
-					<input type="text" id="methodIndex" name="methodIndex"
-						class="form-control" placeholder="同名のメソッドがある場合に指定" />
+					<select id="methodIndex" name="methodIndex" class="form-control">
+						<option class="noValue" value="" label="呼出すメソッドを引数のパターンで指定" />
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
