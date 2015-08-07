@@ -20,14 +20,6 @@
 	$(function() {
 
 		$("#invokeBtn").click(function(event) {
-			var args = [];
-			$("textarea[name='args']").each(function(index) {
-				args.push($(this).val());
-			});
-			var argTypes = [];
-			$("input[name='argTypes']").each(function(index) {
-				argTypes.push($(this).val());
-			});
 			$.ajax($("#invokerUri").val(), {
 				method : "POST",
 				data : {
@@ -35,10 +27,9 @@
 					className : $("#className").val(),
 					methodName : $("#methodName").val(),
 					methodIndex : $("#methodIndex").val(),
-					args : args,
-					argTypes : argTypes
+					args : $("#args").val(),
+					argTypes : $("#argTypes").val()
 				},
-				traditional : true,
 				success : function(data, textStatus, jqXHR) {
 					$("#result").val(data);
 				},
@@ -63,93 +54,48 @@
 		<h2 class="page-header">汎用実行機能</h2>
 		<div role="form" class="form-horizontal">
 			<div class="form-group">
-				<label for="invokerUri" class="col-sm-2 control-label">実行URI</label>
-				<div class="col-sm-10">
+				<label for="invokerUri" class="col-sm-1 control-label">実行URI</label>
+				<div class="col-sm-11">
 					<input type="text" id="invokerUri" name="invokerUri"
 						class="form-control" placeholder="汎用実行機能のURIを指定してください"
 						value="<c:url value="/invoker" />" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="className" class="col-sm-2 control-label">クラス名称</label>
+				<label for="className" class="col-sm-1 control-label">クラス</label>
 				<div class="col-sm-7">
 					<input type="text" id="className" name="className"
 						class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<input type="text" id="beanName" name="beanName"
 						class="form-control" placeholder="Bean名称(非必須)" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="methodName" class="col-sm-2 control-label">メソッド名称</label>
+				<label for="methodName" class="col-sm-1 control-label">メソッド</label>
 				<div class="col-sm-7">
 					<input type="text" id="methodName" name="methodName"
 						class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<input type="text" id="methodIndex" name="methodIndex"
 						class="form-control" placeholder="同名のメソッドがある場合に指定" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="args1" class="col-sm-2 control-label">引数</label>
+				<label for="args1" class="col-sm-1 control-label">引数</label>
 				<div class="col-sm-7">
-					<textarea rows="1" cols="1" id="arg1" name="args"
-						class="form-control"
-						placeholder="ConversionServiceで変換、または、JSONからDTOにマップ"></textarea>
+					<textarea rows="3" cols="1" id="args" name="args"
+						class="form-control" placeholder="引数リストをJSON形式で指定"></textarea>
 				</div>
-				<div class="col-sm-3">
-					<input type="text" id="argType1" name="argTypes"
-						class="form-control" placeholder="引数のFQCN(非必須)">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-7 col-sm-offset-2">
-					<textarea rows="1" cols="1" id="arg2" name="args"
-						class="form-control"
-						placeholder="ConversionServiceで変換、または、JSONからDTOにマップ"></textarea>
-				</div>
-				<div class="col-sm-3">
-					<input type="text" id="argType2" name="argTypes"
-						class="form-control" placeholder="引数のFQCN(非必須)">
+				<div class="col-sm-4">
+					<textarea rows="3" cols="1" id="argTypes" name="argTypes"
+						class="form-control" placeholder="引数の型のリストをJSON形式で指定(非必須)"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-7 col-sm-offset-2">
-					<textarea rows="1" cols="1" id="arg3" name="args"
-						class="form-control"
-						placeholder="ConversionServiceで変換、または、JSONからDTOにマップ"></textarea>
-				</div>
-				<div class="col-sm-3">
-					<input type="text" id="argType3" name="argTypes"
-						class="form-control" placeholder="引数のFQCN(非必須)">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-7 col-sm-offset-2">
-					<textarea rows="1" cols="1" id="arg4" name="args"
-						class="form-control"
-						placeholder="ConversionServiceで変換、または、JSONからDTOにマップ"></textarea>
-				</div>
-				<div class="col-sm-3">
-					<input type="text" id="argType4" name="argTypes"
-						class="form-control" placeholder="引数のFQCN(非必須)">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-7 col-sm-offset-2">
-					<textarea rows="1" cols="1" id="arg5" name="args"
-						class="form-control"
-						placeholder="ConversionServiceで変換、または、JSONからDTOにマップ"></textarea>
-				</div>
-				<div class="col-sm-3">
-					<input type="text" id="argType5" name="argTypes"
-						class="form-control" placeholder="引数のFQCN(非必須)">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
+				<div class="col-sm-11 col-sm-offset-1">
 					<button class="btn btn-default btn-block" type="button"
 						id="invokeBtn">実行</button>
 				</div>
@@ -157,8 +103,8 @@
 		</div>
 		<div class="form-horizontal" role="form">
 			<div class="form-group">
-				<label for="result" class="col-sm-2 control-label">実行結果</label>
-				<div class="col-sm-10 ">
+				<label for="result" class="col-sm-1 control-label">実行結果</label>
+				<div class="col-sm-11">
 					<textarea rows="5" cols="1" id="result" name="result"
 						class="form-control"></textarea>
 				</div>
