@@ -21,9 +21,11 @@ import java.util.List;
 
 public interface Invoker {
 
-	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			List<String> args, List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException;
+	List<String> resolveBeanName(String className) throws ClassNotFoundException;
 
 	List<Method> resolveMethod(String className, String methodName, int numOfArgs) throws ClassNotFoundException;
+
+	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
+			List<String> args, List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException;
 
 }

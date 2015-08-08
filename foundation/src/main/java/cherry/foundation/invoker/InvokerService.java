@@ -21,9 +21,11 @@ import java.util.List;
 
 public interface InvokerService {
 
-	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex, String args,
-			String argTypes);
+	List<String> resolveBeanName(String className);
 
 	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
+
+	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex, String args,
+			String argTypes);
 
 }

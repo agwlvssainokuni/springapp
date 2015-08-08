@@ -46,6 +46,24 @@ public class InvokerServiceImpl implements InvokerService {
 	}
 
 	@Override
+	public List<String> resolveBeanName(String className) {
+		try {
+			return invoker.resolveBeanName(className);
+		} catch (ClassNotFoundException ex) {
+			return new ArrayList<>();
+		}
+	}
+
+	@Override
+	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) {
+		try {
+			return invoker.resolveMethod(className, methodName, numOfArgs);
+		} catch (ClassNotFoundException ex) {
+			return new ArrayList<>();
+		}
+	}
+
+	@Override
 	public String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
 			String args, String argTypes) {
 		try {
@@ -64,15 +82,6 @@ public class InvokerServiceImpl implements InvokerService {
 			}
 		} catch (Exception ex) {
 			return fromThrowableToString(ex);
-		}
-	}
-
-	@Override
-	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) {
-		try {
-			return invoker.resolveMethod(className, methodName, numOfArgs);
-		} catch (ClassNotFoundException ex) {
-			return new ArrayList<>();
 		}
 	}
 

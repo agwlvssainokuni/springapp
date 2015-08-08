@@ -41,6 +41,10 @@ public interface InvokerController {
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
 
+	@RequestMapping(value = { "", "json", "yaml" }, params = { "bean" })
+	@ResponseBody()
+	List<String> resolveBeanName(@RequestParam("className") String className);
+
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "signature" })
 	@ResponseBody()
 	List<String> resolveMethod(@RequestParam("className") String className,

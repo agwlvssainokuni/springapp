@@ -17,6 +17,7 @@
 package cherry.foundation.invoker;
 
 import static java.text.MessageFormat.format;
+import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +45,18 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.appCtx = applicationContext;
+	}
+
+	@Override
+	public List<String> resolveBeanName(String className) throws ClassNotFoundException {
+		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
+		return asList(appCtx.getBeanNamesForType(beanClass));
+	}
+
+	@Override
+	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) throws ClassNotFoundException {
+		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
+		return getMethodList(beanClass, methodName, numOfArgs);
 	}
 
 	@Override
@@ -81,12 +94,6 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 		} catch (InvocationTargetException | IllegalAccessException | IOException ex) {
 			throw new IllegalStateException(ex);
 		}
-	}
-
-	@Override
-	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) throws ClassNotFoundException {
-		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
-		return getMethodList(beanClass, methodName, numOfArgs);
 	}
 
 	private List<Method> getMethodList(Class<?> beanClass, String methodName, int numOfArgs) {

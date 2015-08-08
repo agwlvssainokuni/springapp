@@ -52,6 +52,11 @@ public class InvokerControllerImpl implements InvokerController {
 	}
 
 	@Override
+	public List<String> resolveBeanName(String className) {
+		return jsonInvokerService.resolveBeanName(className);
+	}
+
+	@Override
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
 		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
