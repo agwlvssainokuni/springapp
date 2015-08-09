@@ -35,6 +35,11 @@
 		});
 
 		$("#className").blur(function(event) {
+			var old = $(this).data("old");
+			if (old == $(this).val()) {
+				return;
+			}
+			$(this).data("old", $(this).val());
 			$.ajax($("#invokerUri").val() + "?bean", {
 				method : "POST",
 				data : {
@@ -56,6 +61,11 @@
 		});
 
 		$("#methodName").blur(function(event) {
+			var old = $(this).data("old");
+			if (old == $(this).val()) {
+				return;
+			}
+			$(this).data("old", $(this).val());
 			$.ajax($("#invokerUri").val() + "?method", {
 				method : "POST",
 				data : {
