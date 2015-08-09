@@ -34,28 +34,48 @@
 			});
 		});
 
-		$("#methodName").blur(
-				function(event) {
-					$.ajax($("#invokerUri").val() + "?signature", {
-						method : "POST",
-						data : {
-							className : $("#className").val(),
-							methodName : $("#methodName").val()
-						},
-						success : function(data, textStatus, jqXHR) {
-							$("#methodIndex option.withValue").remove();
-							for (var i = 0; i < data.length; i++) {
-								var opt = $("<option/>").addClass("withValue").attr("value", i).attr("label",
-										"(" + data[i] + ")")
-								$("#methodIndex").append(opt);
-							}
-							$("#methodIndex option.withValue:first").attr("selected", "selected");
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							alert(errorThrown);
-						}
-					});
-				});
+		$("#className").blur(function(event) {
+			$.ajax($("#invokerUri").val() + "?bean", {
+				method : "POST",
+				data : {
+					className : $("#className").val()
+				},
+				success : function(data, textStatus, jqXHR) {
+					$("#beanName option.withValue").remove();
+					for (var i = 0; i < data.length; i++) {
+						var opt = $("<option/>").addClass("withValue");
+						opt.attr("value", data[i]).attr("label", data[i])
+						$("#beanName").append(opt);
+					}
+					$("#beanName option.withValue:first").attr("selected", "selected");
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+		});
+
+		$("#methodName").blur(function(event) {
+			$.ajax($("#invokerUri").val() + "?method", {
+				method : "POST",
+				data : {
+					className : $("#className").val(),
+					methodName : $("#methodName").val()
+				},
+				success : function(data, textStatus, jqXHR) {
+					$("#methodIndex option.withValue").remove();
+					for (var i = 0; i < data.length; i++) {
+						var opt = $("<option/>").addClass("withValue");
+						opt.attr("value", i).attr("label", "(" + data[i] + ")")
+						$("#methodIndex").append(opt);
+					}
+					$("#methodIndex option.withValue:first").attr("selected", "selected");
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+		});
 
 	});
 </script>
@@ -84,7 +104,9 @@
 					<input type="text" id="className" name="className" class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
 				</div>
 				<div class="col-sm-4">
-					<input type="text" id="beanName" name="beanName" class="form-control" placeholder="Bean名称(非必須)" />
+					<select id="beanName" name="beanName" class="form-control">
+						<option value="0" label="Bean名称(非必須)" />
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -94,7 +116,7 @@
 				</div>
 				<div class="col-sm-4">
 					<select id="methodIndex" name="methodIndex" class="form-control">
-						<option class="noValue" value="" label="呼出すメソッドを引数のパターンで指定" />
+						<option value="0" label="呼出すメソッドを引数のパターンで指定" />
 					</select>
 				</div>
 			</div>

@@ -45,7 +45,7 @@ public interface InvokerController {
 	@ResponseBody()
 	List<String> resolveBeanName(@RequestParam("className") String className);
 
-	@RequestMapping(value = { "", "json", "yaml" }, params = { "signature" })
+	@RequestMapping(value = { "", "json", "yaml" }, params = { "method" })
 	@ResponseBody()
 	List<String> resolveMethod(@RequestParam("className") String className,
 			@RequestParam("methodName") String methodName,
