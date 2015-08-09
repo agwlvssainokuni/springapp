@@ -20,29 +20,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import cherry.foundation.invoker.Invoker;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component("jsonInvokerService")
-public class JsonInvokerServiceFactoryBean extends InvokerServiceFactoryBeanSupport {
+@Component("yamlInvoker")
+public class YamlInvokerFactoryBean extends InvokerFactoryBeanSupport {
 
 	@Autowired
-	@Qualifier("objectMapper")
+	@Qualifier("yamlObjectMapper")
 	private ObjectMapper objectMapper;
 
-	@Autowired
-	@Qualifier("jsonInvoker")
-	private Invoker invoker;
-
-	@Override
 	protected ObjectMapper getObjectMapper() {
 		return objectMapper;
-	}
-
-	@Override
-	protected Invoker getInvoker() {
-		return invoker;
 	}
 
 }
