@@ -39,6 +39,7 @@ public class ToMapUtil {
 	public static Map<String, Object> fromThrowable(Throwable th, int maxDepth) {
 
 		Map<String, Object> map = new LinkedHashMap<>();
+		map.put("type", th.getClass().getName());
 		map.put("message", th.getMessage());
 
 		int depth = maxDepth;
