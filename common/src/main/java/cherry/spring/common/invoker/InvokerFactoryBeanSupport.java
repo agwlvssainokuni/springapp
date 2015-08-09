@@ -24,7 +24,6 @@ import org.springframework.context.ApplicationContextAware;
 
 import cherry.foundation.invoker.Invoker;
 import cherry.foundation.invoker.InvokerImpl;
-import cherry.foundation.invoker.InvokerService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -57,7 +56,7 @@ public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>,
 
 	@Override
 	public Class<?> getObjectType() {
-		return InvokerService.class;
+		return Invoker.class;
 	}
 
 	@Override
