@@ -68,9 +68,17 @@ public class PathDef {
 
 	public static final String URI_ADMIN_HOME = "/admin";
 
+	public static final String URI_ADMIN_USER = "/admin/user";
+
 	public static final String URI_ADMIN_MAILMGMT = "/admin/mailmgmt";
 
 	public static final String VIEW_ADMIN_HOME = "admin/home";
+
+	public static final String VIEW_ADMIN_USER_ADD = "admin/user/add";
+
+	public static final String VIEW_ADMIN_USER_EDIT = "admin/user/edit";
+
+	public static final String VIEW_ADMIN_USER_SEARCH = "admin/user/search";
 
 	// サブURI
 	public static final String SUBURI_START = "start";
@@ -92,6 +100,8 @@ public class PathDef {
 
 	// リクエストパラメタ
 	public static final String PARAM_REF = "ref";
+
+	public static final String PARAM_ID = "id";
 
 	public static final String PATHVAR_ID = "id";
 
