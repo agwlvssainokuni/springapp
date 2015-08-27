@@ -131,7 +131,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="args1" class="col-sm-1 control-label">引数</label>
+				<label for="args" class="col-sm-1 control-label">引数</label>
 				<div class="col-sm-7">
 					<textarea rows="3" cols="1" id="args" name="args" class="form-control" placeholder="引数リストをJSON形式で指定"></textarea>
 				</div>
