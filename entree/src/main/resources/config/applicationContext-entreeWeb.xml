@@ -36,6 +36,9 @@
 				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
 					<constructor-arg value="/invoker/**" />
 				</bean>
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/stubrepos/**" />
+				</bean>
 			</list>
 		</property>
 	</bean>
