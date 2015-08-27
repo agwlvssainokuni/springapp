@@ -21,16 +21,26 @@ import java.util.List;
 
 public class StubImpl<T> implements Stub<T> {
 
+	private Item<T> always;
+
 	private final List<Item<T>> list = new LinkedList<>();
 
 	@Override
 	public boolean hasNext() {
+		if (always != null) {
+			return true;
+		}
 		return !list.isEmpty();
 	}
 
 	@Override
 	public T next() throws Throwable {
-		Item<T> item = list.remove(0);
+		Item<T> item;
+		if (always != null) {
+			item = always;
+		} else {
+			item = list.remove(0);
+		}
 		if (item.getThrowable() == null) {
 			return item.getValue();
 		} else {
@@ -40,12 +50,20 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public boolean isThrowable() {
+		if (always != null) {
+			return always.getThrowable() != null;
+		}
 		return list.get(0).getThrowable() != null;
 	}
 
 	@Override
 	public Class<? extends Throwable> nextThrowable() {
-		Item<T> item = list.remove(0);
+		Item<T> item;
+		if (always != null) {
+			item = always;
+		} else {
+			item = list.remove(0);
+		}
 		if (item.getThrowable() == null) {
 			throw new IllegalStateException();
 		} else {
@@ -55,6 +73,16 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public Stub<T> clear() {
+		always = null;
+		list.clear();
+		return this;
+	}
+
+	@Override
+	public <E extends T> Stub<T> alwaysReturn(E value) {
+		Item<T> item = new Item<>();
+		item.setValue(value);
+		always = item;
 		list.clear();
 		return this;
 	}
@@ -64,6 +92,7 @@ public class StubImpl<T> implements Stub<T> {
 		Item<T> item = new Item<>();
 		item.setValue(value);
 		list.add(item);
+		always = null;
 		return this;
 	}
 
@@ -76,10 +105,20 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
+	public Stub<T> alwaysThrows(Class<? extends Throwable> klass) {
+		Item<T> item = new Item<>();
+		item.setThrowable(klass);
+		always = item;
+		list.clear();
+		return this;
+	}
+
+	@Override
 	public Stub<T> thenThrows(Class<? extends Throwable> klass) {
 		Item<T> item = new Item<>();
 		item.setThrowable(klass);
 		list.add(item);
+		always = null;
 		return this;
 	}
 

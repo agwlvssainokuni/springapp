@@ -76,6 +76,12 @@ public class StubInterceptorTest {
 		assertEquals(Long.valueOf(2L), tester.method(1030L, 204L));
 		repository.get(method).clear();
 		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+
+		repository.get(method).alwaysReturn(1L);
+		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
+		repository.get(method).clear();
+		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
 	}
 
 	@Test
@@ -124,6 +130,22 @@ public class StubInterceptorTest {
 		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).thenThrows(asList(IllegalArgumentException.class, Throwable.class));
+		try {
+			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			// OK
+		}
+		repository.get(method).clear();
+		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+
+		repository.get(method).alwaysThrows(IllegalArgumentException.class);
+		try {
+			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			fail("Exception must be thrown");
+		} catch (IllegalArgumentException ex) {
+			// OK
+		}
 		try {
 			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");

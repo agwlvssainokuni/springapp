@@ -30,9 +30,13 @@ public interface Stub<T> {
 
 	Stub<T> clear();
 
+	<E extends T> Stub<T> alwaysReturn(E value);
+
 	<E extends T> Stub<T> thenReturn(E value);
 
 	<E extends T> Stub<T> thenReturn(List<E> list);
+
+	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
 
 	Stub<T> thenThrows(Class<? extends Throwable> klass);
 
