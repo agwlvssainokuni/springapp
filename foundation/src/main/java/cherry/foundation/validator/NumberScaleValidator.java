@@ -39,9 +39,12 @@ public class NumberScaleValidator implements ConstraintValidator<NumberScale, Nu
 		if (value instanceof BigDecimal) {
 			BigDecimal d = (BigDecimal) value;
 			return d.compareTo(d.setScale(scale, RoundingMode.DOWN)) == 0;
-		} else if (value instanceof Double || value instanceof Float) {
+		} else if (value instanceof Double) {
 			BigDecimal d = BigDecimal.valueOf(value.doubleValue());
 			return d.doubleValue() == d.setScale(scale, RoundingMode.DOWN).doubleValue();
+		} else if (value instanceof Float) {
+			BigDecimal d = BigDecimal.valueOf(value.floatValue());
+			return d.floatValue() == d.setScale(scale, RoundingMode.DOWN).floatValue();
 		} else {
 			return true;
 		}
