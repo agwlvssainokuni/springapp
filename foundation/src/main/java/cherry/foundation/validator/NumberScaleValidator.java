@@ -41,10 +41,10 @@ public class NumberScaleValidator implements ConstraintValidator<NumberScale, Nu
 			return d.compareTo(d.setScale(scale, RoundingMode.DOWN)) == 0;
 		} else if (value instanceof Double) {
 			BigDecimal d = BigDecimal.valueOf(value.doubleValue());
-			return d.doubleValue() == d.setScale(scale, RoundingMode.DOWN).doubleValue();
+			return value.doubleValue() == d.setScale(scale, RoundingMode.DOWN).doubleValue();
 		} else if (value instanceof Float) {
 			BigDecimal d = BigDecimal.valueOf(value.floatValue());
-			return d.floatValue() == d.setScale(scale, RoundingMode.DOWN).floatValue();
+			return value.floatValue() == d.setScale(scale, RoundingMode.DOWN).floatValue();
 		} else {
 			return true;
 		}
