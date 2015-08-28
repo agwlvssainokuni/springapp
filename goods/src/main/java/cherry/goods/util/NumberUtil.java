@@ -36,9 +36,12 @@ public class NumberUtil {
 	public static Number setScale(Number number, int newScale, RoundingMode roundingMode) {
 		if (number instanceof BigDecimal) {
 			return ((BigDecimal) number).setScale(newScale, roundingMode);
-		} else if (number instanceof Double || number instanceof Float) {
+		} else if (number instanceof Double) {
 			BigDecimal d = BigDecimal.valueOf(number.doubleValue());
 			return Double.valueOf(d.setScale(newScale, roundingMode).doubleValue());
+		} else if (number instanceof Float) {
+			BigDecimal d = BigDecimal.valueOf(number.floatValue());
+			return Float.valueOf(d.setScale(newScale, roundingMode).floatValue());
 		} else {
 			return number;
 		}

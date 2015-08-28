@@ -52,7 +52,7 @@ public class NumberUtilTest {
 	public void testSetScale() {
 		assertEquals(new BigDecimal("4444.44"), setScale(new BigDecimal("4444.4444"), 2, RoundingMode.DOWN));
 		assertEquals(Double.valueOf(4444.44), setScale(Double.valueOf(4444.4444), 2, RoundingMode.DOWN));
-		assertEquals(Double.valueOf(4444.44), setScale(Float.valueOf(4444.4444f), 2, RoundingMode.DOWN));
+		assertEquals(Float.valueOf(4444.44f), setScale(Float.valueOf(4444.4444f), 2, RoundingMode.DOWN));
 		assertEquals(Byte.valueOf((byte) 44), setScale(Byte.valueOf((byte) 44), 2, RoundingMode.DOWN));
 		assertEquals(Short.valueOf((short) 4444), setScale(Short.valueOf((short) 4444), 2, RoundingMode.DOWN));
 		assertEquals(Integer.valueOf(44444), setScale(Integer.valueOf(44444), 2, RoundingMode.DOWN));
