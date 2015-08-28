@@ -49,7 +49,7 @@
 					$("#beanName option.withValue").remove();
 					for (var i = 0; i < data.length; i++) {
 						var opt = $("<option/>").addClass("withValue");
-						opt.attr("value", data[i]).attr("label", data[i])
+						opt.attr("value", data[i]).attr("label", data[i]).text(data[i]);
 						$("#beanName").append(opt);
 					}
 					$("#beanName option.withValue:first").attr("selected", "selected");
@@ -76,7 +76,7 @@
 					$("#methodIndex option.withValue").remove();
 					for (var i = 0; i < data.length; i++) {
 						var opt = $("<option/>").addClass("withValue");
-						opt.attr("value", i).attr("label", "(" + data[i] + ")")
+						opt.attr("value", i).attr("label", "(" + data[i] + ")").text("(" + data[i] + ")");
 						$("#methodIndex").append(opt);
 					}
 					$("#methodIndex option.withValue:first").attr("selected", "selected");
@@ -115,7 +115,7 @@
 				</div>
 				<div class="col-sm-4">
 					<select id="beanName" name="beanName" class="form-control">
-						<option value="0" label="Bean名称(非必須)" />
+						<option value="0" label="Bean名称(非必須)">Bean名称(非必須)</option>
 					</select>
 				</div>
 			</div>
@@ -126,7 +126,7 @@
 				</div>
 				<div class="col-sm-4">
 					<select id="methodIndex" name="methodIndex" class="form-control">
-						<option value="0" label="呼出すメソッドを引数のパターンで指定" />
+						<option value="0" label="呼出すメソッドを引数のパターンで指定">呼出すメソッドを引数のパターンで指定</option>
 					</select>
 				</div>
 			</div>
