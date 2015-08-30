@@ -20,6 +20,9 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.InitializingBean;
@@ -106,8 +109,18 @@ public class InvokerTest implements InitializingBean {
 
 	@Test
 	public void testMethodIndex() throws Exception {
-		assertEquals("-1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", -1, 0, asList("1", "2"), null));
-		assertEquals("1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", -1, 1, asList("1", "2"), null));
+		List<Method> list = invoker.resolveMethod(ToBeInvoked.class.getName(), "method6", -1);
+		int m0;
+		int m1;
+		if (list.get(0).getReturnType() == Long.TYPE) {
+			m0 = 0;
+			m1 = 1;
+		} else {
+			m0 = 1;
+			m1 = 0;
+		}
+		assertEquals("-1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", -1, m0, asList("1", "2"), null));
+		assertEquals("1", invoker.invoke(null, ToBeInvoked.class.getName(), "method6", -1, m1, asList("1", "2"), null));
 	}
 
 	@Test(expected = ClassNotFoundException.class)
