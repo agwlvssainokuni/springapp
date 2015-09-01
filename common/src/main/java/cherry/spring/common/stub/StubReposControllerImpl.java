@@ -16,6 +16,8 @@
 
 package cherry.spring.common.stub;
 
+import static cherry.goods.util.ReflectionUtil.getMethodDescription;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,7 +35,6 @@ import cherry.goods.util.ToMapUtil;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Joiner;
 
 @Controller
 public class StubReposControllerImpl implements StubReposController {
@@ -74,11 +75,7 @@ public class StubReposControllerImpl implements StubReposController {
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
 		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
-			List<String> names = new ArrayList<>(m.getParameterTypes().length);
-			for (Class<?> t : m.getParameterTypes()) {
-				names.add(t.getSimpleName());
-			}
-			list.add(Joiner.on(",").join(names));
+			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;
 	}

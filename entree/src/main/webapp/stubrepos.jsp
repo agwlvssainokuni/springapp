@@ -15,7 +15,7 @@
 	$(function() {
 
 		$("#registerBtn").click(function(event) {
-			$.ajax($("#stubreposUri").val(), {
+			$.ajax($("#toolUri").val(), {
 				method : "POST",
 				data : {
 					className : $("#className").val(),
@@ -39,7 +39,7 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
-			$.ajax($("#stubreposUri").val() + "?bean", {
+			$.ajax($("#toolUri").val() + "?bean", {
 				method : "POST",
 				data : {
 					className : $("#className").val()
@@ -65,7 +65,7 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
-			$.ajax($("#stubreposUri").val() + "?method", {
+			$.ajax($("#toolUri").val() + "?method", {
 				method : "POST",
 				data : {
 					className : $("#className").val(),
@@ -75,7 +75,7 @@
 					$("#methodIndex option.withValue").remove();
 					for (var i = 0; i < data.length; i++) {
 						var opt = $("<option/>").addClass("withValue");
-						opt.attr("value", i).attr("label", "(" + data[i] + ")").text("(" + data[i] + ")");
+						opt.attr("value", i).attr("label", data[i]).text(data[i]);
 						$("#methodIndex").append(opt);
 					}
 					$("#methodIndex option.withValue:first").attr("selected", "selected");
@@ -101,10 +101,9 @@
 		<h2 class="page-header">スタブ設定機能</h2>
 		<div role="form" class="form-horizontal">
 			<div class="form-group">
-				<label for="stubreposUri" class="col-sm-1 control-label">実行URI</label>
+				<label for="toolUri" class="col-sm-1 control-label">ツールURI</label>
 				<div class="col-sm-11">
-					<input type="text" id="stubreposUri" name="stubreposUri" class="form-control" placeholder="スタブ設定機能のURIを指定してください"
-						value="<c:url value="/stubrepos" />" />
+					<input type="text" id="toolUri" name="toolUri" class="form-control" placeholder="スタブ設定機能のURIを指定してください" value="<c:url value="/stubrepos" />" />
 				</div>
 			</div>
 			<div class="form-group">
