@@ -133,7 +133,7 @@ public class InvokerTest implements InitializingBean {
 		invoker.invoke(null, ToBeInvoked.class.getName(), "method", -1, 0, null, null);
 	}
 
-	@Test(expected = ClassNotFoundException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testArgClassNotFound() throws Exception {
 		invoker.invoke(null, ToBeInvoked.class.getName(), "method4", -1, 0,
 				asList("{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"), asList("NoClass"));

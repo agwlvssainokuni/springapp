@@ -22,6 +22,7 @@ import static java.util.Arrays.asList;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InvokerImpl implements Invoker, ApplicationContextAware {
@@ -77,16 +79,18 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
 			}
 			Method method = (methodList.size() == 1 ? methodList.get(0) : methodList.get(methodIndex));
-			Class<?>[] paramType = method.getParameterTypes();
+			Type[] paramType = method.getGenericParameterTypes();
 			Object[] param = new Object[paramType.length];
 			for (int i = 0; i < paramType.length; i++) {
 				String arg = getOrNull(args, i);
 				String argType = getOrNull(argTypes, i);
+				JavaType javaType;
 				if (StringUtils.isNotEmpty(argType)) {
-					param[i] = resolve(arg, getClass().getClassLoader().loadClass(argType));
+					javaType = objectMapper.getTypeFactory().constructFromCanonical(argType);
 				} else {
-					param[i] = resolve(arg, paramType[i]);
+					javaType = objectMapper.getTypeFactory().constructType(paramType[i]);
 				}
+				param[i] = resolve(arg, javaType);
 			}
 
 			Object result = method.invoke(targetBean, param);
@@ -118,7 +122,7 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 		}
 	}
 
-	private Object resolve(String arg, Class<?> paramType) throws JsonProcessingException, IOException {
+	private Object resolve(String arg, JavaType paramType) throws JsonProcessingException, IOException {
 		if (arg == null) {
 			return null;
 		}
