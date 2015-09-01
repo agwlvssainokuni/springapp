@@ -31,6 +31,7 @@ import cherry.foundation.invoker.InvokerService;
 import cherry.foundation.stub.StubRepository;
 import cherry.goods.util.ToMapUtil;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 
@@ -92,9 +93,9 @@ public class StubReposControllerImpl implements StubReposController {
 			}
 
 			Method method = list.get(methodIndex);
-			Class<?> returnType = method.getReturnType();
+			JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
 			if (StringUtils.isNotEmpty(valueType)) {
-				returnType = getClass().getClassLoader().loadClass(valueType);
+				returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 			}
 
 			if (StringUtils.isEmpty(value)) {
@@ -106,7 +107,7 @@ public class StubReposControllerImpl implements StubReposController {
 
 			return objectMapper.writeValueAsString(Boolean.TRUE);
 
-		} catch (IOException | ClassNotFoundException ex) {
+		} catch (IOException | IllegalArgumentException ex) {
 			Map<String, ?> map = ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
 			try {
 				return objectMapper.writeValueAsString(map);
