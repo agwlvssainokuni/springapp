@@ -16,6 +16,8 @@
 
 package cherry.spring.common.invoker;
 
+import static cherry.goods.util.ReflectionUtil.getMethodDescription;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +27,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import cherry.foundation.invoker.InvokerService;
-
-import com.google.common.base.Joiner;
 
 @Controller
 public class InvokerControllerImpl implements InvokerController {
@@ -60,11 +60,7 @@ public class InvokerControllerImpl implements InvokerController {
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
 		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
-			List<String> names = new ArrayList<>(m.getParameterTypes().length);
-			for (Class<?> t : m.getParameterTypes()) {
-				names.add(t.getSimpleName());
-			}
-			list.add(Joiner.on(",").join(names));
+			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;
 	}
