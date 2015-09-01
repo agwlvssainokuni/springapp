@@ -29,6 +29,7 @@ public class YamlInvokerFactoryBean extends InvokerFactoryBeanSupport {
 	@Qualifier("yamlObjectMapper")
 	private ObjectMapper objectMapper;
 
+	@Override
 	protected ObjectMapper getObjectMapper() {
 		return objectMapper;
 	}

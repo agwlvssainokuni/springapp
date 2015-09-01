@@ -29,6 +29,7 @@ public class JsonInvokerFactoryBean extends InvokerFactoryBeanSupport {
 	@Qualifier("objectMapper")
 	private ObjectMapper objectMapper;
 
+	@Override
 	protected ObjectMapper getObjectMapper() {
 		return objectMapper;
 	}
