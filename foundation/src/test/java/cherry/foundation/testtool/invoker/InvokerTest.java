@@ -25,43 +25,24 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.testtool.reflect.ReflectionResolver;
-import cherry.foundation.testtool.reflect.ReflectionResolverImpl;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class InvokerTest implements InitializingBean {
+public class InvokerTest {
 
 	@Autowired
-	private ApplicationContext appCtx;
-
-	@Autowired
-	@Qualifier("objectMapper")
-	private ObjectMapper objectMapper;
-
+	@Qualifier("testJsonInvoker")
 	private Invoker invoker;
 
+	@Autowired
+	@Qualifier("testReflectionResolver")
 	private ReflectionResolver reflectionResolver;
-
-	@Override
-	public void afterPropertiesSet() {
-		InvokerImpl impl = new InvokerImpl();
-		impl.setApplicationContext(appCtx);
-		impl.setObjectMapper(objectMapper);
-		invoker = impl;
-		ReflectionResolverImpl resolver = new ReflectionResolverImpl();
-		resolver.setApplicationContext(appCtx);
-		reflectionResolver = resolver;
-	}
 
 	@Test
 	public void testNoArgNoRet() throws Exception {
