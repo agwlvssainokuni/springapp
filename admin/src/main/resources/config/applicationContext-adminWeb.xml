@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:security="http://www.springframework.org/schema/security"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
@@ -14,9 +14,8 @@
 
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
-		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
-			authentication-failure-url="/login/start?loginFailed" default-target-url="/secure/" always-use-default-target="false"
-			username-parameter="loginId" password-parameter="password" />
+		<security:form-login login-page="/login/start" login-processing-url="/login/execute" authentication-failure-url="/login/start?loginFailed"
+			default-target-url="/secure/" always-use-default-target="false" username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout" logout-success-url="/login/start?loggedOut" invalidate-session="true" />
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
@@ -31,10 +30,7 @@
 					<constructor-arg value="/logout/**" />
 				</bean>
 				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-					<constructor-arg value="/invoker/**" />
-				</bean>
-				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-					<constructor-arg value="/stubrepos/**" />
+					<constructor-arg value="/testtool/**" />
 				</bean>
 			</list>
 		</property>
