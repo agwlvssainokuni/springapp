@@ -87,6 +87,10 @@
 			});
 		});
 
+		$("#clearBtn").click(function(event) {
+			$("#value").val("");
+		});
+
 	});
 </script>
 </head>
@@ -131,7 +135,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="value" class="col-sm-1 control-label">返却値</label>
+				<label for="value" class="col-sm-1 control-label">返却値
+					<button class="btn btn-default btn-xs" type="button" id="clearBtn">クリア</button>
+				</label>
 				<div class="col-sm-7">
 					<textarea rows="3" cols="1" id="value" name="value" class="form-control" placeholder="返却値をJSON形式で指定"></textarea>
 				</div>
