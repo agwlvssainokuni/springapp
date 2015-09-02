@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.invoker;
+package cherry.foundation.testtool.invoker;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;

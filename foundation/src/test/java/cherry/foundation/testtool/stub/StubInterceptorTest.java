@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub;
+package cherry.foundation.testtool.stub;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.stub2.StubTester;
+import cherry.foundation.testtool.stub2.StubTester;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")

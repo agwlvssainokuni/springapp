@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder location="classpath:foundation.properties"
-		ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:foundation.properties" ignore-unresolvable="true" />
 
 	<context:component-scan base-package="cherry.foundation" />
 
@@ -26,7 +24,7 @@
 				and !execution(* cherry.foundation.telno..*.*(..))
 				and !execution(* cherry.goods.telno..*.*(..))
 				and !execution(* cherry.goods.wakachi..*.*(..))
-				and !execution(* cherry.foundation.stub..*.*(..))
+				and !execution(* cherry.foundation.testtool.stub..*.*(..))
 				" />
 		<aop:advisor advice-ref="traceInterceptor" pointcut-ref="pointcut" />
 		<aop:advisor advice-ref="stubInterceptor" pointcut-ref="pointcut" />

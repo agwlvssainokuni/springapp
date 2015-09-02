@@ -22,8 +22,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import cherry.foundation.invoker.Invoker;
-import cherry.foundation.invoker.InvokerImpl;
+import cherry.foundation.testtool.invoker.Invoker;
+import cherry.foundation.testtool.invoker.InvokerImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -134,7 +134,7 @@ subprojects {
 		versionJavaJsp = "2.2.1"
 		versionJavaJms = "1.1-rev-1"
 		versionJavaTransaction = "1.1-rev-1"
-		versionLombok = "1.16.4"
+		versionLombok = "1.16.6"
 		versionJunit = "4.12"
 		versionHamcrest = "1.3"
 		versionMockito = "2.0.2-beta"

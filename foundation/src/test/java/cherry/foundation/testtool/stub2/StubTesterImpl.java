@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub2;
+package cherry.foundation.testtool.stub2;
 
 import java.math.BigDecimal;
 

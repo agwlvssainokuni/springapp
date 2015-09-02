@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub;
+package cherry.foundation.testtool.stub;
 
 import java.io.IOException;
 import java.io.InputStream;

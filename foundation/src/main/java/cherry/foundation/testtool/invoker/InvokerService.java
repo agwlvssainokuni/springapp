@@ -14,32 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub;
+package cherry.foundation.testtool.invoker;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
-public interface Stub<T> {
+public interface InvokerService {
 
-	boolean hasNext();
+	List<String> resolveBeanName(String className);
 
-	T next() throws Throwable;
+	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
 
-	boolean isThrowable();
-
-	Class<? extends Throwable> nextThrowable();
-
-	Stub<T> clear();
-
-	<E extends T> Stub<T> alwaysReturn(E value);
-
-	<E extends T> Stub<T> thenReturn(E value);
-
-	<E extends T> Stub<T> thenReturn(List<E> list);
-
-	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
-
-	Stub<T> thenThrows(Class<? extends Throwable> klass);
-
-	Stub<T> thenThrows(List<Class<? extends Throwable>> list);
+	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex, String args,
+			String argTypes);
 
 }

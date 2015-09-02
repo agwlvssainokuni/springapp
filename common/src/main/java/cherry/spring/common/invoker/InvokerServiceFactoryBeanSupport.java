@@ -19,9 +19,9 @@ package cherry.spring.common.invoker;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
-import cherry.foundation.invoker.Invoker;
-import cherry.foundation.invoker.InvokerService;
-import cherry.foundation.invoker.InvokerServiceImpl;
+import cherry.foundation.testtool.invoker.Invoker;
+import cherry.foundation.testtool.invoker.InvokerService;
+import cherry.foundation.testtool.invoker.InvokerServiceImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

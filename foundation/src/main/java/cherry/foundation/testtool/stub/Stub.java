@@ -14,16 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub;
+package cherry.foundation.testtool.stub;
 
-import java.lang.reflect.Method;
+import java.util.List;
 
-public interface StubRepository {
+public interface Stub<T> {
 
-	boolean contains(Method method);
+	boolean hasNext();
 
-	<T> Stub<T> get(Method method);
+	T next() throws Throwable;
 
-	void clear(Method method);
+	boolean isThrowable();
+
+	Class<? extends Throwable> nextThrowable();
+
+	Stub<T> clear();
+
+	<E extends T> Stub<T> alwaysReturn(E value);
+
+	<E extends T> Stub<T> thenReturn(E value);
+
+	<E extends T> Stub<T> thenReturn(List<E> list);
+
+	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
+
+	Stub<T> thenThrows(Class<? extends Throwable> klass);
+
+	Stub<T> thenThrows(List<Class<? extends Throwable>> list);
 
 }

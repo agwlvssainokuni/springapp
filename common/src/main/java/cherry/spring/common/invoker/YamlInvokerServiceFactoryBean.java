@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import cherry.foundation.invoker.Invoker;
+import cherry.foundation.testtool.invoker.Invoker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

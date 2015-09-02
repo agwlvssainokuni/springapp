@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.foundation.invoker;
+package cherry.foundation.testtool.stub;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
-public interface InvokerService {
+public interface StubRepository {
 
-	List<String> resolveBeanName(String className);
+	boolean contains(Method method);
 
-	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
+	<T> Stub<T> get(Method method);
 
-	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex, String args,
-			String argTypes);
+	void clear(Method method);
 
 }

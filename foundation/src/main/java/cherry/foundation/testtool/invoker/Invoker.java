@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.invoker;
+package cherry.foundation.testtool.invoker;
 
 import java.lang.reflect.Method;
 import java.util.List;

@@ -14,20 +14,48 @@
  * limitations under the License.
  */
 
-package cherry.foundation.stub2;
+package cherry.foundation.testtool.invoker;
 
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-public interface StubTester {
+public interface ToBeInvoked {
 
-	Long method(Long p1, Long p2);
+	void method0();
 
-	BigDecimal method(BigDecimal p1, BigDecimal p2);
+	long method1(long a, long b);
 
-	LocalDateTime method(LocalDate p1, LocalTime p2);
+	Long method2(Long a, Long b);
+
+	LocalDateTime method3(LocalDate dt, LocalTime tm);
+
+	Dto1 method4(Dto1 a, Dto1 b);
+
+	Dto2 method5(Dto2 a, Dto2 b);
+
+	long method6(long a, long b);
+
+	int method6(int a, int b);
+
+	@Setter
+	@Getter
+	@ToString
+	public static class Dto1 {
+		private Long val1;
+		private Long val2;
+	}
+
+	@Setter
+	@Getter
+	@ToString
+	public static class Dto2 {
+		private Dto1 val1;
+		private Dto1 val2;
+	}
 
 }
