@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.invoker;
+package cherry.spring.common.testtool.invoker;
 
 import static cherry.goods.util.ReflectionUtil.getMethodDescription;
 

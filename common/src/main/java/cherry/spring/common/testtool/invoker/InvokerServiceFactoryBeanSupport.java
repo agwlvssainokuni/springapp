@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.invoker;
+package cherry.spring.common.testtool.invoker;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -42,7 +42,7 @@ public abstract class InvokerServiceFactoryBeanSupport implements FactoryBean<In
 	}
 
 	@Override
-	public InvokerService getObject() throws Exception {
+	public InvokerService getObject() {
 		return invokerService;
 	}
 

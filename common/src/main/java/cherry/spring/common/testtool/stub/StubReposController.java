@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.stub;
+package cherry.spring.common.testtool.stub;
 
 import java.util.List;
 

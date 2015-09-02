@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.stub;
+package cherry.spring.common.testtool.stub;
 
 import static cherry.goods.util.ReflectionUtil.getMethodDescription;
 

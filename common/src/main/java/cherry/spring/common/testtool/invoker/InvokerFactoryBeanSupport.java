@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.invoker;
+package cherry.spring.common.testtool.invoker;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -37,7 +36,7 @@ public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>,
 	protected abstract ObjectMapper getObjectMapper();
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 
@@ -50,7 +49,7 @@ public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>,
 	}
 
 	@Override
-	public Invoker getObject() throws Exception {
+	public Invoker getObject() {
 		return invoker;
 	}
 
