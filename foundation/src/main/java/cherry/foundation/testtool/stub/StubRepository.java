@@ -17,8 +17,11 @@
 package cherry.foundation.testtool.stub;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 public interface StubRepository {
+
+	List<Method> getStubbedMethod();
 
 	boolean contains(Method method);
 
