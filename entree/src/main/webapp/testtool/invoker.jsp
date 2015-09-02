@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="title">呼出しツール</c:set>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>汎用起動機能</title>
+<title>${title}</title>
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -94,24 +95,24 @@
 	<div class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="nav navbar-header">
-				<div class="navbar-brand">汎用実行機能</div>
+				<div class="navbar-brand">${title}</div>
 			</div>
 		</div>
 	</div>
 	<div class="container" role="main">
-		<h2 class="page-header">汎用実行機能</h2>
+		<h2 class="page-header">${title}</h2>
 		<div role="form" class="form-horizontal">
 			<div class="form-group">
 				<label for="toolUri" class="col-sm-1 control-label">ツールURI</label>
 				<div class="col-sm-11">
-					<input type="text" id="toolUri" name="toolUri" class="form-control" placeholder="汎用実行機能のURIを指定してください"
+					<input type="text" id="toolUri" name="toolUri" class="form-control" placeholder="ツールのURIを指定してください"
 						value="<c:url value="/testtool/invoker" />" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="className" class="col-sm-1 control-label">クラス</label>
 				<div class="col-sm-7">
-					<input type="text" id="className" name="className" class="form-control" placeholder="呼び出すBeanのFQCNを指定してください" />
+					<input type="text" id="className" name="className" class="form-control" placeholder="BeanのFQCNを指定してください" />
 				</div>
 				<div class="col-sm-4">
 					<select id="beanName" name="beanName" class="form-control">
@@ -122,18 +123,18 @@
 			<div class="form-group">
 				<label for="methodName" class="col-sm-1 control-label">メソッド</label>
 				<div class="col-sm-7">
-					<input type="text" id="methodName" name="methodName" class="form-control" placeholder="呼び出すメソッドの名称を指定してください" />
+					<input type="text" id="methodName" name="methodName" class="form-control" placeholder="メソッドの名称を指定してください" />
 				</div>
 				<div class="col-sm-4">
 					<select id="methodIndex" name="methodIndex" class="form-control">
-						<option value="0" label="呼出すメソッドを引数のパターンで指定">呼出すメソッドを引数のパターンで指定</option>
+						<option value="0" label="メソッドを引数のパターンで指定">メソッドを引数のパターンで指定</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="args" class="col-sm-1 control-label">引数</label>
 				<div class="col-sm-7">
-					<textarea rows="3" cols="1" id="args" name="args" class="form-control" placeholder="引数リストをJSON形式で指定"></textarea>
+					<textarea rows="3" cols="1" id="args" name="args" class="form-control" placeholder="引数のリストをJSON形式で指定"></textarea>
 				</div>
 				<div class="col-sm-4">
 					<textarea rows="3" cols="1" id="argTypes" name="argTypes" class="form-control" placeholder="引数の型のリストをJSON形式で指定(非必須)"></textarea>
