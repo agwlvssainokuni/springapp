@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.stub;
+package cherry.spring.common.testtool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

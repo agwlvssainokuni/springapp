@@ -14,48 +14,45 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.stub;
+package cherry.spring.common.testtool;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import cherry.foundation.testtool.reflect.ReflectionResolver;
-import cherry.foundation.testtool.stub.StubConfigService;
-import cherry.foundation.testtool.stub.StubConfigServiceImpl;
-import cherry.foundation.testtool.stub.StubRepository;
+import cherry.foundation.testtool.reflect.ReflectionResolverImpl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+@Component
+public class ReflectionResolverFactoryBean implements FactoryBean<ReflectionResolver>, ApplicationContextAware,
+		InitializingBean {
 
-public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean<StubConfigService>, InitializingBean {
-
-	@Autowired
 	private ReflectionResolver reflectionResolver;
 
-	@Autowired
-	private StubRepository repository;
-
-	private StubConfigService service;
-
-	protected abstract ObjectMapper getObjectMapper();
+	private ApplicationContext applicationContext;
 
 	@Override
-	public void afterPropertiesSet() {
-		StubConfigServiceImpl impl = new StubConfigServiceImpl();
-		impl.setReflectionResolver(reflectionResolver);
-		impl.setRepository(repository);
-		impl.setObjectMapper(getObjectMapper());
-		service = impl;
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
 	}
 
 	@Override
-	public StubConfigService getObject() {
-		return service;
+	public void afterPropertiesSet() {
+		ReflectionResolverImpl impl = new ReflectionResolverImpl();
+		impl.setApplicationContext(applicationContext);
+		reflectionResolver = impl;
+	}
+
+	@Override
+	public ReflectionResolver getObject() {
+		return reflectionResolver;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return StubConfigService.class;
+		return ReflectionResolver.class;
 	}
 
 	@Override

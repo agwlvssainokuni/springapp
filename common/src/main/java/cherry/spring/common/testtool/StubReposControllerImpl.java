@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.invoker;
+package cherry.spring.common.testtool;
 
 import static cherry.goods.util.ReflectionUtil.getMethodDescription;
 
@@ -22,44 +22,53 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import cherry.foundation.testtool.invoker.InvokerService;
+import cherry.foundation.testtool.stub.StubConfigService;
 
 @Controller
-public class InvokerControllerImpl implements InvokerController {
+public class StubReposControllerImpl implements StubReposController {
 
 	@Autowired
-	@Qualifier("jsonInvokerService")
-	private InvokerService jsonInvokerService;
+	@Qualifier("jsonStubConfigService")
+	private StubConfigService jsonStubConfigService;
 
 	@Autowired
-	@Qualifier("yamlInvokerService")
-	private InvokerService yamlInvokerService;
+	@Qualifier("yamlStubConfigService")
+	private StubConfigService yamlStubConfigService;
 
 	@Override
-	public String invokeJson(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			String args, String argTypes) {
-		return jsonInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
+	public String alwaysReturnJson(String className, String methodName, int numOfArgs, int methodIndex, String value,
+			String valueType) {
+		if (StringUtils.isEmpty(value)) {
+			return jsonStubConfigService.clear(className, methodName, numOfArgs, methodIndex);
+		} else {
+			return jsonStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+		}
 	}
 
 	@Override
-	public String invokeYaml(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			String args, String argTypes) {
-		return yamlInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
+	public String alwaysReturnYaml(String className, String methodName, int numOfArgs, int methodIndex, String value,
+			String valueType) {
+		if (StringUtils.isEmpty(value)) {
+			return yamlStubConfigService.clear(className, methodName, numOfArgs, methodIndex);
+		} else {
+			return yamlStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+		}
 	}
 
 	@Override
 	public List<String> resolveBeanName(String className) {
-		return jsonInvokerService.resolveBeanName(className);
+		return jsonStubConfigService.resolveBeanName(className);
 	}
 
 	@Override
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
+		for (Method m : jsonStubConfigService.resolveMethod(className, methodName, numOfArgs)) {
 			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;

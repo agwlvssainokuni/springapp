@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.invoker;
+package cherry.spring.common.testtool;
 
 import java.util.List;
 
@@ -22,24 +22,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("/invoker")
-public interface InvokerController {
+@RequestMapping("/stubrepos")
+public interface StubReposController {
 
 	@RequestMapping({ "", "json" })
 	@ResponseBody()
-	String invokeJson(@RequestParam(value = "beanName", required = false) String beanName,
-			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
+	String alwaysReturnJson(@RequestParam("className") String className, @RequestParam("methodName") String methodName,
 			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
-			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
+			@RequestParam("value") String value, @RequestParam("valueType") String valueType);
 
 	@RequestMapping({ "yaml" })
 	@ResponseBody()
-	String invokeYaml(@RequestParam(value = "beanName", required = false) String beanName,
-			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
+	String alwaysReturnYaml(@RequestParam("className") String className, @RequestParam("methodName") String methodName,
 			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
-			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
+			@RequestParam("value") String value, @RequestParam("valueType") String valueType);
 
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "bean" })
 	@ResponseBody()

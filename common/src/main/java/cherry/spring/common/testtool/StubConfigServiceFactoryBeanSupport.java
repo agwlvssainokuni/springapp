@@ -14,41 +14,48 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.invoker;
+package cherry.spring.common.testtool;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import cherry.foundation.testtool.invoker.Invoker;
-import cherry.foundation.testtool.invoker.InvokerService;
-import cherry.foundation.testtool.invoker.InvokerServiceImpl;
+import cherry.foundation.testtool.reflect.ReflectionResolver;
+import cherry.foundation.testtool.stub.StubConfigService;
+import cherry.foundation.testtool.stub.StubConfigServiceImpl;
+import cherry.foundation.testtool.stub.StubRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class InvokerServiceFactoryBeanSupport implements FactoryBean<InvokerService>, InitializingBean {
+public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean<StubConfigService>, InitializingBean {
 
-	private InvokerService invokerService;
+	@Autowired
+	private ReflectionResolver reflectionResolver;
+
+	@Autowired
+	private StubRepository repository;
+
+	private StubConfigService service;
 
 	protected abstract ObjectMapper getObjectMapper();
 
-	protected abstract Invoker getInvoker();
-
 	@Override
 	public void afterPropertiesSet() {
-		InvokerServiceImpl service = new InvokerServiceImpl();
-		service.setObjectMapper(getObjectMapper());
-		service.setInvoker(getInvoker());
-		invokerService = service;
+		StubConfigServiceImpl impl = new StubConfigServiceImpl();
+		impl.setReflectionResolver(reflectionResolver);
+		impl.setRepository(repository);
+		impl.setObjectMapper(getObjectMapper());
+		service = impl;
 	}
 
 	@Override
-	public InvokerService getObject() {
-		return invokerService;
+	public StubConfigService getObject() {
+		return service;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return InvokerService.class;
+		return StubConfigService.class;
 	}
 
 	@Override
