@@ -18,100 +18,51 @@ package cherry.spring.common.testtool.stub;
 
 import static cherry.goods.util.ReflectionUtil.getMethodDescription;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import cherry.foundation.testtool.invoker.InvokerService;
-import cherry.foundation.testtool.stub.StubRepository;
-import cherry.goods.util.ToMapUtil;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cherry.foundation.testtool.stub.StubConfigService;
 
 @Controller
 public class StubReposControllerImpl implements StubReposController {
 
 	@Autowired
-	private StubRepository stubRepository;
+	@Qualifier("jsonStubConfigService")
+	private StubConfigService jsonStubConfigService;
 
 	@Autowired
-	@Qualifier("objectMapper")
-	private ObjectMapper jsonObjectMapper;
-
-	@Autowired
-	@Qualifier("yamlObjectMapper")
-	private ObjectMapper yamlObjectMapper;
-
-	@Autowired
-	@Qualifier("jsonInvokerService")
-	private InvokerService jsonInvokerService;
+	@Qualifier("yamlStubConfigService")
+	private StubConfigService yamlStubConfigService;
 
 	@Override
 	public String alwaysReturnJson(String className, String methodName, int numOfArgs, int methodIndex, String value,
 			String valueType) {
-		return alwaysReturn(jsonObjectMapper, className, methodName, numOfArgs, methodIndex, value, valueType);
+		return jsonStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
 	}
 
 	@Override
 	public String alwaysReturnYaml(String className, String methodName, int numOfArgs, int methodIndex, String value,
 			String valueType) {
-		return alwaysReturn(yamlObjectMapper, className, methodName, numOfArgs, methodIndex, value, valueType);
+		return yamlStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
 	}
 
 	@Override
 	public List<String> resolveBeanName(String className) {
-		return jsonInvokerService.resolveBeanName(className);
+		return jsonStubConfigService.resolveBeanName(className);
 	}
 
 	@Override
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
+		for (Method m : jsonStubConfigService.resolveMethod(className, methodName, numOfArgs)) {
 			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;
-	}
-
-	public String alwaysReturn(ObjectMapper objectMapper, String className, String methodName, int numOfArgs,
-			int methodIndex, String value, String valueType) {
-		try {
-
-			List<Method> list = jsonInvokerService.resolveMethod(className, methodName, numOfArgs);
-			if (methodIndex >= list.size()) {
-				return objectMapper.writeValueAsString(Boolean.FALSE);
-			}
-
-			Method method = list.get(methodIndex);
-			JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
-			if (StringUtils.isNotEmpty(valueType)) {
-				returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
-			}
-
-			if (StringUtils.isEmpty(value)) {
-				stubRepository.clear(method);
-			} else {
-				Object v = objectMapper.readValue(value, returnType);
-				stubRepository.get(method).alwaysReturn(v);
-			}
-
-			return objectMapper.writeValueAsString(Boolean.TRUE);
-
-		} catch (IOException | IllegalArgumentException ex) {
-			Map<String, ?> map = ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
-			try {
-				return objectMapper.writeValueAsString(map);
-			} catch (IOException ex2) {
-				return ex.getMessage();
-			}
-		}
 	}
 
 }
