@@ -16,14 +16,10 @@
 
 package cherry.foundation.testtool.invoker;
 
-import static java.text.MessageFormat.format;
-import static java.util.Arrays.asList;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -50,23 +46,9 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 	}
 
 	@Override
-	public List<String> resolveBeanName(String className) throws ClassNotFoundException {
-		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
-		return asList(appCtx.getBeanNamesForType(beanClass));
-	}
-
-	@Override
-	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) throws ClassNotFoundException {
-		Class<?> beanClass = getClass().getClassLoader().loadClass(className);
-		return getMethodList(beanClass, methodName, numOfArgs);
-	}
-
-	@Override
-	public String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			List<String> args, List<String> argTypes) throws ClassNotFoundException, NoSuchMethodException {
+	public String invoke(String beanName, Class<?> beanClass, Method method, List<String> args, List<String> argTypes) {
 		try {
 
-			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
 			Object targetBean;
 			if (StringUtils.isEmpty(beanName)) {
 				targetBean = appCtx.getBean(beanClass);
@@ -74,11 +56,6 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 				targetBean = appCtx.getBean(beanName, beanClass);
 			}
 
-			List<Method> methodList = getMethodList(beanClass, methodName, numOfArgs);
-			if (methodList.isEmpty()) {
-				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
-			}
-			Method method = (methodList.size() == 1 ? methodList.get(0) : methodList.get(methodIndex));
 			Type[] paramType = method.getGenericParameterTypes();
 			Object[] param = new Object[paramType.length];
 			for (int i = 0; i < paramType.length; i++) {
@@ -98,18 +75,6 @@ public class InvokerImpl implements Invoker, ApplicationContextAware {
 		} catch (InvocationTargetException | IllegalAccessException | IOException ex) {
 			throw new IllegalStateException(ex);
 		}
-	}
-
-	private List<Method> getMethodList(Class<?> beanClass, String methodName, int numOfArgs) {
-		List<Method> list = new ArrayList<>();
-		for (Method m : beanClass.getDeclaredMethods()) {
-			if (StringUtils.equals(m.getName(), methodName)) {
-				if (numOfArgs < 0 || numOfArgs == m.getParameterTypes().length) {
-					list.add(m);
-				}
-			}
-		}
-		return list;
 	}
 
 	private String getOrNull(List<String> list, int index) {

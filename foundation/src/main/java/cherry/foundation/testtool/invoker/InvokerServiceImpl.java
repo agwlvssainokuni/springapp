@@ -16,6 +16,8 @@
 
 package cherry.foundation.testtool.invoker;
 
+import static java.text.MessageFormat.format;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,6 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import cherry.foundation.testtool.reflect.ReflectionResolver;
 import cherry.goods.util.ToMapUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,9 +36,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InvokerServiceImpl implements InvokerService {
 
+	private ReflectionResolver reflectionResolver;
+
 	private Invoker invoker;
 
 	private ObjectMapper objectMapper;
+
+	public void setReflectionResolver(ReflectionResolver reflectionResolver) {
+		this.reflectionResolver = reflectionResolver;
+	}
 
 	public void setInvoker(Invoker invoker) {
 		this.invoker = invoker;
@@ -48,7 +57,7 @@ public class InvokerServiceImpl implements InvokerService {
 	@Override
 	public List<String> resolveBeanName(String className) {
 		try {
-			return invoker.resolveBeanName(className);
+			return reflectionResolver.resolveBeanName(className);
 		} catch (ClassNotFoundException ex) {
 			return new ArrayList<>();
 		}
@@ -57,7 +66,7 @@ public class InvokerServiceImpl implements InvokerService {
 	@Override
 	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) {
 		try {
-			return invoker.resolveMethod(className, methodName, numOfArgs);
+			return reflectionResolver.resolveMethod(className, methodName, numOfArgs);
 		} catch (ClassNotFoundException ex) {
 			return new ArrayList<>();
 		}
@@ -67,8 +76,15 @@ public class InvokerServiceImpl implements InvokerService {
 	public String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
 			String args, String argTypes) {
 		try {
-			return invoker.invoke(beanName, className, methodName, numOfArgs, methodIndex, resolveArgs(args),
-					resolveArgTypes(argTypes));
+
+			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
+			List<Method> methodList = reflectionResolver.resolveMethod(beanClass, methodName, numOfArgs);
+			if (methodList.isEmpty()) {
+				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
+			}
+			Method method = (methodList.size() == 1 ? methodList.get(0) : methodList.get(methodIndex));
+
+			return invoker.invoke(beanName, beanClass, method, resolveArgs(args), resolveArgTypes(argTypes));
 		} catch (ClassNotFoundException | NoSuchMethodException ex) {
 			return fromThrowableToString(ex);
 		} catch (IOException ex) {

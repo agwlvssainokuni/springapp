@@ -42,10 +42,10 @@
 	</bean>
 
 	<!-- AOP: スタブ -->
-	<bean id="stubInterceptor" class="cherry.foundation.stub.StubInterceptor">
+	<bean id="stubInterceptor" class="cherry.foundation.testtool.stub.StubInterceptor">
 		<property name="repository" ref="stubRepository" />
 	</bean>
-	<bean id="stubRepository" class="cherry.foundation.stub.StubRepositoryImpl" />
+	<bean id="stubRepository" class="cherry.foundation.testtool.stub.StubRepositoryImpl" />
 
 	<!-- 型変換設定 -->
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
