@@ -16,18 +16,23 @@
 
 package cherry.foundation.testtool.stub;
 
+import static cherry.goods.util.ReflectionUtil.getMethodDescription;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StubConfigurer {
@@ -56,23 +61,23 @@ public class StubConfigurer {
 				continue;
 			}
 			try (InputStream in = r.getInputStream()) {
-				Map<Class<?>, List<StubConfig>> map = objectMapper.readValue(in,
-						new TypeReference<LinkedHashMap<Class<?>, List<StubConfig>>>() {
+				Map<Class<?>, Map<String, Config>> map = objectMapper.readValue(in,
+						new TypeReference<LinkedHashMap<Class<?>, Map<String, Config>>>() {
 						});
-				for (Map.Entry<Class<?>, List<StubConfig>> entry : map.entrySet()) {
-					for (StubConfig config : entry.getValue()) {
-						String data = objectMapper.writeValueAsString(config.getReturnData());
-						for (Method m : entry.getKey().getDeclaredMethods()) {
-							if (!m.getName().equals(config.getMethodName())) {
-								continue;
-							}
-							Class<?> returnType = m.getReturnType();
-							if (m.getReturnType().isAssignableFrom(config.getReturnType())) {
-								returnType = config.getReturnType();
-							}
-							Object value = objectMapper.readValue(data, returnType);
-							repository.get(m).alwaysReturn(value);
+				for (Map.Entry<Class<?>, Map<String, Config>> entry : map.entrySet()) {
+					Map<String, Method> methodMap = createMethodMap(entry.getKey().getDeclaredMethods());
+					for (Map.Entry<String, Config> ent : entry.getValue().entrySet()) {
+						if (!methodMap.containsKey(ent.getKey())) {
+							continue;
 						}
+						Method method = methodMap.get(ent.getKey());
+						String data = objectMapper.writeValueAsString(ent.getValue().getReturnData());
+						JavaType type = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
+						if (StringUtils.isNotEmpty(ent.getValue().getReturnType())) {
+							type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getReturnType());
+						}
+						Object v = objectMapper.readValue(data, type);
+						repository.get(method).alwaysReturn(v);
 					}
 				}
 			} catch (IOException ex) {
@@ -81,11 +86,18 @@ public class StubConfigurer {
 		}
 	}
 
-	public static class StubConfig {
+	private Map<String, Method> createMethodMap(Method[] methods) {
+		Map<String, Method> map = new HashMap<>();
+		for (Method m : methods) {
+			map.put(getMethodDescription(m, false, false, true, true, false), m);
+			map.put(getMethodDescription(m, false, false, true, true, true), m);
+		}
+		return map;
+	}
 
-		private String methodName;
+	public static class Config {
 
-		private Class<?> returnType;
+		private String returnType;
 
 		private Object returnData;
 
@@ -94,19 +106,11 @@ public class StubConfigurer {
 			return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 		}
 
-		public String getMethodName() {
-			return methodName;
-		}
-
-		public void setMethodName(String methodName) {
-			this.methodName = methodName;
-		}
-
-		public Class<?> getReturnType() {
+		public String getReturnType() {
 			return returnType;
 		}
 
-		public void setReturnType(Class<?> returnType) {
+		public void setReturnType(String returnType) {
 			this.returnType = returnType;
 		}
 
