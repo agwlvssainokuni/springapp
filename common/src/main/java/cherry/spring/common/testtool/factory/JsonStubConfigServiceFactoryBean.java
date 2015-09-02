@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool;
+package cherry.spring.common.testtool.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component("yamlInvoker")
-public class YamlInvokerFactoryBean extends InvokerFactoryBeanSupport {
+@Component("jsonStubConfigService")
+public class JsonStubConfigServiceFactoryBean extends StubConfigServiceFactoryBeanSupport {
 
 	@Autowired
-	@Qualifier("yamlObjectMapper")
+	@Qualifier("objectMapper")
 	private ObjectMapper objectMapper;
 
 	@Override

@@ -14,47 +14,48 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool;
+package cherry.spring.common.testtool.factory;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import cherry.foundation.testtool.invoker.Invoker;
-import cherry.foundation.testtool.invoker.InvokerService;
-import cherry.foundation.testtool.invoker.InvokerServiceImpl;
-import cherry.foundation.testtool.reflect.ReflectionResolver;
+import cherry.foundation.testtool.invoker.InvokerImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class InvokerServiceFactoryBeanSupport implements FactoryBean<InvokerService>, InitializingBean {
+public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>, ApplicationContextAware,
+		InitializingBean {
 
-	@Autowired
-	private ReflectionResolver reflectionResolver;
+	private ApplicationContext applicationContext;
 
-	private InvokerService invokerService;
+	private Invoker invoker;
 
 	protected abstract ObjectMapper getObjectMapper();
 
-	protected abstract Invoker getInvoker();
-
 	@Override
-	public void afterPropertiesSet() {
-		InvokerServiceImpl service = new InvokerServiceImpl();
-		service.setReflectionResolver(reflectionResolver);
-		service.setObjectMapper(getObjectMapper());
-		service.setInvoker(getInvoker());
-		invokerService = service;
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
 	}
 
 	@Override
-	public InvokerService getObject() {
-		return invokerService;
+	public void afterPropertiesSet() {
+		InvokerImpl impl = new InvokerImpl();
+		impl.setObjectMapper(getObjectMapper());
+		impl.setApplicationContext(applicationContext);
+		invoker = impl;
+	}
+
+	@Override
+	public Invoker getObject() {
+		return invoker;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return InvokerService.class;
+		return Invoker.class;
 	}
 
 	@Override

@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool;
+package cherry.spring.common.testtool.factory;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-import cherry.foundation.testtool.invoker.Invoker;
-import cherry.foundation.testtool.invoker.InvokerImpl;
+import cherry.foundation.testtool.reflect.ReflectionResolver;
+import cherry.foundation.testtool.reflect.ReflectionResolverImpl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>, ApplicationContextAware,
+@Component("reflectionResolver")
+public class ReflectionResolverFactoryBean implements FactoryBean<ReflectionResolver>, ApplicationContextAware,
 		InitializingBean {
 
+	private ReflectionResolver reflectionResolver;
+
 	private ApplicationContext applicationContext;
-
-	private Invoker invoker;
-
-	protected abstract ObjectMapper getObjectMapper();
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
@@ -42,20 +40,19 @@ public abstract class InvokerFactoryBeanSupport implements FactoryBean<Invoker>,
 
 	@Override
 	public void afterPropertiesSet() {
-		InvokerImpl impl = new InvokerImpl();
-		impl.setObjectMapper(getObjectMapper());
+		ReflectionResolverImpl impl = new ReflectionResolverImpl();
 		impl.setApplicationContext(applicationContext);
-		invoker = impl;
+		reflectionResolver = impl;
 	}
 
 	@Override
-	public Invoker getObject() {
-		return invoker;
+	public ReflectionResolver getObject() {
+		return reflectionResolver;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return Invoker.class;
+		return ReflectionResolver.class;
 	}
 
 	@Override

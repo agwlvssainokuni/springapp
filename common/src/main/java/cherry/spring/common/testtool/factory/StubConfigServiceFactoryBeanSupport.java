@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool;
+package cherry.spring.common.testtool.factory;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import cherry.foundation.testtool.reflect.ReflectionResolver;
 import cherry.foundation.testtool.stub.StubConfigService;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean<StubConfigService>, InitializingBean {
 
 	@Autowired
+	@Qualifier("reflectionResolver")
 	private ReflectionResolver reflectionResolver;
 
 	@Autowired
