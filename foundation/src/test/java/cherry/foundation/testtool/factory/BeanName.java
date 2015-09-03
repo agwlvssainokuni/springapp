@@ -16,24 +16,20 @@
 
 package cherry.foundation.testtool.factory;
 
-import static cherry.foundation.testtool.factory.BeanName.YAML_STUB_CONFIG_SERVICE;
+public class BeanName {
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+	public static final String JSON_INVOKER = "testJsonInvoker";
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+	public static final String JSON_INVOKER_SERVICE = "testJsonInvokerService";
 
-@Component(YAML_STUB_CONFIG_SERVICE)
-public class YamlStubConfigServiceFactoryBean extends StubConfigServiceFactoryBeanSupport {
+	public static final String YAML_INVOKER = "testYamlInvoker";
 
-	@Autowired
-	@Qualifier("yamlObjectMapper")
-	private ObjectMapper objectMapper;
+	public static final String YAML_INVOKER_SERVICE = "testYamlInvokerService";
 
-	@Override
-	protected ObjectMapper getObjectMapper() {
-		return objectMapper;
-	}
+	public static final String JSON_STUB_CONFIG_SERVICE = "testJsonStubConfigService";
+
+	public static final String YAML_STUB_CONFIG_SERVICE = "testYamlStubConfigService";
+
+	public static final String REFLECTION_RESOLVER = "testReflectionResolver";
 
 }
