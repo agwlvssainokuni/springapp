@@ -16,6 +16,8 @@
 
 package cherry.spring.common.testtool.factory;
 
+import static cherry.spring.common.testtool.factory.BeanName.REFLECTION_RESOLVER;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean<StubConfigService>, InitializingBean {
 
 	@Autowired
-	@Qualifier("reflectionResolver")
+	@Qualifier(REFLECTION_RESOLVER)
 	private ReflectionResolver reflectionResolver;
 
 	@Autowired

@@ -16,13 +16,15 @@
 
 package cherry.spring.common.testtool.factory;
 
+import static cherry.spring.common.testtool.factory.BeanName.YAML_INVOKER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component("yamlInvoker")
+@Component(YAML_INVOKER)
 public class YamlInvokerFactoryBean extends InvokerFactoryBeanSupport {
 
 	@Autowired

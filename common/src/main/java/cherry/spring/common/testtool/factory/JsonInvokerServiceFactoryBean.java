@@ -16,6 +16,9 @@
 
 package cherry.spring.common.testtool.factory;
 
+import static cherry.spring.common.testtool.factory.BeanName.JSON_INVOKER;
+import static cherry.spring.common.testtool.factory.BeanName.JSON_INVOKER_SERVICE;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -24,7 +27,7 @@ import cherry.foundation.testtool.invoker.Invoker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component("jsonInvokerService")
+@Component(JSON_INVOKER_SERVICE)
 public class JsonInvokerServiceFactoryBean extends InvokerServiceFactoryBeanSupport {
 
 	@Autowired
@@ -32,7 +35,7 @@ public class JsonInvokerServiceFactoryBean extends InvokerServiceFactoryBeanSupp
 	private ObjectMapper objectMapper;
 
 	@Autowired
-	@Qualifier("jsonInvoker")
+	@Qualifier(JSON_INVOKER)
 	private Invoker invoker;
 
 	@Override

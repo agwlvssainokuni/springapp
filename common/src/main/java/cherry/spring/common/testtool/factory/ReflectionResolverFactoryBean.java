@@ -16,6 +16,8 @@
 
 package cherry.spring.common.testtool.factory;
 
+import static cherry.spring.common.testtool.factory.BeanName.REFLECTION_RESOLVER;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Component;
 import cherry.foundation.testtool.reflect.ReflectionResolver;
 import cherry.foundation.testtool.reflect.ReflectionResolverImpl;
 
-@Component("reflectionResolver")
+@Component(REFLECTION_RESOLVER)
 public class ReflectionResolverFactoryBean implements FactoryBean<ReflectionResolver>, ApplicationContextAware,
 		InitializingBean {
 

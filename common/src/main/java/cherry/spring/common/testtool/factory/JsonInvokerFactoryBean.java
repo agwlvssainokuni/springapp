@@ -16,13 +16,15 @@
 
 package cherry.spring.common.testtool.factory;
 
+import static cherry.spring.common.testtool.factory.BeanName.JSON_INVOKER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component("jsonInvoker")
+@Component(JSON_INVOKER)
 public class JsonInvokerFactoryBean extends InvokerFactoryBeanSupport {
 
 	@Autowired
