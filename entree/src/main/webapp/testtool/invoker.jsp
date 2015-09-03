@@ -41,6 +41,9 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
+			if ("" == $(this).val()) {
+				return;
+			}
 			$.ajax($("#toolUri").val() + "?bean", {
 				method : "POST",
 				data : {
@@ -67,6 +70,9 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
+			if ("" == $(this).val() || "" == $("#className").val()) {
+				return;
+			}
 			$.ajax($("#toolUri").val() + "?method", {
 				method : "POST",
 				data : {

@@ -40,6 +40,9 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
+			if ("" == $(this).val()) {
+				return;
+			}
 			$.ajax($("#toolUri").val() + "?bean", {
 				method : "POST",
 				data : {
@@ -66,6 +69,9 @@
 				return;
 			}
 			$(this).data("old", $(this).val());
+			if ("" == $(this).val() || "" == $("#className").val()) {
+				return;
+			}
 			$.ajax($("#toolUri").val() + "?method", {
 				method : "POST",
 				data : {
@@ -89,6 +95,21 @@
 
 		$("#clearBtn").click(function(event) {
 			$("#value").val("");
+		});
+
+		$("#listBtn").click(function(event) {
+			$.ajax($("#toolUri").val() + "?list", {
+				method : "POST",
+				data : {
+					className : $("#className").val()
+				},
+				success : function(data, textStatus, jqXHR) {
+					$("#result").val(data);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
 		});
 
 	});
@@ -146,7 +167,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-11 col-sm-offset-1">
+				<div class="col-sm-1">
+					<button class="btn btn-default btn-block" type="button" id="listBtn">確認</button>
+				</div>
+				<div class="col-sm-11">
 					<button class="btn btn-default btn-block" type="button" id="registerBtn">登録</button>
 				</div>
 			</div>
@@ -155,7 +179,7 @@
 			<div class="form-group">
 				<label for="result" class="col-sm-1 control-label">登録結果</label>
 				<div class="col-sm-11">
-					<textarea rows="1" cols="1" id="result" name="result" class="form-control"></textarea>
+					<textarea rows="5" cols="1" id="result" name="result" class="form-control"></textarea>
 				</div>
 			</div>
 		</div>
