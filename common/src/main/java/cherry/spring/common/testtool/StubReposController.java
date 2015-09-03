@@ -49,4 +49,8 @@ public interface StubReposController {
 			@RequestParam("methodName") String methodName,
 			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs);
 
+	@RequestMapping(value = { "", "json", "yaml" }, params = { "list" })
+	@ResponseBody()
+	List<String> getStubbedMethod(@RequestParam(value = "className", required = false) String className);
+
 }

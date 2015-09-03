@@ -25,6 +25,8 @@ public interface StubConfigService {
 
 	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
 
+	List<Method> getStubbedMethod(String className);
+
 	String clear(String className, String methodName, int numOfArgs, int methodIndex);
 
 	String alwaysReturn(String className, String methodName, int numOfArgs, int methodIndex, String value,

@@ -74,4 +74,13 @@ public class StubReposControllerImpl implements StubReposController {
 		return list;
 	}
 
+	@Override
+	public List<String> getStubbedMethod(String className) {
+		List<String> list = new ArrayList<>();
+		for (Method m : jsonStubConfigService.getStubbedMethod(className)) {
+			list.add(getMethodDescription(m, false, true, true, true, true));
+		}
+		return list;
+	}
+
 }

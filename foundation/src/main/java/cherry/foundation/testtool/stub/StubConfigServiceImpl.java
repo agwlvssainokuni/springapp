@@ -69,6 +69,25 @@ public class StubConfigServiceImpl implements StubConfigService {
 	}
 
 	@Override
+	public List<Method> getStubbedMethod(String className) {
+		try {
+			if (StringUtils.isEmpty(className)) {
+				return repository.getStubbedMethod();
+			}
+			Class<?> klass = objectMapper.getTypeFactory().constructFromCanonical(className).getRawClass();
+			List<Method> list = new ArrayList<>();
+			for (Method m : repository.getStubbedMethod()) {
+				if (klass == m.getDeclaringClass()) {
+					list.add(m);
+				}
+			}
+			return list;
+		} catch (IllegalArgumentException ex) {
+			return new ArrayList<>();
+		}
+	}
+
+	@Override
 	public String clear(String className, String methodName, int numOfArgs, int methodIndex) {
 		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
 			@Override
