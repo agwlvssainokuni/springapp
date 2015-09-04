@@ -34,6 +34,27 @@
 			});
 		});
 
+		$("#peekBtn").click(function(event) {
+			$.ajax($("#toolUri").val() + "?peek", {
+				method : "POST",
+				data : {
+					className : $("#className").val(),
+					methodName : $("#methodName").val(),
+					methodIndex : $("#methodIndex").val()
+				},
+				success : function(data, textStatus, jqXHR) {
+					if (data == null) {
+						return;
+					}
+					$("#value").val(data[0]);
+					$("#valueType").val(data[1]);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+		});
+
 		$("#className").blur(function(event) {
 			var old = $(this).data("old");
 			if (old == $(this).val()) {
@@ -158,6 +179,7 @@
 			<div class="form-group">
 				<label for="value" class="col-sm-1 control-label">返却値
 					<button class="btn btn-default btn-xs" type="button" id="clearBtn">クリア</button>
+					<button class="btn btn-default btn-xs" type="button" id="peekBtn">現在値</button>
 				</label>
 				<div class="col-sm-7">
 					<textarea rows="3" cols="1" id="value" name="value" class="form-control" placeholder="返却値をJSON形式で指定"></textarea>
@@ -168,7 +190,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-1">
-					<button class="btn btn-default btn-block" type="button" id="listBtn">確認</button>
+					<button class="btn btn-default btn-block" type="button" id="listBtn">一覧</button>
 				</div>
 				<div class="col-sm-11">
 					<button class="btn btn-default btn-block" type="button" id="registerBtn">登録</button>
