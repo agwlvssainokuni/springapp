@@ -51,19 +51,14 @@ public class GetBeanTag extends RequestContextAwareTag {
 	}
 
 	@Override
-	protected int doStartTagInternal() {
-		return SKIP_BODY;
-	}
-
-	@Override
-	public int doEndTag() throws JspException {
+	protected int doStartTagInternal() throws JspException {
 		Object bean = getBean(getRequestContext().getWebApplicationContext(), beanName, beanType);
 		VariableMapper vm = pageContext.getELContext().getVariableMapper();
 		if (vm != null) {
 			vm.setVariable(var, null);
 		}
 		pageContext.setAttribute(var, bean, PageContext.PAGE_SCOPE);
-		return EVAL_PAGE;
+		return SKIP_BODY;
 	}
 
 	private Object getBean(WebApplicationContext appCtx, String beanName, Class<?> beanType) throws JspException {
