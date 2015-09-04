@@ -71,10 +71,10 @@ public class StubConfigurer {
 							continue;
 						}
 						Method method = methodMap.get(ent.getKey());
-						String data = objectMapper.writeValueAsString(ent.getValue().getReturnData());
+						String data = objectMapper.writeValueAsString(ent.getValue().getData());
 						JavaType type = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
-						if (StringUtils.isNotEmpty(ent.getValue().getReturnType())) {
-							type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getReturnType());
+						if (StringUtils.isNotEmpty(ent.getValue().getType())) {
+							type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getType());
 						}
 						Object v = objectMapper.readValue(data, type);
 						repository.get(method).alwaysReturn(v);
@@ -89,6 +89,7 @@ public class StubConfigurer {
 	private Map<String, Method> createMethodMap(Method[] methods) {
 		Map<String, Method> map = new HashMap<>();
 		for (Method m : methods) {
+			map.put(getMethodDescription(m, false, false, true, false, false), m);
 			map.put(getMethodDescription(m, false, false, true, true, false), m);
 			map.put(getMethodDescription(m, false, false, true, true, true), m);
 		}
@@ -97,29 +98,29 @@ public class StubConfigurer {
 
 	public static class Config {
 
-		private String returnType;
+		private String type;
 
-		private Object returnData;
+		private Object data;
 
 		@Override
 		public String toString() {
 			return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 		}
 
-		public String getReturnType() {
-			return returnType;
+		public String getType() {
+			return type;
 		}
 
-		public void setReturnType(String returnType) {
-			this.returnType = returnType;
+		public void setType(String type) {
+			this.type = type;
 		}
 
-		public Object getReturnData() {
-			return returnData;
+		public Object getData() {
+			return data;
 		}
 
-		public void setReturnData(Object returnData) {
-			this.returnData = returnData;
+		public void setData(Object data) {
+			this.data = data;
 		}
 	}
 
