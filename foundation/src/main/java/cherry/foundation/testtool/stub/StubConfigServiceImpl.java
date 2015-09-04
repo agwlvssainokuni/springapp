@@ -108,7 +108,7 @@ public class StubConfigServiceImpl implements StubConfigService {
 					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 				}
 				Object v = objectMapper.readValue(value, returnType);
-				repository.get(method).alwaysReturn(v);
+				repository.get(method).alwaysReturn(v, returnType.toCanonical());
 			}
 		});
 	}
@@ -124,7 +124,7 @@ public class StubConfigServiceImpl implements StubConfigService {
 					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 				}
 				Object v = objectMapper.readValue(value, returnType);
-				repository.get(method).thenReturn(v);
+				repository.get(method).thenReturn(v, returnType.toCanonical());
 			}
 		});
 	}
@@ -144,7 +144,7 @@ public class StubConfigServiceImpl implements StubConfigService {
 					Object v = objectMapper.readValue(value, returnType);
 					valueList.add(v);
 				}
-				repository.get(method).thenReturn(valueList);
+				repository.get(method).thenReturn(valueList, returnType.toCanonical());
 			}
 		});
 	}
