@@ -24,17 +24,29 @@ public interface Stub<T> {
 
 	T next() throws Throwable;
 
+	T peek() throws Throwable;
+
+	String peekType() throws Throwable;
+
 	boolean isThrowable();
 
 	Class<? extends Throwable> nextThrowable();
+
+	Class<? extends Throwable> peekThrowable();
 
 	Stub<T> clear();
 
 	<E extends T> Stub<T> alwaysReturn(E value);
 
+	<E extends T> Stub<T> alwaysReturn(E value, String type);
+
 	<E extends T> Stub<T> thenReturn(E value);
 
+	<E extends T> Stub<T> thenReturn(E value, String type);
+
 	<E extends T> Stub<T> thenReturn(List<E> list);
+
+	<E extends T> Stub<T> thenReturn(List<E> list, String type);
 
 	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
 

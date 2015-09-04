@@ -35,12 +35,7 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public T next() throws Throwable {
-		Item<T> item;
-		if (always != null) {
-			item = always;
-		} else {
-			item = list.remove(0);
-		}
+		Item<T> item = doNext();
 		if (item.getThrowable() == null) {
 			return item.getValue();
 		} else {
@@ -49,25 +44,59 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
-	public boolean isThrowable() {
-		if (always != null) {
-			return always.getThrowable() != null;
+	public T peek() throws Throwable {
+		Item<T> item = doPeek();
+		if (item.getThrowable() == null) {
+			return item.getValue();
+		} else {
+			throw item.getThrowable().newInstance();
 		}
-		return list.get(0).getThrowable() != null;
+	}
+
+	@Override
+	public String peekType() throws Throwable {
+		Item<T> item = doPeek();
+		return item.getType();
+	}
+
+	@Override
+	public boolean isThrowable() {
+		return doPeek().getThrowable() != null;
 	}
 
 	@Override
 	public Class<? extends Throwable> nextThrowable() {
-		Item<T> item;
-		if (always != null) {
-			item = always;
-		} else {
-			item = list.remove(0);
-		}
+		Item<T> item = doNext();
 		if (item.getThrowable() == null) {
 			throw new IllegalStateException();
 		} else {
 			return item.getThrowable();
+		}
+	}
+
+	@Override
+	public Class<? extends Throwable> peekThrowable() {
+		Item<T> item = doPeek();
+		if (item.getThrowable() == null) {
+			throw new IllegalStateException();
+		} else {
+			return item.getThrowable();
+		}
+	}
+
+	private Item<T> doNext() {
+		if (always != null) {
+			return always;
+		} else {
+			return list.remove(0);
+		}
+	}
+
+	private Item<T> doPeek() {
+		if (always != null) {
+			return always;
+		} else {
+			return list.get(0);
 		}
 	}
 
@@ -80,8 +109,14 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public <E extends T> Stub<T> alwaysReturn(E value) {
+		return alwaysReturn(value, value == null ? null : value.getClass().getCanonicalName());
+	}
+
+	@Override
+	public <E extends T> Stub<T> alwaysReturn(E value, String type) {
 		Item<T> item = new Item<>();
 		item.setValue(value);
+		item.setType(type);
 		always = item;
 		list.clear();
 		return this;
@@ -89,8 +124,14 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public <E extends T> Stub<T> thenReturn(E value) {
+		return thenReturn(value, value == null ? null : value.getClass().getCanonicalName());
+	}
+
+	@Override
+	public <E extends T> Stub<T> thenReturn(E value, String type) {
 		Item<T> item = new Item<>();
 		item.setValue(value);
+		item.setType(type);
 		list.add(item);
 		always = null;
 		return this;
@@ -100,6 +141,14 @@ public class StubImpl<T> implements Stub<T> {
 	public <E extends T> Stub<T> thenReturn(List<E> list) {
 		for (E value : list) {
 			thenReturn(value);
+		}
+		return this;
+	}
+
+	@Override
+	public <E extends T> Stub<T> thenReturn(List<E> list, String type) {
+		for (E value : list) {
+			thenReturn(value, type);
 		}
 		return this;
 	}
@@ -134,6 +183,8 @@ public class StubImpl<T> implements Stub<T> {
 
 		private T value = null;
 
+		private String type = null;
+
 		private Class<? extends Throwable> throwable = null;
 
 		public T getValue() {
@@ -142,6 +193,14 @@ public class StubImpl<T> implements Stub<T> {
 
 		public void setValue(T value) {
 			this.value = value;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
 		}
 
 		public Class<? extends Throwable> getThrowable() {
