@@ -27,6 +27,16 @@ public interface StubConfigService {
 
 	List<Method> getStubbedMethod(String className);
 
+	boolean hasNext(String className, String methodName, int numOfArgs, int methodIndex);
+
+	String peek(String className, String methodName, int numOfArgs, int methodIndex);
+
+	String peekType(String className, String methodName, int numOfArgs, int methodIndex);
+
+	boolean isThrowable(String className, String methodName, int numOfArgs, int methodIndex);
+
+	String peekThrowable(String className, String methodName, int numOfArgs, int methodIndex);
+
 	String clear(String className, String methodName, int numOfArgs, int methodIndex);
 
 	String alwaysReturn(String className, String methodName, int numOfArgs, int methodIndex, String value,

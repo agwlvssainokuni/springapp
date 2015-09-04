@@ -29,6 +29,8 @@ import cherry.goods.util.ToMapUtil;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 
 public class StubConfigServiceImpl implements StubConfigService {
 
@@ -88,11 +90,70 @@ public class StubConfigServiceImpl implements StubConfigService {
 	}
 
 	@Override
-	public String clear(String className, String methodName, int numOfArgs, int methodIndex) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+	public boolean hasNext(String className, String methodName, int numOfArgs, int methodIndex) {
+		return execute(className, methodName, numOfArgs, methodIndex, new Predicate<Method>() {
 			@Override
-			public void apply(Method method) {
+			public boolean apply(Method method) {
+				return repository.get(method).hasNext();
+			}
+		});
+	}
+
+	@Override
+	public String peek(String className, String methodName, int numOfArgs, int methodIndex) {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
+			@Override
+			public Object apply(Method method) {
+				try {
+					return repository.get(method).peek();
+				} catch (Throwable ex) {
+					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
+				}
+			}
+		});
+	}
+
+	@Override
+	public String peekType(String className, String methodName, int numOfArgs, int methodIndex) {
+		return execute(className, methodName, numOfArgs, methodIndex, new Function<Method, String>() {
+			@Override
+			public String apply(Method method) {
+				try {
+					return repository.get(method).peekType();
+				} catch (Throwable ex) {
+					return ex.getClass().getCanonicalName();
+				}
+			}
+		});
+	}
+
+	@Override
+	public boolean isThrowable(String className, String methodName, int numOfArgs, int methodIndex) {
+		return execute(className, methodName, numOfArgs, methodIndex, new Predicate<Method>() {
+			@Override
+			public boolean apply(Method method) {
+				return repository.get(method).isThrowable();
+			}
+		});
+	}
+
+	@Override
+	public String peekThrowable(String className, String methodName, int numOfArgs, int methodIndex) {
+		return execute(className, methodName, numOfArgs, methodIndex, new Function<Method, String>() {
+			@Override
+			public String apply(Method method) {
+				return repository.get(method).peekThrowable().getCanonicalName();
+			}
+		});
+	}
+
+	@Override
+	public String clear(String className, String methodName, int numOfArgs, int methodIndex) {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
+			@Override
+			public Boolean apply(Method method) {
 				repository.clear(method);
+				return Boolean.TRUE;
 			}
 		});
 	}
@@ -100,15 +161,20 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String alwaysReturn(String className, String methodName, int numOfArgs, int methodIndex, final String value,
 			final String valueType) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
 				if (StringUtils.isNotEmpty(valueType)) {
 					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 				}
-				Object v = objectMapper.readValue(value, returnType);
-				repository.get(method).alwaysReturn(v, returnType.toCanonical());
+				try {
+					Object v = objectMapper.readValue(value, returnType);
+					repository.get(method).alwaysReturn(v, returnType.toCanonical());
+					return Boolean.TRUE;
+				} catch (IOException ex) {
+					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
+				}
 			}
 		});
 	}
@@ -116,15 +182,20 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String thenReturn(String className, String methodName, int numOfArgs, int methodIndex, final String value,
 			final String valueType) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
 				if (StringUtils.isNotEmpty(valueType)) {
 					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 				}
-				Object v = objectMapper.readValue(value, returnType);
-				repository.get(method).thenReturn(v, returnType.toCanonical());
+				try {
+					Object v = objectMapper.readValue(value, returnType);
+					repository.get(method).thenReturn(v, returnType.toCanonical());
+					return Boolean.TRUE;
+				} catch (IOException ex) {
+					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
+				}
 			}
 		});
 	}
@@ -132,19 +203,24 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String thenReturn(String className, String methodName, int numOfArgs, int methodIndex,
 			final List<String> list, final String valueType) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
 				if (StringUtils.isNotEmpty(valueType)) {
 					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
 				}
-				List<Object> valueList = new ArrayList<>(list.size());
-				for (String value : list) {
-					Object v = objectMapper.readValue(value, returnType);
-					valueList.add(v);
+				try {
+					List<Object> valueList = new ArrayList<>(list.size());
+					for (String value : list) {
+						Object v = objectMapper.readValue(value, returnType);
+						valueList.add(v);
+					}
+					repository.get(method).thenReturn(valueList, returnType.toCanonical());
+					return Boolean.TRUE;
+				} catch (IOException ex) {
+					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
 				}
-				repository.get(method).thenReturn(valueList, returnType.toCanonical());
 			}
 		});
 	}
@@ -152,13 +228,14 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String alwaysThrows(String className, String methodName, int numOfArgs, int methodIndex,
 			final String throwableClassName) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Boolean apply(Method method) {
 				JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
 				@SuppressWarnings("unchecked")
 				Class<? extends Throwable> klass = (Class<? extends Throwable>) type.getRawClass();
 				repository.get(method).alwaysThrows(klass);
+				return Boolean.TRUE;
 			}
 		});
 	}
@@ -166,13 +243,14 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String thenThrows(String className, String methodName, int numOfArgs, int methodIndex,
 			final String throwableClassName) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Boolean apply(Method method) {
 				JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
 				@SuppressWarnings("unchecked")
 				Class<? extends Throwable> klass = (Class<? extends Throwable>) type.getRawClass();
 				repository.get(method).thenThrows(klass);
+				return Boolean.TRUE;
 			}
 		});
 	}
@@ -180,9 +258,9 @@ public class StubConfigServiceImpl implements StubConfigService {
 	@Override
 	public String thenThrows(String className, String methodName, int numOfArgs, int methodIndex,
 			final List<String> list) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Callback() {
+		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
 			@Override
-			public void apply(Method method) throws IOException {
+			public Boolean apply(Method method) {
 				List<Class<? extends Throwable>> klassList = new ArrayList<>(list.size());
 				for (String throwableClassName : list) {
 					JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
@@ -191,18 +269,46 @@ public class StubConfigServiceImpl implements StubConfigService {
 					klassList.add(klass);
 				}
 				repository.get(method).thenThrows(klassList);
+				return Boolean.TRUE;
 			}
 		});
 	}
 
-	private String execute(String className, String methodName, int numOfArgs, int methodIndex, Callback callback) {
+	private boolean execute(String className, String methodName, int numOfArgs, int methodIndex,
+			Predicate<Method> predicate) {
+		try {
+			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			if (methodIndex >= list.size()) {
+				return false;
+			}
+			return predicate.apply(list.get(methodIndex));
+		} catch (ClassNotFoundException | IllegalArgumentException ex) {
+			return false;
+		}
+	}
+
+	private String execute(String className, String methodName, int numOfArgs, int methodIndex,
+			Function<Method, String> function) {
+		try {
+			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			if (methodIndex >= list.size()) {
+				return String.valueOf(false);
+			}
+			return function.apply(list.get(methodIndex));
+		} catch (ClassNotFoundException | IllegalArgumentException ex) {
+			return ex.getMessage();
+		}
+	}
+
+	private <T> String executeWithMapping(String className, String methodName, int numOfArgs, int methodIndex,
+			Function<Method, T> function) {
 		try {
 			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
 			if (methodIndex >= list.size()) {
 				return objectMapper.writeValueAsString(Boolean.FALSE);
 			}
-			callback.apply(list.get(methodIndex));
-			return objectMapper.writeValueAsString(Boolean.TRUE);
+			T result = function.apply(list.get(methodIndex));
+			return objectMapper.writeValueAsString(result);
 		} catch (ClassNotFoundException | IOException | IllegalArgumentException ex) {
 			Map<String, ?> map = ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
 			try {
@@ -211,10 +317,6 @@ public class StubConfigServiceImpl implements StubConfigService {
 				return ex.getMessage();
 			}
 		}
-	}
-
-	interface Callback {
-		void apply(Method method) throws IOException;
 	}
 
 }

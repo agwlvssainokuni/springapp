@@ -39,6 +39,20 @@ public interface StubReposController {
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("value") String value, @RequestParam("valueType") String valueType);
 
+	@RequestMapping(value = { "", "json" }, params = { "peek" })
+	@ResponseBody()
+	List<String> peekStubJson(@RequestParam("className") String className,
+			@RequestParam("methodName") String methodName,
+			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
+			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex);
+
+	@RequestMapping(value = { "yaml" }, params = { "peek" })
+	@ResponseBody()
+	List<String> peekStubYaml(@RequestParam("className") String className,
+			@RequestParam("methodName") String methodName,
+			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
+			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex);
+
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "bean" })
 	@ResponseBody()
 	List<String> resolveBeanName(@RequestParam("className") String className);

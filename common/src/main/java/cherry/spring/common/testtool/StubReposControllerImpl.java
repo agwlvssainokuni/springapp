@@ -61,6 +61,28 @@ public class StubReposControllerImpl implements StubReposController {
 	}
 
 	@Override
+	public List<String> peekStubJson(String className, String methodName, int numOfArgs, int methodIndex) {
+		if (!jsonStubConfigService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+			return null;
+		}
+		List<String> list = new ArrayList<>();
+		list.add(jsonStubConfigService.peek(className, methodName, numOfArgs, methodIndex));
+		list.add(jsonStubConfigService.peekType(className, methodName, numOfArgs, methodIndex));
+		return list;
+	}
+
+	@Override
+	public List<String> peekStubYaml(String className, String methodName, int numOfArgs, int methodIndex) {
+		if (!jsonStubConfigService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+			return null;
+		}
+		List<String> list = new ArrayList<>();
+		list.add(yamlStubConfigService.peek(className, methodName, numOfArgs, methodIndex));
+		list.add(yamlStubConfigService.peekType(className, methodName, numOfArgs, methodIndex));
+		return list;
+	}
+
+	@Override
 	public List<String> resolveBeanName(String className) {
 		return jsonStubConfigService.resolveBeanName(className);
 	}
