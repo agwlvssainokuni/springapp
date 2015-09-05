@@ -44,7 +44,7 @@ public class StubInterceptorTest {
 
 	@After
 	public void after() {
-		for (Method m : ToolTester.class.getDeclaredMethods()) {
+		for (Method m : repository.getStubbedMethod()) {
 			repository.clear(m);
 		}
 	}

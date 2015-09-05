@@ -35,28 +35,17 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public T next() throws Throwable {
-		Item<T> item = doNext();
-		if (item.getThrowable() == null) {
-			return item.getValue();
-		} else {
-			throw item.getThrowable().newInstance();
-		}
+		return doNext().getValue();
 	}
 
 	@Override
 	public T peek() throws Throwable {
-		Item<T> item = doPeek();
-		if (item.getThrowable() == null) {
-			return item.getValue();
-		} else {
-			throw item.getThrowable().newInstance();
-		}
+		return doPeek().getValue();
 	}
 
 	@Override
 	public String peekType() throws Throwable {
-		Item<T> item = doPeek();
-		return item.getType();
+		return doPeek().getType();
 	}
 
 	@Override
@@ -66,38 +55,32 @@ public class StubImpl<T> implements Stub<T> {
 
 	@Override
 	public Class<? extends Throwable> nextThrowable() {
-		Item<T> item = doNext();
-		if (item.getThrowable() == null) {
-			throw new IllegalStateException();
-		} else {
-			return item.getThrowable();
-		}
+		return doNext().getThrowable();
 	}
 
 	@Override
 	public Class<? extends Throwable> peekThrowable() {
-		Item<T> item = doPeek();
-		if (item.getThrowable() == null) {
-			throw new IllegalStateException();
-		} else {
-			return item.getThrowable();
-		}
+		return doPeek().getThrowable();
 	}
 
 	private Item<T> doNext() {
 		if (always != null) {
 			return always;
-		} else {
-			return list.remove(0);
 		}
+		if (list.isEmpty()) {
+			throw new IllegalStateException("Empty stub");
+		}
+		return list.remove(0);
 	}
 
 	private Item<T> doPeek() {
 		if (always != null) {
 			return always;
-		} else {
-			return list.get(0);
 		}
+		if (list.isEmpty()) {
+			throw new IllegalStateException("Empty stub");
+		}
+		return list.get(0);
 	}
 
 	@Override
