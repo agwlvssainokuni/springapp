@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cherry.foundation.testtool.ToolTester;
 import cherry.foundation.testtool.reflect.ReflectionResolver;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,49 +47,49 @@ public class InvokerTest {
 
 	@Test
 	public void testNoArgNoRet() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method0", -1);
-		assertEquals("null", invoker.invoke(null, ToBeInvoked.class, list.get(0), null, null));
-		assertEquals("null", invoker.invoke("toBeInvokedImpl", ToBeInvoked.class, list.get(0), null, null));
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method0", -1);
+		assertEquals("null", invoker.invoke(null, ToolTester.class, list.get(0), null, null));
+		assertEquals("null", invoker.invoke("toolTesterImpl", ToolTester.class, list.get(0), null, null));
 	}
 
 	@Test
 	public void testPrimitive() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method1", -1);
-		assertEquals("579", invoker.invoke(null, ToBeInvoked.class, list.get(0), asList("123", "456"), null));
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method1", -1);
+		assertEquals("579", invoker.invoke(null, ToolTester.class, list.get(0), asList("123", "456"), null));
 	}
 
 	@Test
 	public void testLong() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method2", -1);
-		assertEquals("579", invoker.invoke(null, ToBeInvoked.class, list.get(0), asList("123", "456"), null));
-		assertEquals("null", invoker.invoke(null, ToBeInvoked.class, list.get(0), asList(null, "456"), null));
-		assertEquals("null", invoker.invoke(null, ToBeInvoked.class, list.get(0), asList("123"), null));
-		assertEquals("null", invoker.invoke(null, ToBeInvoked.class, list.get(0), null, null));
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method2", -1);
+		assertEquals("579", invoker.invoke(null, ToolTester.class, list.get(0), asList("123", "456"), null));
+		assertEquals("null", invoker.invoke(null, ToolTester.class, list.get(0), asList(null, "456"), null));
+		assertEquals("null", invoker.invoke(null, ToolTester.class, list.get(0), asList("123"), null));
+		assertEquals("null", invoker.invoke(null, ToolTester.class, list.get(0), null, null));
 	}
 
 	@Test
 	public void testJodaTime() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method3", -1);
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method3", -1);
 		assertEquals("\"2015-01-23T12:34:56.000\"",
-				invoker.invoke(null, ToBeInvoked.class, list.get(0), asList("\"2015-01-23\"", "\"12:34:56\""), null));
+				invoker.invoke(null, ToolTester.class, list.get(0), asList("\"2015-01-23\"", "\"12:34:56\""), null));
 	}
 
 	@Test
 	public void testFlatDto() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method4", -1);
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method4", -1);
 		assertEquals(
 				"{\"val1\":68,\"val2\":112}",
-				invoker.invoke(null, ToBeInvoked.class, list.get(0),
+				invoker.invoke(null, ToolTester.class, list.get(0),
 						asList("{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"),
-						asList(ToBeInvoked.Dto1.class.getName())));
+						asList(ToolTester.Dto1.class.getName())));
 	}
 
 	@Test
 	public void testNestedDto() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method5", -1);
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method5", -1);
 		assertEquals("{\"val1\":{\"val1\":6,\"val2\":8},\"val2\":{\"val1\":10,\"val2\":12}}", invoker.invoke(
 				null,
-				ToBeInvoked.class,
+				ToolTester.class,
 				list.get(0),
 				asList("{\"val1\":{\"val1\":1,\"val2\":2},\"val2\":{\"val1\":3,\"val2\":4}}",
 						"{\"val1\":{\"val1\":5,\"val2\":6},\"val2\":{\"val1\":7,\"val2\":8}}"), null));
@@ -96,7 +97,7 @@ public class InvokerTest {
 
 	@Test
 	public void testMethodIndex() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method6", -1);
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method6", -1);
 		int m0;
 		int m1;
 		if (list.get(0).getReturnType() == Long.TYPE) {
@@ -106,14 +107,14 @@ public class InvokerTest {
 			m0 = 1;
 			m1 = 0;
 		}
-		assertEquals("-1", invoker.invoke(null, ToBeInvoked.class, list.get(m0), asList("1", "2"), null));
-		assertEquals("1", invoker.invoke(null, ToBeInvoked.class, list.get(m1), asList("1", "2"), null));
+		assertEquals("-1", invoker.invoke(null, ToolTester.class, list.get(m0), asList("1", "2"), null));
+		assertEquals("1", invoker.invoke(null, ToolTester.class, list.get(m1), asList("1", "2"), null));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testArgClassNotFound() throws Exception {
-		List<Method> list = reflectionResolver.resolveMethod(ToBeInvoked.class, "method4", -1);
-		invoker.invoke(null, ToBeInvoked.class, list.get(0),
+		List<Method> list = reflectionResolver.resolveMethod(ToolTester.class, "method4", -1);
+		invoker.invoke(null, ToolTester.class, list.get(0),
 				asList("{\"val1\":12,\"val2\":34}", "{\"val1\":56,\"val2\":78}"), asList("NoClass"));
 	}
 

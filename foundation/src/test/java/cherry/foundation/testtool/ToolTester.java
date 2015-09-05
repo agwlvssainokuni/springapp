@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.testtool.invoker;
+package cherry.foundation.testtool;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +24,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-public interface ToBeInvoked {
+public interface ToolTester {
 
 	void method0();
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.testtool.invoker;
+package cherry.foundation.testtool;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -25,7 +25,7 @@ import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 
 @Component
-public class ToBeInvokedImpl implements ToBeInvoked {
+public class ToolTesterImpl implements ToolTester {
 
 	private final Log log = LogFactory.getLog(getClass());
 
