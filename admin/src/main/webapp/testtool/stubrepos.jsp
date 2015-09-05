@@ -116,6 +116,7 @@
 
 		$("#clearBtn").click(function(event) {
 			$("#value").val("");
+			$("#valueType").val("");
 		});
 
 		$("#listBtn").click(function(event) {
