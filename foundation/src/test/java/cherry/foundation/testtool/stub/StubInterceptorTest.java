@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cherry.foundation.testtool.stub2.StubTester;
+import cherry.foundation.testtool.ToolTester;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -40,120 +40,120 @@ public class StubInterceptorTest {
 	private StubRepository repository;
 
 	@Autowired
-	private StubTester tester;
+	private ToolTester tester;
 
 	@After
 	public void after() {
-		for (Method m : StubTester.class.getDeclaredMethods()) {
+		for (Method m : ToolTester.class.getDeclaredMethods()) {
 			repository.clear(m);
 		}
 	}
 
 	@Test
 	public void testMethodLong_RETURN() throws NoSuchMethodException {
-		Method method = StubTester.class.getDeclaredMethod("method", Long.class, Long.class);
+		Method method = ToolTester.class.getDeclaredMethod("toBeStubbed", Long.class, Long.class);
 
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
 		repository.get(method).thenReturn(1L);
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
 		repository.get(method).thenReturn(1L).thenReturn(2L).thenReturn(3L);
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(2L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(3L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(2L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(3L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
 		repository.get(method).thenReturn(asList(1L, 2L, 3L));
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(2L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(3L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(2L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(3L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
 		repository.get(method).thenReturn(asList(1L, 2L, 3L));
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(2L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(2L), tester.toBeStubbed(1030L, 204L));
 		repository.get(method).clear();
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
 		repository.get(method).alwaysReturn(1L);
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
-		assertEquals(Long.valueOf(1L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
+		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
 		repository.get(method).clear();
-		assertEquals(Long.valueOf(1234L), tester.method(1030L, 204L));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 	}
 
 	@Test
 	public void testMethodBigDecimal_THROWABLE() throws NoSuchMethodException {
-		Method method = StubTester.class.getDeclaredMethod("method", BigDecimal.class, BigDecimal.class);
+		Method method = ToolTester.class.getDeclaredMethod("toBeStubbed", BigDecimal.class, BigDecimal.class);
 
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).thenThrows(IllegalArgumentException.class);
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).thenThrows(IllegalArgumentException.class).thenThrows(Throwable.class);
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (Throwable ex) {
 			// OK
 		}
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).thenThrows(asList(IllegalArgumentException.class, Throwable.class));
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (Throwable ex) {
 			// OK
 		}
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).thenThrows(asList(IllegalArgumentException.class, Throwable.class));
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 		repository.get(method).clear();
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).alwaysThrows(IllegalArgumentException.class);
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 		try {
-			tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
+			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
 			fail("Exception must be thrown");
 		} catch (IllegalArgumentException ex) {
 			// OK
 		}
 		repository.get(method).clear();
-		assertEquals(BigDecimal.valueOf(1234L), tester.method(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 	}
 
 }

@@ -16,6 +16,8 @@
 
 package cherry.foundation.testtool;
 
+import java.math.BigDecimal;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -75,6 +77,21 @@ public class ToolTesterImpl implements ToolTester {
 	@Override
 	public int method6(int a, int b) {
 		return b - a;
+	}
+
+	@Override
+	public Long toBeStubbed(Long p1, Long p2) {
+		return Long.valueOf(p1.longValue() + p2.longValue());
+	}
+
+	@Override
+	public BigDecimal toBeStubbed(BigDecimal p1, BigDecimal p2) {
+		return p1.add(p2);
+	}
+
+	@Override
+	public LocalDateTime toBeStubbed(LocalDate p1, LocalTime p2) {
+		return p1.toLocalDateTime(p2);
 	}
 
 	private Long submethod(Long a, Long b) {

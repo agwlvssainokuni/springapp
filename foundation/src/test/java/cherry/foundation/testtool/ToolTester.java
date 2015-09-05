@@ -16,6 +16,8 @@
 
 package cherry.foundation.testtool;
 
+import java.math.BigDecimal;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -41,6 +43,12 @@ public interface ToolTester {
 	long method6(long a, long b);
 
 	int method6(int a, int b);
+
+	Long toBeStubbed(Long p1, Long p2);
+
+	BigDecimal toBeStubbed(BigDecimal p1, BigDecimal p2);
+
+	LocalDateTime toBeStubbed(LocalDate p1, LocalTime p2);
 
 	@Setter
 	@Getter
