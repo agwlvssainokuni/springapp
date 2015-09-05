@@ -21,7 +21,6 @@ import static cherry.goods.util.ReflectionUtil.getMethodDescription;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,8 @@ import org.springframework.core.io.Resource;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 
 public class StubConfigurer {
 
@@ -65,19 +66,20 @@ public class StubConfigurer {
 						new TypeReference<LinkedHashMap<Class<?>, Map<String, Config>>>() {
 						});
 				for (Map.Entry<Class<?>, Map<String, Config>> entry : map.entrySet()) {
-					Map<String, Method> methodMap = createMethodMap(entry.getKey().getDeclaredMethods());
+					Multimap<String, Method> methodMap = createMethodMap(entry.getKey().getDeclaredMethods());
 					for (Map.Entry<String, Config> ent : entry.getValue().entrySet()) {
 						if (!methodMap.containsKey(ent.getKey())) {
 							continue;
 						}
-						Method method = methodMap.get(ent.getKey());
-						String data = objectMapper.writeValueAsString(ent.getValue().getData());
-						JavaType type = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
-						if (StringUtils.isNotEmpty(ent.getValue().getType())) {
-							type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getType());
+						for (Method method : methodMap.get(ent.getKey())) {
+							String data = objectMapper.writeValueAsString(ent.getValue().getData());
+							JavaType type = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
+							if (StringUtils.isNotEmpty(ent.getValue().getType())) {
+								type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getType());
+							}
+							Object v = objectMapper.readValue(data, type);
+							repository.get(method).alwaysReturn(v);
 						}
-						Object v = objectMapper.readValue(data, type);
-						repository.get(method).alwaysReturn(v);
 					}
 				}
 			} catch (IOException ex) {
@@ -86,8 +88,8 @@ public class StubConfigurer {
 		}
 	}
 
-	private Map<String, Method> createMethodMap(Method[] methods) {
-		Map<String, Method> map = new HashMap<>();
+	private Multimap<String, Method> createMethodMap(Method[] methods) {
+		Multimap<String, Method> map = MultimapBuilder.hashKeys().arrayListValues().build();
 		for (Method m : methods) {
 			map.put(getMethodDescription(m, false, false, true, false, false), m);
 			map.put(getMethodDescription(m, false, false, true, true, false), m);
