@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.testtool.factory;
+package cherry.foundation.testtool.factory;
 
-import static cherry.spring.common.testtool.factory.BeanName.REFLECTION_RESOLVER;
+import static cherry.foundation.testtool.factory.BeanName.REFLECTION_RESOLVER;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -24,13 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import cherry.foundation.testtool.reflect.ReflectionResolver;
-import cherry.foundation.testtool.stub.StubConfigService;
-import cherry.foundation.testtool.stub.StubConfigServiceImpl;
 import cherry.foundation.testtool.stub.StubRepository;
+import cherry.foundation.testtool.stub.StubService;
+import cherry.foundation.testtool.stub.StubServiceImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean<StubConfigService>, InitializingBean {
+public abstract class StubServiceFactoryBeanSupport implements FactoryBean<StubService>, InitializingBean {
 
 	@Autowired
 	@Qualifier(REFLECTION_RESOLVER)
@@ -39,13 +39,13 @@ public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean
 	@Autowired
 	private StubRepository repository;
 
-	private StubConfigService service;
+	private StubService service;
 
 	protected abstract ObjectMapper getObjectMapper();
 
 	@Override
 	public void afterPropertiesSet() {
-		StubConfigServiceImpl impl = new StubConfigServiceImpl();
+		StubServiceImpl impl = new StubServiceImpl();
 		impl.setReflectionResolver(reflectionResolver);
 		impl.setRepository(repository);
 		impl.setObjectMapper(getObjectMapper());
@@ -53,13 +53,13 @@ public abstract class StubConfigServiceFactoryBeanSupport implements FactoryBean
 	}
 
 	@Override
-	public StubConfigService getObject() {
+	public StubService getObject() {
 		return service;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return StubConfigService.class;
+		return StubService.class;
 	}
 
 	@Override

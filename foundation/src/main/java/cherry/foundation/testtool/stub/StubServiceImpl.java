@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
-public class StubConfigServiceImpl implements StubConfigService {
+public class StubServiceImpl implements StubService {
 
 	private ReflectionResolver reflectionResolver;
 

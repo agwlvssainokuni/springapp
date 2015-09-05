@@ -16,7 +16,7 @@
 
 package cherry.spring.common.testtool.factory;
 
-import static cherry.spring.common.testtool.factory.BeanName.JSON_STUB_CONFIG_SERVICE;
+import static cherry.spring.common.testtool.factory.BeanName.YAML_STUB_SERVICE;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,11 +24,11 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component(JSON_STUB_CONFIG_SERVICE)
-public class JsonStubConfigServiceFactoryBean extends StubConfigServiceFactoryBeanSupport {
+@Component(YAML_STUB_SERVICE)
+public class YamlStubServiceFactoryBean extends StubServiceFactoryBeanSupport {
 
 	@Autowired
-	@Qualifier("objectMapper")
+	@Qualifier("yamlObjectMapper")
 	private ObjectMapper objectMapper;
 
 	@Override

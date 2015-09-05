@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.foundation.testtool.factory;
+package cherry.spring.common.testtool.factory;
 
-import static cherry.foundation.testtool.factory.BeanName.YAML_STUB_CONFIG_SERVICE;
+import static cherry.spring.common.testtool.factory.BeanName.JSON_STUB_SERVICE;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,11 +24,11 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component(YAML_STUB_CONFIG_SERVICE)
-public class YamlStubConfigServiceFactoryBean extends StubConfigServiceFactoryBeanSupport {
+@Component(JSON_STUB_SERVICE)
+public class JsonStubServiceFactoryBean extends StubServiceFactoryBeanSupport {
 
 	@Autowired
-	@Qualifier("yamlObjectMapper")
+	@Qualifier("objectMapper")
 	private ObjectMapper objectMapper;
 
 	@Override

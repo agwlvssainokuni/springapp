@@ -19,7 +19,7 @@ package cherry.foundation.testtool.stub;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public interface StubConfigService {
+public interface StubService {
 
 	List<String> resolveBeanName(String className);
 

@@ -27,26 +27,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import cherry.foundation.testtool.stub.StubConfigService;
+import cherry.foundation.testtool.stub.StubService;
 
 @Controller
 public class StubReposControllerImpl implements StubReposController {
 
 	@Autowired
-	@Qualifier("jsonStubConfigService")
-	private StubConfigService jsonStubConfigService;
+	@Qualifier("jsonStubService")
+	private StubService jsonStubService;
 
 	@Autowired
-	@Qualifier("yamlStubConfigService")
-	private StubConfigService yamlStubConfigService;
+	@Qualifier("yamlStubService")
+	private StubService yamlStubService;
 
 	@Override
 	public String alwaysReturnJson(String className, String methodName, int numOfArgs, int methodIndex, String value,
 			String valueType) {
 		if (StringUtils.isEmpty(value)) {
-			return jsonStubConfigService.clear(className, methodName, numOfArgs, methodIndex);
+			return jsonStubService.clear(className, methodName, numOfArgs, methodIndex);
 		} else {
-			return jsonStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+			return jsonStubService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
 		}
 	}
 
@@ -54,43 +54,43 @@ public class StubReposControllerImpl implements StubReposController {
 	public String alwaysReturnYaml(String className, String methodName, int numOfArgs, int methodIndex, String value,
 			String valueType) {
 		if (StringUtils.isEmpty(value)) {
-			return yamlStubConfigService.clear(className, methodName, numOfArgs, methodIndex);
+			return yamlStubService.clear(className, methodName, numOfArgs, methodIndex);
 		} else {
-			return yamlStubConfigService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+			return yamlStubService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
 		}
 	}
 
 	@Override
 	public List<String> peekStubJson(String className, String methodName, int numOfArgs, int methodIndex) {
-		if (!jsonStubConfigService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+		if (!jsonStubService.hasNext(className, methodName, numOfArgs, methodIndex)) {
 			return null;
 		}
 		List<String> list = new ArrayList<>();
-		list.add(jsonStubConfigService.peek(className, methodName, numOfArgs, methodIndex));
-		list.add(jsonStubConfigService.peekType(className, methodName, numOfArgs, methodIndex));
+		list.add(jsonStubService.peek(className, methodName, numOfArgs, methodIndex));
+		list.add(jsonStubService.peekType(className, methodName, numOfArgs, methodIndex));
 		return list;
 	}
 
 	@Override
 	public List<String> peekStubYaml(String className, String methodName, int numOfArgs, int methodIndex) {
-		if (!jsonStubConfigService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+		if (!jsonStubService.hasNext(className, methodName, numOfArgs, methodIndex)) {
 			return null;
 		}
 		List<String> list = new ArrayList<>();
-		list.add(yamlStubConfigService.peek(className, methodName, numOfArgs, methodIndex));
-		list.add(yamlStubConfigService.peekType(className, methodName, numOfArgs, methodIndex));
+		list.add(yamlStubService.peek(className, methodName, numOfArgs, methodIndex));
+		list.add(yamlStubService.peekType(className, methodName, numOfArgs, methodIndex));
 		return list;
 	}
 
 	@Override
 	public List<String> resolveBeanName(String className) {
-		return jsonStubConfigService.resolveBeanName(className);
+		return jsonStubService.resolveBeanName(className);
 	}
 
 	@Override
 	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonStubConfigService.resolveMethod(className, methodName, numOfArgs)) {
+		for (Method m : jsonStubService.resolveMethod(className, methodName, numOfArgs)) {
 			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;
@@ -99,7 +99,7 @@ public class StubReposControllerImpl implements StubReposController {
 	@Override
 	public List<String> getStubbedMethod(String className) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonStubConfigService.getStubbedMethod(className)) {
+		for (Method m : jsonStubService.getStubbedMethod(className)) {
 			list.add(getMethodDescription(m, false, true, true, true, true));
 		}
 		return list;

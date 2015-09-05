@@ -26,9 +26,9 @@ public class BeanName {
 
 	public static final String YAML_INVOKER_SERVICE = "testYamlInvokerService";
 
-	public static final String JSON_STUB_CONFIG_SERVICE = "testJsonStubConfigService";
+	public static final String JSON_STUB_SERVICE = "testJsonStubService";
 
-	public static final String YAML_STUB_CONFIG_SERVICE = "testYamlStubConfigService";
+	public static final String YAML_STUB_SERVICE = "testYamlStubService";
 
 	public static final String REFLECTION_RESOLVER = "testReflectionResolver";
 
