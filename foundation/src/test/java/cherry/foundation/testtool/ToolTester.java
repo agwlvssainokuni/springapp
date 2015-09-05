@@ -28,21 +28,21 @@ import org.joda.time.LocalTime;
 
 public interface ToolTester {
 
-	void method0();
+	void toBeInvoked0();
 
-	long method1(long a, long b);
+	long toBeInvoked1(long a, long b);
 
-	Long method2(Long a, Long b);
+	Long toBeInvoked2(Long a, Long b);
 
-	LocalDateTime method3(LocalDate dt, LocalTime tm);
+	LocalDateTime toBeInvoked3(LocalDate dt, LocalTime tm);
 
-	Dto1 method4(Dto1 a, Dto1 b);
+	Dto1 toBeInvoked4(Dto1 a, Dto1 b);
 
-	Dto2 method5(Dto2 a, Dto2 b);
+	Dto2 toBeInvoked5(Dto2 a, Dto2 b);
 
-	long method6(long a, long b);
+	long toBeInvoked6(long a, long b);
 
-	int method6(int a, int b);
+	int toBeInvoked6(int a, int b);
 
 	Long toBeStubbed(Long p1, Long p2);
 

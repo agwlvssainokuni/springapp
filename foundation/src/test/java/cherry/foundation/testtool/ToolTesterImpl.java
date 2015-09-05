@@ -32,36 +32,36 @@ public class ToolTesterImpl implements ToolTester {
 	private final Log log = LogFactory.getLog(getClass());
 
 	@Override
-	public void method0() {
+	public void toBeInvoked0() {
 		log.debug("method0");
 	}
 
 	@Override
-	public long method1(long a, long b) {
+	public long toBeInvoked1(long a, long b) {
 		log.debug("method1");
 		return a + b;
 	}
 
 	@Override
-	public Long method2(Long a, Long b) {
+	public Long toBeInvoked2(Long a, Long b) {
 		log.debug("method2");
 		return submethod(a, b);
 	}
 
 	@Override
-	public LocalDateTime method3(LocalDate dt, LocalTime tm) {
+	public LocalDateTime toBeInvoked3(LocalDate dt, LocalTime tm) {
 		log.debug("method3");
 		return dt.toLocalDateTime(tm);
 	}
 
 	@Override
-	public Dto1 method4(Dto1 a, Dto1 b) {
+	public Dto1 toBeInvoked4(Dto1 a, Dto1 b) {
 		log.debug("method4");
 		return submethod(a, b);
 	}
 
 	@Override
-	public Dto2 method5(Dto2 a, Dto2 b) {
+	public Dto2 toBeInvoked5(Dto2 a, Dto2 b) {
 		log.debug("method4");
 		Dto2 c = new Dto2();
 		c.setVal1(submethod(a.getVal1(), b.getVal1()));
@@ -70,12 +70,12 @@ public class ToolTesterImpl implements ToolTester {
 	}
 
 	@Override
-	public long method6(long a, long b) {
+	public long toBeInvoked6(long a, long b) {
 		return a - b;
 	}
 
 	@Override
-	public int method6(int a, int b) {
+	public int toBeInvoked6(int a, int b) {
 		return b - a;
 	}
 
