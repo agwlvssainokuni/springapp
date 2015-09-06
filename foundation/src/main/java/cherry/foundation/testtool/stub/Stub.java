@@ -22,11 +22,11 @@ public interface Stub<T> {
 
 	boolean hasNext();
 
-	T next() throws Throwable;
+	T next();
 
-	T peek() throws Throwable;
+	T peek();
 
-	String peekType() throws Throwable;
+	String peekType();
 
 	boolean isThrowable();
 

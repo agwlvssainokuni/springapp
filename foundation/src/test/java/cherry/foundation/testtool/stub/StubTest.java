@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +44,20 @@ public class StubTest {
 
 	private Method method;
 
-	@After
-	public void after() throws NoSuchMethodException {
+	@Before
+	public void before() throws NoSuchMethodException {
 		method = ToolTester.class.getDeclaredMethod("toBeStubbed", Long.class, Long.class);
+	}
+
+	@After
+	public void after() {
 		for (Method m : repository.getStubbedMethod()) {
 			repository.clear(m);
 		}
 	}
 
 	@Test
-	public void testNext() throws Throwable {
+	public void testNext() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName());
 		assertTrue(stub.hasNext());
 		assertFalse(stub.isThrowable());
@@ -62,7 +67,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testPeek() throws Throwable {
+	public void testPeek() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName());
 		assertTrue(stub.hasNext());
 		assertFalse(stub.isThrowable());
@@ -74,21 +79,21 @@ public class StubTest {
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testNextWhenEmpty() throws Throwable {
+	public void testNextWhenEmpty() {
 		Stub<?> stub = repository.get(method);
 		assertFalse(stub.hasNext());
 		stub.next();
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testPeekWhenEmpty() throws Throwable {
+	public void testPeekWhenEmpty() {
 		Stub<?> stub = repository.get(method);
 		assertFalse(stub.hasNext());
 		stub.peek();
 	}
 
 	@Test
-	public void testNextThrowable() throws Throwable {
+	public void testNextThrowable() {
 		Stub<?> stub = repository.get(method).thenThrows(IllegalArgumentException.class);
 		assertTrue(stub.hasNext());
 		assertTrue(stub.isThrowable());
@@ -97,7 +102,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testPeekThrowable() throws Throwable {
+	public void testPeekThrowable() {
 		Stub<?> stub = repository.get(method).thenThrows(IllegalArgumentException.class);
 		assertTrue(stub.hasNext());
 		assertTrue(stub.isThrowable());
@@ -108,7 +113,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testAlwaysReturn1() throws Throwable {
+	public void testAlwaysReturn1() {
 		Stub<?> stub = repository.get(method).alwaysReturn(Long.valueOf(123L));
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
@@ -122,7 +127,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testAlwaysReturn1_null() throws Throwable {
+	public void testAlwaysReturn1_null() {
 		Stub<?> stub = repository.get(method).alwaysReturn((Long) null);
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
@@ -136,7 +141,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testAlwaysReturn2() throws Throwable {
+	public void testAlwaysReturn2() {
 		Stub<?> stub = repository.get(method).alwaysReturn(Long.valueOf(123L), "long");
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
@@ -150,7 +155,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testThenReturn1() throws Throwable {
+	public void testThenReturn1() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L));
 		assertTrue(stub.hasNext());
 		assertFalse(stub.isThrowable());
@@ -161,7 +166,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testThenReturn1_null() throws Throwable {
+	public void testThenReturn1_null() {
 		Stub<?> stub = repository.get(method).thenReturn((Long) null);
 		assertTrue(stub.hasNext());
 		assertFalse(stub.isThrowable());
@@ -172,7 +177,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testThenReturn2() throws Throwable {
+	public void testThenReturn2() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), "long");
 		assertTrue(stub.hasNext());
 		assertFalse(stub.isThrowable());
@@ -183,7 +188,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testThenReturnList1() throws Throwable {
+	public void testThenReturnList1() {
 		Stub<?> stub = repository.get(method).thenReturn(asList(Long.valueOf(1L), Long.valueOf(2L), Long.valueOf(3L)));
 		for (long l = 1L; l <= 3L; l++) {
 			assertTrue(stub.hasNext());
@@ -196,7 +201,7 @@ public class StubTest {
 	}
 
 	@Test
-	public void testThenReturnList2() throws Throwable {
+	public void testThenReturnList2() {
 		Stub<?> stub = repository.get(method).thenReturn(asList(Long.valueOf(1L), Long.valueOf(2L), Long.valueOf(3L)),
 				"long");
 		for (long l = 1L; l <= 3L; l++) {

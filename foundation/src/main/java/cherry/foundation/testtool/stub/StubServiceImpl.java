@@ -104,11 +104,7 @@ public class StubServiceImpl implements StubService {
 		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
 			@Override
 			public Object apply(Method method) {
-				try {
-					return repository.get(method).peek();
-				} catch (Throwable ex) {
-					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
-				}
+				return repository.get(method).peek();
 			}
 		});
 	}
@@ -118,11 +114,7 @@ public class StubServiceImpl implements StubService {
 		return execute(className, methodName, numOfArgs, methodIndex, new Function<Method, String>() {
 			@Override
 			public String apply(Method method) {
-				try {
-					return repository.get(method).peekType();
-				} catch (Throwable ex) {
-					return ex.getClass().getCanonicalName();
-				}
+				return repository.get(method).peekType();
 			}
 		});
 	}
@@ -282,7 +274,7 @@ public class StubServiceImpl implements StubService {
 				return false;
 			}
 			return predicate.apply(list.get(methodIndex));
-		} catch (ClassNotFoundException | IllegalArgumentException ex) {
+		} catch (ClassNotFoundException ex) {
 			return false;
 		}
 	}
@@ -295,7 +287,7 @@ public class StubServiceImpl implements StubService {
 				return String.valueOf(false);
 			}
 			return function.apply(list.get(methodIndex));
-		} catch (ClassNotFoundException | IllegalArgumentException ex) {
+		} catch (ClassNotFoundException ex) {
 			return ex.getMessage();
 		}
 	}

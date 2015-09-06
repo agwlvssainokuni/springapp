@@ -34,17 +34,17 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
-	public T next() throws Throwable {
+	public T next() {
 		return doNext().getValue();
 	}
 
 	@Override
-	public T peek() throws Throwable {
+	public T peek() {
 		return doPeek().getValue();
 	}
 
 	@Override
-	public String peekType() throws Throwable {
+	public String peekType() {
 		return doPeek().getType();
 	}
 
