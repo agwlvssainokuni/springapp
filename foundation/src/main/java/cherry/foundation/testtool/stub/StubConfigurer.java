@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -83,7 +81,7 @@ public class StubConfigurer {
 					}
 				}
 			} catch (IOException ex) {
-				throw new IllegalStateException(ex);
+				throw new IllegalArgumentException(ex);
 			}
 		}
 	}
@@ -103,11 +101,6 @@ public class StubConfigurer {
 		private String type;
 
 		private Object data;
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-		}
 
 		public String getType() {
 			return type;
