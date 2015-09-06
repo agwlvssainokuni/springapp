@@ -29,7 +29,6 @@ public interface InvokerController {
 	@ResponseBody()
 	String invokeJson(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
 
@@ -37,7 +36,6 @@ public interface InvokerController {
 	@ResponseBody()
 	String invokeYaml(@RequestParam(value = "beanName", required = false) String beanName,
 			@RequestParam("className") String className, @RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("args") String args, @RequestParam("argTypes") String argTypes);
 
@@ -48,7 +46,6 @@ public interface InvokerController {
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "method" })
 	@ResponseBody()
 	List<String> resolveMethod(@RequestParam("className") String className,
-			@RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs);
+			@RequestParam("methodName") String methodName);
 
 }

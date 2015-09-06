@@ -64,21 +64,21 @@ public class InvokerServiceImpl implements InvokerService {
 	}
 
 	@Override
-	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) {
+	public List<Method> resolveMethod(String className, String methodName) {
 		try {
-			return reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			return reflectionResolver.resolveMethod(className, methodName);
 		} catch (ClassNotFoundException ex) {
 			return new ArrayList<>();
 		}
 	}
 
 	@Override
-	public String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			String args, String argTypes) {
+	public String invoke(String beanName, String className, String methodName, int methodIndex, String args,
+			String argTypes) {
 		try {
 
 			Class<?> beanClass = getClass().getClassLoader().loadClass(className);
-			List<Method> methodList = reflectionResolver.resolveMethod(beanClass, methodName, numOfArgs);
+			List<Method> methodList = reflectionResolver.resolveMethod(beanClass, methodName);
 			if (methodList.isEmpty()) {
 				throw new NoSuchMethodException(format("{0}#{1}() not found", className, methodName));
 			}

@@ -25,8 +25,8 @@ public interface ReflectionResolver {
 
 	List<String> resolveBeanName(Class<?> beanClass);
 
-	List<Method> resolveMethod(String beanClassName, String methodName, int numOfArgs) throws ClassNotFoundException;
+	List<Method> resolveMethod(String beanClassName, String methodName) throws ClassNotFoundException;
 
-	List<Method> resolveMethod(Class<?> beanClass, String methodName, int numOfArgs);
+	List<Method> resolveMethod(Class<?> beanClass, String methodName);
 
 }

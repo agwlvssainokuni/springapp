@@ -40,15 +40,15 @@ public class InvokerControllerImpl implements InvokerController {
 	private InvokerService yamlInvokerService;
 
 	@Override
-	public String invokeJson(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			String args, String argTypes) {
-		return jsonInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
+	public String invokeJson(String beanName, String className, String methodName, int methodIndex, String args,
+			String argTypes) {
+		return jsonInvokerService.invoke(beanName, className, methodName, methodIndex, args, argTypes);
 	}
 
 	@Override
-	public String invokeYaml(String beanName, String className, String methodName, int numOfArgs, int methodIndex,
-			String args, String argTypes) {
-		return yamlInvokerService.invoke(beanName, className, methodName, numOfArgs, methodIndex, args, argTypes);
+	public String invokeYaml(String beanName, String className, String methodName, int methodIndex, String args,
+			String argTypes) {
+		return yamlInvokerService.invoke(beanName, className, methodName, methodIndex, args, argTypes);
 	}
 
 	@Override
@@ -57,9 +57,9 @@ public class InvokerControllerImpl implements InvokerController {
 	}
 
 	@Override
-	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
+	public List<String> resolveMethod(String className, String methodName) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonInvokerService.resolveMethod(className, methodName, numOfArgs)) {
+		for (Method m : jsonInvokerService.resolveMethod(className, methodName)) {
 			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;

@@ -65,7 +65,7 @@ public class InvokerServiceTest {
 
 	@Test
 	public void testResolveMethod() {
-		List<Method> list = invokerService.resolveMethod(ToolTester.class.getName(), "toBeInvoked0", -1);
+		List<Method> list = invokerService.resolveMethod(ToolTester.class.getName(), "toBeInvoked0");
 		assertEquals(1, list.size());
 		Method m = list.get(0);
 		assertEquals(0, m.getParameterTypes().length);
@@ -74,47 +74,47 @@ public class InvokerServiceTest {
 
 	@Test
 	public void testResolveMethod_ClassNotFound() {
-		List<Method> list = invokerService.resolveMethod(ToolTester.class.getName() + "NotExist", "toBeInvoked6", -1);
+		List<Method> list = invokerService.resolveMethod(ToolTester.class.getName() + "NotExist", "toBeInvoked6");
 		assertEquals(0, list.size());
 	}
 
 	@Test
 	public void testInvoke_NORMAL1() {
-		assertEquals("579", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked1", -1, 0,
+		assertEquals("579", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked1", 0,
 				"[123,456]", "[\"java.lang.Long\",\"java.lang.Long\"]"));
 	}
 
 	@Test
 	public void testInvoke_NORMAL2_NullArgs() {
-		assertEquals("579", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked2", -1, 0,
+		assertEquals("579", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked2", 0,
 				"[123,456]", "[\"java.lang.Long\",\"java.lang.Long\"]"));
 		assertEquals("null",
-				invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked2", -1, 0, null, null));
+				invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked2", 0, null, null));
 	}
 
 	@Test
 	public void testInvoke_NORMAL3_MultiMethod() {
-		List<Method> list = resolver.resolveMethod(ToolTester.class, "toBeInvoked6", -1);
+		List<Method> list = resolver.resolveMethod(ToolTester.class, "toBeInvoked6");
 		int index0 = list.get(0).getReturnType() == Integer.TYPE ? 0 : 1;
-		assertEquals("333", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked6", -1,
-				index0, "[123,456]", null));
+		assertEquals("333", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked6", index0,
+				"[123,456]", null));
 		int index1 = list.get(0).getReturnType() == Long.TYPE ? 0 : 1;
-		assertEquals("-333", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked6", -1,
+		assertEquals("-333", invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "toBeInvoked6",
 				index1, "[123,456]", null));
 	}
 
 	@Test
 	public void testInvoke_ClassNotFound() throws IOException {
 		String result = invokerService.invoke("toolTesterImpl", ToolTester.class.getName() + "NotExist",
-				"toBeInvoked1", -1, 0, "[123,456]", "[\"java.lang.Long\",\"java.lang.Long\"]");
+				"toBeInvoked1", 0, "[123,456]", "[\"java.lang.Long\",\"java.lang.Long\"]");
 		Map<?, ?> map = objectMapper.readValue(result, Map.class);
 		assertEquals("java.lang.ClassNotFoundException", map.get("type"));
 	}
 
 	@Test
 	public void testInvoke_NoSuchMethod() throws IOException {
-		String result = invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "noSuchMethod", -1, 0,
-				null, null);
+		String result = invokerService.invoke("toolTesterImpl", ToolTester.class.getName(), "noSuchMethod", 0, null,
+				null);
 		Map<?, ?> map = objectMapper.readValue(result, Map.class);
 		assertEquals("java.lang.NoSuchMethodException", map.get("type"));
 	}

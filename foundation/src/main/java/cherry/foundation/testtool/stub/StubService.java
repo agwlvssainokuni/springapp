@@ -23,35 +23,32 @@ public interface StubService {
 
 	List<String> resolveBeanName(String className);
 
-	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
+	List<Method> resolveMethod(String className, String methodName);
 
 	List<Method> getStubbedMethod(String className);
 
-	boolean hasNext(String className, String methodName, int numOfArgs, int methodIndex);
+	boolean hasNext(String className, String methodName, int methodIndex);
 
-	String peek(String className, String methodName, int numOfArgs, int methodIndex);
+	String peek(String className, String methodName, int methodIndex);
 
-	String peekType(String className, String methodName, int numOfArgs, int methodIndex);
+	String peekType(String className, String methodName, int methodIndex);
 
-	boolean isThrowable(String className, String methodName, int numOfArgs, int methodIndex);
+	boolean isThrowable(String className, String methodName, int methodIndex);
 
-	String peekThrowable(String className, String methodName, int numOfArgs, int methodIndex);
+	String peekThrowable(String className, String methodName, int methodIndex);
 
-	String clear(String className, String methodName, int numOfArgs, int methodIndex);
+	String clear(String className, String methodName, int methodIndex);
 
-	String alwaysReturn(String className, String methodName, int numOfArgs, int methodIndex, String value,
-			String valueType);
+	String alwaysReturn(String className, String methodName, int methodIndex, String value, String valueType);
 
-	String thenReturn(String className, String methodName, int numOfArgs, int methodIndex, String value,
-			String valueType);
+	String thenReturn(String className, String methodName, int methodIndex, String value, String valueType);
 
-	String thenReturn(String className, String methodName, int numOfArgs, int methodIndex, List<String> list,
-			String valueType);
+	String thenReturn(String className, String methodName, int methodIndex, List<String> list, String valueType);
 
-	String alwaysThrows(String className, String methodName, int numOfArgs, int methodIndex, String throwableClassName);
+	String alwaysThrows(String className, String methodName, int methodIndex, String throwableClassName);
 
-	String thenThrows(String className, String methodName, int numOfArgs, int methodIndex, String throwableClassName);
+	String thenThrows(String className, String methodName, int methodIndex, String throwableClassName);
 
-	String thenThrows(String className, String methodName, int numOfArgs, int methodIndex, List<String> list);
+	String thenThrows(String className, String methodName, int methodIndex, List<String> list);
 
 }

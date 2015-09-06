@@ -47,20 +47,17 @@ public class ReflectionResolverImpl implements ReflectionResolver, ApplicationCo
 	}
 
 	@Override
-	public List<Method> resolveMethod(String beanClassName, String methodName, int numOfArgs)
-			throws ClassNotFoundException {
+	public List<Method> resolveMethod(String beanClassName, String methodName) throws ClassNotFoundException {
 		Class<?> beanClass = getClass().getClassLoader().loadClass(beanClassName);
-		return resolveMethod(beanClass, methodName, numOfArgs);
+		return resolveMethod(beanClass, methodName);
 	}
 
 	@Override
-	public List<Method> resolveMethod(Class<?> beanClass, String methodName, int numOfArgs) {
+	public List<Method> resolveMethod(Class<?> beanClass, String methodName) {
 		List<Method> list = new ArrayList<>();
 		for (Method m : beanClass.getDeclaredMethods()) {
 			if (StringUtils.equals(m.getName(), methodName)) {
-				if (numOfArgs < 0 || numOfArgs == m.getParameterTypes().length) {
-					list.add(m);
-				}
+				list.add(m);
 			}
 		}
 		return list;

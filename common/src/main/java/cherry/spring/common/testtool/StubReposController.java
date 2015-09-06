@@ -28,14 +28,12 @@ public interface StubReposController {
 	@RequestMapping({ "", "json" })
 	@ResponseBody()
 	String alwaysReturnJson(@RequestParam("className") String className, @RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("value") String value, @RequestParam("valueType") String valueType);
 
 	@RequestMapping({ "yaml" })
 	@ResponseBody()
 	String alwaysReturnYaml(@RequestParam("className") String className, @RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex,
 			@RequestParam("value") String value, @RequestParam("valueType") String valueType);
 
@@ -43,14 +41,12 @@ public interface StubReposController {
 	@ResponseBody()
 	List<String> peekStubJson(@RequestParam("className") String className,
 			@RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex);
 
 	@RequestMapping(value = { "yaml" }, params = { "peek" })
 	@ResponseBody()
 	List<String> peekStubYaml(@RequestParam("className") String className,
 			@RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs,
 			@RequestParam(value = "methodIndex", defaultValue = "0") int methodIndex);
 
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "bean" })
@@ -60,8 +56,7 @@ public interface StubReposController {
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "method" })
 	@ResponseBody()
 	List<String> resolveMethod(@RequestParam("className") String className,
-			@RequestParam("methodName") String methodName,
-			@RequestParam(value = "numOfArgs", defaultValue = "-1") int numOfArgs);
+			@RequestParam("methodName") String methodName);
 
 	@RequestMapping(value = { "", "json", "yaml" }, params = { "list" })
 	@ResponseBody()

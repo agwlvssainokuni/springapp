@@ -23,9 +23,8 @@ public interface InvokerService {
 
 	List<String> resolveBeanName(String className);
 
-	List<Method> resolveMethod(String className, String methodName, int numOfArgs);
+	List<Method> resolveMethod(String className, String methodName);
 
-	String invoke(String beanName, String className, String methodName, int numOfArgs, int methodIndex, String args,
-			String argTypes);
+	String invoke(String beanName, String className, String methodName, int methodIndex, String args, String argTypes);
 
 }

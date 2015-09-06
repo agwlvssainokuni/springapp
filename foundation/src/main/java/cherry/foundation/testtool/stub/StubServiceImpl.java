@@ -62,9 +62,9 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public List<Method> resolveMethod(String className, String methodName, int numOfArgs) {
+	public List<Method> resolveMethod(String className, String methodName) {
 		try {
-			return reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			return reflectionResolver.resolveMethod(className, methodName);
 		} catch (ClassNotFoundException ex) {
 			return new ArrayList<>();
 		}
@@ -90,8 +90,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public boolean hasNext(String className, String methodName, int numOfArgs, int methodIndex) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Predicate<Method>() {
+	public boolean hasNext(String className, String methodName, int methodIndex) {
+		return execute(className, methodName, methodIndex, new Predicate<Method>() {
 			@Override
 			public boolean apply(Method method) {
 				return repository.get(method).hasNext();
@@ -100,8 +100,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String peek(String className, String methodName, int numOfArgs, int methodIndex) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
+	public String peek(String className, String methodName, int methodIndex) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Object>() {
 			@Override
 			public Object apply(Method method) {
 				return repository.get(method).peek();
@@ -110,8 +110,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String peekType(String className, String methodName, int numOfArgs, int methodIndex) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Function<Method, String>() {
+	public String peekType(String className, String methodName, int methodIndex) {
+		return execute(className, methodName, methodIndex, new Function<Method, String>() {
 			@Override
 			public String apply(Method method) {
 				return repository.get(method).peekType();
@@ -120,8 +120,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public boolean isThrowable(String className, String methodName, int numOfArgs, int methodIndex) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Predicate<Method>() {
+	public boolean isThrowable(String className, String methodName, int methodIndex) {
+		return execute(className, methodName, methodIndex, new Predicate<Method>() {
 			@Override
 			public boolean apply(Method method) {
 				return repository.get(method).isThrowable();
@@ -130,8 +130,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String peekThrowable(String className, String methodName, int numOfArgs, int methodIndex) {
-		return execute(className, methodName, numOfArgs, methodIndex, new Function<Method, String>() {
+	public String peekThrowable(String className, String methodName, int methodIndex) {
+		return execute(className, methodName, methodIndex, new Function<Method, String>() {
 			@Override
 			public String apply(Method method) {
 				return repository.get(method).peekThrowable().getCanonicalName();
@@ -140,8 +140,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String clear(String className, String methodName, int numOfArgs, int methodIndex) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
+	public String clear(String className, String methodName, int methodIndex) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
 			@Override
 			public Boolean apply(Method method) {
 				repository.clear(method);
@@ -151,9 +151,9 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String alwaysReturn(String className, String methodName, int numOfArgs, int methodIndex, final String value,
+	public String alwaysReturn(String className, String methodName, int methodIndex, final String value,
 			final String valueType) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Object>() {
 			@Override
 			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
@@ -172,9 +172,9 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String thenReturn(String className, String methodName, int numOfArgs, int methodIndex, final String value,
+	public String thenReturn(String className, String methodName, int methodIndex, final String value,
 			final String valueType) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Object>() {
 			@Override
 			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
@@ -193,9 +193,9 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String thenReturn(String className, String methodName, int numOfArgs, int methodIndex,
-			final List<String> list, final String valueType) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Object>() {
+	public String thenReturn(String className, String methodName, int methodIndex, final List<String> list,
+			final String valueType) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Object>() {
 			@Override
 			public Object apply(Method method) {
 				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
@@ -218,9 +218,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String alwaysThrows(String className, String methodName, int numOfArgs, int methodIndex,
-			final String throwableClassName) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
+	public String alwaysThrows(String className, String methodName, int methodIndex, final String throwableClassName) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
 			@Override
 			public Boolean apply(Method method) {
 				JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
@@ -233,9 +232,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String thenThrows(String className, String methodName, int numOfArgs, int methodIndex,
-			final String throwableClassName) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
+	public String thenThrows(String className, String methodName, int methodIndex, final String throwableClassName) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
 			@Override
 			public Boolean apply(Method method) {
 				JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
@@ -248,9 +246,8 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String thenThrows(String className, String methodName, int numOfArgs, int methodIndex,
-			final List<String> list) {
-		return executeWithMapping(className, methodName, numOfArgs, methodIndex, new Function<Method, Boolean>() {
+	public String thenThrows(String className, String methodName, int methodIndex, final List<String> list) {
+		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
 			@Override
 			public Boolean apply(Method method) {
 				List<Class<? extends Throwable>> klassList = new ArrayList<>(list.size());
@@ -266,10 +263,9 @@ public class StubServiceImpl implements StubService {
 		});
 	}
 
-	private boolean execute(String className, String methodName, int numOfArgs, int methodIndex,
-			Predicate<Method> predicate) {
+	private boolean execute(String className, String methodName, int methodIndex, Predicate<Method> predicate) {
 		try {
-			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			List<Method> list = reflectionResolver.resolveMethod(className, methodName);
 			if (methodIndex >= list.size()) {
 				return false;
 			}
@@ -279,10 +275,9 @@ public class StubServiceImpl implements StubService {
 		}
 	}
 
-	private String execute(String className, String methodName, int numOfArgs, int methodIndex,
-			Function<Method, String> function) {
+	private String execute(String className, String methodName, int methodIndex, Function<Method, String> function) {
 		try {
-			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			List<Method> list = reflectionResolver.resolveMethod(className, methodName);
 			if (methodIndex >= list.size()) {
 				return String.valueOf(false);
 			}
@@ -292,10 +287,10 @@ public class StubServiceImpl implements StubService {
 		}
 	}
 
-	private <T> String executeWithMapping(String className, String methodName, int numOfArgs, int methodIndex,
+	private <T> String executeWithMapping(String className, String methodName, int methodIndex,
 			Function<Method, T> function) {
 		try {
-			List<Method> list = reflectionResolver.resolveMethod(className, methodName, numOfArgs);
+			List<Method> list = reflectionResolver.resolveMethod(className, methodName);
 			if (methodIndex >= list.size()) {
 				return objectMapper.writeValueAsString(Boolean.FALSE);
 			}

@@ -92,7 +92,7 @@ public class StubServiceTest {
 
 	@Test
 	public void testResolveMethod() {
-		List<Method> list = stubService.resolveMethod(ToolTester.class.getName(), "toBeStubbed", -1);
+		List<Method> list = stubService.resolveMethod(ToolTester.class.getName(), "toBeStubbed");
 		assertEquals(3, list.size());
 		Set<Class<?>> returnType = new HashSet<>();
 		returnType.add(Long.class);
@@ -107,15 +107,14 @@ public class StubServiceTest {
 
 	@Test
 	public void testResolveMethod_ClassNotFound() {
-		List<Method> list = stubService.resolveMethod(ToolTester.class.getName() + "NotExist", "toBeStubbed", -1);
+		List<Method> list = stubService.resolveMethod(ToolTester.class.getName() + "NotExist", "toBeStubbed");
 		assertEquals(0, list.size());
 	}
 
 	@Test
 	public void testGetStubbedMethod_NOCOND() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
 		List<Method> list = stubService.getStubbedMethod(null);
 		assertEquals(1, list.size());
 		assertEquals(method, list.get(0));
@@ -124,8 +123,7 @@ public class StubServiceTest {
 	@Test
 	public void testGetStubbedMethod_WITHCOND() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
 		List<Method> list = stubService.getStubbedMethod(ToolTester.class.getName());
 		assertEquals(1, list.size());
 		assertEquals(method, list.get(0));
@@ -134,8 +132,7 @@ public class StubServiceTest {
 	@Test
 	public void testGetStubbedMethod_EMPTY() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
 		List<Method> list = stubService.getStubbedMethod(getClass().getName());
 		assertTrue(list.isEmpty());
 	}
@@ -149,157 +146,153 @@ public class StubServiceTest {
 	@Test
 	public void testPeek() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
-		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("java.lang.Long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
+		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("java.lang.Long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testPeekThrowable() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.alwaysThrows(ToolTester.class.getName(), "toBeStubbed", -1, index,
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.alwaysThrows(ToolTester.class.getName(), "toBeStubbed", index,
 				IllegalArgumentException.class.getName()));
-		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(IllegalArgumentException.class.getName(),
-				stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+				stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testAlwaysReturn1() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
 		for (int i = 0; i < 100; i++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals(Long.class.getName(),
-					stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals(Long.class.getName(), stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(Long.valueOf(123L), repository.get(method).next());
 		}
-		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testAlwaysReturn2() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true",
-				stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", "long"));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", "long"));
 		for (int i = 0; i < 100; i++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(Long.valueOf(123L), repository.get(method).next());
 		}
-		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testThenReturn1() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", null));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", null));
 
-		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals(Long.class.getName(), stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals(Long.class.getName(), stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(Long.valueOf(123L), repository.get(method).next());
 
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testThenReturn2() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true",
-				stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", -1, index, "123", "long"));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, "123", "long"));
 
-		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("123", stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(Long.valueOf(123L), repository.get(method).next());
 
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testThenReturnList1() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", -1, index,
-				asList("1", "2", "3"), null));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true",
+				stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, asList("1", "2", "3"), null));
 		for (long l = 1; l <= 3; l++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals(Long.class.getName(),
-					stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals(Long.class.getName(), stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(Long.valueOf(l), repository.get(method).next());
 		}
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testThenReturnList2() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", -1, index,
-				asList("1", "2", "3"), "long"));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true",
+				stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, asList("1", "2", "3"), "long"));
 		for (long l = 1; l <= 3; l++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(Long.valueOf(l), repository.get(method).next());
 		}
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testAlwaysThrows() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.alwaysThrows(ToolTester.class.getName(), "toBeStubbed", -1, index,
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.alwaysThrows(ToolTester.class.getName(), "toBeStubbed", index,
 				IllegalArgumentException.class.getName()));
 		for (int i = 0; i < 100; i++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(IllegalArgumentException.class.getName(),
-					stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+					stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(IllegalArgumentException.class, repository.get(method).nextThrowable());
 		}
-		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertEquals("true", stubService.clear(ToolTester.class.getName(), "toBeStubbed", index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testThenThrows() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.thenThrows(ToolTester.class.getName(), "toBeStubbed", -1, index,
-				IllegalArgumentException.class.getName()));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals(
+				"true",
+				stubService.thenThrows(ToolTester.class.getName(), "toBeStubbed", index,
+						IllegalArgumentException.class.getName()));
 
-		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(IllegalArgumentException.class.getName(),
-				stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+				stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(IllegalArgumentException.class, repository.get(method).nextThrowable());
 
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
@@ -311,50 +304,50 @@ public class StubServiceTest {
 			exname.add(c.getName());
 		}
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-		assertEquals("true", stubService.thenThrows(ToolTester.class.getName(), "toBeStubbed", -1, index, exname));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+		assertEquals("true", stubService.thenThrows(ToolTester.class.getName(), "toBeStubbed", index, exname));
 		for (Class<?> c : list) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
-			assertEquals(c.getName(), stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", -1, index));
+			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
+			assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
+			assertEquals(c.getName(), stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 			assertEquals(c, repository.get(method).nextThrowable());
 		}
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 
 	@Test
 	public void testExecutePredicate_methodIndex() {
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", -1, 4));
+		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", 4));
 	}
 
 	@Test
 	public void testExecutePredicate_ClassNotFound() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName() + "NotExist", "toBeStubbed", -1, index));
+		assertFalse(stubService.hasNext(ToolTester.class.getName() + "NotExist", "toBeStubbed", index));
 	}
 
 	@Test
 	public void testExecuteFunction_methodIndex() {
-		assertEquals("false", stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", -1, 3));
+		assertEquals("false", stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", 3));
 	}
 
 	@Test
 	public void testExecuteFunction_ClassNotFound() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
 		assertEquals(ToolTester.class.getName() + "NotExist",
-				stubService.peekThrowable(ToolTester.class.getName() + "NotExist", "toBeStubbed", -1, index));
+				stubService.peekThrowable(ToolTester.class.getName() + "NotExist", "toBeStubbed", index));
 	}
 
 	@Test
 	public void testExecuteWithMapping_methodIndex() throws IOException {
-		assertEquals("false", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", -1, 3, "1", null));
+		assertEquals("false", stubService.alwaysReturn(ToolTester.class.getName(), "toBeStubbed", 3, "1", null));
 	}
 
 	@Test
 	public void testExecuteWithMapping_ClassNotFound() throws IOException {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		String result = stubService.alwaysReturn(ToolTester.class.getName() + "NotExist", "toBeStubbed", -1, index,
-				"1", null);
+		String result = stubService.alwaysReturn(ToolTester.class.getName() + "NotExist", "toBeStubbed", index, "1",
+				null);
 		Map<?, ?> map = objectMapper.readValue(result, Map.class);
 		assertEquals(ClassNotFoundException.class.getName(), map.get("type"));
 		assertEquals(ToolTester.class.getName() + "NotExist", map.get("message"));
@@ -362,7 +355,7 @@ public class StubServiceTest {
 
 	private int getMethodIndex(Class<?> beanClass, String methodName, Class<?> returnType) {
 		int i = 0;
-		for (Method m : resolver.resolveMethod(ToolTester.class, methodName, -1)) {
+		for (Method m : resolver.resolveMethod(ToolTester.class, methodName)) {
 			if (m.getReturnType() == returnType) {
 				return i;
 			}

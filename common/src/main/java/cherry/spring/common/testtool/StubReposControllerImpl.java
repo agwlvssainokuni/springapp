@@ -41,44 +41,42 @@ public class StubReposControllerImpl implements StubReposController {
 	private StubService yamlStubService;
 
 	@Override
-	public String alwaysReturnJson(String className, String methodName, int numOfArgs, int methodIndex, String value,
-			String valueType) {
+	public String alwaysReturnJson(String className, String methodName, int methodIndex, String value, String valueType) {
 		if (StringUtils.isEmpty(value)) {
-			return jsonStubService.clear(className, methodName, numOfArgs, methodIndex);
+			return jsonStubService.clear(className, methodName, methodIndex);
 		} else {
-			return jsonStubService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+			return jsonStubService.alwaysReturn(className, methodName, methodIndex, value, valueType);
 		}
 	}
 
 	@Override
-	public String alwaysReturnYaml(String className, String methodName, int numOfArgs, int methodIndex, String value,
-			String valueType) {
+	public String alwaysReturnYaml(String className, String methodName, int methodIndex, String value, String valueType) {
 		if (StringUtils.isEmpty(value)) {
-			return yamlStubService.clear(className, methodName, numOfArgs, methodIndex);
+			return yamlStubService.clear(className, methodName, methodIndex);
 		} else {
-			return yamlStubService.alwaysReturn(className, methodName, numOfArgs, methodIndex, value, valueType);
+			return yamlStubService.alwaysReturn(className, methodName, methodIndex, value, valueType);
 		}
 	}
 
 	@Override
-	public List<String> peekStubJson(String className, String methodName, int numOfArgs, int methodIndex) {
-		if (!jsonStubService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+	public List<String> peekStubJson(String className, String methodName, int methodIndex) {
+		if (!jsonStubService.hasNext(className, methodName, methodIndex)) {
 			return null;
 		}
 		List<String> list = new ArrayList<>();
-		list.add(jsonStubService.peek(className, methodName, numOfArgs, methodIndex));
-		list.add(jsonStubService.peekType(className, methodName, numOfArgs, methodIndex));
+		list.add(jsonStubService.peek(className, methodName, methodIndex));
+		list.add(jsonStubService.peekType(className, methodName, methodIndex));
 		return list;
 	}
 
 	@Override
-	public List<String> peekStubYaml(String className, String methodName, int numOfArgs, int methodIndex) {
-		if (!jsonStubService.hasNext(className, methodName, numOfArgs, methodIndex)) {
+	public List<String> peekStubYaml(String className, String methodName, int methodIndex) {
+		if (!jsonStubService.hasNext(className, methodName, methodIndex)) {
 			return null;
 		}
 		List<String> list = new ArrayList<>();
-		list.add(yamlStubService.peek(className, methodName, numOfArgs, methodIndex));
-		list.add(yamlStubService.peekType(className, methodName, numOfArgs, methodIndex));
+		list.add(yamlStubService.peek(className, methodName, methodIndex));
+		list.add(yamlStubService.peekType(className, methodName, methodIndex));
 		return list;
 	}
 
@@ -88,9 +86,9 @@ public class StubReposControllerImpl implements StubReposController {
 	}
 
 	@Override
-	public List<String> resolveMethod(String className, String methodName, int numOfArgs) {
+	public List<String> resolveMethod(String className, String methodName) {
 		List<String> list = new ArrayList<>();
-		for (Method m : jsonStubService.resolveMethod(className, methodName, numOfArgs)) {
+		for (Method m : jsonStubService.resolveMethod(className, methodName)) {
 			list.add(getMethodDescription(m, false, false, false, true, false));
 		}
 		return list;
