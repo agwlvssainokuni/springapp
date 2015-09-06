@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +80,7 @@ public class StubConfigurerTest {
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(java.lang.Long,java.lang.Long)\":{\"data\":123}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertEquals(1, repository.getStubbedMethod().size());
 		assertEquals(method, repository.getStubbedMethod().get(0));
@@ -94,7 +94,7 @@ public class StubConfigurerTest {
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(java.lang.Long,java.lang.Long)\":{\"data\":123,\"type\":\"java.lang.Long\"}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertEquals(1, repository.getStubbedMethod().size());
 		assertEquals(method, repository.getStubbedMethod().get(0));
@@ -105,7 +105,7 @@ public class StubConfigurerTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConfigure1_withInvalidType() {
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(java.lang.Long,java.lang.Long)\":{\"data\":123,\"type\":\"INVALID_TYPE\"}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 	}
 
@@ -115,7 +115,7 @@ public class StubConfigurerTest {
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(Long,Long)\":{\"data\":123}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertEquals(1, repository.getStubbedMethod().size());
 		assertEquals(method, repository.getStubbedMethod().get(0));
@@ -132,7 +132,7 @@ public class StubConfigurerTest {
 				toolTester.toBeStubbed(new LocalDate(2015, 1, 1), new LocalTime(12, 34, 56)));
 
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed\":{\"data\":123}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertEquals(3, repository.getStubbedMethod().size());
 		for (Method m : ToolTester.class.getDeclaredMethods()) {
@@ -150,7 +150,7 @@ public class StubConfigurerTest {
 	@Test
 	public void testConfigure_NOMETHOD() {
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"NOT_EXIST\":{\"data\":123}}}";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertTrue(repository.getStubbedMethod().isEmpty());
 	}
@@ -158,7 +158,7 @@ public class StubConfigurerTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConfigure_NGJSON() {
 		String json = "NGJSON";
-		Resource res = new InMemoryResource(json.getBytes(Charset.forName("UTF-8")));
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 	}
 
