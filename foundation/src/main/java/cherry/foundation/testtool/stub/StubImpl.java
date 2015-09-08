@@ -136,22 +136,6 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
-	public <E extends T> Stub<T> thenReturn(List<E> list) {
-		for (E value : list) {
-			thenReturn(value);
-		}
-		return this;
-	}
-
-	@Override
-	public <E extends T> Stub<T> thenReturn(List<E> list, String type) {
-		for (E value : list) {
-			thenReturn(value, type);
-		}
-		return this;
-	}
-
-	@Override
 	public Stub<T> alwaysMock(Object mock) {
 		Item<T> item = new Item<>();
 		item.setMock(mock);
@@ -184,14 +168,6 @@ public class StubImpl<T> implements Stub<T> {
 		item.setThrowable(klass);
 		list.add(item);
 		always = null;
-		return this;
-	}
-
-	@Override
-	public Stub<T> thenThrows(List<Class<? extends Throwable>> list) {
-		for (Class<? extends Throwable> klass : list) {
-			thenThrows(klass);
-		}
 		return this;
 	}
 

@@ -16,8 +16,6 @@
 
 package cherry.foundation.testtool.stub;
 
-import java.util.List;
-
 public interface Stub<T> {
 
 	boolean hasNext();
@@ -50,10 +48,6 @@ public interface Stub<T> {
 
 	<E extends T> Stub<T> thenReturn(E value, String type);
 
-	<E extends T> Stub<T> thenReturn(List<E> list);
-
-	<E extends T> Stub<T> thenReturn(List<E> list, String type);
-
 	Stub<T> alwaysMock(Object mock);
 
 	Stub<T> thenMock(Object mock);
@@ -61,7 +55,5 @@ public interface Stub<T> {
 	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
 
 	Stub<T> thenThrows(Class<? extends Throwable> klass);
-
-	Stub<T> thenThrows(List<Class<? extends Throwable>> list);
 
 }

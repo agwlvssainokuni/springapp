@@ -43,12 +43,8 @@ public interface StubService {
 
 	String thenReturn(String className, String methodName, int methodIndex, String value, String valueType);
 
-	String thenReturn(String className, String methodName, int methodIndex, List<String> list, String valueType);
-
 	String alwaysThrows(String className, String methodName, int methodIndex, String throwableClassName);
 
 	String thenThrows(String className, String methodName, int methodIndex, String throwableClassName);
-
-	String thenThrows(String className, String methodName, int methodIndex, List<String> list);
 
 }

@@ -193,31 +193,6 @@ public class StubServiceImpl implements StubService {
 	}
 
 	@Override
-	public String thenReturn(String className, String methodName, int methodIndex, final List<String> list,
-			final String valueType) {
-		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Object>() {
-			@Override
-			public Object apply(Method method) {
-				JavaType returnType = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
-				if (StringUtils.isNotEmpty(valueType)) {
-					returnType = objectMapper.getTypeFactory().constructFromCanonical(valueType);
-				}
-				try {
-					List<Object> valueList = new ArrayList<>(list.size());
-					for (String value : list) {
-						Object v = objectMapper.readValue(value, returnType);
-						valueList.add(v);
-					}
-					repository.get(method).thenReturn(valueList, returnType.toCanonical());
-					return Boolean.TRUE;
-				} catch (IOException ex) {
-					return ToMapUtil.fromThrowable(ex, Integer.MAX_VALUE);
-				}
-			}
-		});
-	}
-
-	@Override
 	public String alwaysThrows(String className, String methodName, int methodIndex, final String throwableClassName) {
 		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
 			@Override
@@ -240,24 +215,6 @@ public class StubServiceImpl implements StubService {
 				@SuppressWarnings("unchecked")
 				Class<? extends Throwable> klass = (Class<? extends Throwable>) type.getRawClass();
 				repository.get(method).thenThrows(klass);
-				return Boolean.TRUE;
-			}
-		});
-	}
-
-	@Override
-	public String thenThrows(String className, String methodName, int methodIndex, final List<String> list) {
-		return executeWithMapping(className, methodName, methodIndex, new Function<Method, Boolean>() {
-			@Override
-			public Boolean apply(Method method) {
-				List<Class<? extends Throwable>> klassList = new ArrayList<>(list.size());
-				for (String throwableClassName : list) {
-					JavaType type = objectMapper.getTypeFactory().constructFromCanonical(throwableClassName);
-					@SuppressWarnings("unchecked")
-					Class<? extends Throwable> klass = (Class<? extends Throwable>) type.getRawClass();
-					klassList.add(klass);
-				}
-				repository.get(method).thenThrows(klassList);
 				return Boolean.TRUE;
 			}
 		});

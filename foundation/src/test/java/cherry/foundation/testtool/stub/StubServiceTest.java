@@ -16,7 +16,6 @@
 
 package cherry.foundation.testtool.stub;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -229,38 +227,6 @@ public class StubServiceTest {
 	}
 
 	@Test
-	public void testThenReturnList1() {
-		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-		assertEquals("true",
-				stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, asList("1", "2", "3"), null));
-		for (long l = 1; l <= 3; l++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(Long.class.getName(), stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(Long.valueOf(l), repository.get(method).next());
-		}
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-	}
-
-	@Test
-	public void testThenReturnList2() {
-		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-		assertEquals("true",
-				stubService.thenReturn(ToolTester.class.getName(), "toBeStubbed", index, asList("1", "2", "3"), "long"));
-		for (long l = 1; l <= 3; l++) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-			assertFalse(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals("long", stubService.peekType(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(String.valueOf(l), stubService.peek(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(Long.valueOf(l), repository.get(method).next());
-		}
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-	}
-
-	@Test
 	public void testAlwaysThrows() {
 		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
 		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
@@ -292,26 +258,6 @@ public class StubServiceTest {
 				stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
 		assertEquals(IllegalArgumentException.class, repository.get(method).nextThrowable());
 
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-	}
-
-	@Test
-	public void testThenThrowsList() {
-		List<Class<? extends Throwable>> list = asList((Class<? extends Throwable>) IllegalArgumentException.class,
-				IllegalStateException.class, IllegalArgumentException.class);
-		List<String> exname = new ArrayList<>(list.size());
-		for (Class<?> c : list) {
-			exname.add(c.getName());
-		}
-		int index = getMethodIndex(ToolTester.class, "toBeStubbed", Long.class);
-		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-		assertEquals("true", stubService.thenThrows(ToolTester.class.getName(), "toBeStubbed", index, exname));
-		for (Class<?> c : list) {
-			assertTrue(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
-			assertTrue(stubService.isThrowable(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(c.getName(), stubService.peekThrowable(ToolTester.class.getName(), "toBeStubbed", index));
-			assertEquals(c, repository.get(method).nextThrowable());
-		}
 		assertFalse(stubService.hasNext(ToolTester.class.getName(), "toBeStubbed", index));
 	}
 

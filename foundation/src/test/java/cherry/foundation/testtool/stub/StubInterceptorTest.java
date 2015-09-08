@@ -16,7 +16,6 @@
 
 package cherry.foundation.testtool.stub;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -65,18 +64,6 @@ public class StubInterceptorTest {
 		assertEquals(Long.valueOf(3L), tester.toBeStubbed(1030L, 204L));
 		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
 
-		repository.get(method).thenReturn(asList(1L, 2L, 3L));
-		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
-		assertEquals(Long.valueOf(2L), tester.toBeStubbed(1030L, 204L));
-		assertEquals(Long.valueOf(3L), tester.toBeStubbed(1030L, 204L));
-		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
-
-		repository.get(method).thenReturn(asList(1L, 2L, 3L));
-		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
-		assertEquals(Long.valueOf(2L), tester.toBeStubbed(1030L, 204L));
-		repository.get(method).clear();
-		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(1030L, 204L));
-
 		repository.get(method).alwaysReturn(1L);
 		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
 		assertEquals(Long.valueOf(1L), tester.toBeStubbed(1030L, 204L));
@@ -112,31 +99,6 @@ public class StubInterceptorTest {
 		} catch (Throwable ex) {
 			// OK
 		}
-		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
-
-		repository.get(method).thenThrows(asList(IllegalArgumentException.class, Throwable.class));
-		try {
-			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
-			fail("Exception must be thrown");
-		} catch (IllegalArgumentException ex) {
-			// OK
-		}
-		try {
-			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
-			fail("Exception must be thrown");
-		} catch (Throwable ex) {
-			// OK
-		}
-		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
-
-		repository.get(method).thenThrows(asList(IllegalArgumentException.class, Throwable.class));
-		try {
-			tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L));
-			fail("Exception must be thrown");
-		} catch (IllegalArgumentException ex) {
-			// OK
-		}
-		repository.get(method).clear();
 		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
 
 		repository.get(method).alwaysThrows(IllegalArgumentException.class);
