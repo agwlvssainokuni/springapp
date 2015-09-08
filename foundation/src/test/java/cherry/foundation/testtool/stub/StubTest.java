@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.lang.reflect.Method;
 
@@ -58,6 +59,7 @@ public class StubTest {
 	public void testNext() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName());
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertFalse(stub.isThrowable());
 		assertEquals(Long.class.getCanonicalName(), stub.peekType());
 		assertEquals(Long.valueOf(123L), stub.next());
@@ -68,6 +70,7 @@ public class StubTest {
 	public void testPeek() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName());
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertFalse(stub.isThrowable());
 		assertEquals(Long.class.getCanonicalName(), stub.peekType());
 		assertEquals(Long.valueOf(123L), stub.peek());
@@ -91,9 +94,34 @@ public class StubTest {
 	}
 
 	@Test
+	public void testNextMock() {
+		ToolTester mock = mock(ToolTester.class);
+		Stub<?> stub = repository.get(method).thenMock(mock);
+		assertTrue(stub.hasNext());
+		assertTrue(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(mock, stub.nextMock());
+		assertFalse(stub.hasNext());
+	}
+
+	@Test
+	public void testPeekMock() {
+		ToolTester mock = mock(ToolTester.class);
+		Stub<?> stub = repository.get(method).thenMock(mock);
+		assertTrue(stub.hasNext());
+		assertTrue(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(mock, stub.peekMock());
+		assertTrue(stub.hasNext());
+		assertEquals(mock, stub.nextMock());
+		assertFalse(stub.hasNext());
+	}
+
+	@Test
 	public void testNextThrowable() {
 		Stub<?> stub = repository.get(method).thenThrows(IllegalArgumentException.class);
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertTrue(stub.isThrowable());
 		assertEquals(IllegalArgumentException.class, stub.nextThrowable());
 		assertFalse(stub.hasNext());
@@ -103,6 +131,7 @@ public class StubTest {
 	public void testPeekThrowable() {
 		Stub<?> stub = repository.get(method).thenThrows(IllegalArgumentException.class);
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertTrue(stub.isThrowable());
 		assertEquals(IllegalArgumentException.class, stub.peekThrowable());
 		assertTrue(stub.hasNext());
@@ -115,6 +144,7 @@ public class StubTest {
 		Stub<?> stub = repository.get(method).alwaysReturn(Long.valueOf(123L));
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
+			assertFalse(stub.isMock());
 			assertFalse(stub.isThrowable());
 			assertEquals(Long.class.getCanonicalName(), stub.peekType());
 			assertEquals(Long.valueOf(123L), stub.peek());
@@ -129,6 +159,7 @@ public class StubTest {
 		Stub<?> stub = repository.get(method).alwaysReturn((Long) null);
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
+			assertFalse(stub.isMock());
 			assertFalse(stub.isThrowable());
 			assertNull(stub.peekType());
 			assertNull(stub.peek());
@@ -143,6 +174,7 @@ public class StubTest {
 		Stub<?> stub = repository.get(method).alwaysReturn(Long.valueOf(123L), "long");
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
+			assertFalse(stub.isMock());
 			assertFalse(stub.isThrowable());
 			assertEquals("long", stub.peekType());
 			assertEquals(Long.valueOf(123L), stub.peek());
@@ -156,6 +188,7 @@ public class StubTest {
 	public void testThenReturn1() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L));
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertFalse(stub.isThrowable());
 		assertEquals(Long.class.getCanonicalName(), stub.peekType());
 		assertEquals(Long.valueOf(123L), stub.peek());
@@ -167,6 +200,7 @@ public class StubTest {
 	public void testThenReturn1_null() {
 		Stub<?> stub = repository.get(method).thenReturn((Long) null);
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertFalse(stub.isThrowable());
 		assertNull(stub.peekType());
 		assertNull(stub.peek());
@@ -178,6 +212,7 @@ public class StubTest {
 	public void testThenReturn2() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), "long");
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertFalse(stub.isThrowable());
 		assertEquals("long", stub.peekType());
 		assertEquals(Long.valueOf(123L), stub.peek());
@@ -186,10 +221,38 @@ public class StubTest {
 	}
 
 	@Test
+	public void testAlwaysMock() {
+		ToolTester mock = mock(ToolTester.class);
+		Stub<?> stub = repository.get(method).alwaysMock(mock);
+		for (int i = 0; i < 100; i++) {
+			assertTrue(stub.hasNext());
+			assertTrue(stub.isMock());
+			assertFalse(stub.isThrowable());
+			assertEquals(mock, stub.peekMock());
+			assertEquals(mock, stub.nextMock());
+		}
+		stub.clear();
+		assertFalse(stub.hasNext());
+	}
+
+	@Test
+	public void testThenMock() {
+		ToolTester mock = mock(ToolTester.class);
+		Stub<?> stub = repository.get(method).thenMock(mock);
+		assertTrue(stub.hasNext());
+		assertTrue(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(mock, stub.peekMock());
+		assertEquals(mock, stub.nextMock());
+		assertFalse(stub.hasNext());
+	}
+
+	@Test
 	public void testAlwaysThrows() {
 		Stub<?> stub = repository.get(method).alwaysThrows(IllegalArgumentException.class);
 		for (int i = 0; i < 100; i++) {
 			assertTrue(stub.hasNext());
+			assertFalse(stub.isMock());
 			assertTrue(stub.isThrowable());
 			assertEquals(IllegalArgumentException.class, stub.peekThrowable());
 			assertEquals(IllegalArgumentException.class, stub.nextThrowable());
@@ -202,6 +265,7 @@ public class StubTest {
 	public void testThenThrows() {
 		Stub<?> stub = repository.get(method).thenThrows(IllegalArgumentException.class);
 		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
 		assertTrue(stub.isThrowable());
 		assertEquals(IllegalArgumentException.class, stub.peekThrowable());
 		assertEquals(IllegalArgumentException.class, stub.nextThrowable());
