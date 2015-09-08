@@ -28,6 +28,12 @@ public interface Stub<T> {
 
 	String peekType();
 
+	boolean isMock();
+
+	Object nextMock();
+
+	Object peekMock();
+
 	boolean isThrowable();
 
 	Class<? extends Throwable> nextThrowable();
@@ -47,6 +53,10 @@ public interface Stub<T> {
 	<E extends T> Stub<T> thenReturn(List<E> list);
 
 	<E extends T> Stub<T> thenReturn(List<E> list, String type);
+
+	Stub<T> alwaysMock(Object mock);
+
+	Stub<T> thenMock(Object mock);
 
 	Stub<T> alwaysThrows(Class<? extends Throwable> klass);
 

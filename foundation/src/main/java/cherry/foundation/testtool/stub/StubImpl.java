@@ -49,6 +49,21 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
+	public boolean isMock() {
+		return doPeek().getMock() != null;
+	}
+
+	@Override
+	public Object nextMock() {
+		return doNext().getMock();
+	}
+
+	@Override
+	public Object peekMock() {
+		return doPeek().getMock();
+	}
+
+	@Override
 	public boolean isThrowable() {
 		return doPeek().getThrowable() != null;
 	}
@@ -137,6 +152,24 @@ public class StubImpl<T> implements Stub<T> {
 	}
 
 	@Override
+	public Stub<T> alwaysMock(Object mock) {
+		Item<T> item = new Item<>();
+		item.setMock(mock);
+		always = item;
+		list.clear();
+		return this;
+	}
+
+	@Override
+	public Stub<T> thenMock(Object mock) {
+		Item<T> item = new Item<>();
+		item.setMock(mock);
+		list.add(item);
+		always = null;
+		return this;
+	}
+
+	@Override
 	public Stub<T> alwaysThrows(Class<? extends Throwable> klass) {
 		Item<T> item = new Item<>();
 		item.setThrowable(klass);
@@ -168,6 +201,8 @@ public class StubImpl<T> implements Stub<T> {
 
 		private String type = null;
 
+		private Object mock = null;
+
 		private Class<? extends Throwable> throwable = null;
 
 		public T getValue() {
@@ -184,6 +219,14 @@ public class StubImpl<T> implements Stub<T> {
 
 		public void setType(String type) {
 			this.type = type;
+		}
+
+		public Object getMock() {
+			return mock;
+		}
+
+		public void setMock(Object mock) {
+			this.mock = mock;
 		}
 
 		public Class<? extends Throwable> getThrowable() {
