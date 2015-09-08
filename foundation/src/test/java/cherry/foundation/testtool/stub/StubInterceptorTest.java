@@ -18,6 +18,12 @@ package cherry.foundation.testtool.stub;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -116,6 +122,27 @@ public class StubInterceptorTest {
 		}
 		repository.get(method).clear();
 		assertEquals(BigDecimal.valueOf(1234L), tester.toBeStubbed(BigDecimal.valueOf(1030L), BigDecimal.valueOf(204L)));
+	}
+
+	@Test
+	public void testMocked() throws NoSuchMethodException {
+
+		Method method = ToolTester.class.getDeclaredMethod("toBeStubbed", Long.class, Long.class);
+		ToolTester mock = mock(ToolTester.class);
+		when(mock.toBeStubbed(any(Long.class), any(Long.class))).thenReturn(Long.valueOf(1234L));
+
+		repository.get(method).thenMock(mock);
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+		assertEquals(Long.valueOf(3L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+
+		repository.get(method).alwaysMock(mock);
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+		assertEquals(Long.valueOf(1234L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+		repository.get(method).clear();
+		assertEquals(Long.valueOf(3L), tester.toBeStubbed(Long.valueOf(1L), Long.valueOf(2L)));
+
+		verify(mock, times(4)).toBeStubbed(eq(Long.valueOf(1L)), eq(Long.valueOf(2L)));
 	}
 
 }
