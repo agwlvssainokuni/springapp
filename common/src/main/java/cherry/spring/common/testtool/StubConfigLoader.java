@@ -17,6 +17,7 @@
 package cherry.spring.common.testtool;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,14 +53,14 @@ public class StubConfigLoader implements InitializingBean {
 	private StubRepository repository;
 
 	@Override
-	public void afterPropertiesSet() {
+	public void afterPropertiesSet() throws IOException {
 		File[] jsonfiles = defDir.listFiles(new PatternFilenameFilter(".*\\.json$"));
 		configure(jsonfiles, jsonObjectMapper);
 		File[] yamlfiles = defDir.listFiles(new PatternFilenameFilter(".*\\.yaml$"));
 		configure(yamlfiles, yamlObjectMapper);
 	}
 
-	private void configure(File[] files, ObjectMapper mapper) {
+	private void configure(File[] files, ObjectMapper mapper) throws IOException {
 		List<Resource> list = new ArrayList<>();
 		if (files != null) {
 			for (File f : files) {

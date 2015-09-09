@@ -17,6 +17,7 @@
 package cherry.foundation.testtool.stub;
 
 import static cherry.goods.util.ReflectionUtil.getMethodDescription;
+import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,36 +55,56 @@ public class StubConfigurer {
 		this.repository = repository;
 	}
 
-	public void configure() {
+	public void configure() throws IOException {
 		for (Resource r : resources) {
 			if (!r.exists()) {
 				continue;
 			}
 			try (InputStream in = r.getInputStream()) {
-				Map<Class<?>, Map<String, Config>> map = objectMapper.readValue(in,
-						new TypeReference<LinkedHashMap<Class<?>, Map<String, Config>>>() {
+				Map<Class<?>, Map<String, Object>> map = objectMapper.readValue(in,
+						new TypeReference<LinkedHashMap<Class<?>, Map<String, Object>>>() {
 						});
-				for (Map.Entry<Class<?>, Map<String, Config>> entry : map.entrySet()) {
+				for (Map.Entry<Class<?>, Map<String, Object>> entry : map.entrySet()) {
 					Multimap<String, Method> methodMap = createMethodMap(entry.getKey().getDeclaredMethods());
-					for (Map.Entry<String, Config> ent : entry.getValue().entrySet()) {
+					for (Map.Entry<String, Object> ent : entry.getValue().entrySet()) {
 						if (!methodMap.containsKey(ent.getKey())) {
 							continue;
 						}
 						for (Method method : methodMap.get(ent.getKey())) {
-							String data = objectMapper.writeValueAsString(ent.getValue().getData());
 							JavaType type = objectMapper.getTypeFactory().constructType(method.getGenericReturnType());
-							if (StringUtils.isNotEmpty(ent.getValue().getType())) {
-								type = objectMapper.getTypeFactory().constructFromCanonical(ent.getValue().getType());
+							List<Config> cfglist = parseConfig(ent.getValue());
+							for (Config cfg : cfglist) {
+								Object v = parseValue(cfg, type);
+								if (cfglist.size() == 1) {
+									repository.get(method).alwaysReturn(v);
+								} else {
+									repository.get(method).thenReturn(v);
+								}
 							}
-							Object v = objectMapper.readValue(data, type);
-							repository.get(method).alwaysReturn(v);
 						}
 					}
 				}
-			} catch (IOException ex) {
-				throw new IllegalArgumentException(ex);
 			}
 		}
+	}
+
+	private List<Config> parseConfig(Object value) throws IOException {
+		String deparsed = objectMapper.writeValueAsString(value);
+		if (value instanceof List) {
+			return objectMapper.readValue(deparsed, new TypeReference<List<Config>>() {
+			});
+		} else {
+			return asList(objectMapper.readValue(deparsed, Config.class));
+		}
+	}
+
+	private Object parseValue(Config cfg, JavaType defaultType) throws IOException {
+		String data = objectMapper.writeValueAsString(cfg.getData());
+		JavaType type = defaultType;
+		if (StringUtils.isNotEmpty(cfg.getType())) {
+			type = objectMapper.getTypeFactory().constructFromCanonical(cfg.getType());
+		}
+		return objectMapper.readValue(data, type);
 	}
 
 	private Multimap<String, Method> createMethodMap(Method[] methods) {

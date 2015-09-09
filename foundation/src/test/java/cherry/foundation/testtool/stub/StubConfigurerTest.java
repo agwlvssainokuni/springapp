@@ -20,6 +20,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -75,7 +76,7 @@ public class StubConfigurerTest {
 	}
 
 	@Test
-	public void testConfigure1() {
+	public void testConfigure1() throws IOException {
 
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
@@ -89,7 +90,7 @@ public class StubConfigurerTest {
 	}
 
 	@Test
-	public void testConfigure1_withType() {
+	public void testConfigure1_withType() throws IOException {
 
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
@@ -103,14 +104,14 @@ public class StubConfigurerTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testConfigure1_withInvalidType() {
+	public void testConfigure1_withInvalidType() throws IOException {
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(java.lang.Long,java.lang.Long)\":{\"data\":123,\"type\":\"INVALID_TYPE\"}}}";
 		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 	}
 
 	@Test
-	public void testConfigure2() {
+	public void testConfigure2() throws IOException {
 
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 
@@ -124,7 +125,7 @@ public class StubConfigurerTest {
 	}
 
 	@Test
-	public void testConfigure3() {
+	public void testConfigure3() throws IOException {
 
 		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
 		assertEquals(BigDecimal.ZERO, toolTester.toBeStubbed(BigDecimal.ZERO, BigDecimal.ZERO));
@@ -148,34 +149,68 @@ public class StubConfigurerTest {
 	}
 
 	@Test
-	public void testConfigure_NOMETHOD() {
+	public void testConfigure4() throws IOException {
+
+		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+
+		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(Long,Long)\":[{\"data\":123}]}}";
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
+		configure(asList(res));
+		assertEquals(1, repository.getStubbedMethod().size());
+		assertEquals(method, repository.getStubbedMethod().get(0));
+
+		assertEquals(Long.valueOf(123L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(123L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(123L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(123L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+	}
+
+	@Test
+	public void testConfigure5() throws IOException {
+
+		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+
+		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"toBeStubbed(Long,Long)\":[{\"data\":123},{\"data\":456},{\"data\":789}]}}";
+		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
+		configure(asList(res));
+		assertEquals(1, repository.getStubbedMethod().size());
+		assertEquals(method, repository.getStubbedMethod().get(0));
+
+		assertEquals(Long.valueOf(123L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(456L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(789L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+		assertEquals(Long.valueOf(0L), toolTester.toBeStubbed(Long.valueOf(0L), Long.valueOf(0L)));
+	}
+
+	@Test
+	public void testConfigure_NOMETHOD() throws IOException {
 		String json = "{\"cherry.foundation.testtool.ToolTester\":{\"NOT_EXIST\":{\"data\":123}}}";
 		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 		assertTrue(repository.getStubbedMethod().isEmpty());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testConfigure_NGJSON() {
+	@Test(expected = IOException.class)
+	public void testConfigure_NGJSON() throws IOException {
 		String json = "NGJSON";
 		Resource res = new InMemoryResource(json.getBytes(StandardCharsets.UTF_8));
 		configure(asList(res));
 	}
 
 	@Test
-	public void testConfigure_NORESOURCE() {
+	public void testConfigure_NORESOURCE() throws IOException {
 		configure(new ArrayList<Resource>());
 		assertTrue(repository.getStubbedMethod().isEmpty());
 	}
 
 	@Test
-	public void testConfigure_RESOURCENOTEXIST() {
+	public void testConfigure_RESOURCENOTEXIST() throws IOException {
 		Resource res = new FileSystemResource("/not/exist");
 		configure(asList(res));
 		assertTrue(repository.getStubbedMethod().isEmpty());
 	}
 
-	private void configure(List<Resource> resources) {
+	private void configure(List<Resource> resources) throws IOException {
 		StubConfigurer cfg = new StubConfigurer();
 		cfg.setRepository(repository);
 		cfg.setObjectMapper(objectMapper);
