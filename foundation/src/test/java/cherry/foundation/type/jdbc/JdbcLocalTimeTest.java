@@ -18,38 +18,34 @@ package cherry.foundation.type.jdbc;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.joda.time.LocalTime;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.db.dto.ConversionTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class JdbcLocalTimeTest {
 
 	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+	private JdbcOperations jdbcOperations;
 
 	@Autowired
 	private JdbcDao jdbcDao;
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
 
 	@Test
 	public void testSaveAndLoad() {
@@ -67,6 +63,9 @@ public class JdbcLocalTimeTest {
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
 		assertThat(r.getJodaTime(), is(orig));
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
@@ -85,6 +84,9 @@ public class JdbcLocalTimeTest {
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
 		assertThat(r.getJodaTime(), is(orig));
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
@@ -102,7 +104,7 @@ public class JdbcLocalTimeTest {
 		List<ConversionTest> list = jdbcDao.selectAllWithMask();
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(new LocalTime(0, 0, 0)));
+		assertThat(r.getJodaTime(), is(new LocalTime(0, 0, 0, orig.getMillisOfSecond())));
 	}
 
 }

@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.sql.Time;
+import java.util.Calendar;
 
 import org.joda.time.LocalTime;
 import org.junit.Test;
@@ -31,30 +32,40 @@ public class SqlTimeMaskerTest {
 	public void testMaskHour() {
 		SqlTimeMasker masker = SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), true, false, false);
 		LocalTime v = LocalTime.now();
-		Time vv = new Time(v.getMillisOfDay());
+		Time vv = getSqlTime(v);
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat((int) masker.mask(vv).getTime(),
-				is(new LocalTime(0, v.getMinuteOfHour(), v.getSecondOfMinute()).getMillisOfDay()));
+		assertThat(masker.mask(vv).getTime(),
+				is(getSqlTime(new LocalTime(0, v.getMinuteOfHour(), v.getSecondOfMinute(), v.getMillisOfSecond()))
+						.getTime()));
 	}
 
 	@Test
 	public void testMaskMinute() {
 		SqlTimeMasker masker = SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), false, true, false);
 		LocalTime v = LocalTime.now();
-		Time vv = new Time(v.getMillisOfDay());
+		Time vv = getSqlTime(v);
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat((int) masker.mask(vv).getTime(),
-				is(new LocalTime(v.getHourOfDay(), 0, v.getSecondOfMinute()).getMillisOfDay()));
+		assertThat(masker.mask(vv).getTime(),
+				is(getSqlTime(new LocalTime(v.getHourOfDay(), 0, v.getSecondOfMinute(), v.getMillisOfSecond()))
+						.getTime()));
 	}
 
 	@Test
 	public void testMaskSecond() {
 		SqlTimeMasker masker = SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), false, false, true);
 		LocalTime v = LocalTime.now();
-		Time vv = new Time(v.getMillisOfDay());
+		Time vv = getSqlTime(v);
 		assertThat(masker.mask(null), is(nullValue()));
-		assertThat((int) masker.mask(vv).getTime(),
-				is(new LocalTime(v.getHourOfDay(), v.getMinuteOfHour(), 0).getMillisOfDay()));
+		assertThat(
+				masker.mask(vv).getTime(),
+				is(getSqlTime(new LocalTime(v.getHourOfDay(), v.getMinuteOfHour(), 0, v.getMillisOfSecond())).getTime()));
+	}
+
+	private Time getSqlTime(LocalTime ltm) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+		cal.set(Calendar.MILLISECOND, ltm.getMillisOfSecond());
+		return new Time(cal.getTimeInMillis());
 	}
 
 }

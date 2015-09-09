@@ -19,6 +19,7 @@ package cherry.foundation.type.jdbc;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -47,7 +48,10 @@ public class CustomBeanPropertySqlParameterSource extends BeanPropertySqlParamet
 		}
 		if (object instanceof LocalTime) {
 			LocalTime lt = (LocalTime) object;
-			return new Time((long) lt.getMillisOfDay());
+			Calendar cal = Calendar.getInstance();
+			cal.set(0, 0, 0, lt.getHourOfDay(), lt.getMinuteOfHour(), lt.getSecondOfMinute());
+			cal.set(Calendar.MILLISECOND, lt.getMillisOfSecond());
+			return new Time(cal.getTimeInMillis());
 		}
 		if (object instanceof SecureType<?>) {
 			SecureType<?> st = (SecureType<?>) object;

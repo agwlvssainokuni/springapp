@@ -22,38 +22,29 @@ import static org.junit.Assert.assertThat;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.SecureBigInteger;
 import cherry.foundation.type.db.dto.ConversionTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class JdbcSecureBigIntegerTest {
-
-	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
 	private JdbcDao jdbcDao;
 
 	private SecureRandom random = new SecureRandom();
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
 
 	@Test
 	public void testSaveAndLoad() {

@@ -49,7 +49,8 @@ public abstract class LocalTimeMasker implements Masker<LocalTime> {
 			int hour = (this.hour ? mask.getHourOfDay() : value.getHourOfDay());
 			int minute = (this.minute ? mask.getMinuteOfHour() : value.getMinuteOfHour());
 			int second = (this.second ? mask.getSecondOfMinute() : value.getSecondOfMinute());
-			return new LocalTime(hour, minute, second);
+			int millis = value.getMillisOfSecond();
+			return new LocalTime(hour, minute, second, millis);
 		}
 	}
 

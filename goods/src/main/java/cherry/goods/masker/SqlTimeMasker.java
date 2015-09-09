@@ -17,8 +17,8 @@
 package cherry.goods.masker;
 
 import java.sql.Time;
+import java.util.Calendar;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 public abstract class SqlTimeMasker implements Masker<Time> {
@@ -40,8 +40,21 @@ public abstract class SqlTimeMasker implements Masker<Time> {
 			if (value == null) {
 				return value;
 			}
-			LocalTime masked = masker.mask(new LocalTime(value.getTime() + LocalDate.now().toDate().getTime()));
-			return new Time(masked.getMillisOfDay());
+			return getSqlTime(masker.mask(getLocalTime(value)));
+		}
+
+		private Time getSqlTime(LocalTime ltm) {
+			Calendar cal = Calendar.getInstance();
+			cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+			cal.set(Calendar.MILLISECOND, ltm.getMillisOfSecond());
+			return new Time(cal.getTimeInMillis());
+		}
+
+		private LocalTime getLocalTime(Time time) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(time.getTime());
+			return new LocalTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND),
+					cal.get(Calendar.MILLISECOND));
 		}
 	}
 
