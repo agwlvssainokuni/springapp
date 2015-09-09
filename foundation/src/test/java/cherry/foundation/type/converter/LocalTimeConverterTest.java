@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.Time;
+import java.util.Calendar;
 
 import org.joda.time.LocalTime;
 import org.junit.Test;
@@ -46,8 +47,14 @@ public class LocalTimeConverterTest {
 	public void testConvert() {
 		LocalTime now = LocalTime.now();
 		for (int i = -86400; i <= 86400; i++) {
+
 			LocalTime lt = now.plusSeconds(i);
-			Time time = new Time(lt.getMillisOfDay());
+
+			Calendar cal = Calendar.getInstance();
+			cal.set(0, 0, 0, lt.getHourOfDay(), lt.getMinuteOfHour(), lt.getSecondOfMinute());
+			cal.set(Calendar.MILLISECOND, lt.getMillisOfSecond());
+			Time time = new Time(cal.getTimeInMillis());
+
 			assertThat(cs.convert(time, LocalTime.class), is(lt));
 			assertThat(cs.convert(lt, Time.class), is(time));
 		}

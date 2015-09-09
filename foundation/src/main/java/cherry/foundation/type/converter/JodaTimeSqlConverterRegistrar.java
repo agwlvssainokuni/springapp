@@ -19,6 +19,7 @@ package cherry.foundation.type.converter;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -56,14 +57,20 @@ public class JodaTimeSqlConverterRegistrar implements FormatterRegistrar {
 	static class LocalTimeConverter implements Converter<Time, LocalTime> {
 		@Override
 		public LocalTime convert(Time source) {
-			return LocalTime.fromMillisOfDay(source.getTime());
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(source.getTime());
+			return new LocalTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND),
+					cal.get(Calendar.MILLISECOND));
 		}
 	}
 
 	static class SqlTimeConverter implements Converter<LocalTime, Time> {
 		@Override
 		public Time convert(LocalTime source) {
-			return new Time(source.getMillisOfDay());
+			Calendar cal = Calendar.getInstance();
+			cal.set(0, 0, 0, source.getHourOfDay(), source.getMinuteOfHour(), source.getSecondOfMinute());
+			cal.set(Calendar.MILLISECOND, source.getMillisOfSecond());
+			return new Time(cal.getTimeInMillis());
 		}
 	}
 
