@@ -18,37 +18,33 @@ package cherry.foundation.mybatis;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class JodaLocalDateTypeHandlerTest {
 
 	@Autowired
 	private ConversionTestMapper mapper;
 
 	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
+	private JdbcOperations jdbcOperations;
 
 	@Test
 	public void testSaveAndLoad() {
@@ -64,6 +60,9 @@ public class JodaLocalDateTypeHandlerTest {
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
 		assertThat(r.getJodaDate(), is(orig));
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
 	}
 
 	@Test
@@ -80,6 +79,9 @@ public class JodaLocalDateTypeHandlerTest {
 		assertThat(list.isEmpty(), is(false));
 		ConversionTest r = list.get(0);
 		assertThat(r.getJodaDate(), is(orig));
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
 	}
 
 }

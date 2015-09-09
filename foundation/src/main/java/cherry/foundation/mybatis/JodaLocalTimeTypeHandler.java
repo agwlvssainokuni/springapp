@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.Calendar;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -33,7 +34,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setTime(i, new Time(parameter.getMillisOfDay()));
+		ps.setTime(i, getSqlTime(parameter));
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return getLocalTime(time);
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return getLocalTime(time);
 	}
 
 	@Override
@@ -60,7 +61,21 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return getLocalTime(time);
+	}
+
+	private Time getSqlTime(LocalTime ltm) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+		cal.set(Calendar.MILLISECOND, ltm.getMillisOfSecond());
+		return new Time(cal.getTimeInMillis());
+	}
+
+	private LocalTime getLocalTime(Time time) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time.getTime());
+		return new LocalTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND),
+				cal.get(Calendar.MILLISECOND));
 	}
 
 }
