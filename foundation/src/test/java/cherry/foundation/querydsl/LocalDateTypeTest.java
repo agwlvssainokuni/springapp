@@ -25,6 +25,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,9 @@ import com.mysema.query.sql.dml.SQLInsertClause;
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
 public class LocalDateTypeTest {
+
+	@Autowired
+	private JdbcOperations jdbcOperations;
 
 	@Autowired
 	private SQLQueryFactory queryFactory;
@@ -57,6 +61,9 @@ public class LocalDateTypeTest {
 		SQLQuery query = queryFactory.from(ct);
 		LocalDate result = query.uniqueResult(ct.jodaDate);
 		assertEquals(orig, result);
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
 	}
 
 	@Test
@@ -71,6 +78,9 @@ public class LocalDateTypeTest {
 		SQLQuery query = queryFactory.from(ct);
 		LocalDate result = query.uniqueResult(ct.jodaDate);
 		assertEquals(orig, result);
+
+		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
+				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
 	}
 
 	@Test

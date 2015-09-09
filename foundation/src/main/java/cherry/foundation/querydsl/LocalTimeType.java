@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
+import java.util.Calendar;
 
 import org.joda.time.LocalTime;
 
@@ -52,12 +53,26 @@ public class LocalTimeType extends AbstractDateTimeType<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return LocalTime.fromMillisOfDay(time.getTime());
+		return getLocalTime(time);
 	}
 
 	@Override
 	public void setValue(PreparedStatement st, int startIndex, LocalTime value) throws SQLException {
-		st.setTime(startIndex, new Time(value.getMillisOfDay()));
+		st.setTime(startIndex, getSqlTime(value));
+	}
+
+	private Time getSqlTime(LocalTime ltm) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+		cal.set(Calendar.MILLISECOND, ltm.getMillisOfSecond());
+		return new Time(cal.getTimeInMillis());
+	}
+
+	private LocalTime getLocalTime(Time time) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time.getTime());
+		return new LocalTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND),
+				cal.get(Calendar.MILLISECOND));
 	}
 
 }
