@@ -38,6 +38,10 @@ public interface Stub<T> {
 
 	Class<? extends Throwable> peekThrowable();
 
+	boolean isRepeated();
+
+	Stub<?> setRepeated(boolean repeated);
+
 	Stub<T> clear();
 
 	<E extends T> Stub<T> alwaysReturn(E value);

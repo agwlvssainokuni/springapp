@@ -25,6 +25,8 @@ public class StubImpl<T> implements Stub<T> {
 
 	private final List<Item<T>> list = new LinkedList<>();
 
+	private boolean repeated = false;
+
 	@Override
 	public boolean hasNext() {
 		if (always != null) {
@@ -85,7 +87,11 @@ public class StubImpl<T> implements Stub<T> {
 		if (list.isEmpty()) {
 			throw new IllegalStateException("Empty stub");
 		}
-		return list.remove(0);
+		Item<T> item = list.remove(0);
+		if (isRepeated()) {
+			list.add(item);
+		}
+		return item;
 	}
 
 	private Item<T> doPeek() {
@@ -96,6 +102,17 @@ public class StubImpl<T> implements Stub<T> {
 			throw new IllegalStateException("Empty stub");
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public boolean isRepeated() {
+		return repeated;
+	}
+
+	@Override
+	public Stub<?> setRepeated(boolean repeated) {
+		this.repeated = repeated;
+		return this;
 	}
 
 	@Override
