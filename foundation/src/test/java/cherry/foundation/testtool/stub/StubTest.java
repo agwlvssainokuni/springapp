@@ -67,6 +67,40 @@ public class StubTest {
 	}
 
 	@Test
+	public void testNextWhenRepeatedFalse() {
+		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName())
+				.setRepeated(false);
+		assertFalse(repository.get(method).isRepeated());
+
+		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(Long.class.getCanonicalName(), stub.peekType());
+		assertEquals(Long.valueOf(123L), stub.next());
+
+		assertFalse(stub.hasNext());
+	}
+
+	@Test
+	public void testNextWhenRepeatedTrue() {
+		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName())
+				.setRepeated(true);
+		assertTrue(repository.get(method).isRepeated());
+
+		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(Long.class.getCanonicalName(), stub.peekType());
+		assertEquals(Long.valueOf(123L), stub.next());
+
+		assertTrue(stub.hasNext());
+		assertFalse(stub.isMock());
+		assertFalse(stub.isThrowable());
+		assertEquals(Long.class.getCanonicalName(), stub.peekType());
+		assertEquals(Long.valueOf(123L), stub.next());
+	}
+
+	@Test
 	public void testPeek() {
 		Stub<?> stub = repository.get(method).thenReturn(Long.valueOf(123L), Long.class.getCanonicalName());
 		assertTrue(stub.hasNext());
