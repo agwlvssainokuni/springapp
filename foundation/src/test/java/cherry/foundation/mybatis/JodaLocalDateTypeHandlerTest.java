@@ -84,4 +84,13 @@ public class JodaLocalDateTypeHandlerTest {
 				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
 	}
 
+	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_date) VALUES ('2015-01-23')");
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertEquals(new LocalDate(2015, 1, 23), r.getJodaDate());
+	}
+
 }

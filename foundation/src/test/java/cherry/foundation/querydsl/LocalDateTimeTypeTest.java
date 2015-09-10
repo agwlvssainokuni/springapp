@@ -98,6 +98,13 @@ public class LocalDateTimeTypeTest {
 	}
 
 	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_datetime) VALUES ('2015-01-23 12:34:56.789')");
+		LocalDateTime result = queryFactory.from(ct).uniqueResult(ct.jodaDatetime);
+		assertEquals(new LocalDateTime(2015, 1, 23, 12, 34, 56, 789), result);
+	}
+
+	@Test
 	public void testMisc() {
 
 		LocalDateTimeType type = new LocalDateTimeType(Types.TIMESTAMP);

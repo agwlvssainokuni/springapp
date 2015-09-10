@@ -84,4 +84,13 @@ public class JodaLocalTimeTypeHandlerTest {
 				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
 	}
 
+	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_time) VALUES ('12:34:56.789')");
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertEquals(new LocalTime(12, 34, 56, 789), r.getJodaTime());
+	}
+
 }

@@ -96,6 +96,13 @@ public class LocalTimeTypeTest {
 	}
 
 	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_time) VALUES ('12:34:56.789')");
+		LocalTime result = queryFactory.from(ct).uniqueResult(ct.jodaTime);
+		assertEquals(new LocalTime(12, 34, 56, 789), result);
+	}
+
+	@Test
 	public void testMisc() {
 
 		LocalTimeType type = new LocalTimeType(Types.TIMESTAMP);

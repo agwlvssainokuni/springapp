@@ -96,6 +96,13 @@ public class LocalDateTypeTest {
 	}
 
 	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_date) VALUES ('2015-01-23')");
+		LocalDate result = queryFactory.from(ct).uniqueResult(ct.jodaDate);
+		assertEquals(new LocalDate(2015, 1, 23), result);
+	}
+
+	@Test
 	public void testMisc() {
 
 		LocalDateType type = new LocalDateType(Types.DATE);

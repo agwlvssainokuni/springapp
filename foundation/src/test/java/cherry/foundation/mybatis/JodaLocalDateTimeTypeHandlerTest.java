@@ -86,4 +86,13 @@ public class JodaLocalDateTimeTypeHandlerTest {
 				orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
 	}
 
+	@Test
+	public void testLoad() {
+		jdbcOperations.execute("INSERT INTO conversion_test(joda_datetime) VALUES ('2015-01-23 12:34:56.789')");
+		List<ConversionTest> list = mapper.selectAll();
+		assertThat(list.isEmpty(), is(false));
+		ConversionTest r = list.get(0);
+		assertEquals(new LocalDateTime(2015, 1, 23, 12, 34, 56, 789), r.getJodaDatetime());
+	}
+
 }
