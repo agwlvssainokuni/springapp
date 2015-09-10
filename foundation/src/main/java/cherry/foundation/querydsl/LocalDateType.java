@@ -16,6 +16,9 @@
 
 package cherry.foundation.querydsl;
 
+import static cherry.goods.util.JodaTimeUtil.getLocalDate;
+import static cherry.goods.util.JodaTimeUtil.getSqlDate;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,12 +55,12 @@ public class LocalDateType extends AbstractDateTimeType<LocalDate> {
 		if (date == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return getLocalDate(date);
 	}
 
 	@Override
 	public void setValue(PreparedStatement st, int startIndex, LocalDate value) throws SQLException {
-		st.setDate(startIndex, new Date(value.toDate().getTime()));
+		st.setDate(startIndex, getSqlDate(value));
 	}
 
 }

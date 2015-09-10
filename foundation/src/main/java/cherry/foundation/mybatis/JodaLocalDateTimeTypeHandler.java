@@ -16,6 +16,9 @@
 
 package cherry.foundation.mybatis;
 
+import static cherry.goods.util.JodaTimeUtil.getLocalDateTime;
+import static cherry.goods.util.JodaTimeUtil.getSqlTimestamp;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +36,7 @@ public class JodaLocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime>
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, LocalDateTime parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()));
+		ps.setTimestamp(i, getSqlTimestamp(parameter));
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class JodaLocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime>
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return getLocalDateTime(timestamp);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class JodaLocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime>
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return getLocalDateTime(timestamp);
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class JodaLocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime>
 		if (timestamp == null) {
 			return null;
 		}
-		return new LocalDateTime(timestamp.getTime());
+		return getLocalDateTime(timestamp);
 	}
 
 }

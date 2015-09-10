@@ -16,6 +16,9 @@
 
 package cherry.foundation.mybatis;
 
+import static cherry.goods.util.JodaTimeUtil.getLocalDate;
+import static cherry.goods.util.JodaTimeUtil.getSqlDate;
+
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -33,7 +36,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setDate(i, new Date(parameter.toDate().getTime()));
+		ps.setDate(i, getSqlDate(parameter));
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 		if (date == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return getLocalDate(date);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 		if (date == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return getLocalDate(date);
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 		if (date == null) {
 			return null;
 		}
-		return new LocalDate(date.getTime());
+		return getLocalDate(date);
 	}
 
 }
