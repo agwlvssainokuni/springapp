@@ -16,6 +16,9 @@
 
 package cherry.goods.masker;
 
+import static cherry.goods.util.JodaTimeUtil.getLocalDateTime;
+import static cherry.goods.util.JodaTimeUtil.getSqlTimestamp;
+
 import java.sql.Timestamp;
 
 import org.joda.time.LocalDateTime;
@@ -41,8 +44,7 @@ public abstract class SqlTimestampMasker implements Masker<Timestamp> {
 			if (value == null) {
 				return value;
 			}
-			LocalDateTime masked = masker.mask(new LocalDateTime(value.getTime()));
-			return new Timestamp(masked.toDate().getTime());
+			return getSqlTimestamp(masker.mask(getLocalDateTime(value)));
 		}
 	}
 

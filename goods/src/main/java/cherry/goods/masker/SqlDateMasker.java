@@ -16,6 +16,9 @@
 
 package cherry.goods.masker;
 
+import static cherry.goods.util.JodaTimeUtil.getLocalDate;
+import static cherry.goods.util.JodaTimeUtil.getSqlDate;
+
 import java.sql.Date;
 
 import org.joda.time.LocalDate;
@@ -39,8 +42,7 @@ public abstract class SqlDateMasker implements Masker<Date> {
 			if (value == null) {
 				return value;
 			}
-			LocalDate masked = masker.mask(new LocalDate(value.getTime()));
-			return new Date(masked.toDate().getTime());
+			return getSqlDate(masker.mask(getLocalDate(value)));
 		}
 	}
 
