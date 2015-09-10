@@ -16,10 +16,9 @@
 
 package cherry.foundation.type.jdbc;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import static cherry.goods.util.JodaTimeUtil.getSqlDate;
+import static cherry.goods.util.JodaTimeUtil.getSqlTime;
+import static cherry.goods.util.JodaTimeUtil.getSqlTimestamp;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -39,19 +38,13 @@ public class CustomBeanPropertySqlParameterSource extends BeanPropertySqlParamet
 	public Object getValue(String paramName) throws IllegalArgumentException {
 		Object object = super.getValue(paramName);
 		if (object instanceof LocalDateTime) {
-			LocalDateTime ldt = (LocalDateTime) object;
-			return new Timestamp(ldt.toDate().getTime());
+			return getSqlTimestamp((LocalDateTime) object);
 		}
 		if (object instanceof LocalDate) {
-			LocalDate ld = (LocalDate) object;
-			return new Date(ld.toDate().getTime());
+			return getSqlDate((LocalDate) object);
 		}
 		if (object instanceof LocalTime) {
-			LocalTime lt = (LocalTime) object;
-			Calendar cal = Calendar.getInstance();
-			cal.set(0, 0, 0, lt.getHourOfDay(), lt.getMinuteOfHour(), lt.getSecondOfMinute());
-			cal.set(Calendar.MILLISECOND, lt.getMillisOfSecond());
-			return new Time(cal.getTimeInMillis());
+			return getSqlTime((LocalTime) object);
 		}
 		if (object instanceof SecureType<?>) {
 			SecureType<?> st = (SecureType<?>) object;
