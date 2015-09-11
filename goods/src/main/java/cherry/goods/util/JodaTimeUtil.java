@@ -36,44 +36,59 @@ import org.joda.time.LocalTime;
 public class JodaTimeUtil {
 
 	public static LocalDateTime getLocalDateTime(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ts.getTime());
+		Calendar cal = getCalendar(ts);
 		return new LocalDateTime(cal.get(YEAR), cal.get(MONTH) + 1, cal.get(DAY_OF_MONTH), cal.get(HOUR_OF_DAY),
 				cal.get(MINUTE), cal.get(SECOND), cal.get(MILLISECOND));
 	}
 
-	public static Timestamp getSqlTimestamp(LocalDateTime ldtm) {
+	public static Calendar getCalendar(LocalDateTime ldtm) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(ldtm.getYear(), ldtm.getMonthOfYear() - 1, ldtm.getDayOfMonth(), ldtm.getHourOfDay(),
 				ldtm.getMinuteOfHour(), ldtm.getSecondOfMinute());
 		cal.set(MILLISECOND, ldtm.getMillisOfSecond());
-		return new Timestamp(cal.getTimeInMillis());
+		return cal;
+	}
+
+	public static Timestamp getSqlTimestamp(LocalDateTime ldtm) {
+		return new Timestamp(getCalendar(ldtm).getTimeInMillis());
 	}
 
 	public static LocalDate getLocalDate(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(date.getTime());
+		Calendar cal = getCalendar(date);
 		return new LocalDate(cal.get(YEAR), cal.get(MONTH) + 1, cal.get(DAY_OF_MONTH));
 	}
 
-	public static Date getSqlDate(LocalDate ldt) {
+	public static Calendar getCalendar(LocalDate ldt) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(ldt.getYear(), ldt.getMonthOfYear() - 1, ldt.getDayOfMonth(), 0, 0, 0);
 		cal.set(MILLISECOND, 0);
-		return new Date(cal.getTimeInMillis());
+		return cal;
+	}
+
+	public static Date getSqlDate(LocalDate ldt) {
+		return new Date(getCalendar(ldt).getTimeInMillis());
 	}
 
 	public static LocalTime getLocalTime(Time time) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(time.getTime());
+		Calendar cal = getCalendar(time);
 		return new LocalTime(cal.get(HOUR_OF_DAY), cal.get(MINUTE), cal.get(SECOND), cal.get(MILLISECOND));
 	}
 
-	public static Time getSqlTime(LocalTime ltm) {
+	public static Calendar getCalendar(LocalTime ltm) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+		cal.set(1970, 0, 1, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
 		cal.set(MILLISECOND, ltm.getMillisOfSecond());
-		return new Time(cal.getTimeInMillis());
+		return cal;
+	}
+
+	public static Time getSqlTime(LocalTime ltm) {
+		return new Time(getCalendar(ltm).getTimeInMillis());
+	}
+
+	public static Calendar getCalendar(java.util.Date d) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(d.getTime());
+		return cal;
 	}
 
 }
