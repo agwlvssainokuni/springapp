@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
@@ -32,10 +31,6 @@ public class DeindexMessageSource implements MessageSource {
 
 	private final Pattern pattern = Pattern.compile("\\[([._0-9a-z]+)\\]", Pattern.CASE_INSENSITIVE);
 
-	private final Pattern number = Pattern.compile("[0-9]+");
-
-	private final String replacement = "[]";
-
 	private MessageSource messageSource;
 
 	public void setMessageSource(MessageSource messageSource) {
@@ -44,57 +39,56 @@ public class DeindexMessageSource implements MessageSource {
 
 	@Override
 	public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
-		Pair<String, List<Object>> p = parse(code);
-		return messageSource.getMessage(p.getLeft(), getArgs(p.getRight(), args), defaultMessage, locale);
+		return messageSource.getMessage(parse2(code, args, defaultMessage), locale);
 	}
 
 	@Override
 	public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
-		Pair<String, List<Object>> p = parse(code);
-		return messageSource.getMessage(p.getLeft(), getArgs(p.getRight(), args), locale);
+		return messageSource.getMessage(parse2(code, args, null), locale);
 	}
 
 	@Override
 	public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
-		List<String> codes = new ArrayList<>(resolvable.getCodes().length);
-		List<Object> params = new ArrayList<>();
-		for (String c : resolvable.getCodes()) {
-			Pair<String, List<Object>> p = parse(c);
-			codes.add(p.getLeft());
-			if (params.size() < p.getRight().size()) {
-				params = p.getRight();
+		for (String code : resolvable.getCodes()) {
+			try {
+				return messageSource.getMessage(
+						parse2(code, resolvable.getArguments(), resolvable.getDefaultMessage()), locale);
+			} catch (NoSuchMessageException ex) {
+				// NOTHING
 			}
 		}
-		MessageSourceResolvable r = new DefaultMessageSourceResolvable(codes.toArray(new String[codes.size()]),
-				getArgs(params, resolvable.getArguments()), resolvable.getDefaultMessage());
-		return messageSource.getMessage(r, locale);
+		throw new NoSuchMessageException(resolvable.getCodes().length <= 0 ? null : resolvable.getCodes()[0], locale);
 	}
 
-	private Pair<String, List<Object>> parse(String code) {
+	private MessageSourceResolvable parse2(String code, Object[] args, String defaultMessage) {
 
-		List<Object> params = new ArrayList<>();
+		List<MessageSourceResolvable> params = new ArrayList<>();
+
 		Matcher m = pattern.matcher(code);
 		boolean result = m.find();
 		if (!result) {
-			return Pair.of(code, params);
+			return new DefaultMessageSourceResolvable(new String[] { code }, getArgs(params, args), defaultMessage);
 		}
 
 		StringBuffer sb = new StringBuffer();
 		do {
 			String s = m.group(1);
-			if (number.matcher(s).matches()) {
-				params.add(Integer.parseInt(s));
-			} else {
-				params.add(new DefaultMessageSourceResolvable(new String[] { s }, s));
-			}
-			m.appendReplacement(sb, replacement);
+			params.add(create(sb.toString(), s));
+			m.appendReplacement(sb, "[]");
 			result = m.find();
 		} while (result);
 		m.appendTail(sb);
-		return Pair.of(sb.toString(), params);
+
+		return new DefaultMessageSourceResolvable(new String[] { code, sb.toString() }, getArgs(params, args),
+				defaultMessage);
 	}
 
-	private Object[] getArgs(List<Object> params, Object[] args) {
+	private MessageSourceResolvable create(String prefix, String name) {
+		return new DefaultMessageSourceResolvable(new String[] { name, prefix + "." + name, prefix + "[]." + name },
+				name);
+	}
+
+	private Object[] getArgs(List<MessageSourceResolvable> params, Object[] args) {
 		List<Object> list = new ArrayList<>(params.size() + args.length);
 		list.addAll(params);
 		for (Object a : args) {
