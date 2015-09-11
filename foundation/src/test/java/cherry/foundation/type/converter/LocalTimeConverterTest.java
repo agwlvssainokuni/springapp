@@ -51,7 +51,7 @@ public class LocalTimeConverterTest {
 			LocalTime lt = now.plusSeconds(i);
 
 			Calendar cal = Calendar.getInstance();
-			cal.set(0, 0, 0, lt.getHourOfDay(), lt.getMinuteOfHour(), lt.getSecondOfMinute());
+			cal.set(1970, 0, 1, lt.getHourOfDay(), lt.getMinuteOfHour(), lt.getSecondOfMinute());
 			cal.set(Calendar.MILLISECOND, lt.getMillisOfSecond());
 			Time time = new Time(cal.getTimeInMillis());
 
