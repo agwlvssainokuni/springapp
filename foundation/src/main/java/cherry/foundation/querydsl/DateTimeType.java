@@ -16,11 +16,15 @@
 
 package cherry.foundation.querydsl;
 
+import static cherry.goods.util.JodaTimeUtil.getCalendar;
+import static cherry.goods.util.JodaTimeUtil.getDateTime;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Calendar;
 
 import org.joda.time.DateTime;
 
@@ -52,12 +56,13 @@ public class DateTimeType extends AbstractDateTimeType<DateTime> {
 		if (timestamp == null) {
 			return null;
 		}
-		return new DateTime(timestamp.getTime());
+		return getDateTime(timestamp);
 	}
 
 	@Override
 	public void setValue(PreparedStatement st, int startIndex, DateTime value) throws SQLException {
-		st.setTimestamp(startIndex, new Timestamp(value.toDate().getTime()), value.toCalendar(null));
+		Calendar cal = getCalendar(value);
+		st.setTimestamp(startIndex, new Timestamp(cal.getTimeInMillis()), cal);
 	}
 
 }

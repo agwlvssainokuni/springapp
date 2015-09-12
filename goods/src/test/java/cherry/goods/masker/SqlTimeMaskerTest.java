@@ -63,7 +63,7 @@ public class SqlTimeMaskerTest {
 
 	private Time getSqlTime(LocalTime ltm) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(0, 0, 0, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
+		cal.set(1970, 0, 1, ltm.getHourOfDay(), ltm.getMinuteOfHour(), ltm.getSecondOfMinute());
 		cal.set(Calendar.MILLISECOND, ltm.getMillisOfSecond());
 		return new Time(cal.getTimeInMillis());
 	}

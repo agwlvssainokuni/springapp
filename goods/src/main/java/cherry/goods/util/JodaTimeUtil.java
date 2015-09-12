@@ -29,11 +29,26 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 public class JodaTimeUtil {
+
+	public static DateTime getDateTime(Timestamp ts) {
+		Calendar cal = getCalendar(ts);
+		return new DateTime(cal.get(YEAR), cal.get(MONTH) + 1, cal.get(DAY_OF_MONTH), cal.get(HOUR_OF_DAY),
+				cal.get(MINUTE), cal.get(SECOND), cal.get(MILLISECOND));
+	}
+
+	public static Calendar getCalendar(DateTime dtm) {
+		Calendar cal = Calendar.getInstance(dtm.getZone().toTimeZone());
+		cal.set(dtm.getYear(), dtm.getMonthOfYear() - 1, dtm.getDayOfMonth(), dtm.getHourOfDay(),
+				dtm.getMinuteOfHour(), dtm.getSecondOfMinute());
+		cal.set(MILLISECOND, dtm.getMillisOfSecond());
+		return cal;
+	}
 
 	public static LocalDateTime getLocalDateTime(Timestamp ts) {
 		Calendar cal = getCalendar(ts);

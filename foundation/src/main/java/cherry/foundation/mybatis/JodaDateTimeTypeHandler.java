@@ -16,11 +16,15 @@
 
 package cherry.foundation.mybatis;
 
+import static cherry.goods.util.JodaTimeUtil.getCalendar;
+import static cherry.goods.util.JodaTimeUtil.getDateTime;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -33,7 +37,8 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, DateTime parameter, JdbcType jdbcType)
 			throws SQLException {
-		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()), parameter.toCalendar(null));
+		Calendar cal = getCalendar(parameter);
+		ps.setTimestamp(i, new Timestamp(cal.getTimeInMillis()), cal);
 	}
 
 	@Override
@@ -42,7 +47,7 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 		if (timestamp == null) {
 			return null;
 		}
-		return new DateTime(timestamp.getTime());
+		return getDateTime(timestamp);
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 		if (timestamp == null) {
 			return null;
 		}
-		return new DateTime(timestamp.getTime());
+		return getDateTime(timestamp);
 	}
 
 	@Override
@@ -60,7 +65,7 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 		if (timestamp == null) {
 			return null;
 		}
-		return new DateTime(timestamp.getTime());
+		return getDateTime(timestamp);
 	}
 
 }
