@@ -3,6 +3,9 @@
 build/
 gradle.properties
 
+# Maven
+target/
+
 # Eclipse
 bin/
 .classpath

@@ -1,0 +1,15 @@
+package cherry.ruletutorial.rule.def1;
+
+import org.joda.time.LocalDate
+
+declare Address
+	number : int
+	streetName : String
+	city : String
+end
+
+declare Person
+	name : String
+	dateOfBirth : LocalDate
+	address : Address
+end

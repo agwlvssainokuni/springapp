@@ -1,0 +1,24 @@
+apply plugin: "eclipse-wtp"
+
+repositories {
+	mavenCentral()
+	maven { url "http://repository.jboss.org/nexus/content/groups/public-jboss" }
+}
+
+ext { versionDrools = "6.2.0.Final" }
+
+dependencies {
+	compile fileTree(dir: "target", include: "${project.name}-rule-*.jar")
+	compile "org.kie:kie-api:${versionDrools}"
+	compile "org.drools:drools-core:${versionDrools}"
+	compile "org.drools:drools-compiler:${versionDrools}"
+	compile "joda-time:joda-time:${versionJodaTime}"
+	compile "org.slf4j:slf4j-api:${versionSlf4j}"
+	runtime "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
+	compile "org.springframework:spring-context:${versionSpring}"
+	testRuntime "ch.qos.logback:logback-classic:${versionLogback}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
+}
