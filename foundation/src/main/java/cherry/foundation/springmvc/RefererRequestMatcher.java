@@ -104,7 +104,7 @@ public class RefererRequestMatcher implements RequestMatcher {
 		if (!verify(fragment, m.group(9))) {
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	private boolean verify(Pattern p, String s) {
