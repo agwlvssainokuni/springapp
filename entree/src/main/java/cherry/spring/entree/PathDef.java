@@ -18,7 +18,7 @@ package cherry.spring.entree;
 
 public class PathDef {
 
-	public static final String URI_LOGIN = "/login/start";
+	public static final String URI_LOGIN = "/login";
 
 	public static final String URI_HOME = "/secure";
 

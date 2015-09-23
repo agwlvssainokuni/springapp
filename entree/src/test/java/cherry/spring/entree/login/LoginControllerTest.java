@@ -59,7 +59,7 @@ public class LoginControllerTest {
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + PathDef.URI_LOGIN, ((RedirectView) mav.getView()).getUrl());
+		assertEquals("http://localhost/login/start", ((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loginFailed", true);
 	}
 
@@ -70,7 +70,7 @@ public class LoginControllerTest {
 		assertNotNull(mav);
 		assertNull(mav.getViewName());
 		assertTrue(mav.getView() instanceof RedirectView);
-		assertEquals("http://localhost" + PathDef.URI_LOGIN, ((RedirectView) mav.getView()).getUrl());
+		assertEquals("http://localhost/login/start", ((RedirectView) mav.getView()).getUrl());
 		verify(redirAttr).addFlashAttribute("loggedOut", true);
 	}
 

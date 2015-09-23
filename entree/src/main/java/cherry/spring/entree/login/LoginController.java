@@ -30,14 +30,14 @@ import cherry.spring.entree.PathDef;
 @RequestMapping(PathDef.URI_LOGIN)
 public interface LoginController {
 
-	@RequestMapping()
+	@RequestMapping(PathDef.SUBURI_START)
 	ModelAndView init(Locale locale, SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
+	@RequestMapping(value = PathDef.SUBURI_START, params = PathDef.METHOD_LOGIN_FAILED)
 	ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
-	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
+	@RequestMapping(value = PathDef.SUBURI_START, params = PathDef.METHOD_LOGGED_OUT)
 	ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 

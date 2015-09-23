@@ -18,7 +18,7 @@ package cherry.spring.admin;
 
 public class PathDef {
 
-	public static final String URI_LOGIN = "/login/start";
+	public static final String URI_LOGIN = "/login";
 
 	public static final String URI_HOME = "/secure";
 
@@ -35,6 +35,8 @@ public class PathDef {
 	public static final String URI_GALLERY = "/secure/gallery";
 
 	public static final String URI_GALLERY_ZIPCD = "/secure/gallery/zipcd";
+
+	public static final String SUBURI_START = "start";
 
 	public static final String SUBURI_EXECUTE = "execute";
 
