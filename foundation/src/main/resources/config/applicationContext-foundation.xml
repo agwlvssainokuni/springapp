@@ -172,6 +172,13 @@
 				<property name="configuration">
 					<bean class="com.mysema.query.sql.Configuration">
 						<constructor-arg ref="sqlTemplates" />
+						<property name="exceptionTranslator">
+							<bean class="cherry.foundation.querydsl.SpringExceptionTranslator">
+								<property name="exceptionTranslator">
+									<bean factory-bean="jdbcOperations" factory-method="getExceptionTranslator" />
+								</property>
+							</bean>
+						</property>
 					</bean>
 				</property>
 				<property name="listeners">
