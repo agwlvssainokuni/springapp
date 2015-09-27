@@ -35,7 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.query.QConversionTest;
+import cherry.foundation.db.gen.query.QVerifySecure;
 import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.PagedList;
 
@@ -77,18 +77,20 @@ public class QueryDslUtilTest {
 
 	@Test
 	public void adjustSize() {
-		assertNull(QueryDslUtil.adjustSize(null, QConversionTest.conversionTest.secInt));
-		assertEquals("", QueryDslUtil.adjustSize("", QConversionTest.conversionTest.secInt));
-		assertEquals("1234567890123456789012345678901234567890", QueryDslUtil.adjustSize(
-				"1234567890123456789012345678901234567890", QConversionTest.conversionTest.secInt));
-		assertEquals("1234567890123456789012345678901234567890", QueryDslUtil.adjustSize(
-				"12345678901234567890123456789012345678901", QConversionTest.conversionTest.secInt));
+		assertNull(QueryDslUtil.adjustSize(null, QVerifySecure.verifySecure.int32));
+		assertEquals("", QueryDslUtil.adjustSize("", QVerifySecure.verifySecure.int32));
+		assertEquals("123456789012345678901234567890123456789012345678901234567890123456789012",
+				QueryDslUtil.adjustSize("123456789012345678901234567890123456789012345678901234567890123456789012",
+						QVerifySecure.verifySecure.int32));
+		assertEquals("123456789012345678901234567890123456789012345678901234567890123456789012",
+				QueryDslUtil.adjustSize("1234567890123456789012345678901234567890123456789012345678901234567890123",
+						QVerifySecure.verifySecure.int32));
 	}
 
 	@Test
 	public void getExpressionLabel() {
-		assertEquals("SEC_INT", QueryDslUtil.getExpressionLabel(QConversionTest.conversionTest.secInt));
-		assertEquals("aaa", QueryDslUtil.getExpressionLabel(QConversionTest.conversionTest.secInt.as("aaa")));
+		assertEquals("INT32", QueryDslUtil.getExpressionLabel(QVerifySecure.verifySecure.int32));
+		assertEquals("aaa", QueryDslUtil.getExpressionLabel(QVerifySecure.verifySecure.int32.as("aaa")));
 		assertNull(QueryDslUtil.getExpressionLabel(QueryDslUtil.currentDate()));
 	}
 

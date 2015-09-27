@@ -32,35 +32,35 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.db.gen.dto.VerifySecure;
 import cherry.foundation.type.SecureInteger;
-import cherry.foundation.type.db.dto.ConversionTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcSecureIntegerTest {
+public class SecureIntegerTest {
 
 	@Autowired
-	private JdbcDao jdbcDao;
+	private SecureDao dao;
 
 	private SecureRandom random = new SecureRandom();
 
 	@Test
 	public void testSaveAndLoad() {
 		int plain = random.nextInt();
-		ConversionTest record = new ConversionTest();
-		record.setSecInt(SecureInteger.plainValueOf(plain));
+		VerifySecure record = new VerifySecure();
+		record.setInt32(SecureInteger.plainValueOf(plain));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifySecure> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getSecInt().plain(), is(plain));
+		VerifySecure r = list.get(0);
+		assertThat(r.getInt32().plain(), is(plain));
 	}
 
 }

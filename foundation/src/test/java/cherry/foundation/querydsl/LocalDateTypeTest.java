@@ -30,7 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.query.QConversionTest;
+import cherry.foundation.db.gen.query.QVerifyDatetime;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
@@ -47,58 +47,62 @@ public class LocalDateTypeTest {
 	@Autowired
 	private SQLQueryFactory queryFactory;
 
-	private final QConversionTest ct = new QConversionTest("ct");
+	private final QVerifyDatetime vd = new QVerifyDatetime("vd");
 
 	@Test
 	public void testSaveAndLoad() {
 
 		LocalDate orig = LocalDate.now();
-		SQLInsertClause insert = queryFactory.insert(ct);
-		insert.set(ct.jodaDate, orig);
+		SQLInsertClause insert = queryFactory.insert(vd);
+		insert.set(vd.dt, orig);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalDate result = query.uniqueResult(ct.jodaDate);
+		SQLQuery query = queryFactory.from(vd);
+		LocalDate result = query.uniqueResult(vd.dt);
 		assertEquals(orig, result);
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dt=?", Integer.class,
+						orig.toString("yyyy-MM-dd")));
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1d() {
 
 		LocalDate orig = LocalDate.now().plusDays(1);
-		SQLInsertClause insert = queryFactory.insert(ct);
-		insert.set(ct.jodaDate, orig);
+		SQLInsertClause insert = queryFactory.insert(vd);
+		insert.set(vd.dt, orig);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalDate result = query.uniqueResult(ct.jodaDate);
+		SQLQuery query = queryFactory.from(vd);
+		LocalDate result = query.uniqueResult(vd.dt);
 		assertEquals(orig, result);
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dt=?", Integer.class,
+						orig.toString("yyyy-MM-dd")));
 	}
 
 	@Test
 	public void testSaveAndLoad_null() {
 
-		SQLInsertClause insert = queryFactory.insert(ct);
+		SQLInsertClause insert = queryFactory.insert(vd);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalDate result = query.uniqueResult(ct.jodaDate);
+		SQLQuery query = queryFactory.from(vd);
+		LocalDate result = query.uniqueResult(vd.dt);
 		assertNull(result);
 	}
 
 	@Test
 	public void testLoad() {
-		jdbcOperations.execute("INSERT INTO conversion_test(joda_date) VALUES ('2015-01-23')");
-		LocalDate result = queryFactory.from(ct).uniqueResult(ct.jodaDate);
+		jdbcOperations.execute("INSERT INTO verify_datetime(dt) VALUES ('2015-01-23')");
+		LocalDate result = queryFactory.from(vd).uniqueResult(vd.dt);
 		assertEquals(new LocalDate(2015, 1, 23), result);
 	}
 

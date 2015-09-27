@@ -38,15 +38,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.db.gen.dto.VerifyDatetime;
+import cherry.foundation.db.gen.query.QVerifyDatetime;
 import cherry.foundation.etl.Column;
 import cherry.foundation.etl.Consumer;
 import cherry.foundation.etl.CsvConsumer;
 import cherry.foundation.etl.Limiter;
 import cherry.foundation.etl.LimiterException;
 import cherry.foundation.etl.TimeLimiter;
-import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.query.QConversionTest;
 import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.goods.paginate.PagedList;
 
@@ -73,7 +72,7 @@ public class QueryDslSupportImplTest {
 	@Autowired
 	private SQLQueryFactory queryFactory;
 
-	private final QConversionTest ct = new QConversionTest("ct");
+	private final QVerifyDatetime vd = new QVerifyDatetime("vd");
 
 	private final LocalDate localDate = LocalDate.now();
 
@@ -81,11 +80,10 @@ public class QueryDslSupportImplTest {
 
 	@Before
 	public void before() {
-		SQLInsertClause insert = queryFactory.insert(ct);
+		SQLInsertClause insert = queryFactory.insert(vd);
 		for (int i = -100; i <= 100; i++) {
-			insert.set(ct.jodaDate, localDate.plusDays(i));
-			insert.set(ct.jodaDatetime, localDateTime.plusDays(i));
-			insert.set(ct.deletedFlg, 0);
+			insert.set(vd.dt, localDate.plusDays(i));
+			insert.set(vd.dtm, localDateTime.plusDays(i));
 			insert.addBatch();
 		}
 		assertEquals(201L, insert.execute());
@@ -94,8 +92,8 @@ public class QueryDslSupportImplTest {
 	@Test
 	public void testSearch1_OK() {
 
-		PagedList<ConversionTest> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
-				rowMapperCreator.create(ConversionTest.class), ct.id, ct.jodaDate, ct.jodaDatetime);
+		PagedList<VerifyDatetime> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5,
+				rowMapperCreator.create(VerifyDatetime.class), vd.id, vd.dt, vd.dtm);
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -104,30 +102,30 @@ public class QueryDslSupportImplTest {
 		assertEquals(5, pagedList.getPageSet().getCurrent().getCount());
 
 		int i = 50;
-		for (ConversionTest item : pagedList.getList()) {
-			assertEquals(localDate.plusDays(i), item.getJodaDate());
-			assertEquals(localDateTime.plusDays(i), item.getJodaDatetime());
+		for (VerifyDatetime item : pagedList.getList()) {
+			assertEquals(localDate.plusDays(i), item.getDt());
+			assertEquals(localDateTime.plusDays(i), item.getDtm());
 			i -= 1;
 		}
 	}
 
 	@Test(expected = DataAccessException.class)
 	public void testSearch1_SQLException() {
-		queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5, new RowMapper<ConversionTest>() {
+		queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5, new RowMapper<VerifyDatetime>() {
 			@Override
-			public ConversionTest mapRow(ResultSet rs, int rowNum) throws SQLException {
+			public VerifyDatetime mapRow(ResultSet rs, int rowNum) throws SQLException {
 				rs.getObject(0);
 				return null;
 			}
-		}, ct.id, ct.jodaDate, ct.jodaDatetime);
+		}, vd.id, vd.dt, vd.dtm);
 	}
 
 	@Test
 	public void testSearch2_OK() {
 
 		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
-		PagedList<ConversionTest> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
-				cancelPredicate, rowMapperCreator.create(ConversionTest.class), ct.id, ct.jodaDate, ct.jodaDatetime);
+		PagedList<VerifyDatetime> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5,
+				cancelPredicate, rowMapperCreator.create(VerifyDatetime.class), vd.id, vd.dt, vd.dtm);
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -136,9 +134,9 @@ public class QueryDslSupportImplTest {
 		assertEquals(5, pagedList.getPageSet().getCurrent().getCount());
 
 		int i = 50;
-		for (ConversionTest item : pagedList.getList()) {
-			assertEquals(localDate.plusDays(i), item.getJodaDate());
-			assertEquals(localDateTime.plusDays(i), item.getJodaDatetime());
+		for (VerifyDatetime item : pagedList.getList()) {
+			assertEquals(localDate.plusDays(i), item.getDt());
+			assertEquals(localDateTime.plusDays(i), item.getDtm());
 			i -= 1;
 		}
 	}
@@ -147,8 +145,8 @@ public class QueryDslSupportImplTest {
 	public void testSearch2_Cancel() {
 
 		Predicate<Long> cancelPredicate = Predicates.alwaysTrue();
-		PagedList<ConversionTest> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
-				cancelPredicate, rowMapperCreator.create(ConversionTest.class), ct.id, ct.jodaDate, ct.jodaDatetime);
+		PagedList<VerifyDatetime> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5,
+				cancelPredicate, rowMapperCreator.create(VerifyDatetime.class), vd.id, vd.dt, vd.dtm);
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -162,8 +160,8 @@ public class QueryDslSupportImplTest {
 	@Test
 	public void testSearch3() {
 
-		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5, new QTuple(
-				ct.id, ct.jodaDate, ct.jodaDatetime));
+		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5, new QTuple(
+				vd.id, vd.dt, vd.dtm));
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -173,8 +171,8 @@ public class QueryDslSupportImplTest {
 
 		int i = 50;
 		for (Tuple item : pagedList.getList()) {
-			assertEquals(localDate.plusDays(i), item.get(ct.jodaDate));
-			assertEquals(localDateTime.plusDays(i), item.get(ct.jodaDatetime));
+			assertEquals(localDate.plusDays(i), item.get(vd.dt));
+			assertEquals(localDateTime.plusDays(i), item.get(vd.dtm));
 			i -= 1;
 		}
 	}
@@ -183,8 +181,8 @@ public class QueryDslSupportImplTest {
 	public void testSearch4_OK() {
 
 		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
-		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
-				cancelPredicate, new QTuple(ct.id, ct.jodaDate, ct.jodaDatetime));
+		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5,
+				cancelPredicate, new QTuple(vd.id, vd.dt, vd.dtm));
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -194,8 +192,8 @@ public class QueryDslSupportImplTest {
 
 		int i = 50;
 		for (Tuple item : pagedList.getList()) {
-			assertEquals(localDate.plusDays(i), item.get(ct.jodaDate));
-			assertEquals(localDateTime.plusDays(i), item.get(ct.jodaDatetime));
+			assertEquals(localDate.plusDays(i), item.get(vd.dt));
+			assertEquals(localDateTime.plusDays(i), item.get(vd.dtm));
 			i -= 1;
 		}
 	}
@@ -204,8 +202,8 @@ public class QueryDslSupportImplTest {
 	public void testSearch4_Cancel() {
 
 		Predicate<Long> cancelPredicate = Predicates.alwaysTrue();
-		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(ct), orderByClause(ct), 10, 5,
-				cancelPredicate, new QTuple(ct.id, ct.jodaDate, ct.jodaDatetime));
+		PagedList<Tuple> pagedList = queryDslSupport.search(commonClause(vd), orderByClause(vd), 10, 5,
+				cancelPredicate, new QTuple(vd.id, vd.dt, vd.dtm));
 
 		assertEquals(101, pagedList.getPageSet().getTotalCount());
 		assertEquals(10, pagedList.getPageSet().getCurrent().getNo());
@@ -221,7 +219,7 @@ public class QueryDslSupportImplTest {
 		try (StringWriter w = new StringWriter()) {
 
 			CsvConsumer consumer = new CsvConsumer(w, false);
-			long count = queryDslSupport.download(commonClause(ct), orderByClause(ct), consumer, ct.jodaDate);
+			long count = queryDslSupport.download(commonClause(vd), orderByClause(vd), consumer, vd.dt);
 			assertEquals(101L, count);
 
 			List<String> list = new ArrayList<>();
@@ -235,7 +233,7 @@ public class QueryDslSupportImplTest {
 	@Test(expected = IOException.class)
 	public void testDownload1_IOException() throws IOException {
 		try (StringWriter w = new StringWriter()) {
-			queryDslSupport.download(commonClause(ct), orderByClause(ct), new Consumer() {
+			queryDslSupport.download(commonClause(vd), orderByClause(vd), new Consumer() {
 
 				@Override
 				public void begin(Column[] col) throws IOException {
@@ -251,7 +249,7 @@ public class QueryDslSupportImplTest {
 				public void end() throws IOException {
 					// 何もしない
 				}
-			}, ct.jodaDate);
+			}, vd.dt);
 		}
 	}
 
@@ -261,7 +259,7 @@ public class QueryDslSupportImplTest {
 
 			Limiter limiter = new TimeLimiter(3600000L);
 			CsvConsumer consumer = new CsvConsumer(w, false);
-			long count = queryDslSupport.download(commonClause(ct), orderByClause(ct), consumer, limiter, ct.jodaDate);
+			long count = queryDslSupport.download(commonClause(vd), orderByClause(vd), consumer, limiter, vd.dt);
 			assertEquals(101L, count);
 
 			List<String> list = new ArrayList<>();
@@ -277,26 +275,26 @@ public class QueryDslSupportImplTest {
 		try (StringWriter w = new StringWriter()) {
 			Limiter limiter = new TimeLimiter(-1L);
 			CsvConsumer consumer = new CsvConsumer(w, false);
-			queryDslSupport.download(commonClause(ct), orderByClause(ct), consumer, limiter, ct.jodaDate);
+			queryDslSupport.download(commonClause(vd), orderByClause(vd), consumer, limiter, vd.dt);
 		}
 	}
 
-	private QueryConfigurer commonClause(final QConversionTest qct) {
+	private QueryConfigurer commonClause(final QVerifyDatetime qvd) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-				query.from(qct);
-				query.where(qct.jodaDate.goe(localDate), qct.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				query.from(qvd);
+				query.where(qvd.dt.goe(localDate));
 				return query;
 			}
 		};
 	}
 
-	private QueryConfigurer orderByClause(final QConversionTest qct) {
+	private QueryConfigurer orderByClause(final QVerifyDatetime qvd) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-				query.orderBy(qct.jodaDate.desc());
+				query.orderBy(qvd.dt.desc());
 				return query;
 			}
 		};

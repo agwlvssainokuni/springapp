@@ -16,8 +16,7 @@
 
 package cherry.foundation.sql;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -30,15 +29,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * {@link SqlExecutorImpl} のテスト.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class SqlExecutorImplTest {
 
 	@Autowired
@@ -47,17 +49,18 @@ public class SqlExecutorImplTest {
 	@Autowired
 	private SqlExecutor executor;
 
+	@Autowired
+	private JdbcOperations operations;
+
 	@Test
 	public void DDLをファイルから読込んで実行する() throws IOException {
 		Resource resource = new ClassPathResource("SqlExecutorImplTest.sql", getClass());
-		try {
-			executor.execute(dataSource, resource, null, true);
-			assertTrue(true);
-		} catch (DataAccessException ex) {
-			ex.printStackTrace();
-			fail("例外が発生するのはNG");
-		} finally {
-			executor.execute(dataSource, new StringReader("DROP TABLE etl_user_test"), null, true);
+		executor.execute(dataSource, resource, null, false);
+
+		assertEquals(Integer.valueOf(3), operations.queryForObject("SELECT COUNT(*) FROM sql_execution", Integer.class));
+		for (int i = 1; i <= 3; i++) {
+			assertEquals("user" + i,
+					operations.queryForObject("SELECT name FROM sql_execution WHERE login=?", String.class, "user" + i));
 		}
 	}
 
@@ -65,20 +68,13 @@ public class SqlExecutorImplTest {
 	public void 不正なSQLを実行する_エラー無視() throws IOException {
 		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, true);
-			assertTrue(true);
-		} catch (DataAccessException ex) {
-			ex.printStackTrace();
-			fail("例外が発生するのはNG");
 		}
 	}
 
-	@Test
+	@Test(expected = BadSqlGrammarException.class)
 	public void 不正なSQLを実行する_エラー通知() throws IOException {
 		try (Reader reader = new StringReader("DROP TABLE no_table")) {
 			executor.execute(dataSource, reader, null, false);
-			fail("例外が発生しないとNG");
-		} catch (DataAccessException ex) {
-			assertTrue(true);
 		}
 	}
 

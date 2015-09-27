@@ -18,79 +18,97 @@ package cherry.foundation.type.jdbc;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.joda.time.LocalTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.db.dto.ConversionTest;
+import cherry.foundation.db.gen.dto.VerifyDatetime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcDeletedFlagTest {
+public class LocalTimeTest {
 
 	@Autowired
-	private JdbcDao jdbcDao;
+	private JdbcOperations jdbcOperations;
+
+	@Autowired
+	private DatetimeDao dao;
 
 	@Test
-	public void testSaveAndLoad_NOT_DELETED() {
-		ConversionTest record = new ConversionTest();
-		record.setDeletedFlg(DeletedFlag.NOT_DELETED);
+	public void testSaveAndLoad() {
+		LocalTime orig = LocalTime.now();
+		VerifyDatetime record = new VerifyDatetime();
+		record.setTm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyDatetime> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getDeletedFlg(), is(DeletedFlag.NOT_DELETED));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getTm(), is(orig));
+
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE tm=?", Integer.class,
+						orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
-	public void testSaveAndLoad_1() {
-		ConversionTest record = new ConversionTest();
-		record.setDeletedFlg(new DeletedFlag(1));
+	public void testSaveAndLoad_plus1h() {
+		LocalTime orig = LocalTime.now().plusHours(1);
+		VerifyDatetime record = new VerifyDatetime();
+		record.setTm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyDatetime> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getDeletedFlg(), is(new DeletedFlag(1)));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getTm(), is(orig));
+
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE tm=?", Integer.class,
+						orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
-	public void testSaveAndLoad_100() {
-		ConversionTest record = new ConversionTest();
-		record.setDeletedFlg(new DeletedFlag(100));
+	public void testSaveAndLoad_masked() {
+		LocalTime orig = LocalTime.now();
+		VerifyDatetime record = new VerifyDatetime();
+		record.setTm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyDatetime> list = dao.selectAllWithMask();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getDeletedFlg(), is(new DeletedFlag(100)));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getTm(), is(new LocalTime(0, 0, 0, orig.getMillisOfSecond())));
 	}
 
 }

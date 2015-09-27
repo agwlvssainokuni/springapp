@@ -1,0 +1,139 @@
+﻿# A5:ER FORMAT:09
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=SpringApp
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=1
+Page=試験用DBスキーマ
+PageInfo="試験用DBスキーマ",4,"A3Landscape",$FFFFFF
+Domain=ID=BIGINT
+Domain=日付=@DATE
+Domain=時刻=@TIME
+Domain=日時=@DATETIME
+Domain=フラグ=@INT
+Domain=暗号化【短】=@VARCHAR(72)
+Domain=暗号化【長】=@VARCHAR(136)
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=4
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Entity]
+PName=sql_execution
+LName=SQL実行検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=500
+Top=1300
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="ログイン","login","@VARCHAR(32)",,,"","",$FFFFFFFF,""
+Field="名前","name","@VARCHAR(32)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150927214623
+Position="試験用DBスキーマ",500,1300
+
+[Entity]
+PName=etl_extr_ldr
+LName=ETL検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="名前","name","@VARCHAR(32)","NOT NULL",,"","",$FFFFFFFF,""
+Field="住所","address","@VARCHAR(64)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150927212954
+Position="試験用DBスキーマ",500,1000
+
+[Entity]
+PName=verify_flag
+LName=フラグ操作検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=1900
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="フラグ","flag_code","*フラグ",,,"","",$FFFFFFFF,""
+Field="削除フラグ","deleted_flg","*フラグ",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150927191224
+Position="試験用DBスキーマ",1900,500
+
+[Entity]
+PName=verify_secure
+LName=暗号操作検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=1000
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="文字列","str","*暗号化【長】",,,"","",$FFFFFFFF,""
+Field="整数【32bit】","int32","*暗号化【短】",,,"","",$FFFFFFFF,""
+Field="整数【64bit】","int64","*暗号化【短】",,,"","",$FFFFFFFF,""
+Field="整数【BigInteger】","bigint","*暗号化【長】",,,"","",$FFFFFFFF,""
+Field="数値【BigDecimal】","bigdec","*暗号化【長】",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150927194214
+Position="試験用DBスキーマ",1000,500
+
+[Entity]
+PName=verify_datetime
+LName=日時操作検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="日付","dt","*日付",,,"","",$FFFFFFFF,""
+Field="時刻","tm","*時刻",,,"","",$FFFFFFFF,""
+Field="日時","dtm","*日時",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150927191208
+Position="試験用DBスキーマ",500,500

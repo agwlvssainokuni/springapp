@@ -20,51 +20,42 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.db.gen.dto.VerifySecure;
+import cherry.foundation.db.gen.mapper.VerifySecureMapper;
 import cherry.foundation.type.SecureString;
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class SecureStringTypeHandlerTest {
 
 	@Autowired
-	private ConversionTestMapper mapper;
-
-	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
+	private VerifySecureMapper mapper;
 
 	@Test
 	public void testSaveAndLoad() {
 		String plain = RandomStringUtils.randomAlphanumeric(32);
-		ConversionTest record = new ConversionTest();
-		record.setSecStr(SecureString.plainValueOf(plain));
+		VerifySecure record = new VerifySecure();
+		record.setStr(SecureString.plainValueOf(plain));
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifySecure> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getSecStr().plain(), is(plain));
+		VerifySecure r = list.get(0);
+		assertThat(r.getStr().plain(), is(plain));
 	}
 
 }

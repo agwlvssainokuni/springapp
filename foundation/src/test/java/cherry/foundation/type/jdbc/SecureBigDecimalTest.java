@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -33,35 +33,35 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.SecureBigInteger;
-import cherry.foundation.type.db.dto.ConversionTest;
+import cherry.foundation.db.gen.dto.VerifySecure;
+import cherry.foundation.type.SecureBigDecimal;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcSecureBigIntegerTest {
+public class SecureBigDecimalTest {
 
 	@Autowired
-	private JdbcDao jdbcDao;
+	private SecureDao dao;
 
 	private SecureRandom random = new SecureRandom();
 
 	@Test
 	public void testSaveAndLoad() {
-		BigInteger plain = BigInteger.valueOf(random.nextLong());
-		ConversionTest record = new ConversionTest();
-		record.setSecBigint(SecureBigInteger.plainValueOf(plain));
+		BigDecimal plain = BigDecimal.valueOf(random.nextDouble());
+		VerifySecure record = new VerifySecure();
+		record.setBigdec(SecureBigDecimal.plainValueOf(plain));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifySecure> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getSecBigint().plain(), is(plain));
+		VerifySecure r = list.get(0);
+		assertThat(r.getBigdec().plain(), is(plain));
 	}
 
 }

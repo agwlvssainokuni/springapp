@@ -30,9 +30,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.mapper.ConversionTestMapper;
-import cherry.foundation.type.db.query.QConversionTest;
+import cherry.foundation.db.gen.dto.VerifyDatetime;
+import cherry.foundation.db.gen.mapper.VerifyDatetimeMapper;
+import cherry.foundation.db.gen.query.QVerifyDatetime;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQueryFactory;
@@ -43,50 +43,49 @@ import com.mysema.query.sql.SQLQueryFactory;
 public class InteropTest {
 
 	@Autowired
-	private ConversionTestMapper mapper;
+	private VerifyDatetimeMapper mapper;
 
 	@Autowired
 	private SQLQueryFactory queryFactory;
 
-	private final QConversionTest ct = new QConversionTest("ct");
+	private final QVerifyDatetime vd = new QVerifyDatetime("vd");
 
 	@Test
 	public void testQuerydslToMyBatis() {
 
-		LocalDateTime ldt = LocalDateTime.now();
-		LocalDate ld = LocalDate.now();
-		LocalTime lt = LocalTime.now();
+		LocalDateTime ldtm = LocalDateTime.now();
+		LocalDate ldt = LocalDate.now();
+		LocalTime ltm = LocalTime.now();
 
-		long count = queryFactory.insert(ct).set(ct.jodaDatetime, ldt).set(ct.jodaDate, ld).set(ct.jodaTime, lt)
-				.execute();
+		long count = queryFactory.insert(vd).set(vd.dtm, ldtm).set(vd.dt, ldt).set(vd.tm, ltm).execute();
 		assertEquals(1L, count);
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifyDatetime> list = mapper.selectByExample(null);
 		assertEquals(1, list.size());
-		ConversionTest record = list.get(0);
-		assertEquals(ldt, record.getJodaDatetime());
-		assertEquals(ld, record.getJodaDate());
-		assertEquals(lt, record.getJodaTime());
+		VerifyDatetime record = list.get(0);
+		assertEquals(ldtm, record.getDtm());
+		assertEquals(ldt, record.getDt());
+		assertEquals(ltm, record.getTm());
 	}
 
 	@Test
 	public void testMyBatisToQuerydsl() {
 
-		LocalDateTime ldt = LocalDateTime.now();
-		LocalDate ld = LocalDate.now();
-		LocalTime lt = LocalTime.now();
+		LocalDateTime ldtm = LocalDateTime.now();
+		LocalDate ldt = LocalDate.now();
+		LocalTime ltm = LocalTime.now();
 
-		ConversionTest record = new ConversionTest();
-		record.setJodaDatetime(ldt);
-		record.setJodaDate(ld);
-		record.setJodaTime(lt);
-		int count = mapper.insert(record);
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(ldtm);
+		record.setDt(ldt);
+		record.setTm(ltm);
+		int count = mapper.insertSelective(record);
 		assertEquals(1, count);
 
-		Tuple tuple = queryFactory.from(ct).uniqueResult(ct.jodaDatetime, ct.jodaDate, ct.jodaTime);
-		assertEquals(ldt, tuple.get(ct.jodaDatetime));
-		assertEquals(ld, tuple.get(ct.jodaDate));
-		assertEquals(lt, tuple.get(ct.jodaTime));
+		Tuple tuple = queryFactory.from(vd).uniqueResult(vd.dtm, vd.dt, vd.tm);
+		assertEquals(ldtm, tuple.get(vd.dtm));
+		assertEquals(ldt, tuple.get(vd.dt));
+		assertEquals(ltm, tuple.get(vd.tm));
 	}
 
 }

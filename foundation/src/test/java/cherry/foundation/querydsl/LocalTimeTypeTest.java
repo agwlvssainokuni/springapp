@@ -30,7 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.query.QConversionTest;
+import cherry.foundation.db.gen.query.QVerifyDatetime;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
@@ -47,58 +47,62 @@ public class LocalTimeTypeTest {
 	@Autowired
 	private SQLQueryFactory queryFactory;
 
-	private final QConversionTest ct = new QConversionTest("ct");
+	private final QVerifyDatetime vd = new QVerifyDatetime("vd");
 
 	@Test
 	public void testSaveAndLoad() {
 
 		LocalTime orig = LocalTime.now();
-		SQLInsertClause insert = queryFactory.insert(ct);
-		insert.set(ct.jodaTime, orig);
+		SQLInsertClause insert = queryFactory.insert(vd);
+		insert.set(vd.tm, orig);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalTime result = query.uniqueResult(ct.jodaTime);
+		SQLQuery query = queryFactory.from(vd);
+		LocalTime result = query.uniqueResult(vd.tm);
 		assertEquals(orig, result);
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE tm=?", Integer.class,
+						orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1h() {
 
 		LocalTime orig = LocalTime.now().plusHours(1);
-		SQLInsertClause insert = queryFactory.insert(ct);
-		insert.set(ct.jodaTime, orig);
+		SQLInsertClause insert = queryFactory.insert(vd);
+		insert.set(vd.tm, orig);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalTime result = query.uniqueResult(ct.jodaTime);
+		SQLQuery query = queryFactory.from(vd);
+		LocalTime result = query.uniqueResult(vd.tm);
 		assertEquals(orig, result);
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE tm=?", Integer.class,
+						orig.toString("HH:mm:ss.SSS")));
 	}
 
 	@Test
 	public void testSaveAndLoad_null() {
 
-		SQLInsertClause insert = queryFactory.insert(ct);
+		SQLInsertClause insert = queryFactory.insert(vd);
 		long count = insert.execute();
 		assertEquals(1L, count);
 
-		SQLQuery query = queryFactory.from(ct);
-		LocalTime result = query.uniqueResult(ct.jodaTime);
+		SQLQuery query = queryFactory.from(vd);
+		LocalTime result = query.uniqueResult(vd.tm);
 		assertNull(result);
 	}
 
 	@Test
 	public void testLoad() {
-		jdbcOperations.execute("INSERT INTO conversion_test(joda_time) VALUES ('12:34:56.789')");
-		LocalTime result = queryFactory.from(ct).uniqueResult(ct.jodaTime);
+		jdbcOperations.execute("INSERT INTO verify_datetime(tm) VALUES ('12:34:56.789')");
+		LocalTime result = queryFactory.from(vd).uniqueResult(vd.tm);
 		assertEquals(new LocalTime(12, 34, 56, 789), result);
 	}
 

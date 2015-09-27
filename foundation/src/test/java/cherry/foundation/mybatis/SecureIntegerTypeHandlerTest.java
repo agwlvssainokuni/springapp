@@ -21,52 +21,43 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.db.gen.dto.VerifySecure;
+import cherry.foundation.db.gen.mapper.VerifySecureMapper;
 import cherry.foundation.type.SecureInteger;
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class SecureIntegerTypeHandlerTest {
 
 	@Autowired
-	private ConversionTestMapper mapper;
-
-	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+	private VerifySecureMapper mapper;
 
 	private SecureRandom random = new SecureRandom();
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
 
 	@Test
 	public void testSaveAndLoad() {
 		int plain = random.nextInt();
-		ConversionTest record = new ConversionTest();
-		record.setSecInt(SecureInteger.plainValueOf(plain));
+		VerifySecure record = new VerifySecure();
+		record.setInt32(SecureInteger.plainValueOf(plain));
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifySecure> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getSecInt().plain(), is(plain));
+		VerifySecure r = list.get(0);
+		assertThat(r.getInt32().plain(), is(plain));
 	}
 
 }

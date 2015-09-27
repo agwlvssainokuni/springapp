@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 import org.junit.Test;
@@ -31,49 +32,35 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.FlagCode;
-import cherry.foundation.type.db.dto.ConversionTest;
+import cherry.foundation.db.gen.dto.VerifySecure;
+import cherry.foundation.type.SecureLong;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcFlagCodeTest {
+public class SecureLongTest {
 
 	@Autowired
-	private JdbcDao jdbcDao;
+	private SecureDao dao;
+
+	private SecureRandom random = new SecureRandom();
 
 	@Test
-	public void testSaveAndLoad_FALSE() {
-		ConversionTest record = new ConversionTest();
-		record.setFlagCode(FlagCode.FALSE);
+	public void testSaveAndLoad() {
+		long plain = random.nextLong();
+		VerifySecure record = new VerifySecure();
+		record.setInt64(SecureLong.plainValueOf(plain));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifySecure> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getFlagCode(), is(FlagCode.FALSE));
-	}
-
-	@Test
-	public void testSaveAndLoad_TRUE() {
-		ConversionTest record = new ConversionTest();
-		record.setFlagCode(FlagCode.TRUE);
-
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
-
-		assertThat(count, is(1));
-		assertThat(keyHolder.getKey().intValue(), is(not(0)));
-
-		List<ConversionTest> list = jdbcDao.selectAll();
-		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getFlagCode(), is(FlagCode.TRUE));
+		VerifySecure r = list.get(0);
+		assertThat(r.getInt64().plain(), is(plain));
 	}
 
 }

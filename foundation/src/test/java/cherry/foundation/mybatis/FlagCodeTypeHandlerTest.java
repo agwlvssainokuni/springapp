@@ -20,63 +20,54 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.db.gen.dto.VerifyFlag;
+import cherry.foundation.db.gen.mapper.VerifyFlagMapper;
 import cherry.foundation.type.FlagCode;
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.mapper.ConversionTestMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Transactional
 public class FlagCodeTypeHandlerTest {
 
 	@Autowired
-	private ConversionTestMapper mapper;
-
-	@Autowired
-	private NamedParameterJdbcOperations namedParameterJdbcOperations;
-
-	@After
-	public void after() {
-		namedParameterJdbcOperations.update("DELETE FROM conversion_test", new HashMap<String, Object>());
-	}
+	private VerifyFlagMapper mapper;
 
 	@Test
 	public void testSaveAndLoad_FALSE() {
-		ConversionTest record = new ConversionTest();
+		VerifyFlag record = new VerifyFlag();
 		record.setFlagCode(FlagCode.FALSE);
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifyFlag> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
+		VerifyFlag r = list.get(0);
 		assertThat(r.getFlagCode(), is(FlagCode.FALSE));
 	}
 
 	@Test
 	public void testSaveAndLoad_TRUE() {
-		ConversionTest record = new ConversionTest();
+		VerifyFlag record = new VerifyFlag();
 		record.setFlagCode(FlagCode.TRUE);
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifyFlag> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
+		VerifyFlag r = list.get(0);
 		assertThat(r.getFlagCode(), is(FlagCode.TRUE));
 	}
 

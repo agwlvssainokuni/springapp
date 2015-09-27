@@ -18,93 +18,79 @@ package cherry.foundation.type.jdbc;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.dto.ConversionTest;
+import cherry.foundation.db.gen.dto.VerifyFlag;
+import cherry.foundation.type.DeletedFlag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcLocalDateTest {
+public class DeletedFlagTest {
 
 	@Autowired
-	private JdbcOperations jdbcOperations;
-
-	@Autowired
-	private JdbcDao jdbcDao;
+	private FlagDao dao;
 
 	@Test
-	public void testSaveAndLoad() {
-		LocalDate orig = LocalDate.now();
-		ConversionTest record = new ConversionTest();
-		record.setJodaDate(orig);
+	public void testSaveAndLoad_NOT_DELETED() {
+		VerifyFlag record = new VerifyFlag();
+		record.setDeletedFlg(DeletedFlag.NOT_DELETED);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyFlag> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDate(), is(orig));
-
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
+		VerifyFlag r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(DeletedFlag.NOT_DELETED));
 	}
 
 	@Test
-	public void testSaveAndLoad_plus1d() {
-		LocalDate orig = LocalDate.now().plusDays(1);
-		ConversionTest record = new ConversionTest();
-		record.setJodaDate(orig);
+	public void testSaveAndLoad_1() {
+		VerifyFlag record = new VerifyFlag();
+		record.setDeletedFlg(new DeletedFlag(1));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyFlag> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDate(), is(orig));
-
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_date=?", Integer.class, orig.toString("yyyy-MM-dd")));
+		VerifyFlag r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(1)));
 	}
 
 	@Test
-	public void testSaveAndLoad_masked() {
-		LocalDate orig = LocalDate.now();
-		ConversionTest record = new ConversionTest();
-		record.setJodaDate(orig);
+	public void testSaveAndLoad_100() {
+		VerifyFlag record = new VerifyFlag();
+		record.setDeletedFlg(new DeletedFlag(100));
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAllWithMask();
+		List<VerifyFlag> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDate(), is(new LocalDate(2000, 1, 1)));
+		VerifyFlag r = list.get(0);
+		assertThat(r.getDeletedFlg(), is(new DeletedFlag(100)));
 	}
 
 }

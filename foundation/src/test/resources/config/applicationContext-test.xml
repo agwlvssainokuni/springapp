@@ -24,7 +24,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan base-package="cherry.foundation.type.db.mapper" />
+	<mybatis-spring:scan base-package="cherry.foundation.db.gen.mapper,cherry.foundation.type.db.mapper" />
 
 	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
 		<constructor-arg>

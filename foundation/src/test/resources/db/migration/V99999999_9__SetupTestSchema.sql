@@ -1,29 +1,78 @@
-CREATE TABLE etl_executor_test (
-	id		INTEGER		NOT NULL	AUTO_INCREMENT,
-	login	VARCHAR(32)	NOT NULL,
-	passwd	VARCHAR(64)	NOT NULL,
-	name	VARCHAR(255),
-	del_flg	INTEGER		DEFAULT 0,
-	CONSTRAINT etl_executor_test_pkcs PRIMARY KEY (id)
-);
+-- Project Name : SpringApp
+-- Date/Time    : 2015/09/27 21:46:39
+-- Author       : agwlvssainokuni
+-- RDBMS Type   : IBM DB2
+-- Application  : A5:SQL Mk-2
 
-CREATE TABLE etl_extr_ldr_test (
-	id		INTEGER		NOT NULL	AUTO_INCREMENT,
-	name	VARCHAR(32)	NOT NULL,
-	address	VARCHAR(64)	NOT NULL,
-	CONSTRAINT etl_extr_ldr_test_pkcs PRIMARY KEY (id)
-);
+-- SQL実行検証
+create table sql_execution (
+  id BIGINT not null AUTO_INCREMENT
+  , login VARCHAR(32)
+  , name VARCHAR(32)
+  , constraint sql_execution_PKC primary key (id)
+) ;
 
-CREATE TABLE conversion_test (
-	id		INTEGER		NOT NULL	AUTO_INCREMENT,
-	joda_date		DATE,
-	joda_time		TIME,
-	joda_datetime	TIMESTAMP,
-	sec_str		VARCHAR(136),
-	sec_int		VARCHAR(72),
-	sec_long	VARCHAR(72),
-	sec_bigint	VARCHAR(136),
-	sec_bigdec	VARCHAR(136),
-	flag_code	INTEGER,
-	deleted_flg	INTEGER
-);
+-- ETL検証
+create table etl_extr_ldr (
+  id BIGINT not null AUTO_INCREMENT
+  , name VARCHAR(32) not null
+  , address VARCHAR(64) not null
+  , constraint etl_extr_ldr_PKC primary key (id)
+) ;
+
+-- フラグ操作検証
+create table verify_flag (
+  id BIGINT not null AUTO_INCREMENT
+  , flag_code INTEGER
+  , deleted_flg INTEGER
+  , constraint verify_flag_PKC primary key (id)
+) ;
+
+-- 暗号操作検証
+create table verify_secure (
+  id BIGINT not null AUTO_INCREMENT
+  , str VARCHAR(136)
+  , int32 VARCHAR(72)
+  , int64 VARCHAR(72)
+  , bigint VARCHAR(136)
+  , bigdec VARCHAR(136)
+  , constraint verify_secure_PKC primary key (id)
+) ;
+
+-- 日時操作検証
+create table verify_datetime (
+  id BIGINT not null AUTO_INCREMENT
+  , dt DATE
+  , tm TIME
+  , dtm TIMESTAMP
+  , constraint verify_datetime_PKC primary key (id)
+) ;
+
+comment on table sql_execution is 'SQL実行検証';
+comment on column sql_execution.id is 'ID';
+comment on column sql_execution.login is 'ログイン';
+comment on column sql_execution.name is '名前';
+
+comment on table etl_extr_ldr is 'ETL検証';
+comment on column etl_extr_ldr.id is 'ID';
+comment on column etl_extr_ldr.name is '名前';
+comment on column etl_extr_ldr.address is '住所';
+
+comment on table verify_flag is 'フラグ操作検証';
+comment on column verify_flag.id is 'ID';
+comment on column verify_flag.flag_code is 'フラグ';
+comment on column verify_flag.deleted_flg is '削除フラグ';
+
+comment on table verify_secure is '暗号操作検証';
+comment on column verify_secure.id is 'ID';
+comment on column verify_secure.str is '文字列';
+comment on column verify_secure.int32 is '整数【32bit】';
+comment on column verify_secure.int64 is '整数【64bit】';
+comment on column verify_secure.bigint is '整数【BigInteger】';
+comment on column verify_secure.bigdec is '数値【BigDecimal】';
+
+comment on table verify_datetime is '日時操作検証';
+comment on column verify_datetime.id is 'ID';
+comment on column verify_datetime.dt is '日付';
+comment on column verify_datetime.tm is '時刻';
+comment on column verify_datetime.dtm is '日時';

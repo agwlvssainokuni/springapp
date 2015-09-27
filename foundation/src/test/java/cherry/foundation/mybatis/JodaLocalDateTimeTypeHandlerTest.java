@@ -32,8 +32,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.dto.ConversionTest;
-import cherry.foundation.type.db.mapper.ConversionTestMapper;
+import cherry.foundation.db.gen.dto.VerifyDatetime;
+import cherry.foundation.db.gen.mapper.VerifyDatetimeMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -41,7 +41,7 @@ import cherry.foundation.type.db.mapper.ConversionTestMapper;
 public class JodaLocalDateTimeTypeHandlerTest {
 
 	@Autowired
-	private ConversionTestMapper mapper;
+	private VerifyDatetimeMapper mapper;
 
 	@Autowired
 	private JdbcOperations jdbcOperations;
@@ -49,50 +49,52 @@ public class JodaLocalDateTimeTypeHandlerTest {
 	@Test
 	public void testSaveAndLoad() {
 		LocalDateTime orig = LocalDateTime.now();
-		ConversionTest record = new ConversionTest();
-		record.setJodaDatetime(orig);
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(orig);
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifyDatetime> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDatetime(), is(orig));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getDtm(), is(orig));
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_datetime=?", Integer.class,
-				orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dtm=?", Integer.class,
+						orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
 	}
 
 	@Test
 	public void testSaveAndLoad_plus1d() {
 		LocalDateTime orig = LocalDateTime.now().plusDays(1);
-		ConversionTest record = new ConversionTest();
-		record.setJodaDatetime(orig);
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(orig);
 
-		int count = mapper.insert(record);
+		int count = mapper.insertSelective(record);
 		assertThat(count, is(1));
-		assertThat(record.getId(), is(not(0)));
+		assertThat(record.getId(), is(not(0L)));
 
-		List<ConversionTest> list = mapper.selectAll();
+		List<VerifyDatetime> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaDatetime(), is(orig));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getDtm(), is(orig));
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_datetime=?", Integer.class,
-				orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dtm=?", Integer.class,
+						orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
 	}
 
 	@Test
 	public void testLoad() {
-		jdbcOperations.execute("INSERT INTO conversion_test(joda_datetime) VALUES ('2015-01-23 12:34:56.789')");
-		List<ConversionTest> list = mapper.selectAll();
+		jdbcOperations.execute("INSERT INTO verify_datetime(dtm) VALUES ('2015-01-23 12:34:56.789')");
+		List<VerifyDatetime> list = mapper.selectByExample(null);
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertEquals(new LocalDateTime(2015, 1, 23, 12, 34, 56, 789), r.getJodaDatetime());
+		VerifyDatetime r = list.get(0);
+		assertEquals(new LocalDateTime(2015, 1, 23, 12, 34, 56, 789), r.getDtm());
 	}
 
 }

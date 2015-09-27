@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,77 +34,81 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.foundation.type.db.dto.ConversionTest;
+import cherry.foundation.db.gen.dto.VerifyDatetime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
 @Transactional
-public class JdbcLocalTimeTest {
+public class LocalDateTimeTest {
 
 	@Autowired
 	private JdbcOperations jdbcOperations;
 
 	@Autowired
-	private JdbcDao jdbcDao;
+	private DatetimeDao dao;
 
 	@Test
 	public void testSaveAndLoad() {
-		LocalTime orig = LocalTime.now();
-		ConversionTest record = new ConversionTest();
-		record.setJodaTime(orig);
+		LocalDateTime orig = LocalDateTime.now();
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyDatetime> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(orig));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getDtm(), is(orig));
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dtm=?", Integer.class,
+						orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
 	}
 
 	@Test
-	public void testSaveAndLoad_plus1h() {
-		LocalTime orig = LocalTime.now().plusHours(1);
-		ConversionTest record = new ConversionTest();
-		record.setJodaTime(orig);
+	public void testSaveAndLoad_plus1d() {
+		LocalDateTime orig = LocalDateTime.now().plusDays(1);
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAll();
+		List<VerifyDatetime> list = dao.selectAll();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(orig));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getDtm(), is(orig));
 
-		assertEquals(Integer.valueOf(1), jdbcOperations.queryForObject(
-				"SELECT COUNT(*) FROM conversion_test WHERE joda_time=?", Integer.class, orig.toString("HH:mm:ss.SSS")));
+		assertEquals(
+				Integer.valueOf(1),
+				jdbcOperations.queryForObject("SELECT COUNT(*) FROM verify_datetime WHERE dtm=?", Integer.class,
+						orig.toString("yyyy-MM-dd HH:mm:ss.SSS")));
 	}
 
 	@Test
 	public void testSaveAndLoad_masked() {
-		LocalTime orig = LocalTime.now();
-		ConversionTest record = new ConversionTest();
-		record.setJodaTime(orig);
+		LocalDateTime orig = LocalDateTime.now();
+		VerifyDatetime record = new VerifyDatetime();
+		record.setDtm(orig);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = jdbcDao.insert(record, keyHolder);
+		int count = dao.insert(record, keyHolder);
 
 		assertThat(count, is(1));
 		assertThat(keyHolder.getKey().intValue(), is(not(0)));
 
-		List<ConversionTest> list = jdbcDao.selectAllWithMask();
+		List<VerifyDatetime> list = dao.selectAllWithMask();
 		assertThat(list.isEmpty(), is(false));
-		ConversionTest r = list.get(0);
-		assertThat(r.getJodaTime(), is(new LocalTime(0, 0, 0, orig.getMillisOfSecond())));
+		VerifyDatetime r = list.get(0);
+		assertThat(r.getDtm(), is(new LocalDateTime(2000, 1, 1, 0, 0, 0)));
 	}
 
 }

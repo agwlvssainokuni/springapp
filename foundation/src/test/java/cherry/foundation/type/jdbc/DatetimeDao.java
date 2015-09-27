@@ -30,15 +30,15 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import cherry.foundation.db.gen.dto.VerifyDatetime;
 import cherry.foundation.sql.SqlLoader;
-import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.goods.masker.Masker;
 import cherry.goods.masker.SqlDateMasker;
 import cherry.goods.masker.SqlTimeMasker;
 import cherry.goods.masker.SqlTimestampMasker;
 
 @Component
-public class JdbcDao implements InitializingBean {
+public class DatetimeDao implements InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -63,21 +63,21 @@ public class JdbcDao implements InitializingBean {
 		insertSql = sqlmap.get("insert");
 	}
 
-	public List<ConversionTest> selectAll() {
-		return namedParameterJdbcOperations.query(selectAllSql, rowMapperCreator.create(ConversionTest.class));
+	public List<VerifyDatetime> selectAll() {
+		return namedParameterJdbcOperations.query(selectAllSql, rowMapperCreator.create(VerifyDatetime.class));
 	}
 
-	public List<ConversionTest> selectAllWithMask() {
+	public List<VerifyDatetime> selectAllWithMask() {
 		Map<String, Masker<?>> maskerMap = new HashMap<>();
-		maskerMap.put("jodaDate", SqlDateMasker.newMasker(new LocalDate(2000, 1, 1), true, true, true));
-		maskerMap.put("jodaTime", SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), true, true, true));
-		maskerMap.put("jodaDatetime", SqlTimestampMasker.newMasker(new LocalDateTime(2000, 1, 1, 0, 0, 0), true, true,
-				true, true, true, true));
+		maskerMap.put("dt", SqlDateMasker.newMasker(new LocalDate(2000, 1, 1), true, true, true));
+		maskerMap.put("tm", SqlTimeMasker.newMasker(new LocalTime(0, 0, 0), true, true, true));
+		maskerMap.put("dtm", SqlTimestampMasker.newMasker(new LocalDateTime(2000, 1, 1, 0, 0, 0), true, true, true,
+				true, true, true));
 		return namedParameterJdbcOperations.query(selectAllSql,
-				rowMapperCreator.create(ConversionTest.class, maskerMap));
+				rowMapperCreator.create(VerifyDatetime.class, maskerMap));
 	}
 
-	public int insert(ConversionTest record, KeyHolder keyHolder) {
+	public int insert(VerifyDatetime record, KeyHolder keyHolder) {
 		return namedParameterJdbcOperations.update(insertSql, sqlParameterSourceCreator.create(record), keyHolder);
 	}
 
