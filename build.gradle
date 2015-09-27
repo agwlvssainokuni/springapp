@@ -120,7 +120,7 @@ subprojects {
 		versionAspectJ = "1.8.2"
 		versionAopalliance = "1.0"
 		versionSpring = "4.1.7.RELEASE"
-		versionSpringLdap = "2.0.3.RELEASE"
+		versionSpringLdap = "2.0.4.RELEASE"
 		versionSpringSecurity = "4.0.2.RELEASE"
 		versionSpringMobile = "1.1.4.RELEASE"
 		versionSpringDataJdbcCore = "1.1.0.RELEASE"
