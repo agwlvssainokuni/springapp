@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
@@ -24,7 +23,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan base-package="cherry.foundation.db.gen.mapper,cherry.foundation.type.db.mapper" />
+	<mybatis-spring:scan base-package="cherry.foundation.db.gen.mapper" />
 
 	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
 		<constructor-arg>
