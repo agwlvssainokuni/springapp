@@ -49,6 +49,8 @@ subprojects {
 	}
 
 	javadoc {
+		classpath += [configurations.provided]
+		classpath += [configurations.compileOnly]
 		options.encoding = "UTF-8"
 		options.addBooleanOption("Xdoclint:none", true)
 	}
