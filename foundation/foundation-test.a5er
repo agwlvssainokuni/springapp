@@ -44,14 +44,54 @@ SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
 
+[Relation]
+Entity1=verify_constraints
+Entity2=verify_constraints
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=parent_id
+Cardinarity1=
+Cardinarity2=
+Position="試験用DBスキーマ",0,1869,3979,6982,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20150928094506
+LineMode=0
+Bar1=187
+Bar2=398
+Bar3=698
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=verify_constraints
+LName=制約検証
+Comment=
+TableOption=
+Page=試験用DBスキーマ
+Left=500
+Top=1400
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="親ID","parent_id","*ID",,,"","",$FFFFFFFF,""
+Field="名称","name","@VARCHAR(32)",,,"","",$FFFFFFFF,""
+Index==2,name
+EffectMode=None
+Tag=技術検証
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150928094418
+Position="試験用DBスキーマ",500,1400
+
 [Entity]
 PName=sql_execution
 LName=SQL実行検証
 Comment=
 TableOption=
 Page=試験用DBスキーマ
-Left=500
-Top=1300
+Left=1000
+Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="ログイン","login","@VARCHAR(32)",,,"","",$FFFFFFFF,""
 Field="名前","name","@VARCHAR(32)",,,"","",$FFFFFFFF,""
@@ -60,7 +100,7 @@ Tag=技術検証
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20150927214623
-Position="試験用DBスキーマ",500,1300
+Position="試験用DBスキーマ",1000,1000
 
 [Entity]
 PName=etl_extr_ldr

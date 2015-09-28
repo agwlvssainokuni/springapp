@@ -1,8 +1,19 @@
 -- Project Name : SpringApp
--- Date/Time    : 2015/09/27 21:46:39
+-- Date/Time    : 2015/09/28 9:46:00
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- 制約検証
+create table verify_constraints (
+  id BIGINT not null AUTO_INCREMENT
+  , parent_id BIGINT
+  , name VARCHAR(32)
+  , constraint verify_constraints_PKC primary key (id)
+) ;
+
+alter table verify_constraints add constraint verify_constraints_IX1
+  unique (name) ;
 
 -- SQL実行検証
 create table sql_execution (
@@ -47,6 +58,14 @@ create table verify_datetime (
   , dtm TIMESTAMP
   , constraint verify_datetime_PKC primary key (id)
 ) ;
+
+alter table verify_constraints
+  add constraint verify_constraints_FK1 foreign key (parent_id) references verify_constraints(id);
+
+comment on table verify_constraints is '制約検証';
+comment on column verify_constraints.id is 'ID';
+comment on column verify_constraints.parent_id is '親ID';
+comment on column verify_constraints.name is '名称';
 
 comment on table sql_execution is 'SQL実行検証';
 comment on column sql_execution.id is 'ID';

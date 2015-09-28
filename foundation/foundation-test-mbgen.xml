@@ -48,5 +48,8 @@
 			<columnOverride column="flag_code"
 				javaType="cherry.foundation.type.FlagCode" />
 		</table>
+		<table tableName="verify_constraints">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
 	</context>
 </generatorConfiguration>
