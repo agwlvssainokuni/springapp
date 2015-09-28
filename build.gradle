@@ -48,6 +48,11 @@ subprojects {
 		classpath.plusConfigurations += [configurations.compileOnly]
 	}
 
+	javadoc {
+		options.encoding = "UTF-8"
+		options.addBooleanOption("Xdoclint:none", true)
+	}
+
 	findbugs { ignoreFailures = true }
 	findbugsMain {
 		// excludeFilter = rootProject.file("findbugs-exclude.xml")
