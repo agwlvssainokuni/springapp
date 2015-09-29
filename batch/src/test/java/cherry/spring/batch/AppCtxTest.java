@@ -16,8 +16,7 @@
 
 package cherry.spring.batch;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import cherry.foundation.AppCtxHolder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -36,8 +33,8 @@ public class AppCtxTest {
 	private ApplicationContext appCtx;
 
 	@Test
-	public void testGetAppCtx() {
-		assertThat(AppCtxHolder.getAppCtx(), is(appCtx));
+	public void testInitialize() {
+		assertNotNull(appCtx);
 	}
 
 }

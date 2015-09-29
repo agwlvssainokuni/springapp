@@ -17,43 +17,24 @@
 package cherry.foundation;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.core.convert.ConversionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
-public class AppCtxTagTest {
+public class AppCtxTest {
+
+	@Autowired
+	private ApplicationContext appCtx;
 
 	@Test
-	public void testGetBean() {
-		ConversionService service = AppCtxTag.getBean("conversionService", ConversionService.class);
-		assertNotNull(service);
-	}
-
-	@Test
-	public void testGetBeanByName() {
-		Object service = AppCtxTag.getBeanByName("conversionService");
-		assertNotNull(service);
-	}
-
-	@Test
-	public void testGetBeanByClass() {
-		ConversionService service = AppCtxTag.getBeanByClass(ConversionService.class);
-		assertNotNull(service);
-	}
-
-	@Test
-	public void testInstantiate() {
-		try {
-			new AppCtxTag();
-		} catch (Exception ex) {
-			fail("Exception must not be thrown");
-		}
+	public void testInitialize() {
+		assertNotNull(appCtx);
 	}
 
 }

@@ -16,16 +16,24 @@
 
 package cherry.foundation.navi;
 
-import static cherry.foundation.AppCtxHolder.getAppCtx;
-
 import java.util.List;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import cherry.foundation.navi.Navigator.Node;
 
-public class NavigatorTag {
+public class NavigatorTag implements ApplicationContextAware {
+
+	private static Navigator navigator;
+
+	@Override
+	public void setApplicationContext(ApplicationContext appCtx) {
+		navigator = appCtx.getBean(Navigator.class);
+	}
 
 	public static List<Node> navigate(String name) {
-		return getAppCtx().getBean(Navigator.class).navigate(name);
+		return navigator.navigate(name);
 	}
 
 }
