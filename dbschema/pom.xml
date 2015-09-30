@@ -6,10 +6,10 @@
 	<artifactId>dbschema</artifactId>
 	<version>1.0</version>
 	<properties>
-		<versionH2db>1.4.187</versionH2db>
+		<versionH2db>1.4.188</versionH2db>
 		<versionFlyway>3.2.1</versionFlyway>
 		<versionMyBatisGenerator>1.3.2</versionMyBatisGenerator>
-		<versionQuerydsl>3.6.5</versionQuerydsl>
+		<versionQuerydsl>3.6.8</versionQuerydsl>
 	</properties>
 	<build>
 		<plugins>

@@ -78,6 +78,7 @@ public class BAuthor {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", loginId = " + loginId + ", name = " + name + ", updatedAt = " + updatedAt;
     }

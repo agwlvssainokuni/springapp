@@ -118,6 +118,7 @@ public class BTodo {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public String toString() {
          return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", doneAt = " + doneAt + ", doneFlg = " + doneFlg + ", dueDt = " + dueDt + ", id = " + id + ", lockVersion = " + lockVersion + ", postedAt = " + postedAt + ", postedBy = " + postedBy + ", updatedAt = " + updatedAt;
     }
