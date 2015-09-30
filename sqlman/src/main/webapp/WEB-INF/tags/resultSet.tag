@@ -1,14 +1,10 @@
-<%@ tag language="java" pageEncoding="UTF-8" body-content="empty"
-	trimDirectiveWhitespaces="true"%>
+<%@ tag language="java" pageEncoding="UTF-8" body-content="empty" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ attribute name="id" required="true" rtexprvalue="true"
-	type="java.lang.String"%>
-<%@ attribute name="resultSet" required="true" rtexprvalue="true"
-	type="cherry.sqlman.tool.shared.ResultSet"%>
-<%@ attribute name="pageSet" required="true" rtexprvalue="true"
-	type="cherry.goods.paginate.PageSet"%>
+<%@ attribute name="id" required="true" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="resultSet" required="true" rtexprvalue="true" type="cherry.sqlman.tool.shared.ResultSet"%>
+<%@ attribute name="pageSet" required="true" rtexprvalue="true" type="cherry.goods.paginate.PageSet"%>
 <table id="${id}" class="table table-striped">
 	<thead>
 		<tr>
@@ -21,10 +17,8 @@
 	<tbody>
 		<c:forEach var="count" begin="1" end="${resultSet.recordSet.size()}">
 			<tr>
-				<td class="text-right"><c:out
-						value="${pageSet.current.from + count}" /></td>
-				<c:forEach var="fnum" begin="1"
-					end="${fn:length(resultSet.recordSet.get(count-1))}">
+				<td class="text-right"><c:out value="${pageSet.current.from + count}" /></td>
+				<c:forEach var="fnum" begin="1" end="${fn:length(resultSet.recordSet.get(count-1))}">
 					<s:bind path="resultSet.recordSet[${count - 1}][${fnum - 1}]">
 						<td>${status.value}</td>
 					</s:bind>
