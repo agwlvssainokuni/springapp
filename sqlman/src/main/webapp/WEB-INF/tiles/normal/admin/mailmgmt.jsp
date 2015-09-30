@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h2 class="page-header">
 	<s:message code="admin/mailmgmt.message.0" />
@@ -14,20 +12,17 @@
 <div class="form-horizontal">
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-2">
-			<button id="sendBtn" class="btn btn-default btn-block" type="submit"
-				data-action="<c:url value="/admin/mailmgmt/execute"/>">
+			<button id="sendBtn" class="btn btn-default btn-block" type="submit" data-action="<c:url value="/admin/mailmgmt/execute"/>">
 				<s:message code="admin/mailmgmt.sendButton" />
 			</button>
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="sendResultModal" tabindex="-1" role="dialog"
-	aria-labelledby="sendResultLabel">
+<div class="modal fade" id="sendResultModal" tabindex="-1" role="dialog" aria-labelledby="sendResultLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
 				<h4 class="modal-title" id="sendResultLabel">

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xmlns:security="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -66,9 +65,8 @@
 	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/tool/**" access="isAuthenticated() and hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 		<security:intercept-url pattern="/admin/**" access="isAuthenticated() and hasRole('ROLE_ADMIN')" />
-		<security:form-login login-page="/login/start" login-processing-url="/login/execute"
-			authentication-failure-url="/login/start?loginFailed" default-target-url="/tool/" always-use-default-target="false"
-			username-parameter="loginId" password-parameter="password" />
+		<security:form-login login-page="/login/start" login-processing-url="/login/execute" authentication-failure-url="/login/start?loginFailed"
+			default-target-url="/tool/" always-use-default-target="false" username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout" logout-success-url="/login/start?loggedOut" invalidate-session="true" />
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>

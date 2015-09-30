@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h2>
 	<s:message code="signup/entry/init.message.0" />
@@ -19,15 +17,13 @@
 		</div>
 	</div>
 </s:hasBindErrors>
-<f:form servletRelativeAction="/signup/execute" method="POST"
-	modelAttribute="signupEntryForm" role="form" cssClass="form-horizontal">
+<f:form servletRelativeAction="/signup/execute" method="POST" modelAttribute="signupEntryForm" role="form" cssClass="form-horizontal">
 	<div class="form-group">
 		<f:label path="email" class="col-sm-2 control-label">
 			<s:message code="signupEntryForm.email" />
 		</f:label>
 		<div class="col-sm-10">
-			<f:input path="email" cssClass="form-control"
-				cssErrorClass="form-control has-error" />
+			<f:input path="email" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">

@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1 class="app-subject">
@@ -41,47 +39,34 @@
 		</c:choose>
 	</c:set>
 	<div class="app-portion">
-		<f:form servletRelativeAction="/secure/userman/search/execute"
-			method="POST" modelAttribute="usermanSearchForm">
+		<f:form servletRelativeAction="/secure/userman/search/execute" method="POST" modelAttribute="usermanSearchForm">
 			<table class="app-transparent">
 				<tbody>
 					<tr>
-						<td><label for="loginId"><s:message
-									code="usermanSearchForm.loginId" /></label></td>
-						<td><f:input path="loginId" cssClass="app-width30"
-								cssErrorClass="app-width30 ui-state-error" /></td>
+						<td><label for="loginId"><s:message code="usermanSearchForm.loginId" /></label></td>
+						<td><f:input path="loginId" cssClass="app-width30" cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<td><label for="registeredFrom"><s:message
-									code="usermanSearchForm.registeredFrom" /></label></td>
-						<td><f:input path="registeredFrom" cssClass="app-width30"
-								cssErrorClass="app-width30 ui-state-error" /></td>
+						<td><label for="registeredFrom"><s:message code="usermanSearchForm.registeredFrom" /></label></td>
+						<td><f:input path="registeredFrom" cssClass="app-width30" cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<td><label for="registeredTo"><s:message
-									code="usermanSearchForm.registeredTo" /></label></td>
-						<td><f:input path="registeredTo" cssClass="app-width30"
-								cssErrorClass="app-width30 ui-state-error" /></td>
+						<td><label for="registeredTo"><s:message code="usermanSearchForm.registeredTo" /></label></td>
+						<td><f:input path="registeredTo" cssClass="app-width30" cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<td><label for="lastName"><s:message
-									code="usermanSearchForm.lastName" /></label></td>
-						<td><f:input path="lastName" cssClass="app-width30"
-								cssErrorClass="app-width30 ui-state-error" /></td>
+						<td><label for="lastName"><s:message code="usermanSearchForm.lastName" /></label></td>
+						<td><f:input path="lastName" cssClass="app-width30" cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<td><label for="firstName"><s:message
-									code="usermanSearchForm.firstName" /></label></td>
-						<td><f:input path="firstName" cssClass="app-width30"
-								cssErrorClass="app-width30 ui-state-error" /></td>
+						<td><label for="firstName"><s:message code="usermanSearchForm.firstName" /></label></td>
+						<td><f:input path="firstName" cssClass="app-width30" cssErrorClass="app-width30 ui-state-error" /></td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td></td>
-						<td><input type="hidden" id="sz" name="sz"
-							value="${param.sz}"> <f:button type="submit"
-								class="app-button">
+						<td><input type="hidden" id="sz" name="sz" value="${param.sz}"> <f:button type="submit" class="app-button">
 								<s:message code="secure/userman/search/init.searchButton" />
 							</f:button> <f:button type="submit" name="download" class="app-button">
 								<s:message code="secure/userman/search/init.downloadButton" />
@@ -92,9 +77,7 @@
 		</f:form>
 	</div>
 	<c:if test="${resultIsNotEmpty}">
-		<f:form servletRelativeAction="/secure/userman/search/execute"
-			method="POST" modelAttribute="usermanSearchForm"
-			id="HusermanSearchForm">
+		<f:form servletRelativeAction="/secure/userman/search/execute" method="POST" modelAttribute="usermanSearchForm" id="HusermanSearchForm">
 			<f:hidden path="loginId" id="HloginId" />
 			<f:hidden path="registeredFrom" id="HregisteredFrom" />
 			<f:hidden path="registeredTo" id="HregisteredTo" />
@@ -116,34 +99,26 @@
 			</div>
 			<div class="app-pagerbox ui-helper-clearfix">
 				<div class="app-floatleft">
-					<app:pageSorter label="SORT BY" markerClass="usermanSearchFormSort"
-						sortOrder="sortOrder" sortBy="sortBy">
+					<app:pageSorter label="SORT BY" markerClass="usermanSearchFormSort" sortOrder="sortOrder" sortBy="sortBy">
 						<option value="1">カラム1</option>
 						<option value="2">カラム2</option>
 						<option value="3">カラム3</option>
 					</app:pageSorter>
-					<app:refreshButton selector=".usermanSearchFormSort"
-						form="#HusermanSearchForm" />
+					<app:refreshButton selector=".usermanSearchFormSort" form="#HusermanSearchForm" />
 				</div>
 				<div class="app-floatright">
 					<app:pageSize form="#HusermanSearchForm" psz="psz" />
-					<app:pagerLink pageSet="${pagedList.pageSet}"
-						form="#HusermanSearchForm" pno="pno" />
+					<app:pagerLink pageSet="${pagedList.pageSet}" form="#HusermanSearchForm" pno="pno" />
 				</div>
 			</div>
-			<table id="usermanSearchList"
-				class="app-stripe app-width-full app-multihead">
+			<table id="usermanSearchList" class="app-stripe app-width-full app-multihead">
 				<thead>
 					<tr class="app-head">
 						<th>#</th>
-						<th><s:message
-								code="secure/userman/search/init.column.loginId" /></th>
-						<th><s:message
-								code="secure/userman/search/init.column.lastName" /></th>
-						<th><s:message
-								code="secure/userman/search/init.column.firstName" /></th>
-						<th><s:message
-								code="secure/userman/search/init.column.registeredAt" /></th>
+						<th><s:message code="secure/userman/search/init.column.loginId" /></th>
+						<th><s:message code="secure/userman/search/init.column.lastName" /></th>
+						<th><s:message code="secure/userman/search/init.column.firstName" /></th>
+						<th><s:message code="secure/userman/search/init.column.registeredAt" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -162,8 +137,7 @@
 			</table>
 			<div class="app-pagerbox ui-helper-clearfix">
 				<div class="app-floatright">
-					<app:pagerLink pageSet="${pagedList.pageSet}"
-						form="#HusermanSearchForm" pno="pno" />
+					<app:pagerLink pageSet="${pagedList.pageSet}" form="#HusermanSearchForm" pno="pno" />
 				</div>
 			</div>
 		</div>

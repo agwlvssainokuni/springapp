@@ -1,17 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<c:set var="hasResultList"
-	value="${pagedList != null && !pagedList.list.isEmpty()}" />
+<c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
 <h2 class="page-header">
 	<s:message code="tool/search/page.message.0" />
 </h2>
@@ -19,12 +16,10 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#searchForm"><s:message
-						code="tool/search/page.message.1" /></a>
+				<a data-toggle="collapse" href="#searchForm"><s:message code="tool/search/page.message.1" /></a>
 			</h3>
 		</div>
-		<div id="searchForm"
-			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+		<div id="searchForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqlSearchForm">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -45,9 +40,7 @@
 						</div>
 					</div>
 				</c:if>
-				<f:form servletRelativeAction="/tool/search/execute" method="POST"
-					modelAttribute="sqlSearchForm" cssClass="form-horizontal"
-					role="form">
+				<f:form servletRelativeAction="/tool/search/execute" method="POST" modelAttribute="sqlSearchForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="pageNo" value="0" />
 					<f:hidden path="pageSz" />
 					<c:set var="hasError">
@@ -62,27 +55,21 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label"><s:message
-								code="tool/search/page.form.type" /></label>
+						<label class="col-sm-2 control-label"><s:message code="tool/search/page.form.type" /></label>
 						<div class="col-sm-10">
-							<c:forEach var="item"
-								items="${foundation:getLabeledEnumList('cherry.sqlman.SqlType')}">
+							<c:forEach var="item" items="${foundation:getLabeledEnumList('cherry.sqlman.SqlType')}">
 								<div class="checkbox-inline">
-									<f:checkbox path="sqlType" value="${item.enumName}"
-										label="${item.enumLabel}" />
+									<f:checkbox path="sqlType" value="${item.enumName}" label="${item.enumLabel}" />
 								</div>
 							</c:forEach>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label"><s:message
-								code="tool/search/page.form.published" /></label>
+						<label class="col-sm-2 control-label"><s:message code="tool/search/page.form.published" /></label>
 						<div class="col-sm-10">
-							<c:forEach var="item"
-								items="${foundation:getLabeledEnumList('cherry.sqlman.Published')}">
+							<c:forEach var="item" items="${foundation:getLabeledEnumList('cherry.sqlman.Published')}">
 								<div class="checkbox-inline">
-									<f:checkbox path="published" value="${item.enumName}"
-										label="${item.enumLabel}" />
+									<f:checkbox path="published" value="${item.enumName}" label="${item.enumLabel}" />
 								</div>
 							</c:forEach>
 						</div>
@@ -95,9 +82,7 @@
 						<s:bind path="registeredFromTm">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group">
-						<span
-							class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label
-							class="col-sm-2 control-label"><s:message
+						<span class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label class="col-sm-2 control-label"><s:message
 									code="sqlSearchForm.registeredFrom" /></label></span>
 						<div class="col-sm-4 ${hasErrorDt}">
 							<f:input path="registeredFromDt" cssClass="form-control" />
@@ -113,9 +98,7 @@
 						<s:bind path="registeredToTm">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group">
-						<span
-							class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label
-							class="col-sm-2 control-label"><s:message
+						<span class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label class="col-sm-2 control-label"><s:message
 									code="sqlSearchForm.registeredTo" /></label></span>
 						<div class="col-sm-4 ${hasErrorDt}">
 							<f:input path="registeredToDt" cssClass="form-control" />
@@ -140,14 +123,12 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" href="#searchResult"><s:message
-							code="tool/search/page.message.2" /></a>
+					<a data-toggle="collapse" href="#searchResult"><s:message code="tool/search/page.message.2" /></a>
 				</h3>
 			</div>
 			<div id="searchResult" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<f:form servletRelativeAction="/tool/search/execute" method="POST"
-						modelAttribute="sqlSearchForm" id="sqlSearchForm2">
+					<f:form servletRelativeAction="/tool/search/execute" method="POST" modelAttribute="sqlSearchForm" id="sqlSearchForm2">
 						<f:hidden id="pageNo2" path="pageNo" />
 						<f:hidden id="pageSz2" path="pageSz" />
 						<f:hidden id="name2" path="name" />
@@ -163,8 +144,7 @@
 							<s:message code="common/pager.message.0"
 								arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 						</div>
-						<app:pagerLink pageSet="${pagedList.pageSet}"
-							form="#sqlSearchForm2" pno="pageNo" />
+						<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
 					</div>
 					<table id="searchResultList" class="table table-striped">
 						<thead>
@@ -191,18 +171,15 @@
 										</s:param>
 									</s:url>
 									<tr>
-										<td class="text-right"><c:out
-												value="${pagedList.pageSet.current.from + count}" /></td>
+										<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
 										<td><s:bind path="list[${count-1}][name]">
-												<a href="${uri}" title="${status.value}"><c:out
-														value="${status.value}" /></a>
+												<a href="${uri}" title="${status.value}"><c:out value="${status.value}" /></a>
 											</s:bind></td>
 										<td><app:out path="list[${count-1}][sqlType]" /></td>
 										<td><app:out path="list[${count-1}][databaseName]" /></td>
 										<td><app:out path="list[${count-1}][registeredAt]" /></td>
 										<td><s:bind path="list[${count-1}][publishedFlg]">
-												<s:message
-													code="tool/search/page.column.publishedFlg.${status.value}" />
+												<s:message code="tool/search/page.column.publishedFlg.${status.value}" />
 											</s:bind></td>
 										<td><app:out path="list[${count-1}][ownedBy]" /></td>
 										<td><app:out path="list[${count-1}][description]" /></td>
@@ -212,8 +189,7 @@
 						</tbody>
 					</table>
 					<div>
-						<app:pagerLink pageSet="${pagedList.pageSet}"
-							form="#sqlSearchForm2" pno="pageNo" />
+						<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
 					</div>
 				</div>
 			</div>

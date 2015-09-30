@@ -1,22 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <s:url var="baseUri" value="/tool/clause/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<c:set var="hasResultList"
-	value="${resultSet != null && pageSet != null}" />
-<foundation:getBean var="dataSourceDef"
-	beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
+<c:set var="hasResultList" value="${resultSet != null && pageSet != null}" />
+<foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
 	<s:message code="tool/clause/page.message.0" />
 </h2>
@@ -24,8 +20,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#metadataForm"><s:message
-						code="tool/clause/page.message.1" /></a>
+				<a data-toggle="collapse" href="#metadataForm"><s:message code="tool/clause/page.message.1" /></a>
 			</h3>
 		</div>
 		<div id="metadataForm" class="panel-collapse collapse">
@@ -45,8 +40,7 @@
 								<s:message code="sqlMetadataForm.description" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:textarea path="description" cssClass="form-control"
-									readonly="true" />
+								<f:textarea path="description" cssClass="form-control" readonly="true" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -62,14 +56,12 @@
 								<s:message code="sqlMetadataForm.publishedFlg" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:checkbox path="publishedFlg" cssClass="form-control"
-									disabled="true" />
+								<f:checkbox path="publishedFlg" cssClass="form-control" disabled="true" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<a href="${baseUri}/edit" class="btn btn-default"><s:message
-										code="tool/clause/page.editButton" /></a>
+								<a href="${baseUri}/edit" class="btn btn-default"><s:message code="tool/clause/page.editButton" /></a>
 							</div>
 						</div>
 					</div>
@@ -80,12 +72,10 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#clauseForm"><s:message
-						code="tool/clause/page.message.2" /></a>
+				<a data-toggle="collapse" href="#clauseForm"><s:message code="tool/clause/page.message.2" /></a>
 			</h3>
 		</div>
-		<div id="clauseForm"
-			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+		<div id="clauseForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqlClauseForm">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -102,8 +92,7 @@
 								<s:message code="sqlClauseForm.databaseName" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:select path="databaseName" cssClass="form-control"
-									disabled="true">
+								<f:select path="databaseName" cssClass="form-control" disabled="true">
 									<f:options items="${dataSourceDef.names}" />
 								</f:select>
 							</div>
@@ -113,8 +102,7 @@
 								<s:message code="sqlClauseForm.select" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:textarea path="select" cssClass="form-control"
-									readonly="true" />
+								<f:textarea path="select" cssClass="form-control" readonly="true" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -138,8 +126,7 @@
 								<s:message code="sqlClauseForm.groupBy" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:textarea path="groupBy" cssClass="form-control"
-									readonly="true" />
+								<f:textarea path="groupBy" cssClass="form-control" readonly="true" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -147,8 +134,7 @@
 								<s:message code="sqlClauseForm.having" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:textarea path="having" cssClass="form-control"
-									readonly="true" />
+								<f:textarea path="having" cssClass="form-control" readonly="true" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -156,15 +142,12 @@
 								<s:message code="sqlClauseForm.orderBy" />
 							</f:label>
 							<div class="col-sm-10">
-								<f:textarea path="orderBy" cssClass="form-control"
-									readonly="true" />
+								<f:textarea path="orderBy" cssClass="form-control" readonly="true" />
 							</div>
 						</div>
 					</div>
 				</s:nestedPath>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
-					modelAttribute="sqlClauseForm" cssClass="form-horizontal"
-					role="form">
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST" modelAttribute="sqlClauseForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="pageNo" value="0" />
 					<f:hidden path="pageSz" />
 					<f:hidden path="lockVersion" />
@@ -187,8 +170,7 @@
 							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="tool/clause/page.downloadButton" />
 							</f:button>
-							<a href="${baseUri}/edit" class="btn btn-default"><s:message
-									code="tool/clause/page.editButton" /></a>
+							<a href="${baseUri}/edit" class="btn btn-default"><s:message code="tool/clause/page.editButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -199,13 +181,11 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" href="#clauseResult"><s:message
-							code="tool/clause/page.message.3" /></a>
+					<a data-toggle="collapse" href="#clauseResult"><s:message code="tool/clause/page.message.3" /></a>
 				</h3>
 			</div>
 			<div id="clauseResult" class="panel-collapse collapse in">
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
-					modelAttribute="sqlClauseForm" id="sqlClause2">
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST" modelAttribute="sqlClauseForm" id="sqlClause2">
 					<f:hidden id="pageNo2" path="pageNo" />
 					<f:hidden id="pageSz2" path="pageSz" />
 					<f:hidden id="lockVersion2" path="lockVersion" />
@@ -214,17 +194,13 @@
 				<div class="panel-body">
 					<div>
 						<div class="app-pager-desc">
-							<s:message code="common/pager.message.0"
-								arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
+							<s:message code="common/pager.message.0" arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
 						</div>
-						<app:pagerLink pageSet="${pageSet}" form="#sqlClause2"
-							pno="pageNo" />
+						<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pageNo" />
 					</div>
-					<app:resultSet id="resultSetList" resultSet="${resultSet}"
-						pageSet="${pageSet}" />
+					<app:resultSet id="resultSetList" resultSet="${resultSet}" pageSet="${pageSet}" />
 					<div>
-						<app:pagerLink pageSet="${pageSet}" form="#sqlClause2"
-							pno="pageNo" />
+						<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pageNo" />
 					</div>
 				</div>
 			</div>

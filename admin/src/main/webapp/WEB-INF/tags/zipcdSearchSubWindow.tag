@@ -1,5 +1,4 @@
-<%@ tag language="java" body-content="empty" pageEncoding="UTF-8"
-	trimDirectiveWhitespaces="true"%>
+<%@ tag language="java" body-content="empty" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
@@ -19,10 +18,8 @@
 </div>
 <c:url var="zipcdUri" value="/secure/gallery/zipcd" />
 <s:message var="title" code="parts/zipcdSearchSubWindow.title" />
-<s:message var="alertNotFound"
-	code="parts/zipcdSearchSubWindow.alert.notFound" />
-<s:message var="selectButton"
-	code="parts/zipcdSearchSubWindow.selectButton" />
+<s:message var="alertNotFound" code="parts/zipcdSearchSubWindow.alert.notFound" />
+<s:message var="selectButton" code="parts/zipcdSearchSubWindow.selectButton" />
 <script type="text/javascript">
 	$(function() {
 		$("#zipcdSearchSubWindow").dialog({

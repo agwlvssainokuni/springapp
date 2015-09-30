@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="fnd" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
@@ -25,22 +23,17 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<f:form method="POST" servletRelativeAction="/secure/asyncproc"
-			modelAttribute="asyncProcForm" id="HasyncProcForm">
+		<f:form method="POST" servletRelativeAction="/secure/asyncproc" modelAttribute="asyncProcForm" id="HasyncProcForm">
 			<f:hidden path="pno" />
 			<f:hidden path="psz" />
 		</f:form>
 		<div data-role="navbar">
-			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno"
-				data-current="${pagedList.pageSet.current.no+1}">
-				<li><a href="#"
-					class="ui-icon-arrow-u ui-btn-icon-top ui-disabled"
-					title="${pagedList.pageSet.prev.no+1}"><s:message
+			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno" data-current="${pagedList.pageSet.current.no+1}">
+				<li><a href="#" class="ui-icon-arrow-u ui-btn-icon-top ui-disabled" title="${pagedList.pageSet.prev.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.prev" /></a></li>
 			</ul>
 		</div>
-		<table id="asyncProcList" data-role="table"
-			class="table-stripe ui-responsive">
+		<table id="asyncProcList" data-role="table" class="table-stripe ui-responsive">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -49,14 +42,12 @@
 					<th><s:message code="secure/asyncproc/init.column.launchedBy" /></th>
 					<th><s:message code="secure/asyncproc/init.column.asyncType" /></th>
 					<th><s:message code="secure/asyncproc/init.column.asyncStatus" /></th>
-					<th><s:message
-							code="secure/asyncproc/init.column.originalFilename" /></th>
+					<th><s:message code="secure/asyncproc/init.column.originalFilename" /></th>
 					<th><s:message code="secure/asyncproc/init.column.fileSize" /></th>
 					<th><s:message code="secure/asyncproc/init.column.totalCount" /></th>
 					<th><s:message code="secure/asyncproc/init.column.okCount" /></th>
 					<th><s:message code="secure/asyncproc/init.column.ngCount" /></th>
-					<th><s:message
-							code="secure/asyncproc/init.column.registeredAt" /></th>
+					<th><s:message code="secure/asyncproc/init.column.registeredAt" /></th>
 					<th><s:message code="secure/asyncproc/init.column.launchedAt" /></th>
 					<th><s:message code="secure/asyncproc/init.column.startedAt" /></th>
 					<th><s:message code="secure/asyncproc/init.column.finishedAt" /></th>
@@ -115,11 +106,8 @@
 			</tbody>
 		</table>
 		<div data-role="navbar">
-			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno"
-				data-current="${pagedList.pageSet.current.no+1}">
-				<li><a href="#"
-					class="ui-icon-arrow-d ui-btn-icon-top ui-disabled"
-					title="${pagedList.pageSet.next.no+1}"><s:message
+			<ul class="pager-link" data-form="#HasyncProcForm" data-pno="pno" data-current="${pagedList.pageSet.current.no+1}">
+				<li><a href="#" class="ui-icon-arrow-d ui-btn-icon-top ui-disabled" title="${pagedList.pageSet.next.no+1}"><s:message
 							code="secure/asyncproc/init.paginate.next" /></a></li>
 			</ul>
 		</div>

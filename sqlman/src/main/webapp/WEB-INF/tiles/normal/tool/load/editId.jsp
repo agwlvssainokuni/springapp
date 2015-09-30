@@ -1,20 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <s:url var="baseUri" value="/tool/load/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<foundation:getBean var="dataSourceDef"
-	beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
+<foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
 	<s:message code="tool/load/page.message.0" />
 </h2>
@@ -22,8 +19,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#metadataForm"><s:message
-						code="tool/load/page.message.1" /></a>
+				<a data-toggle="collapse" href="#metadataForm"><s:message code="tool/load/page.message.1" /></a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -41,9 +37,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
-					modelAttribute="sqlMetadataForm" cssClass="form-horizontal"
-					role="form">
+				<f:form servletRelativeAction="${baseUri}/metadata" method="POST" modelAttribute="sqlMetadataForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
@@ -88,8 +82,7 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message
-									code="tool/load/page.finishButton" /></a>
+							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -99,8 +92,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#loadForm"><s:message
-						code="tool/load/page.message.2" /></a>
+				<a data-toggle="collapse" href="#loadForm"><s:message code="tool/load/page.message.2" /></a>
 			</h3>
 		</div>
 		<div id="loadForm" class="panel-collapse collapse in">
@@ -124,8 +116,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/update" method="POST"
-					modelAttribute="sqlLoadForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/update" method="POST" modelAttribute="sqlLoadForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
@@ -156,8 +147,7 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message
-									code="tool/load/page.finishButton" /></a>
+							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>

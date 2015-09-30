@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h2 class="page-header">
 	<s:message code="password/start.message.0" />
@@ -27,9 +25,7 @@
 	</div>
 </s:hasBindErrors>
 <c:url var="action" value="/password/execute" />
-<f:form servletRelativeAction="${action}" method="POST"
-	modelAttribute="passwordRequestForm" cssClass="form-horizontal"
-	role="form">
+<f:form servletRelativeAction="${action}" method="POST" modelAttribute="passwordRequestForm" cssClass="form-horizontal" role="form">
 	<c:set var="hasError">
 		<s:bind path="mailAddr">${status.isError() ? "has-error" : ""}</s:bind>
 	</c:set>
