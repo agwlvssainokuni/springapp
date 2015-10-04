@@ -1,0 +1,16 @@
+apply plugin: "eclipse-wtp"
+
+dependencies {
+	compile project(":goods")
+	compile project(":foundation")
+	compile project(":example-dbschema")
+	runtime "ch.qos.logback:logback-core:${versionLogback}"
+	runtime "ch.qos.logback:logback-classic:${versionLogback}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
+	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
+	testRuntime "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
+	testRuntime "javax.jms:jms-api:${versionJavaJms}"
+	testRuntime "javax.transaction:transaction-api:${versionJavaTransaction}"
+	testRuntime "com.h2database:h2:${versionH2db}"
+	testRuntime "org.flywaydb:flyway-core:${versionFlyway}"
+}

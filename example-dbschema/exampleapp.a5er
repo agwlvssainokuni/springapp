@@ -1,0 +1,766 @@
+﻿# A5:ER FORMAT:09
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=SpringApp
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=業務日時
+PageInfo="業務日時",4,"A3Landscape",$FFFFFF
+Page=非同期実行フレームワーク
+PageInfo="非同期実行フレームワーク",4,"A3Landscape",$FFFFFF
+Page=メール送信機能
+PageInfo="メール送信機能",4,"A3Landscape",$FFFFFF
+Page=メール文面テンプレート
+PageInfo="メール文面テンプレート",4,"A3Landscape",$FFFFFF
+Page=区分値管理
+PageInfo="区分値管理",4,"A3Landscape",$FFFFFF
+Page=発番
+PageInfo="発番",4,"A3Landscape",$FFFFFF
+Page=郵便番号
+PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
+Page=SpringApp
+PageInfo="SpringApp",4,"A3Landscape",$FFFFFF
+Domain=ID=BIGINT
+Domain=整数【32bit】=@INT
+Domain=整数【64bit】=BIGINT
+Domain=区分値【2】=@VARCHAR(2)
+Domain=区分値【3】=@VARCHAR(3)
+Domain=区分値【5】=@VARCHAR(5)
+Domain=文字列【10】=@VARCHAR(10)
+Domain=文字列【30】=@VARCHAR(30)
+Domain=文字列【50】=@VARCHAR(50)
+Domain=文字列【100】=@VARCHAR(100)
+Domain=文字列【300】=@VARCHAR(300)
+Domain=文字列【500】=@VARCHAR(500)
+Domain=文字列【1000】=@VARCHAR(1000)
+Domain=文字列【3000】=@VARCHAR(3000)
+Domain=文字列【5000】=@VARCHAR(5000)
+Domain=文字列【TEXT】=TEXT
+Domain=日付=@DATE
+Domain=時刻=@TIME
+Domain=日時=@DATETIME
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=4
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="ロックバージョン","lock_version","*整数【32bit】","NOT NULL",,"1","",$FFFFFFFF
+CommonField="削除フラグ","deleted_flg","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Entity]
+PName=digit
+LName=桁マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=1500
+Top=700
+Field="桁","d","*整数【32bit】","NOT NULL",0,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150224060549
+Position="業務日時",1500,700
+
+[Entity]
+PName=dayoff_master
+LName=休日マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=1500
+Top=500
+Field="識別名","name","*文字列【10】","NOT NULL",0,"\qstandard\q","",$FFFFFFFF,""
+Field="年月日","dt","*日付","NOT NULL",1,"","",$FFFFFFFF,""
+Field="休日区分","type","*区分値【2】","NOT NULL",,"\q00\q","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150224231722
+Position="業務日時",1500,500
+
+[Entity]
+PName=numbering_master
+LName=発番マスタ
+Comment=
+TableOption=
+Page=発番
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="発番名称","name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="テンプレート","template","*文字列【30】","NOT NULL",,"0000000000","",$FFFFFFFF,""
+Field="最小値","min_value","*整数【64bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="最大値","max_value","*整数【64bit】","NOT NULL",,"9999999999","",$FFFFFFFF,""
+Field="現在値","current_value","*整数【64bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Index==0,name
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150201072259
+Position="発番",500,500
+
+[Entity]
+PName=code_master
+LName=区分値マスタ
+Comment=
+TableOption=
+Page=区分値管理
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="区分値名称","name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="区分値","value","*区分値【5】","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示名称","label","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示順序","sort_order","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Index==0,name
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150117194950
+Position="区分値管理",500,500
+
+[Relation]
+Entity1=mail_log
+Entity2=mail_queue
+RelationType1=2
+RelationType2=1
+Fields1=id
+Fields2=mail_id
+Cardinarity1=
+Cardinarity2=
+Position="メール送信機能",0,683,7961,4948,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141214100027
+LineMode=0
+Bar1=68
+Bar2=796
+Bar3=495
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=mail_queue
+LName=メール送信キュー
+Comment=
+TableOption=
+Page=メール送信機能
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メール送信記録ID","mail_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="送信予定日時","scheduled_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,mail_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070706
+Position="メール送信機能",1500,500
+
+[Relation]
+Entity1=mail_log
+Entity2=mail_rcpt
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=mail_id
+Cardinarity1=
+Cardinarity2=
+Position="メール送信機能",0,2061,7939,2054,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141214100037
+LineMode=0
+Bar1=206
+Bar2=794
+Bar3=205
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=mail_rcpt
+LName=メール宛先
+Comment=
+TableOption=
+Page=メール送信機能
+Left=500
+Top=1200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メール送信記録ID","mail_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先区分","rcpt_type","*区分値【3】","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先アドレス","rcpt_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070700
+Position="メール送信機能",500,1200
+
+[Entity]
+PName=mail_log
+LName=メール送信記録
+Comment=
+TableOption=
+Page=メール送信機能
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="投入者ID","launched_by","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="投入日時","launched_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="メール送信状況","mail_status","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールメッセージ名","message_name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="送信予定日時","scheduled_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="送信実績日時","sent_at","*日時",,,"","",$FFFFFFFF,""
+Field="差出人アドレス","from_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="返信先アドレス","reply_to_addr","*文字列【300】",,,"","",$FFFFFFFF,""
+Field="件名","subject","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Field="本文","body","*文字列【5000】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,launched_by
+Index==0,scheduled_at
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150621075115
+Position="メール送信機能",500,500
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_exception
+RelationType1=2
+RelationType2=1
+Fields1=id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,1961,8039,1802,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141212235848
+LineMode=0
+Bar1=196
+Bar2=804
+Bar3=180
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_exception
+LName=非同期実行状況管理・例外
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=500
+Top=1200
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="例外情報","exception","*文字列【TEXT】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070307
+Position="非同期実行フレームワーク",500,1200
+
+[Relation]
+Entity1=async_process_command
+Entity2=async_process_command_result
+RelationType1=2
+RelationType2=2
+Fields1=async_id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,4534,5466,4419,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210223837
+LineMode=0
+Bar1=453
+Bar2=547
+Bar3=442
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command_result
+LName=非同期実行状況管理・コマンド・結果
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=1500
+Top=1800
+Field="ID","ID","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="終了コード","exit_value","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="標準出力","stdout","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Field="標準エラー出力","stderr","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070452
+Position="非同期実行フレームワーク",1500,1800
+
+[Relation]
+Entity1=async_process_command
+Entity2=async_process_command_arg
+RelationType1=2
+RelationType2=3
+Fields1=async_id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,5618,4382,5618,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210223343
+LineMode=0
+Bar1=562
+Bar2=438
+Bar3=562
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command_arg
+LName=非同期実行状況管理・コマンド・引数
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=2500
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="引数","argument","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070500
+Position="非同期実行フレームワーク",2500,1500
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_command
+RelationType1=2
+RelationType2=1
+Fields1=id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,5618,4382,2665,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141212235907
+LineMode=0
+Bar1=562
+Bar2=438
+Bar3=266
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_command
+LName=非同期実行状況管理・コマンド
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=1500
+Top=1500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="コマンド","command","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070438
+Position="非同期実行フレームワーク",1500,1500
+
+[Relation]
+Entity1=async_process_file
+Entity2=async_process_file_result
+RelationType1=2
+RelationType2=2
+Fields1=async_id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,4534,5466,4534,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210222901
+LineMode=0
+Bar1=453
+Bar2=547
+Bar3=453
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=async_process_file_result
+Entity2=async_process_file_result_detail
+RelationType1=2
+RelationType2=3
+Fields1=async_id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,3912,6088,3995,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210222628
+LineMode=0
+Bar1=391
+Bar2=609
+Bar3=400
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file_result_detail
+LName=非同期実行状況管理・ファイル処理・結果詳細
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=2500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="NGレコード番号","record_number","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="付加情報","description","*文字列【100】",,,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070424
+Position="非同期実行フレームワーク",2500,1000
+
+[Entity]
+PName=async_process_file_result
+LName=非同期実行状況管理・ファイル処理・結果
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=1500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="総件数","total_count","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="OK件数","ok_count","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="NG件数","ng_count","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070400
+Position="非同期実行フレームワーク",1500,1000
+
+[Relation]
+Entity1=async_process_file
+Entity2=async_process_file_arg
+RelationType1=2
+RelationType2=3
+Fields1=async_id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,4544,5456,4507,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141210221732
+LineMode=0
+Bar1=454
+Bar2=546
+Bar3=451
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file_arg
+LName=非同期実行状況管理・ファイル処理・引数
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=2500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="引数","argument","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070411
+Position="非同期実行フレームワーク",2500,500
+
+[Relation]
+Entity1=async_process
+Entity2=async_process_file
+RelationType1=2
+RelationType2=1
+Fields1=id
+Fields2=async_id
+Cardinarity1=
+Cardinarity2=
+Position="非同期実行フレームワーク",0,1517,8389,1841,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141212235859
+LineMode=0
+Bar1=152
+Bar2=839
+Bar3=184
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=async_process_file
+LName=非同期実行状況管理・ファイル処理
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="非同期実行状況管理ID","async_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="ハンドラ名","handler_name","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="パラメタ名","param_name","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="元ファイル名","original_filename","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="コンテントタイプ","content_type","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルサイズ","file_size","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,async_id
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070346
+Position="非同期実行フレームワーク",1500,500
+
+[Entity]
+PName=async_process
+LName=非同期実行状況管理
+Comment=
+TableOption=
+Page=非同期実行フレームワーク
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="キュー投入者ID","launched_by","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="内容表記","description","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="非同期実行種別","async_type","*区分値【3】","NOT NULL",,"","",$FFFFFFFF,""
+Field="非同期実行状況","async_status","*区分値【3】","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","registered_at","*日時","NOT NULL",,"","",$FFFFFFFF,""
+Field="キュー投入日時","launched_at","*日時",,,"","",$FFFFFFFF,""
+Field="実行開始日時","started_at","*日時",,,"","",$FFFFFFFF,""
+Field="実行終了日時","finished_at","*日時",,,"","",$FFFFFFFF,""
+Index==0,launched_by
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070207
+Position="非同期実行フレームワーク",500,500
+
+[Entity]
+PName=zipcd_master
+LName=郵便番号マスタ
+Comment=
+TableOption=
+Page=郵便番号
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="市区町村コード","city_cd","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="郵便番号","zipcd","*文字列【10】","NOT NULL",,"","",$FFFFFFFF,""
+Field="都道府県","pref","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="市区町村","city","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="町域","addr","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="都道府県(カナ)","pref_kana","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="市区町村(カナ)","city_kana","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="町域(カナ)","addr_kana","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,zipcd
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070956
+Position="郵便番号",500,500
+
+[Entity]
+PName=bizdatetime_master
+LName=業務日時マスタ
+Comment=
+TableOption=
+Page=業務日時
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="業務日付","bizdate","*日付","NOT NULL",,"CURRENT_DATE","",$FFFFFFFF,""
+Field="オフセット(日)","offset_day","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(時)","offset_hour","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(分)","offset_minute","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+Field="オフセット(秒)","offset_second","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070101
+Position="業務日時",500,500
+
+[Entity]
+PName=user
+LName=利用者
+Comment=
+TableOption=
+Page=SPRINGAPP
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="ログインID","login_id","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","password","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="氏名(名)","first_name","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="氏名(姓)","last_name","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,login_id
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227071108
+Position="SPRINGAPP",500,500
+
+[Entity]
+PName=signup_request
+LName=利用申請
+Comment=
+TableOption=
+Page=SPRINGAPP
+Left=1500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールアドレス","mail_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="トークン","token","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
+Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Index==0,mail_addr
+Index==1,token
+EffectMode=None
+Tag=トランザクション
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227071137
+Position="SPRINGAPP",1500,500
+
+[Entity]
+PName=mail_template
+LName=メールテンプレート
+Comment=
+TableOption=
+Page=メール文面テンプレート
+Left=500
+Top=500
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="テンプレート名","template_name","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
+Field="差出人","from_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Field="返信先","reply_to_addr","*文字列【300】",,,"","",$FFFFFFFF,""
+Field="件名","subject","*文字列【1000】","NOT NULL",,"","",$FFFFFFFF,""
+Field="本文","body","*文字列【5000】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,template_name
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20150621073626
+Position="メール文面テンプレート",500,500
+
+[Entity]
+PName=mail_template_rcpt
+LName=メールテンプレート宛先
+Comment=
+TableOption=
+Page=メール文面テンプレート
+Left=500
+Top=1000
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="メールテンプレートID","template_id","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先区分","rcpt_type","*区分値【3】","NOT NULL",,"","",$FFFFFFFF,""
+Field="宛先アドレス","rcpt_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,template_id
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20141227070813
+Position="メール文面テンプレート",500,1000
+
+[Relation]
+Entity1=mail_template
+Entity2=mail_template_rcpt
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=template_id
+Cardinarity1=
+Cardinarity2=
+Position="メール文面テンプレート",0,2076,6064,1395,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20141214103349
+LineMode=0
+Bar1=208
+Bar2=606
+Bar3=140
+TermPos1=R
+TermPos2=R

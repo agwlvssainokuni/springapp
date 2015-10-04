@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":foundation-cli")
+	compile project(":example-common")
+	runtime "commons-cli:commons-cli:1.2"
+	runtime "com.h2database:h2:${versionH2db}"
+	runtime "org.flywaydb:flyway-core:${versionFlyway}"
+	runtime "commons-pool:commons-pool:${versionCommonsPool}"
+	runtime "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
+	runtime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
+	compileOnly "org.projectlombok:lombok:${versionLombok}"
+}

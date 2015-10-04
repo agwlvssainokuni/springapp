@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder location="classpath:webext.properties" ignore-unresolvable="true" />
+
+	<context:component-scan base-package="cherry.example.webext" />
+
+	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl" p:navigationDef="classpath:navi.yaml" p:objectMapper-ref="yamlObjectMapper" />
+
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
+		<property name="paginateStrategy">
+			<bean class="cherry.goods.paginate.TotalCountStrategy" p:totalCount="${webext.app.paginator.totalCount}" p:lowerSideHint="${webext.app.paginator.lowerSideHint}"
+				p:lowerTrim="1" p:upperTrim="1" />
+		</property>
+	</bean>
+
+	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
+		<constructor-arg value="log" />
+	</bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message/error</value>
+				<value>message/form</value>
+				<value>message/page</value>
+				<value>message/validation</value>
+				<value>message/preseterror</value>
+			</list>
+		</property>
+	</bean>
+
+	<cache:annotation-driven />
+
+	<bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager" p:cacheSpecification="concurrencyLevel=4,expireAfterAccess=10s,expireAfterWrite=1m,weakKeys,weakValues" />
+
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider>
+			<security:password-encoder ref="passwordEncoder" />
+			<security:user-service properties="${webext.userfile}" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
+		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
+		<security:form-login login-page="/login/start" login-processing-url="/login/execute" authentication-failure-url="/login/start?loginFailed"
+			default-target-url="/secure/" always-use-default-target="false" username-parameter="loginId" password-parameter="password" />
+		<security:logout logout-url="/logout" logout-success-url="/login/start?loggedOut" invalidate-session="true" />
+		<security:csrf request-matcher-ref="csrfRequestMatcher" />
+	</security:http>
+
+	<bean id="csrfRequestMatcher" class="cherry.foundation.springmvc.CsrfRequestMatcher">
+		<property name="excludes">
+			<list>
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher" c:pattern="/login/**" />
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher" c:pattern="/logout/**" />
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher" c:pattern="/testtool/**" />
+			</list>
+		</property>
+	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/login/**" />
+			<mvc:mapping path="/logout/**" />
+			<mvc:mapping path="/secure/**" />
+			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor" />
+		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+	</mvc:interceptors>
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+			<bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" p:objectMapper-ref="objectMapper" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver" p:mobilePrefix="normal/" p:tabletPrefix="normal/"
+					p:normalPrefix="normal/">
+					<constructor-arg>
+						<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
+					</constructor-arg>
+				</bean>
+				<bean class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver" p:mobilePrefix="normal/" p:tabletPrefix="normal/"
+					p:normalPrefix="normal/">
+					<constructor-arg>
+						<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:viewClass="org.springframework.web.servlet.view.JstlView"
+							p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" p:objectMapper-ref="objectMapper" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+
+</beans>

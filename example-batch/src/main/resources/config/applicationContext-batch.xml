@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder location="classpath:batch.properties" ignore-unresolvable="true" />
+
+	<context:component-scan base-package="cherry.example.batch" />
+
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
+		<property name="paginateStrategy">
+			<bean class="cherry.goods.paginate.TotalCountStrategy" p:totalCount="9" p:lowerSideHint="4" p:lowerTrim="0" p:upperTrim="0" />
+		</property>
+	</bean>
+
+	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
+		<constructor-arg value="log" />
+	</bean>
+
+	<cache:annotation-driven />
+
+	<bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
+		<property name="cacheSpecification" value="concurrencyLevel=4,expireAfterWrite=1m,weakKeys,weakValues" />
+	</bean>
+
+</beans>

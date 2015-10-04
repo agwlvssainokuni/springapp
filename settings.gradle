@@ -1,1 +1,1 @@
-include "goods", "foundation", "foundation-cli", "dbschema", "common", "admin", "entree", "batch", "sqlman", "querytutorial", "ruletutorial"
+include "goods", "foundation", "foundation-cli", "dbschema", "common", "admin", "entree", "batch", "example-dbschema", "example-common", "example-web", "example-webext", "example-batch", "sqlman", "querytutorial", "ruletutorial"

@@ -176,7 +176,7 @@ subprojects {
 	}
 }
 
-def webapp = ["admin", "entree", "sqlman"]
+def webapp = ["admin", "entree", "example-web", "example-webext", "sqlman"]
 def batchapp = ["batch"]
 
 configure(subprojects.findAll { it.name in webapp }) {

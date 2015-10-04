@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:property-placeholder location="classpath:common.properties" ignore-unresolvable="true" />
+
+	<context:component-scan base-package="cherry.example.common" />
+
+	<tx:annotation-driven />
+
+	<bean id="bizDateTime" class="cherry.example.common.foundation.impl.BizDateTimeImpl" />
+	<bean id="workdayStore" class="cherry.example.common.foundation.impl.WorkdayStoreImpl" />
+	<bean id="codeStore" class="cherry.example.common.foundation.impl.CodeStoreImpl" />
+	<bean id="numberingStore" class="cherry.example.common.foundation.impl.NumberingStoreImpl" />
+	<bean id="asyncProcessStore" class="cherry.example.common.foundation.impl.AsyncProcessStoreImpl" />
+	<bean id="mailFacade" class="cherry.foundation.mail.MailFacadeImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="mailDataHandler" ref="mailDataHandler" />
+		<property name="mailSendHandler" ref="mailSendHandler" />
+	</bean>
+
+	<bean id="mailDataHandler" class="cherry.foundation.mail.MailDataHandlerImpl">
+		<property name="templateStore">
+			<bean class="cherry.example.common.foundation.impl.TemplateStoreImpl" />
+		</property>
+		<property name="velocityEngine">
+			<bean class="org.apache.velocity.app.VelocityEngine" init-method="init" />
+		</property>
+	</bean>
+	<bean id="mailSendHandler" class="cherry.foundation.mail.MailSendHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="messageStore">
+			<bean class="cherry.example.common.foundation.impl.MessageStoreImpl" />
+		</property>
+		<property name="mailSender">
+			<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+				<property name="host" value="${common.mail.host}" />
+				<property name="port" value="${common.mail.port}" />
+				<property name="protocol" value="${common.mail.protocol}" />
+				<property name="defaultEncoding" value="${common.mail.encoding}" />
+			</bean>
+		</property>
+	</bean>
+
+</beans>
