@@ -176,6 +176,49 @@ subprojects {
 	}
 }
 
+def webapp = ["admin", "entree", "sqlman"]
+def batchapp = ["batch"]
+
+configure(subprojects.findAll { it.name in webapp }) {
+	apply plugin: "war"
+	apply plugin: "eclipse-wtp"
+	apply plugin: "jetty"
+
+	eclipse.wtp.facet {
+		facet name: "java", version: "1.7"
+		facet name: "jst.web", version: "3.0"
+	}
+
+	war {
+		classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
+	}
+
+	def messageDir = "src/main/resources/message"
+	task mergeformmessage << {
+		ant.concat(destfile: "${messageDir}/form/form.properties", encoding: "UTF-8", outputencoding: "UTF-8") {
+			fileset(dir: "${messageDir}/form/") {
+				include(name: "**.txt")
+				exclude(name: "**.properties")
+			}
+		}
+		ant.native2ascii(src: "${messageDir}/form/", dest: "${messageDir}/", includes: "form.properties", encoding: "UTF-8")
+	}
+}
+
+configure(subprojects.findAll { it.name in batchapp }) {
+	apply plugin: "application"
+
+	mainClassName = "cherry.foundation.batch.tools.Main"
+
+	jar.doFirst {
+		manifest.attributes "Class-Path": configurations.runtime.files.collect({it.name}).join(" ")
+	}
+
+	startScripts {
+		classpath = jar.outputs.files
+	}
+}
+
 task deliveryZip(type: Zip)
 task deliveryTar(type: Tar) { compression = Compression.GZIP }
 

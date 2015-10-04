@@ -1,7 +1,3 @@
-apply plugin: "application"
-
-mainClassName = "cherry.spring.batch.tools.Main"
-
 dependencies {
 	compile project(":common")
 	runtime "com.h2database:h2:${versionH2db}"
@@ -10,12 +6,4 @@ dependencies {
 	compile "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
 	runtime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
-}
-
-jar {
-	manifest.attributes "Class-Path": configurations.runtime.files.collect({it.name}).join(" ")
-}
-
-startScripts {
-	classpath = jar.outputs.files
 }
