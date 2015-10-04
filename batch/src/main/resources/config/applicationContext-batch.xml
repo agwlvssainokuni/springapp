@@ -7,7 +7,7 @@
 
 	<context:property-placeholder location="classpath:batch.properties" ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.spring.batch" />
+	<context:component-scan base-package="cherry.batch" />
 
 	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">

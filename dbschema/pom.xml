@@ -61,7 +61,7 @@
 					<jdbcDriver>org.h2.Driver</jdbcDriver>
 					<jdbcUrl>jdbc:h2:file:./target/gendb</jdbcUrl>
 					<jdbcUser>sa</jdbcUser>
-					<packageName>cherry.spring.common.db.gen.query</packageName>
+					<packageName>cherry.common.db.gen.query</packageName>
 					<targetFolder>${project.basedir}/../common/src/generated/java</targetFolder>
 					<namePrefix>Q</namePrefix>
 					<beanPrefix>B</beanPrefix>

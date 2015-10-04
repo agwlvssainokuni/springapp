@@ -21,10 +21,9 @@
 			<property name="useJodaTime" value="true" />
 			<property name="javaTypeByColumnName.DELETED_FLG" value="cherry.foundation.type.DeletedFlag" />
 		</javaTypeResolver>
-		<javaModelGenerator targetPackage="cherry.spring.common.db.gen.dto" targetProject="../common/src/generated/java" />
-		<sqlMapGenerator targetPackage="cherry.spring.common.db.gen.mapper" targetProject="../common/src/generated/java" />
-		<javaClientGenerator targetPackage="cherry.spring.common.db.gen.mapper" type="ANNOTATEDMAPPER"
-			targetProject="../common/src/generated/java" />
+		<javaModelGenerator targetPackage="cherry.common.db.gen.dto" targetProject="../common/src/generated/java" />
+		<sqlMapGenerator targetPackage="cherry.common.db.gen.mapper" targetProject="../common/src/generated/java" />
+		<javaClientGenerator targetPackage="cherry.common.db.gen.mapper" type="ANNOTATEDMAPPER" targetProject="../common/src/generated/java" />
 		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>

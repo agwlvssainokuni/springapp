@@ -7,7 +7,7 @@
 
 	<context:property-placeholder location="classpath:entree.properties" ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.spring.entree" />
+	<context:component-scan base-package="cherry.entree" />
 
 	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />

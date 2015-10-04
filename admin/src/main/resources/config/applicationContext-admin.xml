@@ -7,7 +7,7 @@
 
 	<context:property-placeholder location="classpath:admin.properties" ignore-unresolvable="true" />
 
-	<context:component-scan base-package="cherry.spring.admin" />
+	<context:component-scan base-package="cherry.admin" />
 
 	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.yaml" />
