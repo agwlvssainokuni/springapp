@@ -1,16 +1,8 @@
 apply plugin: "jettyEclipse"
 
-configurations { container }
-sourceSets.main {
-	compileClasspath += [configurations.container]
-	runtimeClasspath += [configurations.container]
-}
-sourceSets.test {
-	compileClasspath += [configurations.container]
-	runtimeClasspath += [configurations.container]
-}
+sourceSets { container }
 eclipse {
-	classpath.plusConfigurations += [configurations.container]
+	classpath.plusConfigurations += [configurations.containerCompile]
 }
 
 ext {
@@ -37,38 +29,29 @@ dependencies {
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
-	container "args4j:args4j:${versionArgs4j}"
-	container "org.eclipse.jetty:jetty-webapp:${versionJetty}"
-	container "org.eclipse.jetty:jetty-plus:${versionJetty}"
-	// container "org.eclipse.jetty:jetty-jsp:${versionJetty}"
-	container "org.eclipse.jetty:apache-jsp:${versionJetty}"
-	container "org.eclipse.jetty:jetty-annotations:${versionJetty}"
-	container "com.h2database:h2:${versionH2db}"
-	container "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
+	containerCompile "args4j:args4j:${versionArgs4j}"
+	containerCompile "org.eclipse.jetty:jetty-webapp:${versionJetty}"
+	containerCompile "org.eclipse.jetty:jetty-plus:${versionJetty}"
+	// containerCompile "org.eclipse.jetty:jetty-jsp:${versionJetty}"
+	containerCompile "org.eclipse.jetty:apache-jsp:${versionJetty}"
+	containerCompile "org.eclipse.jetty:jetty-annotations:${versionJetty}"
+	containerCompile "com.h2database:h2:${versionH2db}"
+	containerCompile "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
 	testRuntime "com.h2database:h2:${versionH2db}"
 }
 
-jar { exclude "Main.class" }
-
 war {
-	from("build/classes/main") { include "Main.class" }
+	from sourceSets.container.output.classesDir
+	from sourceSets.container.output.resourcesDir
 	manifest.attributes "Main-Class": "Main"
-	manifest.attributes "Class-Path": configurations.container.files.collect { "deps/" + it.name }.join(" ")
-	// Jettyのライブラリを全てWARに展開する場合。
-	//	from(configurations.container.collect { project.zipTree(it) }) {
-	//		exclude "META-INF/LICENSE*"
-	//		exclude "META-INF/NOTICE*"
-	//		exclude "META-INF/eclipse.inf"
-	//		exclude "OSGI-OPT/**"
-	//		exclude "about.html"
-	//		exclude "jetty-dir.css"
-	//	}
+	manifest.attributes "Class-Path": configurations.containerCompile.files.collect { "deps/" + it.name }.join(" ")
+	dependsOn containerClasses
 }
 
 task executable(type: Copy, dependsOn: war) {
 	into "build/executable"
 	from("build/libs") { include "*.war" }
-	into("deps") { from configurations.container.files }
+	into("deps") { from configurations.containerCompile.files }
 }
 assemble.dependsOn(executable)
 
