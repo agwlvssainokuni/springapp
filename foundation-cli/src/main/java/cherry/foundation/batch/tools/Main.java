@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.batch.tools;
+package cherry.foundation.batch.tools;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

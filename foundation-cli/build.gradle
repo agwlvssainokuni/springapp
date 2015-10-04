@@ -1,0 +1,13 @@
+dependencies {
+	compile project(":goods")
+	compile project(":foundation")
+	compile "commons-cli:commons-cli:1.2"
+	testRuntime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
+	testRuntime "com.h2database:h2:${versionH2db}"
+	testRuntime "commons-pool:commons-pool:${versionCommonsPool}"
+	testRuntime "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
+}

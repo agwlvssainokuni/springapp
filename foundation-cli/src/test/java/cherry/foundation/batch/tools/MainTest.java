@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.batch.tools;
+package cherry.foundation.batch.tools;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cherry.foundation.batch.ExitStatus;
+import cherry.foundation.batch.tools.Main;
 
 public class MainTest {
 
