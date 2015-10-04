@@ -8,7 +8,7 @@ dependencies {
 	compile "org.apache.poi:poi:${versionPoi}"
 	compile "org.apache.poi:poi-ooxml:${versionPoi}"
 	compile "org.slf4j:slf4j-api:${versionSlf4j}"
-	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
+	runtime "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
 	compileOnly "org.fluentd:fluent-logger:${versionFluentLogger}"
 	compileOnly "ch.qos.logback:logback-classic:${versionLogback}"
 }

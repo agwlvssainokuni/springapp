@@ -1,3 +1,5 @@
+apply plugin: "eclipse-wtp"
+
 dependencies {
 	compile project(":goods")
 	compile project(":foundation")

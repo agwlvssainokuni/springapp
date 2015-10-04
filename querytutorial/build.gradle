@@ -3,8 +3,8 @@ apply plugin: "eclipse-wtp"
 dependencies {
 	compile project(":goods")
 	compile project(":foundation")
-	compile "org.flywaydb:flyway-core:${versionFlyway}"
-	compile "com.h2database:h2:${versionH2db}"
 	compile "org.springframework.data:spring-data-jdbc-core:${versionSpringDataJdbcCore}"
+	runtime "org.flywaydb:flyway-core:${versionFlyway}"
+	runtime "com.h2database:h2:${versionH2db}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 }

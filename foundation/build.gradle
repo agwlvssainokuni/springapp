@@ -49,5 +49,5 @@ dependencies {
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testRuntime "com.h2database:h2:${versionH2db}"
 	testRuntime "org.flywaydb:flyway-core:${versionFlyway}"
-	testRuntime "ch.qos.logback:logback-classic:${versionLogback}"
+	testCompile "ch.qos.logback:logback-classic:${versionLogback}"
 }
