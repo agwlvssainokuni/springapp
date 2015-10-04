@@ -147,6 +147,14 @@ subprojects {
 		versionMockito = "2.0.2-beta"
 	}
 
+	dependencies {
+		testCompile "org.springframework:spring-test:${versionSpring}"
+		testCompile "junit:junit:${versionJunit}"
+		testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
+		testCompile "org.mockito:mockito-all:${versionMockito}"
+		testRuntime "org.glassfish:javax.el:${versionJavaEl}"
+	}
+
 	deliveryResources {
 		from "src/main/deliveryResources"
 		tokens "../filter.properties"

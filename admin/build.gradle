@@ -17,10 +17,6 @@ dependencies {
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testRuntime "com.h2database:h2:${versionH2db}"
-	testCompile "org.springframework:spring-test:${versionSpring}"
-	testCompile "junit:junit:${versionJunit}"
-	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
-	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
 
 eclipse.wtp.facet {

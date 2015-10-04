@@ -11,8 +11,4 @@ dependencies {
 	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
 	compileOnly "org.fluentd:fluent-logger:${versionFluentLogger}"
 	compileOnly "ch.qos.logback:logback-classic:${versionLogback}"
-	testCompile "ch.qos.logback:logback-classic:${versionLogback}"
-	testCompile "junit:junit:${versionJunit}"
-	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
-	testCompile "org.mockito:mockito-all:${versionMockito}"
 }

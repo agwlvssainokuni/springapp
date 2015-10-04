@@ -10,10 +10,6 @@ dependencies {
 	compile "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
 	runtime "javax.servlet:javax.servlet-api:${versionJavaServlet}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
-	testCompile "org.springframework:spring-test:${versionSpring}"
-	testCompile "junit:junit:${versionJunit}"
-	testCompile "org.hamcrest:hamcrest-all:${versionHamcrest}"
-	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
 
 jar {
