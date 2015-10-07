@@ -36,6 +36,19 @@ $(function() {
 	});
 
 	/**
+	 * Bootstrap標準スタイル Tabs をインプレースで開閉させる。<br>
+	 * http://getbootstrap.com/components/#nav-tabs
+	 * http://getbootstrap.com/javascript/#tabs
+	 */
+	$("ul.togglable-tabs>li>a").click(function(event) {
+		event.preventDefault();
+		$(this).tab("show");
+	});
+	$("ul.togglable-tabs>li:first>a").each(function(index) {
+		$(this).tab("show");
+	});
+
+	/**
 	 * Spring SecurityのCSRF検証対応。
 	 */
 	var token = $("meta[name='_csrf']").attr("content");
