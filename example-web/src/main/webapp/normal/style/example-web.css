@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+/* Bootstrapの標準スタイル (CSSクラス) をカスタマイズする。 */
+/* Navbar: http://getbootstrap.com/components/#navbar */
+.navbar {
+	margin-bottom: 0px;
+}
+
+/* Breadcrumbs: http://getbootstrap.com/components/#breadcrumbs */
+.breadcrumb {
+	/* background: transparent; */
+	margin-bottom: 0px;
+}
+
+/* Pagination: http://getbootstrap.com/components/#pagination */
+.pagination {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* Page header: http://getbootstrap.com/components/#page-header */
+h1.page-header, h2.page-header, h3.page-header, h4.page-header, h5.page-header,
+	h6.page-header {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+}

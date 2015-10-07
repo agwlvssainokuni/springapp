@@ -13,5 +13,5 @@ dependencies {
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	compileOnly "org.projectlombok:lombok:${versionLombok}"
 	testRuntime "com.h2database:h2:${versionH2db}"
-	testRuntime "org.flywaydb:flyway-core:${versionFlyway}"
+	runtime "org.flywaydb:flyway-core:${versionFlyway}"
 }

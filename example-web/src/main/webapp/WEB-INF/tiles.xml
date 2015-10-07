@@ -10,8 +10,8 @@
 	</definition>
 
 	<definition name="*/secure/**" template="/WEB-INF/tiles/{1}/base_layout_2.jsp">
-		<put-attribute name="name" value="tool/{2}" />
-		<put-attribute name="content" value="/WEB-INF/tiles/{1}/tool/{2}.jsp" />
+		<put-attribute name="name" value="secure/{2}" />
+		<put-attribute name="content" value="/WEB-INF/tiles/{1}/secure/{2}.jsp" />
 	</definition>
 
 </tiles-definitions>
