@@ -16,27 +16,19 @@
 </ul>
 <div class="tab-content">
 	<div id="create" class="tab-pane" role="tabpanel">
-		<div class="list-group">
-			<div>
-				<a href="${baseUri}/create/ex01/" class="list-group-item">基本型</a>
-			</div>
-		</div>
+		<ul class="list-group list-unstyled">
+			<li><a href="${baseUri}/create/ex01/" class="list-group-item">基本型</a></li>
+		</ul>
 	</div>
 	<div id="list" class="tab-pane" role="tabpanel">
-		<div class="list-group">
-			<div>
-				<a href="${baseUri}/list/ex01" class="list-group-item">基本型</a>
-			</div>
-			<div>
-				<a href="${baseUri}/list/ex02" class="list-group-item">検索結果(一覧)へ戻り得る場合</a>
-			</div>
-		</div>
+		<ul class="list-group list-unstyled">
+			<li><a href="${baseUri}/list/ex01/" class="list-group-item">基本型</a></li>
+			<li><a href="${baseUri}/list/ex02/" class="list-group-item">検索結果(一覧)へ戻り得る場合</a></li>
+		</ul>
 	</div>
 	<div id="detail" class="tab-pane" role="tabpanel">
-		<div class="list-group">
-			<div>
-				<a href="${baseUri}/detail/ex01/" class="list-group-item">基本型</a>
-			</div>
-		</div>
+		<ul class="list-group list-unstyled">
+			<li><a href="${baseUri}/detail/ex01/" class="list-group-item">基本型</a></li>
+		</ul>
 	</div>
 </div>
