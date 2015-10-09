@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple;
+package cherry.example.web.simple.ex10;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

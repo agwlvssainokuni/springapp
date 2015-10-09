@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple;
+package cherry.example.web.simple.ex10;
 
 import static cherry.example.web.PathDef.VIEW_SIMPLE_EX10_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+import cherry.foundation.onetimetoken.OneTimeTokenValidator;
+
 @Controller
 public class Ex10ControllerImpl implements Ex10Controller {
+
+	@Autowired
+	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
@@ -66,6 +73,12 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	@Override
 	public ModelAndView execute(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
+
+		if (!oneTimeTokenValidator.isValid(request)) {
+			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
+			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
+			return mav;
+		}
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);

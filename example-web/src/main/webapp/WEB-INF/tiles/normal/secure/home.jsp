@@ -10,34 +10,30 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">HOME</h2>
 <ul class="nav nav-tabs togglable-tabs" role="tablist">
-	<li role="presentation"><a href="#simple" aria-controls="simple" role="tab" data-toggle="tab">単純画面遷移</a></li>
-	<li role="presentation"><a href="#create" aria-controls="create" role="tab" data-toggle="tab">登録系画面遷移</a></li>
-	<li role="presentation"><a href="#list" aria-controls="list" role="tab" data-toggle="tab">一覧表示系画面遷移</a></li>
-	<li role="presentation"><a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">詳細表示系画面遷移</a></li>
+	<li role="presentation"><a href="#simple" aria-controls="simple" role="tab" data-toggle="tab">単純画面遷移事例</a></li>
+	<li role="presentation"><a href="#form" aria-controls="form" role="tab" data-toggle="tab">入力フォーム事例</a></li>
+	<li role="presentation"><a href="#validation" aria-controls="validation" role="tab" data-toggle="tab">単項目チェック事例</a></li>
 </ul>
 <div class="tab-content">
 	<div id="simple" class="tab-pane" role="tabpanel">
 		<ul class="list-group list-unstyled">
 			<li><a href="${baseUri}/simple/ex10/" class="list-group-item">登録-確認-完了</a></li>
 			<li><a href="${baseUri}/simple/ex20/" class="list-group-item">登録-確認-単票表示</a></li>
-			<li><a href="${baseUri}/simple/ex30/" class="list-group-item">検索条件-一覧表示-単票表示-検索条件</a></li>
+			<li><a href="${baseUri}/simple/ex30/" class="list-group-item">検索条件-一覧表示</a></li>
 			<li><a href="${baseUri}/simple/ex40/" class="list-group-item">検索条件-一覧表示-単票表示-一覧表示</a></li>
 		</ul>
 	</div>
-	<div id="create" class="tab-pane" role="tabpanel">
+	<div id="form" class="tab-pane" role="tabpanel">
 		<ul class="list-group list-unstyled">
-			<li><a href="${baseUri}/create/ex01/" class="list-group-item">基本型</a></li>
+			<li><a href="${baseUri}/form/ex10/" class="list-group-item">単票入力</a></li>
+			<li><a href="${baseUri}/form/ex10/" class="list-group-item">一覧入力</a></li>
 		</ul>
 	</div>
-	<div id="list" class="tab-pane" role="tabpanel">
+	<div id="validation" class="tab-pane" role="tabpanel">
 		<ul class="list-group list-unstyled">
-			<li><a href="${baseUri}/list/ex01/" class="list-group-item">基本型</a></li>
-			<li><a href="${baseUri}/list/ex02/" class="list-group-item">検索結果(一覧)へ戻り得る場合</a></li>
-		</ul>
-	</div>
-	<div id="detail" class="tab-pane" role="tabpanel">
-		<ul class="list-group list-unstyled">
-			<li><a href="${baseUri}/detail/ex01/" class="list-group-item">基本型</a></li>
+			<li><a href="${baseUri}/validation/ex10/" class="list-group-item">文字列項目</a></li>
+			<li><a href="${baseUri}/validation/ex20/" class="list-group-item">数値項目</a></li>
+			<li><a href="${baseUri}/validation/ex30/" class="list-group-item">日時項目</a></li>
 		</ul>
 	</div>
 </div>

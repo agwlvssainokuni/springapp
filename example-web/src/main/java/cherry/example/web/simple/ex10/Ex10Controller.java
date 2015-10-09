@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple;
+package cherry.example.web.simple.ex10;
 
 import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;

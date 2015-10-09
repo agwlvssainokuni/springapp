@@ -11,6 +11,7 @@
 <h2 class="page-header">単純画面遷移-登録確認</h2>
 <div class="panel-body">
 	<f:form servletRelativeAction="${baseUri}/simple/ex10/execute" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal" role="form">
+		<foundation:onetimetoken />
 		<div class="form-group">
 			<f:label path="text" cssClass="col-sm-2 control-label">文字列</f:label>
 			<div class="col-sm-10">

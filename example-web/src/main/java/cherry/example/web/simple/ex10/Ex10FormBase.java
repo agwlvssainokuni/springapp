@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple;
+package cherry.example.web.simple.ex10;
 
 import java.math.BigDecimal;
 
@@ -64,7 +64,7 @@ public class Ex10FormBase {
 	@NotNull
 	@DecimalMin("-10000")
 	@DecimalMax("10000")
-	@NumberFormat(pattern = "#,##0.00")
+	@NumberFormat(pattern = "#,##0.00####")
 	@NumberScale(2)
 	private BigDecimal decimal;
 
