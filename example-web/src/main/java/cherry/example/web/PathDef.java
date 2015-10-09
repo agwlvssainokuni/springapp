@@ -28,6 +28,10 @@ public class PathDef {
 	/** ホーム画面のビュー */
 	public static final String VIEW_HOME = "secure/home";
 
+	// 単純画面遷移
+	public static final String URI_SIMPLE_EX10 = "/secure/simple/ex10";
+	public static final String VIEW_SIMPLE_EX10_START = "secure/simple/ex10/start";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
@@ -37,5 +41,9 @@ public class PathDef {
 	public static final String SUBURI_EXECUTE = "execute";
 	/** サブURI: /completed */
 	public static final String SUBURI_COMPLETED = "completed";
+
+	// リクエストパラメタ
+	/** リクエストパラメタ: id */
+	public static final String PARAM_ID = "id";
 
 }

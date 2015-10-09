@@ -1,0 +1,60 @@
+/*
+ * Copyright 2015 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cherry.example.web.simple;
+
+import static cherry.example.web.PathDef.SUBURI_COMPLETED;
+import static cherry.example.web.PathDef.SUBURI_CONFIRM;
+import static cherry.example.web.PathDef.SUBURI_EXECUTE;
+import static cherry.example.web.PathDef.SUBURI_START;
+import static cherry.example.web.PathDef.URI_SIMPLE_EX10;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@RequestMapping(URI_SIMPLE_EX10)
+public interface Ex10Controller {
+
+	public static final String PARAM_ID = "id";
+
+	@RequestMapping()
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(SUBURI_START)
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(SUBURI_CONFIRM)
+	ModelAndView confirm(@Validated Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(SUBURI_EXECUTE)
+	ModelAndView execute(@Validated Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(SUBURI_COMPLETED)
+	ModelAndView completed(@RequestParam(PARAM_ID) Long id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
+
+}
