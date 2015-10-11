@@ -74,7 +74,7 @@ public class MessageStoreImpl implements MessageStore {
 
 		SQLQuery querya = queryFactory.from(ml).forUpdate();
 		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()));
-		Tuple maillog = querya.uniqueResult(ml.fromAddr, ml.replyToAddr, ml.subject, ml.body);
+		Tuple maillog = querya.singleResult(ml.fromAddr, ml.replyToAddr, ml.subject, ml.body);
 		if (maillog == null) {
 			return null;
 		}
@@ -122,10 +122,11 @@ public class MessageStoreImpl implements MessageStore {
 		update.set(ml.lockVersion, ml.lockVersion.add(1));
 		update.where(ml.id.eq(messageId));
 		long count = update.execute();
-		checkState(count == 1L, "failed to update QMailLog: id=%s, mailStatus=%s", messageId, FlagCode.TRUE.code());
+		checkState(count == 1L, "failed to update %s: id=%s, mailStatus=%s", ml.getTableName(), messageId,
+				FlagCode.TRUE.code());
 
 		long c = queryFactory.delete(mq).where(mq.mailId.eq(messageId)).execute();
-		checkState(c == 1L, "failed to delete QMailQueue: mailId=%s", messageId);
+		checkState(c == 1L, "failed to delete %s: mailId=%s", mq.getTableName(), messageId);
 	}
 
 	private long createMailLog(String launcherId, LocalDateTime launchedAt, String messageName,
@@ -143,8 +144,9 @@ public class MessageStoreImpl implements MessageStore {
 		Long id = insert.executeWithKey(Long.class);
 		checkState(
 				id != null,
-				"failed to create QMailLog: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, replyToAddr=%s, subject=%s, body=%s",
-				launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from, replyTo, subject, body);
+				"failed to create %s: launchedBy=%s, launchedAt=%s, mailStatus=%s, messageName=%s, scheduledAt=%s, fromAddr=%s, replyToAddr=%s, subject=%s, body=%s",
+				ml.getTableName(), launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from,
+				replyTo, subject, body);
 		return id.longValue();
 	}
 
@@ -158,8 +160,8 @@ public class MessageStoreImpl implements MessageStore {
 			insert.set(mr.rcptType, rcptType);
 			insert.set(mr.rcptAddr, addr);
 			long c = insert.execute();
-			checkState(c == 1L, "failed to create QMailRcpt: mailId=%s, rcptType=%s, rcptAddr=%s", mailId, rcptType,
-					addr);
+			checkState(c == 1L, "failed to create %s: mailId=%s, rcptType=%s, rcptAddr=%s", mr.getTableName(), mailId,
+					rcptType, addr);
 		}
 	}
 
@@ -168,7 +170,8 @@ public class MessageStoreImpl implements MessageStore {
 		insert.set(mq.mailId, mailId);
 		insert.set(mq.scheduledAt, scheduledAt);
 		long count = insert.execute();
-		checkState(count == 1L, "failed to create QMailQueue: mailId=%s, scheduledAt=%s", mailId, scheduledAt);
+		checkState(count == 1L, "failed to create %s: mailId=%s, scheduledAt=%s", mq.getTableName(), mailId,
+				scheduledAt);
 	}
 
 }

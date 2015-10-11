@@ -41,7 +41,7 @@ public class CodeStoreImpl implements CodeStore {
 	public CodeEntry findByValue(String codeName, String value) {
 		SQLQuery query = queryFactory.from(qcm);
 		query.where(qcm.name.eq(codeName), qcm.value.eq(value));
-		return query.uniqueResult(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
+		return query.singleResult(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}
 
 	@Transactional(readOnly = true)

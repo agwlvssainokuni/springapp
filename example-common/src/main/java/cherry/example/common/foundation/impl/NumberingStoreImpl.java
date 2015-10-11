@@ -41,17 +41,14 @@ public class NumberingStoreImpl implements NumberingStore {
 
 	@Override
 	public NumberingDefinition getDefinition(String numberName) {
-		SQLQuery query = createBaseQuery(numberName);
-		List<NumberingDefinition> list = query.list(new QBean<NumberingDefinition>(NumberingDefinition.class,
-				nm.template, nm.minValue, nm.maxValue));
+		List<NumberingDefinition> list = baseQuery(numberName).list(
+				new QBean<>(NumberingDefinition.class, nm.template, nm.minValue, nm.maxValue));
 		return DataAccessUtils.requiredSingleResult(list);
 	}
 
 	@Override
 	public long loadAndLock(String numberName) {
-		SQLQuery query = createBaseQuery(numberName);
-		query.forUpdate();
-		List<Long> list = query.list(nm.currentValue);
+		List<Long> list = baseQuery(numberName).forUpdate().list(nm.currentValue);
 		return DataAccessUtils.requiredSingleResult(list).longValue();
 	}
 
@@ -66,7 +63,7 @@ public class NumberingStoreImpl implements NumberingStore {
 				numberName, current, count);
 	}
 
-	private SQLQuery createBaseQuery(String numberName) {
+	private SQLQuery baseQuery(String numberName) {
 		SQLQuery query = queryFactory.from(nm);
 		query.where(nm.name.eq(numberName));
 		return query;

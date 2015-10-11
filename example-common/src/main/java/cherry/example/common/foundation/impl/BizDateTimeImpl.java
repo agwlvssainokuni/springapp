@@ -41,8 +41,7 @@ public class BizDateTimeImpl implements BizDateTime {
 	@Transactional
 	@Override
 	public LocalDate today() {
-		SQLQuery query = createSqlQuery(bm);
-		LocalDate ldt = query.uniqueResult(bm.bizdate);
+		LocalDate ldt = baseQuery(bm).singleResult(bm.bizdate);
 		if (ldt == null) {
 			return LocalDate.now();
 		}
@@ -53,8 +52,7 @@ public class BizDateTimeImpl implements BizDateTime {
 	@Override
 	public LocalDateTime now() {
 		DateTimeExpression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
-		SQLQuery query = createSqlQuery(bm);
-		Tuple tuple = query.uniqueResult(curDtm, bm.offsetDay, bm.offsetHour, bm.offsetMinute, bm.offsetSecond);
+		Tuple tuple = baseQuery(bm).singleResult(curDtm, bm.offsetDay, bm.offsetHour, bm.offsetMinute, bm.offsetSecond);
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
@@ -62,7 +60,7 @@ public class BizDateTimeImpl implements BizDateTime {
 				.plusMinutes(tuple.get(bm.offsetMinute)).plusSeconds(tuple.get(bm.offsetSecond));
 	}
 
-	private SQLQuery createSqlQuery(QBizdatetimeMaster bm) {
+	private SQLQuery baseQuery(QBizdatetimeMaster bm) {
 		return queryFactory.from(bm).orderBy(bm.id.desc());
 	}
 

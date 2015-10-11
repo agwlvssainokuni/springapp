@@ -58,7 +58,7 @@ public class WorkdayStoreImpl implements WorkdayStore {
 	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
 		SQLQuery query = queryFactory.from(h0);
 		query.where(h0.name.eq(name), h0.dt.between(from, to));
-		long count = query.uniqueResult(h0.dt.count());
+		long count = query.singleResult(h0.dt.count());
 		return Days.daysBetween(from, to).getDays() + 1 - (int) count;
 	}
 

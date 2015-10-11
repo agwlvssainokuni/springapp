@@ -87,13 +87,13 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		long count = insert.execute();
 		checkState(
 				count == 1L,
-				"failed to create QAsyncProcessFile: asyncId=%s, paramName=%s, originalFilename=%s, contentType=%s, fileSize=%s, handlerName=%s",
-				asyncId, name, originalFilename, contentType, size, handlerName);
+				"failed to create %s: asyncId=%s, paramName=%s, originalFilename=%s, contentType=%s, fileSize=%s, handlerName=%s",
+				apf.getTableName(), asyncId, name, originalFilename, contentType, size, handlerName);
 
 		for (String arg : args) {
 			long c = queryFactory.insert(apfa).set(apfa.asyncId, asyncId)
 					.set(apfa.argument, adjustSize(arg, apfa.argument)).execute();
-			checkState(c == 1L, "failed to create QAsyncProcessFileArg: asyncId=%s, arg=%s", asyncId, arg);
+			checkState(c == 1L, "failed to create %s: asyncId=%s, arg=%s", apfa.getTableName(), asyncId, arg);
 		}
 
 		return asyncId;
@@ -108,12 +108,12 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		insert.set(apc.asyncId, asyncId);
 		insert.set(apc.command, adjustSize(command, apc.command));
 		long count = insert.execute();
-		checkState(count == 1L, "failed to create QAsyncProcessCommand: asyncId=%s, command=%s", asyncId, command);
+		checkState(count == 1L, "failed to create %s: asyncId=%s, command=%s", apc.getTableName(), asyncId, command);
 
 		for (String arg : args) {
 			long c = queryFactory.insert(apca).set(apca.asyncId, asyncId)
 					.set(apca.argument, adjustSize(arg, apca.argument)).execute();
-			checkState(c == 1L, "failed to create QAsyncProcessCommandArg: asyncId=%s, arg=%s", asyncId, arg);
+			checkState(c == 1L, "failed to create %s: asyncId=%s, arg=%s", apca.getTableName(), asyncId, arg);
 		}
 
 		return asyncId;
@@ -128,8 +128,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
 		long count = update.execute();
-		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, launchedAt=%s, count=%s",
-				asyncId, AsyncStatus.LAUNCHED.code(), dtm, count);
+		checkState(count == 1L, "failed to update %s: id=%s, asyncStatus=%s, launchedAt=%s, count=%s",
+				ap.getTableName(), asyncId, AsyncStatus.LAUNCHED.code(), dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
@@ -142,8 +142,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
 		long count = update.execute();
-		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, startedAt=%s, count=%s",
-				asyncId, AsyncStatus.PROCESSING.code(), dtm, count);
+		checkState(count == 1L, "failed to update %s: id=%s, asyncStatus=%s, startedAt=%s, count=%s",
+				ap.getTableName(), asyncId, AsyncStatus.PROCESSING.code(), dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
@@ -158,9 +158,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		insert.set(apfr.okCount, result.getOkCount());
 		insert.set(apfr.ngCount, result.getNgCount());
 		long count = insert.execute();
-		checkState(count == 1L,
-				"failed to create QAsyncProcessFileResult: asyncId=%s, totalCount=%s, okCount=%s, ngCount=%s", asyncId,
-				result.getTotalCount(), result.getOkCount(), result.getNgCount());
+		checkState(count == 1L, "failed to create %s: asyncId=%s, totalCount=%s, okCount=%s, ngCount=%s",
+				apfr.getTableName(), asyncId, result.getTotalCount(), result.getOkCount(), result.getNgCount());
 
 		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>() : result
 				.getNgRecordInfoList());
@@ -170,9 +169,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			}
 			long c = queryFactory.insert(apfrd).set(apfrd.asyncId, asyncId).set(apfrd.recordNumber, r.getNumber())
 					.set(apfrd.description, adjustSize(r.getDescription(), apfrd.description)).execute();
-			checkState(c == 1L,
-					"failed to create QAsyncProcessFileResultDetail: asyncId=%s, recordNumber=%s, description=%s",
-					asyncId, r.getNumber(), r.getDescription());
+			checkState(c == 1L, "failed to create %s: asyncId=%s, recordNumber=%s, description=%s",
+					apfrd.getTableName(), asyncId, r.getNumber(), r.getDescription());
 		}
 	}
 
@@ -188,9 +186,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		insert.set(apcr.stdout, adjustSize(result.getStdout(), apcr.stdout));
 		insert.set(apcr.stderr, adjustSize(result.getStderr(), apcr.stderr));
 		long count = insert.execute();
-		checkState(count == 1L,
-				"failed to create QAsyncProcessCommandResult: asyncId=%s, exitValue=%s, stdout=%s, stderr=%s", asyncId,
-				result.getExitValue(), result.getStdout(), result.getStderr());
+		checkState(count == 1L, "failed to create %s: asyncId=%s, exitValue=%s, stdout=%s, stderr=%s",
+				apcr.getTableName(), asyncId, result.getExitValue(), result.getStdout(), result.getStderr());
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
@@ -203,7 +200,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		insert.set(ape.asyncId, asyncId);
 		insert.set(ape.exception, adjustSize(throwableToString(th), ape.exception));
 		long count = insert.execute();
-		checkState(count == 1L, "failed to create QAsyncProcessException: asyncId=%s, exception=%s", asyncId,
+		checkState(count == 1L, "failed to create %s: asyncId=%s, exception=%s", ape.getTableName(), asyncId,
 				th.getMessage());
 	}
 
@@ -215,10 +212,9 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		insert.set(ap.asyncStatus, AsyncStatus.LAUNCHING.code());
 		insert.set(ap.registeredAt, dtm);
 		Long id = insert.executeWithKey(Long.class);
-		checkState(
-				id != null,
-				"failed to create QAsyncProcess: launchedBy=%s, description=%s, asyncType=%s, asyncStatus=%s, registeredAt=%s",
-				launcherId, description, asyncType.code(), AsyncStatus.LAUNCHING.code(), dtm);
+		checkState(id != null,
+				"failed to create %s: launchedBy=%s, description=%s, asyncType=%s, asyncStatus=%s, registeredAt=%s",
+				ap.getTableName(), launcherId, description, asyncType.code(), AsyncStatus.LAUNCHING.code(), dtm);
 		return id.longValue();
 	}
 
@@ -230,8 +226,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
 		long count = update.execute();
-		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, finishedAt=%s, count=%s",
-				asyncId, status.code(), dtm, count);
+		checkState(count == 1L, "failed to update %s: id=%s, asyncStatus=%s, finishedAt=%s, count=%s",
+				ap.getTableName(), asyncId, status.code(), dtm, count);
 	}
 
 	private String throwableToString(Throwable th) {

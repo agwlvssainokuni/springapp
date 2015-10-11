@@ -49,7 +49,7 @@ public class TemplateStoreImpl implements TemplateStore {
 
 		SQLQuery querya = queryFactory.from(mt);
 		querya.where(mt.templateName.eq(templateName));
-		Tuple templ = querya.uniqueResult(mt.id, mt.fromAddr, mt.replyToAddr, mt.subject, mt.body);
+		Tuple templ = querya.singleResult(mt.id, mt.fromAddr, mt.replyToAddr, mt.subject, mt.body);
 
 		SQLQuery queryb = queryFactory.from(mtr);
 		queryb.where(mtr.templateId.eq(templ.get(mt.id)));
@@ -89,7 +89,7 @@ public class TemplateStoreImpl implements TemplateStore {
 		SQLQuery querya = queryFactory.from(mt);
 		querya.where(mt.templateName.eq(templateName));
 		querya.forUpdate();
-		Long id = querya.uniqueResult(mt.id);
+		Long id = querya.singleResult(mt.id);
 		if (id == null) {
 			SQLInsertClause insert = queryFactory.insert(mt);
 			insert.set(mt.templateName, templateName);
