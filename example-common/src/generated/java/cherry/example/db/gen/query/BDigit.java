@@ -12,8 +12,6 @@ public class BDigit {
 
     private Integer d;
 
-    private Integer deletedFlg;
-
     private Integer lockVersion;
 
     private org.joda.time.LocalDateTime updatedAt;
@@ -34,14 +32,6 @@ public class BDigit {
         this.d = d;
     }
 
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
-    }
-
     public Integer getLockVersion() {
         return lockVersion;
     }
@@ -60,7 +50,7 @@ public class BDigit {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", d = " + d + ", deletedFlg = " + deletedFlg + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", d = " + d + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
     }
 
 }

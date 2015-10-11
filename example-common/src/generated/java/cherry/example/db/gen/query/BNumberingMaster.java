@@ -12,8 +12,6 @@ public class BNumberingMaster {
 
     private Long currentValue;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private Integer lockVersion;
@@ -42,14 +40,6 @@ public class BNumberingMaster {
 
     public void setCurrentValue(Long currentValue) {
         this.currentValue = currentValue;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getId() {
@@ -110,7 +100,7 @@ public class BNumberingMaster {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", currentValue = " + currentValue + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", maxValue = " + maxValue + ", minValue = " + minValue + ", name = " + name + ", template = " + template + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", currentValue = " + currentValue + ", id = " + id + ", lockVersion = " + lockVersion + ", maxValue = " + maxValue + ", minValue = " + minValue + ", name = " + name + ", template = " + template + ", updatedAt = " + updatedAt;
     }
 
 }

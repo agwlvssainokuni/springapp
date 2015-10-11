@@ -26,8 +26,6 @@ public class QDayoffMaster extends com.mysema.query.sql.RelationalPathBase<BDayo
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final DatePath<org.joda.time.LocalDate> dt = createDate("dt", org.joda.time.LocalDate.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
@@ -62,7 +60,6 @@ public class QDayoffMaster extends com.mysema.query.sql.RelationalPathBase<BDayo
 
     public void addMetadata() {
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(dt, ColumnMetadata.named("DT").withIndex(2).ofType(Types.DATE).withSize(8).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(name, ColumnMetadata.named("NAME").withIndex(1).ofType(Types.VARCHAR).withSize(10).notNull());

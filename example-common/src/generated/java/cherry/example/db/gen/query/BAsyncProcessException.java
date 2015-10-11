@@ -12,8 +12,6 @@ public class BAsyncProcessException {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private String exception;
 
     private Long id;
@@ -36,14 +34,6 @@ public class BAsyncProcessException {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public String getException() {
@@ -80,7 +70,7 @@ public class BAsyncProcessException {
 
     @Override
     public String toString() {
-         return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", exception = " + exception + ", id = " + id + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
+         return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", exception = " + exception + ", id = " + id + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
     }
 
 }

@@ -10,8 +10,6 @@ public class BMailQueue {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private Integer lockVersion;
@@ -28,14 +26,6 @@ public class BMailQueue {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getId() {
@@ -80,7 +70,7 @@ public class BMailQueue {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", mailId = " + mailId + ", scheduledAt = " + scheduledAt + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", mailId = " + mailId + ", scheduledAt = " + scheduledAt + ", updatedAt = " + updatedAt;
     }
 
 }

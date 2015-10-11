@@ -10,8 +10,6 @@ public class BMailTemplateRcpt {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private Integer lockVersion;
@@ -30,14 +28,6 @@ public class BMailTemplateRcpt {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getId() {
@@ -90,7 +80,7 @@ public class BMailTemplateRcpt {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", rcptAddr = " + rcptAddr + ", rcptType = " + rcptType + ", templateId = " + templateId + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", rcptAddr = " + rcptAddr + ", rcptType = " + rcptType + ", templateId = " + templateId + ", updatedAt = " + updatedAt;
     }
 
 }

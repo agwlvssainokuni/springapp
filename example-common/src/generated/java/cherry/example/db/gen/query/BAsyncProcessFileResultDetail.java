@@ -12,8 +12,6 @@ public class BAsyncProcessFileResultDetail {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private String description;
 
     private Long id;
@@ -38,14 +36,6 @@ public class BAsyncProcessFileResultDetail {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public String getDescription() {
@@ -90,7 +80,7 @@ public class BAsyncProcessFileResultDetail {
 
     @Override
     public String toString() {
-         return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", id = " + id + ", lockVersion = " + lockVersion + ", recordNumber = " + recordNumber + ", updatedAt = " + updatedAt;
+         return "asyncId = " + asyncId + ", createdAt = " + createdAt + ", description = " + description + ", id = " + id + ", lockVersion = " + lockVersion + ", recordNumber = " + recordNumber + ", updatedAt = " + updatedAt;
     }
 
 }

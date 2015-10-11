@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.example.db.gen.query.QBizdatetimeMaster;
 import cherry.foundation.bizdtm.BizDateTime;
-import cherry.foundation.type.DeletedFlag;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -64,7 +63,7 @@ public class BizDateTimeImpl implements BizDateTime {
 	}
 
 	private SQLQuery createSqlQuery(QBizdatetimeMaster bm) {
-		return queryFactory.from(bm).where(bm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())).orderBy(bm.id.desc());
+		return queryFactory.from(bm).orderBy(bm.id.desc());
 	}
 
 }

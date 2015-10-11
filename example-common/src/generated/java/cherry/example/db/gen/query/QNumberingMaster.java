@@ -28,8 +28,6 @@ public class QNumberingMaster extends com.mysema.query.sql.RelationalPathBase<BN
 
     public final NumberPath<Long> currentValue = createNumber("currentValue", Long.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
@@ -69,7 +67,6 @@ public class QNumberingMaster extends com.mysema.query.sql.RelationalPathBase<BN
     public void addMetadata() {
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(currentValue, ColumnMetadata.named("CURRENT_VALUE").withIndex(6).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(10).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(maxValue, ColumnMetadata.named("MAX_VALUE").withIndex(5).ofType(Types.BIGINT).withSize(19).notNull());

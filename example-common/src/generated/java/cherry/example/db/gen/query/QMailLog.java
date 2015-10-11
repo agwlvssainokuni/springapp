@@ -28,8 +28,6 @@ public class QMailLog extends com.mysema.query.sql.RelationalPathBase<BMailLog> 
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final StringPath fromAddr = createString("fromAddr");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -79,7 +77,6 @@ public class QMailLog extends com.mysema.query.sql.RelationalPathBase<BMailLog> 
     public void addMetadata() {
         addMetadata(body, ColumnMetadata.named("BODY").withIndex(11).ofType(Types.VARCHAR).withSize(5000).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(13).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(15).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(fromAddr, ColumnMetadata.named("FROM_ADDR").withIndex(8).ofType(Types.VARCHAR).withSize(300).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(launchedAt, ColumnMetadata.named("LAUNCHED_AT").withIndex(3).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());

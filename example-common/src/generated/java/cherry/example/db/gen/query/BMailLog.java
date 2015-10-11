@@ -12,8 +12,6 @@ public class BMailLog {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private String fromAddr;
 
     private Long id;
@@ -52,14 +50,6 @@ public class BMailLog {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public String getFromAddr() {
@@ -160,7 +150,7 @@ public class BMailLog {
 
     @Override
     public String toString() {
-         return "body = " + body + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fromAddr = " + fromAddr + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", mailStatus = " + mailStatus + ", messageName = " + messageName + ", replyToAddr = " + replyToAddr + ", scheduledAt = " + scheduledAt + ", sentAt = " + sentAt + ", subject = " + subject + ", updatedAt = " + updatedAt;
+         return "body = " + body + ", createdAt = " + createdAt + ", fromAddr = " + fromAddr + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", mailStatus = " + mailStatus + ", messageName = " + messageName + ", replyToAddr = " + replyToAddr + ", scheduledAt = " + scheduledAt + ", sentAt = " + sentAt + ", subject = " + subject + ", updatedAt = " + updatedAt;
     }
 
 }

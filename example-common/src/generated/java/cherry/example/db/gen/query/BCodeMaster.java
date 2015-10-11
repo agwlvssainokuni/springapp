@@ -10,8 +10,6 @@ public class BCodeMaster {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private String label;
@@ -32,14 +30,6 @@ public class BCodeMaster {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getId() {
@@ -100,7 +90,7 @@ public class BCodeMaster {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", label = " + label + ", lockVersion = " + lockVersion + ", name = " + name + ", sortOrder = " + sortOrder + ", updatedAt = " + updatedAt + ", value = " + value;
+         return "createdAt = " + createdAt + ", id = " + id + ", label = " + label + ", lockVersion = " + lockVersion + ", name = " + name + ", sortOrder = " + sortOrder + ", updatedAt = " + updatedAt + ", value = " + value;
     }
 
 }

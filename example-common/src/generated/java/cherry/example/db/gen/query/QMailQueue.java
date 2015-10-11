@@ -26,8 +26,6 @@ public class QMailQueue extends com.mysema.query.sql.RelationalPathBase<BMailQue
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
@@ -62,7 +60,6 @@ public class QMailQueue extends com.mysema.query.sql.RelationalPathBase<BMailQue
 
     public void addMetadata() {
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(6).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(mailId, ColumnMetadata.named("MAIL_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());

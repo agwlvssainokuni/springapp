@@ -26,8 +26,6 @@ public class QCodeMaster extends com.mysema.query.sql.RelationalPathBase<BCodeMa
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath label = createString("label");
@@ -66,7 +64,6 @@ public class QCodeMaster extends com.mysema.query.sql.RelationalPathBase<BCodeMa
 
     public void addMetadata() {
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(label, ColumnMetadata.named("LABEL").withIndex(4).ofType(Types.VARCHAR).withSize(50).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());

@@ -16,7 +16,6 @@
 
 package cherry.example.common.foundation.impl;
 
-import static cherry.foundation.type.DeletedFlag.NOT_DELETED;
 import static com.mysema.query.support.Expressions.constant;
 import static com.mysema.query.support.Expressions.dateOperation;
 import static com.mysema.query.support.Expressions.datePath;
@@ -58,7 +57,7 @@ public class WorkdayStoreImpl implements WorkdayStore {
 	@Override
 	public int getNumberOfWorkday(String name, LocalDate from, LocalDate to) {
 		SQLQuery query = queryFactory.from(h0);
-		query.where(h0.name.eq(name), h0.dt.between(constant(from), constant(to)), h0.deletedFlg.eq(NOT_DELETED.code()));
+		query.where(h0.name.eq(name), h0.dt.between(from, to));
 		long count = query.uniqueResult(h0.dt.count());
 		return Days.daysBetween(from, to).getDays() + 1 - (int) count;
 	}
@@ -78,9 +77,8 @@ public class WorkdayStoreImpl implements WorkdayStore {
 		DatePath<LocalDate> ddt = datePath(LocalDate.class, d, "dt");
 
 		SQLQuery query = queryFactory.from(subquery, d).leftJoin(h0)
-				.on(h0.name.eq(name), h0.dt.between(constant(from), ddt), h0.deletedFlg.eq(NOT_DELETED.code()));
-		query.where(queryFactory.subQuery(h1)
-				.where(h1.name.eq(name), h1.dt.eq(ddt), h1.deletedFlg.eq(NOT_DELETED.code())).notExists());
+				.on(h0.name.eq(name), h0.dt.between(constant(from), ddt));
+		query.where(queryFactory.subQuery(h1).where(h1.name.eq(name), h1.dt.eq(ddt)).notExists());
 		query.groupBy(dn);
 		query.having(h0.dt.count().eq(dn.subtract(numberOfWorkday).add(1)));
 		List<LocalDate> list = query.list(ddt.min());

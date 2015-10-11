@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.example.db.gen.query.QCodeMaster;
 import cherry.foundation.code.CodeEntry;
 import cherry.foundation.code.CodeStore;
-import cherry.foundation.type.DeletedFlag;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
@@ -41,7 +40,7 @@ public class CodeStoreImpl implements CodeStore {
 	@Override
 	public CodeEntry findByValue(String codeName, String value) {
 		SQLQuery query = queryFactory.from(qcm);
-		query.where(qcm.name.eq(codeName), qcm.value.eq(value), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(qcm.name.eq(codeName), qcm.value.eq(value));
 		return query.uniqueResult(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}
 
@@ -49,7 +48,7 @@ public class CodeStoreImpl implements CodeStore {
 	@Override
 	public List<CodeEntry> getCodeList(String codeName) {
 		SQLQuery query = queryFactory.from(qcm);
-		query.where(qcm.name.eq(codeName), qcm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(qcm.name.eq(codeName));
 		query.orderBy(qcm.sortOrder.asc());
 		return query.list(new QBean<>(CodeEntry.class, qcm.value, qcm.label, qcm.sortOrder));
 	}

@@ -14,8 +14,6 @@ public class BAsyncProcessCommand {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private Integer lockVersion;
@@ -46,14 +44,6 @@ public class BAsyncProcessCommand {
         this.createdAt = createdAt;
     }
 
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
-    }
-
     public Long getId() {
         return id;
     }
@@ -80,7 +70,7 @@ public class BAsyncProcessCommand {
 
     @Override
     public String toString() {
-         return "asyncId = " + asyncId + ", command = " + command + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
+         return "asyncId = " + asyncId + ", command = " + command + ", createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", updatedAt = " + updatedAt;
     }
 
 }

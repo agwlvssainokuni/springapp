@@ -26,7 +26,6 @@ import org.springframework.dao.support.DataAccessUtils;
 import cherry.example.db.gen.query.QNumberingMaster;
 import cherry.foundation.numbering.NumberingDefinition;
 import cherry.foundation.numbering.NumberingStore;
-import cherry.foundation.type.DeletedFlag;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLQueryFactory;
@@ -61,7 +60,7 @@ public class NumberingStoreImpl implements NumberingStore {
 		SQLUpdateClause update = queryFactory.update(nm);
 		update.set(nm.currentValue, current);
 		update.set(nm.lockVersion, nm.lockVersion.add(1));
-		update.where(nm.name.eq(numberName), nm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		update.where(nm.name.eq(numberName));
 		long count = update.execute();
 		checkState(count == 1, "Failed to update %s: name=%s, currentValue=%s, count=%s", nm.getTableName(),
 				numberName, current, count);
@@ -69,7 +68,7 @@ public class NumberingStoreImpl implements NumberingStore {
 
 	private SQLQuery createBaseQuery(String numberName) {
 		SQLQuery query = queryFactory.from(nm);
-		query.where(nm.name.eq(numberName), nm.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(nm.name.eq(numberName));
 		return query;
 	}
 

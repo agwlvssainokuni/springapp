@@ -10,8 +10,6 @@ public class BDayoffMaster {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private org.joda.time.LocalDate dt;
 
     private Integer lockVersion;
@@ -28,14 +26,6 @@ public class BDayoffMaster {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public org.joda.time.LocalDate getDt() {
@@ -80,7 +70,7 @@ public class BDayoffMaster {
 
     @Override
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", dt = " + dt + ", lockVersion = " + lockVersion + ", name = " + name + ", type = " + type + ", updatedAt = " + updatedAt;
+         return "createdAt = " + createdAt + ", dt = " + dt + ", lockVersion = " + lockVersion + ", name = " + name + ", type = " + type + ", updatedAt = " + updatedAt;
     }
 
 }

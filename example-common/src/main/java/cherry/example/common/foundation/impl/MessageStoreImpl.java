@@ -30,7 +30,6 @@ import cherry.example.db.gen.query.QMailQueue;
 import cherry.example.db.gen.query.QMailRcpt;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MessageStore;
-import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.FlagCode;
 
 import com.mysema.query.Tuple;
@@ -66,7 +65,7 @@ public class MessageStoreImpl implements MessageStore {
 	@Override
 	public List<Long> listMessage(LocalDateTime dtm) {
 		SQLQuery query = queryFactory.from(mq);
-		query.where(mq.scheduledAt.goe(dtm), mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		query.where(mq.scheduledAt.goe(dtm));
 		return query.list(mq.mailId);
 	}
 
@@ -74,8 +73,7 @@ public class MessageStoreImpl implements MessageStore {
 	public SimpleMailMessage getMessage(long messageId) {
 
 		SQLQuery querya = queryFactory.from(ml).forUpdate();
-		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()),
-				ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		querya.where(ml.id.eq(messageId), ml.mailStatus.eq(FlagCode.FALSE.code()));
 		Tuple maillog = querya.uniqueResult(ml.fromAddr, ml.replyToAddr, ml.subject, ml.body);
 		if (maillog == null) {
 			return null;
@@ -122,12 +120,11 @@ public class MessageStoreImpl implements MessageStore {
 		SQLUpdateClause update = queryFactory.update(ml);
 		update.set(ml.mailStatus, FlagCode.TRUE.code());
 		update.set(ml.lockVersion, ml.lockVersion.add(1));
-		update.where(ml.id.eq(messageId), ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		update.where(ml.id.eq(messageId));
 		long count = update.execute();
 		checkState(count == 1L, "failed to update QMailLog: id=%s, mailStatus=%s", messageId, FlagCode.TRUE.code());
 
-		long c = queryFactory.delete(mq)
-				.where(mq.mailId.eq(messageId), mq.deletedFlg.eq(DeletedFlag.NOT_DELETED.code())).execute();
+		long c = queryFactory.delete(mq).where(mq.mailId.eq(messageId)).execute();
 		checkState(c == 1L, "failed to delete QMailQueue: mailId=%s", messageId);
 	}
 

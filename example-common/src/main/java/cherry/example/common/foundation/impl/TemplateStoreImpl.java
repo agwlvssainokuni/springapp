@@ -28,7 +28,6 @@ import cherry.example.db.gen.query.QMailTemplate;
 import cherry.example.db.gen.query.QMailTemplateRcpt;
 import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.TemplateStore;
-import cherry.foundation.type.DeletedFlag;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -49,11 +48,11 @@ public class TemplateStoreImpl implements TemplateStore {
 	public MailData getTemplate(String templateName) {
 
 		SQLQuery querya = queryFactory.from(mt);
-		querya.where(mt.templateName.eq(templateName), mt.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		querya.where(mt.templateName.eq(templateName));
 		Tuple templ = querya.uniqueResult(mt.id, mt.fromAddr, mt.replyToAddr, mt.subject, mt.body);
 
 		SQLQuery queryb = queryFactory.from(mtr);
-		queryb.where(mtr.templateId.eq(templ.get(mt.id)), mtr.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		queryb.where(mtr.templateId.eq(templ.get(mt.id)));
 		List<Tuple> templAddr = queryb.list(mtr.rcptType, mtr.rcptAddr);
 
 		List<String> toAddr = new ArrayList<>();
@@ -88,7 +87,7 @@ public class TemplateStoreImpl implements TemplateStore {
 	public void putTemplate(String templateName, MailData mailData) {
 
 		SQLQuery querya = queryFactory.from(mt);
-		querya.where(mt.templateName.eq(templateName), mt.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+		querya.where(mt.templateName.eq(templateName));
 		querya.forUpdate();
 		Long id = querya.uniqueResult(mt.id);
 		if (id == null) {

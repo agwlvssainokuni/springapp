@@ -30,8 +30,6 @@ public class QAsyncProcess extends com.mysema.query.sql.RelationalPathBase<BAsyn
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final StringPath description = createString("description");
 
     public final DateTimePath<org.joda.time.LocalDateTime> finishedAt = createDateTime("finishedAt", org.joda.time.LocalDateTime.class);
@@ -76,7 +74,6 @@ public class QAsyncProcess extends com.mysema.query.sql.RelationalPathBase<BAsyn
         addMetadata(asyncStatus, ColumnMetadata.named("ASYNC_STATUS").withIndex(5).ofType(Types.VARCHAR).withSize(3).notNull());
         addMetadata(asyncType, ColumnMetadata.named("ASYNC_TYPE").withIndex(4).ofType(Types.VARCHAR).withSize(3).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(11).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(13).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(description, ColumnMetadata.named("DESCRIPTION").withIndex(3).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(finishedAt, ColumnMetadata.named("FINISHED_AT").withIndex(9).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());

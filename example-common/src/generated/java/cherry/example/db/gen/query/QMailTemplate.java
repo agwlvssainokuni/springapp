@@ -28,8 +28,6 @@ public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<BMail
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final StringPath fromAddr = createString("fromAddr");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -69,7 +67,6 @@ public class QMailTemplate extends com.mysema.query.sql.RelationalPathBase<BMail
     public void addMetadata() {
         addMetadata(body, ColumnMetadata.named("BODY").withIndex(6).ofType(Types.VARCHAR).withSize(5000).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(10).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(fromAddr, ColumnMetadata.named("FROM_ADDR").withIndex(3).ofType(Types.VARCHAR).withSize(300).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());

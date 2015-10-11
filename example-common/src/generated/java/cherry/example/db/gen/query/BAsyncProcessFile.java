@@ -14,8 +14,6 @@ public class BAsyncProcessFile {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long fileSize;
 
     private String handlerName;
@@ -52,14 +50,6 @@ public class BAsyncProcessFile {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getFileSize() {
@@ -120,7 +110,7 @@ public class BAsyncProcessFile {
 
     @Override
     public String toString() {
-         return "asyncId = " + asyncId + ", contentType = " + contentType + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", fileSize = " + fileSize + ", handlerName = " + handlerName + ", id = " + id + ", lockVersion = " + lockVersion + ", originalFilename = " + originalFilename + ", paramName = " + paramName + ", updatedAt = " + updatedAt;
+         return "asyncId = " + asyncId + ", contentType = " + contentType + ", createdAt = " + createdAt + ", fileSize = " + fileSize + ", handlerName = " + handlerName + ", id = " + id + ", lockVersion = " + lockVersion + ", originalFilename = " + originalFilename + ", paramName = " + paramName + ", updatedAt = " + updatedAt;
     }
 
 }

@@ -14,8 +14,6 @@ public class BAsyncProcess {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private String description;
 
     private org.joda.time.LocalDateTime finishedAt;
@@ -56,14 +54,6 @@ public class BAsyncProcess {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public String getDescription() {
@@ -140,7 +130,7 @@ public class BAsyncProcess {
 
     @Override
     public String toString() {
-         return "asyncStatus = " + asyncStatus + ", asyncType = " + asyncType + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", finishedAt = " + finishedAt + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", registeredAt = " + registeredAt + ", startedAt = " + startedAt + ", updatedAt = " + updatedAt;
+         return "asyncStatus = " + asyncStatus + ", asyncType = " + asyncType + ", createdAt = " + createdAt + ", description = " + description + ", finishedAt = " + finishedAt + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", registeredAt = " + registeredAt + ", startedAt = " + startedAt + ", updatedAt = " + updatedAt;
     }
 
 }

@@ -28,8 +28,6 @@ public class QAsyncProcessCommandResult extends com.mysema.query.sql.RelationalP
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
-
     public final NumberPath<Integer> exitValue = createNumber("exitValue", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -67,7 +65,6 @@ public class QAsyncProcessCommandResult extends com.mysema.query.sql.RelationalP
     public void addMetadata() {
         addMetadata(asyncId, ColumnMetadata.named("ASYNC_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
-        addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(exitValue, ColumnMetadata.named("EXIT_VALUE").withIndex(3).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());

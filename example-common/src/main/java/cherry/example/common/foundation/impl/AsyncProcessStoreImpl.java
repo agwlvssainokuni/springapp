@@ -43,7 +43,6 @@ import cherry.foundation.async.AsyncStatus;
 import cherry.foundation.async.AsyncType;
 import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.async.FileRecordInfo;
-import cherry.foundation.type.DeletedFlag;
 import cherry.goods.command.CommandResult;
 import cherry.goods.util.ToMapUtil;
 
@@ -128,7 +127,6 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
-		update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		long count = update.execute();
 		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, launchedAt=%s, count=%s",
 				asyncId, AsyncStatus.LAUNCHED.code(), dtm, count);
@@ -143,7 +141,6 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
-		update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		long count = update.execute();
 		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, startedAt=%s, count=%s",
 				asyncId, AsyncStatus.PROCESSING.code(), dtm, count);
@@ -232,7 +229,6 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		update.set(ap.updatedAt, currentTimestamp(LocalDateTime.class));
 		update.set(ap.lockVersion, ap.lockVersion.add(1));
 		update.where(ap.id.eq(asyncId));
-		update.where(ap.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		long count = update.execute();
 		checkState(count == 1L, "failed to update QAsyncProcess: id=%s, asyncStatus=%s, finishedAt=%s, count=%s",
 				asyncId, status.code(), dtm, count);

@@ -12,8 +12,6 @@ public class BBizdatetimeMaster {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Integer deletedFlg;
-
     private Long id;
 
     private Integer lockVersion;
@@ -42,14 +40,6 @@ public class BBizdatetimeMaster {
 
     public void setCreatedAt(org.joda.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Integer getDeletedFlg() {
-        return deletedFlg;
-    }
-
-    public void setDeletedFlg(Integer deletedFlg) {
-        this.deletedFlg = deletedFlg;
     }
 
     public Long getId() {
@@ -110,7 +100,7 @@ public class BBizdatetimeMaster {
 
     @Override
     public String toString() {
-         return "bizdate = " + bizdate + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", id = " + id + ", lockVersion = " + lockVersion + ", offsetDay = " + offsetDay + ", offsetHour = " + offsetHour + ", offsetMinute = " + offsetMinute + ", offsetSecond = " + offsetSecond + ", updatedAt = " + updatedAt;
+         return "bizdate = " + bizdate + ", createdAt = " + createdAt + ", id = " + id + ", lockVersion = " + lockVersion + ", offsetDay = " + offsetDay + ", offsetHour = " + offsetHour + ", offsetMinute = " + offsetMinute + ", offsetSecond = " + offsetSecond + ", updatedAt = " + updatedAt;
     }
 
 }
