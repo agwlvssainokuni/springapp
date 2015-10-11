@@ -30,6 +30,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -46,19 +47,19 @@ public class Ex10ControllerImpl implements Ex10Controller {
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+			NativeWebRequest request) {
 		return ModelAndViewBuilder.redirect(redirectOnInit(redir, auth, locale, sitePref, request)).build();
 	}
 
 	@Override
 	public ModelAndView start(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 	}
 
 	@Override
 	public ModelAndView confirm(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
@@ -69,19 +70,19 @@ public class Ex10ControllerImpl implements Ex10Controller {
 
 	@Override
 	public ModelAndView back(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 	}
 
 	@Override
 	public ModelAndView execute(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
-		if (!oneTimeTokenValidator.isValid(request)) {
+		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
@@ -93,23 +94,23 @@ public class Ex10ControllerImpl implements Ex10Controller {
 
 	@Override
 	public ModelAndView completed(Long id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+			NativeWebRequest request) {
 		return ModelAndViewBuilder.withoutView().build();
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+			NativeWebRequest request) {
 		return UriComponentsBuilder.fromPath(redir).build();
 	}
 
 	private UriComponents redirectOnExecute(Long id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+			NativeWebRequest request) {
 		return fromMethodCall(on(Ex10Controller.class).completed(id, auth, locale, sitePref, request))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
 	private boolean isValid(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {

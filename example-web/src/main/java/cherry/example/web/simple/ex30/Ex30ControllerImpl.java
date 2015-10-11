@@ -20,13 +20,12 @@ import static cherry.example.web.PathDef.VIEW_SIMPLE_EX30_START;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -38,7 +37,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, SessionStatus status) {
+			NativeWebRequest request, SessionStatus status) {
 
 		status.setComplete();
 
@@ -47,7 +46,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 	@Override
 	public ModelAndView start(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
 
@@ -56,7 +55,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 	@Override
 	public ModelAndView execute(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
@@ -66,12 +65,12 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+			NativeWebRequest request) {
 		return UriComponentsBuilder.fromPath(redir).build();
 	}
 
 	private boolean isValid(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {

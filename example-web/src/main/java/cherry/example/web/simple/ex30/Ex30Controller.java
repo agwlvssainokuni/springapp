@@ -23,8 +23,6 @@ import static cherry.example.web.PathDef.URI_SIMPLE_EX30;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
@@ -33,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
@@ -43,14 +42,14 @@ public interface Ex30Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, defaultValue = SUBURI_START) String redir, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, SessionStatus status);
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
 	ModelAndView start(@Validated(G9.class) Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
 	ModelAndView execute(@Validated() Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+			SitePreference sitePref, NativeWebRequest request);
 
 }
