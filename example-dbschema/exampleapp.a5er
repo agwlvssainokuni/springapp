@@ -5,10 +5,10 @@
 #  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
 
 [Manager]
-ProjectName=SpringApp
+ProjectName=ExampleApp
 Author=agwlvssainokuni
 MaxEntityRowShow=1000
-ReadOnlyRecommend=0
+ReadOnlyRecommend=1
 Page=業務日時
 PageInfo="業務日時",4,"A3Landscape",$FFFFFF
 Page=非同期実行フレームワーク
@@ -21,13 +21,14 @@ Page=区分値管理
 PageInfo="区分値管理",4,"A3Landscape",$FFFFFF
 Page=発番
 PageInfo="発番",4,"A3Landscape",$FFFFFF
-Page=郵便番号
-PageInfo="郵便番号",4,"A3Landscape",$FFFFFF
-Page=SpringApp
-PageInfo="SpringApp",4,"A3Landscape",$FFFFFF
+Page=ExampleApp
+PageInfo="ExampleApp",4,"A3Landscape",$FFFFFF
 Domain=ID=BIGINT
 Domain=整数【32bit】=@INT
 Domain=整数【64bit】=BIGINT
+Domain=小数【1桁】=@DECIMAL(11,1)
+Domain=小数【2桁】=@DECIMAL(12,2)
+Domain=小数【3桁】=@DECIMAL(13,3)
 Domain=区分値【2】=@VARCHAR(2)
 Domain=区分値【3】=@VARCHAR(3)
 Domain=区分値【5】=@VARCHAR(5)
@@ -65,7 +66,6 @@ RDBMSTypeName=IBM DB2
 CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
 CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
 CommonField="ロックバージョン","lock_version","*整数【32bit】","NOT NULL",,"1","",$FFFFFFFF
-CommonField="削除フラグ","deleted_flg","*整数【32bit】","NOT NULL",,"0","",$FFFFFFFF
 DefaultPkName=%0:s_PKC
 DefaultPkIndexName=%0:s_PKI
 DefaultIndexName=%0:s_IX%1:d
@@ -73,6 +73,79 @@ DefaultFkName=%0:s_FK%1:d
 SqlSeparator=0
 ShowTag=1
 ShowCommonAttributes=0
+
+[Relation]
+Entity1=ex_tbl_1
+Entity2=ex_tbl_2
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=parent_id
+Cardinarity1=
+Cardinarity2=
+Position="EXAMPLEAPP",0,2706,7294,2622,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20151012071103
+LineMode=0
+Bar1=271
+Bar2=729
+Bar3=262
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=ex_tbl_2
+LName=テーブル2
+Comment=
+TableOption=
+Page=EXAMPLEAPP
+Left=1500
+Top=500
+Field="ID","id","*整数【64bit】","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="親ID","parent_id","*整数【64bit】","NOT NULL",,"","",$FFFFFFFF,""
+Field="文字列【10】","text10","*文字列【10】",,,"","",$FFFFFFFF,""
+Field="文字列【100】","text100","*文字列【100】",,,"","",$FFFFFFFF,""
+Field="整数【64bit】","int64","*整数【64bit】",,,"","",$FFFFFFFF,""
+Field="小数【1桁】","decimal1","*小数【1桁】",,,"","",$FFFFFFFF,""
+Field="小数【3桁】","decimal3","*小数【3桁】",,,"","",$FFFFFFFF,""
+Field="日付","dt","*日付",,,"","",$FFFFFFFF,""
+Field="時刻","tm","*時刻",,,"","",$FFFFFFFF,""
+Field="日時","dtm","*日時",,,"","",$FFFFFFFF,""
+Field="区分値【2】","code2","*区分値【2】",,,"","",$FFFFFFFF,""
+Index==0,parent_id
+EffectMode=None
+Tag=事例集
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20151012072932
+Position="EXAMPLEAPP",1500,500
+
+[Entity]
+PName=ex_tbl_1
+LName=テーブル1
+Comment=
+TableOption=
+Page=EXAMPLEAPP
+Left=500
+Top=500
+Field="ID","id","*整数【64bit】","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="文字列【10】","text10","*文字列【10】",,,"","",$FFFFFFFF,""
+Field="文字列【100】","text100","*文字列【100】",,,"","",$FFFFFFFF,""
+Field="整数【64bit】","int64","*整数【64bit】",,,"","",$FFFFFFFF,""
+Field="小数【1桁】","decimal1","*小数【1桁】",,,"","",$FFFFFFFF,""
+Field="小数【3桁】","decimal3","*小数【3桁】",,,"","",$FFFFFFFF,""
+Field="日付","dt","*日付",,,"","",$FFFFFFFF,""
+Field="時刻","tm","*時刻",,,"","",$FFFFFFFF,""
+Field="日時","dtm","*日時",,,"","",$FFFFFFFF,""
+Field="区分値【2】","code2","*区分値【2】",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=事例集
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20151012070913
+Position="EXAMPLEAPP",500,500
 
 [Entity]
 PName=digit
@@ -614,31 +687,6 @@ ModifiedDateTime=20141227070207
 Position="非同期実行フレームワーク",500,500
 
 [Entity]
-PName=zipcd_master
-LName=郵便番号マスタ
-Comment=
-TableOption=
-Page=郵便番号
-Left=500
-Top=500
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="市区町村コード","city_cd","*整数【32bit】","NOT NULL",,"","",$FFFFFFFF,""
-Field="郵便番号","zipcd","*文字列【10】","NOT NULL",,"","",$FFFFFFFF,""
-Field="都道府県","pref","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
-Field="市区町村","city","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Field="町域","addr","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Field="都道府県(カナ)","pref_kana","*文字列【30】","NOT NULL",,"","",$FFFFFFFF,""
-Field="市区町村(カナ)","city_kana","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Field="町域(カナ)","addr_kana","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Index==0,zipcd
-EffectMode=None
-Tag=マスタ
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20141227070956
-Position="郵便番号",500,500
-
-[Entity]
 PName=bizdatetime_master
 LName=業務日時マスタ
 Comment=
@@ -658,49 +706,6 @@ Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20141227070101
 Position="業務日時",500,500
-
-[Entity]
-PName=user
-LName=利用者
-Comment=
-TableOption=
-Page=SPRINGAPP
-Left=500
-Top=500
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="ログインID","login_id","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
-Field="パスワード","password","*文字列【100】","NOT NULL",,"","",$FFFFFFFF,""
-Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
-Field="氏名(名)","first_name","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Field="氏名(姓)","last_name","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Index==1,login_id
-EffectMode=None
-Tag=マスタ
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20141227071108
-Position="SPRINGAPP",500,500
-
-[Entity]
-PName=signup_request
-LName=利用申請
-Comment=
-TableOption=
-Page=SPRINGAPP
-Left=1500
-Top=500
-Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="メールアドレス","mail_addr","*文字列【300】","NOT NULL",,"","",$FFFFFFFF,""
-Field="トークン","token","*文字列【50】","NOT NULL",,"","",$FFFFFFFF,""
-Field="申請日時","applied_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
-Index==0,mail_addr
-Index==1,token
-EffectMode=None
-Tag=トランザクション
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20141227071137
-Position="SPRINGAPP",1500,500
 
 [Entity]
 PName=mail_template

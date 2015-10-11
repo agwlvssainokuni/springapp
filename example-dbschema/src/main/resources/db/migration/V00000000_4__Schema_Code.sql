@@ -1,5 +1,5 @@
--- Project Name : SpringApp
--- Date/Time    : 2015/01/17 19:51:39
+-- Project Name : ExampleApp
+-- Date/Time    : 2015/10/12 7:27:43
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -14,7 +14,6 @@ create table code_master (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint code_master_PKC primary key (id)
 ) ;
 
@@ -30,4 +29,3 @@ comment on column code_master.sort_order is '表示順序';
 comment on column code_master.updated_at is '更新日時';
 comment on column code_master.created_at is '作成日時';
 comment on column code_master.lock_version is 'ロックバージョン';
-comment on column code_master.deleted_flg is '削除フラグ';

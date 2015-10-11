@@ -1,5 +1,5 @@
--- Project Name : SpringApp
--- Date/Time    : 2015/06/21 7:52:07
+-- Project Name : ExampleApp
+-- Date/Time    : 2015/10/12 7:26:48
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -12,7 +12,6 @@ create table mail_queue (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint mail_queue_PKC primary key (id)
 ) ;
 
@@ -28,7 +27,6 @@ create table mail_rcpt (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint mail_rcpt_PKC primary key (id)
 ) ;
 
@@ -48,7 +46,6 @@ create table mail_log (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint mail_log_PKC primary key (id)
 ) ;
 
@@ -65,7 +62,6 @@ comment on column mail_queue.scheduled_at is '送信予定日時';
 comment on column mail_queue.updated_at is '更新日時';
 comment on column mail_queue.created_at is '作成日時';
 comment on column mail_queue.lock_version is 'ロックバージョン';
-comment on column mail_queue.deleted_flg is '削除フラグ';
 
 comment on table mail_rcpt is 'メール宛先';
 comment on column mail_rcpt.id is 'ID';
@@ -75,7 +71,6 @@ comment on column mail_rcpt.rcpt_addr is '宛先アドレス';
 comment on column mail_rcpt.updated_at is '更新日時';
 comment on column mail_rcpt.created_at is '作成日時';
 comment on column mail_rcpt.lock_version is 'ロックバージョン';
-comment on column mail_rcpt.deleted_flg is '削除フラグ';
 
 comment on table mail_log is 'メール送信記録';
 comment on column mail_log.id is 'ID';
@@ -92,4 +87,3 @@ comment on column mail_log.body is '本文';
 comment on column mail_log.updated_at is '更新日時';
 comment on column mail_log.created_at is '作成日時';
 comment on column mail_log.lock_version is 'ロックバージョン';
-comment on column mail_log.deleted_flg is '削除フラグ';

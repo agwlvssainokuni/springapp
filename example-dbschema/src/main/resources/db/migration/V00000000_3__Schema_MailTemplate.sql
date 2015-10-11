@@ -1,5 +1,5 @@
--- Project Name : SpringApp
--- Date/Time    : 2015/06/21 7:37:23
+-- Project Name : ExampleApp
+-- Date/Time    : 2015/10/12 7:27:11
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -15,7 +15,6 @@ create table mail_template (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint mail_template_PKC primary key (id)
 ) ;
 
@@ -31,7 +30,6 @@ create table mail_template_rcpt (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint mail_template_rcpt_PKC primary key (id)
 ) ;
 
@@ -48,7 +46,6 @@ comment on column mail_template.body is '本文';
 comment on column mail_template.updated_at is '更新日時';
 comment on column mail_template.created_at is '作成日時';
 comment on column mail_template.lock_version is 'ロックバージョン';
-comment on column mail_template.deleted_flg is '削除フラグ';
 
 comment on table mail_template_rcpt is 'メールテンプレート宛先';
 comment on column mail_template_rcpt.id is 'ID';
@@ -58,4 +55,3 @@ comment on column mail_template_rcpt.rcpt_addr is '宛先アドレス';
 comment on column mail_template_rcpt.updated_at is '更新日時';
 comment on column mail_template_rcpt.created_at is '作成日時';
 comment on column mail_template_rcpt.lock_version is 'ロックバージョン';
-comment on column mail_template_rcpt.deleted_flg is '削除フラグ';

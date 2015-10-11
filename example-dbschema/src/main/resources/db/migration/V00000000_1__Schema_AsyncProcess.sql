@@ -1,5 +1,5 @@
--- Project Name : SpringApp
--- Date/Time    : 2014/12/27 7:15:47
+-- Project Name : ExampleApp
+-- Date/Time    : 2015/10/12 7:26:21
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -12,7 +12,6 @@ create table async_process_exception (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_exception_PKC primary key (id)
 ) ;
 
@@ -29,7 +28,6 @@ create table async_process_command_result (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_command_result_PKC primary key (ID)
 ) ;
 
@@ -44,7 +42,6 @@ create table async_process_command_arg (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_command_arg_PKC primary key (id)
 ) ;
 
@@ -59,7 +56,6 @@ create table async_process_command (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_command_PKC primary key (id)
 ) ;
 
@@ -75,7 +71,6 @@ create table async_process_file_result_detail (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_file_result_detail_PKC primary key (id)
 ) ;
 
@@ -92,7 +87,6 @@ create table async_process_file_result (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_file_result_PKC primary key (id)
 ) ;
 
@@ -107,7 +101,6 @@ create table async_process_file_arg (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_file_arg_PKC primary key (id)
 ) ;
 
@@ -126,7 +119,6 @@ create table async_process_file (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_file_PKC primary key (id)
 ) ;
 
@@ -147,7 +139,6 @@ create table async_process (
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
-  , deleted_flg INTEGER default 0 not null
   , constraint async_process_PKC primary key (id)
 ) ;
 
@@ -161,7 +152,6 @@ comment on column async_process_exception.exception is '例外情報';
 comment on column async_process_exception.updated_at is '更新日時';
 comment on column async_process_exception.created_at is '作成日時';
 comment on column async_process_exception.lock_version is 'ロックバージョン';
-comment on column async_process_exception.deleted_flg is '削除フラグ';
 
 comment on table async_process_command_result is '非同期実行状況管理・コマンド・結果';
 comment on column async_process_command_result.ID is 'ID';
@@ -172,7 +162,6 @@ comment on column async_process_command_result.stderr is '標準エラー出力'
 comment on column async_process_command_result.updated_at is '更新日時';
 comment on column async_process_command_result.created_at is '作成日時';
 comment on column async_process_command_result.lock_version is 'ロックバージョン';
-comment on column async_process_command_result.deleted_flg is '削除フラグ';
 
 comment on table async_process_command_arg is '非同期実行状況管理・コマンド・引数';
 comment on column async_process_command_arg.id is 'ID';
@@ -181,7 +170,6 @@ comment on column async_process_command_arg.argument is '引数';
 comment on column async_process_command_arg.updated_at is '更新日時';
 comment on column async_process_command_arg.created_at is '作成日時';
 comment on column async_process_command_arg.lock_version is 'ロックバージョン';
-comment on column async_process_command_arg.deleted_flg is '削除フラグ';
 
 comment on table async_process_command is '非同期実行状況管理・コマンド';
 comment on column async_process_command.id is 'ID';
@@ -190,7 +178,6 @@ comment on column async_process_command.command is 'コマンド';
 comment on column async_process_command.updated_at is '更新日時';
 comment on column async_process_command.created_at is '作成日時';
 comment on column async_process_command.lock_version is 'ロックバージョン';
-comment on column async_process_command.deleted_flg is '削除フラグ';
 
 comment on table async_process_file_result_detail is '非同期実行状況管理・ファイル処理・結果詳細';
 comment on column async_process_file_result_detail.id is 'ID';
@@ -200,7 +187,6 @@ comment on column async_process_file_result_detail.description is '付加情報'
 comment on column async_process_file_result_detail.updated_at is '更新日時';
 comment on column async_process_file_result_detail.created_at is '作成日時';
 comment on column async_process_file_result_detail.lock_version is 'ロックバージョン';
-comment on column async_process_file_result_detail.deleted_flg is '削除フラグ';
 
 comment on table async_process_file_result is '非同期実行状況管理・ファイル処理・結果';
 comment on column async_process_file_result.id is 'ID';
@@ -211,7 +197,6 @@ comment on column async_process_file_result.ng_count is 'NG件数';
 comment on column async_process_file_result.updated_at is '更新日時';
 comment on column async_process_file_result.created_at is '作成日時';
 comment on column async_process_file_result.lock_version is 'ロックバージョン';
-comment on column async_process_file_result.deleted_flg is '削除フラグ';
 
 comment on table async_process_file_arg is '非同期実行状況管理・ファイル処理・引数';
 comment on column async_process_file_arg.id is 'ID';
@@ -220,7 +205,6 @@ comment on column async_process_file_arg.argument is '引数';
 comment on column async_process_file_arg.updated_at is '更新日時';
 comment on column async_process_file_arg.created_at is '作成日時';
 comment on column async_process_file_arg.lock_version is 'ロックバージョン';
-comment on column async_process_file_arg.deleted_flg is '削除フラグ';
 
 comment on table async_process_file is '非同期実行状況管理・ファイル処理';
 comment on column async_process_file.id is 'ID';
@@ -233,7 +217,6 @@ comment on column async_process_file.file_size is 'ファイルサイズ';
 comment on column async_process_file.updated_at is '更新日時';
 comment on column async_process_file.created_at is '作成日時';
 comment on column async_process_file.lock_version is 'ロックバージョン';
-comment on column async_process_file.deleted_flg is '削除フラグ';
 
 comment on table async_process is '非同期実行状況管理';
 comment on column async_process.id is 'ID';
@@ -248,4 +231,3 @@ comment on column async_process.finished_at is '実行終了日時';
 comment on column async_process.updated_at is '更新日時';
 comment on column async_process.created_at is '作成日時';
 comment on column async_process.lock_version is 'ロックバージョン';
-comment on column async_process.deleted_flg is '削除フラグ';
