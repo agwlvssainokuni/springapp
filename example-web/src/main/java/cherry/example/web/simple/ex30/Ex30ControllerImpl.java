@@ -28,9 +28,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import cherry.example.web.util.ModelAndViewBuilder;
 
 @Controller
 public class Ex30ControllerImpl implements Ex30Controller {
@@ -41,10 +42,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 		status.setComplete();
 
-		UriComponents uc = redirectOnInit(redir, auth, locale, sitePref, request);
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		return ModelAndViewBuilder.redirect(redirectOnInit(redir, auth, locale, sitePref, request)).build();
 	}
 
 	@Override
@@ -53,8 +51,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 		form.setPno(0L);
 
-		ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX30_START);
-		return mav;
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 	}
 
 	@Override
@@ -62,12 +59,10 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
-			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX30_START);
-			return mav;
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 		}
 
-		ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX30_START);
-		return mav;
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,

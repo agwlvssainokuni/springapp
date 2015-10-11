@@ -31,10 +31,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
@@ -47,17 +47,13 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
-		UriComponents uc = redirectOnInit(redir, auth, locale, sitePref, request);
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		return ModelAndViewBuilder.redirect(redirectOnInit(redir, auth, locale, sitePref, request)).build();
 	}
 
 	@Override
 	public ModelAndView start(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
-		return mav;
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 	}
 
 	@Override
@@ -65,19 +61,16 @@ public class Ex10ControllerImpl implements Ex10Controller {
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
-			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
-			return mav;
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
-		ModelAndView mav = new ModelAndView();
-		return mav;
+		return ModelAndViewBuilder.withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
-		return mav;
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 	}
 
 	@Override
@@ -85,29 +78,23 @@ public class Ex10ControllerImpl implements Ex10Controller {
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (isValid(form, binding, auth, locale, sitePref, request)) {
-			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
-			return mav;
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request)) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			ModelAndView mav = new ModelAndView(VIEW_SIMPLE_EX10_START);
-			return mav;
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
 		Long id = 0L;
 
-		UriComponents uc = redirectOnExecute(id, auth, locale, sitePref, request);
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		return ModelAndViewBuilder.redirect(redirectOnExecute(id, auth, locale, sitePref, request)).build();
 	}
 
 	@Override
 	public ModelAndView completed(Long id, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		return mav;
+		return ModelAndViewBuilder.withoutView().build();
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
