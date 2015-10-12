@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,45 @@ public class Ex30ServiceImpl implements Ex30Service {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 				query.from(et1);
+				if (StringUtils.isNotEmpty(form.getText10())) {
+					query.where(et1.text10.startsWith(form.getText10()));
+				}
+				if (form.getInt64From() != null) {
+					query.where(et1.int64.goe(form.getInt64From()));
+				}
+				if (form.getInt64To() != null) {
+					query.where(et1.int64.loe(form.getInt64To()));
+				}
+				if (form.getDecimal1From() != null) {
+					query.where(et1.decimal1.goe(form.getDecimal1From()));
+				}
+				if (form.getDecimal1To() != null) {
+					query.where(et1.decimal1.loe(form.getDecimal1To()));
+				}
+				if (form.getDecimal3From() != null) {
+					query.where(et1.decimal3.goe(form.getDecimal3From()));
+				}
+				if (form.getDecimal3To() != null) {
+					query.where(et1.decimal3.loe(form.getDecimal3To()));
+				}
+				if (form.getDtFrom() != null) {
+					query.where(et1.dt.goe(form.getDtFrom()));
+				}
+				if (form.getDtTo() != null) {
+					query.where(et1.dt.loe(form.getDtTo()));
+				}
+				if (form.getTmFrom() != null) {
+					query.where(et1.tm.goe(form.getTmFrom()));
+				}
+				if (form.getTmTo() != null) {
+					query.where(et1.tm.loe(form.getTmTo()));
+				}
+				if (form.getDtmFromD() != null && form.getDtmFromT() != null) {
+					query.where(et1.dtm.goe(form.getDtmFromD().toLocalDateTime(form.getDtmFromT())));
+				}
+				if (form.getDtmToD() != null && form.getDtmToT() != null) {
+					query.where(et1.dtm.loe(form.getDtmToD().toLocalDateTime(form.getDtmToT())));
+				}
 				return query;
 			}
 		};

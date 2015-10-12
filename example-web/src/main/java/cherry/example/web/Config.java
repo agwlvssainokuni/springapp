@@ -16,19 +16,16 @@
 
 package cherry.example.web;
 
-import cherry.foundation.logicalerror.ILogicalError;
+import lombok.Getter;
 
-public enum LogicalError implements ILogicalError {
-	/** {1} を指定する時は {0} が必須です。 */
-	RequiredWhen,
-	/** 登録済みです。{0} を見直してください。 */
-	AlreadyExists,
-	/** {0} は {1} 以前の値を指定してください。 */
-	RangeFromTo;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-	@Override
-	public String code() {
-		return name();
-	}
+@Component
+@Getter
+public class Config {
+
+	@Value("${web.app.defaultPageSize}")
+	private long defaultPageSize;
 
 }

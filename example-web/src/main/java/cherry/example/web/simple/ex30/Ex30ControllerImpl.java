@@ -20,6 +20,7 @@ import static cherry.example.web.PathDef.VIEW_SIMPLE_EX30_START;
 
 import java.util.Locale;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.db.gen.query.BExTbl1;
+import cherry.example.web.Config;
+import cherry.example.web.LogicalError;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
@@ -41,6 +44,9 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 	@Autowired
 	private Ex30Service ex30Service;
+
+	@Autowired
+	private Config config;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -56,6 +62,9 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
+		if (form.getPsz() <= 0L) {
+			form.setPsz(config.getDefaultPageSize());
+		}
 
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 	}
@@ -68,6 +77,12 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 		}
 
+		if (form.getPno() <= 0L) {
+			form.setPno(0L);
+		}
+		if (form.getPsz() <= 0L) {
+			form.setPsz(config.getDefaultPageSize());
+		}
 		PagedList<BExTbl1> pagedList = ex30Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
@@ -91,6 +106,35 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		}
 
 		// 項目間チェック
+		if (form.getDtFrom() != null && form.getDtTo() != null) {
+			if (form.getDtFrom().isAfter(form.getDtTo())) {
+				LogicalErrorUtil.rejectValue(binding, "dtFrom", LogicalError.RangeFromTo,
+						LogicalErrorUtil.resolve("ex30Form.dtFrom"), LogicalErrorUtil.resolve("ex30Form.dtTo"));
+			}
+		}
+		if (form.getTmFrom() != null && form.getTmTo() != null) {
+			if (form.getTmFrom().isAfter(form.getTmTo())) {
+				LogicalErrorUtil.rejectValue(binding, "tmFrom", LogicalError.RangeFromTo,
+						LogicalErrorUtil.resolve("ex30Form.tmFrom"), LogicalErrorUtil.resolve("ex30Form.tmTo"));
+			}
+		}
+		if (form.getDtmFromD() == null && form.getDtmFromT() != null) {
+			LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RequiredWhen,
+					LogicalErrorUtil.resolve("ex30Form.dtmFromD"), LogicalErrorUtil.resolve("ex30Form.dtmFromT"));
+		}
+		if (form.getDtmToD() == null && form.getDtmToT() != null) {
+			LogicalErrorUtil.rejectValue(binding, "dtmToD", LogicalError.RequiredWhen,
+					LogicalErrorUtil.resolve("ex30Form.dtmToD"), LogicalErrorUtil.resolve("ex30Form.dtmToT"));
+		}
+		if (form.getDtmFromD() != null && form.getDtmFromT() != null && form.getDtmToD() != null
+				&& form.getDtmToT() != null) {
+			LocalDateTime dtmFrom = form.getDtmFromD().toLocalDateTime(form.getDtmFromT());
+			LocalDateTime dtmTo = form.getDtmToD().toLocalDateTime(form.getDtmToT());
+			if (dtmFrom.isAfter(dtmTo)) {
+				LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RangeFromTo,
+						LogicalErrorUtil.resolve("ex30Form.dtmFromD"), LogicalErrorUtil.resolve("ex30Form.dtmToD"));
+			}
+		}
 
 		if (binding.hasErrors()) {
 			return true;

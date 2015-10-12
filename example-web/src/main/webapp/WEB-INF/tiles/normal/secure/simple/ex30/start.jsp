@@ -23,6 +23,10 @@
 						<f:errors path="ex30Form.text10" element="div" />
 						<f:errors path="ex30Form.int64From" element="div" />
 						<f:errors path="ex30Form.int64To" element="div" />
+						<f:errors path="ex30Form.decimal1From" element="div" />
+						<f:errors path="ex30Form.decimal1To" element="div" />
+						<f:errors path="ex30Form.decimal3From" element="div" />
+						<f:errors path="ex30Form.decimal3To" element="div" />
 						<f:errors path="ex30Form.dtFrom" element="div" />
 						<f:errors path="ex30Form.dtTo" element="div" />
 						<f:errors path="ex30Form.tmFrom" element="div" />
@@ -43,6 +47,33 @@
 					<f:label path="text10" cssClass="col-sm-2 control-label">文字列【10】</f:label>
 					<div class="col-sm-10">
 						<f:input path="text10" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+				</div>
+				<div class="form-group">
+					<f:label path="int64From" cssClass="col-sm-2 control-label">整数【64bit】</f:label>
+					<div class="col-sm-3">
+						<f:input path="int64From" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+					<div class="col-sm-3">
+						<f:input path="int64To" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+				</div>
+				<div class="form-group">
+					<f:label path="decimal1From" cssClass="col-sm-2 control-label">小数【1桁】</f:label>
+					<div class="col-sm-3">
+						<f:input path="decimal1From" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+					<div class="col-sm-3">
+						<f:input path="decimal1To" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+				</div>
+				<div class="form-group">
+					<f:label path="decimal3From" cssClass="col-sm-2 control-label">小数【3桁】</f:label>
+					<div class="col-sm-3">
+						<f:input path="decimal3From" cssClass="form-control" cssErrorClass="form-control has-error" />
+					</div>
+					<div class="col-sm-3">
+						<f:input path="decimal3To" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -103,6 +134,10 @@
 					<f:hidden path="text10" id="text102" />
 					<f:hidden path="int64From" id="int64From2" />
 					<f:hidden path="int64To" id="int64To2" />
+					<f:hidden path="decimal1From" id="decimal1From2" />
+					<f:hidden path="decimal1To" id="decimal1To2" />
+					<f:hidden path="decimal3From" id="decimal3From2" />
+					<f:hidden path="decimal3To" id="decimal3To2" />
 					<f:hidden path="dtFrom" id="dtFrom2" />
 					<f:hidden path="dtTo" id="dtTo2" />
 					<f:hidden path="tmFrom" id="tmFrom2" />
