@@ -94,6 +94,14 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		if (form.getPsz() <= 0L) {
 			form.setPsz(config.getDefaultPageSize());
 		}
+
+		if (form.getSortBy() == null) {
+			form.setSortBy(SortBy.ID.code());
+		}
+		if (form.getSortOrder() == null) {
+			form.setSortOrder(SortOrder.ASC.code());
+		}
+
 		PagedList<BExTbl1> pagedList = ex30Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);

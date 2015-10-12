@@ -127,15 +127,8 @@ public class Ex30ServiceImpl implements Ex30Service {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 
-				SortBy sortBy = SortBy.ID;
-				if (form.getSortBy() != null) {
-					sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(form.getSortBy());
-				}
-
-				SortOrder sortOrder = SortOrder.ASC;
-				if (form.getSortOrder() != null) {
-					sortOrder = EnumCodeUtil.getCodeMap(SortOrder.class, SortOrder.ASC).get(form.getSortOrder());
-				}
+				SortBy sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(form.getSortBy());
+				SortOrder sortOrder = EnumCodeUtil.getCodeMap(SortOrder.class, SortOrder.ASC).get(form.getSortOrder());
 
 				ComparableExpressionBase<?> sortKey;
 				if (sortBy == SortBy.ID) {
@@ -165,6 +158,7 @@ public class Ex30ServiceImpl implements Ex30Service {
 				} else {
 					query.orderBy(sortKey.asc());
 				}
+
 				return query;
 			}
 		};
