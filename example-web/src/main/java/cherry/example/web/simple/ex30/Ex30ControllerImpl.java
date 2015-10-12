@@ -20,6 +20,7 @@ import static cherry.example.web.PathDef.VIEW_SIMPLE_EX30_START;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,10 +31,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+import cherry.goods.paginate.PagedList;
 
 @Controller
 public class Ex30ControllerImpl implements Ex30Controller {
+
+	@Autowired
+	private Ex30Service ex30Service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -57,11 +64,17 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	public ModelAndView execute(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
-		if (isValid(form, binding, auth, locale, sitePref, request)) {
+		if (hasErrors(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 		}
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
+		PagedList<BExTbl1> pagedList = ex30Service.search(form);
+		if (pagedList.getPageSet().getTotalCount() <= 0L) {
+			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
+		}
+
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).addObject(pagedList).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -69,7 +82,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		return UriComponentsBuilder.fromPath(redir).build();
 	}
 
-	private boolean isValid(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
+	private boolean hasErrors(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		// 単項目チェック
@@ -78,6 +91,10 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		}
 
 		// 項目間チェック
+
+		if (binding.hasErrors()) {
+			return true;
+		}
 
 		// 整合性チェック
 

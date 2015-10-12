@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="${baseUri}/simple/ex10/confirm" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/simple/ex10/confirm" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal" role="form">
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-sm-2 control-label">文字列【10】</f:label>
 			<div class="col-sm-10">
