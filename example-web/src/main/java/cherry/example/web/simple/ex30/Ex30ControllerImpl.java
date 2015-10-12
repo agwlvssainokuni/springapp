@@ -38,6 +38,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.Config;
 import cherry.example.web.LogicalError;
+import cherry.example.web.SortOrder;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
@@ -67,6 +68,13 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		form.setPno(0L);
 		if (form.getPsz() <= 0L) {
 			form.setPsz(config.getDefaultPageSize());
+		}
+
+		if (form.getSortBy() == null) {
+			form.setSortBy(SortBy.ID.code());
+		}
+		if (form.getSortOrder() == null) {
+			form.setSortOrder(SortOrder.ASC.code());
 		}
 
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();

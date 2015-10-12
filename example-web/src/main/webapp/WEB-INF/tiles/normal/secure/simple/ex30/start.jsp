@@ -148,7 +148,16 @@
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
 				<div>
-					<div class="col-sm-offset-5 col-sm-7 text-right">
+					<div class="col-sm-3">
+						<s:nestedPath path="ex30Form">
+							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sortOrder" sortBy="sortBy"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex30.SortBy')}" />
+						</s:nestedPath>
+					</div>
+					<div class="col-sm-1">
+						<ex:refreshButton selector=".ex30Sorter" form="#ex30Form2" />
+					</div>
+					<div class="col-sm-offset-1 col-sm-7 text-right">
 						<ex:pagerDesc pageSet="${pagedList.pageSet}" />
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>

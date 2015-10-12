@@ -30,13 +30,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.db.gen.query.QExTbl1;
+import cherry.example.web.SortOrder;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.download.TableDownloadOperation;
 import cherry.foundation.querydsl.QueryConfigurer;
 import cherry.foundation.querydsl.QueryDslSupport;
+import cherry.foundation.type.EnumCodeUtil;
 import cherry.goods.paginate.PagedList;
 
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.expr.ComparableExpressionBase;
 
 @Service
 public class Ex30ServiceImpl implements Ex30Service {
@@ -123,6 +126,45 @@ public class Ex30ServiceImpl implements Ex30Service {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
+
+				SortBy sortBy = SortBy.ID;
+				if (form.getSortBy() != null) {
+					sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(form.getSortBy());
+				}
+
+				SortOrder sortOrder = SortOrder.ASC;
+				if (form.getSortOrder() != null) {
+					sortOrder = EnumCodeUtil.getCodeMap(SortOrder.class, SortOrder.ASC).get(form.getSortOrder());
+				}
+
+				ComparableExpressionBase<?> sortKey;
+				if (sortBy == SortBy.ID) {
+					sortKey = et1.id;
+				} else if (sortBy == SortBy.TEXT10) {
+					sortKey = et1.text10;
+				} else if (sortBy == SortBy.INT64) {
+					sortKey = et1.int64;
+				} else if (sortBy == SortBy.DECIMAL1) {
+					sortKey = et1.decimal1;
+				} else if (sortBy == SortBy.DECIMAL3) {
+					sortKey = et1.decimal3;
+				} else if (sortBy == SortBy.DT) {
+					sortKey = et1.dt;
+				} else if (sortBy == SortBy.TM) {
+					sortKey = et1.tm;
+				} else if (sortBy == SortBy.DTM) {
+					sortKey = et1.dtm;
+				} else {
+					sortKey = et1.id;
+				}
+
+				if (sortOrder == SortOrder.ASC) {
+					query.orderBy(sortKey.asc());
+				} else if (sortOrder == SortOrder.DESC) {
+					query.orderBy(sortKey.desc());
+				} else {
+					query.orderBy(sortKey.asc());
+				}
 				return query;
 			}
 		};

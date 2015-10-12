@@ -48,6 +48,42 @@ $(function() {
 		$(this).tab("show");
 	});
 
+	$(".page-size").each(function(index) {
+		var form = $("select", this).data("form");
+		var psz = $("select", this).data("psz");
+		var current = $("input[name='" + psz + "']", $(form)).val();
+		$("select", this).val(current);
+		$("select", this).selectmenu({
+			change : function(event) {
+				event.preventDefault();
+				$("input[name='" + psz + "']", $(form)).val($(this).val());
+				$(form).submit();
+			}
+		});
+	});
+
+	$(".refresh-button").each(function(index) {
+		var form = $("button", this).data("form");
+		var selector = $("button", this).data("selector");
+		$(selector).each(function(index) {
+			var name = $(this).attr("name");
+			var val = $("input[name='" + name + "']", $(form)).val();
+			if ($(this).attr("type") == "radio") {
+				$(this).attr("checked", $(this).val() == val);
+			} else {
+				$(this).val(val);
+			}
+		});
+		$("button", this).button().click(function(event) {
+			event.preventDefault();
+			$(selector).each(function(index) {
+				var name = $(this).attr("name");
+				$("input[name='" + name + "']", $(form)).val($(this).val());
+			});
+			$(form).submit();
+		});
+	});
+
 	/**
 	 * Spring SecurityのCSRF検証対応。
 	 */
