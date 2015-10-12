@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cherry.example.db.gen.query.BExTbl1;
+import cherry.example.web.LogicalError;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -44,6 +46,9 @@ public class Ex10ControllerImpl implements Ex10Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
+
+	@Autowired
+	private Ex10Service ex10Service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -61,7 +66,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	public ModelAndView confirm(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
-		if (isValid(form, binding, auth, locale, sitePref, request)) {
+		if (hasErrors(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
@@ -78,7 +83,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	public ModelAndView execute(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
-		if (isValid(form, binding, auth, locale, sitePref, request)) {
+		if (hasErrors(form, binding, auth, locale, sitePref, request)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
@@ -87,7 +92,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
 		}
 
-		Long id = 0L;
+		Long id = ex10Service.create(form);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id, auth, locale, sitePref, request)).build();
 	}
@@ -95,7 +100,8 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	@Override
 	public ModelAndView completed(Long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return ModelAndViewBuilder.withoutView().build();
+		BExTbl1 record = ex10Service.findById(id.longValue());
+		return ModelAndViewBuilder.withoutView().addObject(record).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -109,7 +115,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private boolean isValid(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	private boolean hasErrors(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		// 単項目チェック
@@ -118,8 +124,24 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		}
 
 		// 項目間チェック
+		if (form.getDt() == null && form.getTm() != null) {
+			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
+					LogicalErrorUtil.resolve("ex10Form.dt"), LogicalErrorUtil.resolve("ex10Form.tm"));
+		}
+
+		if (binding.hasErrors()) {
+			return true;
+		}
 
 		// 整合性チェック
+		if (ex10Service.exists(form.getText10())) {
+			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
+					LogicalErrorUtil.resolve("ex10Form.text10"));
+		}
+
+		if (binding.hasErrors()) {
+			return true;
+		}
 
 		return false;
 	}
