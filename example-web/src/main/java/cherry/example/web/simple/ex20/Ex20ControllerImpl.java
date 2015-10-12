@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple.ex10;
+package cherry.example.web.simple.ex20;
 
 import static cherry.example.web.ParamDef.REQ_ID;
-import static cherry.example.web.PathDef.VIEW_SIMPLE_EX10_START;
+import static cherry.example.web.PathDef.VIEW_SIMPLE_EX20_START;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -34,23 +34,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.LogicalError;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex10ControllerImpl implements Ex10Controller {
+public class Ex20ControllerImpl implements Ex20Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex10Service ex10Service;
+	private Ex20Service ex20Service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -59,68 +59,61 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
 		}
 
 		return ModelAndViewBuilder.withoutView().build();
 	}
 
 	@Override
-	public ModelAndView back(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView execute(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX10_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
 		}
 
-		Long id = ex10Service.create(form);
+		Long id = ex20Service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
-	}
-
-	@Override
-	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
-		BExTbl1 record = ex10Service.findById(id);
-		return ModelAndViewBuilder.withoutView().addObject(record).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex10Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(Ex20Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(Ex10Controller.class).completed(id, null, null, null, null)).replaceQueryParam(REQ_ID,
-				id).build();
+		return fromMethodCall(on(Ex21Controller.class).init(null, id, null, null, null, null)).replaceQueryParam(
+				REQ_ID, id).build();
 	}
 
-	private boolean hasErrors(Ex10Form form, BindingResult binding) {
+	private boolean hasErrors(Ex20Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -130,7 +123,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex10Form.dt"), LogicalErrorUtil.resolve("ex10Form.tm"));
+					LogicalErrorUtil.resolve("ex20Form.dt"), LogicalErrorUtil.resolve("ex20Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -138,9 +131,9 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		}
 
 		// 整合性チェック
-		if (ex10Service.exists(form.getText10())) {
+		if (ex20Service.exists(form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex10Form.text10"));
+					LogicalErrorUtil.resolve("ex20Form.text10"));
 		}
 
 		if (binding.hasErrors()) {

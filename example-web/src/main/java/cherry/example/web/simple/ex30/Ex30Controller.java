@@ -41,7 +41,7 @@ import cherry.foundation.validator.groups.G9;
 public interface Ex30Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, defaultValue = SUBURI_START) String redir, Authentication auth,
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)

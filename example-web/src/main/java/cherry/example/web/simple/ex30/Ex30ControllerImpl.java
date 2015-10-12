@@ -17,9 +17,12 @@
 package cherry.example.web.simple.ex30;
 
 import static cherry.example.web.PathDef.VIEW_SIMPLE_EX30_START;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
@@ -54,7 +57,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 		status.setComplete();
 
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir, auth, locale, sitePref, request)).build();
+		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
@@ -73,7 +76,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	public ModelAndView execute(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
-		if (hasErrors(form, binding, auth, locale, sitePref, request)) {
+		if (hasErrors(form, binding)) {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 		}
 
@@ -92,13 +95,15 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).addObject(pagedList).build();
 	}
 
-	private UriComponents redirectOnInit(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
-		return UriComponentsBuilder.fromPath(redir).build();
+	private UriComponents redirectOnInit(String redir) {
+		if (StringUtils.isNotEmpty(redir)) {
+			return UriComponentsBuilder.fromPath(redir).build();
+		} else {
+			return fromMethodCall(on(Ex30Controller.class).start(null, null, null, null, null, null)).build();
+		}
 	}
 
-	private boolean hasErrors(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	private boolean hasErrors(Ex30Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {

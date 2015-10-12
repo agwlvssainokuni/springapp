@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple.ex10;
+package cherry.example.web.simple.ex20;
 
 import java.math.BigDecimal;
 
@@ -45,7 +45,7 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex10FormBase {
+public class Ex20FormBase {
 
 	@NotEmpty()
 	@MaxLength(10)
