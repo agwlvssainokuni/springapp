@@ -148,46 +148,45 @@
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
 				<div>
-					<div class="text-right">
-						<div>
-							<s:message text="全{0}件 {1}件目〜{2}件目"
-								arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
-						</div>
+					<div class="col-sm-offset-5 col-sm-7 text-right">
+						<ex:pagerDesc pageSet="${pagedList.pageSet}" />
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
-					<table id="searchResultList" class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>ID</th>
-								<th>文字列【10】</th>
-								<th>整数【64bit】</th>
-								<th>小数【1桁】</th>
-								<th>小数【3桁】</th>
-								<th>日付</th>
-								<th>時刻</th>
-								<th>日時</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
-								<s:nestedPath path="pagedList.list[${count-1}]">
-									<tr>
-										<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
-										<td class="text-right"><ex:out path="id" /></td>
-										<td><ex:out path="text10" /></td>
-										<td class="text-right"><ex:out path="int64" /></td>
-										<td class="text-right"><ex:out path="decimal1" mode="1" /></td>
-										<td class="text-right"><ex:out path="decimal3" mode="3" /></td>
-										<td><ex:out path="dt" /></td>
-										<td><ex:out path="tm" /></td>
-										<td><ex:out path="dtm" /></td>
-									</tr>
-								</s:nestedPath>
-							</c:forEach>
-						</tbody>
-					</table>
-					<div class="text-right">
+				</div>
+				<table id="searchResultList" class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>ID</th>
+							<th>文字列【10】</th>
+							<th>整数【64bit】</th>
+							<th>小数【1桁】</th>
+							<th>小数【3桁】</th>
+							<th>日付</th>
+							<th>時刻</th>
+							<th>日時</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
+							<s:nestedPath path="pagedList.list[${count-1}]">
+								<tr>
+									<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+									<td class="text-right"><ex:out path="id" /></td>
+									<td><ex:out path="text10" /></td>
+									<td class="text-right"><ex:out path="int64" /></td>
+									<td class="text-right"><ex:out path="decimal1" mode="1" /></td>
+									<td class="text-right"><ex:out path="decimal3" mode="3" /></td>
+									<td><ex:out path="dt" /></td>
+									<td><ex:out path="tm" /></td>
+									<td><ex:out path="dtm" /></td>
+								</tr>
+							</s:nestedPath>
+						</c:forEach>
+					</tbody>
+				</table>
+				<div>
+					<div class="col-sm-offset-5 col-sm-7 text-right">
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
 				</div>
