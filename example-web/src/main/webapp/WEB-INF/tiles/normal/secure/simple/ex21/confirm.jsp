@@ -64,7 +64,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<f:button type="submit" class="btn btn-primary">登録</f:button>
+				<f:button type="submit" class="btn btn-primary">更新</f:button>
 				<f:button type="submit" class="btn btn-default" name="back">戻る</f:button>
 			</div>
 		</div>

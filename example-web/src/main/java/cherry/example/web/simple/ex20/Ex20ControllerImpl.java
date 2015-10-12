@@ -97,6 +97,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 		Long id = ex20Service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
+		redirAttr.addFlashAttribute("created", Boolean.TRUE);
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
 	}
 
@@ -109,8 +110,8 @@ public class Ex20ControllerImpl implements Ex20Controller {
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(Ex21Controller.class).init(null, id, null, null, null, null)).replaceQueryParam(
-				REQ_ID, id).build();
+		return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
 	}
 
 	private boolean hasErrors(Ex20Form form, BindingResult binding) {

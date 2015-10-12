@@ -10,6 +10,20 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">単純画面遷移-更新</h2>
 <div class="panel-body">
+	<c:if test="${created != null && created}">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="alert alert-info" role="alert">
+				ID
+				<c:out value="${param.id}" />
+				で登録しました。
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${update != null && updated}">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="alert alert-info" role="alert">更新しました。</div>
+		</div>
+	</c:if>
 	<s:hasBindErrors name="ex20Form">
 		<div class="col-sm-offset-2 col-sm-10">
 			<div class="alert alert-danger" role="alert">

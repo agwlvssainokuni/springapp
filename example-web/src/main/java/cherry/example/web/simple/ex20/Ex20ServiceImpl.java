@@ -65,7 +65,7 @@ public class Ex20ServiceImpl implements Ex20Service {
 	@Override
 	public Ex20Form findById(long id) {
 		QBean<Ex20Form> qb = new QBean<>(Ex20Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
-				et1.decimal3, et1.dt, et1.tm, et1.dtm);
+				et1.decimal3, et1.dt, et1.tm, et1.dtm, et1.lockVersion);
 		return qf.from(et1).where(et1.id.eq(id)).singleResult(qb);
 	}
 

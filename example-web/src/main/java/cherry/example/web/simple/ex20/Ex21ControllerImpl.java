@@ -98,6 +98,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		long count = ex20Service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
+		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
 	}
 
@@ -111,8 +112,8 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(Ex21Controller.class).init(null, id, null, null, null, null)).replaceQueryParam(
-				REQ_ID, id).build();
+		return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
 	}
 
 	private boolean hasErrors(long id, Ex20Form form, BindingResult binding) {
