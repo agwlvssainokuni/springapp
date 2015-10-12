@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple.ex20;
+package cherry.example.web.simple.ex10;
 
 import static cherry.example.web.ParamDef.REQ_ID;
-import static cherry.example.web.PathDef.VIEW_SIMPLE_EX21_START;
+import static cherry.example.web.PathDef.VIEW_SIMPLE_EX11_START;
 import static cherry.foundation.springmvc.Contract.shouldExist;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
@@ -35,23 +35,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.LogicalError;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex21ControllerImpl implements Ex21Controller {
+public class Ex11ControllerImpl implements Ex11Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex20Service ex20Service;
+	private Ex10Service ex10Service;
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
@@ -60,65 +60,71 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	}
 
 	@Override
-	public ModelAndView start(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex20Form f = ex20Service.findById(id);
-		shouldExist(f, Ex20Form.class, id);
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX21_START).addObject(f).build();
+		Ex10Form f = ex10Service.findFormById(id);
+		shouldExist(f, Ex10Form.class, id);
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView confirm(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX21_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
 		}
 
 		return ModelAndViewBuilder.withoutView().build();
 	}
 
 	@Override
-	public ModelAndView back(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX21_START).build();
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
 	}
 
 	@Override
-	public ModelAndView execute(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX21_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX21_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
 		}
 
-		long count = ex20Service.update(id, form);
+		long count = ex10Service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
-		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
+	}
+
+	@Override
+	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
+			NativeWebRequest request) {
+		BExTbl1 record = ex10Service.findById(id);
+		return ModelAndViewBuilder.withoutView().addObject(record).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id) {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).replaceQueryParam(REQ_ID, id).build();
 		} else {
-			return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
+			return fromMethodCall(on(Ex11Controller.class).start(id, null, null, null, null, null, null))
 					.replaceQueryParam(REQ_ID, id).build();
 		}
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
-				.replaceQueryParam(REQ_ID, id).build();
+		return fromMethodCall(on(Ex11Controller.class).completed(id, null, null, null, null)).replaceQueryParam(REQ_ID,
+				id).build();
 	}
 
-	private boolean hasErrors(long id, Ex20Form form, BindingResult binding) {
+	private boolean hasErrors(long id, Ex10Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -128,7 +134,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex20Form.dt"), LogicalErrorUtil.resolve("ex20Form.tm"));
+					LogicalErrorUtil.resolve("ex10Form.dt"), LogicalErrorUtil.resolve("ex10Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -136,9 +142,9 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		}
 
 		// 整合性チェック
-		if (ex20Service.exists(id, form.getText10())) {
+		if (ex10Service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex20Form.text10"));
+					LogicalErrorUtil.resolve("ex10Form.text10"));
 		}
 
 		if (binding.hasErrors()) {

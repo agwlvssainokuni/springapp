@@ -31,6 +31,8 @@ public class PathDef {
 	// 単純画面遷移
 	public static final String URI_SIMPLE_EX10 = "/secure/simple/ex10";
 	public static final String VIEW_SIMPLE_EX10_START = "secure/simple/ex10/start";
+	public static final String URI_SIMPLE_EX11 = "/secure/simple/ex11";
+	public static final String VIEW_SIMPLE_EX11_START = "secure/simple/ex11/start";
 
 	public static final String URI_SIMPLE_EX20 = "/secure/simple/ex20";
 	public static final String VIEW_SIMPLE_EX20_START = "secure/simple/ex20/start";

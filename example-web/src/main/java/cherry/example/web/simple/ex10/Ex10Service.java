@@ -26,4 +26,10 @@ public interface Ex10Service {
 
 	BExTbl1 findById(long id);
 
+	Ex10Form findFormById(long id);
+
+	boolean exists(long id, String text10);
+
+	long update(long id, Ex10Form form);
+
 }

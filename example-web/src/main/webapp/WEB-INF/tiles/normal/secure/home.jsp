@@ -17,8 +17,8 @@
 <div class="tab-content">
 	<div id="simple" class="tab-pane" role="tabpanel">
 		<ul class="list-group list-unstyled">
-			<li><a href="${baseUri}/simple/ex10/" class="list-group-item">登録-確認-完了</a></li>
-			<li><a href="${baseUri}/simple/ex20/" class="list-group-item">登録-確認-単票表示</a></li>
+			<li><a href="${baseUri}/simple/ex10/" class="list-group-item">登録-登録確認-登録完了-更新-更新確認-更新完了</a></li>
+			<li><a href="${baseUri}/simple/ex20/" class="list-group-item">登録-登録確認-更新(登録完了)-更新確認-更新(更新完了)</a></li>
 			<li><a href="${baseUri}/simple/ex30/" class="list-group-item">検索条件-一覧表示</a></li>
 			<li><a href="${baseUri}/simple/ex40/" class="list-group-item">検索条件-一覧表示-単票表示-一覧表示</a></li>
 		</ul>

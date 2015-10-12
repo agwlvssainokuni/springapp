@@ -26,6 +26,8 @@ import cherry.example.db.gen.query.QExTbl1;
 
 import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLInsertClause;
+import com.mysema.query.sql.dml.SQLUpdateClause;
+import com.mysema.query.types.QBean;
 
 @Service
 public class Ex10ServiceImpl implements Ex10Service {
@@ -64,6 +66,40 @@ public class Ex10ServiceImpl implements Ex10Service {
 	@Override
 	public BExTbl1 findById(long id) {
 		return qf.from(et1).where(et1.id.eq(id)).singleResult(et1);
+	}
+
+	@Transactional
+	@Override
+	public Ex10Form findFormById(long id) {
+		QBean<Ex10Form> qb = new QBean<>(Ex10Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
+				et1.decimal3, et1.dt, et1.tm, et1.dtm, et1.lockVersion);
+		return qf.from(et1).where(et1.id.eq(id)).singleResult(qb);
+	}
+
+	@Transactional
+	@Override
+	public boolean exists(long id, String text10) {
+		return qf.from(et1).where(et1.id.ne(id), et1.text10.eq(text10)).exists();
+	}
+
+	@Transactional
+	@Override
+	public long update(long id, Ex10Form form) {
+		SQLUpdateClause update = qf.update(et1).where(et1.id.eq(id));
+		update.where(et1.lockVersion.eq(form.getLockVersion())).set(et1.lockVersion, et1.lockVersion.add(1));
+		if (StringUtils.isNotEmpty(form.getText10())) {
+			update.set(et1.text10, form.getText10());
+		}
+		if (StringUtils.isNotEmpty(form.getText100())) {
+			update.set(et1.text100, form.getText100());
+		}
+		update.set(et1.int64, form.getInt64());
+		update.set(et1.decimal1, form.getDecimal1());
+		update.set(et1.decimal3, form.getDecimal3());
+		update.set(et1.dt, form.getDt());
+		update.set(et1.tm, form.getTm());
+		update.set(et1.dtm, form.getDtm());
+		return update.execute();
 	}
 
 }

@@ -12,11 +12,7 @@
 <div class="panel-body">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="alert alert-info" role="alert">
-			<div>
-				ID
-				<c:out value="${param.id}" />
-				で登録しました。
-			</div>
+			<div>更新しました。</div>
 			<div>
 				<a href="${baseUri}/simple/ex11/?id=${param.id}">編集する</a>
 			</div>
