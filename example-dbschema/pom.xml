@@ -49,6 +49,23 @@
 						<customType>com.mysema.query.sql.types.LocalTimeType</customType>
 						<customType>com.mysema.query.sql.types.LocalDateTimeType</customType>
 					</customTypes>
+					<numericMappings>
+						<numericMapping>
+							<total>11</total>
+							<decimal>1</decimal>
+							<javaType>java.math.BigDecimal</javaType>
+						</numericMapping>
+						<numericMapping>
+							<total>12</total>
+							<decimal>2</decimal>
+							<javaType>java.math.BigDecimal</javaType>
+						</numericMapping>
+						<numericMapping>
+							<total>13</total>
+							<decimal>3</decimal>
+							<javaType>java.math.BigDecimal</javaType>
+						</numericMapping>
+					</numericMappings>
 				</configuration>
 				<dependencies>
 					<dependency>

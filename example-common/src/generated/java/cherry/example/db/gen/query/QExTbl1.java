@@ -28,9 +28,9 @@ public class QExTbl1 extends com.mysema.query.sql.RelationalPathBase<BExTbl1> {
 
     public final DateTimePath<org.joda.time.LocalDateTime> createdAt = createDateTime("createdAt", org.joda.time.LocalDateTime.class);
 
-    public final NumberPath<Double> decimal1 = createNumber("decimal1", Double.class);
+    public final NumberPath<java.math.BigDecimal> decimal1 = createNumber("decimal1", java.math.BigDecimal.class);
 
-    public final NumberPath<Double> decimal3 = createNumber("decimal3", Double.class);
+    public final NumberPath<java.math.BigDecimal> decimal3 = createNumber("decimal3", java.math.BigDecimal.class);
 
     public final DatePath<org.joda.time.LocalDate> dt = createDate("dt", org.joda.time.LocalDate.class);
 

@@ -12,9 +12,9 @@ public class BExTbl2 {
 
     private org.joda.time.LocalDateTime createdAt;
 
-    private Double decimal1;
+    private java.math.BigDecimal decimal1;
 
-    private Double decimal3;
+    private java.math.BigDecimal decimal3;
 
     private org.joda.time.LocalDate dt;
 
@@ -52,19 +52,19 @@ public class BExTbl2 {
         this.createdAt = createdAt;
     }
 
-    public Double getDecimal1() {
+    public java.math.BigDecimal getDecimal1() {
         return decimal1;
     }
 
-    public void setDecimal1(Double decimal1) {
+    public void setDecimal1(java.math.BigDecimal decimal1) {
         this.decimal1 = decimal1;
     }
 
-    public Double getDecimal3() {
+    public java.math.BigDecimal getDecimal3() {
         return decimal3;
     }
 
-    public void setDecimal3(Double decimal3) {
+    public void setDecimal3(java.math.BigDecimal decimal3) {
         this.decimal3 = decimal3;
     }
 
