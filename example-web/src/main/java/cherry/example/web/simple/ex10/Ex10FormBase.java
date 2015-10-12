@@ -22,7 +22,6 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,8 +35,8 @@ import org.joda.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import cherry.foundation.validator.CharTypeAlphaNumeric;
 import cherry.foundation.validator.MaxLength;
-import cherry.foundation.validator.MinLength;
 import cherry.foundation.validator.NumberScale;
 
 @Getter
@@ -47,34 +46,36 @@ import cherry.foundation.validator.NumberScale;
 public class Ex10FormBase {
 
 	@NotEmpty
-	@MinLength(5)
 	@MaxLength(10)
-	private String text;
+	@CharTypeAlphaNumeric
+	private String text10;
 
-	@NotNull
-	@Min(-10000)
-	@Max(10000)
-	private Integer inum;
+	@MaxLength(100)
+	private String text100;
 
-	@NotNull
-	@Min(-10000)
-	@Max(10000)
-	private Long lnum;
+	@Min(-1000000000)
+	@Max(1000000000)
+	private Long int64;
 
-	@NotNull
-	@DecimalMin("-10000")
-	@DecimalMax("10000")
-	@NumberFormat(pattern = "#,##0.00####")
-	@NumberScale(2)
-	private BigDecimal decimal;
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberFormat(pattern = "#,##0.0#########")
+	@NumberScale(1)
+	private BigDecimal decimal1;
+
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberFormat(pattern = "#,##0.000#######")
+	@NumberScale(3)
+	private BigDecimal decimal3;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate ldt;
+	private LocalDate dt;
 
 	@DateTimeFormat(pattern = "HH:mm:ss")
-	private LocalTime ltm;
+	private LocalTime tm;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	private LocalDateTime ldtm;
+	private LocalDateTime dtm;
 
 }

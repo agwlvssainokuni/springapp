@@ -14,57 +14,64 @@
 		<div class="col-sm-offset-2 col-sm-10">
 			<div class="alert alert-danger" role="alert">
 				<f:errors path="ex10Form" element="div" />
-				<f:errors path="ex10Form.text" element="div" />
-				<f:errors path="ex10Form.inum" element="div" />
-				<f:errors path="ex10Form.lnum" element="div" />
-				<f:errors path="ex10Form.decimal" element="div" />
-				<f:errors path="ex10Form.ldt" element="div" />
-				<f:errors path="ex10Form.ltm" element="div" />
-				<f:errors path="ex10Form.ldtm" element="div" />
+				<f:errors path="ex10Form.text10" element="div" />
+				<f:errors path="ex10Form.text100" element="div" />
+				<f:errors path="ex10Form.int64" element="div" />
+				<f:errors path="ex10Form.decimal1" element="div" />
+				<f:errors path="ex10Form.decimal3" element="div" />
+				<f:errors path="ex10Form.dt" element="div" />
+				<f:errors path="ex10Form.tm" element="div" />
+				<f:errors path="ex10Form.dtm" element="div" />
 			</div>
 		</div>
 	</s:hasBindErrors>
 	<f:form servletRelativeAction="${baseUri}/simple/ex10/confirm" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal" role="form">
 		<div class="form-group">
-			<f:label path="text" cssClass="col-sm-2 control-label">文字列</f:label>
+			<f:label path="text10" cssClass="col-sm-2 control-label">文字列【10】</f:label>
 			<div class="col-sm-10">
-				<f:input path="text" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="text10" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="inum" cssClass="col-sm-2 control-label">整数(Integer)</f:label>
+			<f:label path="text100" cssClass="col-sm-2 control-label">文字列【100】</f:label>
 			<div class="col-sm-10">
-				<f:input path="inum" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:textarea path="text100" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="lnum" cssClass="col-sm-2 control-label">整数(Long)</f:label>
+			<f:label path="int64" cssClass="col-sm-2 control-label">整数【64bit】</f:label>
 			<div class="col-sm-10">
-				<f:input path="lnum" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="int64" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="decimal" cssClass="col-sm-2 control-label">小数(2桁)</f:label>
+			<f:label path="decimal1" cssClass="col-sm-2 control-label">小数【1桁】</f:label>
 			<div class="col-sm-10">
-				<f:input path="decimal" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="decimal1" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="ldt" cssClass="col-sm-2 control-label">日付(年月日)</f:label>
+			<f:label path="decimal3" cssClass="col-sm-2 control-label">小数【3桁】</f:label>
 			<div class="col-sm-10">
-				<f:input path="ldt" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="decimal3" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="ltm" cssClass="col-sm-2 control-label">時刻(時分秒)</f:label>
+			<f:label path="dt" cssClass="col-sm-2 control-label">日付</f:label>
 			<div class="col-sm-10">
-				<f:input path="ltm" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="dt" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="ldtm" cssClass="col-sm-2 control-label">日時(年月日時分秒)</f:label>
+			<f:label path="tm" cssClass="col-sm-2 control-label">時刻</f:label>
 			<div class="col-sm-10">
-				<f:input path="ldtm" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="tm" cssClass="form-control" cssErrorClass="form-control has-error" />
+			</div>
+		</div>
+		<div class="form-group">
+			<f:label path="dtm" cssClass="col-sm-2 control-label">日時</f:label>
+			<div class="col-sm-10">
+				<f:input path="dtm" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
