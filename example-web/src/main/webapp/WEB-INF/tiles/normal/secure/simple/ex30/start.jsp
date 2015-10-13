@@ -17,7 +17,7 @@
 		</div>
 		<div class="panel-body">
 			<s:hasBindErrors name="ex30Form">
-				<div class="col-sm-offset-2 col-sm-10">
+				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
 						<f:errors path="ex30Form" element="div" />
 						<f:errors path="ex30Form.text10" element="div" />
@@ -44,76 +44,76 @@
 				<f:hidden path="pno" />
 				<f:hidden path="psz" />
 				<div class="form-group">
-					<f:label path="text10" cssClass="col-sm-2 control-label">文字列【10】</f:label>
-					<div class="col-sm-10">
+					<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
+					<div class="col-md-10">
 						<f:input path="text10" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="int64From" cssClass="col-sm-2 control-label">整数【64bit】</f:label>
-					<div class="col-sm-3">
+					<f:label path="int64From" cssClass="col-md-2 control-label">整数【64bit】</f:label>
+					<div class="col-md-3">
 						<f:input path="int64From" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="int64To" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="decimal1From" cssClass="col-sm-2 control-label">小数【1桁】</f:label>
-					<div class="col-sm-3">
+					<f:label path="decimal1From" cssClass="col-md-2 control-label">小数【1桁】</f:label>
+					<div class="col-md-3">
 						<f:input path="decimal1From" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="decimal1To" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="decimal3From" cssClass="col-sm-2 control-label">小数【3桁】</f:label>
-					<div class="col-sm-3">
+					<f:label path="decimal3From" cssClass="col-md-2 control-label">小数【3桁】</f:label>
+					<div class="col-md-3">
 						<f:input path="decimal3From" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="decimal3To" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="dtFrom" cssClass="col-sm-2 control-label">日付</f:label>
-					<div class="col-sm-3">
+					<f:label path="dtFrom" cssClass="col-md-2 control-label">日付</f:label>
+					<div class="col-md-3">
 						<f:input path="dtFrom" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="dtTo" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="tmFrom" cssClass="col-sm-2 control-label">時刻</f:label>
-					<div class="col-sm-3">
+					<f:label path="tmFrom" cssClass="col-md-2 control-label">時刻</f:label>
+					<div class="col-md-3">
 						<f:input path="tmFrom" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="tmTo" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="dtmFromD" cssClass="col-sm-2 control-label">日時(から)</f:label>
-					<div class="col-sm-3">
+					<f:label path="dtmFromD" cssClass="col-md-2 control-label">日時(から)</f:label>
+					<div class="col-md-3">
 						<f:input path="dtmFromD" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="dtmFromT" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<f:label path="dtmToD" cssClass="col-sm-2 control-label">日時(まで)</f:label>
-					<div class="col-sm-3">
+					<f:label path="dtmToD" cssClass="col-md-2 control-label">日時(まで)</f:label>
+					<div class="col-md-3">
 						<f:input path="dtmToD" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<f:input path="dtmToT" cssClass="form-control" cssErrorClass="form-control has-error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-md-offset-2 col-md-10">
 						<f:button type="submit" class="btn btn-primary">検索</f:button>
 					</div>
 				</div>
@@ -148,16 +148,16 @@
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
 				<div>
-					<div class="col-sm-3">
+					<div class="col-md-3">
 						<s:nestedPath path="ex30Form">
 							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sortOrder" sortBy="sortBy"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex30.SortBy')}" />
 						</s:nestedPath>
 					</div>
-					<div class="col-sm-1">
+					<div class="col-md-1">
 						<ex:refreshButton selector=".ex30Sorter" form="#ex30Form2" />
 					</div>
-					<div class="col-sm-offset-1 col-sm-7 text-right">
+					<div class="col-md-offset-1 col-md-7 text-right">
 						<ex:pagerDesc pageSet="${pagedList.pageSet}" />
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
@@ -195,7 +195,7 @@
 					</tbody>
 				</table>
 				<div>
-					<div class="col-sm-offset-5 col-sm-7 text-right">
+					<div class="col-md-offset-5 col-md-7 text-right">
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
 				</div>

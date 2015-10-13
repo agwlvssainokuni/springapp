@@ -11,7 +11,7 @@
 <h2 class="page-header">単純画面遷移-更新</h2>
 <div class="panel-body">
 	<c:if test="${created != null && created}">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-info" role="alert">
 				ID
 				<c:out value="${param.id}" />
@@ -20,12 +20,12 @@
 		</div>
 	</c:if>
 	<c:if test="${update != null && updated}">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-info" role="alert">更新しました。</div>
 		</div>
 	</c:if>
 	<s:hasBindErrors name="ex20Form">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
 				<f:errors path="ex20Form" element="div" />
 				<f:errors path="ex20Form.text10" element="div" />
@@ -43,55 +43,55 @@
 		role="form">
 		<f:hidden path="lockVersion" />
 		<div class="form-group">
-			<f:label path="text10" cssClass="col-sm-2 control-label">文字列【10】</f:label>
-			<div class="col-sm-10">
+			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
+			<div class="col-md-10">
 				<f:input path="text10" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text100" cssClass="col-sm-2 control-label">文字列【100】</f:label>
-			<div class="col-sm-10">
+			<f:label path="text100" cssClass="col-md-2 control-label">文字列【100】</f:label>
+			<div class="col-md-10">
 				<f:textarea path="text100" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="int64" cssClass="col-sm-2 control-label">整数【64bit】</f:label>
-			<div class="col-sm-10">
+			<f:label path="int64" cssClass="col-md-2 control-label">整数【64bit】</f:label>
+			<div class="col-md-10">
 				<f:input path="int64" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="decimal1" cssClass="col-sm-2 control-label">小数【1桁】</f:label>
-			<div class="col-sm-10">
+			<f:label path="decimal1" cssClass="col-md-2 control-label">小数【1桁】</f:label>
+			<div class="col-md-10">
 				<f:input path="decimal1" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="decimal3" cssClass="col-sm-2 control-label">小数【3桁】</f:label>
-			<div class="col-sm-10">
+			<f:label path="decimal3" cssClass="col-md-2 control-label">小数【3桁】</f:label>
+			<div class="col-md-10">
 				<f:input path="decimal3" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="dt" cssClass="col-sm-2 control-label">日付</f:label>
-			<div class="col-sm-10">
+			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+			<div class="col-md-10">
 				<f:input path="dt" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="tm" cssClass="col-sm-2 control-label">時刻</f:label>
-			<div class="col-sm-10">
+			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+			<div class="col-md-10">
 				<f:input path="tm" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="dtm" cssClass="col-sm-2 control-label">日時</f:label>
-			<div class="col-sm-10">
+			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+			<div class="col-md-10">
 				<f:input path="dtm" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-md-offset-2 col-md-10">
 				<f:button type="submit" class="btn btn-primary">確認</f:button>
 			</div>
 		</div>
