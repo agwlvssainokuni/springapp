@@ -8,11 +8,18 @@
 <%@ attribute name="sortOrder" required="true" rtexprvalue="true"%>
 <%@ attribute name="sortByItems" required="true" rtexprvalue="true" type="java.util.List"%>
 <%@ attribute name="cssClass" required="true" rtexprvalue="true"%>
-<fieldset class="page-sorter">
-	<f:label path="${sortBy}" for="${sortBy}3">並び順</f:label>
-	<f:select path="${sortBy}" id="${sortBy}3" cssClass="${cssClass}">
-		<f:options itemLabel="codeLabel" itemValue="codeValue" items="${sortByItems}" />
-	</f:select>
-	<f:radiobuttons path="${sortOrder}" id="${sortOrder}3" itemLabel="codeLabel" itemValue="codeValue"
-		items="${foundation:getLabeledEnumCodeList('cherry.example.web.SortOrder')}" cssClass="${cssClass}" />
-</fieldset>
+<div class="page-sorter form-inline">
+	<div class="form-group">
+		<f:select path="${sortBy}" id="${sortBy}3" cssClass="${cssClass} form-control input-sm">
+			<f:options itemLabel="codeLabel" itemValue="codeValue" items="${sortByItems}" />
+		</f:select>
+	</div>
+	<div class="form-group">
+		<c:forEach var="item" items="${foundation:getLabeledEnumCodeList('cherry.example.web.SortOrder')}">
+			<label class="radio-inline">
+				<f:radiobutton path="${sortOrder}" value="${item.codeValue}" cssClass="${cssClass}" />
+				<c:out value="${item.codeLabel}" />
+			</label>
+		</c:forEach>
+	</div>
+</div>

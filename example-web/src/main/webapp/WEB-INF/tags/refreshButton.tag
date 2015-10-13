@@ -4,6 +4,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ attribute name="form" required="true" rtexprvalue="true"%>
 <%@ attribute name="selector" required="true" rtexprvalue="true"%>
-<fieldset class="refresh-button">
-	<button data-form="${form}" data-selector="${selector}">更新</button>
-</fieldset>
+<div class="refresh-button form-inline">
+	<button data-form="${form}" data-selector="${selector}" class="btn btn-default btn-sm">更新</button>
+</div>

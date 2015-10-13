@@ -69,7 +69,7 @@ $(function() {
 			var name = $(this).attr("name");
 			var val = $("input[name='" + name + "']", $(form)).val();
 			if ($(this).attr("type") == "radio") {
-				$(this).attr("checked", $(this).val() == val);
+				$(this).prop("checked", $(this).val() == val);
 			} else {
 				$(this).val(val);
 			}
@@ -78,7 +78,14 @@ $(function() {
 			event.preventDefault();
 			$(selector).each(function(index) {
 				var name = $(this).attr("name");
-				$("input[name='" + name + "']", $(form)).val($(this).val());
+				var val = $(this).val();
+				if ($(this).attr("type") == "radio") {
+					if ($(this).prop("checked")) {
+						$("input[name='" + name + "']", $(form)).val(val);
+					}
+				} else {
+					$("input[name='" + name + "']", $(form)).val(val);
+				}
 			});
 			$(form).submit();
 		});
