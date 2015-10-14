@@ -25,3 +25,8 @@ h1.page-header, h2.page-header, h3.page-header, h4.page-header, h5.page-header,
 	margin-bottom: 10px;
 	padding-bottom: 5px;
 }
+
+/* 自前クラスにスタイルを設定する。*/
+.pager-desc, .page-size {
+	display: inline-block;
+}

@@ -164,7 +164,10 @@
 						<ex:refreshButton selector=".ex30Sorter" form="#ex30Form2" />
 					</div>
 					<div class="col-md-offset-1 col-md-7 text-right">
-						<ex:pagerDesc pageSet="${pagedList.pageSet}" />
+						<div>
+							<ex:pagerDesc pageSet="${pagedList.pageSet}" />
+							<ex:pageSize form="#ex30Form2" psz="psz" />
+						</div>
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
 				</div>

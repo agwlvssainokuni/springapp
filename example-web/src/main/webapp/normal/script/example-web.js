@@ -53,12 +53,10 @@ $(function() {
 		var psz = $("select", this).data("psz");
 		var current = $("input[name='" + psz + "']", $(form)).val();
 		$("select", this).val(current);
-		$("select", this).selectmenu({
-			change : function(event) {
-				event.preventDefault();
-				$("input[name='" + psz + "']", $(form)).val($(this).val());
-				$(form).submit();
-			}
+		$("select", this).change(function(event) {
+			event.preventDefault();
+			$("input[name='" + psz + "']", $(form)).val($(this).val());
+			$(form).submit();
 		});
 	});
 
@@ -74,7 +72,7 @@ $(function() {
 				$(this).val(val);
 			}
 		});
-		$("button", this).button().click(function(event) {
+		$("button", this).click(function(event) {
 			event.preventDefault();
 			$(selector).each(function(index) {
 				var name = $(this).attr("name");
