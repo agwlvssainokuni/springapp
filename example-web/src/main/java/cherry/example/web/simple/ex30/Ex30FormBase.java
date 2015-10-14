@@ -124,9 +124,13 @@ public class Ex30FormBase implements Serializable {
 	@JodaTimeMax("23:59:59")
 	private LocalTime dtmToT;
 
-	private Integer sortBy;
+	private String sortBy1;
 
-	private Integer sortOrder;
+	private String sortOrder1;
+
+	private String sortBy2;
+
+	private String sortOrder2;
 
 	private long pno = 0L;
 

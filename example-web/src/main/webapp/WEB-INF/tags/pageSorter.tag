@@ -15,10 +15,10 @@
 		</f:select>
 	</div>
 	<div class="form-group">
-		<c:forEach var="item" items="${foundation:getLabeledEnumCodeList('cherry.example.web.SortOrder')}">
+		<c:forEach var="item" items="${foundation:getLabeledEnumList('cherry.example.web.SortOrder')}">
 			<label class="radio-inline">
-				<f:radiobutton path="${sortOrder}" value="${item.codeValue}" cssClass="${cssClass}" />
-				<c:out value="${item.codeLabel}" />
+				<f:radiobutton path="${sortOrder}" value="${item.enumName}" cssClass="${cssClass}" />
+				<c:out value="${item.enumLabel}" />
 			</label>
 		</c:forEach>
 	</div>

@@ -39,8 +39,10 @@
 				</div>
 			</s:hasBindErrors>
 			<f:form servletRelativeAction="/secure/simple/ex30/execute" method="POST" modelAttribute="ex30Form" cssClass="form-horizontal" role="form">
-				<f:hidden path="sortBy" />
-				<f:hidden path="sortOrder" />
+				<f:hidden path="sortBy1" />
+				<f:hidden path="sortOrder1" />
+				<f:hidden path="sortBy2" />
+				<f:hidden path="sortOrder2" />
 				<f:hidden path="pno" />
 				<f:hidden path="psz" />
 				<div class="form-group">
@@ -127,8 +129,10 @@
 			</div>
 			<div class="panel-body">
 				<f:form servletRelativeAction="/secure/simple/ex30/execute" method="POST" modelAttribute="ex30Form" id="ex30Form2">
-					<f:hidden path="sortBy" id="sortBy2" />
-					<f:hidden path="sortOrder" id="sortOrder2" />
+					<f:hidden path="sortBy1" id="sortBy12" />
+					<f:hidden path="sortOrder1" id="sortOrder12" />
+					<f:hidden path="sortBy2" id="sortBy22" />
+					<f:hidden path="sortOrder2" id="sortOrder22" />
 					<f:hidden path="pno" id="pno2" />
 					<f:hidden path="psz" id="psz2" />
 					<f:hidden path="text10" id="text102" />
@@ -150,7 +154,9 @@
 				<div>
 					<div class="col-md-3">
 						<s:nestedPath path="ex30Form">
-							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sortOrder" sortBy="sortBy"
+							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sortOrder1" sortBy="sortBy1"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex30.SortBy')}" />
+							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sortOrder2" sortBy="sortBy2"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex30.SortBy')}" />
 						</s:nestedPath>
 					</div>

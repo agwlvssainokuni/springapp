@@ -70,12 +70,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			form.setPsz(config.getDefaultPageSize());
 		}
 
-		if (form.getSortBy() == null) {
-			form.setSortBy(SortBy.ID.code());
-		}
-		if (form.getSortOrder() == null) {
-			form.setSortOrder(SortOrder.ASC.code());
-		}
+		adjustSortCondition(form);
 
 		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
 	}
@@ -95,12 +90,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			form.setPsz(config.getDefaultPageSize());
 		}
 
-		if (form.getSortBy() == null) {
-			form.setSortBy(SortBy.ID.code());
-		}
-		if (form.getSortOrder() == null) {
-			form.setSortOrder(SortOrder.ASC.code());
-		}
+		adjustSortCondition(form);
 
 		PagedList<BExTbl1> pagedList = ex30Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
@@ -164,6 +154,21 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		// 整合性チェック
 
 		return false;
+	}
+
+	private void adjustSortCondition(Ex30Form form) {
+		if (form.getSortBy1() == null) {
+			form.setSortBy1(SortBy.ID.code());
+		}
+		if (form.getSortOrder1() == null) {
+			form.setSortOrder1(SortOrder.ASC.name());
+		}
+		if (form.getSortBy2() == null) {
+			form.setSortBy2(SortBy.TEXT10.code());
+		}
+		if (form.getSortOrder2() == null) {
+			form.setSortOrder2(SortOrder.ASC.name());
+		}
 	}
 
 }

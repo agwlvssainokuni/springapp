@@ -39,6 +39,7 @@ import cherry.foundation.type.EnumCodeUtil;
 import cherry.goods.paginate.PagedList;
 
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.ComparableExpressionBase;
 
 @Service
@@ -126,42 +127,46 @@ public class Ex30ServiceImpl implements Ex30Service {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-
-				SortBy sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(form.getSortBy());
-				SortOrder sortOrder = EnumCodeUtil.getCodeMap(SortOrder.class, SortOrder.ASC).get(form.getSortOrder());
-
-				ComparableExpressionBase<?> sortKey;
-				if (sortBy == SortBy.ID) {
-					sortKey = et1.id;
-				} else if (sortBy == SortBy.TEXT10) {
-					sortKey = et1.text10;
-				} else if (sortBy == SortBy.INT64) {
-					sortKey = et1.int64;
-				} else if (sortBy == SortBy.DECIMAL1) {
-					sortKey = et1.decimal1;
-				} else if (sortBy == SortBy.DECIMAL3) {
-					sortKey = et1.decimal3;
-				} else if (sortBy == SortBy.DT) {
-					sortKey = et1.dt;
-				} else if (sortBy == SortBy.TM) {
-					sortKey = et1.tm;
-				} else if (sortBy == SortBy.DTM) {
-					sortKey = et1.dtm;
-				} else {
-					sortKey = et1.id;
-				}
-
-				if (sortOrder == SortOrder.ASC) {
-					query.orderBy(sortKey.asc());
-				} else if (sortOrder == SortOrder.DESC) {
-					query.orderBy(sortKey.desc());
-				} else {
-					query.orderBy(sortKey.asc());
-				}
-
+				query.orderBy(createOrderSpec(form.getSortBy1(), form.getSortOrder1()));
+				query.orderBy(createOrderSpec(form.getSortBy2(), form.getSortOrder2()));
 				return query;
 			}
 		};
+	}
+
+	private OrderSpecifier<?> createOrderSpec(String by, String order) {
+
+		SortBy sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(by);
+		SortOrder sortOrder = (order == null ? SortOrder.ASC : SortOrder.valueOf(order));
+
+		ComparableExpressionBase<?> sortKey;
+		if (sortBy == SortBy.ID) {
+			sortKey = et1.id;
+		} else if (sortBy == SortBy.TEXT10) {
+			sortKey = et1.text10;
+		} else if (sortBy == SortBy.INT64) {
+			sortKey = et1.int64;
+		} else if (sortBy == SortBy.DECIMAL1) {
+			sortKey = et1.decimal1;
+		} else if (sortBy == SortBy.DECIMAL3) {
+			sortKey = et1.decimal3;
+		} else if (sortBy == SortBy.DT) {
+			sortKey = et1.dt;
+		} else if (sortBy == SortBy.TM) {
+			sortKey = et1.tm;
+		} else if (sortBy == SortBy.DTM) {
+			sortKey = et1.dtm;
+		} else {
+			sortKey = et1.id;
+		}
+
+		if (sortOrder == SortOrder.ASC) {
+			return sortKey.asc();
+		} else if (sortOrder == SortOrder.DESC) {
+			return sortKey.desc();
+		} else {
+			return sortKey.asc();
+		}
 	}
 
 }

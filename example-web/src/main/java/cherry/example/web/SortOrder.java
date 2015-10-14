@@ -16,23 +16,9 @@
 
 package cherry.example.web;
 
-import cherry.foundation.type.Code;
-
-public enum SortOrder implements Code<Integer> {
+public enum SortOrder {
 	/** 昇順 */
-	ASC(0),
+	ASC,
 	/** 降順 */
-	DESC(1);
-
-	private final int c;
-
-	private SortOrder(int c) {
-		this.c = c;
-	}
-
-	@Override
-	public Integer code() {
-		return c;
-	}
-
+	DESC;
 }

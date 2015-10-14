@@ -18,32 +18,32 @@ package cherry.example.web.simple.ex30;
 
 import cherry.foundation.type.Code;
 
-public enum SortBy implements Code<Integer> {
+public enum SortBy implements Code<String> {
 	/** 並べ替えキー: ID */
-	ID(0),
+	ID("00"),
 	/** 並べ替えキー: 文字列【10】 */
-	TEXT10(1),
+	TEXT10("01"),
 	/** 並べ替えキー: 整数【64bit】 */
-	INT64(2),
+	INT64("02"),
 	/** 並べ替えキー: 小数【1桁】 */
-	DECIMAL1(3),
+	DECIMAL1("03"),
 	/** 並べ替えキー: 小数【3桁】 */
-	DECIMAL3(4),
+	DECIMAL3("04"),
 	/** 並べ替えキー: 日付 */
-	DT(5),
+	DT("05"),
 	/** 並べ替えキー: 時刻 */
-	TM(6),
+	TM("06"),
 	/** 並べ替えキー: 日時 */
-	DTM(7);
+	DTM("07");
 
-	private final int c;
+	private final String c;
 
-	private SortBy(int c) {
+	private SortBy(String c) {
 		this.c = c;
 	}
 
 	@Override
-	public Integer code() {
+	public String code() {
 		return c;
 	}
 
