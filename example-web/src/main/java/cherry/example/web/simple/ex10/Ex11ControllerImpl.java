@@ -112,7 +112,7 @@ public class Ex11ControllerImpl implements Ex11Controller {
 
 	private UriComponents redirectOnInit(String redir, long id) {
 		if (StringUtils.isNotEmpty(redir)) {
-			return UriComponentsBuilder.fromPath(redir).replaceQueryParam(REQ_ID, id).build();
+			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
 			return fromMethodCall(on(Ex11Controller.class).start(id, null, null, null, null, null, null))
 					.replaceQueryParam(REQ_ID, id).build();
