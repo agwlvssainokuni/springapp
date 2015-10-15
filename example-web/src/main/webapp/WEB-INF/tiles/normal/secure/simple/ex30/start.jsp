@@ -9,13 +9,15 @@
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
 <c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
-<h2 class="page-header">単純画面遷移-検索条件</h2>
+<h2 class="page-header">単純画面遷移: 検索一覧系1-検索条件結果一覧</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">検索条件</h3>
+			<h3 class="panel-title">
+				<a data-toggle="collapse" href="#searchForm">検索条件</a>
+			</h3>
 		</div>
-		<div class="panel-body">
+		<div id="searchForm" class="panel-body panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<s:hasBindErrors name="ex30Form">
 				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
@@ -125,7 +127,7 @@
 	<c:if test="${hasResultList}">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">検索結果</h3>
+				<h3 class="panel-title">検索結果一覧</h3>
 			</div>
 			<div class="panel-body">
 				<f:form servletRelativeAction="/secure/simple/ex30/execute" method="POST" modelAttribute="ex30Form" id="ex30Form2">

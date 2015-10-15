@@ -8,7 +8,7 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">単純画面遷移-登録確認</h2>
+<h2 class="page-header">単純画面遷移: 単票入力系2-登録確認</h2>
 <div class="panel-body">
 	<f:form servletRelativeAction="/secure/simple/ex20/execute" method="POST" modelAttribute="ex20Form" cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
@@ -62,8 +62,8 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">登録</f:button>
-				<f:button type="submit" class="btn btn-default" name="back">戻る</f:button>
+				<f:button type="submit" class="btn btn-primary">登録実行</f:button>
+				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
 			</div>
 		</div>
 	</f:form>

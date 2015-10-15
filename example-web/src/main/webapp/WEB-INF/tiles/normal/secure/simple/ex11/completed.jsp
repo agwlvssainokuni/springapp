@@ -8,13 +8,13 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">単純画面遷移-登録完了</h2>
+<h2 class="page-header">単純画面遷移: 単票入力系1-変更確認</h2>
 <div class="panel-body">
 	<div class="col-md-offset-2 col-md-10">
 		<div class="alert alert-info" role="alert">
-			<div>更新しました。</div>
+			<div>変更しました。</div>
 			<div>
-				<a href="${baseUri}/simple/ex11/?id=${param.id}">編集する</a>
+				<a href="${baseUri}/simple/ex11/?id=${param.id}">変更する</a>
 			</div>
 		</div>
 	</div>

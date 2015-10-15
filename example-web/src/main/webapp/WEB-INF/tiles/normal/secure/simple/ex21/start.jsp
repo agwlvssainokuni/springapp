@@ -8,7 +8,7 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">単純画面遷移-更新</h2>
+<h2 class="page-header">単純画面遷移: 単票入力系2-変更入力</h2>
 <div class="panel-body">
 	<c:if test="${created != null && created}">
 		<div class="col-md-offset-2 col-md-10">
@@ -19,9 +19,9 @@
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${update != null && updated}">
+	<c:if test="${updated != null && updated}">
 		<div class="col-md-offset-2 col-md-10">
-			<div class="alert alert-info" role="alert">更新しました。</div>
+			<div class="alert alert-info" role="alert">変更しました。</div>
 		</div>
 	</c:if>
 	<s:hasBindErrors name="ex20Form">
@@ -92,7 +92,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">確認</f:button>
+				<f:button type="submit" class="btn btn-primary">変更確認</f:button>
 			</div>
 		</div>
 	</f:form>
