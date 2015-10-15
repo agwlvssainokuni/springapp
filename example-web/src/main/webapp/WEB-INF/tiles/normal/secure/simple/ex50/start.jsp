@@ -9,7 +9,7 @@
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
 <c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
-<h2 class="page-header">単純画面遷移: 検索一覧系2-検索条件結果一覧</h2>
+<h2 class="page-header">単純画面遷移: 一括変更系1-検索条件結果一覧</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -18,29 +18,29 @@
 			</h3>
 		</div>
 		<div id="searchForm" class="panel-body panel-collapse collapse ${hasResultList ? '' : 'in'}">
-			<s:hasBindErrors name="ex40Form">
+			<s:hasBindErrors name="ex50Form">
 				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
-						<f:errors path="ex40Form" element="div" />
-						<f:errors path="ex40Form.text10" element="div" />
-						<f:errors path="ex40Form.int64From" element="div" />
-						<f:errors path="ex40Form.int64To" element="div" />
-						<f:errors path="ex40Form.decimal1From" element="div" />
-						<f:errors path="ex40Form.decimal1To" element="div" />
-						<f:errors path="ex40Form.decimal3From" element="div" />
-						<f:errors path="ex40Form.decimal3To" element="div" />
-						<f:errors path="ex40Form.dtFrom" element="div" />
-						<f:errors path="ex40Form.dtTo" element="div" />
-						<f:errors path="ex40Form.tmFrom" element="div" />
-						<f:errors path="ex40Form.tmTo" element="div" />
-						<f:errors path="ex40Form.dtmFromD" element="div" />
-						<f:errors path="ex40Form.dtmFromT" element="div" />
-						<f:errors path="ex40Form.dtmToD" element="div" />
-						<f:errors path="ex40Form.dtmToT" element="div" />
+						<f:errors path="ex50Form" element="div" />
+						<f:errors path="ex50Form.text10" element="div" />
+						<f:errors path="ex50Form.int64From" element="div" />
+						<f:errors path="ex50Form.int64To" element="div" />
+						<f:errors path="ex50Form.decimal1From" element="div" />
+						<f:errors path="ex50Form.decimal1To" element="div" />
+						<f:errors path="ex50Form.decimal3From" element="div" />
+						<f:errors path="ex50Form.decimal3To" element="div" />
+						<f:errors path="ex50Form.dtFrom" element="div" />
+						<f:errors path="ex50Form.dtTo" element="div" />
+						<f:errors path="ex50Form.tmFrom" element="div" />
+						<f:errors path="ex50Form.tmTo" element="div" />
+						<f:errors path="ex50Form.dtmFromD" element="div" />
+						<f:errors path="ex50Form.dtmFromT" element="div" />
+						<f:errors path="ex50Form.dtmToD" element="div" />
+						<f:errors path="ex50Form.dtmToT" element="div" />
 					</div>
 				</div>
 			</s:hasBindErrors>
-			<f:form servletRelativeAction="/secure/simple/ex40/execute" method="POST" modelAttribute="ex40Form" cssClass="form-horizontal" role="form">
+			<f:form servletRelativeAction="/secure/simple/ex50/execute" method="POST" modelAttribute="ex50Form" cssClass="form-horizontal" role="form">
 				<f:hidden path="sortBy1" />
 				<f:hidden path="sortOrder1" />
 				<f:hidden path="sortBy2" />
@@ -130,7 +130,7 @@
 				<h3 class="panel-title">検索結果一覧</h3>
 			</div>
 			<div class="panel-body">
-				<f:form servletRelativeAction="/secure/simple/ex40/execute" method="POST" modelAttribute="ex40Form" id="ex40Form2">
+				<f:form servletRelativeAction="/secure/simple/ex50/execute" method="POST" modelAttribute="ex50Form" id="ex50Form2">
 					<f:hidden path="sortBy1" id="sortBy12" />
 					<f:hidden path="sortOrder1" id="sortOrder12" />
 					<f:hidden path="sortBy2" id="sortBy22" />
@@ -155,22 +155,22 @@
 				</f:form>
 				<div>
 					<div class="col-md-3">
-						<s:nestedPath path="ex40Form">
-							<ex:pageSorter cssClass="ex40Sorter" sortOrder="sortOrder1" sortBy="sortBy1"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex40.SortBy')}" />
-							<ex:pageSorter cssClass="ex40Sorter" sortOrder="sortOrder2" sortBy="sortBy2"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex40.SortBy')}" />
+						<s:nestedPath path="ex50Form">
+							<ex:pageSorter cssClass="ex50Sorter" sortOrder="sortOrder1" sortBy="sortBy1"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex50.SortBy')}" />
+							<ex:pageSorter cssClass="ex50Sorter" sortOrder="sortOrder2" sortBy="sortBy2"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex50.SortBy')}" />
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">
-						<ex:refreshButton selector=".ex40Sorter" form="#ex40Form2" />
+						<ex:refreshButton selector=".ex50Sorter" form="#ex50Form2" />
 					</div>
 					<div class="col-md-offset-1 col-md-7 text-right">
 						<div>
 							<ex:pagerDesc pageSet="${pagedList.pageSet}" />
-							<ex:pageSize form="#ex40Form2" psz="psz" />
+							<ex:pageSize form="#ex50Form2" psz="psz" />
 						</div>
-						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex40Form2" pno="pno" />
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex50Form2" pno="pno" />
 					</div>
 				</div>
 				<table id="searchResultList" class="table table-striped">
@@ -192,9 +192,7 @@
 						<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 							<s:nestedPath path="pagedList.list[${count-1}]">
 								<tr>
-									<td><s:bind path="id">
-											<a href="${baseUri}/simple/ex41/?id=${status.value}"><span class="glyphicon glyphicon-edit"></span>変更</a>
-										</s:bind></td>
+									<td></td>
 									<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
 									<td class="text-right"><ex:out path="id" /></td>
 									<td><ex:out path="text10" /></td>
@@ -211,7 +209,7 @@
 				</table>
 				<div>
 					<div class="col-md-offset-5 col-md-7 text-right">
-						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex40Form2" pno="pno" />
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex50Form2" pno="pno" />
 					</div>
 				</div>
 			</div>
