@@ -41,8 +41,6 @@ import cherry.foundation.validator.JodaTimeMax;
 import cherry.foundation.validator.JodaTimeMin;
 import cherry.foundation.validator.MaxLength;
 import cherry.foundation.validator.NumberScale;
-import cherry.foundation.validator.groups.G1;
-import cherry.foundation.validator.groups.G2;
 
 @Getter
 @Setter
@@ -50,51 +48,49 @@ import cherry.foundation.validator.groups.G2;
 @ToString
 public class Ex51SubFormBase {
 
-	@NotNull(groups = { G1.class, G2.class })
+	@NotNull()
 	private Long id;
 
-	@NotEmpty(groups = { G2.class })
-	@MaxLength(value = 10, groups = { G2.class })
-	@CharTypeAlphaNumeric(groups = { G2.class })
+	@NotEmpty()
+	@MaxLength(10)
+	@CharTypeAlphaNumeric()
 	private String text10;
 
-	@MaxLength(value = 100, groups = { G2.class })
+	@MaxLength(100)
 	private String text100;
 
-	@Min(value = -1000000000, groups = { G2.class })
-	@Max(value = 1000000000, groups = { G2.class })
+	@Min(-1000000000)
+	@Max(1000000000)
 	private Long int64;
 
 	@NumberFormat(pattern = "#,##0.0#########")
-	@DecimalMin(value = "-1000000000", groups = { G2.class })
-	@DecimalMax(value = "1000000000", groups = { G2.class })
-	@NumberScale(value = 1, groups = { G2.class })
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberScale(1)
 	private BigDecimal decimal1;
 
 	@NumberFormat(pattern = "#,##0.000#######")
-	@DecimalMin(value = "-1000000000", groups = { G2.class })
-	@DecimalMax(value = "1000000000", groups = { G2.class })
-	@NumberScale(value = 3, groups = { G2.class })
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberScale(3)
 	private BigDecimal decimal3;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin(value = "1000-01-01", groups = { G2.class })
-	@JodaTimeMax(value = "2999-12-31", groups = { G2.class })
+	@JodaTimeMin("1000-01-01")
+	@JodaTimeMax("2999-12-31")
 	private LocalDate dt;
 
 	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin(value = "00:00:00", groups = { G2.class })
-	@JodaTimeMax(value = "23:59:59", groups = { G2.class })
+	@JodaTimeMin("00:00:00")
+	@JodaTimeMax("23:59:59")
 	private LocalTime tm;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JodaTimeMin(value = "1000-01-01T00:00:00", groups = { G2.class })
-	@JodaTimeMax(value = "2999-12-31T23:59:59", groups = { G2.class })
+	@JodaTimeMin("1000-01-01T00:00:00")
+	@JodaTimeMax("2999-12-31T23:59:59")
 	private LocalDateTime dtm;
 
-	@NotNull(groups = { G2.class })
+	@NotNull()
 	private Integer lockVersion;
-
-	private boolean checked;
 
 }

@@ -49,7 +49,7 @@ import cherry.goods.paginate.PagedList;
 public class Ex50ControllerImpl implements Ex50Controller {
 
 	@Autowired
-	private Ex50Service ex40Service;
+	private Ex50Service ex50Service;
 
 	@Autowired
 	private Config config;
@@ -94,16 +94,16 @@ public class Ex50ControllerImpl implements Ex50Controller {
 
 		adjustSortCondition(form);
 
-		PagedList<BExTbl1> pagedList = ex40Service.search(form);
+		PagedList<BExTbl1> pagedList = ex50Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).build();
 		}
 
-		Ex51Form ex51Form = new Ex51Form();
-		ex51Form.setItem(createForm(pagedList.getList()));
+		Ex50to51Form ex50to51Form = new Ex50to51Form();
+		ex50to51Form.setItem(createForm(pagedList.getList()));
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).addObject(pagedList).addObject(ex51Form)
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).addObject(pagedList).addObject(ex50to51Form)
 				.build();
 	}
 
@@ -177,13 +177,12 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		}
 	}
 
-	private List<Ex51SubForm> createForm(List<BExTbl1> list) {
-		List<Ex51SubForm> l = new ArrayList<>(list.size());
+	private List<Ex50to51SubForm> createForm(List<BExTbl1> list) {
+		List<Ex50to51SubForm> l = new ArrayList<>(list.size());
 		for (BExTbl1 t : list) {
-			Ex51SubForm f = new Ex51SubForm();
+			Ex50to51SubForm f = new Ex50to51SubForm();
 			f.setId(t.getId());
-			f.setLockVersion(t.getLockVersion());
-			f.setChecked(false);
+			f.setChecked(Boolean.FALSE);
 			l.add(f);
 		}
 		return l;

@@ -21,6 +21,8 @@ import static cherry.example.web.PathDef.VIEW_SIMPLE_EX51_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,9 +55,13 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+		Ex51Form f = createForm(form);
+		if (f.getItem().isEmpty()) {
+			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+		}
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).addObject(f).build();
 	}
 
 	@Override
@@ -99,6 +105,10 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		}
 	}
 
+	private UriComponents redirectOnStart() {
+		return fromMethodCall(on(Ex50Controller.class).execute(null, null, null, null, null, null)).build();
+	}
+
 	private boolean hasErrors(Ex51Form form, BindingResult binding) {
 
 		// 単項目チェック
@@ -115,6 +125,20 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		// 整合性チェック
 
 		return false;
+	}
+
+	private Ex51Form createForm(Ex50to51Form form) {
+		List<Ex51SubForm> l = new ArrayList<>();
+		for (Ex50to51SubForm subform : form.getItem()) {
+			if (subform.getChecked().booleanValue()) {
+				Ex51SubForm sf = new Ex51SubForm();
+				sf.setId(subform.getId());
+				l.add(sf);
+			}
+		}
+		Ex51Form f = new Ex51Form();
+		f.setItem(l);
+		return f;
 	}
 
 }

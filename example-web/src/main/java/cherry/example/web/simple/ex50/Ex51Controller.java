@@ -34,9 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.foundation.validator.groups.G1;
-import cherry.foundation.validator.groups.G2;
-
 @RequestMapping(URI_SIMPLE_EX51)
 public interface Ex51Controller {
 
@@ -45,19 +42,19 @@ public interface Ex51Controller {
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G1.class) Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView start(@Validated() Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated(G2.class) Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated(G2.class) Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated(G2.class) Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 }
