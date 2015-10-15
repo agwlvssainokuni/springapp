@@ -44,6 +44,11 @@ public class PathDef {
 	public static final String URI_SIMPLE_EX31 = "/secure/simple/ex31";
 	public static final String VIEW_SIMPLE_EX31_START = "secure/simple/ex31/start";
 
+	public static final String URI_SIMPLE_EX40 = "/secure/simple/ex40";
+	public static final String VIEW_SIMPLE_EX40_START = "secure/simple/ex40/start";
+	public static final String URI_SIMPLE_EX41 = "/secure/simple/ex41";
+	public static final String VIEW_SIMPLE_EX41_START = "secure/simple/ex41/start";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
