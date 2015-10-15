@@ -176,6 +176,7 @@
 				<table id="searchResultList" class="table table-striped">
 					<thead>
 						<tr>
+							<th></th>
 							<th>#</th>
 							<th>ID</th>
 							<th>文字列【10】</th>
@@ -191,6 +192,9 @@
 						<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 							<s:nestedPath path="pagedList.list[${count-1}]">
 								<tr>
+									<td><s:bind path="id">
+											<a href="${baseUri}/simple/ex31/?id=${status.value}"><span class="glyphicon glyphicon-edit"></span>変更</a>
+										</s:bind></td>
 									<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
 									<td class="text-right"><ex:out path="id" /></td>
 									<td><ex:out path="text10" /></td>
