@@ -20,6 +20,8 @@ import static cherry.example.web.PathDef.VIEW_SIMPLE_EX50_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
@@ -98,7 +100,11 @@ public class Ex50ControllerImpl implements Ex50Controller {
 			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).build();
 		}
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).addObject(pagedList).build();
+		Ex51Form ex51Form = new Ex51Form();
+		ex51Form.setItem(createForm(pagedList.getList()));
+
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).addObject(pagedList).addObject(ex51Form)
+				.build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
@@ -169,6 +175,18 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		if (form.getSortOrder2() == null) {
 			form.setSortOrder2(SortOrder.ASC.name());
 		}
+	}
+
+	private List<Ex51SubForm> createForm(List<BExTbl1> list) {
+		List<Ex51SubForm> l = new ArrayList<>(list.size());
+		for (BExTbl1 t : list) {
+			Ex51SubForm f = new Ex51SubForm();
+			f.setId(t.getId());
+			f.setLockVersion(t.getLockVersion());
+			f.setChecked(false);
+			l.add(f);
+		}
+		return l;
 	}
 
 }
