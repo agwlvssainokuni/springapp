@@ -92,7 +92,7 @@ public class Ex51SubFormBase {
 	@JodaTimeMax(value = "2999-12-31T23:59:59", groups = { G2.class })
 	private LocalDateTime dtm;
 
-	@NotNull(groups = { G1.class, G2.class })
+	@NotNull(groups = { G2.class })
 	private Integer lockVersion;
 
 	private boolean checked;

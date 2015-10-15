@@ -173,7 +173,7 @@
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex50Form2" pno="pno" />
 					</div>
 				</div>
-				<f:form servletRelativeAction="/simple/ex51/start" method="POST" modelAttribute="ex51Form">
+				<f:form servletRelativeAction="/secure/simple/ex51/start" method="POST" modelAttribute="ex51Form">
 					<table id="searchResultList" class="table table-striped">
 						<thead>
 							<tr>
@@ -196,7 +196,6 @@
 									<td><s:nestedPath path="item[${count-1}]">
 											<f:checkbox path="checked" />
 											<f:hidden path="id" />
-											<f:hidden path="lockVersion" />
 										</s:nestedPath></td>
 									<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
 									<td class="text-right"><foundation:render value="${r.id}" /></td>
