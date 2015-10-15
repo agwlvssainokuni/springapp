@@ -11,9 +11,9 @@
 <h2 class="page-header">単純画面遷移: 検索一覧系1-単票変更入力</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/simple/ex30/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/simple/ex30/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/simple/ex30/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="${baseUri}/simple/ex31/?id=${param.id}&redir=/secure/simple/ex30/execute">検索結果一覧へ戻る</a></li>
+		<li><a href="${baseUri}/simple/ex31/?id=${param.id}&redir=/secure/simple/ex30/start">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="${baseUri}/simple/ex31/?id=${param.id}&redir=/secure/simple/ex30/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<s:hasBindErrors name="ex31Form">
 		<div class="col-md-offset-2 col-md-10">
