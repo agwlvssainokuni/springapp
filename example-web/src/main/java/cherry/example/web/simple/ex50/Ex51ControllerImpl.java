@@ -16,7 +16,6 @@
 
 package cherry.example.web.simple.ex50;
 
-import static cherry.example.web.PathDef.VIEW_SIMPLE_EX41_START;
 import static cherry.example.web.PathDef.VIEW_SIMPLE_EX51_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -48,6 +47,9 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
+	@Autowired
+	private Ex51Service ex51Service;
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
@@ -57,7 +59,11 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	@Override
 	public ModelAndView start(Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex51Form f = createForm(form);
+		List<Long> id = getCheckedId(form);
+		if (id.isEmpty()) {
+			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+		}
+		Ex51Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
 		}
@@ -91,7 +97,13 @@ public class Ex51ControllerImpl implements Ex51Controller {
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX41_START).build();
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+		}
+
+		long count = ex51Service.update(form.getItem());
+		if (count != form.getItem().size()) {
+			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
+			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
 		}
 
 		return ModelAndViewBuilder.withoutView().build();
@@ -127,17 +139,19 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		return false;
 	}
 
-	private Ex51Form createForm(Ex50to51Form form) {
-		List<Ex51SubForm> l = new ArrayList<>();
+	private List<Long> getCheckedId(Ex50to51Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (Ex50to51SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				Ex51SubForm sf = new Ex51SubForm();
-				sf.setId(subform.getId());
-				l.add(sf);
+				l.add(subform.getId());
 			}
 		}
+		return l;
+	}
+
+	private Ex51Form createForm(List<Long> id) {
 		Ex51Form f = new Ex51Form();
-		f.setItem(l);
+		f.setItem(ex51Service.search(id));
 		return f;
 	}
 

@@ -8,7 +8,7 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">単純画面遷移: 検索一覧系1-単票変更確認</h2>
+<h2 class="page-header">単純画面遷移: 検索一覧系1-単票変更完了</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
 		<li><a href="${baseUri}/simple/ex31/?id=${param.id}&redir=/secure/simple/ex30/execute">検索結果一覧へ戻る</a></li>
