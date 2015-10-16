@@ -74,7 +74,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 
 		adjustSortCondition(form);
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).build();
+			return renderStartView().build();
 		}
 
 		if (form.getPno() <= 0L) {
@@ -97,14 +97,17 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		PagedList<BExTbl1> pagedList = ex50Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).build();
+			return renderStartView().build();
 		}
 
 		Ex50to51Form ex50to51Form = new Ex50to51Form();
 		ex50to51Form.setItem(createForm(pagedList.getList()));
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START).addObject(pagedList).addObject(ex50to51Form)
-				.build();
+		return renderStartView().addObject(pagedList).addObject(ex50to51Form).build();
+	}
+
+	private ModelAndViewBuilder renderStartView() {
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX50_START);
 	}
 
 	private UriComponents redirectOnInit(String redir) {

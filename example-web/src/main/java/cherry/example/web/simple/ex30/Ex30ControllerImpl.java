@@ -72,7 +72,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 		adjustSortCondition(form);
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
+			return renderStartView().build();
 		}
 
 		if (form.getPno() <= 0L) {
@@ -95,10 +95,14 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		PagedList<BExTbl1> pagedList = ex30Service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).build();
+			return renderStartView().build();
 		}
 
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START).addObject(pagedList).build();
+		return renderStartView().addObject(pagedList).build();
+	}
+
+	private ModelAndViewBuilder renderStartView() {
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX30_START);
 	}
 
 	private UriComponents redirectOnInit(String redir) {

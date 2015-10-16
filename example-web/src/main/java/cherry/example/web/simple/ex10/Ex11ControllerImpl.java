@@ -64,7 +64,7 @@ public class Ex11ControllerImpl implements Ex11Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 		Ex10Form f = ex10Service.findFormById(id);
 		shouldExist(f, Ex10Form.class, id);
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).addObject(f).build();
+		return renderStartView().addObject(f).build();
 	}
 
 	@Override
@@ -72,16 +72,16 @@ public class Ex11ControllerImpl implements Ex11Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
+			return renderStartView().build();
 		}
 
-		return ModelAndViewBuilder.withoutView().build();
+		return renderWithoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -89,12 +89,12 @@ public class Ex11ControllerImpl implements Ex11Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
+			return renderStartView().build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START).build();
+			return renderStartView().build();
 		}
 
 		long count = ex10Service.update(id, form);
@@ -107,7 +107,15 @@ public class Ex11ControllerImpl implements Ex11Controller {
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
 		BExTbl1 record = ex10Service.findById(id);
-		return ModelAndViewBuilder.withoutView().addObject(record).build();
+		return renderWithoutView().addObject(record).build();
+	}
+
+	private ModelAndViewBuilder renderStartView() {
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX11_START);
+	}
+
+	private ModelAndViewBuilder renderWithoutView() {
+		return ModelAndViewBuilder.withoutView();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id) {

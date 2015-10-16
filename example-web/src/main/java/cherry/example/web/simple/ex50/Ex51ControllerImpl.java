@@ -67,7 +67,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		if (f.getItem().isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
 		}
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).addObject(f).build();
+		return renderStartView().addObject(f).build();
 	}
 
 	@Override
@@ -75,16 +75,16 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+			return renderStartView().build();
 		}
 
-		return ModelAndViewBuilder.withoutView().build();
+		return renderWithoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -92,21 +92,29 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+			return renderStartView().build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+			return renderStartView().build();
 		}
 
 		long count = ex51Service.update(form.getItem());
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START).build();
+			return renderStartView().build();
 		}
 
-		return ModelAndViewBuilder.withoutView().build();
+		return renderWithoutView().build();
+	}
+
+	private ModelAndViewBuilder renderStartView() {
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START);
+	}
+
+	private ModelAndViewBuilder renderWithoutView() {
+		return ModelAndViewBuilder.withoutView();
 	}
 
 	private UriComponents redirectOnInit(String redir) {

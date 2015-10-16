@@ -61,7 +61,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 	@Override
 	public ModelAndView start(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -69,16 +69,16 @@ public class Ex20ControllerImpl implements Ex20Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
+			return renderStartView().build();
 		}
 
-		return ModelAndViewBuilder.withoutView().build();
+		return renderWithoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
+		return renderStartView().build();
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public class Ex20ControllerImpl implements Ex20Controller {
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
+			return renderStartView().build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START).build();
+			return renderStartView().build();
 		}
 
 		Long id = ex20Service.create(form);
@@ -99,6 +99,14 @@ public class Ex20ControllerImpl implements Ex20Controller {
 
 		redirAttr.addFlashAttribute("created", Boolean.TRUE);
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
+	}
+
+	private ModelAndViewBuilder renderStartView() {
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX20_START);
+	}
+
+	private ModelAndViewBuilder renderWithoutView() {
+		return ModelAndViewBuilder.withoutView();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
