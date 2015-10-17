@@ -51,7 +51,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex20Service ex20Service;
+	private Ex20Service service;
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
@@ -62,7 +62,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	@Override
 	public ModelAndView start(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex20Form f = ex20Service.findById(id);
+		Ex20Form f = service.findById(id);
 		shouldExist(f, Ex20Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
@@ -97,7 +97,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex20Service.update(id, form);
+		long count = service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
 		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
@@ -144,7 +144,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		}
 
 		// 整合性チェック
-		if (ex20Service.exists(id, form.getText10())) {
+		if (service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
 					LogicalErrorUtil.resolve("ex20Form.text10"));
 		}

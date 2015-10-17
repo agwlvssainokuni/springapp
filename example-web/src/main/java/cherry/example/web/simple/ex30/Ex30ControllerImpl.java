@@ -47,7 +47,7 @@ import cherry.goods.paginate.PagedList;
 public class Ex30ControllerImpl implements Ex30Controller {
 
 	@Autowired
-	private Ex30Service ex30Service;
+	private Ex30Service service;
 
 	@Autowired
 	private Config config;
@@ -92,7 +92,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 
 		adjustSortCondition(form);
 
-		PagedList<BExTbl1> pagedList = ex30Service.search(form);
+		PagedList<BExTbl1> pagedList = service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
 			return renderStartView().build();

@@ -49,7 +49,7 @@ import cherry.goods.paginate.PagedList;
 public class Ex50ControllerImpl implements Ex50Controller {
 
 	@Autowired
-	private Ex50Service ex50Service;
+	private Ex50Service service;
 
 	@Autowired
 	private Config config;
@@ -94,16 +94,16 @@ public class Ex50ControllerImpl implements Ex50Controller {
 
 		adjustSortCondition(form);
 
-		PagedList<BExTbl1> pagedList = ex50Service.search(form);
+		PagedList<BExTbl1> pagedList = service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
 			return renderStartView().build();
 		}
 
-		Ex50to51Form ex50to51Form = new Ex50to51Form();
-		ex50to51Form.setItem(createForm(pagedList.getList()));
+		Ex50to51Form f = new Ex50to51Form();
+		f.setItem(createForm(pagedList.getList()));
 
-		return renderStartView().addObject(pagedList).addObject(ex50to51Form).build();
+		return renderStartView().addObject(pagedList).addObject(f).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {

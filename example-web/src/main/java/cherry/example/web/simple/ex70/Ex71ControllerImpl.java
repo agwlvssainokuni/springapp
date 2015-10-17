@@ -50,7 +50,7 @@ public class Ex71ControllerImpl implements Ex71Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex71Service ex61Service;
+	private Ex71Service service;
 
 	@Override
 	public ModelAndView init(String redir, Ex70to71Form form, BindingResult binding, Authentication auth,
@@ -115,7 +115,7 @@ public class Ex71ControllerImpl implements Ex71Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex61Service.update(form.getItem());
+		long count = service.update(form.getItem());
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
@@ -186,7 +186,7 @@ public class Ex71ControllerImpl implements Ex71Controller {
 
 	private Ex71Form createForm(List<Long> id) {
 		Ex71Form f = new Ex71Form();
-		f.setItem(ex61Service.search(id));
+		f.setItem(service.search(id));
 		return f;
 	}
 

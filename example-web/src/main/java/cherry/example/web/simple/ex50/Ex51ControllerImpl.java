@@ -48,7 +48,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex51Service ex51Service;
+	private Ex51Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -103,7 +103,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex51Service.update(form.getItem());
+		long count = service.update(form.getItem());
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
@@ -162,7 +162,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 
 	private Ex51Form createForm(List<Long> id) {
 		Ex51Form f = new Ex51Form();
-		f.setItem(ex51Service.search(id));
+		f.setItem(service.search(id));
 		return f;
 	}
 

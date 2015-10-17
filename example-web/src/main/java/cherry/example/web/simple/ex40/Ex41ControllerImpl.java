@@ -51,7 +51,7 @@ public class Ex41ControllerImpl implements Ex41Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex41Service ex41Service;
+	private Ex41Service service;
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
@@ -62,7 +62,7 @@ public class Ex41ControllerImpl implements Ex41Controller {
 	@Override
 	public ModelAndView start(long id, Ex41Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex41Form f = ex41Service.findById(id);
+		Ex41Form f = service.findById(id);
 		shouldExist(f, Ex41Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
@@ -97,7 +97,7 @@ public class Ex41ControllerImpl implements Ex41Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex41Service.update(id, form);
+		long count = service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
 		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
@@ -144,7 +144,7 @@ public class Ex41ControllerImpl implements Ex41Controller {
 		}
 
 		// 整合性チェック
-		if (ex41Service.exists(id, form.getText10())) {
+		if (service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
 					LogicalErrorUtil.resolve("ex41Form.text10"));
 		}

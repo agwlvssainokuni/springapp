@@ -50,7 +50,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex20Service ex20Service;
+	private Ex20Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -94,7 +94,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 			return renderStartView().build();
 		}
 
-		Long id = ex20Service.create(form);
+		Long id = service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
 		redirAttr.addFlashAttribute("created", Boolean.TRUE);
@@ -140,7 +140,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 		}
 
 		// 整合性チェック
-		if (ex20Service.exists(form.getText10())) {
+		if (service.exists(form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
 					LogicalErrorUtil.resolve("ex20Form.text10"));
 		}

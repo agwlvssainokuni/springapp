@@ -47,7 +47,7 @@ import cherry.goods.paginate.PagedList;
 public class Ex40ControllerImpl implements Ex40Controller {
 
 	@Autowired
-	private Ex40Service ex40Service;
+	private Ex40Service service;
 
 	@Autowired
 	private Config config;
@@ -92,7 +92,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 
 		adjustSortCondition(form);
 
-		PagedList<BExTbl1> pagedList = ex40Service.search(form);
+		PagedList<BExTbl1> pagedList = service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
 			return renderStartView().build();

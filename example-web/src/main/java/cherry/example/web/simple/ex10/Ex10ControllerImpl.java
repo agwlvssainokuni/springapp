@@ -50,7 +50,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex10Service ex10Service;
+	private Ex10Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -94,7 +94,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 			return renderStartView().build();
 		}
 
-		Long id = ex10Service.create(form);
+		Long id = service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
@@ -103,7 +103,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		BExTbl1 record = ex10Service.findById(id);
+		BExTbl1 record = service.findById(id);
 		return renderWithoutView().addObject(record).build();
 	}
 
@@ -146,7 +146,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		}
 
 		// 整合性チェック
-		if (ex10Service.exists(form.getText10())) {
+		if (service.exists(form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
 					LogicalErrorUtil.resolve("ex10Form.text10"));
 		}

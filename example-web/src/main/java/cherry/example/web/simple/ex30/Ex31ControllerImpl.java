@@ -51,7 +51,7 @@ public class Ex31ControllerImpl implements Ex31Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex31Service ex31Service;
+	private Ex31Service service;
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
@@ -62,7 +62,7 @@ public class Ex31ControllerImpl implements Ex31Controller {
 	@Override
 	public ModelAndView start(long id, Ex31Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex31Form f = ex31Service.findFormById(id);
+		Ex31Form f = service.findFormById(id);
 		shouldExist(f, Ex31Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
@@ -97,7 +97,7 @@ public class Ex31ControllerImpl implements Ex31Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex31Service.update(id, form);
+		long count = service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
@@ -106,7 +106,7 @@ public class Ex31ControllerImpl implements Ex31Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		BExTbl1 record = ex31Service.findById(id);
+		BExTbl1 record = service.findById(id);
 		return renderWithoutView().addObject(record).build();
 	}
 
@@ -150,7 +150,7 @@ public class Ex31ControllerImpl implements Ex31Controller {
 		}
 
 		// 整合性チェック
-		if (ex31Service.exists(id, form.getText10())) {
+		if (service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
 					LogicalErrorUtil.resolve("ex31Form.text10"));
 		}
