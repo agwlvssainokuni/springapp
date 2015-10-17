@@ -16,6 +16,7 @@
 
 package cherry.example.web.simple.ex60;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -30,10 +31,12 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex60to61FormBase {
+public class Ex61inFormBase implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@NotNull()
 	@Valid()
-	private List<Ex60to61SubForm> item;
+	private List<Ex61inSubForm> item;
 
 }

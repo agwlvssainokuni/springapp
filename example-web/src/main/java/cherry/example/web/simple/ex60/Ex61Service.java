@@ -18,22 +18,10 @@ package cherry.example.web.simple.ex60;
 
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+public interface Ex61Service {
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+	List<Ex61SubForm> search(List<Long> id);
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-public class Ex60to61FormBase {
-
-	@NotNull()
-	@Valid()
-	private List<Ex60to61SubForm> item;
+	long update(List<Ex61SubForm> list);
 
 }

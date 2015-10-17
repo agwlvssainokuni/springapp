@@ -19,6 +19,7 @@ package cherry.example.web.simple.ex50;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,7 +32,8 @@ import lombok.ToString;
 @ToString
 public class Ex50to51FormBase {
 
-	@Valid
+	@NotNull()
+	@Valid()
 	private List<Ex50to51SubForm> item;
 
 }

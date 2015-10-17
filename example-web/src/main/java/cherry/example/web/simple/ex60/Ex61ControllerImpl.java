@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple.ex50;
+package cherry.example.web.simple.ex60;
 
-import static cherry.example.web.PathDef.VIEW_SIMPLE_EX51_START;
+import static cherry.example.web.PathDef.VIEW_SIMPLE_EX61_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -32,8 +32,10 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,39 +44,49 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex51ControllerImpl implements Ex51Controller {
+public class Ex61ControllerImpl implements Ex61Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex51Service ex51Service;
+	private Ex61Service ex61Service;
 
 	@Override
-	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+	public ModelAndView init(String redir, Ex60to61Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
+		if (StringUtils.isNotEmpty(redir)) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectTo(redir)).build();
+		}
+		if (binding.hasErrors()) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+		}
+
+		Ex61inForm f = createSessionForm(form);
+		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(Ex61inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		if (binding.hasErrors()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		List<Long> id = getCheckedId(form);
+		List<Long> id = getId(form);
 		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		Ex51Form f = createForm(id);
+		Ex61Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 		return renderStartView().addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -85,14 +97,14 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView execute(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
 			return renderStartView().build();
@@ -103,36 +115,37 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			return renderStartView().build();
 		}
 
-		long count = ex51Service.update(form.getItem());
+		long count = ex61Service.update(form.getItem());
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
 		}
 
-		return renderWithoutView().build();
+		redirAttr.addFlashAttribute("updated", true);
+		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX51_START);
+		return ModelAndViewBuilder.withViewname(VIEW_SIMPLE_EX61_START);
 	}
 
 	private ModelAndViewBuilder renderWithoutView() {
 		return ModelAndViewBuilder.withoutView();
 	}
 
-	private UriComponents redirectOnInit(String redir) {
-		if (StringUtils.isNotEmpty(redir)) {
-			return UriComponentsBuilder.fromPath(redir).build();
-		} else {
-			return fromMethodCall(on(Ex51Controller.class).start(null, null, null, null, null, null)).build();
-		}
+	private UriComponents redirectTo(String redir) {
+		return UriComponentsBuilder.fromPath(redir).build();
 	}
 
-	private UriComponents redirectOnStart() {
-		return fromMethodCall(on(Ex50Controller.class).execute(null, null, null, null, null, null)).build();
+	private UriComponents redirectToSearchResult() {
+		return fromMethodCall(on(Ex60Controller.class).execute(null, null, null, null, null, null)).build();
 	}
 
-	private boolean hasErrors(Ex51Form form, BindingResult binding) {
+	private UriComponents redirectToStart() {
+		return fromMethodCall(on(Ex61Controller.class).start(null, null, null, null, null, null)).build();
+	}
+
+	private boolean hasErrors(Ex61Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -150,19 +163,31 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		return false;
 	}
 
-	private List<Long> getCheckedId(Ex50to51Form form) {
-		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (Ex50to51SubForm subform : form.getItem()) {
+	private Ex61inForm createSessionForm(Ex60to61Form form) {
+		List<Ex61inSubForm> l = new ArrayList<>(form.getItem().size());
+		for (Ex60to61SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				l.add(subform.getId());
+				Ex61inSubForm sf = new Ex61inSubForm();
+				sf.setId(subform.getId());
+				l.add(sf);
 			}
+		}
+		Ex61inForm f = new Ex61inForm();
+		f.setItem(l);
+		return f;
+	}
+
+	private List<Long> getId(Ex61inForm form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
+		for (Ex61inSubForm subform : form.getItem()) {
+			l.add(subform.getId());
 		}
 		return l;
 	}
 
-	private Ex51Form createForm(List<Long> id) {
-		Ex51Form f = new Ex51Form();
-		f.setItem(ex51Service.search(id));
+	private Ex61Form createForm(List<Long> id) {
+		Ex61Form f = new Ex61Form();
+		f.setItem(ex61Service.search(id));
 		return f;
 	}
 
