@@ -69,6 +69,8 @@ public class PathDef {
 	public static final String VIEW_SIMPLE_EX70_START = "secure/simple/ex70/start";
 	public static final String URI_SIMPLE_EX71 = "/secure/simple/ex71";
 	public static final String VIEW_SIMPLE_EX71_START = "secure/simple/ex71/start";
+	public static final String URI_SIMPLE_EX72 = "/secure/simple/ex72";
+	public static final String VIEW_SIMPLE_EX72_START = "secure/simple/ex72/start";
 
 	// 単純画面遷移: 一括変更系4
 	public static final String URI_SIMPLE_EX80 = "/secure/simple/ex80";
@@ -79,6 +81,8 @@ public class PathDef {
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
+	/** サブURI: /update */
+	public static final String SUBURI_UPDATE = "update";
 	/** サブURI: /confirm */
 	public static final String SUBURI_CONFIRM = "confirm";
 	/** サブURI: /execute */
