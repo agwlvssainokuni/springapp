@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.simple.ex70;
+package cherry.example.web.simple.ex80;
 
 import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_REDIR;
@@ -22,7 +22,7 @@ import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.SUBURI_UPDATE;
-import static cherry.example.web.PathDef.URI_SIMPLE_EX71;
+import static cherry.example.web.PathDef.URI_SIMPLE_EX81;
 
 import java.util.Locale;
 
@@ -36,36 +36,37 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_SIMPLE_EX71)
-@SessionAttributes(types = { Ex71inForm.class, Ex71Form.class })
-public interface Ex71Controller {
+@RequestMapping(URI_SIMPLE_EX81)
+@SessionAttributes(types = { Ex81inForm.class, Ex81Form.class })
+public interface Ex81Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @Validated() Ex70to71Form form,
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @Validated() Ex80to81Form form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() Ex71inForm form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView start(@Validated() Ex81inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_UPDATE)
-	ModelAndView update(@Validated(G9.class) Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView update(@Validated(G9.class) Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated() Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated() Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView execute(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
 }

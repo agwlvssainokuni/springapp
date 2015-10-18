@@ -77,6 +77,8 @@ public class PathDef {
 	public static final String VIEW_SIMPLE_EX80_START = "secure/simple/ex80/start";
 	public static final String URI_SIMPLE_EX81 = "/secure/simple/ex81";
 	public static final String VIEW_SIMPLE_EX81_START = "secure/simple/ex81/start";
+	public static final String URI_SIMPLE_EX82 = "/secure/simple/ex82";
+	public static final String VIEW_SIMPLE_EX82_START = "secure/simple/ex82/start";
 
 	// サブURI
 	/** サブURI: /start */
