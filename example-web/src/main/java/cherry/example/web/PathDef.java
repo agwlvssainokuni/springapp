@@ -80,6 +80,10 @@ public class PathDef {
 	public static final String URI_SIMPLE_EX82 = "/secure/simple/ex82";
 	public static final String VIEW_SIMPLE_EX82_START = "secure/simple/ex82/start";
 
+	// 単純画面遷移: アップロード
+	public static final String URI_SIMPLE_EX90 = "/secure/simple/ex90";
+	public static final String VIEW_SIMPLE_EX90_START = "secure/simple/ex90/start";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
