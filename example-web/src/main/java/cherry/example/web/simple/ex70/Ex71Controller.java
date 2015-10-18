@@ -21,6 +21,7 @@ import static cherry.example.web.ParamDef.REQ_REDIR;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
+import static cherry.example.web.PathDef.SUBURI_UPDATE;
 import static cherry.example.web.PathDef.URI_SIMPLE_EX71;
 
 import java.util.Locale;
@@ -37,8 +38,10 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cherry.foundation.validator.groups.G9;
+
 @RequestMapping(URI_SIMPLE_EX71)
-@SessionAttributes(types = { Ex71inForm.class })
+@SessionAttributes(types = { Ex71inForm.class, Ex71Form.class })
 public interface Ex71Controller {
 
 	@RequestMapping()
@@ -48,6 +51,10 @@ public interface Ex71Controller {
 
 	@RequestMapping(SUBURI_START)
 	ModelAndView start(@Validated() Ex71inForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(SUBURI_UPDATE)
+	ModelAndView update(@Validated(G9.class) Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)

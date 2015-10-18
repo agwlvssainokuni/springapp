@@ -59,20 +59,29 @@ public class Ex71ServiceImpl implements Ex71Service {
 	}
 
 	@Override
-	public long update(final List<Ex71SubForm> list) {
+	public long update(final Ex71Form form) {
 		return txOps.execute(new TransactionCallback<Long>() {
 			@Override
 			public Long doInTransaction(TransactionStatus status) {
 				SQLUpdateClause update = qf.update(et1);
-				for (Ex71SubForm sf : list) {
+				for (Ex71SubForm sf : form.getItem()) {
 					update.where(et1.id.eq(sf.getId()), et1.lockVersion.eq(sf.getLockVersion()));
 					update.set(et1.lockVersion, et1.lockVersion.add(1));
 					update.set(et1.int64, sf.getInt64()).set(et1.decimal1, sf.getDecimal1())
 							.set(et1.decimal3, sf.getDecimal3());
+					if (form.getDt() != null) {
+						update.set(et1.dt, form.getDt());
+					}
+					if (form.getTm() != null) {
+						update.set(et1.tm, form.getTm());
+					}
+					if (form.getDtm() != null) {
+						update.set(et1.dtm, form.getDtm());
+					}
 					update.addBatch();
 				}
 				long count = update.execute();
-				if (count != list.size()) {
+				if (count != form.getItem().size()) {
 					status.setRollbackOnly();
 				}
 				return count;

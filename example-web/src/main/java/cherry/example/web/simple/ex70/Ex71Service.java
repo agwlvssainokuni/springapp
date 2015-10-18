@@ -22,6 +22,6 @@ public interface Ex71Service {
 
 	List<Ex71SubForm> search(List<Long> id);
 
-	long update(List<Ex71SubForm> list);
+	long update(Ex71Form form);
 
 }

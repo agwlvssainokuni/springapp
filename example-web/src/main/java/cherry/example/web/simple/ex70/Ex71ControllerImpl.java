@@ -86,6 +86,12 @@ public class Ex71ControllerImpl implements Ex71Controller {
 	}
 
 	@Override
+	public ModelAndView update(Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		return renderStartView().build();
+	}
+
+	@Override
 	public ModelAndView confirm(Ex71Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
@@ -115,13 +121,17 @@ public class Ex71ControllerImpl implements Ex71Controller {
 			return renderStartView().build();
 		}
 
-		long count = service.update(form.getItem());
+		long count = service.update(form);
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
 		}
 
-		return renderWithoutView().build();
+		List<Long> id = getId(form);
+		Ex71Form f = new Ex71Form();
+		f.setItem(service.search(id));
+
+		return renderWithoutView().addObject(f).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
@@ -179,6 +189,14 @@ public class Ex71ControllerImpl implements Ex71Controller {
 	private List<Long> getId(Ex71inForm form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (Ex71inSubForm subform : form.getItem()) {
+			l.add(subform.getId());
+		}
+		return l;
+	}
+
+	private List<Long> getId(Ex71Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
+		for (Ex71SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
 		return l;

@@ -27,4 +27,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Ex71Form extends Ex71FormBase {
 
+	private static final long serialVersionUID = 1L;
+
 }
