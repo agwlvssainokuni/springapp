@@ -103,13 +103,17 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			return renderStartView().build();
 		}
 
-		long count = service.update(form.getItem());
+		long count = service.update(form);
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
 		}
 
-		return renderWithoutView().build();
+		List<Long> id = getId(form);
+		Ex51Form f = new Ex51Form();
+		f.setItem(service.search(id));
+
+		return renderWithoutView().addObject(f).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
@@ -156,6 +160,14 @@ public class Ex51ControllerImpl implements Ex51Controller {
 			if (subform.getChecked().booleanValue()) {
 				l.add(subform.getId());
 			}
+		}
+		return l;
+	}
+
+	private List<Long> getId(Ex51Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
+		for (Ex51SubForm subform : form.getItem()) {
+			l.add(subform.getId());
 		}
 		return l;
 	}

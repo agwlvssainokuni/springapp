@@ -59,12 +59,12 @@ public class Ex61ServiceImpl implements Ex61Service {
 	}
 
 	@Override
-	public long update(final List<Ex61SubForm> list) {
+	public long update(final Ex61Form form) {
 		return txOps.execute(new TransactionCallback<Long>() {
 			@Override
 			public Long doInTransaction(TransactionStatus status) {
 				SQLUpdateClause update = qf.update(et1);
-				for (Ex61SubForm sf : list) {
+				for (Ex61SubForm sf : form.getItem()) {
 					update.where(et1.id.eq(sf.getId()), et1.lockVersion.eq(sf.getLockVersion()));
 					update.set(et1.lockVersion, et1.lockVersion.add(1));
 					update.set(et1.int64, sf.getInt64()).set(et1.decimal1, sf.getDecimal1())
@@ -72,7 +72,7 @@ public class Ex61ServiceImpl implements Ex61Service {
 					update.addBatch();
 				}
 				long count = update.execute();
-				if (count != list.size()) {
+				if (count != form.getItem().size()) {
 					status.setRollbackOnly();
 				}
 				return count;

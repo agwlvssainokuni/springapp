@@ -115,7 +115,7 @@ public class Ex61ControllerImpl implements Ex61Controller {
 			return renderStartView().build();
 		}
 
-		long count = service.update(form.getItem());
+		long count = service.update(form);
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			return renderStartView().build();
