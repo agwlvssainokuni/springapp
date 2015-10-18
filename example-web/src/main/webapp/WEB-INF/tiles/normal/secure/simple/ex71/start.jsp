@@ -19,6 +19,9 @@
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
 				<f:errors path="ex71Form" element="div" />
+				<f:errors path="ex71Form.dt" element="div" />
+				<f:errors path="ex71Form.tm" element="div" />
+				<f:errors path="ex71Form.dtm" element="div" />
 				<c:forEach var="count" begin="0" end="${ex71Form.item.size()-1}">
 					<s:nestedPath path="ex71Form.item[${count}]">
 						<f:errors path="text10" element="div" />
@@ -36,21 +39,31 @@
 	</s:hasBindErrors>
 	<f:form servletRelativeAction="/secure/simple/ex71/confirm" method="POST" modelAttribute="ex71Form" cssClass="form-horizontal" role="form">
 		<div class="form-group">
-			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
-			<div class="col-md-10">
+			<f:label path="dt" cssClass="col-md-1 control-label">日付</f:label>
+			<div class="col-md-2">
 				<f:input path="dt" cssClass="form-control" readonly="true" />
 			</div>
-		</div>
-		<div class="form-group">
-			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
-			<div class="col-md-10">
+			<f:label path="tm" cssClass="col-md-1 control-label">時刻</f:label>
+			<div class="col-md-2">
 				<f:input path="tm" cssClass="form-control" readonly="true" />
 			</div>
-		</div>
-		<div class="form-group">
-			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
-			<div class="col-md-10">
+			<f:label path="dtm" cssClass="col-md-1 control-label">日時</f:label>
+			<div class="col-md-2">
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
+			</div>
+			<div class="col-md-2">
+				<s:url var="uri" value="/secure/simple/ex72/start">
+					<s:param name="dt">
+						<s:bind path="dt">${status.value}</s:bind>
+					</s:param>
+					<s:param name="tm">
+						<s:bind path="tm">${status.value}</s:bind>
+					</s:param>
+					<s:param name="dtm">
+						<s:bind path="dtm">${status.value}</s:bind>
+					</s:param>
+				</s:url>
+				<a href="${uri}" class="btn btn-default" role="button">補足</a>
 			</div>
 		</div>
 		<table class="table table-striped">

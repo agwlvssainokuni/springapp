@@ -26,10 +26,10 @@
 					検索結果一覧または検索条件入力</a></li>
 			<li><a href="${baseUri}/simple/ex60/" class="list-group-item">一括変更系2: 検索条件入力 - 検索結果一覧(対象選択) - 一括変更入力 - 一括変更確認 - 一括変更入力(変更完了メッセージ) -
 					検索結果一覧または検索条件入力</a></li>
-			<li><a href="${baseUri}/simple/ex70/" class="list-group-item">一括変更系3: 検索条件入力 - 検索結果一覧(対象選択) - 一括変更入力 - 一括変更確認 - 一括変更完了 -
-					検索結果一覧または検索条件入力</a></li>
-			<li><a href="${baseUri}/simple/ex80/" class="list-group-item">一括変更系3: 検索条件入力 - 検索結果一覧(対象選択) - 一括変更入力 - 一括変更確認 - 一括変更入力(変更完了メッセージ) -
-					検索結果一覧または検索条件入力</a></li>
+			<li><a href="${baseUri}/simple/ex70/" class="list-group-item">一括変更系3: 検索条件入力 - 検索結果一覧(対象選択) - 一括変更入力 - 補足入力 - 補足確認 - 一括変更入力(補足反映) -
+					一括変更確認 - 一括変更完了 - 検索結果一覧または検索条件入力</a></li>
+			<li><a href="${baseUri}/simple/ex80/" class="list-group-item">一括変更系4: 検索条件入力 - 検索結果一覧(対象選択) - 一括変更入力 - 補足入力 - 補足確認 - 一括変更入力(補足反映) -
+					一括変更確認 - 一括変更入力(変更完了メッセージ) - 検索結果一覧または検索条件入力</a></li>
 		</ul>
 	</div>
 	<div id="form" class="tab-pane" role="tabpanel">

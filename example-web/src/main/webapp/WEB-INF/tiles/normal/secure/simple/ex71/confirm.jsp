@@ -18,20 +18,16 @@
 	<f:form servletRelativeAction="/secure/simple/ex71/execute" method="POST" modelAttribute="ex71Form" cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
 		<div class="form-group">
-			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
-			<div class="col-md-10">
+			<f:label path="dt" cssClass="col-md-1 control-label">日付</f:label>
+			<div class="col-md-2">
 				<f:input path="dt" cssClass="form-control" readonly="true" />
 			</div>
-		</div>
-		<div class="form-group">
-			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
-			<div class="col-md-10">
+			<f:label path="tm" cssClass="col-md-1 control-label">時刻</f:label>
+			<div class="col-md-2">
 				<f:input path="tm" cssClass="form-control" readonly="true" />
 			</div>
-		</div>
-		<div class="form-group">
-			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
-			<div class="col-md-10">
+			<f:label path="dtm" cssClass="col-md-1 control-label">日時</f:label>
+			<div class="col-md-2">
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
