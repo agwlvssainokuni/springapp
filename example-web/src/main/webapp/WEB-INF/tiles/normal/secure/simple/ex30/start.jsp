@@ -173,7 +173,7 @@
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
 				</div>
-				<table id="searchResultList" class="table table-striped">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th></th>

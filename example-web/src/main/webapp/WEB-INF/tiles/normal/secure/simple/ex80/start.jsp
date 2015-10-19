@@ -174,7 +174,7 @@
 					</div>
 				</div>
 				<f:form servletRelativeAction="/secure/simple/ex81/" method="POST" modelAttribute="ex80to81Form">
-					<table id="searchResultList" class="table table-striped">
+					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th></th>
