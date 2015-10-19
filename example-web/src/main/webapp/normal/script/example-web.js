@@ -89,6 +89,16 @@ $(function() {
 		});
 	});
 
+	$(".ex-download-button").each(function(index) {
+		var form = $("button", this).data("form");
+		$("button", this).click(function(event) {
+			event.preventDefault();
+			$(form).append("<input type='hidden' name='download' />");
+			$(form).submit();
+			$("input[name='download']", $(form)).remove();
+		});
+	});
+
 	/**
 	 * Spring SecurityのCSRF検証対応。
 	 */

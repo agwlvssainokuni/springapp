@@ -16,12 +16,15 @@
 
 package cherry.example.web.simple.ex40;
 
+import static cherry.example.web.ParamDef.REQ_DOWNLOAD;
 import static cherry.example.web.ParamDef.REQ_REDIR;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.URI_SIMPLE_EX40;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -51,5 +54,9 @@ public interface Ex40Controller {
 	@RequestMapping(SUBURI_EXECUTE)
 	ModelAndView execute(@Validated() Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_DOWNLOAD)
+	ModelAndView download(@Validated() Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response);
 
 }

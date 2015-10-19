@@ -22,6 +22,8 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +101,20 @@ public class Ex40ControllerImpl implements Ex40Controller {
 		}
 
 		return renderStartView().addObject(pagedList).build();
+	}
+
+	@Override
+	public ModelAndView download(Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
+
+		if (hasErrors(form, binding)) {
+			return renderStartView().build();
+		}
+
+		adjustSortCondition(form);
+		service.downloadXlsx(form, response);
+
+		return null;
 	}
 
 	private ModelAndViewBuilder renderStartView() {

@@ -214,6 +214,11 @@
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex30Form2" pno="pno" />
 					</div>
 				</div>
+				<div>
+					<div class="col-md-2">
+						<ex:downloadButton form="#ex30Form2" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</c:if>

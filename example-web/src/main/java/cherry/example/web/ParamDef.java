@@ -25,6 +25,9 @@ public class ParamDef {
 	/** 画面遷移制御: 戻る */
 	public static final String REQ_BACK = "back";
 
+	/** 画面遷移制御: ダウンロード */
+	public static final String REQ_DOWNLOAD = "download";
+
 	// 画面引継項目
 	/** 画面引継項目: ID */
 	public static final String REQ_ID = "id";
