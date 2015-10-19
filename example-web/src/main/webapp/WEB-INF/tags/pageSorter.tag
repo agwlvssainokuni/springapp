@@ -8,7 +8,7 @@
 <%@ attribute name="sortOrder" required="true" rtexprvalue="true"%>
 <%@ attribute name="sortByItems" required="true" rtexprvalue="true" type="java.util.List"%>
 <%@ attribute name="cssClass" required="true" rtexprvalue="true"%>
-<div class="page-sorter form-inline">
+<div class="ex-page-sorter form-inline">
 	<div class="form-group">
 		<f:select path="${sortBy}" id="${sortBy}3" cssClass="${cssClass} form-control input-sm">
 			<f:options itemLabel="codeLabel" itemValue="codeValue" items="${sortByItems}" />

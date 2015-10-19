@@ -12,7 +12,7 @@ $(function() {
 	 * に合わせてページネーションリンクを形成する。<br>
 	 * http://getbootstrap.com/components/#pagination
 	 */
-	$(".pager-link").each(function(index) {
+	$(".ex-pager-link").each(function(index) {
 		var form = $(this).attr("data-form");
 		var pno = $(this).attr("data-pno");
 		var current = $(this).attr("data-current");
@@ -48,7 +48,7 @@ $(function() {
 		$(this).tab("show");
 	});
 
-	$(".page-size").each(function(index) {
+	$(".ex-page-size").each(function(index) {
 		var form = $("select", this).data("form");
 		var psz = $("select", this).data("psz");
 		var current = $("input[name='" + psz + "']", $(form)).val();
@@ -60,7 +60,7 @@ $(function() {
 		});
 	});
 
-	$(".refresh-button").each(function(index) {
+	$(".ex-refresh-button").each(function(index) {
 		var form = $("button", this).data("form");
 		var selector = $("button", this).data("selector");
 		$(selector).each(function(index) {

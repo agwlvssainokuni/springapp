@@ -6,7 +6,7 @@
 <%@ attribute name="pno" required="true" rtexprvalue="true"%>
 <%-- Bootstrap標準スタイル Pagination に合わせてページネーションリンクを形成する。 --%>
 <%-- http://getbootstrap.com/components/#pagination --%>
-<ul class="pager-link pagination" data-form="${form}" data-pno="${pno}" data-current="${pageSet.current.no+1}">
+<ul class="ex-pager-link pagination" data-form="${form}" data-pno="${pno}" data-current="${pageSet.current.no+1}">
 	<li class="edge"><a href="#" title="${pageSet.prev.no+1}">&laquo;</a></li>
 	<li class="edge"><a href="#" title="${pageSet.next.no+1}">&raquo;</a></li>
 	<c:choose>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ attribute name="form" required="true" rtexprvalue="true"%>
 <%@ attribute name="psz" required="true" rtexprvalue="true"%>
-<div class="page-size form-inline">
+<div class="ex-page-size form-inline">
 	<div class="form-group">
 		<select data-form="${form}" data-psz="${psz}" class="form-control input-sm">
 			<option value="10">10 件/頁</option>
