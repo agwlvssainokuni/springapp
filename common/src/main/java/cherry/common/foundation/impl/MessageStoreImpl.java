@@ -121,6 +121,7 @@ public class MessageStoreImpl implements MessageStore {
 
 		SQLUpdateClause update = queryFactory.update(ml);
 		update.set(ml.mailStatus, FlagCode.TRUE.code());
+		update.set(ml.sentAt, bizDateTime.now());
 		update.set(ml.lockVersion, ml.lockVersion.add(1));
 		update.where(ml.id.eq(messageId), ml.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		long count = update.execute();
