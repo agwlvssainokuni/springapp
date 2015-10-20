@@ -58,9 +58,10 @@ public class SendMailBatch implements IBatch {
 
 	@Override
 	public ExitStatus execute(String... args) {
+		sendMail();
 		while (!shutdownTrigger.exists()) {
-			sendMail();
 			sleep();
+			sendMail();
 		}
 		deleteShutdownTrigger();
 		return ExitStatus.NORMAL;

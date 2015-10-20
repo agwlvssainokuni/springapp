@@ -65,7 +65,7 @@ public class MessageStoreImpl implements MessageStore {
 	@Override
 	public List<Long> listMessage(LocalDateTime dtm) {
 		SQLQuery query = queryFactory.from(mq);
-		query.where(mq.scheduledAt.goe(dtm));
+		query.where(mq.scheduledAt.loe(dtm));
 		return query.list(mq.mailId);
 	}
 
