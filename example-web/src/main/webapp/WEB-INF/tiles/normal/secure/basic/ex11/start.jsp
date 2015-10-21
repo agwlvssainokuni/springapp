@@ -10,23 +10,23 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">基本画面遷移: 単票入力系1-変更入力</h2>
 <div class="panel-body">
-	<s:hasBindErrors name="ex10Form">
+	<s:hasBindErrors name="basicEx10Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex10Form" element="div" />
-				<f:errors path="ex10Form.text10" element="div" />
-				<f:errors path="ex10Form.text100" element="div" />
-				<f:errors path="ex10Form.int64" element="div" />
-				<f:errors path="ex10Form.decimal1" element="div" />
-				<f:errors path="ex10Form.decimal3" element="div" />
-				<f:errors path="ex10Form.dt" element="div" />
-				<f:errors path="ex10Form.tm" element="div" />
-				<f:errors path="ex10Form.dtm" element="div" />
+				<f:errors path="basicEx10Form" element="div" />
+				<f:errors path="basicEx10Form.text10" element="div" />
+				<f:errors path="basicEx10Form.text100" element="div" />
+				<f:errors path="basicEx10Form.int64" element="div" />
+				<f:errors path="basicEx10Form.decimal1" element="div" />
+				<f:errors path="basicEx10Form.decimal3" element="div" />
+				<f:errors path="basicEx10Form.dt" element="div" />
+				<f:errors path="basicEx10Form.tm" element="div" />
+				<f:errors path="basicEx10Form.dtm" element="div" />
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex11/confirm?id=${param.id}" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal"
-		role="form">
+	<f:form servletRelativeAction="/secure/basic/ex11/confirm?id=${param.id}" method="POST" modelAttribute="basicEx10Form"
+		cssClass="form-horizontal" role="form">
 		<f:hidden path="lockVersion" />
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>

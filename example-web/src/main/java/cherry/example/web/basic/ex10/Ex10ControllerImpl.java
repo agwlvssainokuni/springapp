@@ -59,13 +59,13 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -76,13 +76,13 @@ public class Ex10ControllerImpl implements Ex10Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -128,7 +128,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 				id).build();
 	}
 
-	private boolean hasErrors(Ex10Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx10Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -138,7 +138,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex10Form.dt"), LogicalErrorUtil.resolve("ex10Form.tm"));
+					LogicalErrorUtil.resolve("basicEx10Form.dt"), LogicalErrorUtil.resolve("basicEx10Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -148,7 +148,7 @@ public class Ex10ControllerImpl implements Ex10Controller {
 		// 整合性チェック
 		if (service.exists(form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex10Form.text10"));
+					LogicalErrorUtil.resolve("basicEx10Form.text10"));
 		}
 
 		if (binding.hasErrors()) {

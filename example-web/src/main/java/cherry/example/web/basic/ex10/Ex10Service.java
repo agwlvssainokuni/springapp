@@ -22,14 +22,14 @@ public interface Ex10Service {
 
 	boolean exists(String text10);
 
-	Long create(Ex10Form form);
+	Long create(BasicEx10Form form);
 
 	BExTbl1 findById(long id);
 
-	Ex10Form findFormById(long id);
+	BasicEx10Form findFormById(long id);
 
 	boolean exists(long id, String text10);
 
-	long update(long id, Ex10Form form);
+	long update(long id, BasicEx10Form form);
 
 }

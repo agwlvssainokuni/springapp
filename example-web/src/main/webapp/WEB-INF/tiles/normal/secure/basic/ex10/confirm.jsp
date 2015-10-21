@@ -10,7 +10,7 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">基本画面遷移: 単票入力系1-登録確認</h2>
 <div class="panel-body">
-	<f:form servletRelativeAction="/secure/basic/ex10/execute" method="POST" modelAttribute="ex10Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/basic/ex10/execute" method="POST" modelAttribute="basicEx10Form" cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>

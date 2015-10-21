@@ -45,7 +45,7 @@ public class Ex10ServiceImpl implements Ex10Service {
 
 	@Transactional
 	@Override
-	public Long create(Ex10Form form) {
+	public Long create(BasicEx10Form form) {
 		SQLInsertClause insert = qf.insert(et1);
 		if (StringUtils.isNotEmpty(form.getText10())) {
 			insert.set(et1.text10, form.getText10());
@@ -70,8 +70,8 @@ public class Ex10ServiceImpl implements Ex10Service {
 
 	@Transactional
 	@Override
-	public Ex10Form findFormById(long id) {
-		QBean<Ex10Form> qb = new QBean<>(Ex10Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
+	public BasicEx10Form findFormById(long id) {
+		QBean<BasicEx10Form> qb = new QBean<>(BasicEx10Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
 				et1.decimal3, et1.dt, et1.tm, et1.dtm, et1.lockVersion);
 		return qf.from(et1).where(et1.id.eq(id)).singleResult(qb);
 	}
@@ -84,7 +84,7 @@ public class Ex10ServiceImpl implements Ex10Service {
 
 	@Transactional
 	@Override
-	public long update(long id, Ex10Form form) {
+	public long update(long id, BasicEx10Form form) {
 		SQLUpdateClause update = qf.update(et1).where(et1.id.eq(id));
 		update.where(et1.lockVersion.eq(form.getLockVersion())).set(et1.lockVersion, et1.lockVersion.add(1));
 		if (StringUtils.isNotEmpty(form.getText10())) {

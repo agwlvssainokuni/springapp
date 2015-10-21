@@ -60,15 +60,15 @@ public class Ex11ControllerImpl implements Ex11Controller {
 	}
 
 	@Override
-	public ModelAndView start(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(long id, BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex10Form f = service.findFormById(id);
-		shouldExist(f, Ex10Form.class, id);
+		BasicEx10Form f = service.findFormById(id);
+		shouldExist(f, BasicEx10Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView confirm(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(long id, BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
@@ -79,13 +79,13 @@ public class Ex11ControllerImpl implements Ex11Controller {
 	}
 
 	@Override
-	public ModelAndView back(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(long id, BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(long id, Ex10Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(long id, BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
@@ -132,7 +132,7 @@ public class Ex11ControllerImpl implements Ex11Controller {
 				id).build();
 	}
 
-	private boolean hasErrors(long id, Ex10Form form, BindingResult binding) {
+	private boolean hasErrors(long id, BasicEx10Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -142,7 +142,7 @@ public class Ex11ControllerImpl implements Ex11Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex10Form.dt"), LogicalErrorUtil.resolve("ex10Form.tm"));
+					LogicalErrorUtil.resolve("basicEx10Form.dt"), LogicalErrorUtil.resolve("basicEx10Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -152,7 +152,7 @@ public class Ex11ControllerImpl implements Ex11Controller {
 		// 整合性チェック
 		if (service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex10Form.text10"));
+					LogicalErrorUtil.resolve("basicEx10Form.text10"));
 		}
 
 		if (binding.hasErrors()) {
