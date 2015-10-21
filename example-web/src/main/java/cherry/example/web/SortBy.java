@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.basic.ex60;
+package cherry.example.web;
 
 import cherry.foundation.type.Code;
 

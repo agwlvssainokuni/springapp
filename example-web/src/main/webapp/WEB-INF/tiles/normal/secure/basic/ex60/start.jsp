@@ -157,9 +157,9 @@
 					<div class="col-md-3">
 						<s:nestedPath path="ex60Form">
 							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort1.order" sortBy="sort1.by"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.basic.ex60.SortBy')}" />
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
 							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort2.order" sortBy="sort2.by"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.basic.ex60.SortBy')}" />
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">

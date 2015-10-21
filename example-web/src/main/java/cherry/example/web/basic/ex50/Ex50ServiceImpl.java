@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.db.gen.query.QExTbl1;
+import cherry.example.web.SortBy;
 import cherry.example.web.SortOrder;
 import cherry.example.web.SortParam;
 import cherry.foundation.bizdtm.BizDateTime;
