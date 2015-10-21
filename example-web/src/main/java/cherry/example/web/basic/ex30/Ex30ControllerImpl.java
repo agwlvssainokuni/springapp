@@ -66,7 +66,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
@@ -80,7 +80,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	}
 
 	@Override
-	public ModelAndView execute(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -106,7 +106,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 	}
 
 	@Override
-	public ModelAndView download(Ex30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView download(BasicEx30Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
@@ -131,7 +131,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		}
 	}
 
-	private boolean hasErrors(Ex30Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx30Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -142,22 +142,25 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		if (form.getDtFrom() != null && form.getDtTo() != null) {
 			if (form.getDtFrom().isAfter(form.getDtTo())) {
 				LogicalErrorUtil.rejectValue(binding, "dtFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex30Form.dtFrom"), LogicalErrorUtil.resolve("ex30Form.dtTo"));
+						LogicalErrorUtil.resolve("basicEx30Form.dtFrom"),
+						LogicalErrorUtil.resolve("basicEx30Form.dtTo"));
 			}
 		}
 		if (form.getTmFrom() != null && form.getTmTo() != null) {
 			if (form.getTmFrom().isAfter(form.getTmTo())) {
 				LogicalErrorUtil.rejectValue(binding, "tmFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex30Form.tmFrom"), LogicalErrorUtil.resolve("ex30Form.tmTo"));
+						LogicalErrorUtil.resolve("basicEx30Form.tmFrom"),
+						LogicalErrorUtil.resolve("basicEx30Form.tmTo"));
 			}
 		}
 		if (form.getDtmFromD() == null && form.getDtmFromT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex30Form.dtmFromD"), LogicalErrorUtil.resolve("ex30Form.dtmFromT"));
+					LogicalErrorUtil.resolve("basicEx30Form.dtmFromD"),
+					LogicalErrorUtil.resolve("basicEx30Form.dtmFromT"));
 		}
 		if (form.getDtmToD() == null && form.getDtmToT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmToD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex30Form.dtmToD"), LogicalErrorUtil.resolve("ex30Form.dtmToT"));
+					LogicalErrorUtil.resolve("basicEx30Form.dtmToD"), LogicalErrorUtil.resolve("basicEx30Form.dtmToT"));
 		}
 		if (form.getDtmFromD() != null && form.getDtmFromT() != null && form.getDtmToD() != null
 				&& form.getDtmToT() != null) {
@@ -165,7 +168,8 @@ public class Ex30ControllerImpl implements Ex30Controller {
 			LocalDateTime dtmTo = form.getDtmToD().toLocalDateTime(form.getDtmToT());
 			if (dtmFrom.isAfter(dtmTo)) {
 				LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex30Form.dtmFromD"), LogicalErrorUtil.resolve("ex30Form.dtmToD"));
+						LogicalErrorUtil.resolve("basicEx30Form.dtmFromD"),
+						LogicalErrorUtil.resolve("basicEx30Form.dtmToD"));
 			}
 		}
 
@@ -178,7 +182,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		return false;
 	}
 
-	private void adjustSortCondition(Ex30Form form) {
+	private void adjustSortCondition(BasicEx30Form form) {
 
 		if (form.getSort1() == null) {
 			form.setSort1(new SortParam());

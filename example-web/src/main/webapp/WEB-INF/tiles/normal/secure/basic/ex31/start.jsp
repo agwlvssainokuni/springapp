@@ -15,23 +15,23 @@
 		<li><a href="${baseUri}/basic/ex31/?id=${param.id}&redir=/secure/basic/ex30/start">検索条件入力へ戻る(維持)</a></li>
 		<li><a href="${baseUri}/basic/ex31/?id=${param.id}&redir=/secure/basic/ex30/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<s:hasBindErrors name="ex31Form">
+	<s:hasBindErrors name="basicEx31Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex31Form" element="div" />
-				<f:errors path="ex31Form.text10" element="div" />
-				<f:errors path="ex31Form.text100" element="div" />
-				<f:errors path="ex31Form.int64" element="div" />
-				<f:errors path="ex31Form.decimal1" element="div" />
-				<f:errors path="ex31Form.decimal3" element="div" />
-				<f:errors path="ex31Form.dt" element="div" />
-				<f:errors path="ex31Form.tm" element="div" />
-				<f:errors path="ex31Form.dtm" element="div" />
+				<f:errors path="basicEx31Form" element="div" />
+				<f:errors path="basicEx31Form.text10" element="div" />
+				<f:errors path="basicEx31Form.text100" element="div" />
+				<f:errors path="basicEx31Form.int64" element="div" />
+				<f:errors path="basicEx31Form.decimal1" element="div" />
+				<f:errors path="basicEx31Form.decimal3" element="div" />
+				<f:errors path="basicEx31Form.dt" element="div" />
+				<f:errors path="basicEx31Form.tm" element="div" />
+				<f:errors path="basicEx31Form.dtm" element="div" />
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex31/confirm?id=${param.id}" method="POST" modelAttribute="ex31Form" cssClass="form-horizontal"
-		role="form">
+	<f:form servletRelativeAction="/secure/basic/ex31/confirm?id=${param.id}" method="POST" modelAttribute="basicEx31Form"
+		cssClass="form-horizontal" role="form">
 		<f:hidden path="lockVersion" />
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>

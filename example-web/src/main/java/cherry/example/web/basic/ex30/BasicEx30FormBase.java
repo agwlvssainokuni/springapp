@@ -47,7 +47,7 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex30FormBase implements Serializable {
+public class BasicEx30FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -15,8 +15,8 @@
 		<li><a href="${baseUri}/basic/ex31/?id=${param.id}&redir=/secure/basic/ex30/start">検索条件入力へ戻る(維持)</a></li>
 		<li><a href="${baseUri}/basic/ex31/?id=${param.id}&redir=/secure/basic/ex30/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<f:form servletRelativeAction="/secure/basic/ex31/execute?id=${param.id}" method="POST" modelAttribute="ex31Form" cssClass="form-horizontal"
-		role="form">
+	<f:form servletRelativeAction="/secure/basic/ex31/execute?id=${param.id}" method="POST" modelAttribute="basicEx31Form"
+		cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
 		<f:hidden path="lockVersion" />
 		<div class="form-group">

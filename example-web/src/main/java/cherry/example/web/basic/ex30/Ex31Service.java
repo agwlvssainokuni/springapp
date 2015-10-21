@@ -22,10 +22,10 @@ public interface Ex31Service {
 
 	BExTbl1 findById(long id);
 
-	Ex31Form findFormById(long id);
+	BasicEx31Form findFormById(long id);
 
 	boolean exists(long id, String text10);
 
-	long update(long id, Ex31Form form);
+	long update(long id, BasicEx31Form form);
 
 }
