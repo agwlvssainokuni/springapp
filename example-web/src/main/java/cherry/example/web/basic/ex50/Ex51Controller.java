@@ -42,19 +42,19 @@ public interface Ex51Controller {
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView start(@Validated() BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 }

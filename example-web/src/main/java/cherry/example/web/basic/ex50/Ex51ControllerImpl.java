@@ -57,7 +57,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex50to51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		if (binding.hasErrors()) {
 			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
@@ -66,7 +66,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		if (id.isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
 		}
-		Ex51Form f = createForm(id);
+		BasicEx51Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
 		}
@@ -74,7 +74,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	}
 
 	@Override
-	public ModelAndView confirm(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -85,13 +85,13 @@ public class Ex51ControllerImpl implements Ex51Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex51Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -110,7 +110,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		}
 
 		List<Long> id = getId(form);
-		Ex51Form f = new Ex51Form();
+		BasicEx51Form f = new BasicEx51Form();
 		f.setItem(service.search(id));
 
 		return renderWithoutView().addObject(f).build();
@@ -136,7 +136,7 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		return fromMethodCall(on(Ex50Controller.class).execute(null, null, null, null, null, null)).build();
 	}
 
-	private boolean hasErrors(Ex51Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx51Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -154,9 +154,9 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		return false;
 	}
 
-	private List<Long> getCheckedId(Ex50to51Form form) {
+	private List<Long> getCheckedId(BasicEx50to51Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (Ex50to51SubForm subform : form.getItem()) {
+		for (BasicEx50to51SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
 				l.add(subform.getId());
 			}
@@ -164,16 +164,16 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		return l;
 	}
 
-	private List<Long> getId(Ex51Form form) {
+	private List<Long> getId(BasicEx51Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (Ex51SubForm subform : form.getItem()) {
+		for (BasicEx51SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
 		return l;
 	}
 
-	private Ex51Form createForm(List<Long> id) {
-		Ex51Form f = new Ex51Form();
+	private BasicEx51Form createForm(List<Long> id) {
+		BasicEx51Form f = new BasicEx51Form();
 		f.setItem(service.search(id));
 		return f;
 	}

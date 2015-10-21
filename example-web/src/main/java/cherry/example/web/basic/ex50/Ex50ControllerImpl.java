@@ -68,7 +68,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex50Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
@@ -82,7 +82,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 	}
 
 	@Override
-	public ModelAndView execute(Ex50Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -104,14 +104,14 @@ public class Ex50ControllerImpl implements Ex50Controller {
 			return renderStartView().build();
 		}
 
-		Ex50to51Form f = new Ex50to51Form();
+		BasicEx50to51Form f = new BasicEx50to51Form();
 		f.setItem(createForm(pagedList.getList()));
 
 		return renderStartView().addObject(pagedList).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView download(Ex50Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView download(BasicEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
@@ -136,7 +136,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		}
 	}
 
-	private boolean hasErrors(Ex50Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx50Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -147,22 +147,25 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		if (form.getDtFrom() != null && form.getDtTo() != null) {
 			if (form.getDtFrom().isAfter(form.getDtTo())) {
 				LogicalErrorUtil.rejectValue(binding, "dtFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.dtFrom"), LogicalErrorUtil.resolve("ex40Form.dtTo"));
+						LogicalErrorUtil.resolve("basicEx50Form.dtFrom"),
+						LogicalErrorUtil.resolve("basicEx50Form.dtTo"));
 			}
 		}
 		if (form.getTmFrom() != null && form.getTmTo() != null) {
 			if (form.getTmFrom().isAfter(form.getTmTo())) {
 				LogicalErrorUtil.rejectValue(binding, "tmFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.tmFrom"), LogicalErrorUtil.resolve("ex40Form.tmTo"));
+						LogicalErrorUtil.resolve("basicEx50Form.tmFrom"),
+						LogicalErrorUtil.resolve("basicEx50Form.tmTo"));
 			}
 		}
 		if (form.getDtmFromD() == null && form.getDtmFromT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex40Form.dtmFromD"), LogicalErrorUtil.resolve("ex40Form.dtmFromT"));
+					LogicalErrorUtil.resolve("basicEx50Form.dtmFromD"),
+					LogicalErrorUtil.resolve("basicEx50Form.dtmFromT"));
 		}
 		if (form.getDtmToD() == null && form.getDtmToT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmToD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex40Form.dtmToD"), LogicalErrorUtil.resolve("ex40Form.dtmToT"));
+					LogicalErrorUtil.resolve("basicEx50Form.dtmToD"), LogicalErrorUtil.resolve("basicEx50Form.dtmToT"));
 		}
 		if (form.getDtmFromD() != null && form.getDtmFromT() != null && form.getDtmToD() != null
 				&& form.getDtmToT() != null) {
@@ -170,7 +173,8 @@ public class Ex50ControllerImpl implements Ex50Controller {
 			LocalDateTime dtmTo = form.getDtmToD().toLocalDateTime(form.getDtmToT());
 			if (dtmFrom.isAfter(dtmTo)) {
 				LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.dtmFromD"), LogicalErrorUtil.resolve("ex40Form.dtmToD"));
+						LogicalErrorUtil.resolve("basicEx50Form.dtmFromD"),
+						LogicalErrorUtil.resolve("basicEx50Form.dtmToD"));
 			}
 		}
 
@@ -183,7 +187,7 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		return false;
 	}
 
-	private void adjustSortCondition(Ex50Form form) {
+	private void adjustSortCondition(BasicEx50Form form) {
 
 		if (form.getSort1() == null) {
 			form.setSort1(new SortParam());
@@ -206,10 +210,10 @@ public class Ex50ControllerImpl implements Ex50Controller {
 		}
 	}
 
-	private List<Ex50to51SubForm> createForm(List<BExTbl1> list) {
-		List<Ex50to51SubForm> l = new ArrayList<>(list.size());
+	private List<BasicEx50to51SubForm> createForm(List<BExTbl1> list) {
+		List<BasicEx50to51SubForm> l = new ArrayList<>(list.size());
 		for (BExTbl1 t : list) {
-			Ex50to51SubForm f = new Ex50to51SubForm();
+			BasicEx50to51SubForm f = new BasicEx50to51SubForm();
 			f.setId(t.getId());
 			f.setChecked(Boolean.FALSE);
 			l.add(f);

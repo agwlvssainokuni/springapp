@@ -15,12 +15,12 @@
 		<li><a href="${baseUri}/basic/ex51/?redir=/secure/basic/ex50/start">検索条件入力へ戻る(維持)</a></li>
 		<li><a href="${baseUri}/basic/ex51/?redir=/secure/basic/ex50/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<s:hasBindErrors name="ex51Form">
+	<s:hasBindErrors name="basicEx51Form">
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex51Form" element="div" />
-				<c:forEach var="count" begin="0" end="${ex51Form.item.size()-1}">
-					<s:nestedPath path="ex51Form.item[${count}]">
+				<f:errors path="basicEx51Form" element="div" />
+				<c:forEach var="count" begin="0" end="${basicEx51Form.item.size()-1}">
+					<s:nestedPath path="basicEx51Form.item[${count}]">
 						<f:errors path="text10" element="div" />
 						<f:errors path="text100" element="div" />
 						<f:errors path="int64" element="div" />
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex51/confirm" method="POST" modelAttribute="ex51Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/basic/ex51/confirm" method="POST" modelAttribute="basicEx51Form" cssClass="form-horizontal" role="form">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -50,7 +50,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex51Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${basicEx51Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>

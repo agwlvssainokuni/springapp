@@ -36,8 +36,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex51Form.item.size()-1}">
-					<s:nestedPath path="ex51Form.item[${count}]">
+				<c:forEach var="count" begin="0" end="${basicEx51Form.item.size()-1}">
+					<s:nestedPath path="basicEx51Form.item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>
 							<td class="text-right"><foundation:render value="${r.id}" /> <f:hidden path="id" /></td>
