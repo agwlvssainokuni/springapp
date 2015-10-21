@@ -19,10 +19,12 @@ package cherry.example.web.basic.ex30;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +36,7 @@ import org.joda.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import cherry.example.web.SortParam;
 import cherry.foundation.validator.CharTypeAlphaNumeric;
 import cherry.foundation.validator.JodaTimeMax;
 import cherry.foundation.validator.JodaTimeMin;
@@ -124,13 +127,13 @@ public class Ex30FormBase implements Serializable {
 	@JodaTimeMax("23:59:59")
 	private LocalTime dtmToT;
 
-	private String sortBy1;
+	@NotNull()
+	@Valid()
+	private SortParam sort1;
 
-	private String sortOrder1;
-
-	private String sortBy2;
-
-	private String sortOrder2;
+	@NotNull()
+	@Valid()
+	private SortParam sort2;
 
 	private long pno = 0L;
 

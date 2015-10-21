@@ -9,7 +9,7 @@
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
 <c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
-<h2 class="page-header">基本画面遷移: 一括変更系1-検索条件結果一覧</h2>
+<h2 class="page-header">基本画面遷移: 一括変更系2-検索条件結果一覧</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -41,10 +41,10 @@
 				</div>
 			</s:hasBindErrors>
 			<f:form servletRelativeAction="/secure/basic/ex60/execute" method="POST" modelAttribute="ex60Form" cssClass="form-horizontal" role="form">
-				<f:hidden path="sortBy1" />
-				<f:hidden path="sortOrder1" />
-				<f:hidden path="sortBy2" />
-				<f:hidden path="sortOrder2" />
+				<f:hidden path="sort1.by" />
+				<f:hidden path="sort1.order" />
+				<f:hidden path="sort2.by" />
+				<f:hidden path="sort2.order" />
 				<f:hidden path="pno" />
 				<f:hidden path="psz" />
 				<div class="form-group">
@@ -131,10 +131,10 @@
 			</div>
 			<div class="panel-body">
 				<f:form servletRelativeAction="/secure/basic/ex60/execute" method="POST" modelAttribute="ex60Form" id="ex60Form2">
-					<f:hidden path="sortBy1" id="sortBy12" />
-					<f:hidden path="sortOrder1" id="sortOrder12" />
-					<f:hidden path="sortBy2" id="sortBy22" />
-					<f:hidden path="sortOrder2" id="sortOrder22" />
+					<f:hidden path="sort1.by" id="sort1by2" />
+					<f:hidden path="sort1.order" id="sort1order2" />
+					<f:hidden path="sort2.by" id="sort2by2" />
+					<f:hidden path="sort2.order" id="sort2order2" />
 					<f:hidden path="pno" id="pno2" />
 					<f:hidden path="psz" id="psz2" />
 					<f:hidden path="text10" id="text102" />
@@ -156,10 +156,10 @@
 				<div>
 					<div class="col-md-3">
 						<s:nestedPath path="ex60Form">
-							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sortOrder1" sortBy="sortBy1"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex60.SortBy')}" />
-							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sortOrder2" sortBy="sortBy2"
-								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.simple.ex60.SortBy')}" />
+							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort1.order" sortBy="sort1.by"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.basic.ex60.SortBy')}" />
+							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort2.order" sortBy="sort2.by"
+								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.basic.ex60.SortBy')}" />
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">

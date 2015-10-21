@@ -41,6 +41,8 @@ import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.Config;
 import cherry.example.web.LogicalError;
 import cherry.example.web.SortOrder;
+import cherry.example.web.SortParam;
+import cherry.example.web.basic.ex50.SortBy;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
@@ -177,17 +179,25 @@ public class Ex40ControllerImpl implements Ex40Controller {
 	}
 
 	private void adjustSortCondition(Ex40Form form) {
-		if (form.getSortBy1() == null) {
-			form.setSortBy1(SortBy.ID.code());
+
+		if (form.getSort1() == null) {
+			form.setSort1(new SortParam());
 		}
-		if (form.getSortOrder1() == null) {
-			form.setSortOrder1(SortOrder.ASC.name());
+		if (form.getSort1().getBy() == null) {
+			form.getSort1().setBy(SortBy.ID.code());
 		}
-		if (form.getSortBy2() == null) {
-			form.setSortBy2(SortBy.TEXT10.code());
+		if (form.getSort1().getOrder() == null) {
+			form.getSort1().setOrder(SortOrder.ASC);
 		}
-		if (form.getSortOrder2() == null) {
-			form.setSortOrder2(SortOrder.ASC.name());
+
+		if (form.getSort2() == null) {
+			form.setSort2(new SortParam());
+		}
+		if (form.getSort2().getBy() == null) {
+			form.getSort2().setBy(SortBy.TEXT10.code());
+		}
+		if (form.getSort2().getOrder() == null) {
+			form.getSort2().setOrder(SortOrder.ASC);
 		}
 	}
 

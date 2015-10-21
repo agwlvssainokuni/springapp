@@ -31,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.db.gen.query.QExTbl1;
 import cherry.example.web.SortOrder;
+import cherry.example.web.SortParam;
+import cherry.example.web.basic.ex50.SortBy;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.download.TableDownloadOperation;
 import cherry.foundation.querydsl.QueryConfigurer;
@@ -127,17 +129,16 @@ public class Ex60ServiceImpl implements Ex60Service {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
-				query.orderBy(createOrderSpec(form.getSortBy1(), form.getSortOrder1()));
-				query.orderBy(createOrderSpec(form.getSortBy2(), form.getSortOrder2()));
+				query.orderBy(createOrderSpec(form.getSort1()));
+				query.orderBy(createOrderSpec(form.getSort2()));
 				return query;
 			}
 		};
 	}
 
-	private OrderSpecifier<?> createOrderSpec(String by, String order) {
+	private OrderSpecifier<?> createOrderSpec(SortParam sort) {
 
-		SortBy sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(by);
-		SortOrder sortOrder = (order == null ? SortOrder.ASC : SortOrder.valueOf(order));
+		SortBy sortBy = EnumCodeUtil.getCodeMap(SortBy.class, SortBy.ID).get(sort.getBy());
 
 		ComparableExpressionBase<?> sortKey;
 		if (sortBy == SortBy.ID) {
@@ -160,9 +161,9 @@ public class Ex60ServiceImpl implements Ex60Service {
 			sortKey = et1.id;
 		}
 
-		if (sortOrder == SortOrder.ASC) {
+		if (sort.getOrder() == SortOrder.ASC) {
 			return sortKey.asc();
-		} else if (sortOrder == SortOrder.DESC) {
+		} else if (sort.getOrder() == SortOrder.DESC) {
 			return sortKey.desc();
 		} else {
 			return sortKey.asc();
