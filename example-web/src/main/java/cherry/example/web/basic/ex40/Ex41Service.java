@@ -18,10 +18,10 @@ package cherry.example.web.basic.ex40;
 
 public interface Ex41Service {
 
-	Ex41Form findById(long id);
+	BasicEx41Form findById(long id);
 
 	boolean exists(long id, String text10);
 
-	long update(long id, Ex41Form form);
+	long update(long id, BasicEx41Form form);
 
 }

@@ -37,8 +37,8 @@ public class Ex41ServiceImpl implements Ex41Service {
 
 	@Transactional
 	@Override
-	public Ex41Form findById(long id) {
-		QBean<Ex41Form> qb = new QBean<>(Ex41Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
+	public BasicEx41Form findById(long id) {
+		QBean<BasicEx41Form> qb = new QBean<>(BasicEx41Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
 				et1.decimal3, et1.dt, et1.tm, et1.dtm, et1.lockVersion);
 		return qf.from(et1).where(et1.id.eq(id)).singleResult(qb);
 	}
@@ -51,7 +51,7 @@ public class Ex41ServiceImpl implements Ex41Service {
 
 	@Transactional
 	@Override
-	public long update(long id, Ex41Form form) {
+	public long update(long id, BasicEx41Form form) {
 		SQLUpdateClause update = qf.update(et1).where(et1.id.eq(id));
 		update.where(et1.lockVersion.eq(form.getLockVersion())).set(et1.lockVersion, et1.lockVersion.add(1));
 		if (StringUtils.isNotEmpty(form.getText10())) {

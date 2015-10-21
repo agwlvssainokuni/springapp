@@ -45,7 +45,7 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex41FormBase {
+public class BasicEx41FormBase {
 
 	@NotEmpty()
 	@MaxLength(10)

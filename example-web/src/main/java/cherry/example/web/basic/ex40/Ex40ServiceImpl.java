@@ -64,19 +64,19 @@ public class Ex40ServiceImpl implements Ex40Service {
 
 	@Transactional
 	@Override
-	public PagedList<BExTbl1> search(Ex40Form form) {
+	public PagedList<BExTbl1> search(BasicEx40Form form) {
 		return queryDslSupport.search(commonClause(form), orderByClause(form), form.getPno(), form.getPsz(), et1);
 	}
 
 	@Transactional
 	@Override
-	public void downloadXlsx(Ex40Form form, HttpServletResponse response) {
+	public void downloadXlsx(BasicEx40Form form, HttpServletResponse response) {
 		LocalDateTime now = bizDateTime.now();
 		tableDownloadOperation.downloadXlsx(response, filename, now, header, commonClause(form), orderByClause(form),
 				et1.id, et1.text10, et1.text100, et1.int64, et1.decimal1, et1.decimal3, et1.dt, et1.tm, et1.dtm);
 	}
 
-	private QueryConfigurer commonClause(final Ex40Form form) {
+	private QueryConfigurer commonClause(final BasicEx40Form form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
@@ -125,7 +125,7 @@ public class Ex40ServiceImpl implements Ex40Service {
 		};
 	}
 
-	private QueryConfigurer orderByClause(final Ex40Form form) {
+	private QueryConfigurer orderByClause(final BasicEx40Form form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {

@@ -29,23 +29,23 @@
 			<div class="alert alert-info" role="alert">変更しました。</div>
 		</div>
 	</c:if>
-	<s:hasBindErrors name="ex41Form">
+	<s:hasBindErrors name="basicEx41Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex41Form" element="div" />
-				<f:errors path="ex41Form.text10" element="div" />
-				<f:errors path="ex41Form.text100" element="div" />
-				<f:errors path="ex41Form.int64" element="div" />
-				<f:errors path="ex41Form.decimal1" element="div" />
-				<f:errors path="ex41Form.decimal3" element="div" />
-				<f:errors path="ex41Form.dt" element="div" />
-				<f:errors path="ex41Form.tm" element="div" />
-				<f:errors path="ex41Form.dtm" element="div" />
+				<f:errors path="basicEx41Form" element="div" />
+				<f:errors path="basicEx41Form.text10" element="div" />
+				<f:errors path="basicEx41Form.text100" element="div" />
+				<f:errors path="basicEx41Form.int64" element="div" />
+				<f:errors path="basicEx41Form.decimal1" element="div" />
+				<f:errors path="basicEx41Form.decimal3" element="div" />
+				<f:errors path="basicEx41Form.dt" element="div" />
+				<f:errors path="basicEx41Form.tm" element="div" />
+				<f:errors path="basicEx41Form.dtm" element="div" />
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex41/confirm?id=${param.id}" method="POST" modelAttribute="ex41Form" cssClass="form-horizontal"
-		role="form">
+	<f:form servletRelativeAction="/secure/basic/ex41/confirm?id=${param.id}" method="POST" modelAttribute="basicEx41Form"
+		cssClass="form-horizontal" role="form">
 		<f:hidden path="lockVersion" />
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>

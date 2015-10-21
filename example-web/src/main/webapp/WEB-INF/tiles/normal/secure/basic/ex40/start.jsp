@@ -18,29 +18,30 @@
 			</h3>
 		</div>
 		<div id="searchForm" class="panel-body panel-collapse collapse ${hasResultList ? '' : 'in'}">
-			<s:hasBindErrors name="ex40Form">
+			<s:hasBindErrors name="basicEx40Form">
 				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
-						<f:errors path="ex40Form" element="div" />
-						<f:errors path="ex40Form.text10" element="div" />
-						<f:errors path="ex40Form.int64From" element="div" />
-						<f:errors path="ex40Form.int64To" element="div" />
-						<f:errors path="ex40Form.decimal1From" element="div" />
-						<f:errors path="ex40Form.decimal1To" element="div" />
-						<f:errors path="ex40Form.decimal3From" element="div" />
-						<f:errors path="ex40Form.decimal3To" element="div" />
-						<f:errors path="ex40Form.dtFrom" element="div" />
-						<f:errors path="ex40Form.dtTo" element="div" />
-						<f:errors path="ex40Form.tmFrom" element="div" />
-						<f:errors path="ex40Form.tmTo" element="div" />
-						<f:errors path="ex40Form.dtmFromD" element="div" />
-						<f:errors path="ex40Form.dtmFromT" element="div" />
-						<f:errors path="ex40Form.dtmToD" element="div" />
-						<f:errors path="ex40Form.dtmToT" element="div" />
+						<f:errors path="basicEx40Form" element="div" />
+						<f:errors path="basicEx40Form.text10" element="div" />
+						<f:errors path="basicEx40Form.int64From" element="div" />
+						<f:errors path="basicEx40Form.int64To" element="div" />
+						<f:errors path="basicEx40Form.decimal1From" element="div" />
+						<f:errors path="basicEx40Form.decimal1To" element="div" />
+						<f:errors path="basicEx40Form.decimal3From" element="div" />
+						<f:errors path="basicEx40Form.decimal3To" element="div" />
+						<f:errors path="basicEx40Form.dtFrom" element="div" />
+						<f:errors path="basicEx40Form.dtTo" element="div" />
+						<f:errors path="basicEx40Form.tmFrom" element="div" />
+						<f:errors path="basicEx40Form.tmTo" element="div" />
+						<f:errors path="basicEx40Form.dtmFromD" element="div" />
+						<f:errors path="basicEx40Form.dtmFromT" element="div" />
+						<f:errors path="basicEx40Form.dtmToD" element="div" />
+						<f:errors path="basicEx40Form.dtmToT" element="div" />
 					</div>
 				</div>
 			</s:hasBindErrors>
-			<f:form servletRelativeAction="/secure/basic/ex40/execute" method="POST" modelAttribute="ex40Form" cssClass="form-horizontal" role="form">
+			<f:form servletRelativeAction="/secure/basic/ex40/execute" method="POST" modelAttribute="basicEx40Form" cssClass="form-horizontal"
+				role="form">
 				<f:hidden path="sort1.by" />
 				<f:hidden path="sort1.order" />
 				<f:hidden path="sort2.by" />
@@ -130,7 +131,7 @@
 				<h3 class="panel-title">検索結果一覧</h3>
 			</div>
 			<div class="panel-body">
-				<f:form servletRelativeAction="/secure/basic/ex40/execute" method="POST" modelAttribute="ex40Form" id="ex40Form2">
+				<f:form servletRelativeAction="/secure/basic/ex40/execute" method="POST" modelAttribute="basicEx40Form" id="basicEx40Form2">
 					<f:hidden path="sort1.by" id="sort1by2" />
 					<f:hidden path="sort1.order" id="sort1order2" />
 					<f:hidden path="sort2.by" id="sort2by2" />
@@ -155,7 +156,7 @@
 				</f:form>
 				<div>
 					<div class="col-md-3">
-						<s:nestedPath path="ex40Form">
+						<s:nestedPath path="basicEx40Form">
 							<ex:pageSorter cssClass="ex40Sorter" sortOrder="sort1.order" sortBy="sort1.by"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
 							<ex:pageSorter cssClass="ex40Sorter" sortOrder="sort2.order" sortBy="sort2.by"
@@ -163,14 +164,14 @@
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">
-						<ex:refreshButton selector=".ex40Sorter" form="#ex40Form2" />
+						<ex:refreshButton selector=".ex40Sorter" form="#basicEx40Form2" />
 					</div>
 					<div class="col-md-offset-1 col-md-7 text-right">
 						<div>
 							<ex:pagerDesc pageSet="${pagedList.pageSet}" />
-							<ex:pageSize form="#ex40Form2" psz="psz" />
+							<ex:pageSize form="#basicEx40Form2" psz="psz" />
 						</div>
-						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex40Form2" pno="pno" />
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx40Form2" pno="pno" />
 					</div>
 				</div>
 				<table class="table table-striped">
@@ -211,12 +212,12 @@
 				</table>
 				<div>
 					<div class="col-md-offset-5 col-md-7 text-right">
-						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex40Form2" pno="pno" />
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx40Form2" pno="pno" />
 					</div>
 				</div>
 				<div>
 					<div class="col-md-2">
-						<ex:downloadButton form="#ex40Form2" />
+						<ex:downloadButton form="#basicEx40Form2" />
 					</div>
 				</div>
 			</div>

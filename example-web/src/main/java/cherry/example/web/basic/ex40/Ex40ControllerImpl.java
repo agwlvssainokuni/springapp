@@ -66,7 +66,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
@@ -80,7 +80,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 	}
 
 	@Override
-	public ModelAndView execute(Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -106,7 +106,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 	}
 
 	@Override
-	public ModelAndView download(Ex40Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView download(BasicEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
@@ -131,7 +131,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 		}
 	}
 
-	private boolean hasErrors(Ex40Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx40Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -142,22 +142,25 @@ public class Ex40ControllerImpl implements Ex40Controller {
 		if (form.getDtFrom() != null && form.getDtTo() != null) {
 			if (form.getDtFrom().isAfter(form.getDtTo())) {
 				LogicalErrorUtil.rejectValue(binding, "dtFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.dtFrom"), LogicalErrorUtil.resolve("ex40Form.dtTo"));
+						LogicalErrorUtil.resolve("basicEx40Form.dtFrom"),
+						LogicalErrorUtil.resolve("basicEx40Form.dtTo"));
 			}
 		}
 		if (form.getTmFrom() != null && form.getTmTo() != null) {
 			if (form.getTmFrom().isAfter(form.getTmTo())) {
 				LogicalErrorUtil.rejectValue(binding, "tmFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.tmFrom"), LogicalErrorUtil.resolve("ex40Form.tmTo"));
+						LogicalErrorUtil.resolve("basicEx40Form.tmFrom"),
+						LogicalErrorUtil.resolve("basicEx40Form.tmTo"));
 			}
 		}
 		if (form.getDtmFromD() == null && form.getDtmFromT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex40Form.dtmFromD"), LogicalErrorUtil.resolve("ex40Form.dtmFromT"));
+					LogicalErrorUtil.resolve("basicEx40Form.dtmFromD"),
+					LogicalErrorUtil.resolve("basicEx40Form.dtmFromT"));
 		}
 		if (form.getDtmToD() == null && form.getDtmToT() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dtmToD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex40Form.dtmToD"), LogicalErrorUtil.resolve("ex40Form.dtmToT"));
+					LogicalErrorUtil.resolve("basicEx40Form.dtmToD"), LogicalErrorUtil.resolve("basicEx40Form.dtmToT"));
 		}
 		if (form.getDtmFromD() != null && form.getDtmFromT() != null && form.getDtmToD() != null
 				&& form.getDtmToT() != null) {
@@ -165,7 +168,8 @@ public class Ex40ControllerImpl implements Ex40Controller {
 			LocalDateTime dtmTo = form.getDtmToD().toLocalDateTime(form.getDtmToT());
 			if (dtmFrom.isAfter(dtmTo)) {
 				LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("ex40Form.dtmFromD"), LogicalErrorUtil.resolve("ex40Form.dtmToD"));
+						LogicalErrorUtil.resolve("basicEx40Form.dtmFromD"),
+						LogicalErrorUtil.resolve("basicEx40Form.dtmToD"));
 			}
 		}
 
@@ -178,7 +182,7 @@ public class Ex40ControllerImpl implements Ex40Controller {
 		return false;
 	}
 
-	private void adjustSortCondition(Ex40Form form) {
+	private void adjustSortCondition(BasicEx40Form form) {
 
 		if (form.getSort1() == null) {
 			form.setSort1(new SortParam());
