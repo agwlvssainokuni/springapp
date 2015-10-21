@@ -59,13 +59,13 @@ public class Ex20ControllerImpl implements Ex20Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -76,13 +76,13 @@ public class Ex20ControllerImpl implements Ex20Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
@@ -122,7 +122,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private boolean hasErrors(Ex20Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx20Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -132,7 +132,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex20Form.dt"), LogicalErrorUtil.resolve("ex20Form.tm"));
+					LogicalErrorUtil.resolve("basicEx20Form.dt"), LogicalErrorUtil.resolve("basicEx20Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -142,7 +142,7 @@ public class Ex20ControllerImpl implements Ex20Controller {
 		// 整合性チェック
 		if (service.exists(form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex20Form.text10"));
+					LogicalErrorUtil.resolve("basicEx20Form.text10"));
 		}
 
 		if (binding.hasErrors()) {

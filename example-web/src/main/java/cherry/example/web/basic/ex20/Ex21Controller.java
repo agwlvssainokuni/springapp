@@ -46,19 +46,19 @@ public interface Ex21Controller {
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@RequestParam(REQ_ID) long id, @Validated(G9.class) Ex20Form form, BindingResult binding,
+	ModelAndView start(@RequestParam(REQ_ID) long id, @Validated(G9.class) BasicEx20Form form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@RequestParam(REQ_ID) long id, @Validated() Ex20Form form, BindingResult binding,
+	ModelAndView confirm(@RequestParam(REQ_ID) long id, @Validated() BasicEx20Form form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@RequestParam(REQ_ID) long id, @Validated() Ex20Form form, BindingResult binding,
+	ModelAndView back(@RequestParam(REQ_ID) long id, @Validated() BasicEx20Form form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@RequestParam(REQ_ID) long id, @Validated() Ex20Form form, BindingResult binding,
+	ModelAndView execute(@RequestParam(REQ_ID) long id, @Validated() BasicEx20Form form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr);
 

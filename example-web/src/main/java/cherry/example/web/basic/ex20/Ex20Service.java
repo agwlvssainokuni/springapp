@@ -20,12 +20,12 @@ public interface Ex20Service {
 
 	boolean exists(String text10);
 
-	Long create(Ex20Form form);
+	Long create(BasicEx20Form form);
 
-	Ex20Form findById(long id);
+	BasicEx20Form findById(long id);
 
 	boolean exists(long id, String text10);
 
-	long update(long id, Ex20Form form);
+	long update(long id, BasicEx20Form form);
 
 }

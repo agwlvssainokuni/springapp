@@ -60,15 +60,15 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	}
 
 	@Override
-	public ModelAndView start(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(long id, BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		Ex20Form f = service.findById(id);
-		shouldExist(f, Ex20Form.class, id);
+		BasicEx20Form f = service.findById(id);
+		shouldExist(f, BasicEx20Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView confirm(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(long id, BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
@@ -79,13 +79,13 @@ public class Ex21ControllerImpl implements Ex21Controller {
 	}
 
 	@Override
-	public ModelAndView back(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(long id, BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(long id, Ex20Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(long id, BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(id, form, binding)) {
@@ -126,7 +126,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private boolean hasErrors(long id, Ex20Form form, BindingResult binding) {
+	private boolean hasErrors(long id, BasicEx20Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -136,7 +136,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex20Form.dt"), LogicalErrorUtil.resolve("ex20Form.tm"));
+					LogicalErrorUtil.resolve("basicEx20Form.dt"), LogicalErrorUtil.resolve("basicEx20Form.tm"));
 		}
 
 		if (binding.hasErrors()) {
@@ -146,7 +146,7 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		// 整合性チェック
 		if (service.exists(id, form.getText10())) {
 			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("ex20Form.text10"));
+					LogicalErrorUtil.resolve("basicEx20Form.text10"));
 		}
 
 		if (binding.hasErrors()) {

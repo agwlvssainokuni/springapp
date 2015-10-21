@@ -10,8 +10,8 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">基本画面遷移: 単票入力系2-変更確認</h2>
 <div class="panel-body">
-	<f:form servletRelativeAction="/secure/basic/ex21/execute?id=${param.id}" method="POST" modelAttribute="ex20Form" cssClass="form-horizontal"
-		role="form">
+	<f:form servletRelativeAction="/secure/basic/ex21/execute?id=${param.id}" method="POST" modelAttribute="basicEx20Form"
+		cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
 		<f:hidden path="lockVersion" />
 		<div class="form-group">
