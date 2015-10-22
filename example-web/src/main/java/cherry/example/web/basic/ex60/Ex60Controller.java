@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_BASIC_EX60)
-@SessionAttributes(types = { Ex60Form.class })
+@SessionAttributes(types = { BasicEx60Form.class })
 public interface Ex60Controller {
 
 	@RequestMapping()
@@ -48,15 +48,15 @@ public interface Ex60Controller {
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) Ex60Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) BasicEx60Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex60Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() BasicEx60Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_DOWNLOAD)
-	ModelAndView download(@Validated() Ex60Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView download(@Validated() BasicEx60Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response);
 
 }

@@ -49,22 +49,22 @@ public class Ex61ServiceImpl implements Ex61Service {
 
 	@Transactional
 	@Override
-	public List<Ex61SubForm> search(List<Long> id) {
+	public List<BasicEx61SubForm> search(List<Long> id) {
 		return qf
 				.from(et1)
 				.where(et1.id.in(id))
 				.orderBy(orderBy(id))
-				.list(new QBean<>(Ex61SubForm.class, et1.id, et1.text10, et1.int64, et1.decimal1, et1.decimal3, et1.dt,
-						et1.tm, et1.dtm, et1.lockVersion));
+				.list(new QBean<>(BasicEx61SubForm.class, et1.id, et1.text10, et1.int64, et1.decimal1, et1.decimal3,
+						et1.dt, et1.tm, et1.dtm, et1.lockVersion));
 	}
 
 	@Override
-	public long update(final Ex61Form form) {
+	public long update(final BasicEx61Form form) {
 		return txOps.execute(new TransactionCallback<Long>() {
 			@Override
 			public Long doInTransaction(TransactionStatus status) {
 				SQLUpdateClause update = qf.update(et1);
-				for (Ex61SubForm sf : form.getItem()) {
+				for (BasicEx61SubForm sf : form.getItem()) {
 					update.where(et1.id.eq(sf.getId()), et1.lockVersion.eq(sf.getLockVersion()));
 					update.set(et1.lockVersion, et1.lockVersion.add(1));
 					update.set(et1.int64, sf.getInt64()).set(et1.decimal1, sf.getDecimal1())

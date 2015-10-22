@@ -16,10 +16,8 @@
 
 package cherry.example.web.basic.ex60;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -31,12 +29,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import cherry.example.web.SortParam;
 import cherry.foundation.validator.CharTypeAlphaNumeric;
 import cherry.foundation.validator.JodaTimeMax;
 import cherry.foundation.validator.JodaTimeMin;
@@ -47,96 +46,51 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex60FormBase implements Serializable {
+public class BasicEx61SubFormBase {
 
-	private static final long serialVersionUID = 1L;
+	@NotNull()
+	private Long id;
 
+	@NotEmpty()
 	@MaxLength(10)
-	@CharTypeAlphaNumeric
+	@CharTypeAlphaNumeric()
 	private String text10;
 
-	@Min(-1000000000)
-	@Max(1000000000)
-	private Long int64From;
+	@MaxLength(100)
+	private String text100;
 
 	@Min(-1000000000)
 	@Max(1000000000)
-	private Long int64To;
+	private Long int64;
 
-	@DecimalMin("-1000000000")
-	@DecimalMax("1000000000")
 	@NumberFormat(pattern = "#,##0.0#########")
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
 	@NumberScale(1)
-	private BigDecimal decimal1From;
+	private BigDecimal decimal1;
 
-	@DecimalMin("-1000000000")
-	@DecimalMax("1000000000")
-	@NumberFormat(pattern = "#,##0.0#########")
-	@NumberScale(1)
-	private BigDecimal decimal1To;
-
-	@DecimalMin("-1000000000")
-	@DecimalMax("1000000000")
 	@NumberFormat(pattern = "#,##0.000#######")
-	@NumberScale(3)
-	private BigDecimal decimal3From;
-
 	@DecimalMin("-1000000000")
 	@DecimalMax("1000000000")
-	@NumberFormat(pattern = "#,##0.000#######")
 	@NumberScale(3)
-	private BigDecimal decimal3To;
+	private BigDecimal decimal3;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@JodaTimeMin("1000-01-01")
 	@JodaTimeMax("2999-12-31")
-	private LocalDate dtFrom;
-
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin("1000-01-01")
-	@JodaTimeMax("2999-12-31")
-	private LocalDate dtTo;
+	private LocalDate dt;
 
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	@JodaTimeMin("00:00:00")
 	@JodaTimeMax("23:59:59")
-	private LocalTime tmFrom;
+	private LocalTime tm;
 
-	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin("00:00:00")
-	@JodaTimeMax("23:59:59")
-	private LocalTime tmTo;
-
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin("1000-01-01")
-	@JodaTimeMax("2999-12-31")
-	private LocalDate dtmFromD;
-
-	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin("00:00:00")
-	@JodaTimeMax("23:59:59")
-	private LocalTime dtmFromT;
-
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin("1000-01-01")
-	@JodaTimeMax("2999-12-31")
-	private LocalDate dtmToD;
-
-	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin("00:00:00")
-	@JodaTimeMax("23:59:59")
-	private LocalTime dtmToT;
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@JodaTimeMin("1000-01-01T00:00:00")
+	@JodaTimeMax("2999-12-31T23:59:59")
+	private LocalDateTime dtm;
 
 	@NotNull()
-	@Valid()
-	private SortParam sort1;
-
-	@NotNull()
-	@Valid()
-	private SortParam sort2;
-
-	private long pno = 0L;
-
-	private long psz = 0L;
+	private Integer lockVersion;
 
 }

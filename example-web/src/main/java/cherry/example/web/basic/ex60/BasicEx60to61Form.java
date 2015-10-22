@@ -16,11 +16,6 @@
 
 package cherry.example.web.basic.ex60;
 
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +23,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class Ex60to61FormBase {
-
-	@NotNull()
-	@Valid()
-	private List<Ex60to61SubForm> item;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class BasicEx60to61Form extends BasicEx60to61FormBase {
 
 }

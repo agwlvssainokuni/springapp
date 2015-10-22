@@ -38,28 +38,28 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping(URI_BASIC_EX61)
-@SessionAttributes(types = { Ex61inForm.class })
+@SessionAttributes(types = { BasicEx61inForm.class })
 public interface Ex61Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @Validated() Ex60to61Form form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request, SessionStatus status);
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,
+			@Validated() BasicEx60to61Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() Ex61inForm form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView start(@Validated() BasicEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated() Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated() Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
 }

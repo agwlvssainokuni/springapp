@@ -23,8 +23,8 @@ import cherry.goods.paginate.PagedList;
 
 public interface Ex60Service {
 
-	PagedList<BExTbl1> search(Ex60Form form);
+	PagedList<BExTbl1> search(BasicEx60Form form);
 
-	void downloadXlsx(Ex60Form form, HttpServletResponse response);
+	void downloadXlsx(BasicEx60Form form, HttpServletResponse response);
 
 }

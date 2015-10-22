@@ -15,7 +15,7 @@
 		<li><a href="${baseUri}/basic/ex61/?redir=/secure/basic/ex60/start">検索条件入力へ戻る(維持)</a></li>
 		<li><a href="${baseUri}/basic/ex61/?redir=/secure/basic/ex60/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<f:form servletRelativeAction="/secure/basic/ex61/execute" method="POST" modelAttribute="ex61Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/basic/ex61/execute" method="POST" modelAttribute="basicEx61Form" cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
 		<table class="table table-striped">
 			<thead>
@@ -32,7 +32,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex61Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${basicEx61Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>

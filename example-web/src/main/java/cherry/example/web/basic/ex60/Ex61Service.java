@@ -20,8 +20,8 @@ import java.util.List;
 
 public interface Ex61Service {
 
-	List<Ex61SubForm> search(List<Long> id);
+	List<BasicEx61SubForm> search(List<Long> id);
 
-	long update(Ex61Form form);
+	long update(BasicEx61Form form);
 
 }

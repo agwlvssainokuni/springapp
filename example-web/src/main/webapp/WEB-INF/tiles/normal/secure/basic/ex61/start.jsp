@@ -20,12 +20,12 @@
 			<div class="alert alert-info" role="alert">変更しました。</div>
 		</div>
 	</c:if>
-	<s:hasBindErrors name="ex61Form">
+	<s:hasBindErrors name="basicEx61Form">
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex61Form" element="div" />
-				<c:forEach var="count" begin="0" end="${ex61Form.item.size()-1}">
-					<s:nestedPath path="ex61Form.item[${count}]">
+				<f:errors path="basicEx61Form" element="div" />
+				<c:forEach var="count" begin="0" end="${basicEx61Form.item.size()-1}">
+					<s:nestedPath path="basicEx61Form.item[${count}]">
 						<f:errors path="text10" element="div" />
 						<f:errors path="text100" element="div" />
 						<f:errors path="int64" element="div" />
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex61/confirm" method="POST" modelAttribute="ex61Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/basic/ex61/confirm" method="POST" modelAttribute="basicEx61Form" cssClass="form-horizontal" role="form">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -55,7 +55,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex61Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${basicEx61Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>

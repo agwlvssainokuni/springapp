@@ -53,7 +53,7 @@ public class Ex61ControllerImpl implements Ex61Controller {
 	private Ex61Service service;
 
 	@Override
-	public ModelAndView init(String redir, Ex60to61Form form, BindingResult binding, Authentication auth,
+	public ModelAndView init(String redir, BasicEx60to61Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (StringUtils.isNotEmpty(redir)) {
 			status.setComplete();
@@ -64,12 +64,12 @@ public class Ex61ControllerImpl implements Ex61Controller {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 
-		Ex61inForm f = createSessionForm(form);
+		BasicEx61inForm f = createSessionForm(form);
 		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(Ex61inForm form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		if (binding.hasErrors()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
@@ -78,7 +78,7 @@ public class Ex61ControllerImpl implements Ex61Controller {
 		if (id.isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		Ex61Form f = createForm(id);
+		BasicEx61Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
@@ -86,7 +86,7 @@ public class Ex61ControllerImpl implements Ex61Controller {
 	}
 
 	@Override
-	public ModelAndView confirm(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -97,13 +97,13 @@ public class Ex61ControllerImpl implements Ex61Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex61Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
@@ -145,7 +145,7 @@ public class Ex61ControllerImpl implements Ex61Controller {
 		return fromMethodCall(on(Ex61Controller.class).start(null, null, null, null, null, null)).build();
 	}
 
-	private boolean hasErrors(Ex61Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx61Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -163,30 +163,30 @@ public class Ex61ControllerImpl implements Ex61Controller {
 		return false;
 	}
 
-	private Ex61inForm createSessionForm(Ex60to61Form form) {
-		List<Ex61inSubForm> l = new ArrayList<>(form.getItem().size());
-		for (Ex60to61SubForm subform : form.getItem()) {
+	private BasicEx61inForm createSessionForm(BasicEx60to61Form form) {
+		List<BasicEx61inSubForm> l = new ArrayList<>(form.getItem().size());
+		for (BasicEx60to61SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				Ex61inSubForm sf = new Ex61inSubForm();
+				BasicEx61inSubForm sf = new BasicEx61inSubForm();
 				sf.setId(subform.getId());
 				l.add(sf);
 			}
 		}
-		Ex61inForm f = new Ex61inForm();
+		BasicEx61inForm f = new BasicEx61inForm();
 		f.setItem(l);
 		return f;
 	}
 
-	private List<Long> getId(Ex61inForm form) {
+	private List<Long> getId(BasicEx61inForm form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (Ex61inSubForm subform : form.getItem()) {
+		for (BasicEx61inSubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
 		return l;
 	}
 
-	private Ex61Form createForm(List<Long> id) {
-		Ex61Form f = new Ex61Form();
+	private BasicEx61Form createForm(List<Long> id) {
+		BasicEx61Form f = new BasicEx61Form();
 		f.setItem(service.search(id));
 		return f;
 	}
