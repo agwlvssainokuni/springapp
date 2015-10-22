@@ -14,25 +14,26 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.web.applied.ex10;
 
-public class ParamDef {
+import java.util.List;
 
-	// 画面遷移制御
-	/** 画面遷移制御: リダイレクト */
-	public static final String REQ_REDIR = "redir";
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-	/** 画面遷移制御: 戻る */
-	public static final String REQ_BACK = "back";
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	/** 画面遷移制御: ダウンロード */
-	public static final String REQ_DOWNLOAD = "download";
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+public class AppliedEx11FormBase {
 
-	// 画面引継項目
-	/** 画面引継項目: ID */
-	public static final String REQ_ID = "id";
-
-	/** 画面引継項目: 行番号 */
-	public static final String REQ_ROWNUM = "rownum";
+	@NotNull()
+	@Valid()
+	private List<AppliedEx11SubForm> item;
 
 }

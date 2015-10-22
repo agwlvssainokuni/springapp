@@ -84,6 +84,12 @@ public class PathDef {
 	public static final String URI_BASIC_EX90 = "/secure/basic/ex90";
 	public static final String VIEW_BASIC_EX90_START = "secure/basic/ex90/start";
 
+	// 応用画面遷移：
+	public static final String URI_APPLIED_EX10 = "/secure/applied/ex10";
+	public static final String VIEW_APPLIED_EX10_START = "secure/applied/ex10/start";
+	public static final String URI_APPLIED_EX11 = "/secure/applied/ex11";
+	public static final String VIEW_APPLIED_EX11_START = "secure/applied/ex11/start";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
