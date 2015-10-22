@@ -245,8 +245,14 @@
 	<!-- ダウンロード設定 -->
 	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
 		<property name="headerName" value="Content-Disposition" />
-		<property name="headerValue" value="attachment; filename=&quot;{0}&quot;" />
+		<property name="headerValue" value="attachment; filename=&quot;{0}&quot;; filename*={1}" />
 		<property name="formatter" value="yyyyMMddHHmmss" />
+		<property name="filenameEncoder">
+			<bean class="cherry.foundation.download.Rfc5987Encoder">
+				<property name="charset" value="UTF-8" />
+				<property name="languageTag" value="" />
+			</bean>
+		</property>
 	</bean>
 	<bean id="tableDownloadOperation" class="cherry.foundation.download.TableDownloadTemplate">
 		<property name="downloadOperation" ref="downloadOperation" />

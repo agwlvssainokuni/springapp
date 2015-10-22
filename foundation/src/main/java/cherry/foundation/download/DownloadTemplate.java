@@ -28,6 +28,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Function;
+
 public class DownloadTemplate implements DownloadOperation {
 
 	public static final String OPER_DOWNLOAD = "operation.DOWNLOAD";
@@ -39,6 +41,8 @@ public class DownloadTemplate implements DownloadOperation {
 	private String headerValue;
 
 	private DateTimeFormatter formatter;
+
+	private Function<String, String> filenameEncoder;
 
 	public void setHeaderName(String headerName) {
 		this.headerName = headerName;
@@ -52,6 +56,10 @@ public class DownloadTemplate implements DownloadOperation {
 		this.formatter = formatter;
 	}
 
+	public void setFilenameEncoder(Function<String, String> filenameEncoder) {
+		this.filenameEncoder = filenameEncoder;
+	}
+
 	@Override
 	public void download(HttpServletResponse response, String contentType, Charset charset, String filename,
 			LocalDateTime timestamp, DownloadAction action) {
@@ -62,7 +70,7 @@ public class DownloadTemplate implements DownloadOperation {
 		if (charset != null) {
 			response.setCharacterEncoding(charset.name());
 		}
-		String value = MessageFormat.format(headerValue, fname);
+		String value = MessageFormat.format(headerValue, fname, filenameEncoder.apply(fname));
 		response.setHeader(headerName, value);
 
 		loggerOper.info("STARTING: Content-Type={}, charset={}, {}={}", contentType,
