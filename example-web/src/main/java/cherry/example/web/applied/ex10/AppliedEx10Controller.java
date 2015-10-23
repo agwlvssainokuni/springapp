@@ -17,8 +17,9 @@
 package cherry.example.web.applied.ex10;
 
 import static cherry.example.web.ParamDef.REQ_BACK;
+import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.ParamDef.REQ_REDIR;
-import static cherry.example.web.ParamDef.REQ_ROWNUM;
+import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
@@ -33,6 +34,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,27 +42,30 @@ import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX10)
 @SessionAttributes(types = { AppliedEx10Form.class })
-public interface Ex11Controller {
+public interface AppliedEx10Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,
-			@RequestParam(REQ_ROWNUM) long rownum, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request);
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@RequestParam(REQ_ROWNUM) long rownum, @Validated(G9.class) AppliedEx10Form form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) AppliedEx10Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@RequestParam(REQ_ROWNUM) long rownum, @Validated() AppliedEx11Form form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView confirm(@Validated() AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@RequestParam(REQ_ROWNUM) long rownum, @Validated() AppliedEx11Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView back(@Validated() AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@RequestParam(REQ_ROWNUM) long rownum, @Validated() AppliedEx10Form form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView execute(@Validated() AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(SUBURI_COMPLETED)
+	ModelAndView completed(@RequestParam(REQ_ID) long id, Authentication auth, Locale locale, SitePreference sitePref,
+			NativeWebRequest request, SessionStatus status);
 
 }

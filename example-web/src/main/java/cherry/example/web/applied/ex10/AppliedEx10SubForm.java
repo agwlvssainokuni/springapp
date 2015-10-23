@@ -25,6 +25,8 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class AppliedEx10SubForm extends AppliedEx11SubFormBase {
+public class AppliedEx10SubForm extends AppliedEx10SubFormBase {
+
+	private static final long serialVersionUID = 1L;
 
 }

@@ -27,4 +27,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class AppliedEx10Form extends AppliedEx10FormBase {
 
+	private static final long serialVersionUID = 1L;
+
 }

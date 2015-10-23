@@ -16,6 +16,7 @@
 
 package cherry.example.web.applied.ex10;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -48,7 +49,9 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class AppliedEx10FormBase {
+public class AppliedEx10FormBase implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@NotEmpty()
 	@MaxLength(10)
