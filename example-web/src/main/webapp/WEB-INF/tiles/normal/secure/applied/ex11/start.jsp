@@ -29,7 +29,7 @@
 	</s:hasBindErrors>
 	<f:form servletRelativeAction="/secure/applied/ex11/confirm?rownum=${param.rownum}" method="POST" modelAttribute="appliedEx11Form"
 		cssClass="form-horizontal" role="form">
-		<s:nestedPath path="appliedEx11Form.item[${param.rownum}]">
+		<s:nestedPath path="item[${param.rownum}]">
 			<div class="form-group">
 				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
 				<div class="col-md-10">

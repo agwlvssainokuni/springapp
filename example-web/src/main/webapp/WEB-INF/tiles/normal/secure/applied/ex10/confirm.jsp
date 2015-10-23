@@ -70,7 +70,6 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th></th>
 					<th>#</th>
 					<th>文字列【10】</th>
 					<th>整数【64bit】</th>

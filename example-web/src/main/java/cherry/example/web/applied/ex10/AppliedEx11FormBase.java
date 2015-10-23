@@ -34,6 +34,6 @@ public class AppliedEx11FormBase {
 
 	@NotNull()
 	@Valid()
-	private List<AppliedEx11SubForm> item;
+	private List<AppliedEx10SubForm> item;
 
 }

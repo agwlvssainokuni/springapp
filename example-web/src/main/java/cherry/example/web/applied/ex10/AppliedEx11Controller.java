@@ -39,7 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX11)
-@SessionAttributes(types = { AppliedEx10Form.class })
+@SessionAttributes(types = { AppliedEx10Form.class }, value = { "appliedEx10Form" })
 public interface AppliedEx11Controller {
 
 	@RequestMapping()

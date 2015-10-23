@@ -24,6 +24,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.list.LazyList;
@@ -54,20 +55,13 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 	public ModelAndView start(int rownum, AppliedEx10Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		AppliedEx11SubForm sf = new AppliedEx11SubForm();
-		sf.setText10(form.getItem().get(rownum).getText10());
-		sf.setText100(form.getItem().get(rownum).getText100());
-		sf.setInt64(form.getItem().get(rownum).getInt64());
-		sf.setDecimal1(form.getItem().get(rownum).getDecimal1());
-		sf.setDecimal3(form.getItem().get(rownum).getDecimal3());
-		sf.setDt(form.getItem().get(rownum).getDt());
-		sf.setTm(form.getItem().get(rownum).getTm());
-		sf.setDtm(form.getItem().get(rownum).getDtm());
-
-		Factory<AppliedEx11SubForm> factory = FactoryUtils.nullFactory();
+		Factory<AppliedEx10SubForm> factory = FactoryUtils.nullFactory();
 		AppliedEx11Form f = new AppliedEx11Form();
-		f.setItem(LazyList.lazyList(new ArrayList<AppliedEx11SubForm>(), factory));
-		f.getItem().set(rownum, sf);
+		f.setItem(LazyList.lazyList(new ArrayList<AppliedEx10SubForm>(), factory));
+		if (CollectionUtils.isNotEmpty(form.getItem()) && form.getItem().size() > rownum) {
+			f.getItem().get(rownum);
+			f.getItem().set(rownum, form.getItem().get(rownum));
+		}
 
 		return renderStartView().addObject(f).build();
 	}

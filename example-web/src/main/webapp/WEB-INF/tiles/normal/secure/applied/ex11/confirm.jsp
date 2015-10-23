@@ -10,7 +10,7 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">応用画面遷移: 単票入力系1-補助確認</h2>
 <div class="panel-body">
-	<f:form servletRelativeAction="/secure/applied/ex11/execute?rownum=${param.rownum}" method="POST" modelAttribute="appliedEx10Form"
+	<f:form servletRelativeAction="/secure/applied/ex11/execute?rownum=${param.rownum}" method="POST" modelAttribute="appliedEx11Form"
 		cssClass="form-horizontal" role="form">
 		<s:nestedPath path="item[${param.rownum}]">
 			<div class="form-group">

@@ -56,6 +56,7 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
+		status.setComplete();
 		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
 	}
 

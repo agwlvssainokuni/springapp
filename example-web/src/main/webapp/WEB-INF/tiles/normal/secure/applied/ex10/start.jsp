@@ -25,18 +25,20 @@
 					<f:errors path="dtm" element="div" />
 					<f:errors path="item" element="div" />
 				</s:nestedPath>
-				<c:forEach var="rownum" begin="0" end="${appliedEx10Form.item.size()-1}">
-					<s:nestedPath path="appliedEx10Form.item[${rownum}]">
-						<f:errors path="text10" element="div" />
-						<f:errors path="text100" element="div" />
-						<f:errors path="int64" element="div" />
-						<f:errors path="decimal1" element="div" />
-						<f:errors path="decimal3" element="div" />
-						<f:errors path="dt" element="div" />
-						<f:errors path="tm" element="div" />
-						<f:errors path="dtm" element="div" />
-					</s:nestedPath>
-				</c:forEach>
+				<c:if test="${!appliedEx10Form.item.isEmpty()}">
+					<c:forEach var="count" begin="1" end="${appliedEx10Form.item.size()}">
+						<s:nestedPath path="appliedEx10Form.item[${count-1}]">
+							<f:errors path="text10" element="div" />
+							<f:errors path="text100" element="div" />
+							<f:errors path="int64" element="div" />
+							<f:errors path="decimal1" element="div" />
+							<f:errors path="decimal3" element="div" />
+							<f:errors path="dt" element="div" />
+							<f:errors path="tm" element="div" />
+							<f:errors path="dtm" element="div" />
+						</s:nestedPath>
+					</c:forEach>
+				</c:if>
 			</div>
 		</div>
 	</s:hasBindErrors>
@@ -110,10 +112,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="rownum" begin="0" end="${appliedEx10Form.item.size()-1}">
-					<s:nestedPath path="item[${rownum}]">
+				<c:forEach var="count" begin="1" end="${appliedEx10Form.item.size()}">
+					<s:nestedPath path="item[${count-1}]">
 						<tr>
-							<td class="text-right"><c:out value="${rownum+1}" /></td>
+							<td><a href="${baseUri}/applied/ex11/?rownum=${count-1}"><span class="glyphicon glyphicon-edit"></span>変更</a></td>
+							<td class="text-right"><c:out value="${count}" /></td>
 							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
 							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
 							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>
@@ -124,6 +127,18 @@
 						</tr>
 					</s:nestedPath>
 				</c:forEach>
+				<tr>
+					<td><a href="${baseUri}/applied/ex11/?rownum=${appliedEx10Form.item == null ? 0 : appliedEx10Form.item.size()}"><span
+							class="glyphicon glyphicon-plus"></span>追加</a></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 			</tbody>
 		</table>
 	</f:form>
