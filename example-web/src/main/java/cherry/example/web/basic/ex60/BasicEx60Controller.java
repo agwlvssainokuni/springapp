@@ -41,7 +41,7 @@ import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_BASIC_EX60)
 @SessionAttributes(types = { BasicEx60Form.class })
-public interface Ex60Controller {
+public interface BasicEx60Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,

@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping(URI_BASIC_EX61)
 @SessionAttributes(types = { BasicEx61inForm.class })
-public interface Ex61Controller {
+public interface BasicEx61Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,

@@ -44,13 +44,13 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex61ControllerImpl implements Ex61Controller {
+public class BasicEx61ControllerImpl implements BasicEx61Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex61Service service;
+	private BasicEx61Service service;
 
 	@Override
 	public ModelAndView init(String redir, BasicEx60to61Form form, BindingResult binding, Authentication auth,
@@ -138,11 +138,11 @@ public class Ex61ControllerImpl implements Ex61Controller {
 	}
 
 	private UriComponents redirectToSearchResult() {
-		return fromMethodCall(on(Ex60Controller.class).execute(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(BasicEx60Controller.class).execute(null, null, null, null, null, null)).build();
 	}
 
 	private UriComponents redirectToStart() {
-		return fromMethodCall(on(Ex61Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(BasicEx61Controller.class).start(null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(BasicEx61Form form, BindingResult binding) {

@@ -16,12 +16,15 @@
 
 package cherry.example.web.basic.ex60;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
-public interface Ex61Service {
+import cherry.example.db.gen.query.BExTbl1;
+import cherry.goods.paginate.PagedList;
 
-	List<BasicEx61SubForm> search(List<Long> id);
+public interface BasicEx60Service {
 
-	long update(BasicEx61Form form);
+	PagedList<BExTbl1> search(BasicEx60Form form);
+
+	void downloadXlsx(BasicEx60Form form, HttpServletResponse response);
 
 }

@@ -37,7 +37,7 @@ import com.mysema.query.types.expr.CaseBuilder.Cases;
 import com.mysema.query.types.expr.NumberExpression;
 
 @Service
-public class Ex61ServiceImpl implements Ex61Service {
+public class BasicEx61ServiceImpl implements BasicEx61Service {
 
 	@Autowired
 	private SQLQueryFactory qf;
