@@ -18,7 +18,7 @@ package cherry.example.web.basic.ex50;
 
 import java.util.List;
 
-public interface Ex51Service {
+public interface BasicEx51Service {
 
 	List<BasicEx51SubForm> search(List<Long> id);
 

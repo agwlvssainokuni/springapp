@@ -42,13 +42,13 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex51ControllerImpl implements Ex51Controller {
+public class BasicEx51ControllerImpl implements BasicEx51Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex51Service service;
+	private BasicEx51Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -128,12 +128,12 @@ public class Ex51ControllerImpl implements Ex51Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex51Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(BasicEx51Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
 	private UriComponents redirectOnStart() {
-		return fromMethodCall(on(Ex50Controller.class).execute(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(BasicEx50Controller.class).execute(null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(BasicEx51Form form, BindingResult binding) {

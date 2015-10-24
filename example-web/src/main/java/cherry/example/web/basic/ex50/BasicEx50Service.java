@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.goods.paginate.PagedList;
 
-public interface Ex50Service {
+public interface BasicEx50Service {
 
 	PagedList<BExTbl1> search(BasicEx50Form form);
 

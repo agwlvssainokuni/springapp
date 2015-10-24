@@ -35,7 +35,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(URI_BASIC_EX51)
-public interface Ex51Controller {
+public interface BasicEx51Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
