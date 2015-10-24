@@ -22,21 +22,23 @@
 				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
 						<f:errors path="basicEx50Form" element="div" />
-						<f:errors path="basicEx50Form.text10" element="div" />
-						<f:errors path="basicEx50Form.int64From" element="div" />
-						<f:errors path="basicEx50Form.int64To" element="div" />
-						<f:errors path="basicEx50Form.decimal1From" element="div" />
-						<f:errors path="basicEx50Form.decimal1To" element="div" />
-						<f:errors path="basicEx50Form.decimal3From" element="div" />
-						<f:errors path="basicEx50Form.decimal3To" element="div" />
-						<f:errors path="basicEx50Form.dtFrom" element="div" />
-						<f:errors path="basicEx50Form.dtTo" element="div" />
-						<f:errors path="basicEx50Form.tmFrom" element="div" />
-						<f:errors path="basicEx50Form.tmTo" element="div" />
-						<f:errors path="basicEx50Form.dtmFromD" element="div" />
-						<f:errors path="basicEx50Form.dtmFromT" element="div" />
-						<f:errors path="basicEx50Form.dtmToD" element="div" />
-						<f:errors path="basicEx50Form.dtmToT" element="div" />
+						<s:nestedPath path="basicEx50Form">
+							<f:errors path="text10" element="div" />
+							<f:errors path="int64From" element="div" />
+							<f:errors path="int64To" element="div" />
+							<f:errors path="decimal1From" element="div" />
+							<f:errors path="decimal1To" element="div" />
+							<f:errors path="decimal3From" element="div" />
+							<f:errors path="decimal3To" element="div" />
+							<f:errors path="dtFrom" element="div" />
+							<f:errors path="dtTo" element="div" />
+							<f:errors path="tmFrom" element="div" />
+							<f:errors path="tmTo" element="div" />
+							<f:errors path="dtmFromD" element="div" />
+							<f:errors path="dtmFromT" element="div" />
+							<f:errors path="dtmToD" element="div" />
+							<f:errors path="dtmToT" element="div" />
+						</s:nestedPath>
 					</div>
 				</div>
 			</s:hasBindErrors>

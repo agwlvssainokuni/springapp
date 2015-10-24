@@ -14,14 +14,16 @@
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
 				<f:errors path="basicEx10Form" element="div" />
-				<f:errors path="basicEx10Form.text10" element="div" />
-				<f:errors path="basicEx10Form.text100" element="div" />
-				<f:errors path="basicEx10Form.int64" element="div" />
-				<f:errors path="basicEx10Form.decimal1" element="div" />
-				<f:errors path="basicEx10Form.decimal3" element="div" />
-				<f:errors path="basicEx10Form.dt" element="div" />
-				<f:errors path="basicEx10Form.tm" element="div" />
-				<f:errors path="basicEx10Form.dtm" element="div" />
+				<s:nestedPath path="basicEx10Form">
+					<f:errors path="text10" element="div" />
+					<f:errors path="text100" element="div" />
+					<f:errors path="int64" element="div" />
+					<f:errors path="decimal1" element="div" />
+					<f:errors path="decimal3" element="div" />
+					<f:errors path="dt" element="div" />
+					<f:errors path="tm" element="div" />
+					<f:errors path="dtm" element="div" />
+				</s:nestedPath>
 			</div>
 		</div>
 	</s:hasBindErrors>
