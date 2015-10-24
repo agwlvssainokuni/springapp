@@ -91,13 +91,13 @@
 					<s:nestedPath path="appliedEx10Form.item[${rownum}]">
 						<tr>
 							<td class="text-right"><c:out value="${rownum+1}" /></td>
-							<td><ex:out path="text10" /></td>
-							<td class="text-right"><ex:out path="int64" /></td>
-							<td class="text-right"><ex:out path="decimal1" /></td>
-							<td class="text-right"><ex:out path="decimal3" /></td>
-							<td><ex:out path="dt" /></td>
-							<td><ex:out path="tm" /></td>
-							<td><ex:out path="dtm" /></td>
+							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
+							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal3" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="dt" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="tm" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="dtm" cssClass="form-control input-sm" readonly="true" /></td>
 						</tr>
 					</s:nestedPath>
 				</c:forEach>
