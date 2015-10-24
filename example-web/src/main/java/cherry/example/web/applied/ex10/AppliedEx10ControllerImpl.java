@@ -39,7 +39,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
-import cherry.example.web.basic.ex10.Ex10Service;
+import cherry.example.web.basic.ex10.BasicEx10Service;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -51,7 +51,7 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex10Service service;
+	private BasicEx10Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,

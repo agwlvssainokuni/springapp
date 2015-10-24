@@ -30,7 +30,7 @@ import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.QBean;
 
 @Service
-public class Ex10ServiceImpl implements Ex10Service {
+public class BasicEx10ServiceImpl implements BasicEx10Service {
 
 	@Autowired
 	private SQLQueryFactory qf;

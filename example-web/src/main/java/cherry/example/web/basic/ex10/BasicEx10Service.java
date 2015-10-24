@@ -18,7 +18,7 @@ package cherry.example.web.basic.ex10;
 
 import cherry.example.db.gen.query.BExTbl1;
 
-public interface Ex10Service {
+public interface BasicEx10Service {
 
 	boolean exists(String text10);
 

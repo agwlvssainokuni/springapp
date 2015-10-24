@@ -23,7 +23,7 @@ import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
-import static cherry.example.web.PathDef.URI_BASIC_EX11;
+import static cherry.example.web.PathDef.URI_BASIC_EX10;
 
 import java.util.Locale;
 
@@ -38,28 +38,28 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_BASIC_EX11)
-public interface Ex11Controller {
+@RequestMapping(URI_BASIC_EX10)
+public interface BasicEx10Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @RequestParam(REQ_ID) long id,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@RequestParam(REQ_ID) long id, @Validated(G9.class) BasicEx10Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) BasicEx10Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@RequestParam(REQ_ID) long id, @Validated() BasicEx10Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView confirm(@Validated() BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@RequestParam(REQ_ID) long id, @Validated() BasicEx10Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView back(@Validated() BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@RequestParam(REQ_ID) long id, @Validated() BasicEx10Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView execute(@Validated() BasicEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_COMPLETED)
 	ModelAndView completed(@RequestParam(REQ_ID) long id, Authentication auth, Locale locale, SitePreference sitePref,
