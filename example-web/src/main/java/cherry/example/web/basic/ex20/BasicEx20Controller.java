@@ -38,15 +38,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_BASIC_EX20)
-public interface Ex20Controller {
+public interface BasicEx20Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) BasicEx20Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
 	ModelAndView confirm(@Validated() BasicEx20Form form, BindingResult binding, Authentication auth, Locale locale,

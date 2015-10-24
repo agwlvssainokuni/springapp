@@ -16,7 +16,7 @@
 
 package cherry.example.web.basic.ex20;
 
-public interface Ex20Service {
+public interface BasicEx20Service {
 
 	boolean exists(String text10);
 

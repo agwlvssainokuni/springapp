@@ -45,13 +45,13 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex21ControllerImpl implements Ex21Controller {
+public class BasicEx21ControllerImpl implements BasicEx21Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex20Service service;
+	private BasicEx20Service service;
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
@@ -116,13 +116,13 @@ public class Ex21ControllerImpl implements Ex21Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
+			return fromMethodCall(on(BasicEx21Controller.class).start(id, null, null, null, null, null, null))
 					.replaceQueryParam(REQ_ID, id).build();
 		}
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(Ex21Controller.class).start(id, null, null, null, null, null, null))
+		return fromMethodCall(on(BasicEx21Controller.class).start(id, null, null, null, null, null, null))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 

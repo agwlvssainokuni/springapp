@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_BASIC_EX21)
-public interface Ex21Controller {
+public interface BasicEx21Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @RequestParam(REQ_ID) long id,
