@@ -39,7 +39,6 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
-import cherry.example.web.basic.ex10.BasicEx10Service;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -51,12 +50,14 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private BasicEx10Service service;
+	private AppliedEx10Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
+
 		status.setComplete();
+
 		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
 	}
 
@@ -96,7 +97,7 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 			return renderStartView().build();
 		}
 
-		Long id = 1L;
+		Long id = service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
@@ -105,8 +106,11 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
+
 		status.setComplete();
-		return renderWithoutView().build();
+
+		AppliedEx10Form form = service.findById(id);
+		return renderWithoutView().addObject(form).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
@@ -148,10 +152,10 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 		}
 
 		// 整合性チェック
-		// if (service.exists(form.getText10())) {
-		// LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-		// LogicalErrorUtil.resolve("appliedEx10Form.text10"));
-		// }
+		if (service.exists(form.getText10())) {
+			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
+					LogicalErrorUtil.resolve("appliedEx10Form.text10"));
+		}
 
 		if (binding.hasErrors()) {
 			return true;

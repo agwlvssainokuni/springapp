@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<div class="form-horizontal">
-		<s:nestedPath path="BExTbl1">
+		<s:nestedPath path="appliedEx10Form">
 			<div class="form-group">
 				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
 				<div class="col-md-10">
@@ -73,5 +73,35 @@
 				</div>
 			</div>
 		</s:nestedPath>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>文字列【10】</th>
+					<th>整数【64bit】</th>
+					<th>小数【1桁】</th>
+					<th>小数【3桁】</th>
+					<th>日付</th>
+					<th>時刻</th>
+					<th>日時</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="rownum" begin="0" end="${appliedEx10Form.item.size()-1}">
+					<s:nestedPath path="appliedEx10Form.item[${rownum}]">
+						<tr>
+							<td class="text-right"><c:out value="${rownum+1}" /></td>
+							<td><ex:out path="text10" /></td>
+							<td class="text-right"><ex:out path="int64" /></td>
+							<td class="text-right"><ex:out path="decimal1" /></td>
+							<td class="text-right"><ex:out path="decimal3" /></td>
+							<td><ex:out path="dt" /></td>
+							<td><ex:out path="tm" /></td>
+							<td><ex:out path="dtm" /></td>
+						</tr>
+					</s:nestedPath>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </div>
