@@ -16,7 +16,7 @@
 
 package cherry.example.web.applied.ex60;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX81_START;
+import static cherry.example.web.PathDef.VIEW_APPLIED_EX61_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -132,7 +132,7 @@ public class Ex81ControllerImpl implements Ex81Controller {
 	}
 
 	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX81_START);
+		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX61_START);
 	}
 
 	private ModelAndViewBuilder renderWithoutView() {

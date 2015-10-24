@@ -20,7 +20,7 @@ import static cherry.example.web.ParamDef.REQ_DOWNLOAD;
 import static cherry.example.web.ParamDef.REQ_REDIR;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
-import static cherry.example.web.PathDef.URI_BASIC_EX80;
+import static cherry.example.web.PathDef.URI_APPLIED_EX60;
 
 import java.util.Locale;
 
@@ -39,7 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_BASIC_EX80)
+@RequestMapping(URI_APPLIED_EX60)
 @SessionAttributes(types = { Ex80Form.class })
 public interface Ex80Controller {
 

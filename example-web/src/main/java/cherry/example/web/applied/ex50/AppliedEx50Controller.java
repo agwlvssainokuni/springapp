@@ -20,7 +20,7 @@ import static cherry.example.web.ParamDef.REQ_DOWNLOAD;
 import static cherry.example.web.ParamDef.REQ_REDIR;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
-import static cherry.example.web.PathDef.URI_BASIC_EX70;
+import static cherry.example.web.PathDef.URI_APPLIED_EX50;
 
 import java.util.Locale;
 
@@ -39,24 +39,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_BASIC_EX70)
-@SessionAttributes(types = { Ex70Form.class })
-public interface Ex70Controller {
+@RequestMapping(URI_APPLIED_EX50)
+@SessionAttributes(types = { AppliedEx50Form.class })
+public interface AppliedEx50Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) AppliedEx50Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() AppliedEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_DOWNLOAD)
-	ModelAndView download(@Validated() Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView download(@Validated() AppliedEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response);
 
 }

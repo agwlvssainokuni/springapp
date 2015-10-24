@@ -16,31 +16,64 @@
 
 package cherry.example.web.applied.ex50;
 
-import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 
-import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
+import cherry.foundation.validator.CharTypeAlphaNumeric;
 import cherry.foundation.validator.JodaTimeMax;
 import cherry.foundation.validator.JodaTimeMin;
+import cherry.foundation.validator.MaxLength;
+import cherry.foundation.validator.NumberScale;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex71FormBase implements Serializable {
+public class AppliedEx51SubFormBase {
 
-	private static final long serialVersionUID = 1L;
+	@NotNull()
+	private Long id;
+
+	@NotEmpty()
+	@MaxLength(10)
+	@CharTypeAlphaNumeric()
+	private String text10;
+
+	@MaxLength(100)
+	private String text100;
+
+	@Min(-1000000000)
+	@Max(1000000000)
+	private Long int64;
+
+	@NumberFormat(pattern = "#,##0.0#########")
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberScale(1)
+	private BigDecimal decimal1;
+
+	@NumberFormat(pattern = "#,##0.000#######")
+	@DecimalMin("-1000000000")
+	@DecimalMax("1000000000")
+	@NumberScale(3)
+	private BigDecimal decimal3;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@JodaTimeMin("1000-01-01")
@@ -57,7 +90,7 @@ public class Ex71FormBase implements Serializable {
 	@JodaTimeMax("2999-12-31T23:59:59")
 	private LocalDateTime dtm;
 
-	@Valid
-	private List<Ex71SubForm> item;
+	@NotNull()
+	private Integer lockVersion;
 
 }

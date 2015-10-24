@@ -21,7 +21,7 @@ import static cherry.example.web.ParamDef.REQ_REDIR;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
-import static cherry.example.web.PathDef.URI_BASIC_EX82;
+import static cherry.example.web.PathDef.URI_APPLIED_EX62;
 
 import java.util.Locale;
 
@@ -36,7 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_BASIC_EX82)
+@RequestMapping(URI_APPLIED_EX62)
 public interface Ex82Controller {
 
 	@RequestMapping()

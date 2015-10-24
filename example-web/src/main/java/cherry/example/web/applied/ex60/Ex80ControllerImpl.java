@@ -16,7 +16,7 @@
 
 package cherry.example.web.applied.ex60;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX80_START;
+import static cherry.example.web.PathDef.VIEW_APPLIED_EX60_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -125,7 +125,7 @@ public class Ex80ControllerImpl implements Ex80Controller {
 	}
 
 	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX80_START);
+		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX60_START);
 	}
 
 	private UriComponents redirectOnInit(String redir) {

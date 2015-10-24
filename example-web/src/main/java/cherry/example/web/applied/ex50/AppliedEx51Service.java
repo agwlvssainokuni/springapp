@@ -18,22 +18,10 @@ package cherry.example.web.applied.ex50;
 
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+public interface AppliedEx51Service {
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+	List<AppliedEx51SubForm> search(List<Long> id);
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-public class Ex70to71FormBase {
-
-	@NotNull()
-	@Valid()
-	private List<Ex70to71SubForm> item;
+	long update(AppliedEx51Form form);
 
 }

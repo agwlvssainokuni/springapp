@@ -25,8 +25,6 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Ex71inSubForm extends Ex71inSubFormBase {
-
-	private static final long serialVersionUID = 1L;
+public class AppliedEx50to51SubForm extends AppliedEx50to51SubFormBase {
 
 }

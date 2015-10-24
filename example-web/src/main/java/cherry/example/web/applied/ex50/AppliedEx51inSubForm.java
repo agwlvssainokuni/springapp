@@ -16,12 +16,17 @@
 
 package cherry.example.web.applied.ex50;
 
-import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-public interface Ex71Service {
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class AppliedEx51inSubForm extends AppliedEx51inSubFormBase {
 
-	List<Ex71SubForm> search(List<Long> id);
-
-	long update(Ex71Form form);
+	private static final long serialVersionUID = 1L;
 
 }

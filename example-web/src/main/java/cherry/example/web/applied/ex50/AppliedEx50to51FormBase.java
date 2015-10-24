@@ -16,15 +16,24 @@
 
 package cherry.example.web.applied.ex50;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
-import cherry.example.db.gen.query.BExTbl1;
-import cherry.goods.paginate.PagedList;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-public interface Ex70Service {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	PagedList<BExTbl1> search(Ex70Form form);
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+public class AppliedEx50to51FormBase {
 
-	void downloadXlsx(Ex70Form form, HttpServletResponse response);
+	@NotNull()
+	@Valid()
+	private List<AppliedEx50to51SubForm> item;
 
 }

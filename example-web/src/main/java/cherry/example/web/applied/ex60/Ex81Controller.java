@@ -22,7 +22,7 @@ import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.SUBURI_UPDATE;
-import static cherry.example.web.PathDef.URI_BASIC_EX81;
+import static cherry.example.web.PathDef.URI_APPLIED_EX61;
 
 import java.util.Locale;
 
@@ -40,7 +40,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(URI_BASIC_EX81)
+@RequestMapping(URI_APPLIED_EX61)
 @SessionAttributes(types = { Ex81inForm.class, Ex81Form.class })
 public interface Ex81Controller {
 

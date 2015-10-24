@@ -16,7 +16,7 @@
 
 package cherry.example.web.applied.ex50;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX70_START;
+import static cherry.example.web.PathDef.VIEW_APPLIED_EX50_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -50,10 +50,10 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
 
 @Controller
-public class Ex70ControllerImpl implements Ex70Controller {
+public class AppliedEx50ControllerImpl implements AppliedEx50Controller {
 
 	@Autowired
-	private Ex70Service service;
+	private AppliedEx50Service service;
 
 	@Autowired
 	private Config config;
@@ -68,7 +68,7 @@ public class Ex70ControllerImpl implements Ex70Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(AppliedEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
@@ -82,7 +82,7 @@ public class Ex70ControllerImpl implements Ex70Controller {
 	}
 
 	@Override
-	public ModelAndView execute(Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(AppliedEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -104,14 +104,14 @@ public class Ex70ControllerImpl implements Ex70Controller {
 			return renderStartView().build();
 		}
 
-		Ex70to71Form f = new Ex70to71Form();
+		AppliedEx50to51Form f = new AppliedEx50to51Form();
 		f.setItem(createForm(pagedList.getList()));
 
 		return renderStartView().addObject(pagedList).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView download(Ex70Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView download(AppliedEx50Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
@@ -125,18 +125,18 @@ public class Ex70ControllerImpl implements Ex70Controller {
 	}
 
 	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX70_START);
+		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX50_START);
 	}
 
 	private UriComponents redirectOnInit(String redir) {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex70Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(AppliedEx50Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
-	private boolean hasErrors(Ex70Form form, BindingResult binding) {
+	private boolean hasErrors(AppliedEx50Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -183,7 +183,7 @@ public class Ex70ControllerImpl implements Ex70Controller {
 		return false;
 	}
 
-	private void adjustSortCondition(Ex70Form form) {
+	private void adjustSortCondition(AppliedEx50Form form) {
 
 		if (form.getSort1() == null) {
 			form.setSort1(new SortParam());
@@ -206,10 +206,10 @@ public class Ex70ControllerImpl implements Ex70Controller {
 		}
 	}
 
-	private List<Ex70to71SubForm> createForm(List<BExTbl1> list) {
-		List<Ex70to71SubForm> l = new ArrayList<>(list.size());
+	private List<AppliedEx50to51SubForm> createForm(List<BExTbl1> list) {
+		List<AppliedEx50to51SubForm> l = new ArrayList<>(list.size());
 		for (BExTbl1 t : list) {
-			Ex70to71SubForm f = new Ex70to71SubForm();
+			AppliedEx50to51SubForm f = new AppliedEx50to51SubForm();
 			f.setId(t.getId());
 			f.setChecked(Boolean.FALSE);
 			l.add(f);
