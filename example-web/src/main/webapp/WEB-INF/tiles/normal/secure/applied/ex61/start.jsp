@@ -71,7 +71,7 @@
 						<s:bind path="dtm">${status.value}</s:bind>
 					</s:param>
 				</s:url>
-				<a href="${uri}" class="btn btn-default" role="button">補足</a>
+				<a href="${uri}" class="btn btn-default" role="button">補助入力</a>
 			</div>
 		</div>
 		<table class="table table-striped">

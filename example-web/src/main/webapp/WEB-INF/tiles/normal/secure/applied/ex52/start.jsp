@@ -44,7 +44,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">補足確認</f:button>
+				<f:button type="submit" class="btn btn-primary">補助確認</f:button>
 			</div>
 		</div>
 	</f:form>

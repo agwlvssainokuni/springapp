@@ -8,7 +8,7 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">応用画面遷移: 一括変更系2-補足確認</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系2-補助確認</h2>
 <div class="panel-body">
 	<f:form servletRelativeAction="/secure/applied/ex62/execute" method="POST" modelAttribute="appliedEx62Form" cssClass="form-horizontal"
 		role="form">
@@ -33,7 +33,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">補足実行</f:button>
+				<f:button type="submit" class="btn btn-primary">補助完了</f:button>
 				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
 			</div>
 		</div>

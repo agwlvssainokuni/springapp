@@ -33,7 +33,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">補足実行</f:button>
+				<f:button type="submit" class="btn btn-primary">補助完了</f:button>
 				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
 			</div>
 		</div>
