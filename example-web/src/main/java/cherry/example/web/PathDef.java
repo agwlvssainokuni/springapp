@@ -73,6 +73,10 @@ public class PathDef {
 	public static final String VIEW_APPLIED_EX10_START = "secure/applied/ex10/start";
 	public static final String URI_APPLIED_EX11 = "/secure/applied/ex11";
 	public static final String VIEW_APPLIED_EX11_START = "secure/applied/ex11/start";
+	public static final String URI_APPLIED_EX12 = "/secure/applied/ex12";
+	public static final String VIEW_APPLIED_EX12_START = "secure/applied/ex12/start";
+	public static final String URI_APPLIED_EX13 = "/secure/applied/ex13";
+	public static final String VIEW_APPLIED_EX13_START = "secure/applied/ex13/start";
 
 	// 応用画面遷移: 一括変更系1
 	public static final String URI_APPLIED_EX50 = "/secure/applied/ex50";
