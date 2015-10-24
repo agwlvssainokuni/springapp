@@ -16,7 +16,7 @@
 
 package cherry.example.web.applied.ex10;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -34,6 +34,6 @@ public class AppliedEx11FormBase {
 
 	@NotNull()
 	@Valid()
-	private List<AppliedEx10SubForm> item;
+	private Map<Integer, AppliedEx10SubForm> item;
 
 }

@@ -21,13 +21,10 @@ import static cherry.example.web.PathDef.VIEW_APPLIED_EX11_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Factory;
-import org.apache.commons.collections4.FactoryUtils;
-import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -55,12 +52,10 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 	public ModelAndView start(int rownum, AppliedEx10Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		Factory<AppliedEx10SubForm> factory = FactoryUtils.nullFactory();
 		AppliedEx11Form f = new AppliedEx11Form();
-		f.setItem(LazyList.lazyList(new ArrayList<AppliedEx10SubForm>(), factory));
+		f.setItem(new HashMap<Integer, AppliedEx10SubForm>());
 		if (CollectionUtils.isNotEmpty(form.getItem()) && form.getItem().size() > rownum) {
-			f.getItem().get(rownum);
-			f.getItem().set(rownum, form.getItem().get(rownum));
+			f.getItem().put(rownum, form.getItem().get(rownum));
 		}
 
 		return renderStartView().addObject(f).build();
