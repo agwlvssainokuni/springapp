@@ -8,22 +8,24 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">基本画面遷移: 一括変更系3-一括変更入力</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系1-一括変更入力</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/execute">検索結果一覧へ戻る</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/start">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<s:hasBindErrors name="ex71Form">
+	<s:hasBindErrors name="appliedEx51Form">
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex71Form" element="div" />
-				<f:errors path="ex71Form.dt" element="div" />
-				<f:errors path="ex71Form.tm" element="div" />
-				<f:errors path="ex71Form.dtm" element="div" />
-				<c:forEach var="count" begin="0" end="${ex71Form.item.size()-1}">
-					<s:nestedPath path="ex71Form.item[${count}]">
+				<f:errors path="appliedEx51Form" element="div" />
+				<s:nestedPath path="appliedEx51Form">
+					<f:errors path="dt" element="div" />
+					<f:errors path="tm" element="div" />
+					<f:errors path="dtm" element="div" />
+				</s:nestedPath>
+				<c:forEach var="count" begin="0" end="${appliedEx51Form.item.size()-1}">
+					<s:nestedPath path="appliedEx51Form.item[${count}]">
 						<f:errors path="text10" element="div" />
 						<f:errors path="text100" element="div" />
 						<f:errors path="int64" element="div" />
@@ -37,7 +39,8 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex71/confirm" method="POST" modelAttribute="ex71Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex51/confirm" method="POST" modelAttribute="appliedEx51Form" cssClass="form-horizontal"
+		role="form">
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-1 control-label">日付</f:label>
 			<div class="col-md-2">
@@ -52,7 +55,7 @@
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>
 			<div class="col-md-2">
-				<s:url var="uri" value="/secure/basic/ex72/start">
+				<s:url var="uri" value="/secure/applied/ex52/start">
 					<s:param name="dt">
 						<s:bind path="dt">${status.value}</s:bind>
 					</s:param>
@@ -81,7 +84,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex71Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${appliedEx51Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>

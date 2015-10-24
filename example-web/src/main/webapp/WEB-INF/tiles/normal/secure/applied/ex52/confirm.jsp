@@ -8,9 +8,10 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">基本画面遷移: 一括変更系3-補足確認</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系1-補助確認</h2>
 <div class="panel-body">
-	<f:form servletRelativeAction="/secure/basic/ex72/execute" method="POST" modelAttribute="ex72Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex52/execute" method="POST" modelAttribute="appliedEx52Form" cssClass="form-horizontal"
+		role="form">
 		<foundation:onetimetoken />
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>

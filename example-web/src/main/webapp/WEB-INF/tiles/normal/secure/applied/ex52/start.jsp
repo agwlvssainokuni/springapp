@@ -8,19 +8,22 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">基本画面遷移: 一括変更系3-補足入力</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系1-補助入力</h2>
 <div class="panel-body">
-	<s:hasBindErrors name="ex72Form">
+	<s:hasBindErrors name="appliedEx52Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex72Form" element="div" />
-				<f:errors path="ex72Form.dt" element="div" />
-				<f:errors path="ex72Form.tm" element="div" />
-				<f:errors path="ex72Form.dtm" element="div" />
+				<f:errors path="appliedEx52Form" element="div" />
+				<s:nestedPath path="appliedEx52Form">
+					<f:errors path="dt" element="div" />
+					<f:errors path="tm" element="div" />
+					<f:errors path="dtm" element="div" />
+				</s:nestedPath>
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex72/confirm" method="POST" modelAttribute="ex72Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex52/confirm" method="POST" modelAttribute="appliedEx52Form" cssClass="form-horizontal"
+		role="form">
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
 			<div class="col-md-10">

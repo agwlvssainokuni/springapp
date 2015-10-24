@@ -9,7 +9,7 @@
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
 <c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
-<h2 class="page-header">基本画面遷移: 一括変更系4-検索条件結果一覧</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系2-検索条件結果一覧</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -18,29 +18,32 @@
 			</h3>
 		</div>
 		<div id="searchForm" class="panel-body panel-collapse collapse ${hasResultList ? '' : 'in'}">
-			<s:hasBindErrors name="ex80Form">
+			<s:hasBindErrors name="appliedEx60Form">
 				<div class="col-md-offset-2 col-md-10">
 					<div class="alert alert-danger" role="alert">
-						<f:errors path="ex80Form" element="div" />
-						<f:errors path="ex80Form.text10" element="div" />
-						<f:errors path="ex80Form.int64From" element="div" />
-						<f:errors path="ex80Form.int64To" element="div" />
-						<f:errors path="ex80Form.decimal1From" element="div" />
-						<f:errors path="ex80Form.decimal1To" element="div" />
-						<f:errors path="ex80Form.decimal3From" element="div" />
-						<f:errors path="ex80Form.decimal3To" element="div" />
-						<f:errors path="ex80Form.dtFrom" element="div" />
-						<f:errors path="ex80Form.dtTo" element="div" />
-						<f:errors path="ex80Form.tmFrom" element="div" />
-						<f:errors path="ex80Form.tmTo" element="div" />
-						<f:errors path="ex80Form.dtmFromD" element="div" />
-						<f:errors path="ex80Form.dtmFromT" element="div" />
-						<f:errors path="ex80Form.dtmToD" element="div" />
-						<f:errors path="ex80Form.dtmToT" element="div" />
+						<f:errors path="appliedEx60Form" element="div" />
+						<s:nestedPath path="appliedEx60Form">
+							<f:errors path="text10" element="div" />
+							<f:errors path="int64From" element="div" />
+							<f:errors path="int64To" element="div" />
+							<f:errors path="decimal1From" element="div" />
+							<f:errors path="decimal1To" element="div" />
+							<f:errors path="decimal3From" element="div" />
+							<f:errors path="decimal3To" element="div" />
+							<f:errors path="dtFrom" element="div" />
+							<f:errors path="dtTo" element="div" />
+							<f:errors path="tmFrom" element="div" />
+							<f:errors path="tmTo" element="div" />
+							<f:errors path="dtmFromD" element="div" />
+							<f:errors path="dtmFromT" element="div" />
+							<f:errors path="dtmToD" element="div" />
+							<f:errors path="dtmToT" element="div" />
+						</s:nestedPath>
 					</div>
 				</div>
 			</s:hasBindErrors>
-			<f:form servletRelativeAction="/secure/basic/ex80/execute" method="POST" modelAttribute="ex80Form" cssClass="form-horizontal" role="form">
+			<f:form servletRelativeAction="/secure/applied/ex60/execute" method="POST" modelAttribute="appliedEx60Form" cssClass="form-horizontal"
+				role="form">
 				<f:hidden path="sort1.by" />
 				<f:hidden path="sort1.order" />
 				<f:hidden path="sort2.by" />
@@ -130,7 +133,7 @@
 				<h3 class="panel-title">検索結果一覧</h3>
 			</div>
 			<div class="panel-body">
-				<f:form servletRelativeAction="/secure/basic/ex80/execute" method="POST" modelAttribute="ex80Form" id="ex80Form2">
+				<f:form servletRelativeAction="/secure/applied/ex60/execute" method="POST" modelAttribute="appliedEx60Form" id="appliedEx60Form2">
 					<f:hidden path="sort1.by" id="sort1by2" />
 					<f:hidden path="sort1.order" id="sort1order2" />
 					<f:hidden path="sort2.by" id="sort2by2" />
@@ -155,25 +158,25 @@
 				</f:form>
 				<div>
 					<div class="col-md-3">
-						<s:nestedPath path="ex80Form">
-							<ex:pageSorter cssClass="ex80Sorter" sortOrder="sort1.order" sortBy="sort1.by"
+						<s:nestedPath path="appliedEx60Form">
+							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort1.order" sortBy="sort1.by"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
-							<ex:pageSorter cssClass="ex80Sorter" sortOrder="sort2.order" sortBy="sort2.by"
+							<ex:pageSorter cssClass="ex60Sorter" sortOrder="sort2.order" sortBy="sort2.by"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">
-						<ex:refreshButton selector=".ex80Sorter" form="#ex80Form2" />
+						<ex:refreshButton selector=".ex60Sorter" form="#appliedEx60Form2" />
 					</div>
 					<div class="col-md-offset-1 col-md-7 text-right">
 						<div>
 							<ex:pagerDesc pageSet="${pagedList.pageSet}" />
-							<ex:pageSize form="#ex80Form2" psz="psz" />
+							<ex:pageSize form="#appliedEx60Form2" psz="psz" />
 						</div>
-						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex80Form2" pno="pno" />
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx60Form2" pno="pno" />
 					</div>
 				</div>
-				<f:form servletRelativeAction="/secure/basic/ex81/" method="POST" modelAttribute="ex80to81Form">
+				<f:form servletRelativeAction="/secure/applied/ex61/" method="POST" modelAttribute="appliedEx60to61Form">
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -215,12 +218,12 @@
 							<f:button type="submit" class="btn btn-primary">変更対象選択</f:button>
 						</div>
 						<div class="col-md-offset-2 col-md-7 text-right">
-							<ex:pagerLink pageSet="${pagedList.pageSet}" form="#ex80Form2" pno="pno" />
+							<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx60Form2" pno="pno" />
 						</div>
 					</div>
 					<div>
 						<div class="col-md-2">
-							<ex:downloadButton form="#ex80Form2" />
+							<ex:downloadButton form="#appliedEx60Form2" />
 						</div>
 					</div>
 				</f:form>

@@ -8,27 +8,29 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">基本画面遷移: 一括変更系4-一括変更入力</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系2-一括変更入力</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/basic/ex81/?redir=/secure/basic/ex80/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/basic/ex81/?redir=/secure/basic/ex80/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/basic/ex81/?redir=/secure/basic/ex80/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="${baseUri}/applied/ex61/?redir=/secure/applied/ex60/execute">検索結果一覧へ戻る</a></li>
+		<li><a href="${baseUri}/applied/ex61/?redir=/secure/applied/ex60/start">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="${baseUri}/applied/ex61/?redir=/secure/applied/ex60/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<c:if test="${updated != null && updated}">
 		<div class="col-md-12">
 			<div class="alert alert-info" role="alert">変更しました。</div>
 		</div>
 	</c:if>
-	<s:hasBindErrors name="ex81Form">
+	<s:hasBindErrors name="appliedEx61Form">
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex81Form" element="div" />
-				<f:errors path="ex81Form.dt" element="div" />
-				<f:errors path="ex81Form.tm" element="div" />
-				<f:errors path="ex81Form.dtm" element="div" />
-				<c:forEach var="count" begin="0" end="${ex81Form.item.size()-1}">
-					<s:nestedPath path="ex81Form.item[${count}]">
+				<f:errors path="appliedEx61Form" element="div" />
+				<s:nestedPath path="appliedEx61Form">
+					<f:errors path="dt" element="div" />
+					<f:errors path="tm" element="div" />
+					<f:errors path="dtm" element="div" />
+				</s:nestedPath>
+				<c:forEach var="count" begin="0" end="${appliedEx61Form.item.size()-1}">
+					<s:nestedPath path="appliedEx61Form.item[${count}]">
 						<f:errors path="text10" element="div" />
 						<f:errors path="text100" element="div" />
 						<f:errors path="int64" element="div" />
@@ -42,7 +44,8 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex81/confirm" method="POST" modelAttribute="ex81Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex61/confirm" method="POST" modelAttribute="appliedEx61Form" cssClass="form-horizontal"
+		role="form">
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-1 control-label">日付</f:label>
 			<div class="col-md-2">
@@ -57,7 +60,7 @@
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>
 			<div class="col-md-2">
-				<s:url var="uri" value="/secure/basic/ex82/start">
+				<s:url var="uri" value="/secure/applied/ex62/start">
 					<s:param name="dt">
 						<s:bind path="dt">${status.value}</s:bind>
 					</s:param>
@@ -86,7 +89,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex81Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${appliedEx61Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>

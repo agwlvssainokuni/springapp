@@ -8,14 +8,15 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">基本画面遷移: 一括変更系3-一括変更確認</h2>
+<h2 class="page-header">応用画面遷移: 一括変更系1-一括変更確認</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/basic/ex71/?redir=/secure/basic/ex70/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/execute">検索結果一覧へ戻る</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/start">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="${baseUri}/applied/ex51/?redir=/secure/applied/ex50/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
-	<f:form servletRelativeAction="/secure/basic/ex71/execute" method="POST" modelAttribute="ex71Form" cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex51/execute" method="POST" modelAttribute="appliedEx51Form" cssClass="form-horizontal"
+		role="form">
 		<foundation:onetimetoken />
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-1 control-label">日付</f:label>
@@ -46,7 +47,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${ex71Form.item.size()-1}">
+				<c:forEach var="count" begin="0" end="${appliedEx51Form.item.size()-1}">
 					<s:nestedPath path="item[${count}]">
 						<tr>
 							<td class="text-right"><c:out value="${count+1}" /></td>
