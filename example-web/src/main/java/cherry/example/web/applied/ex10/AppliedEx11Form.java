@@ -16,15 +16,27 @@
 
 package cherry.example.web.applied.ex10;
 
+import java.util.ArrayList;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.apache.commons.collections4.Factory;
+import org.apache.commons.collections4.FactoryUtils;
+import org.apache.commons.collections4.list.LazyList;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AppliedEx11Form extends AppliedEx11FormBase {
+
+	public AppliedEx11Form() {
+		Factory<AppliedEx10SubForm> factory = FactoryUtils.nullFactory();
+		setItem(LazyList.lazyList(new ArrayList<AppliedEx10SubForm>(), factory));
+		getItem().get(99);
+	}
 
 }
