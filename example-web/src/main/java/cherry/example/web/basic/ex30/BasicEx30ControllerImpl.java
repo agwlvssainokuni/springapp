@@ -48,10 +48,10 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
 
 @Controller
-public class Ex30ControllerImpl implements Ex30Controller {
+public class BasicEx30ControllerImpl implements BasicEx30Controller {
 
 	@Autowired
-	private Ex30Service service;
+	private BasicEx30Service service;
 
 	@Autowired
 	private Config config;
@@ -127,7 +127,7 @@ public class Ex30ControllerImpl implements Ex30Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex30Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(BasicEx30Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
