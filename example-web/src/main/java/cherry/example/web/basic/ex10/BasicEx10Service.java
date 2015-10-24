@@ -16,17 +16,13 @@
 
 package cherry.example.web.basic.ex10;
 
-import cherry.example.db.gen.query.BExTbl1;
-
 public interface BasicEx10Service {
 
 	boolean exists(String text10);
 
 	Long create(BasicEx10Form form);
 
-	BExTbl1 findById(long id);
-
-	BasicEx10Form findFormById(long id);
+	BasicEx10Form findById(long id);
 
 	boolean exists(long id, String text10);
 
