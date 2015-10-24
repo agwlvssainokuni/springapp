@@ -35,18 +35,18 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_BASIC_EX90)
-public interface Ex90Controller {
+public interface BasicEx90Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) Ex90Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) BasicEx90Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex90Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() BasicEx90Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 }

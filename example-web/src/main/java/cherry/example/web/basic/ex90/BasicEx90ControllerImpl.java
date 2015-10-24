@@ -41,13 +41,13 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex90ControllerImpl implements Ex90Controller {
+public class BasicEx90ControllerImpl implements BasicEx90Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex90Service service;
+	private BasicEx90Service service;
 
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
@@ -56,13 +56,13 @@ public class Ex90ControllerImpl implements Ex90Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex90Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(BasicEx90Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex90Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(BasicEx90Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -74,7 +74,7 @@ public class Ex90ControllerImpl implements Ex90Controller {
 			return renderStartView().build();
 		}
 
-		Ex90ResultDto result = service.load(form);
+		BasicEx90ResultDto result = service.load(form);
 
 		return renderWithoutView().addObject(result).build();
 	}
@@ -91,11 +91,11 @@ public class Ex90ControllerImpl implements Ex90Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex90Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(BasicEx90Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
-	private boolean hasErrors(Ex90Form form, BindingResult binding) {
+	private boolean hasErrors(BasicEx90Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {

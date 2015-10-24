@@ -12,9 +12,9 @@
 <div class="panel-body">
 	<div class="col-md-offset-2 col-md-10">
 		<c:choose>
-			<c:when test="${ex90ResultDto.ngCount <= 0}">
+			<c:when test="${basicEx90ResultDto.ngCount <= 0}">
 				<div class="alert alert-info" role="alert">
-					<s:nestedPath path="ex90ResultDto">
+					<s:nestedPath path="basicEx90ResultDto">
 						<div>
 							<ex:out path="totalCount" />
 							登録しました。
@@ -24,7 +24,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-danger" role="alert">
-					<s:nestedPath path="ex90ResultDto">
+					<s:nestedPath path="basicEx90ResultDto">
 						<div>
 							全
 							<ex:out path="totalCount" />
@@ -35,7 +35,7 @@
 							件。
 						</div>
 					</s:nestedPath>
-					<c:forEach var="entry" items="${ex90ResultDto.ngInfo.entrySet()}">
+					<c:forEach var="entry" items="${basicEx90ResultDto.ngInfo.entrySet()}">
 						<div>
 							<foundation:render value="${entry.key}" />
 							件目:
@@ -49,7 +49,7 @@
 		</c:choose>
 	</div>
 	<div class="form-horizontal">
-		<s:nestedPath path="ex90Form">
+		<s:nestedPath path="basicEx90Form">
 			<div class="form-group">
 				<f:label path="file.originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
 				<div class="col-md-10">

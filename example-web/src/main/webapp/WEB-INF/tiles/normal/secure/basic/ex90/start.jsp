@@ -10,19 +10,21 @@
 <c:url var="baseUri" value="/secure" />
 <h2 class="page-header">基本画面遷移: アップロード系1-入力</h2>
 <div class="panel-body">
-	<s:hasBindErrors name="ex90Form">
+	<s:hasBindErrors name="basicEx90Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
-				<f:errors path="ex90Form" element="div" />
-				<f:errors path="ex90Form.file" element="div" />
-				<f:errors path="ex90Form.charset" element="div" />
-				<f:errors path="ex90Form.dt" element="div" />
-				<f:errors path="ex90Form.tm" element="div" />
-				<f:errors path="ex90Form.dtm" element="div" />
+				<f:errors path="basicEx90Form" element="div" />
+				<s:nestedPath path="basicEx90Form">
+					<f:errors path="file" element="div" />
+					<f:errors path="charset" element="div" />
+					<f:errors path="dt" element="div" />
+					<f:errors path="tm" element="div" />
+					<f:errors path="dtm" element="div" />
+				</s:nestedPath>
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/basic/ex90/execute" method="POST" modelAttribute="ex90Form" cssClass="form-horizontal" role="form"
+	<f:form servletRelativeAction="/secure/basic/ex90/execute" method="POST" modelAttribute="basicEx90Form" cssClass="form-horizontal" role="form"
 		enctype="multipart/form-data">
 		<foundation:onetimetoken />
 		<div class="form-group">

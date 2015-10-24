@@ -47,7 +47,7 @@ import com.mysema.query.sql.SQLQueryFactory;
 import com.mysema.query.sql.dml.SQLInsertClause;
 
 @Service
-public class Ex90ServiceImpl implements Ex90Service {
+public class BasicEx90ServiceImpl implements BasicEx90Service {
 
 	@Autowired
 	private SQLQueryFactory qf;
@@ -59,7 +59,7 @@ public class Ex90ServiceImpl implements Ex90Service {
 
 	@Transactional
 	@Override
-	public Ex90ResultDto load(Ex90Form form) {
+	public BasicEx90ResultDto load(BasicEx90Form form) {
 
 		try (InputStream in = form.getFile().getInputStream();
 				Reader r = new InputStreamReader(in, form.getCharset());
@@ -67,7 +67,7 @@ public class Ex90ServiceImpl implements Ex90Service {
 
 			String[] header = csv.read();
 			if (header == null) {
-				return new Ex90ResultDto();
+				return new BasicEx90ResultDto();
 			}
 
 			long totalCount = 0L;
@@ -81,7 +81,7 @@ public class Ex90ServiceImpl implements Ex90Service {
 
 				totalCount += 1L;
 
-				Ex90LoadDto dto = new Ex90LoadDto();
+				BasicEx90LoadDto dto = new BasicEx90LoadDto();
 				BindingResult binding = dataBinderHelper.bindAndValidate(dto,
 						new MutablePropertyValues(createValueMap(field, record)));
 				if (binding.hasErrors()) {
@@ -118,7 +118,7 @@ public class Ex90ServiceImpl implements Ex90Service {
 				}
 			}
 
-			Ex90ResultDto result = new Ex90ResultDto();
+			BasicEx90ResultDto result = new BasicEx90ResultDto();
 			result.setTotalCount(totalCount);
 			result.setOkCount(okCount);
 			result.setNgCount(ngCount);

@@ -39,7 +39,7 @@ import cherry.foundation.validator.NumberScale;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex90LoadDtoBase {
+public class BasicEx90LoadDtoBase {
 
 	@NotEmpty()
 	@MaxLength(10)

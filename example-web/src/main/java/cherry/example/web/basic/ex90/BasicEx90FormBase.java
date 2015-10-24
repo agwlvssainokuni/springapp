@@ -38,7 +38,7 @@ import cherry.foundation.validator.JodaTimeMin;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex90FormBase {
+public class BasicEx90FormBase {
 
 	private MultipartFile file;
 

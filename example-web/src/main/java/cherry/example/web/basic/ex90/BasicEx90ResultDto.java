@@ -16,8 +16,15 @@
 
 package cherry.example.web.basic.ex90;
 
-public interface Ex90Service {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	Ex90ResultDto load(Ex90Form form);
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class BasicEx90ResultDto extends BasicEx90ResultDtoBase {
 
 }

@@ -28,7 +28,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex90ResultDtoBase {
+public class BasicEx90ResultDtoBase {
 
 	private long totalCount = 0L;
 

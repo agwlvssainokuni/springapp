@@ -25,6 +25,6 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Ex90LoadDto extends Ex90LoadDtoBase {
+public class BasicEx90LoadDto extends BasicEx90LoadDtoBase {
 
 }
