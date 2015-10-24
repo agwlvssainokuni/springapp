@@ -16,12 +16,6 @@
 
 package cherry.example.web.applied.ex60;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,14 +23,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class Ex81inFormBase implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@NotNull()
-	@Valid()
-	private List<Ex81inSubForm> item;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class AppliedEx60to61SubForm extends AppliedEx60to61SubFormBase {
 
 }

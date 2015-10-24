@@ -41,32 +41,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX61)
-@SessionAttributes(types = { Ex81inForm.class, Ex81Form.class })
-public interface Ex81Controller {
+@SessionAttributes(types = { AppliedEx61inForm.class, AppliedEx61Form.class })
+public interface AppliedEx61Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @Validated() Ex80to81Form form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request, SessionStatus status);
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,
+			@Validated() AppliedEx60to61Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() Ex81inForm form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView start(@Validated() AppliedEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_UPDATE)
-	ModelAndView update(@Validated(G9.class) Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView update(@Validated(G9.class) AppliedEx61Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
 }

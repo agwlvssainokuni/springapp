@@ -45,7 +45,7 @@ import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.ComparableExpressionBase;
 
 @Service
-public class Ex80ServiceImpl implements Ex80Service {
+public class AppliedEx60ServiceImpl implements AppliedEx60Service {
 
 	@Autowired
 	private QueryDslSupport queryDslSupport;
@@ -58,25 +58,25 @@ public class Ex80ServiceImpl implements Ex80Service {
 
 	private final QExTbl1 et1 = new QExTbl1("et1");
 
-	private final String filename = "ex80_{0}.xlsx";
+	private final String filename = "ex60_{0}.xlsx";
 	private final List<String> header = asList("ID", "文字列【10】", "文字列【100】", "整数【64bit】", "小数【1桁】", "小数【3桁】", "日付",
 			"時刻", "日時");
 
 	@Transactional
 	@Override
-	public PagedList<BExTbl1> search(Ex80Form form) {
+	public PagedList<BExTbl1> search(AppliedEx60Form form) {
 		return queryDslSupport.search(commonClause(form), orderByClause(form), form.getPno(), form.getPsz(), et1);
 	}
 
 	@Transactional
 	@Override
-	public void downloadXlsx(Ex80Form form, HttpServletResponse response) {
+	public void downloadXlsx(AppliedEx60Form form, HttpServletResponse response) {
 		LocalDateTime now = bizDateTime.now();
 		tableDownloadOperation.downloadXlsx(response, filename, now, header, commonClause(form), orderByClause(form),
 				et1.id, et1.text10, et1.text100, et1.int64, et1.decimal1, et1.decimal3, et1.dt, et1.tm, et1.dtm);
 	}
 
-	private QueryConfigurer commonClause(final Ex80Form form) {
+	private QueryConfigurer commonClause(final AppliedEx60Form form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
@@ -125,7 +125,7 @@ public class Ex80ServiceImpl implements Ex80Service {
 		};
 	}
 
-	private QueryConfigurer orderByClause(final Ex80Form form) {
+	private QueryConfigurer orderByClause(final AppliedEx60Form form) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {

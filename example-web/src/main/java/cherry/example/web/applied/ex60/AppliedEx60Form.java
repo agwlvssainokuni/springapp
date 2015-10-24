@@ -16,15 +16,17 @@
 
 package cherry.example.web.applied.ex60;
 
-import javax.servlet.http.HttpServletResponse;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import cherry.example.db.gen.query.BExTbl1;
-import cherry.goods.paginate.PagedList;
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class AppliedEx60Form extends AppliedEx60FormBase {
 
-public interface Ex80Service {
-
-	PagedList<BExTbl1> search(Ex80Form form);
-
-	void downloadXlsx(Ex80Form form, HttpServletResponse response);
+	private static final long serialVersionUID = 1L;
 
 }

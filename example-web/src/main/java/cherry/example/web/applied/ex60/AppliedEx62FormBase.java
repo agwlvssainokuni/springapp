@@ -21,12 +21,33 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import cherry.foundation.validator.JodaTimeMax;
+import cherry.foundation.validator.JodaTimeMin;
+
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class Ex81inForm extends Ex81inFormBase {
+@EqualsAndHashCode
+@ToString
+public class AppliedEx62FormBase {
 
-	private static final long serialVersionUID = 1L;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JodaTimeMin("1000-01-01")
+	@JodaTimeMax("2999-12-31")
+	private LocalDate dt;
+
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	@JodaTimeMin("00:00:00")
+	@JodaTimeMax("23:59:59")
+	private LocalTime tm;
+
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@JodaTimeMin("1000-01-01T00:00:00")
+	@JodaTimeMax("2999-12-31T23:59:59")
+	private LocalDateTime dtm;
 
 }

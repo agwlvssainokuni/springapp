@@ -16,6 +16,11 @@
 
 package cherry.example.web.applied.ex60;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +38,9 @@ import cherry.foundation.validator.JodaTimeMin;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Ex82FormBase {
+public class AppliedEx61FormBase implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@JodaTimeMin("1000-01-01")
@@ -49,5 +56,8 @@ public class Ex82FormBase {
 	@JodaTimeMin("1000-01-01T00:00:00")
 	@JodaTimeMax("2999-12-31T23:59:59")
 	private LocalDateTime dtm;
+
+	@Valid
+	private List<AppliedEx61SubForm> item;
 
 }

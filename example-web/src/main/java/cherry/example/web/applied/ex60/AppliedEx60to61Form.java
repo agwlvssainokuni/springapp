@@ -25,6 +25,6 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Ex81SubForm extends Ex81SubFormBase {
+public class AppliedEx60to61Form extends AppliedEx60to61FormBase {
 
 }

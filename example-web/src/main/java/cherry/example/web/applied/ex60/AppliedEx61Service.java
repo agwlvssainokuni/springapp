@@ -16,15 +16,12 @@
 
 package cherry.example.web.applied.ex60;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class Ex82Form extends Ex82FormBase {
+public interface AppliedEx61Service {
+
+	List<AppliedEx61SubForm> search(List<Long> id);
+
+	long update(AppliedEx61Form form);
 
 }

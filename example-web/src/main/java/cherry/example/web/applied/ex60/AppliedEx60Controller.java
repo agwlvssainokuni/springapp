@@ -40,23 +40,23 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX60)
-@SessionAttributes(types = { Ex80Form.class })
-public interface Ex80Controller {
+@SessionAttributes(types = { AppliedEx60Form.class })
+public interface AppliedEx60Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) Ex80Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) AppliedEx60Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex80Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() AppliedEx60Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_DOWNLOAD)
-	ModelAndView download(@Validated() Ex80Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView download(@Validated() AppliedEx60Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response);
 
 }

@@ -44,16 +44,16 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 @Controller
-public class Ex81ControllerImpl implements Ex81Controller {
+public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 
 	@Autowired
 	private OneTimeTokenValidator oneTimeTokenValidator;
 
 	@Autowired
-	private Ex81Service service;
+	private AppliedEx61Service service;
 
 	@Override
-	public ModelAndView init(String redir, Ex80to81Form form, BindingResult binding, Authentication auth,
+	public ModelAndView init(String redir, AppliedEx60to61Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (StringUtils.isNotEmpty(redir)) {
 			status.setComplete();
@@ -64,12 +64,12 @@ public class Ex81ControllerImpl implements Ex81Controller {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 
-		Ex81inForm f = createSessionForm(form);
+		AppliedEx61inForm f = createSessionForm(form);
 		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(Ex81inForm form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(AppliedEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		if (binding.hasErrors()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
@@ -78,7 +78,7 @@ public class Ex81ControllerImpl implements Ex81Controller {
 		if (id.isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		Ex81Form f = createForm(id);
+		AppliedEx61Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
@@ -86,13 +86,13 @@ public class Ex81ControllerImpl implements Ex81Controller {
 	}
 
 	@Override
-	public ModelAndView update(Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView update(AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -103,13 +103,13 @@ public class Ex81ControllerImpl implements Ex81Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex81Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
@@ -144,14 +144,14 @@ public class Ex81ControllerImpl implements Ex81Controller {
 	}
 
 	private UriComponents redirectToSearchResult() {
-		return fromMethodCall(on(Ex80Controller.class).execute(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(AppliedEx60Controller.class).execute(null, null, null, null, null, null)).build();
 	}
 
 	private UriComponents redirectToStart() {
-		return fromMethodCall(on(Ex81Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(AppliedEx61Controller.class).start(null, null, null, null, null, null)).build();
 	}
 
-	private boolean hasErrors(Ex81Form form, BindingResult binding) {
+	private boolean hasErrors(AppliedEx61Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -169,30 +169,30 @@ public class Ex81ControllerImpl implements Ex81Controller {
 		return false;
 	}
 
-	private Ex81inForm createSessionForm(Ex80to81Form form) {
-		List<Ex81inSubForm> l = new ArrayList<>(form.getItem().size());
-		for (Ex80to81SubForm subform : form.getItem()) {
+	private AppliedEx61inForm createSessionForm(AppliedEx60to61Form form) {
+		List<AppliedEx61inSubForm> l = new ArrayList<>(form.getItem().size());
+		for (AppliedEx60to61SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				Ex81inSubForm sf = new Ex81inSubForm();
+				AppliedEx61inSubForm sf = new AppliedEx61inSubForm();
 				sf.setId(subform.getId());
 				l.add(sf);
 			}
 		}
-		Ex81inForm f = new Ex81inForm();
+		AppliedEx61inForm f = new AppliedEx61inForm();
 		f.setItem(l);
 		return f;
 	}
 
-	private List<Long> getId(Ex81inForm form) {
+	private List<Long> getId(AppliedEx61inForm form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (Ex81inSubForm subform : form.getItem()) {
+		for (AppliedEx61inSubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
 		return l;
 	}
 
-	private Ex81Form createForm(List<Long> id) {
-		Ex81Form f = new Ex81Form();
+	private AppliedEx61Form createForm(List<Long> id) {
+		AppliedEx61Form f = new AppliedEx61Form();
 		f.setItem(service.search(id));
 		return f;
 	}

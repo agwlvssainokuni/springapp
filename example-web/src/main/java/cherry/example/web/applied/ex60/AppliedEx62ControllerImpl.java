@@ -39,7 +39,7 @@ import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Controller
-public class Ex82ControllerImpl implements Ex82Controller {
+public class AppliedEx62ControllerImpl implements AppliedEx62Controller {
 
 	@Autowired
 	private ConversionService conversionService;
@@ -51,13 +51,13 @@ public class Ex82ControllerImpl implements Ex82Controller {
 	}
 
 	@Override
-	public ModelAndView start(Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView confirm(Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView confirm(AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -68,13 +68,13 @@ public class Ex82ControllerImpl implements Ex82Controller {
 	}
 
 	@Override
-	public ModelAndView back(Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView back(AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -96,19 +96,20 @@ public class Ex82ControllerImpl implements Ex82Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(Ex81Controller.class).update(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(AppliedEx61Controller.class).update(null, null, null, null, null, null)).build();
 		}
 	}
 
-	private UriComponents redirectOnExecute(Ex82Form form) {
-		UriComponentsBuilder ucb = fromMethodCall(on(Ex81Controller.class).update(null, null, null, null, null, null));
+	private UriComponents redirectOnExecute(AppliedEx62Form form) {
+		UriComponentsBuilder ucb = fromMethodCall(on(AppliedEx61Controller.class).update(null, null, null, null, null,
+				null));
 		ucb.queryParam("dt", conversionService.convert(form.getDt(), String.class));
 		ucb.queryParam("tm", conversionService.convert(form.getTm(), String.class));
 		ucb.queryParam("dtm", conversionService.convert(form.getDtm(), String.class));
 		return ucb.build();
 	}
 
-	private boolean hasErrors(Ex82Form form, BindingResult binding) {
+	private boolean hasErrors(AppliedEx62Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -118,7 +119,7 @@ public class Ex82ControllerImpl implements Ex82Controller {
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
 			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("ex81Form.dt"), LogicalErrorUtil.resolve("ex81Form.tm"));
+					LogicalErrorUtil.resolve("appliedEx61Form.dt"), LogicalErrorUtil.resolve("appliedEx61Form.tm"));
 		}
 
 		if (binding.hasErrors()) {

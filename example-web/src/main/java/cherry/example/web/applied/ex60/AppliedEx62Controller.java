@@ -37,26 +37,26 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX62)
-public interface Ex82Controller {
+public interface AppliedEx62Controller {
 
 	@RequestMapping()
 	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated(G9.class) AppliedEx62Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
-	ModelAndView confirm(@Validated() Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView confirm(@Validated() AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
-	ModelAndView back(@Validated() Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView back(@Validated() AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() Ex82Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() AppliedEx62Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 }
