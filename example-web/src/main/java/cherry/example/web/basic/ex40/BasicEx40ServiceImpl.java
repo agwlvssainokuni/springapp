@@ -45,7 +45,7 @@ import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.expr.ComparableExpressionBase;
 
 @Service
-public class Ex40ServiceImpl implements Ex40Service {
+public class BasicEx40ServiceImpl implements BasicEx40Service {
 
 	@Autowired
 	private QueryDslSupport queryDslSupport;

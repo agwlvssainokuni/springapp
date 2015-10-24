@@ -28,7 +28,7 @@ import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.QBean;
 
 @Service
-public class Ex41ServiceImpl implements Ex41Service {
+public class BasicEx41ServiceImpl implements BasicEx41Service {
 
 	@Autowired
 	private SQLQueryFactory qf;
