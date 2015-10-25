@@ -102,7 +102,7 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 	}
 
 	private UriComponents redirectOnExecute() {
-		return fromMethodCall(on(AppliedEx10Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(AppliedEx10Controller.class).update(null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(int rownum, AppliedEx11Form form, BindingResult binding) {

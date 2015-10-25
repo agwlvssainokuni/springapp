@@ -68,6 +68,12 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 	}
 
 	@Override
+	public ModelAndView update(AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		return renderStartView().build();
+	}
+
+	@Override
 	public ModelAndView confirm(AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 

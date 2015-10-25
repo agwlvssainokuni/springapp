@@ -103,7 +103,7 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(AppliedEx12Controller.class).start(id, null, null, null, null, null, null))
+		return fromMethodCall(on(AppliedEx12Controller.class).update(id, null, null, null, null, null, null))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 

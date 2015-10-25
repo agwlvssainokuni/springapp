@@ -23,6 +23,7 @@ import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
+import static cherry.example.web.PathDef.SUBURI_UPDATE;
 import static cherry.example.web.PathDef.URI_APPLIED_EX10;
 
 import java.util.Locale;
@@ -50,6 +51,10 @@ public interface AppliedEx10Controller {
 
 	@RequestMapping(SUBURI_START)
 	ModelAndView start(@Validated(G9.class) AppliedEx10Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(SUBURI_UPDATE)
+	ModelAndView update(@Validated(G9.class) AppliedEx10Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
