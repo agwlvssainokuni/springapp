@@ -1,0 +1,10 @@
+appliedEx51SubForm.id=ID
+appliedEx51SubForm.text10=文字列【10】
+appliedEx51SubForm.text100=文字列【100】
+appliedEx51SubForm.int64=整数【64bit】
+appliedEx51SubForm.decimal1=小数【1桁】
+appliedEx51SubForm.decimal3=小数【3桁】
+appliedEx51SubForm.dt=日付
+appliedEx51SubForm.tm=時刻
+appliedEx51SubForm.dtm=日時
+appliedEx51SubForm.lockVersion=ロックバージョン

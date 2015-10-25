@@ -16,6 +16,11 @@
 
 package cherry.example.web.applied.ex10;
 
+import java.util.Map;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +28,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class AppliedEx11Form extends AppliedEx11FormBase {
+@EqualsAndHashCode
+@ToString
+public class AppliedEx11Form {
+
+	@NotNull()
+	@Valid()
+	private Map<Integer, AppliedEx10SubForm> item;
 
 }

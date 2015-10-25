@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package cherry.example.web.applied.ex10;
 
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +33,9 @@ import lombok.ToString;
 public class AppliedEx10Form extends AppliedEx10FormBase {
 
 	private static final long serialVersionUID = 1L;
+
+	@NotNull()
+	@Valid()
+	private List<AppliedEx10SubForm> item;
 
 }

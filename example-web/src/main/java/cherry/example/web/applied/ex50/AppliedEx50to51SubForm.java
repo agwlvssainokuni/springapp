@@ -16,6 +16,8 @@
 
 package cherry.example.web.applied.ex50;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +25,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class AppliedEx50to51SubForm extends AppliedEx50to51SubFormBase {
+@EqualsAndHashCode
+@ToString
+public class AppliedEx50to51SubForm {
+
+	@NotNull()
+	private Long id;
+
+	@NotNull()
+	private Boolean checked;
 
 }

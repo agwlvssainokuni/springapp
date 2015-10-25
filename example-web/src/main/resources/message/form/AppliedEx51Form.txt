@@ -1,0 +1,3 @@
+appliedEx51Form.dt=日付
+appliedEx51Form.tm=時刻
+appliedEx51Form.dtm=日時

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,85 +17,82 @@
 package cherry.example.web.applied.ex10;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
+import org.springframework.context.MessageSourceResolvable;
 
-import cherry.foundation.validator.CharTypeAlphaNumeric;
-import cherry.foundation.validator.JodaTimeMax;
-import cherry.foundation.validator.JodaTimeMin;
-import cherry.foundation.validator.MaxLength;
-import cherry.foundation.validator.NumberScale;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class AppliedEx10FormBase implements Serializable {
+public abstract class AppliedEx10FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty()
-	@MaxLength(10)
-	@CharTypeAlphaNumeric()
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 10, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.CharTypeAlphaNumeric(groups = { javax.validation.groups.Default.class })
 	private String text10;
 
-	@MaxLength(100)
+	@cherry.foundation.validator.MaxLength(value = 100, groups = { javax.validation.groups.Default.class })
 	private String text100;
 
-	@Min(-1000000000)
-	@Max(1000000000)
+	@javax.validation.constraints.Min(value = -1000000000, groups = { javax.validation.groups.Default.class })
+	@javax.validation.constraints.Max(value = 1000000000, groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.type.format.CustomNumberFormat
 	private Long int64;
 
-	@NumberFormat(pattern = "#,##0.0#########")
-	@DecimalMin("-1000000000")
-	@DecimalMax("1000000000")
-	@NumberScale(1)
-	private BigDecimal decimal1;
+	@javax.validation.constraints.DecimalMin(value = "-1000000000", groups = { javax.validation.groups.Default.class })
+	@javax.validation.constraints.DecimalMax(value = "1000000000", groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.type.format.CustomNumberFormat(1)
+	private java.math.BigDecimal decimal1;
 
-	@NumberFormat(pattern = "#,##0.000#######")
-	@DecimalMin("-1000000000")
-	@DecimalMax("1000000000")
-	@NumberScale(3)
-	private BigDecimal decimal3;
+	@javax.validation.constraints.DecimalMin(value = "-1000000000", groups = { javax.validation.groups.Default.class })
+	@javax.validation.constraints.DecimalMax(value = "1000000000", groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.type.format.CustomNumberFormat(3)
+	private java.math.BigDecimal decimal3;
 
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin("1000-01-01")
-	@JodaTimeMax("2999-12-31")
-	private LocalDate dt;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDate dt;
 
-	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin("00:00:00")
-	@JodaTimeMax("23:59:59")
-	private LocalTime tm;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalTime tm;
 
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JodaTimeMin("1000-01-01T00:00:00")
-	@JodaTimeMax("2999-12-31T23:59:59")
-	private LocalDateTime dtm;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDateTime dtm;
 
 	private Integer lockVersion;
 
-	@NotNull()
-	@Valid()
-	private List<AppliedEx10SubForm> item;
+	@Getter
+	public enum Prop {
+		Text10("text10", "appliedEx10Form.text10"), //
+		Text100("text100", "appliedEx10Form.text100"), //
+		Int64("int64", "appliedEx10Form.int64"), //
+		Decimal1("decimal1", "appliedEx10Form.decimal1"), //
+		Decimal3("decimal3", "appliedEx10Form.decimal3"), //
+		Dt("dt", "appliedEx10Form.dt"), //
+		Tm("tm", "appliedEx10Form.tm"), //
+		Dtm("dtm", "appliedEx10Form.dtm"), //
+		LockVersion("lockVersion", "appliedEx10Form.lockVersion"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
+		}
+	}
 
 }
