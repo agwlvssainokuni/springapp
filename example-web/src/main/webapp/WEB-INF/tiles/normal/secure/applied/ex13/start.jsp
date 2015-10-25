@@ -27,8 +27,8 @@
 			</div>
 		</div>
 	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/applied/ex13/confirm?rownum=${param.rownum}" method="POST" modelAttribute="appliedEx11Form"
-		cssClass="form-horizontal" role="form">
+	<f:form servletRelativeAction="/secure/applied/ex13/confirm?id=${param.id}&rownum=${param.rownum}" method="POST"
+		modelAttribute="appliedEx11Form" cssClass="form-horizontal" role="form">
 		<s:nestedPath path="item[${param.rownum}]">
 			<div class="form-group">
 				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
