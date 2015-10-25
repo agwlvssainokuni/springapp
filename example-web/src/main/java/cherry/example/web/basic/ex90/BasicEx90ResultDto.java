@@ -16,6 +16,9 @@
 
 package cherry.example.web.basic.ex90;
 
+import java.util.List;
+import java.util.Map;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +26,16 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class BasicEx90ResultDto extends BasicEx90ResultDtoBase {
+@EqualsAndHashCode
+@ToString
+public class BasicEx90ResultDto {
+
+	private long totalCount = 0L;
+
+	private long okCount = 0L;
+
+	private long ngCount = 0L;
+
+	private Map<Long, List<String>> ngInfo;
 
 }

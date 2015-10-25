@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,48 +16,57 @@
 
 package cherry.example.web.basic.ex90;
 
-import java.nio.charset.Charset;
-
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.context.MessageSourceResolvable;
 
-import cherry.foundation.validator.JodaTimeMax;
-import cherry.foundation.validator.JodaTimeMin;
+import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class BasicEx90FormBase {
+public abstract class BasicEx90FormBase implements Serializable {
 
-	private MultipartFile file;
+	private static final long serialVersionUID = 1L;
 
-	@NotNull
-	private Charset charset;
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	private org.springframework.web.multipart.MultipartFile file;
 
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@JodaTimeMin("1000-01-01")
-	@JodaTimeMax("2999-12-31")
-	private LocalDate dt;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDate dt;
 
-	@DateTimeFormat(pattern = "HH:mm:ss")
-	@JodaTimeMin("00:00:00")
-	@JodaTimeMax("23:59:59")
-	private LocalTime tm;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalTime tm;
 
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JodaTimeMin("1000-01-01T00:00:00")
-	@JodaTimeMax("2999-12-31T23:59:59")
-	private LocalDateTime dtm;
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDateTime dtm;
+
+	@Getter
+	public enum Prop {
+		File("file", "basicEx90Form.file"), //
+		Charset("charset", "basicEx90Form.charset"), //
+		Dt("dt", "basicEx90Form.dt"), //
+		Tm("tm", "basicEx90Form.tm"), //
+		Dtm("dtm", "basicEx90Form.dtm"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
+		}
+	}
 
 }

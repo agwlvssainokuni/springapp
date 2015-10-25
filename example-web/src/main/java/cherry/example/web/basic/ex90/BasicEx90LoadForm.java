@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.basic.ex60;
-
-import javax.validation.constraints.NotNull;
+package cherry.example.web.basic.ex90;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,14 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class BasicEx60to61SubFormBase {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class BasicEx90LoadForm extends BasicEx90LoadFormBase {
 
-	@NotNull()
-	private Long id;
-
-	@NotNull()
-	private Boolean checked;
+	private static final long serialVersionUID = 1L;
 
 }

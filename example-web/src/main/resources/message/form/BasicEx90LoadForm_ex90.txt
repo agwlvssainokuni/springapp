@@ -1,0 +1,5 @@
+ex90.text10=文字列【10】
+ex90.text100=文字列【100】
+ex90.int64=整数【64bit】
+ex90.decimal1=小数【1桁】
+ex90.decimal3=小数【3桁】

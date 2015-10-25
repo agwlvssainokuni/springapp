@@ -1,0 +1,9 @@
+basicEx20Form.text10=文字列【10】
+basicEx20Form.text100=文字列【100】
+basicEx20Form.int64=整数【64bit】
+basicEx20Form.decimal1=小数【1桁】
+basicEx20Form.decimal3=小数【3桁】
+basicEx20Form.dt=日付
+basicEx20Form.tm=時刻
+basicEx20Form.dtm=日時
+basicEx20Form.lockVersion=ロックバージョン

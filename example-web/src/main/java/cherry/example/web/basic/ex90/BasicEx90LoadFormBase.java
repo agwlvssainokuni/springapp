@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.basic.ex40;
+package cherry.example.web.basic.ex90;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class BasicEx41FormBase implements Serializable {
+public abstract class BasicEx90LoadFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,28 +58,13 @@ public abstract class BasicEx41FormBase implements Serializable {
 	@cherry.foundation.type.format.CustomNumberFormat(3)
 	private java.math.BigDecimal decimal3;
 
-	@cherry.foundation.type.format.CustomDateTimeFormat()
-	private org.joda.time.LocalDate dt;
-
-	@cherry.foundation.type.format.CustomDateTimeFormat()
-	private org.joda.time.LocalTime tm;
-
-	@cherry.foundation.type.format.CustomDateTimeFormat()
-	private org.joda.time.LocalDateTime dtm;
-
-	private Integer lockVersion;
-
 	@Getter
 	public enum Prop {
-		Text10("text10", "basicEx41Form.text10"), //
-		Text100("text100", "basicEx41Form.text100"), //
-		Int64("int64", "basicEx41Form.int64"), //
-		Decimal1("decimal1", "basicEx41Form.decimal1"), //
-		Decimal3("decimal3", "basicEx41Form.decimal3"), //
-		Dt("dt", "basicEx41Form.dt"), //
-		Tm("tm", "basicEx41Form.tm"), //
-		Dtm("dtm", "basicEx41Form.dtm"), //
-		LockVersion("lockVersion", "basicEx41Form.lockVersion"), //
+		Text10("text10", "basicEx90LoadForm.text10"), //
+		Text100("text100", "basicEx90LoadForm.text100"), //
+		Int64("int64", "basicEx90LoadForm.int64"), //
+		Decimal1("decimal1", "basicEx90LoadForm.decimal1"), //
+		Decimal3("decimal3", "basicEx90LoadForm.decimal3"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;

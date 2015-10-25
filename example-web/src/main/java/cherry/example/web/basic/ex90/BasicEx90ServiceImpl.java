@@ -81,7 +81,7 @@ public class BasicEx90ServiceImpl implements BasicEx90Service {
 
 				totalCount += 1L;
 
-				BasicEx90LoadDto dto = new BasicEx90LoadDto();
+				BasicEx90LoadForm dto = new BasicEx90LoadForm();
 				BindingResult binding = dataBinderHelper.bindAndValidate(dto,
 						new MutablePropertyValues(createValueMap(field, record)));
 				if (binding.hasErrors()) {

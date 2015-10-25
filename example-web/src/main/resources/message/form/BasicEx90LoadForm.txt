@@ -1,0 +1,5 @@
+basicEx90LoadForm.text10=文字列【10】
+basicEx90LoadForm.text100=文字列【100】
+basicEx90LoadForm.int64=整数【64bit】
+basicEx90LoadForm.decimal1=小数【1桁】
+basicEx90LoadForm.decimal3=小数【3桁】

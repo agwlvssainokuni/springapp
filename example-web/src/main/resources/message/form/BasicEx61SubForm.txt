@@ -1,0 +1,10 @@
+basicEx61SubForm.id=ID
+basicEx61SubForm.text10=文字列【10】
+basicEx61SubForm.text100=文字列【100】
+basicEx61SubForm.int64=整数【64bit】
+basicEx61SubForm.decimal1=小数【1桁】
+basicEx61SubForm.decimal3=小数【3桁】
+basicEx61SubForm.dt=日付
+basicEx61SubForm.tm=時刻
+basicEx61SubForm.dtm=日時
+basicEx61SubForm.lockVersion=ロックバージョン
