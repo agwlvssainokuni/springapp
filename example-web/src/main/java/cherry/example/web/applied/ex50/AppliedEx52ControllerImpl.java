@@ -23,8 +23,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -41,9 +39,6 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 @Controller
 public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 
-	@Autowired
-	private ConversionService conversionService;
-
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
@@ -51,9 +46,15 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 	}
 
 	@Override
-	public ModelAndView start(AppliedEx52Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+
+		AppliedEx52Form f = new AppliedEx52Form();
+		f.setDt(form.getDt());
+		f.setTm(form.getTm());
+		f.setDtm(form.getDtm());
+
+		return renderStartView().addObject(f).build();
 	}
 
 	@Override
@@ -74,13 +75,8 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 	}
 
 	@Override
-	public ModelAndView execute(AppliedEx52Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-
-		if (hasErrors(form, binding)) {
-			return renderStartView().build();
-		}
-
 		return ModelAndViewBuilder.redirect(redirectOnExecute(form)).build();
 	}
 
@@ -100,13 +96,8 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 		}
 	}
 
-	private UriComponents redirectOnExecute(AppliedEx52Form form) {
-		UriComponentsBuilder ucb = fromMethodCall(on(AppliedEx51Controller.class).update(null, null, null, null, null,
-				null));
-		ucb.queryParam("dt", conversionService.convert(form.getDt(), String.class));
-		ucb.queryParam("tm", conversionService.convert(form.getTm(), String.class));
-		ucb.queryParam("dtm", conversionService.convert(form.getDtm(), String.class));
-		return ucb.build();
+	private UriComponents redirectOnExecute(AppliedEx51Form form) {
+		return fromMethodCall(on(AppliedEx51Controller.class).update(null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(AppliedEx52Form form, BindingResult binding) {

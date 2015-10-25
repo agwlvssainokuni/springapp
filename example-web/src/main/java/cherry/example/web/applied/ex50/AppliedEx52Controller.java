@@ -31,12 +31,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX52)
+@SessionAttributes(types = { AppliedEx51Form.class }, value = { "appliedEx51Form" })
 public interface AppliedEx52Controller {
 
 	@RequestMapping()
@@ -44,7 +46,7 @@ public interface AppliedEx52Controller {
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated(G9.class) AppliedEx52Form form, BindingResult binding, Authentication auth,
+	ModelAndView start(@Validated(G9.class) AppliedEx51Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_CONFIRM)
@@ -56,7 +58,7 @@ public interface AppliedEx52Controller {
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() AppliedEx52Form form, BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated() AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
 
 }
