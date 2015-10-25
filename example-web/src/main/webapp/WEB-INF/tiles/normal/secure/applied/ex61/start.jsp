@@ -60,18 +60,7 @@
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>
 			<div class="col-md-2">
-				<s:url var="uri" value="/secure/applied/ex62/start">
-					<s:param name="dt">
-						<s:bind path="dt">${status.value}</s:bind>
-					</s:param>
-					<s:param name="tm">
-						<s:bind path="tm">${status.value}</s:bind>
-					</s:param>
-					<s:param name="dtm">
-						<s:bind path="dtm">${status.value}</s:bind>
-					</s:param>
-				</s:url>
-				<a href="${uri}" class="btn btn-default" role="button">補助入力</a>
+				<a href="${baseUri}/applied/ex62/start" class="btn btn-default" role="button">補助入力</a>
 			</div>
 		</div>
 		<table class="table table-striped">
