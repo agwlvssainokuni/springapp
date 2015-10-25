@@ -1,0 +1,9 @@
+appliedEx20Form.text10=文字列【10】
+appliedEx20Form.text100=文字列【100】
+appliedEx20Form.int64=整数【64bit】
+appliedEx20Form.decimal1=小数【1桁】
+appliedEx20Form.decimal3=小数【3桁】
+appliedEx20Form.dt=日付
+appliedEx20Form.tm=時刻
+appliedEx20Form.dtm=日時
+appliedEx20Form.lockVersion=ロックバージョン
