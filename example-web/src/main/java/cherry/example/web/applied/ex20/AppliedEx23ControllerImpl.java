@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package cherry.example.web.applied.ex10;
+package cherry.example.web.applied.ex20;
 
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.ParamDef.REQ_ROWNUM;
-import static cherry.example.web.PathDef.VIEW_APPLIED_EX13_START;
+import static cherry.example.web.PathDef.VIEW_APPLIED_EX23_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -37,12 +37,12 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
-import cherry.example.web.applied.ex10.AppliedEx10SubFormBase.Prop;
+import cherry.example.web.applied.ex20.AppliedEx20SubFormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Controller
-public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
+public class AppliedEx23ControllerImpl implements AppliedEx23Controller {
 
 	@Override
 	public ModelAndView init(String redir, long id, int rownum, Authentication auth, Locale locale,
@@ -51,11 +51,11 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 	}
 
 	@Override
-	public ModelAndView start(long id, int rownum, AppliedEx10Form form, BindingResult binding, Authentication auth,
+	public ModelAndView start(long id, int rownum, AppliedEx20Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		AppliedEx11Form f = new AppliedEx11Form();
-		f.setItem(new HashMap<Integer, AppliedEx10SubForm>());
+		AppliedEx21Form f = new AppliedEx21Form();
+		f.setItem(new HashMap<Integer, AppliedEx20SubForm>());
 		if (CollectionUtils.isNotEmpty(form.getItem()) && form.getItem().size() > rownum) {
 			f.getItem().put(rownum, form.getItem().get(rownum));
 		}
@@ -64,7 +64,7 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 	}
 
 	@Override
-	public ModelAndView confirm(long id, int rownum, AppliedEx11Form form, BindingResult binding, Authentication auth,
+	public ModelAndView confirm(long id, int rownum, AppliedEx21Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, rownum, form, binding)) {
@@ -75,19 +75,19 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 	}
 
 	@Override
-	public ModelAndView back(long id, int rownum, AppliedEx11Form form, BindingResult binding, Authentication auth,
+	public ModelAndView back(long id, int rownum, AppliedEx21Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 		return renderStartView().build();
 	}
 
 	@Override
-	public ModelAndView execute(long id, int rownum, AppliedEx10Form form, BindingResult binding, Authentication auth,
+	public ModelAndView execute(long id, int rownum, AppliedEx20Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX13_START);
+		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX23_START);
 	}
 
 	private ModelAndViewBuilder renderWithoutView() {
@@ -98,17 +98,17 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(AppliedEx13Controller.class).start(id, rownum, null, null, null, null, null, null))
+			return fromMethodCall(on(AppliedEx23Controller.class).start(id, rownum, null, null, null, null, null, null))
 					.replaceQueryParam(REQ_ID, id).replaceQueryParam(REQ_ROWNUM, rownum).build();
 		}
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(AppliedEx12Controller.class).update(id, null, null, null, null, null, null))
+		return fromMethodCall(on(AppliedEx22Controller.class).update(id, null, null, null, null, null, null))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private boolean hasErrors(long id, int rownum, AppliedEx11Form form, BindingResult binding) {
+	private boolean hasErrors(long id, int rownum, AppliedEx21Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -117,9 +117,9 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 
 		// 項目間チェック
 		if (form.getItem().get(rownum).getDt() == null && form.getItem().get(rownum).getTm() != null) {
-			LogicalErrorUtil.rejectValue(binding, AppliedEx11Form.getItemPropName(rownum, Prop.Dt),
-					LogicalError.RequiredWhen, AppliedEx11Form.resolveItemProp(rownum, Prop.Dt),
-					AppliedEx11Form.resolveItemProp(rownum, Prop.Tm));
+			LogicalErrorUtil.rejectValue(binding, AppliedEx21Form.getItemPropName(rownum, Prop.Dt),
+					LogicalError.RequiredWhen, AppliedEx21Form.resolveItemProp(rownum, Prop.Dt),
+					AppliedEx21Form.resolveItemProp(rownum, Prop.Tm));
 		}
 
 		if (binding.hasErrors()) {

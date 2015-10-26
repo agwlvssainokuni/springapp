@@ -68,7 +68,7 @@ public class PathDef {
 	public static final String URI_BASIC_EX90 = "/secure/basic/ex90";
 	public static final String VIEW_BASIC_EX90_START = "secure/basic/ex90/start";
 
-	// 応用画面遷移：
+	// 応用画面遷移：単票入力系1
 	public static final String URI_APPLIED_EX10 = "/secure/applied/ex10";
 	public static final String VIEW_APPLIED_EX10_START = "secure/applied/ex10/start";
 	public static final String URI_APPLIED_EX11 = "/secure/applied/ex11";
@@ -77,6 +77,16 @@ public class PathDef {
 	public static final String VIEW_APPLIED_EX12_START = "secure/applied/ex12/start";
 	public static final String URI_APPLIED_EX13 = "/secure/applied/ex13";
 	public static final String VIEW_APPLIED_EX13_START = "secure/applied/ex13/start";
+
+	// 応用画面遷移：単票入力系2
+	public static final String URI_APPLIED_EX20 = "/secure/applied/ex20";
+	public static final String VIEW_APPLIED_EX20_START = "secure/applied/ex20/start";
+	public static final String URI_APPLIED_EX21 = "/secure/applied/ex21";
+	public static final String VIEW_APPLIED_EX21_START = "secure/applied/ex21/start";
+	public static final String URI_APPLIED_EX22 = "/secure/applied/ex22";
+	public static final String VIEW_APPLIED_EX22_START = "secure/applied/ex22/start";
+	public static final String URI_APPLIED_EX23 = "/secure/applied/ex23";
+	public static final String VIEW_APPLIED_EX23_START = "secure/applied/ex23/start";
 
 	// 応用画面遷移: 一括変更系1
 	public static final String URI_APPLIED_EX50 = "/secure/applied/ex50";

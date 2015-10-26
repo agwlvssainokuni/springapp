@@ -16,6 +16,9 @@
 
 package cherry.example.web.applied.ex20;
 
+import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+import static com.google.common.base.CaseFormat.UPPER_CAMEL;
+
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -26,6 +29,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -35,5 +42,15 @@ public class AppliedEx21Form {
 	@NotNull()
 	@Valid()
 	private Map<Integer, AppliedEx20SubForm> item;
+
+	public static String getItemPropName(int rownum, AppliedEx20SubFormBase.Prop prop) {
+		return new StringBuilder().append("item[").append(rownum).append("].").append(prop.getName()).toString();
+	}
+
+	public static MessageSourceResolvable resolveItemProp(int rownum, AppliedEx20SubFormBase.Prop prop) {
+		String formName = UPPER_CAMEL.to(LOWER_CAMEL, AppliedEx21Form.class.getSimpleName());
+		return LogicalErrorUtil.resolve(new StringBuilder(formName).append(".").append(getItemPropName(rownum, prop))
+				.toString());
+	}
 
 }

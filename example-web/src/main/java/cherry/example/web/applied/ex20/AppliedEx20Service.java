@@ -1,5 +1,5 @@
 /*
- * Copyright 2014,2015 agwlvssainokuni
+ * Copyright 2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,16 @@
 
 package cherry.example.web.applied.ex20;
 
-import java.util.List;
+public interface AppliedEx20Service {
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+	boolean exists(String text10);
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+	Long create(AppliedEx20Form form);
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class AppliedEx20Form extends AppliedEx20FormBase {
+	AppliedEx20Form findById(long id);
 
-	private static final long serialVersionUID = 1L;
+	boolean exists(long id, String text10);
 
-	@NotNull()
-	@Valid()
-	private List<AppliedEx20SubForm> item;
+	long update(long id, AppliedEx20Form form);
 
 }
