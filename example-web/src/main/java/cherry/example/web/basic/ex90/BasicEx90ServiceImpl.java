@@ -18,6 +18,7 @@ package cherry.example.web.basic.ex90;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
+import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 import static java.util.Arrays.asList;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ import org.springframework.validation.BindingResult;
 
 import cherry.example.db.gen.query.QExTbl1;
 import cherry.example.web.LogicalError;
+import cherry.example.web.basic.ex90.BasicEx90LoadFormBase.Prop;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.validator.DataBinderHelper;
 import cherry.goods.csv.CsvParser;
@@ -75,6 +77,7 @@ public class BasicEx90ServiceImpl implements BasicEx90Service {
 			long ngCount = 0L;
 			Map<Long, List<String>> ngInfo = new TreeMap<>();
 
+			String formName = UPPER_CAMEL.to(UPPER_CAMEL, BasicEx90LoadForm.class.getSimpleName());
 			String[] field = createFieldName(header);
 			String[] record;
 			while ((record = csv.read()) != null) {
@@ -82,8 +85,8 @@ public class BasicEx90ServiceImpl implements BasicEx90Service {
 				totalCount += 1L;
 
 				BasicEx90LoadForm dto = new BasicEx90LoadForm();
-				BindingResult binding = dataBinderHelper.bindAndValidate(dto,
-						new MutablePropertyValues(createValueMap(field, record)));
+				BindingResult binding = dataBinderHelper.bindAndValidate(dto, formName, new MutablePropertyValues(
+						createValueMap(field, record)));
 				if (binding.hasErrors()) {
 					ngInfo.put(totalCount, dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
 					ngCount += 1L;
@@ -91,8 +94,8 @@ public class BasicEx90ServiceImpl implements BasicEx90Service {
 				}
 
 				if (qf.from(et1).where(et1.text10.eq(dto.getText10())).exists()) {
-					LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-							LogicalErrorUtil.resolve("ex90.text10"));
+					LogicalErrorUtil.rejectValue(binding, Prop.Text10.getName(), LogicalError.AlreadyExists,
+							Prop.Text10.resolve());
 					ngInfo.put(totalCount, dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
 					ngCount += 1L;
 					continue;

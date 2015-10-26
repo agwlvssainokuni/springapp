@@ -45,6 +45,7 @@ import cherry.example.web.LogicalError;
 import cherry.example.web.SortBy;
 import cherry.example.web.SortOrder;
 import cherry.example.web.SortParam;
+import cherry.example.web.applied.ex60.AppliedEx60FormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
@@ -146,36 +147,31 @@ public class AppliedEx60ControllerImpl implements AppliedEx60Controller {
 		// 項目間チェック
 		if (form.getDtFrom() != null && form.getDtTo() != null) {
 			if (form.getDtFrom().isAfter(form.getDtTo())) {
-				LogicalErrorUtil.rejectValue(binding, "dtFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("appliedEx60Form.dtFrom"),
-						LogicalErrorUtil.resolve("appliedEx60Form.dtTo"));
+				LogicalErrorUtil.rejectValue(binding, Prop.DtFrom.getName(), LogicalError.RangeFromTo,
+						Prop.DtFrom.resolve(), Prop.DtTo.resolve());
 			}
 		}
 		if (form.getTmFrom() != null && form.getTmTo() != null) {
 			if (form.getTmFrom().isAfter(form.getTmTo())) {
-				LogicalErrorUtil.rejectValue(binding, "tmFrom", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("appliedEx60Form.tmFrom"),
-						LogicalErrorUtil.resolve("appliedEx60Form.tmTo"));
+				LogicalErrorUtil.rejectValue(binding, Prop.TmFrom.getName(), LogicalError.RangeFromTo,
+						Prop.TmFrom.resolve(), Prop.TmTo.resolve());
 			}
 		}
 		if (form.getDtmFromD() == null && form.getDtmFromT() != null) {
-			LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("appliedEx60Form.dtmFromD"),
-					LogicalErrorUtil.resolve("appliedEx60Form.dtmFromT"));
+			LogicalErrorUtil.rejectValue(binding, Prop.DtmFromD.getName(), LogicalError.RequiredWhen,
+					Prop.DtmFromD.resolve(), Prop.DtmFromT.resolve());
 		}
 		if (form.getDtmToD() == null && form.getDtmToT() != null) {
-			LogicalErrorUtil.rejectValue(binding, "dtmToD", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("appliedEx60Form.dtmToD"),
-					LogicalErrorUtil.resolve("appliedEx60Form.dtmToT"));
+			LogicalErrorUtil.rejectValue(binding, Prop.DtmToD.getName(), LogicalError.RequiredWhen,
+					Prop.DtmToD.resolve(), Prop.DtmToT.resolve());
 		}
 		if (form.getDtmFromD() != null && form.getDtmFromT() != null && form.getDtmToD() != null
 				&& form.getDtmToT() != null) {
 			LocalDateTime dtmFrom = form.getDtmFromD().toLocalDateTime(form.getDtmFromT());
 			LocalDateTime dtmTo = form.getDtmToD().toLocalDateTime(form.getDtmToT());
 			if (dtmFrom.isAfter(dtmTo)) {
-				LogicalErrorUtil.rejectValue(binding, "dtmFromD", LogicalError.RangeFromTo,
-						LogicalErrorUtil.resolve("appliedEx60Form.dtmFromD"),
-						LogicalErrorUtil.resolve("appliedEx60Form.dtmToD"));
+				LogicalErrorUtil.rejectValue(binding, Prop.DtmFromD.getName(), LogicalError.RangeFromTo,
+						Prop.DtmFromD.resolve(), Prop.DtmToD.resolve());
 			}
 		}
 

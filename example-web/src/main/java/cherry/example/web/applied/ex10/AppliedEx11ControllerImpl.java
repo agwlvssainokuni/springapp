@@ -36,6 +36,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
+import cherry.example.web.applied.ex10.AppliedEx10SubFormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
@@ -114,9 +115,9 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 
 		// 項目間チェック
 		if (form.getItem().get(rownum).getDt() == null && form.getItem().get(rownum).getTm() != null) {
-			LogicalErrorUtil.rejectValue(binding, "item[" + rownum + "].dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("appliedEx11Form.item[" + rownum + "].dt"),
-					LogicalErrorUtil.resolve("appliedEx11Form.item[" + rownum + "].tm"));
+			LogicalErrorUtil.rejectValue(binding, AppliedEx11Form.getItemPropName(rownum, Prop.Dt),
+					LogicalError.RequiredWhen, AppliedEx11Form.resolveItemProp(rownum, Prop.Dt),
+					AppliedEx11Form.resolveItemProp(rownum, Prop.Tm));
 		}
 
 		if (binding.hasErrors()) {

@@ -39,6 +39,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
+import cherry.example.web.applied.ex10.AppliedEx10FormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -149,8 +150,8 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
-			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("appliedEx10Form.dt"), LogicalErrorUtil.resolve("appliedEx10Form.tm"));
+			LogicalErrorUtil.rejectValue(binding, Prop.Dt.getName(), LogicalError.RequiredWhen, Prop.Dt.resolve(),
+					Prop.Tm.resolve());
 		}
 
 		if (binding.hasErrors()) {
@@ -159,8 +160,8 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 
 		// 整合性チェック
 		if (service.exists(form.getText10())) {
-			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("appliedEx10Form.text10"));
+			LogicalErrorUtil.rejectValue(binding, Prop.Text10.getName(), LogicalError.AlreadyExists,
+					Prop.Text10.resolve());
 		}
 
 		if (binding.hasErrors()) {

@@ -33,6 +33,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
+import cherry.example.web.applied.ex60.AppliedEx62FormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
@@ -109,8 +110,8 @@ public class AppliedEx62ControllerImpl implements AppliedEx62Controller {
 
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
-			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("appliedEx61Form.dt"), LogicalErrorUtil.resolve("appliedEx61Form.tm"));
+			LogicalErrorUtil.rejectValue(binding, Prop.Dt.getName(), LogicalError.RequiredWhen, Prop.Dt.resolve(),
+					Prop.Tm.resolve());
 		}
 
 		if (binding.hasErrors()) {

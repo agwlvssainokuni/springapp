@@ -40,6 +40,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.LogicalError;
+import cherry.example.web.basic.ex30.BasicEx31FormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -141,8 +142,8 @@ public class BasicEx31ControllerImpl implements BasicEx31Controller {
 
 		// 項目間チェック
 		if (form.getDt() == null && form.getTm() != null) {
-			LogicalErrorUtil.rejectValue(binding, "dt", LogicalError.RequiredWhen,
-					LogicalErrorUtil.resolve("basicEx31Form.dt"), LogicalErrorUtil.resolve("basicEx31Form.tm"));
+			LogicalErrorUtil.rejectValue(binding, Prop.Dt.getName(), LogicalError.RequiredWhen, Prop.Dt.resolve(),
+					Prop.Tm.resolve());
 		}
 
 		if (binding.hasErrors()) {
@@ -151,8 +152,8 @@ public class BasicEx31ControllerImpl implements BasicEx31Controller {
 
 		// 整合性チェック
 		if (service.exists(id, form.getText10())) {
-			LogicalErrorUtil.rejectValue(binding, "text10", LogicalError.AlreadyExists,
-					LogicalErrorUtil.resolve("basicEx31Form.text10"));
+			LogicalErrorUtil.rejectValue(binding, Prop.Text10.getName(), LogicalError.AlreadyExists,
+					Prop.Text10.resolve());
 		}
 
 		if (binding.hasErrors()) {
