@@ -35,4 +35,11 @@ public class ParamDef {
 	/** 画面引継項目: 行番号 */
 	public static final String REQ_ROWNUM = "rownum";
 
+	// フラッシュスコープ
+	/** フラッシュスコープ: 登録した */
+	public static final String FLASH_CREATED = "created";
+
+	/** フラッシュスコープ: 変更した */
+	public static final String FLASH_UPDATED = "updated";
+
 }

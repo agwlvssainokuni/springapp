@@ -16,6 +16,7 @@
 
 package cherry.example.web.basic.ex20;
 
+import static cherry.example.web.ParamDef.FLASH_UPDATED;
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.PathDef.VIEW_BASIC_EX21_START;
 import static cherry.foundation.springmvc.Contract.shouldExist;
@@ -101,7 +102,8 @@ public class BasicEx21ControllerImpl implements BasicEx21Controller {
 		long count = service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
-		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
+
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
 	}
 

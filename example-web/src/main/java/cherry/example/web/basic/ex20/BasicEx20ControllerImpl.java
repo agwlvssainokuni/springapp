@@ -16,6 +16,7 @@
 
 package cherry.example.web.basic.ex20;
 
+import static cherry.example.web.ParamDef.FLASH_CREATED;
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.PathDef.VIEW_BASIC_EX20_START;
 import static com.google.common.base.Preconditions.checkState;
@@ -98,7 +99,8 @@ public class BasicEx20ControllerImpl implements BasicEx20Controller {
 		Long id = service.create(form);
 		checkState(id != null, "failed to create: form=%s", form);
 
-		redirAttr.addFlashAttribute("created", Boolean.TRUE);
+		redirAttr.addFlashAttribute(FLASH_CREATED, Boolean.TRUE);
+
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
 	}
 
