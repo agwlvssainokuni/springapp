@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="form-horizontal">
-		<s:nestedPath path="BExTbl1">
+		<s:nestedPath path="basicEx31Form">
 			<div class="form-group">
 				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
 				<div class="col-md-10">

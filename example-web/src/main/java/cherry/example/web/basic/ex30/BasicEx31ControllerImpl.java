@@ -38,7 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.web.LogicalError;
 import cherry.example.web.basic.ex30.BasicEx31FormBase.Prop;
 import cherry.example.web.util.ModelAndViewBuilder;
@@ -63,7 +62,7 @@ public class BasicEx31ControllerImpl implements BasicEx31Controller {
 	@Override
 	public ModelAndView start(long id, BasicEx31Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		BasicEx31Form f = service.findFormById(id);
+		BasicEx31Form f = service.findById(id);
 		shouldExist(f, BasicEx31Form.class, id);
 		return renderStartView().addObject(f).build();
 	}
@@ -107,8 +106,8 @@ public class BasicEx31ControllerImpl implements BasicEx31Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		BExTbl1 record = service.findById(id);
-		return renderWithoutView().addObject(record).build();
+		BasicEx31Form f = service.findById(id);
+		return renderWithoutView().addObject(f).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {

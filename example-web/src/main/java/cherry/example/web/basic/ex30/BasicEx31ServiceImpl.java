@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.example.db.gen.query.BExTbl1;
 import cherry.example.db.gen.query.QExTbl1;
 
 import com.mysema.query.sql.SQLQueryFactory;
@@ -38,13 +37,7 @@ public class BasicEx31ServiceImpl implements BasicEx31Service {
 
 	@Transactional
 	@Override
-	public BExTbl1 findById(long id) {
-		return qf.from(et1).where(et1.id.eq(id)).singleResult(et1);
-	}
-
-	@Transactional
-	@Override
-	public BasicEx31Form findFormById(long id) {
+	public BasicEx31Form findById(long id) {
 		QBean<BasicEx31Form> qb = new QBean<>(BasicEx31Form.class, et1.text10, et1.text100, et1.int64, et1.decimal1,
 				et1.decimal3, et1.dt, et1.tm, et1.dtm, et1.lockVersion);
 		return qf.from(et1).where(et1.id.eq(id)).singleResult(qb);

@@ -16,13 +16,9 @@
 
 package cherry.example.web.basic.ex30;
 
-import cherry.example.db.gen.query.BExTbl1;
-
 public interface BasicEx31Service {
 
-	BExTbl1 findById(long id);
-
-	BasicEx31Form findFormById(long id);
+	BasicEx31Form findById(long id);
 
 	boolean exists(long id, String text10);
 
