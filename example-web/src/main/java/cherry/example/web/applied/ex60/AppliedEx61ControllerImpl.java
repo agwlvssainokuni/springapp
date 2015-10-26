@@ -16,6 +16,7 @@
 
 package cherry.example.web.applied.ex60;
 
+import static cherry.example.web.ParamDef.FLASH_UPDATED;
 import static cherry.example.web.PathDef.VIEW_APPLIED_EX61_START;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -127,7 +128,7 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 			return renderStartView().build();
 		}
 
-		redirAttr.addFlashAttribute("updated", true);
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}
 

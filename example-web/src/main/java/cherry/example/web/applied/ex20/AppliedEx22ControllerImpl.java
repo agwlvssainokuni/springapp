@@ -16,6 +16,7 @@
 
 package cherry.example.web.applied.ex20;
 
+import static cherry.example.web.ParamDef.FLASH_UPDATED;
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.PathDef.VIEW_APPLIED_EX22_START;
 import static com.google.common.base.Preconditions.checkState;
@@ -111,7 +112,7 @@ public class AppliedEx22ControllerImpl implements AppliedEx22Controller {
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
 		status.setComplete();
-		redirAttr.addFlashAttribute("updated", Boolean.TRUE);
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 
 		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
 	}
