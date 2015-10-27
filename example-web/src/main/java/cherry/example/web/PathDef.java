@@ -58,6 +58,11 @@ public class PathDef {
 	public static final String URI_BASIC_EX51 = "/secure/basic/ex51";
 	public static final String VIEW_BASIC_EX51_START = "secure/basic/ex51/start";
 
+	public static final String URI_BASIC_EX52 = "/secure/basic/ex52";
+	public static final String VIEW_BASIC_EX52_START = "secure/basic/ex52/start";
+	public static final String URI_BASIC_EX53 = "/secure/basic/ex53";
+	public static final String VIEW_BASIC_EX53_START = "secure/basic/ex53/start";
+
 	// 基本画面遷移: 一括変更系2
 	public static final String URI_BASIC_EX60 = "/secure/basic/ex60";
 	public static final String VIEW_BASIC_EX60_START = "secure/basic/ex60/start";
