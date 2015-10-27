@@ -87,10 +87,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="rownum" begin="0" end="${appliedEx10Form.item.size()-1}">
-					<s:nestedPath path="appliedEx10Form.item[${rownum}]">
+				<c:forEach var="count" begin="1" end="${appliedEx10Form.item.size()}">
+					<s:nestedPath path="appliedEx10Form.item[${count-1}]">
 						<tr>
-							<td class="text-right"><c:out value="${rownum+1}" /></td>
+							<td class="text-right"><c:out value="${count}" /></td>
 							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
 							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
 							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>

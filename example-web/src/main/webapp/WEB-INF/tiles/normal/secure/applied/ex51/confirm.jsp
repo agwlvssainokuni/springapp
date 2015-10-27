@@ -47,10 +47,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="count" begin="0" end="${appliedEx51Form.item.size()-1}">
-					<s:nestedPath path="item[${count}]">
+				<c:forEach var="count" begin="1" end="${appliedEx51Form.item.size()}">
+					<s:nestedPath path="item[${count-1}]">
 						<tr>
-							<td class="text-right"><c:out value="${count+1}" /></td>
+							<td class="text-right"><c:out value="${count}" /></td>
 							<td class="text-right"><foundation:render value="${r.id}" /> <f:hidden path="id" /> <f:hidden path="lockVersion" /></td>
 							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /></td>
 							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
