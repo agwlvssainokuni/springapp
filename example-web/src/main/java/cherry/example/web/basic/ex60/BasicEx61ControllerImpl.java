@@ -65,22 +65,20 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 
-		BasicEx61inForm f = createSessionForm(form);
+		BasicEx61SessionForm f = createSessionForm(form);
 		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(BasicEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView start(BasicEx61SessionForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (binding.hasErrors()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		List<Long> id = getId(form);
-		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
-		}
-		BasicEx61Form f = createForm(id);
+		BasicEx61Form f = createForm(form);
 		if (f.getItem().isEmpty()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 		return renderStartView().addObject(f).build();
@@ -104,8 +102,9 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 	}
 
 	@Override
-	public ModelAndView execute(BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(BasicEx61Form form, BindingResult binding, BasicEx61SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
 			return renderStartView().build();
@@ -123,6 +122,9 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 		}
 
 		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
+
+		BasicEx61SessionForm f = createSessionForm(form);
+		sessionForm.setId(f.getId());
 
 		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}
@@ -144,7 +146,7 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 	}
 
 	private UriComponents redirectToStart() {
-		return fromMethodCall(on(BasicEx61Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(BasicEx61Controller.class).start(null, null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(BasicEx61Form form, BindingResult binding) {
@@ -165,31 +167,31 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 		return false;
 	}
 
-	private BasicEx61inForm createSessionForm(BasicEx60to61Form form) {
-		List<BasicEx61inSubForm> l = new ArrayList<>(form.getItem().size());
+	private BasicEx61SessionForm createSessionForm(BasicEx60to61Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (BasicEx60to61SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				BasicEx61inSubForm sf = new BasicEx61inSubForm();
-				sf.setId(subform.getId());
-				l.add(sf);
+				l.add(subform.getId());
 			}
 		}
-		BasicEx61inForm f = new BasicEx61inForm();
-		f.setItem(l);
+		BasicEx61SessionForm f = new BasicEx61SessionForm();
+		f.setId(l);
 		return f;
 	}
 
-	private List<Long> getId(BasicEx61inForm form) {
+	private BasicEx61SessionForm createSessionForm(BasicEx61Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (BasicEx61inSubForm subform : form.getItem()) {
+		for (BasicEx61SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
-		return l;
+		BasicEx61SessionForm f = new BasicEx61SessionForm();
+		f.setId(l);
+		return f;
 	}
 
-	private BasicEx61Form createForm(List<Long> id) {
+	private BasicEx61Form createForm(BasicEx61SessionForm form) {
 		BasicEx61Form f = new BasicEx61Form();
-		f.setItem(service.search(id));
+		f.setItem(service.search(form.getId()));
 		return f;
 	}
 

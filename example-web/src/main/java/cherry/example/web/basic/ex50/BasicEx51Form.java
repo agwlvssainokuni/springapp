@@ -25,13 +25,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 public class BasicEx51Form {
 
-	@Valid
+	@NotEmpty()
+	@Valid()
 	private List<BasicEx51SubForm> item;
 
 }

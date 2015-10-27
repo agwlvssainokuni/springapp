@@ -38,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping(URI_BASIC_EX61)
-@SessionAttributes(types = { BasicEx61inForm.class })
+@SessionAttributes(types = { BasicEx61SessionForm.class })
 public interface BasicEx61Controller {
 
 	@RequestMapping()
@@ -47,8 +47,8 @@ public interface BasicEx61Controller {
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() BasicEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated() BasicEx61SessionForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_CONFIRM)
 	ModelAndView confirm(@Validated() BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
@@ -59,7 +59,8 @@ public interface BasicEx61Controller {
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() BasicEx61Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
+	ModelAndView execute(@Validated() BasicEx61Form form, BindingResult binding, BasicEx61SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			RedirectAttributes redirAttr);
 
 }
