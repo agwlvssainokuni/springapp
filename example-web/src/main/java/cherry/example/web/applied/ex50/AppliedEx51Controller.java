@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX51)
-@SessionAttributes(types = { AppliedEx51inForm.class, AppliedEx51Form.class })
+@SessionAttributes(types = { AppliedEx51SessionForm.class, AppliedEx51Form.class })
 public interface AppliedEx51Controller {
 
 	@RequestMapping()
@@ -49,8 +49,8 @@ public interface AppliedEx51Controller {
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() AppliedEx51inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated() AppliedEx51SessionForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_UPDATE)
 	ModelAndView update(@Validated(G9.class) AppliedEx51Form form, BindingResult binding, Authentication auth,
@@ -65,7 +65,7 @@ public interface AppliedEx51Controller {
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView execute(@Validated() AppliedEx51Form form, BindingResult binding, AppliedEx51SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }

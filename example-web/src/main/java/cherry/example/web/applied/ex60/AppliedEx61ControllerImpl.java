@@ -65,22 +65,20 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 
-		AppliedEx61inForm f = createSessionForm(form);
+		AppliedEx61SessionForm f = createSessionForm(form);
 		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(AppliedEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView start(AppliedEx61SessionForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (binding.hasErrors()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		List<Long> id = getId(form);
-		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
-		}
-		AppliedEx61Form f = createForm(id);
+		AppliedEx61Form f = createForm(form);
 		if (f.getItem().isEmpty()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 		return renderStartView().addObject(f).build();
@@ -110,8 +108,9 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 	}
 
 	@Override
-	public ModelAndView execute(AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(AppliedEx61Form form, BindingResult binding, AppliedEx61SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
 			return renderStartView().build();
@@ -129,6 +128,10 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 		}
 
 		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
+
+		AppliedEx61SessionForm f = createSessionForm(form);
+		sessionForm.setId(f.getId());
+
 		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}
 
@@ -149,7 +152,7 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 	}
 
 	private UriComponents redirectToStart() {
-		return fromMethodCall(on(AppliedEx61Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(AppliedEx61Controller.class).start(null, null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(AppliedEx61Form form, BindingResult binding) {
@@ -170,31 +173,31 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 		return false;
 	}
 
-	private AppliedEx61inForm createSessionForm(AppliedEx60to61Form form) {
-		List<AppliedEx61inSubForm> l = new ArrayList<>(form.getItem().size());
+	private AppliedEx61SessionForm createSessionForm(AppliedEx60to61Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (AppliedEx60to61SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				AppliedEx61inSubForm sf = new AppliedEx61inSubForm();
-				sf.setId(subform.getId());
-				l.add(sf);
+				l.add(subform.getId());
 			}
 		}
-		AppliedEx61inForm f = new AppliedEx61inForm();
-		f.setItem(l);
+		AppliedEx61SessionForm f = new AppliedEx61SessionForm();
+		f.setId(l);
 		return f;
 	}
 
-	private List<Long> getId(AppliedEx61inForm form) {
+	private AppliedEx61SessionForm createSessionForm(AppliedEx61Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (AppliedEx61inSubForm subform : form.getItem()) {
+		for (AppliedEx61SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
-		return l;
+		AppliedEx61SessionForm f = new AppliedEx61SessionForm();
+		f.setId(l);
+		return f;
 	}
 
-	private AppliedEx61Form createForm(List<Long> id) {
+	private AppliedEx61Form createForm(AppliedEx61SessionForm form) {
 		AppliedEx61Form f = new AppliedEx61Form();
-		f.setItem(service.search(id));
+		f.setItem(service.search(form.getId()));
 		return f;
 	}
 

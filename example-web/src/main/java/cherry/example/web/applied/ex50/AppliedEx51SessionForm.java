@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-package cherry.example.web.applied.ex60;
+package cherry.example.web.applied.ex50;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class AppliedEx61inForm implements Serializable {
+public class AppliedEx51SessionForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull()
+	@NotEmpty()
 	@Valid()
-	private List<AppliedEx61inSubForm> item;
+	private List<Long> id;
 
 }

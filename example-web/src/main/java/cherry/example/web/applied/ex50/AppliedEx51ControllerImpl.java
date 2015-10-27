@@ -63,22 +63,20 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 
-		AppliedEx51inForm f = createSessionForm(form);
+		AppliedEx51SessionForm f = createSessionForm(form);
 		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(AppliedEx51inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView start(AppliedEx51SessionForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (binding.hasErrors()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		List<Long> id = getId(form);
-		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
-		}
-		AppliedEx51Form f = createForm(id);
+		AppliedEx51Form f = createForm(form);
 		if (f.getItem().isEmpty()) {
+			status.setComplete();
 			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 		return renderStartView().addObject(f).build();
@@ -108,8 +106,8 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 	}
 
 	@Override
-	public ModelAndView execute(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView execute(AppliedEx51Form form, BindingResult binding, AppliedEx51SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
 			return renderStartView().build();
@@ -126,11 +124,11 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			return renderStartView().build();
 		}
 
-		List<Long> id = getId(form);
-		AppliedEx51Form f = new AppliedEx51Form();
-		f.setItem(service.search(id));
+		AppliedEx51SessionForm f = createSessionForm(form);
+		sessionForm.setId(f.getId());
 
-		return renderWithoutView().addObject(f).build();
+		AppliedEx51Form fm = createForm(f);
+		return renderWithoutView().addObject(fm).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
@@ -150,7 +148,7 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 	}
 
 	private UriComponents redirectToStart() {
-		return fromMethodCall(on(AppliedEx51Controller.class).start(null, null, null, null, null, null)).build();
+		return fromMethodCall(on(AppliedEx51Controller.class).start(null, null, null, null, null, null, null)).build();
 	}
 
 	private boolean hasErrors(AppliedEx51Form form, BindingResult binding) {
@@ -171,39 +169,31 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 		return false;
 	}
 
-	private AppliedEx51inForm createSessionForm(AppliedEx50to51Form form) {
-		List<AppliedEx51inSubForm> l = new ArrayList<>(form.getItem().size());
+	private AppliedEx51SessionForm createSessionForm(AppliedEx50to51Form form) {
+		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (AppliedEx50to51SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
-				AppliedEx51inSubForm sf = new AppliedEx51inSubForm();
-				sf.setId(subform.getId());
-				l.add(sf);
+				l.add(subform.getId());
 			}
 		}
-		AppliedEx51inForm f = new AppliedEx51inForm();
-		f.setItem(l);
+		AppliedEx51SessionForm f = new AppliedEx51SessionForm();
+		f.setId(l);
 		return f;
 	}
 
-	private List<Long> getId(AppliedEx51inForm form) {
-		List<Long> l = new ArrayList<>(form.getItem().size());
-		for (AppliedEx51inSubForm subform : form.getItem()) {
-			l.add(subform.getId());
-		}
-		return l;
-	}
-
-	private List<Long> getId(AppliedEx51Form form) {
+	private AppliedEx51SessionForm createSessionForm(AppliedEx51Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (AppliedEx51SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
-		return l;
+		AppliedEx51SessionForm f = new AppliedEx51SessionForm();
+		f.setId(l);
+		return f;
 	}
 
-	private AppliedEx51Form createForm(List<Long> id) {
+	private AppliedEx51Form createForm(AppliedEx51SessionForm form) {
 		AppliedEx51Form f = new AppliedEx51Form();
-		f.setItem(service.search(id));
+		f.setItem(service.search(form.getId()));
 		return f;
 	}
 

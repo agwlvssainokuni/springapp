@@ -41,7 +41,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX61)
-@SessionAttributes(types = { AppliedEx61inForm.class, AppliedEx61Form.class })
+@SessionAttributes(types = { AppliedEx61SessionForm.class, AppliedEx61Form.class })
 public interface AppliedEx61Controller {
 
 	@RequestMapping()
@@ -50,8 +50,8 @@ public interface AppliedEx61Controller {
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() AppliedEx61inForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated() AppliedEx61SessionForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_UPDATE)
 	ModelAndView update(@Validated(G9.class) AppliedEx61Form form, BindingResult binding, Authentication auth,
@@ -66,7 +66,8 @@ public interface AppliedEx61Controller {
 			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() AppliedEx61Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
+	ModelAndView execute(@Validated() AppliedEx61Form form, BindingResult binding, AppliedEx61SessionForm sessionForm,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			RedirectAttributes redirAttr);
 
 }
