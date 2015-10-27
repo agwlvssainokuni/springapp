@@ -32,6 +32,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
@@ -51,24 +52,32 @@ public class BasicEx51ControllerImpl implements BasicEx51Controller {
 	private BasicEx51Service service;
 
 	@Override
-	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+	public ModelAndView init(String redir, BasicEx50to51Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
+		if (StringUtils.isNotEmpty(redir)) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectTo(redir)).build();
+		}
+		if (binding.hasErrors()) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+		}
+
+		BasicEx51SessionForm f = createSessionForm(form);
+		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
-	public ModelAndView start(BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView start(BasicEx51SessionForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (binding.hasErrors()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
-		List<Long> id = getCheckedId(form);
-		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
-		}
-		BasicEx51Form f = createForm(id);
+		BasicEx51Form f = createForm(form);
 		if (f.getItem().isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
 		}
 		return renderStartView().addObject(f).build();
 	}
@@ -109,10 +118,22 @@ public class BasicEx51ControllerImpl implements BasicEx51Controller {
 			return renderStartView().build();
 		}
 
-		List<Long> id = getId(form);
-		BasicEx51Form f = new BasicEx51Form();
-		f.setItem(service.search(id));
+		BasicEx51SessionForm sf = createSessionForm(form);
+		return ModelAndViewBuilder.redirect(redirectOnExecute()).addObject(sf).build();
+	}
 
+	@Override
+	public ModelAndView completed(BasicEx51SessionForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
+		if (binding.hasErrors()) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+		}
+		BasicEx51Form f = createForm(form);
+		if (f.getItem().isEmpty()) {
+			status.setComplete();
+			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+		}
 		return renderWithoutView().addObject(f).build();
 	}
 
@@ -124,16 +145,21 @@ public class BasicEx51ControllerImpl implements BasicEx51Controller {
 		return ModelAndViewBuilder.withoutView();
 	}
 
-	private UriComponents redirectOnInit(String redir) {
-		if (StringUtils.isNotEmpty(redir)) {
-			return UriComponentsBuilder.fromPath(redir).build();
-		} else {
-			return fromMethodCall(on(BasicEx51Controller.class).start(null, null, null, null, null, null)).build();
-		}
+	private UriComponents redirectTo(String redir) {
+		return UriComponentsBuilder.fromPath(redir).build();
 	}
 
-	private UriComponents redirectOnStart() {
+	private UriComponents redirectToSearchResult() {
 		return fromMethodCall(on(BasicEx50Controller.class).execute(null, null, null, null, null, null)).build();
+	}
+
+	private UriComponents redirectToStart() {
+		return fromMethodCall(on(BasicEx51Controller.class).start(null, null, null, null, null, null, null)).build();
+	}
+
+	private UriComponents redirectOnExecute() {
+		return fromMethodCall(on(BasicEx51Controller.class).completed(null, null, null, null, null, null, null))
+				.build();
 	}
 
 	private boolean hasErrors(BasicEx51Form form, BindingResult binding) {
@@ -154,27 +180,31 @@ public class BasicEx51ControllerImpl implements BasicEx51Controller {
 		return false;
 	}
 
-	private List<Long> getCheckedId(BasicEx50to51Form form) {
+	private BasicEx51SessionForm createSessionForm(BasicEx50to51Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (BasicEx50to51SubForm subform : form.getItem()) {
 			if (subform.getChecked().booleanValue()) {
 				l.add(subform.getId());
 			}
 		}
-		return l;
+		BasicEx51SessionForm f = new BasicEx51SessionForm();
+		f.setId(l);
+		return f;
 	}
 
-	private List<Long> getId(BasicEx51Form form) {
+	private BasicEx51SessionForm createSessionForm(BasicEx51Form form) {
 		List<Long> l = new ArrayList<>(form.getItem().size());
 		for (BasicEx51SubForm subform : form.getItem()) {
 			l.add(subform.getId());
 		}
-		return l;
+		BasicEx51SessionForm f = new BasicEx51SessionForm();
+		f.setId(l);
+		return f;
 	}
 
-	private BasicEx51Form createForm(List<Long> id) {
+	private BasicEx51Form createForm(BasicEx51SessionForm form) {
 		BasicEx51Form f = new BasicEx51Form();
-		f.setItem(service.search(id));
+		f.setItem(service.search(form.getId()));
 		return f;
 	}
 

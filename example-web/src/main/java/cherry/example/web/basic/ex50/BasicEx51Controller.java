@@ -18,6 +18,7 @@ package cherry.example.web.basic.ex50;
 
 import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_REDIR;
+import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
@@ -31,19 +32,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(URI_BASIC_EX51)
+@SessionAttributes(types = { BasicEx51SessionForm.class })
 public interface BasicEx51Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
-			Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,
+			@Validated() BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)
-	ModelAndView start(@Validated() BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView start(@Validated() BasicEx51SessionForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_CONFIRM)
 	ModelAndView confirm(@Validated() BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
@@ -56,5 +61,9 @@ public interface BasicEx51Controller {
 	@RequestMapping(SUBURI_EXECUTE)
 	ModelAndView execute(@Validated() BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(SUBURI_COMPLETED)
+	ModelAndView completed(@Validated() BasicEx51SessionForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 }

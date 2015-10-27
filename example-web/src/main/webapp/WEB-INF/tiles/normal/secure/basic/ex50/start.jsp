@@ -176,7 +176,7 @@
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx50Form2" pno="pno" />
 					</div>
 				</div>
-				<f:form servletRelativeAction="/secure/basic/ex51/start" method="POST" modelAttribute="basicEx50to51Form">
+				<f:form servletRelativeAction="/secure/basic/ex51/" method="POST" modelAttribute="basicEx50to51Form">
 					<table class="table table-striped">
 						<thead>
 							<tr>
