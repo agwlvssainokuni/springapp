@@ -123,8 +123,8 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 
 		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 
-		BasicEx61SessionForm f = createSessionForm(form);
-		sessionForm.setId(f.getId());
+		BasicEx61SessionForm sf = createSessionForm(form);
+		sessionForm.setId(sf.getId());
 
 		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}

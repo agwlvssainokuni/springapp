@@ -129,8 +129,8 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 
 		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 
-		AppliedEx61SessionForm f = createSessionForm(form);
-		sessionForm.setId(f.getId());
+		AppliedEx61SessionForm sf = createSessionForm(form);
+		sessionForm.setId(sf.getId());
 
 		return ModelAndViewBuilder.redirect(redirectToStart()).build();
 	}

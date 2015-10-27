@@ -19,12 +19,13 @@ package cherry.example.web.basic.ex50;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ import lombok.ToString;
 @ToString
 public class BasicEx50to51Form {
 
-	@NotNull()
+	@NotEmpty()
 	@Valid()
 	private List<BasicEx50to51SubForm> item;
 

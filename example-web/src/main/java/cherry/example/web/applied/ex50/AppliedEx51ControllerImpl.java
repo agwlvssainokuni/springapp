@@ -124,11 +124,11 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			return renderStartView().build();
 		}
 
-		AppliedEx51SessionForm f = createSessionForm(form);
-		sessionForm.setId(f.getId());
+		AppliedEx51SessionForm sf = createSessionForm(form);
+		sessionForm.setId(sf.getId());
 
-		AppliedEx51Form fm = createForm(f);
-		return renderWithoutView().addObject(fm).build();
+		AppliedEx51Form f = createForm(sf);
+		return renderWithoutView().addObject(f).build();
 	}
 
 	private ModelAndViewBuilder renderStartView() {
