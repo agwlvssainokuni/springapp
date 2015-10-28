@@ -16,7 +16,8 @@
 
 package cherry.example.web.basic.ex40;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX40_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -44,7 +45,7 @@ import cherry.example.web.SortBy;
 import cherry.example.web.SortOrder;
 import cherry.example.web.SortParam;
 import cherry.example.web.basic.ex40.BasicEx40FormBase.Prop;
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
 
@@ -57,13 +58,16 @@ public class BasicEx40ControllerImpl implements BasicEx40Controller {
 	@Autowired
 	private Config config;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(BasicEx40Controller.class).start(null, null,
+			null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
 
 		status.setComplete();
 
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
@@ -77,7 +81,7 @@ public class BasicEx40ControllerImpl implements BasicEx40Controller {
 
 		adjustSortCondition(form);
 
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class BasicEx40ControllerImpl implements BasicEx40Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (form.getPno() <= 0L) {
@@ -100,10 +104,10 @@ public class BasicEx40ControllerImpl implements BasicEx40Controller {
 		PagedList<BExTbl1> pagedList = service.search(form);
 		if (pagedList.getPageSet().getTotalCount() <= 0L) {
 			LogicalErrorUtil.rejectOnSearchResultEmpty(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderStartView().addObject(pagedList).build();
+		return withViewname(viewnameOfStart).addObject(pagedList).build();
 	}
 
 	@Override
@@ -111,17 +115,13 @@ public class BasicEx40ControllerImpl implements BasicEx40Controller {
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		adjustSortCondition(form);
 		service.downloadXlsx(form, response);
 
 		return null;
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX40_START);
 	}
 
 	private UriComponents redirectOnInit(String redir) {
