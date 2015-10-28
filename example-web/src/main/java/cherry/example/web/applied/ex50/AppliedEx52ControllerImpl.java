@@ -16,7 +16,9 @@
 
 package cherry.example.web.applied.ex50;
 
-import static cherry.example.web.PathDef.VIEW_APPLIED_EX52_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -34,16 +36,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
 import cherry.example.web.applied.ex50.AppliedEx52FormBase.Prop;
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Controller
 public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx52Controller.class).start(null,
+			null, null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
@@ -55,7 +60,7 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 		f.setTm(form.getTm());
 		f.setDtm(form.getDtm());
 
-		return renderStartView().addObject(f).build();
+		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
 	@Override
@@ -63,30 +68,22 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderWithoutView().build();
+		return withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(AppliedEx52Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView execute(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnExecute(form)).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX52_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return redirect(redirectOnExecute(form)).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {

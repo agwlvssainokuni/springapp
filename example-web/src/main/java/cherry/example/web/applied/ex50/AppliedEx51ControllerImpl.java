@@ -16,7 +16,9 @@
 
 package cherry.example.web.applied.ex50;
 
-import static cherry.example.web.PathDef.VIEW_APPLIED_EX51_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -38,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
@@ -51,20 +53,23 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 	@Autowired
 	private AppliedEx51Service service;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx51Controller.class).start(null,
+			null, null, null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, AppliedEx50to51Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (StringUtils.isNotEmpty(redir)) {
 			status.setComplete();
-			return ModelAndViewBuilder.redirect(redirectTo(redir)).build();
+			return redirect(redirectTo(redir)).build();
 		}
 		if (binding.hasErrors()) {
 			status.setComplete();
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+			return redirect(redirectToSearchResult()).build();
 		}
 
 		AppliedEx51SessionForm f = createSessionForm(form);
-		return ModelAndViewBuilder.redirect(redirectToStart()).addObject(f).build();
+		return redirect(redirectToStart()).addObject(f).build();
 	}
 
 	@Override
@@ -72,20 +77,20 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 		if (binding.hasErrors()) {
 			status.setComplete();
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+			return redirect(redirectToSearchResult()).build();
 		}
 		AppliedEx51Form f = createForm(form);
 		if (f.getItem().isEmpty()) {
 			status.setComplete();
-			return ModelAndViewBuilder.redirect(redirectToSearchResult()).build();
+			return redirect(redirectToSearchResult()).build();
 		}
-		return renderStartView().addObject(f).build();
+		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
 	@Override
 	public ModelAndView update(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -93,16 +98,16 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderWithoutView().build();
+		return withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(AppliedEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -110,33 +115,25 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		long count = service.update(form);
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		AppliedEx51SessionForm sf = createSessionForm(form);
 		sessionForm.setId(sf.getId());
 
 		AppliedEx51Form f = createForm(sf);
-		return renderWithoutView().addObject(f).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX51_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectTo(String redir) {
