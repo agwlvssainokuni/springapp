@@ -58,6 +58,7 @@
 	</s:hasBindErrors>
 	<f:form servletRelativeAction="/secure/applied/ex22/confirm?id=${param.id}" method="POST" modelAttribute="appliedEx20Form"
 		cssClass="form-horizontal" role="form">
+		<f:hidden path="lockVersion" />
 		<div class="form-group">
 			<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
 			<div class="col-md-10">

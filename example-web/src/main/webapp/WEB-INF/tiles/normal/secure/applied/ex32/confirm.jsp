@@ -8,23 +8,11 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">応用画面遷移: 検索一覧系1-単票変更完了</h2>
+<h2 class="page-header">応用画面遷移: 検索一覧系1-単票変更確認</h2>
 <div class="panel-body">
-	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/applied/ex31/?id=${param.id}&redir=/secure/applied/ex30/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/applied/ex31/?id=${param.id}&redir=/secure/applied/ex30/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/applied/ex31/?id=${param.id}&redir=/secure/applied/ex30/">検索条件入力へ戻る(初期)</a></li>
-	</ul>
-	<div class="col-md-offset-2 col-md-10">
-		<div class="alert alert-info" role="alert">
-			<div>変更しました。</div>
-			<div>
-				<a href="${baseUri}/applied/ex31/?id=${param.id}">変更する</a>
-			</div>
-		</div>
-	</div>
-	<div class="form-horizontal">
-		<s:nestedPath path="appliedEx31Form">
+	<f:form servletRelativeAction="/secure/applied/ex32/execute?id=${param.id}&rownum=${param.rownum}" method="POST"
+		modelAttribute="appliedEx32Form" cssClass="form-horizontal" role="form">
+		<s:nestedPath path="item[${param.rownum}]">
 			<div class="form-group">
 				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
 				<div class="col-md-10">
@@ -74,35 +62,11 @@
 				</div>
 			</div>
 		</s:nestedPath>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>文字列【10】</th>
-					<th>整数【64bit】</th>
-					<th>小数【1桁】</th>
-					<th>小数【3桁】</th>
-					<th>日付</th>
-					<th>時刻</th>
-					<th>日時</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="count" begin="1" end="${appliedEx31Form.item.size()}">
-					<s:nestedPath path="appliedEx31Form.item[${count-1}]">
-						<tr>
-							<td class="text-right"><c:out value="${count}" /></td>
-							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
-							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
-							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>
-							<td><f:input path="decimal3" cssClass="form-control input-sm text-right" readonly="true" /></td>
-							<td><f:input path="dt" cssClass="form-control input-sm" readonly="true" /></td>
-							<td><f:input path="tm" cssClass="form-control input-sm" readonly="true" /></td>
-							<td><f:input path="dtm" cssClass="form-control input-sm" readonly="true" /></td>
-						</tr>
-					</s:nestedPath>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<f:button type="submit" class="btn btn-primary">補助完了</f:button>
+				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
+			</div>
+		</div>
+	</f:form>
 </div>

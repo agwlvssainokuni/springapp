@@ -20,6 +20,7 @@ import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
+import static cherry.foundation.springmvc.Contract.shouldExist;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -55,7 +56,7 @@ public class AppliedEx12ControllerImpl implements AppliedEx12Controller {
 	@Autowired
 	private AppliedEx10Service service;
 
-	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx12Controller.class).start(0, null,
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx12Controller.class).start(0L, null,
 			null, null, null, null, null));
 
 	@Override
@@ -71,6 +72,7 @@ public class AppliedEx12ControllerImpl implements AppliedEx12Controller {
 	public ModelAndView start(long id, AppliedEx10Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		AppliedEx10Form f = service.findById(id);
+		shouldExist(f, AppliedEx10Form.class, id);
 		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
@@ -122,8 +124,8 @@ public class AppliedEx12ControllerImpl implements AppliedEx12Controller {
 
 		status.setComplete();
 
-		AppliedEx10Form form = service.findById(id);
-		return withoutView().addObject(form).build();
+		AppliedEx10Form f = service.findById(id);
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id) {

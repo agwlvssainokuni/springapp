@@ -73,5 +73,35 @@
 				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
 			</div>
 		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>文字列【10】</th>
+					<th>整数【64bit】</th>
+					<th>小数【1桁】</th>
+					<th>小数【3桁】</th>
+					<th>日付</th>
+					<th>時刻</th>
+					<th>日時</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="count" begin="1" end="${appliedEx31Form.item.size()}">
+					<s:nestedPath path="item[${count-1}]">
+						<tr>
+							<td class="text-right"><c:out value="${count}" /></td>
+							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
+							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal3" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="dt" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="tm" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="dtm" cssClass="form-control input-sm" readonly="true" /></td>
+						</tr>
+					</s:nestedPath>
+				</c:forEach>
+			</tbody>
+		</table>
 	</f:form>
 </div>

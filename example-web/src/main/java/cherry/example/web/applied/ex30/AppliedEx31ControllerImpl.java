@@ -35,13 +35,14 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
-import cherry.example.web.basic.ex30.BasicEx31FormBase.Prop;
+import cherry.example.web.applied.ex30.AppliedEx31FormBase.Prop;
 import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
@@ -60,7 +61,10 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 
 	@Override
 	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
+			NativeWebRequest request, SessionStatus status) {
+
+		status.setComplete();
+
 		return redirect(redirectOnInit(redir, id)).build();
 	}
 
@@ -73,8 +77,14 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 	}
 
 	@Override
-	public ModelAndView confirm(long id, AppliedEx31Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView update(long id, AppliedEx31Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
+		return withViewname(viewnameOfStart).build();
+	}
+
+	@Override
+	public ModelAndView confirm(long id, AppliedEx31Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
 			return withViewname(viewnameOfStart).build();
@@ -90,8 +100,8 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 	}
 
 	@Override
-	public ModelAndView execute(long id, AppliedEx31Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request) {
+	public ModelAndView execute(long id, AppliedEx31Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, form, binding)) {
 			return withViewname(viewnameOfStart).build();
@@ -110,7 +120,10 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request) {
+			NativeWebRequest request, SessionStatus status) {
+
+		status.setComplete();
+
 		AppliedEx31Form f = service.findById(id);
 		return withoutView().addObject(f).build();
 	}
@@ -125,8 +138,8 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(AppliedEx31Controller.class).completed(id, null, null, null, null)).replaceQueryParam(
-				REQ_ID, id).build();
+		return fromMethodCall(on(AppliedEx31Controller.class).completed(id, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
 	}
 
 	private boolean hasErrors(long id, AppliedEx31Form form, BindingResult binding) {

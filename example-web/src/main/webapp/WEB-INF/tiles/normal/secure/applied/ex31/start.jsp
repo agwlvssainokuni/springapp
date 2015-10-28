@@ -28,7 +28,22 @@
 					<f:errors path="dt" element="div" />
 					<f:errors path="tm" element="div" />
 					<f:errors path="dtm" element="div" />
+					<f:errors path="item" element="div" />
 				</s:nestedPath>
+				<c:if test="${!appliedEx31Form.item.isEmpty()}">
+					<c:forEach var="count" begin="1" end="${appliedEx31Form.item.size()}">
+						<s:nestedPath path="appliedEx31Form.item[${count-1}]">
+							<f:errors path="text10" element="div" />
+							<f:errors path="text100" element="div" />
+							<f:errors path="int64" element="div" />
+							<f:errors path="decimal1" element="div" />
+							<f:errors path="decimal3" element="div" />
+							<f:errors path="dt" element="div" />
+							<f:errors path="tm" element="div" />
+							<f:errors path="dtm" element="div" />
+						</s:nestedPath>
+					</c:forEach>
+				</c:if>
 			</div>
 		</div>
 	</s:hasBindErrors>
@@ -88,5 +103,50 @@
 				<f:button type="submit" class="btn btn-primary">変更確認</f:button>
 			</div>
 		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>#</th>
+					<th>文字列【10】</th>
+					<th>整数【64bit】</th>
+					<th>小数【1桁】</th>
+					<th>小数【3桁】</th>
+					<th>日付</th>
+					<th>時刻</th>
+					<th>日時</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="count" begin="1" end="${appliedEx31Form.item.size()}">
+					<s:nestedPath path="item[${count-1}]">
+						<tr>
+							<td><a href="${baseUri}/applied/ex32/?id=${param.id}&rownum=${count-1}" class="text-nowrap"><span
+									class="glyphicon glyphicon-edit"></span>変更</a></td>
+							<td class="text-right"><c:out value="${count}" /></td>
+							<td><f:input path="text10" cssClass="form-control input-sm" readonly="true" /> <f:hidden path="text100" /></td>
+							<td><f:input path="int64" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal1" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="decimal3" cssClass="form-control input-sm text-right" readonly="true" /></td>
+							<td><f:input path="dt" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="tm" cssClass="form-control input-sm" readonly="true" /></td>
+							<td><f:input path="dtm" cssClass="form-control input-sm" readonly="true" /></td>
+						</tr>
+					</s:nestedPath>
+				</c:forEach>
+				<tr>
+					<td><a href="${baseUri}/applied/ex32/?id=${param.id}&rownum=${appliedEx31Form.item == null ? 0 : appliedEx31Form.item.size()}"
+						class="text-nowrap"><span class="glyphicon glyphicon-plus"></span>追加</a></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
 	</f:form>
 </div>

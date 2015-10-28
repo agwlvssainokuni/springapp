@@ -21,6 +21,7 @@ import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
+import static cherry.foundation.springmvc.Contract.shouldExist;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -73,6 +74,7 @@ public class AppliedEx22ControllerImpl implements AppliedEx22Controller {
 	public ModelAndView start(long id, AppliedEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		AppliedEx20Form f = service.findById(id);
+		shouldExist(f, AppliedEx20Form.class, id);
 		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
