@@ -16,7 +16,9 @@
 
 package cherry.example.web.basic.ex90;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX90_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -37,7 +39,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
 import cherry.example.web.basic.ex90.BasicEx90FormBase.Prop;
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
@@ -50,16 +52,19 @@ public class BasicEx90ControllerImpl implements BasicEx90Controller {
 	@Autowired
 	private BasicEx90Service service;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(BasicEx90Controller.class).start(null, null,
+			null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
 	public ModelAndView start(BasicEx90Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -67,25 +72,17 @@ public class BasicEx90ControllerImpl implements BasicEx90Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		BasicEx90ResultDto result = service.load(form);
 
-		return renderWithoutView().addObject(result).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX90_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return withoutView().addObject(result).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
