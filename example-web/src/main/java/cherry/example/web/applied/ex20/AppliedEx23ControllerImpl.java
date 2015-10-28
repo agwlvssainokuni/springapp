@@ -18,7 +18,9 @@ package cherry.example.web.applied.ex20;
 
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.ParamDef.REQ_ROWNUM;
-import static cherry.example.web.PathDef.VIEW_APPLIED_EX23_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -38,16 +40,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
 import cherry.example.web.applied.ex20.AppliedEx20SubFormBase.Prop;
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 
 @Controller
 public class AppliedEx23ControllerImpl implements AppliedEx23Controller {
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx23Controller.class).start(0L, 0,
+			null, null, null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, long id, int rownum, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir, id, rownum)).build();
+		return redirect(redirectOnInit(redir, id, rownum)).build();
 	}
 
 	@Override
@@ -60,7 +65,7 @@ public class AppliedEx23ControllerImpl implements AppliedEx23Controller {
 			f.getItem().put(rownum, form.getItem().get(rownum));
 		}
 
-		return renderStartView().addObject(f).build();
+		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
 	@Override
@@ -68,30 +73,22 @@ public class AppliedEx23ControllerImpl implements AppliedEx23Controller {
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(id, rownum, form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderWithoutView().build();
+		return withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(long id, int rownum, AppliedEx21Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView execute(long id, int rownum, AppliedEx20Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnExecute(id)).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX23_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return redirect(redirectOnExecute(id)).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id, int rownum) {

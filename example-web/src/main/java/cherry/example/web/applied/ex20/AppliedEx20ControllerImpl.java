@@ -18,7 +18,9 @@ package cherry.example.web.applied.ex20;
 
 import static cherry.example.web.ParamDef.FLASH_CREATED;
 import static cherry.example.web.ParamDef.REQ_ID;
-import static cherry.example.web.PathDef.VIEW_APPLIED_EX20_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -42,7 +44,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.LogicalError;
 import cherry.example.web.applied.ex20.AppliedEx20FormBase.Prop;
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
@@ -55,25 +57,28 @@ public class AppliedEx20ControllerImpl implements AppliedEx20Controller {
 	@Autowired
 	private AppliedEx20Service service;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx20Controller.class).start(null,
+			null, null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
 
 		status.setComplete();
 
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
 	public ModelAndView start(AppliedEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView update(AppliedEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -81,16 +86,16 @@ public class AppliedEx20ControllerImpl implements AppliedEx20Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderWithoutView().build();
+		return withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(AppliedEx20Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -98,12 +103,12 @@ public class AppliedEx20ControllerImpl implements AppliedEx20Controller {
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status, RedirectAttributes redirAttr) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		Long id = service.create(form);
@@ -112,15 +117,7 @@ public class AppliedEx20ControllerImpl implements AppliedEx20Controller {
 		status.setComplete();
 		redirAttr.addFlashAttribute(FLASH_CREATED, Boolean.TRUE);
 
-		return ModelAndViewBuilder.redirect(redirectOnExecute(id.longValue())).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_APPLIED_EX20_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return redirect(redirectOnExecute(id.longValue())).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
