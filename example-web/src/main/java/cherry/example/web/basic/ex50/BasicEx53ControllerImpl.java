@@ -16,7 +16,9 @@
 
 package cherry.example.web.basic.ex50;
 
-import static cherry.example.web.PathDef.VIEW_BASIC_EX53_START;
+import static cherry.example.web.util.ModelAndViewBuilder.redirect;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
+import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -37,7 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import cherry.example.web.util.ModelAndViewBuilder;
+import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
@@ -50,27 +52,30 @@ public class BasicEx53ControllerImpl implements BasicEx53Controller {
 	@Autowired
 	private BasicEx51Service service;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(BasicEx53Controller.class).start(null, null,
+			null, null, null, null));
+
 	@Override
 	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return ModelAndViewBuilder.redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redir)).build();
 	}
 
 	@Override
 	public ModelAndView start(BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 		if (binding.hasErrors()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return redirect(redirectOnStart()).build();
 		}
 		List<Long> id = getCheckedId(form);
 		if (id.isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return redirect(redirectOnStart()).build();
 		}
 		BasicEx51Form f = createForm(id);
 		if (f.getItem().isEmpty()) {
-			return ModelAndViewBuilder.redirect(redirectOnStart()).build();
+			return redirect(redirectOnStart()).build();
 		}
-		return renderStartView().addObject(f).build();
+		return withViewname(viewnameOfStart).addObject(f).build();
 	}
 
 	@Override
@@ -78,16 +83,16 @@ public class BasicEx53ControllerImpl implements BasicEx53Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
-		return renderWithoutView().build();
+		return withoutView().build();
 	}
 
 	@Override
 	public ModelAndView back(BasicEx51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return renderStartView().build();
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
@@ -95,33 +100,25 @@ public class BasicEx53ControllerImpl implements BasicEx53Controller {
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		long count = service.update(form);
 		if (count != form.getItem().size()) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			return renderStartView().build();
+			return withViewname(viewnameOfStart).build();
 		}
 
 		List<Long> id = getId(form);
 		BasicEx51Form f = new BasicEx51Form();
 		f.setItem(service.search(id));
 
-		return renderWithoutView().addObject(f).build();
-	}
-
-	private ModelAndViewBuilder renderStartView() {
-		return ModelAndViewBuilder.withViewname(VIEW_BASIC_EX53_START);
-	}
-
-	private ModelAndViewBuilder renderWithoutView() {
-		return ModelAndViewBuilder.withoutView();
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {
