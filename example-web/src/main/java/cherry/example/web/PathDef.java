@@ -70,6 +70,16 @@ public class PathDef {
 	public static final String URI_APPLIED_EX22 = "/secure/applied/ex22";
 	public static final String URI_APPLIED_EX23 = "/secure/applied/ex23";
 
+	// 応用画面遷移: 検索一覧系1
+	public static final String URI_APPLIED_EX30 = "/secure/applied/ex30";
+	public static final String URI_APPLIED_EX31 = "/secure/applied/ex31";
+	public static final String URI_APPLIED_EX32 = "/secure/applied/ex32";
+
+	// 応用画面遷移: 検索一覧系2
+	public static final String URI_APPLIED_EX40 = "/secure/applied/ex40";
+	public static final String URI_APPLIED_EX41 = "/secure/applied/ex41";
+	public static final String URI_APPLIED_EX42 = "/secure/applied/ex42";
+
 	// 応用画面遷移: 一括変更系1
 	public static final String URI_APPLIED_EX50 = "/secure/applied/ex50";
 	public static final String URI_APPLIED_EX51 = "/secure/applied/ex51";
