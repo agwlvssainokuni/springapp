@@ -21,29 +21,29 @@ import static cherry.example.web.PathDef.URI_LOGIN;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_LOGIN)
 public interface LoginController {
 
-	@ModelAttribute()
-	LoginForm getForm();
-
 	@RequestMapping(value = SUBURI_START)
-	ModelAndView start(Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView start(@Validated(G9.class) LoginForm form, BindingResult binding, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_START, params = "loginFailed")
-	ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr);
 
 	@RequestMapping(value = SUBURI_START, params = "loggedOut")
-	ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr);
 
 }

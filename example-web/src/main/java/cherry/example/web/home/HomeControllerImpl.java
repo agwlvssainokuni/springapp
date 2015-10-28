@@ -17,23 +17,22 @@
 package cherry.example.web.home;
 
 import static cherry.example.web.PathDef.VIEW_HOME;
+import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeControllerImpl implements HomeController {
 
 	@Override
-	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_HOME);
-		return mav;
+	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request) {
+		return withViewname(VIEW_HOME).build();
 	}
 
 }
