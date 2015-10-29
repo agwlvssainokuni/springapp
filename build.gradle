@@ -100,7 +100,7 @@ subprojects {
 	}
 
 	ext {
-		versionH2db = "1.4.188"
+		versionH2db = "1.4.190"
 		versionFlyway = "3.2.1"
 		versionJodaTime = "2.8.2"
 		versionGuava = "18.0"
