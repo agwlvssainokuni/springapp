@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.applied.ex30;
+package cherry.example.web.applied.ex40;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class AppliedEx30FormBase implements Serializable {
+public abstract class AppliedEx40FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -99,25 +99,25 @@ public abstract class AppliedEx30FormBase implements Serializable {
 
 	@Getter
 	public enum Prop {
-		Text10("text10", "appliedEx30Form.text10"), //
-		Int64From("int64From", "appliedEx30Form.int64From"), //
-		Int64To("int64To", "appliedEx30Form.int64To"), //
-		Decimal1From("decimal1From", "appliedEx30Form.decimal1From"), //
-		Decimal1To("decimal1To", "appliedEx30Form.decimal1To"), //
-		Decimal3From("decimal3From", "appliedEx30Form.decimal3From"), //
-		Decimal3To("decimal3To", "appliedEx30Form.decimal3To"), //
-		DtFrom("dtFrom", "appliedEx30Form.dtFrom"), //
-		DtTo("dtTo", "appliedEx30Form.dtTo"), //
-		TmFrom("tmFrom", "appliedEx30Form.tmFrom"), //
-		TmTo("tmTo", "appliedEx30Form.tmTo"), //
-		DtmFromD("dtmFromD", "appliedEx30Form.dtmFromD"), //
-		DtmFromT("dtmFromT", "appliedEx30Form.dtmFromT"), //
-		DtmToD("dtmToD", "appliedEx30Form.dtmToD"), //
-		DtmToT("dtmToT", "appliedEx30Form.dtmToT"), //
-		Sort1("sort1", "appliedEx30Form.sort1"), //
-		Sort2("sort2", "appliedEx30Form.sort2"), //
-		Pno("pno", "appliedEx30Form.pno"), //
-		Psz("psz", "appliedEx30Form.psz"), //
+		Text10("text10", "appliedEx40Form.text10"), //
+		Int64From("int64From", "appliedEx40Form.int64From"), //
+		Int64To("int64To", "appliedEx40Form.int64To"), //
+		Decimal1From("decimal1From", "appliedEx40Form.decimal1From"), //
+		Decimal1To("decimal1To", "appliedEx40Form.decimal1To"), //
+		Decimal3From("decimal3From", "appliedEx40Form.decimal3From"), //
+		Decimal3To("decimal3To", "appliedEx40Form.decimal3To"), //
+		DtFrom("dtFrom", "appliedEx40Form.dtFrom"), //
+		DtTo("dtTo", "appliedEx40Form.dtTo"), //
+		TmFrom("tmFrom", "appliedEx40Form.tmFrom"), //
+		TmTo("tmTo", "appliedEx40Form.tmTo"), //
+		DtmFromD("dtmFromD", "appliedEx40Form.dtmFromD"), //
+		DtmFromT("dtmFromT", "appliedEx40Form.dtmFromT"), //
+		DtmToD("dtmToD", "appliedEx40Form.dtmToD"), //
+		DtmToT("dtmToT", "appliedEx40Form.dtmToT"), //
+		Sort1("sort1", "appliedEx40Form.sort1"), //
+		Sort2("sort2", "appliedEx40Form.sort2"), //
+		Pno("pno", "appliedEx40Form.pno"), //
+		Psz("psz", "appliedEx40Form.psz"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;

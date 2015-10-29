@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.applied.ex30;
+package cherry.example.web.applied.ex40;
 
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
@@ -44,21 +44,21 @@ import cherry.example.web.LogicalError;
 import cherry.example.web.SortBy;
 import cherry.example.web.SortOrder;
 import cherry.example.web.SortParam;
-import cherry.example.web.applied.ex30.AppliedEx30FormBase.Prop;
+import cherry.example.web.applied.ex40.AppliedEx40FormBase.Prop;
 import cherry.example.web.util.ViewNameUtil;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PagedList;
 
 @Controller
-public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
+public class AppliedEx40ControllerImpl implements AppliedEx40Controller {
 
 	@Autowired
-	private AppliedEx30Service service;
+	private AppliedEx40Service service;
 
 	@Autowired
 	private Config config;
 
-	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx30Controller.class).start(null,
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(AppliedEx40Controller.class).start(null,
 			null, null, null, null, null));
 
 	@Override
@@ -71,7 +71,7 @@ public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
 	}
 
 	@Override
-	public ModelAndView start(AppliedEx30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView start(AppliedEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		form.setPno(0L);
@@ -85,7 +85,7 @@ public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
 	}
 
 	@Override
-	public ModelAndView execute(AppliedEx30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(AppliedEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
 
 		if (hasErrors(form, binding)) {
@@ -111,7 +111,7 @@ public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
 	}
 
 	@Override
-	public ModelAndView download(AppliedEx30Form form, BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView download(AppliedEx40Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
 		if (hasErrors(form, binding)) {
@@ -128,11 +128,11 @@ public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
 		if (StringUtils.isNotEmpty(redir)) {
 			return UriComponentsBuilder.fromPath(redir).build();
 		} else {
-			return fromMethodCall(on(AppliedEx30Controller.class).start(null, null, null, null, null, null)).build();
+			return fromMethodCall(on(AppliedEx40Controller.class).start(null, null, null, null, null, null)).build();
 		}
 	}
 
-	private boolean hasErrors(AppliedEx30Form form, BindingResult binding) {
+	private boolean hasErrors(AppliedEx40Form form, BindingResult binding) {
 
 		// 単項目チェック
 		if (binding.hasErrors()) {
@@ -179,7 +179,7 @@ public class AppliedEx30ControllerImpl implements AppliedEx30Controller {
 		return false;
 	}
 
-	private void adjustSortCondition(AppliedEx30Form form) {
+	private void adjustSortCondition(AppliedEx40Form form) {
 
 		if (form.getSort1() == null) {
 			form.setSort1(new SortParam());

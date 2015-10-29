@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.example.web.applied.ex30;
+package cherry.example.web.applied.ex40;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class AppliedEx31FormBase implements Serializable {
+public abstract class AppliedEx41FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -71,15 +71,15 @@ public abstract class AppliedEx31FormBase implements Serializable {
 
 	@Getter
 	public enum Prop {
-		Text10("text10", "appliedEx31Form.text10"), //
-		Text100("text100", "appliedEx31Form.text100"), //
-		Int64("int64", "appliedEx31Form.int64"), //
-		Decimal1("decimal1", "appliedEx31Form.decimal1"), //
-		Decimal3("decimal3", "appliedEx31Form.decimal3"), //
-		Dt("dt", "appliedEx31Form.dt"), //
-		Tm("tm", "appliedEx31Form.tm"), //
-		Dtm("dtm", "appliedEx31Form.dtm"), //
-		LockVersion("lockVersion", "appliedEx31Form.lockVersion"), //
+		Text10("text10", "appliedEx41Form.text10"), //
+		Text100("text100", "appliedEx41Form.text100"), //
+		Int64("int64", "appliedEx41Form.int64"), //
+		Decimal1("decimal1", "appliedEx41Form.decimal1"), //
+		Decimal3("decimal3", "appliedEx41Form.decimal3"), //
+		Dt("dt", "appliedEx41Form.dt"), //
+		Tm("tm", "appliedEx41Form.tm"), //
+		Dtm("dtm", "appliedEx41Form.dtm"), //
+		LockVersion("lockVersion", "appliedEx41Form.lockVersion"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;
