@@ -16,6 +16,7 @@
 
 package cherry.example.web.applied.ex40;
 
+import static cherry.example.web.ParamDef.FLASH_UPDATED;
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
@@ -38,6 +39,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -101,7 +103,8 @@ public class AppliedEx41ControllerImpl implements AppliedEx41Controller {
 
 	@Override
 	public ModelAndView execute(long id, AppliedEx41Form form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, NativeWebRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status,
+			RedirectAttributes redirAttr) {
 
 		if (hasErrors(id, form, binding)) {
 			return withViewname(viewnameOfStart).build();
@@ -115,17 +118,10 @@ public class AppliedEx41ControllerImpl implements AppliedEx41Controller {
 		long count = service.update(id, form);
 		checkState(count == 1L, "failed to update: id=%s, form=%s", id, form);
 
-		return redirect(redirectOnExecute(id)).build();
-	}
-
-	@Override
-	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request, SessionStatus status) {
-
 		status.setComplete();
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 
-		AppliedEx41Form f = service.findById(id);
-		return withoutView().addObject(f).build();
+		return redirect(redirectOnExecute(id)).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id) {
@@ -138,7 +134,7 @@ public class AppliedEx41ControllerImpl implements AppliedEx41Controller {
 	}
 
 	private UriComponents redirectOnExecute(long id) {
-		return fromMethodCall(on(AppliedEx41Controller.class).completed(id, null, null, null, null, null))
+		return fromMethodCall(on(AppliedEx41Controller.class).start(id, null, null, null, null, null, null))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 

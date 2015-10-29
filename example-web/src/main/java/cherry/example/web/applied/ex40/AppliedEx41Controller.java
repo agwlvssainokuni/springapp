@@ -19,7 +19,6 @@ package cherry.example.web.applied.ex40;
 import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.ParamDef.REQ_REDIR;
-import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
@@ -38,6 +37,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G9;
 
@@ -67,10 +67,7 @@ public interface AppliedEx41Controller {
 
 	@RequestMapping(SUBURI_EXECUTE)
 	ModelAndView execute(@RequestParam(REQ_ID) long id, @Validated() AppliedEx41Form form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
-
-	@RequestMapping(SUBURI_COMPLETED)
-	ModelAndView completed(@RequestParam(REQ_ID) long id, Authentication auth, Locale locale, SitePreference sitePref,
-			NativeWebRequest request, SessionStatus status);
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			SessionStatus status, RedirectAttributes redirAttr);
 
 }

@@ -15,6 +15,20 @@
 		<li><a href="${baseUri}/applied/ex41/?id=${param.id}&redir=/secure/applied/ex40/start">検索条件入力へ戻る(維持)</a></li>
 		<li><a href="${baseUri}/applied/ex41/?id=${param.id}&redir=/secure/applied/ex40/">検索条件入力へ戻る(初期)</a></li>
 	</ul>
+	<c:if test="${created != null && created}">
+		<div class="col-md-offset-2 col-md-10">
+			<div class="alert alert-info" role="alert">
+				ID
+				<c:out value="${param.id}" />
+				で登録しました。
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${updated != null && updated}">
+		<div class="col-md-offset-2 col-md-10">
+			<div class="alert alert-info" role="alert">変更しました。</div>
+		</div>
+	</c:if>
 	<s:hasBindErrors name="appliedEx41Form">
 		<div class="col-md-offset-2 col-md-10">
 			<div class="alert alert-danger" role="alert">
