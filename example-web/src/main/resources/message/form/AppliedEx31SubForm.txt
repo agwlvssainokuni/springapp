@@ -1,0 +1,9 @@
+appliedEx31SubForm.text10=文字列【10】
+appliedEx31SubForm.text100=文字列【100】
+appliedEx31SubForm.int64=整数【64bit】
+appliedEx31SubForm.decimal1=小数【1桁】
+appliedEx31SubForm.decimal3=小数【3桁】
+appliedEx31SubForm.dt=日付
+appliedEx31SubForm.tm=時刻
+appliedEx31SubForm.dtm=日時
+appliedEx31SubForm.lockVersion=ロックバージョン
