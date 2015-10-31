@@ -156,7 +156,7 @@
 					<f:hidden path="dtmToD" id="dtmToD2" />
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
-				<div>
+				<div class="row">
 					<div class="col-md-3">
 						<s:nestedPath path="basicEx50Form">
 							<ex:pageSorter cssClass="ex50Sorter" sortOrder="sort1.order" sortBy="sort1.by"

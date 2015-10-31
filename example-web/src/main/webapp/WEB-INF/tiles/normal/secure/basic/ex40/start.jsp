@@ -156,7 +156,7 @@
 					<f:hidden path="dtmToD" id="dtmToD2" />
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
-				<div>
+				<div class="row">
 					<div class="col-md-3">
 						<s:nestedPath path="basicEx40Form">
 							<ex:pageSorter cssClass="ex40Sorter" sortOrder="sort1.order" sortBy="sort1.by"
@@ -212,12 +212,12 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div>
+				<div class="row">
 					<div class="col-md-offset-5 col-md-7 text-right">
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx40Form2" pno="pno" />
 					</div>
 				</div>
-				<div>
+				<div class="row">
 					<div class="col-md-2">
 						<ex:downloadButton form="#basicEx40Form2" />
 					</div>

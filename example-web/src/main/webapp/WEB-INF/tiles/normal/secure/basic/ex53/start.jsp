@@ -67,7 +67,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div>
+		<div class="row">
 			<div class="col-md-3">
 				<f:button type="submit" class="btn btn-primary">一括変更確認</f:button>
 			</div>
