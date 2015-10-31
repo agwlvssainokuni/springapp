@@ -6,9 +6,9 @@
 	<artifactId>dbschema</artifactId>
 	<version>1.0</version>
 	<properties>
-		<versionH2db>1.4.188</versionH2db>
+		<versionH2db>1.4.190</versionH2db>
 		<versionFlyway>3.2.1</versionFlyway>
-		<versionQuerydsl>3.6.8</versionQuerydsl>
+		<versionQuerydsl>3.6.9</versionQuerydsl>
 	</properties>
 	<build>
 		<plugins>
