@@ -176,59 +176,57 @@
 						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx60Form2" pno="pno" />
 					</div>
 				</div>
-				<div>
-					<f:form servletRelativeAction="/secure/applied/ex61/" method="POST" modelAttribute="appliedEx60to61Form">
-						<table class="table table-striped">
-							<thead>
+				<f:form servletRelativeAction="/secure/applied/ex61/" method="POST" modelAttribute="appliedEx60to61Form">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th>#</th>
+								<th>ID</th>
+								<th>文字列【10】</th>
+								<th>整数【64bit】</th>
+								<th>小数【1桁】</th>
+								<th>小数【3桁】</th>
+								<th>日付</th>
+								<th>時刻</th>
+								<th>日時</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
+								<c:set var="r" value="${pagedList.list[count-1]}" />
 								<tr>
-									<th></th>
-									<th>#</th>
-									<th>ID</th>
-									<th>文字列【10】</th>
-									<th>整数【64bit】</th>
-									<th>小数【1桁】</th>
-									<th>小数【3桁】</th>
-									<th>日付</th>
-									<th>時刻</th>
-									<th>日時</th>
+									<td><s:nestedPath path="item[${count-1}]">
+											<f:checkbox path="checked" />
+											<f:hidden path="id" />
+										</s:nestedPath></td>
+									<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
+									<td class="text-right"><foundation:render value="${r.id}" /></td>
+									<td><foundation:render value="${r.text10}" /></td>
+									<td class="text-right"><foundation:render value="${r.int64}" /></td>
+									<td class="text-right"><foundation:render value="${r.decimal1}" mode="1" /></td>
+									<td class="text-right"><foundation:render value="${r.decimal3}" mode="3" /></td>
+									<td><foundation:render value="${r.dt}" /></td>
+									<td><foundation:render value="${r.tm}" /></td>
+									<td><foundation:render value="${r.dtm}" /></td>
 								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
-									<c:set var="r" value="${pagedList.list[count-1]}" />
-									<tr>
-										<td><s:nestedPath path="item[${count-1}]">
-												<f:checkbox path="checked" />
-												<f:hidden path="id" />
-											</s:nestedPath></td>
-										<td class="text-right"><c:out value="${pagedList.pageSet.current.from + count}" /></td>
-										<td class="text-right"><foundation:render value="${r.id}" /></td>
-										<td><foundation:render value="${r.text10}" /></td>
-										<td class="text-right"><foundation:render value="${r.int64}" /></td>
-										<td class="text-right"><foundation:render value="${r.decimal1}" mode="1" /></td>
-										<td class="text-right"><foundation:render value="${r.decimal3}" mode="3" /></td>
-										<td><foundation:render value="${r.dt}" /></td>
-										<td><foundation:render value="${r.tm}" /></td>
-										<td><foundation:render value="${r.dtm}" /></td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<div>
-							<div class="col-md-3">
-								<f:button type="submit" class="btn btn-primary">変更対象選択</f:button>
-							</div>
-							<div class="col-md-offset-2 col-md-7 text-right">
-								<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx60Form2" pno="pno" />
-							</div>
+							</c:forEach>
+						</tbody>
+					</table>
+					<div>
+						<div class="col-md-3">
+							<f:button type="submit" class="btn btn-primary">変更対象選択</f:button>
 						</div>
-						<div>
-							<div class="col-md-2">
-								<ex:downloadButton form="#appliedEx60Form2" />
-							</div>
+						<div class="col-md-offset-2 col-md-7 text-right">
+							<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx60Form2" pno="pno" />
 						</div>
-					</f:form>
-				</div>
+					</div>
+					<div>
+						<div class="col-md-2">
+							<ex:downloadButton form="#appliedEx60Form2" />
+						</div>
+					</div>
+				</f:form>
 			</div>
 		</div>
 	</c:if>
