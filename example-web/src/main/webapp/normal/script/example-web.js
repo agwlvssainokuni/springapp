@@ -60,6 +60,12 @@ $(function() {
 		});
 	});
 
+	$(".ex-submit-button").click(function(event) {
+		event.preventDefault();
+		var form = $(this).data("form");
+		$(form).submit();
+	});
+
 	$(".ex-refresh-button").each(function(index) {
 		var form = $("button", this).data("form");
 		var selector = $("button", this).data("selector");

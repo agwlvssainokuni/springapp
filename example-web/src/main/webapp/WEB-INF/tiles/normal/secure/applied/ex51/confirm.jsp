@@ -64,7 +64,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div>
+		<div class="row">
 			<div class="col-md-3">
 				<f:button type="submit" class="btn btn-primary">一括変更実行</f:button>
 				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>

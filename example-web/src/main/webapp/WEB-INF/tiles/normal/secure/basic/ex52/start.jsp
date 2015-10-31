@@ -213,20 +213,20 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<div class="row">
-						<div class="col-md-3">
-							<f:button type="submit" class="btn btn-primary">変更対象選択</f:button>
-						</div>
-						<div class="col-md-offset-2 col-md-7 text-right">
-							<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx50Form2" pno="pno" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-2">
-							<ex:downloadButton form="#basicEx50Form2" />
-						</div>
-					</div>
 				</f:form>
+				<div class="row">
+					<div class="col-md-3">
+						<button class="ex-submit-button btn btn-primary" data-form="#basicEx50to51Form">変更対象選択</button>
+					</div>
+					<div class="col-md-offset-2 col-md-7 text-right">
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#basicEx50Form2" pno="pno" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<ex:downloadButton form="#basicEx50Form2" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</c:if>

@@ -156,7 +156,7 @@
 					<f:hidden path="dtmToD" id="dtmToD2" />
 					<f:hidden path="dtmToT" id="dtmToT2" />
 				</f:form>
-				<div>
+				<div class="row">
 					<div class="col-md-3">
 						<s:nestedPath path="appliedEx50Form">
 							<ex:pageSorter cssClass="ex50Sorter" sortOrder="sort1.order" sortBy="sort1.by"
@@ -213,20 +213,20 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<div>
-						<div class="col-md-3">
-							<f:button type="submit" class="btn btn-primary">変更対象選択</f:button>
-						</div>
-						<div class="col-md-offset-2 col-md-7 text-right">
-							<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx50Form2" pno="pno" />
-						</div>
-					</div>
-					<div>
-						<div class="col-md-2">
-							<ex:downloadButton form="#appliedEx50Form2" />
-						</div>
-					</div>
 				</f:form>
+				<div class="row">
+					<div class="col-md-3">
+						<button class="ex-submit-button btn btn-primary" data-form="#appliedEx50to51Form">変更対象選択</button>
+					</div>
+					<div class="col-md-offset-2 col-md-7 text-right">
+						<ex:pagerLink pageSet="${pagedList.pageSet}" form="#appliedEx50Form2" pno="pno" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<ex:downloadButton form="#appliedEx50Form2" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</c:if>
