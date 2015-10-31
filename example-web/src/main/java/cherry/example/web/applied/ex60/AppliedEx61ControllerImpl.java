@@ -161,10 +161,6 @@ public class AppliedEx61ControllerImpl implements AppliedEx61Controller {
 
 		// 項目間チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		// 整合性チェック
 
 		return false;

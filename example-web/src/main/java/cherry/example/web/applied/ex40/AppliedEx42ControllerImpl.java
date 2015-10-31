@@ -125,10 +125,6 @@ public class AppliedEx42ControllerImpl implements AppliedEx42Controller {
 
 		// 整合性チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		return false;
 	}
 

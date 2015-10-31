@@ -125,10 +125,6 @@ public class AppliedEx13ControllerImpl implements AppliedEx13Controller {
 
 		// 整合性チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		return false;
 	}
 

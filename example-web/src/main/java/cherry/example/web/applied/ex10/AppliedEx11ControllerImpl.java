@@ -123,10 +123,6 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 
 		// 整合性チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		return false;
 	}
 

@@ -125,6 +125,7 @@ public class AppliedEx12ControllerImpl implements AppliedEx12Controller {
 		status.setComplete();
 
 		AppliedEx10Form f = service.findById(id);
+		shouldExist(f, AppliedEx10Form.class, id);
 		return withoutView().addObject(f).build();
 	}
 

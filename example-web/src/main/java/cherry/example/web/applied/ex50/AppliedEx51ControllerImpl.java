@@ -157,10 +157,6 @@ public class AppliedEx51ControllerImpl implements AppliedEx51Controller {
 
 		// 項目間チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		// 整合性チェック
 
 		return false;

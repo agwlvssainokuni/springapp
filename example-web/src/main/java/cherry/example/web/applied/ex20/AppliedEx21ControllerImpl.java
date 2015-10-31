@@ -123,10 +123,6 @@ public class AppliedEx21ControllerImpl implements AppliedEx21Controller {
 
 		// 整合性チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		return false;
 	}
 

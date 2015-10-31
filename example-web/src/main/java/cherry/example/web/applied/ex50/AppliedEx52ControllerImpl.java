@@ -117,10 +117,6 @@ public class AppliedEx52ControllerImpl implements AppliedEx52Controller {
 
 		// 整合性チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		return false;
 	}
 

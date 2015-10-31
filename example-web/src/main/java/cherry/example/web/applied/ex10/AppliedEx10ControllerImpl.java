@@ -20,6 +20,7 @@ import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
+import static cherry.foundation.springmvc.Contract.shouldExist;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -121,8 +122,9 @@ public class AppliedEx10ControllerImpl implements AppliedEx10Controller {
 
 		status.setComplete();
 
-		AppliedEx10Form form = service.findById(id);
-		return withoutView().addObject(form).build();
+		AppliedEx10Form f = service.findById(id);
+		shouldExist(f, AppliedEx10Form.class, id);
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {

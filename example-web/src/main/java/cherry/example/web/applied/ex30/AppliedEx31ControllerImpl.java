@@ -125,6 +125,7 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 		status.setComplete();
 
 		AppliedEx31Form f = service.findById(id);
+		shouldExist(f, AppliedEx31Form.class, id);
 		return withoutView().addObject(f).build();
 	}
 
