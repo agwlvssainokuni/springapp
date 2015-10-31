@@ -112,6 +112,7 @@ public class BasicEx31ControllerImpl implements BasicEx31Controller {
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
 		BasicEx31Form f = service.findById(id);
+		shouldExist(f, BasicEx31Form.class, id);
 		return withoutView().addObject(f).build();
 	}
 

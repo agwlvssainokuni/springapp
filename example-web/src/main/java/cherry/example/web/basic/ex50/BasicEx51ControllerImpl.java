@@ -168,10 +168,6 @@ public class BasicEx51ControllerImpl implements BasicEx51Controller {
 
 		// 項目間チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		// 整合性チェック
 
 		return false;

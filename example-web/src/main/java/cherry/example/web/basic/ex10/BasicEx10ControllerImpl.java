@@ -20,6 +20,7 @@ import static cherry.example.web.ParamDef.REQ_ID;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
+import static cherry.foundation.springmvc.Contract.shouldExist;
 import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -108,8 +109,9 @@ public class BasicEx10ControllerImpl implements BasicEx10Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		BasicEx10Form form = service.findById(id);
-		return withoutView().addObject(form).build();
+		BasicEx10Form f = service.findById(id);
+		shouldExist(f, BasicEx10Form.class, id);
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {

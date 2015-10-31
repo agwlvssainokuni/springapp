@@ -142,10 +142,6 @@ public class BasicEx53ControllerImpl implements BasicEx53Controller {
 
 		// 項目間チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		// 整合性チェック
 
 		return false;

@@ -155,10 +155,6 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 
 		// 項目間チェック
 
-		if (binding.hasErrors()) {
-			return true;
-		}
-
 		// 整合性チェック
 
 		return false;

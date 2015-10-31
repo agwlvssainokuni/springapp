@@ -111,8 +111,9 @@ public class BasicEx11ControllerImpl implements BasicEx11Controller {
 	@Override
 	public ModelAndView completed(long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		BasicEx10Form form = service.findById(id);
-		return withoutView().addObject(form).build();
+		BasicEx10Form f = service.findById(id);
+		shouldExist(f, BasicEx10Form.class, id);
+		return withoutView().addObject(f).build();
 	}
 
 	private UriComponents redirectOnInit(String redir, long id) {
