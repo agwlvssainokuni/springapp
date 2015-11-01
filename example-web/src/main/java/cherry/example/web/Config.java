@@ -28,4 +28,7 @@ public class Config {
 	@Value("${web.app.defaultPageSize}")
 	private long defaultPageSize;
 
+	@Value("${web.app.historySize}")
+	private int historySize;
+
 }
