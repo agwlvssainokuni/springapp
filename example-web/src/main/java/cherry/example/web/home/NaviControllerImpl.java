@@ -42,7 +42,7 @@ public class NaviControllerImpl implements NaviController {
 		if (CollectionUtils.isEmpty(form.getHistory())) {
 			return redirect(redirectToHome()).build();
 		}
-		String uri = form.getHistory().remove(0);
+		String uri = form.getHistory().remove(form.getHistory().size() - 1);
 		return redirect(uri).build();
 	}
 
