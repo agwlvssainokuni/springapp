@@ -11,9 +11,9 @@
 <h2 class="page-header">応用画面遷移: 検索一覧系1-単票変更完了</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex30/execute" />">検索結果一覧へ戻る</a></li>
-		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex30/start" />">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex30/" />">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="<ex:uri to="/secure/applied/ex30/execute" />">検索結果一覧へ戻る</a></li>
+		<li><a href="<ex:uri to="/secure/applied/ex30/start" />">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="<ex:uri to="/secure/applied/ex30/" />">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<div class="col-md-offset-2 col-md-10">
 		<div class="alert alert-info" role="alert">

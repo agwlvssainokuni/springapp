@@ -11,9 +11,9 @@
 <h2 class="page-header">基本画面遷移: 検索一覧系1-単票変更確認</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="<ex:uri id="${param.id}" to="/secure/basic/ex30/execute" />">検索結果一覧へ戻る</a></li>
-		<li><a href="<ex:uri id="${param.id}" to="/secure/basic/ex30/start" />">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="<ex:uri id="${param.id}" to="/secure/basic/ex30/" />">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex30/execute" />">検索結果一覧へ戻る</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex30/start" />">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex30/" />">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<f:form servletRelativeAction="/secure/basic/ex31/execute?id=${param.id}" method="POST" modelAttribute="basicEx31Form"
 		cssClass="form-horizontal" role="form">

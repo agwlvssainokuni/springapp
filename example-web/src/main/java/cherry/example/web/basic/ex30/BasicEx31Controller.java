@@ -42,8 +42,9 @@ import cherry.foundation.validator.groups.G9;
 public interface BasicEx31Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, @RequestParam(REQ_ID) long id,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo,
+			@RequestParam(value = REQ_ID, defaultValue = "0") long id, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)
 	ModelAndView start(@RequestParam(REQ_ID) long id, @Validated(G9.class) BasicEx31Form form, BindingResult binding,
