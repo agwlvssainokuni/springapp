@@ -60,9 +60,9 @@ public class BasicEx20ControllerImpl implements BasicEx20Controller {
 			null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, Authentication auth, Locale locale, SitePreference sitePref,
+	public ModelAndView init(String redirTo, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return redirect(redirectOnInit(redir)).build();
+		return redirect(redirectOnInit(redirTo)).build();
 	}
 
 	@Override

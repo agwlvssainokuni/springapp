@@ -59,9 +59,9 @@ public class BasicEx11ControllerImpl implements BasicEx11Controller {
 			null, null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
+	public ModelAndView init(String redirTo, long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return redirect(redirectOnInit(redir, id)).build();
+		return redirect(redirectOnInit(redirTo, id)).build();
 	}
 
 	@Override

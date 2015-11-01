@@ -19,20 +19,17 @@ package cherry.example.web;
 public class ParamDef {
 
 	// 画面遷移制御
-	/** 画面遷移制御: リダイレクト */
-	public static final String REQ_REDIR = "redir";
+	/** 画面遷移制御: 遷移先 */
+	public static final String REQ_TO = "to";
+
+	/** 画面遷移制御: 遷移元(戻り先) */
+	public static final String REQ_FM = "fm";
 
 	/** 画面遷移制御: 戻る */
 	public static final String REQ_BACK = "back";
 
 	/** 画面遷移制御: ダウンロード */
 	public static final String REQ_DOWNLOAD = "download";
-
-	/** 画面遷移制御: 遷移先 */
-	public static final String REQ_TO = "to";
-
-	/** 画面遷移制御: 遷移元(戻り先) */
-	public static final String REQ_FM = "fm";
 
 	/** 画面遷移制御: クリア */
 	public static final String REQ_CLEAR = "clear";

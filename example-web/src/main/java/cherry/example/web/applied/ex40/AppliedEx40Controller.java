@@ -17,7 +17,7 @@
 package cherry.example.web.applied.ex40;
 
 import static cherry.example.web.ParamDef.REQ_DOWNLOAD;
-import static cherry.example.web.ParamDef.REQ_REDIR;
+import static cherry.example.web.ParamDef.REQ_TO;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.URI_APPLIED_EX40;
@@ -44,7 +44,7 @@ import cherry.foundation.validator.groups.G9;
 public interface AppliedEx40Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, Authentication auth,
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 	@RequestMapping(SUBURI_START)

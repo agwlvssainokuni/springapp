@@ -50,9 +50,9 @@ public class AppliedEx23ControllerImpl implements AppliedEx23Controller {
 			null, null, null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, long id, int rownum, Authentication auth, Locale locale,
+	public ModelAndView init(String redirTo, long id, int rownum, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		return redirect(redirectOnInit(redir, id, rownum)).build();
+		return redirect(redirectOnInit(redirTo, id, rownum)).build();
 	}
 
 	@Override

@@ -17,7 +17,7 @@
 package cherry.example.web.basic.ex50;
 
 import static cherry.example.web.ParamDef.REQ_BACK;
-import static cherry.example.web.ParamDef.REQ_REDIR;
+import static cherry.example.web.ParamDef.REQ_TO;
 import static cherry.example.web.PathDef.SUBURI_COMPLETED;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
@@ -42,7 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 public interface BasicEx51Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir,
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo,
 			@Validated() BasicEx50to51Form form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 

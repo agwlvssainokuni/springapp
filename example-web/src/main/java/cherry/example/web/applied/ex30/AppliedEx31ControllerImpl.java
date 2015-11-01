@@ -60,12 +60,12 @@ public class AppliedEx31ControllerImpl implements AppliedEx31Controller {
 			null, null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, long id, Authentication auth, Locale locale, SitePreference sitePref,
+	public ModelAndView init(String redirTo, long id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
 
 		status.setComplete();
 
-		return redirect(redirectOnInit(redir, id)).build();
+		return redirect(redirectOnInit(redirTo, id)).build();
 	}
 
 	@Override

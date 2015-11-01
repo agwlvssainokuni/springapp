@@ -18,7 +18,7 @@ package cherry.example.web.basic.ex20;
 
 import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_ID;
-import static cherry.example.web.ParamDef.REQ_REDIR;
+import static cherry.example.web.ParamDef.REQ_TO;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
@@ -42,7 +42,7 @@ import cherry.foundation.validator.groups.G9;
 public interface BasicEx21Controller {
 
 	@RequestMapping()
-	ModelAndView init(@RequestParam(value = REQ_REDIR, required = false) String redir, @RequestParam(REQ_ID) long id,
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, @RequestParam(REQ_ID) long id,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(SUBURI_START)

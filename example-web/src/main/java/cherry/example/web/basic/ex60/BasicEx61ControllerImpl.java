@@ -59,11 +59,11 @@ public class BasicEx61ControllerImpl implements BasicEx61Controller {
 			null, null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, BasicEx60to61Form form, BindingResult binding, Authentication auth,
+	public ModelAndView init(String redirTo, BasicEx60to61Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
-		if (StringUtils.isNotEmpty(redir)) {
+		if (StringUtils.isNotEmpty(redirTo)) {
 			status.setComplete();
-			return redirect(redirectTo(redir)).build();
+			return redirect(redirectTo(redirTo)).build();
 		}
 		if (binding.hasErrors()) {
 			status.setComplete();

@@ -49,9 +49,9 @@ public class AppliedEx11ControllerImpl implements AppliedEx11Controller {
 			null, null, null, null, null));
 
 	@Override
-	public ModelAndView init(String redir, int rownum, Authentication auth, Locale locale, SitePreference sitePref,
+	public ModelAndView init(String redirTo, int rownum, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request) {
-		return redirect(redirectOnInit(redir, rownum)).build();
+		return redirect(redirectOnInit(redirTo, rownum)).build();
 	}
 
 	@Override
