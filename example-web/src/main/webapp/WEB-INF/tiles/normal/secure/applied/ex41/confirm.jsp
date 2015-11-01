@@ -11,9 +11,9 @@
 <h2 class="page-header">応用画面遷移: 検索一覧系2-単票変更確認</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/applied/ex41/?id=${param.id}&redir=/secure/applied/ex40/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/applied/ex41/?id=${param.id}&redir=/secure/applied/ex40/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/applied/ex41/?id=${param.id}&redir=/secure/applied/ex40/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex40/execute" />">検索結果一覧へ戻る</a></li>
+		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex40/start" />">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="<ex:uri id="${param.id}" to="/secure/applied/ex40/" />">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<f:form servletRelativeAction="/secure/applied/ex41/execute?id=${param.id}" method="POST" modelAttribute="appliedEx41Form"
 		cssClass="form-horizontal" role="form">

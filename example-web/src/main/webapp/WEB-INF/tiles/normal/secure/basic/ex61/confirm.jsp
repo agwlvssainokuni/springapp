@@ -11,9 +11,9 @@
 <h2 class="page-header">基本画面遷移: 一括変更系2-一括変更確認</h2>
 <div class="panel-body">
 	<ul class="list-inline text-right">
-		<li><a href="${baseUri}/basic/ex61/?redir=/secure/basic/ex60/execute">検索結果一覧へ戻る</a></li>
-		<li><a href="${baseUri}/basic/ex61/?redir=/secure/basic/ex60/start">検索条件入力へ戻る(維持)</a></li>
-		<li><a href="${baseUri}/basic/ex61/?redir=/secure/basic/ex60/">検索条件入力へ戻る(初期)</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex60/execute" />">検索結果一覧へ戻る</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex60/start" />">検索条件入力へ戻る(維持)</a></li>
+		<li><a href="<ex:uri to="/secure/basic/ex60/" />">検索条件入力へ戻る(初期)</a></li>
 	</ul>
 	<f:form servletRelativeAction="/secure/basic/ex61/execute" method="POST" modelAttribute="basicEx61Form" cssClass="form-horizontal" role="form">
 		<foundation:onetimetoken />
