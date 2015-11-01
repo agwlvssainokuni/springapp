@@ -28,6 +28,8 @@ public class PathDef {
 	/** ホーム画面のビュー */
 	public static final String VIEW_HOME = "secure/home";
 
+	public static final String URI_NAVI = "/secure/navi";
+
 	// 基本画面遷移: 単票入力系1
 	public static final String URI_BASIC_EX10 = "/secure/basic/ex10";
 	public static final String URI_BASIC_EX11 = "/secure/basic/ex11";

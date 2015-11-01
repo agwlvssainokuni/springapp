@@ -43,7 +43,11 @@ public class ModelAndViewBuilder {
 	}
 
 	public static ModelAndViewBuilder redirect(UriComponents uc) {
-		return new ModelAndViewBuilder(new ModelAndView(new RedirectView(uc.toUriString(), true)));
+		return redirect(uc.toUriString());
+	}
+
+	public static ModelAndViewBuilder redirect(String uri) {
+		return new ModelAndViewBuilder(new ModelAndView(new RedirectView(uri, true)));
 	}
 
 	public ModelAndViewBuilder addObject(Object attributeValue) {
