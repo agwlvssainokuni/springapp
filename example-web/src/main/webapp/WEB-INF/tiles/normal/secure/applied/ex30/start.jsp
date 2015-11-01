@@ -159,14 +159,14 @@
 				<div class="row">
 					<div class="col-md-3">
 						<s:nestedPath path="appliedEx30Form">
-							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sort1.order" sortBy="sort1.by"
+							<ex:pageSorter cssClass="my-sorter" sortOrder="sort1.order" sortBy="sort1.by"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
-							<ex:pageSorter cssClass="ex30Sorter" sortOrder="sort2.order" sortBy="sort2.by"
+							<ex:pageSorter cssClass="my-sorter" sortOrder="sort2.order" sortBy="sort2.by"
 								sortByItems="${foundation:getLabeledEnumCodeList('cherry.example.web.SortBy')}" />
 						</s:nestedPath>
 					</div>
 					<div class="col-md-1">
-						<ex:refreshButton selector=".ex30Sorter" form="#appliedEx30Form2" />
+						<ex:refreshButton selector=".my-sorter" form="#appliedEx30Form2" />
 					</div>
 					<div class="col-md-offset-1 col-md-7 text-right">
 						<div>
