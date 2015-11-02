@@ -92,6 +92,9 @@ public class PathDef {
 	public static final String URI_APPLIED_EX61 = "/secure/applied/ex61";
 	public static final String URI_APPLIED_EX62 = "/secure/applied/ex62";
 
+	// 応用画面遷移: アップロード
+	public static final String URI_APPLIED_EX90 = "/secure/applied/ex90";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";

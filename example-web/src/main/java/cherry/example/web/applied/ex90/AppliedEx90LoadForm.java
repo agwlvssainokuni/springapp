@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.web.applied.ex90;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
-@Component("webConfig")
-public class Config {
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class AppliedEx90LoadForm extends AppliedEx90LoadFormBase {
 
-	@Value("${web.app.defaultPageSize}")
-	private long defaultPageSize;
-
-	@Value("${web.app.historySize}")
-	private int historySize;
+	private static final long serialVersionUID = 1L;
 
 }

@@ -14,21 +14,28 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.web.applied.ex90;
 
+import java.util.List;
+import java.util.Map;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
-@Component("webConfig")
-public class Config {
+@Setter
+@EqualsAndHashCode
+@ToString
+public class AppliedEx90ResultDto {
 
-	@Value("${web.app.defaultPageSize}")
-	private long defaultPageSize;
+	private long totalCount = 0L;
 
-	@Value("${web.app.historySize}")
-	private int historySize;
+	private long okCount = 0L;
+
+	private long ngCount = 0L;
+
+	private Map<Long, List<String>> ngInfo;
 
 }

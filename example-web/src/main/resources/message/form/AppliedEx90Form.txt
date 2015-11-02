@@ -1,0 +1,5 @@
+appliedEx90Form.file=ファイル
+appliedEx90Form.charset=文字コード
+appliedEx90Form.dt=日付
+appliedEx90Form.tm=時刻
+appliedEx90Form.dtm=日時

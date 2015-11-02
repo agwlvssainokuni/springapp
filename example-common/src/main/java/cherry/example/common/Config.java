@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.common;
+
+import java.io.File;
 
 import lombok.Getter;
 
@@ -22,13 +24,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Getter
-@Component("webConfig")
+@Component("commonConfig")
 public class Config {
 
-	@Value("${web.app.defaultPageSize}")
-	private long defaultPageSize;
+	@Value("${common.app.basedir}")
+	private File basedir;
 
-	@Value("${web.app.historySize}")
-	private int historySize;
+	@Value("${common.app.tempdir.topName}")
+	private String tempdirTopName;
+
+	@Value("${common.app.tempdir.pattern}")
+	private String tempdirPattern;
 
 }

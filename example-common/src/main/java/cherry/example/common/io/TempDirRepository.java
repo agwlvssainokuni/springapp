@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.common.io;
 
-import lombok.Getter;
+import java.io.File;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+public interface TempDirRepository {
 
-@Getter
-@Component("webConfig")
-public class Config {
+	String createTempDir();
 
-	@Value("${web.app.defaultPageSize}")
-	private long defaultPageSize;
+	File getTempDir(String name) throws IllegalArgumentException;
 
-	@Value("${web.app.historySize}")
-	private int historySize;
+	void deleteTempDir(String name) throws IllegalArgumentException, IllegalStateException;
 
 }

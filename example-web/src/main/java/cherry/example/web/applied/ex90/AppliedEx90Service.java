@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.example.web;
+package cherry.example.web.applied.ex90;
 
-import lombok.Getter;
+public interface AppliedEx90Service {
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-@Getter
-@Component("webConfig")
-public class Config {
-
-	@Value("${web.app.defaultPageSize}")
-	private long defaultPageSize;
-
-	@Value("${web.app.historySize}")
-	private int historySize;
+	AppliedEx90ResultDto load(AppliedEx90Form form);
 
 }
