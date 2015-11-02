@@ -21,6 +21,8 @@ import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
 import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 import static java.util.Arrays.asList;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -61,9 +63,9 @@ public class AppliedEx90ServiceImpl implements AppliedEx90Service {
 
 	@Transactional
 	@Override
-	public AppliedEx90ResultDto load(AppliedEx90Form form) {
+	public AppliedEx90ResultDto load(AppliedEx90Form form, File file) {
 
-		try (InputStream in = form.getFile().getInputStream();
+		try (InputStream in = new FileInputStream(file);
 				Reader r = new InputStreamReader(in, form.getCharset());
 				CsvParser csv = new CsvParser(r)) {
 

@@ -54,7 +54,7 @@ public class TempDirRepositoryImpl implements TempDirRepository, InitializingBea
 	public String createTempDir() {
 		Calendar cal = JodaTimeUtil.getCalendar(bizDateTime.now());
 		UUID uuid = UUID.randomUUID();
-		String name = MessageFormat.format(config.getTempdirPattern(), cal, uuid.toString());
+		String name = MessageFormat.format(config.getTempdirPattern(), cal.getTime(), uuid.toString());
 		File dir = new File(tempDirTop, name);
 		if (dir.exists()) {
 			throw new IllegalStateException("TempDir already exists " + dir.getPath());

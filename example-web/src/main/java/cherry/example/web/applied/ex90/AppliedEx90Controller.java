@@ -16,7 +16,9 @@
 
 package cherry.example.web.applied.ex90;
 
+import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_TO;
+import static cherry.example.web.PathDef.SUBURI_CONFIRM;
 import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.URI_APPLIED_EX90;
@@ -32,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.foundation.validator.groups.G1;
+import cherry.foundation.validator.groups.G2;
 import cherry.foundation.validator.groups.G9;
 
 @RequestMapping(URI_APPLIED_EX90)
@@ -45,8 +49,16 @@ public interface AppliedEx90Controller {
 	ModelAndView start(@Validated(G9.class) AppliedEx90Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
+	@RequestMapping(SUBURI_CONFIRM)
+	ModelAndView confirm(@Validated(G1.class) AppliedEx90Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
+	ModelAndView back(@Validated(G2.class) AppliedEx90Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
+
 	@RequestMapping(SUBURI_EXECUTE)
-	ModelAndView execute(@Validated() AppliedEx90Form form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, NativeWebRequest request);
+	ModelAndView execute(@Validated(G2.class) AppliedEx90Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }

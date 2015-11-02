@@ -26,6 +26,7 @@ import lombok.ToString;
 import org.springframework.context.MessageSourceResolvable;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
+import cherry.foundation.validator.groups.G1;
 
 @Getter
 @Setter
@@ -35,7 +36,7 @@ public abstract class AppliedEx90FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class, G1.class })
 	private org.springframework.web.multipart.MultipartFile file;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat()

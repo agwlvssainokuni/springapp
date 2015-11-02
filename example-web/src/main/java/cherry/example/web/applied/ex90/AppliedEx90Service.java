@@ -16,8 +16,10 @@
 
 package cherry.example.web.applied.ex90;
 
+import java.io.File;
+
 public interface AppliedEx90Service {
 
-	AppliedEx90ResultDto load(AppliedEx90Form form);
+	AppliedEx90ResultDto load(AppliedEx90Form form, File file);
 
 }

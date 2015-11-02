@@ -51,9 +51,9 @@
 	<div class="form-horizontal">
 		<s:nestedPath path="appliedEx90Form">
 			<div class="form-group">
-				<f:label path="file.originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
+				<f:label path="originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
 				<div class="col-md-10">
-					<f:input path="file.originalFilename" cssClass="form-control" readonly="true" />
+					<f:input path="originalFilename" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">

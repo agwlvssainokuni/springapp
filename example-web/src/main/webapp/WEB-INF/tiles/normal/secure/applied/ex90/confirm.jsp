@@ -8,57 +8,47 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <%@ taglib prefix="ex" tagdir="/WEB-INF/tags"%>
 <c:url var="baseUri" value="/secure" />
-<h2 class="page-header">応用画面遷移: アップロード系1-入力</h2>
+<h2 class="page-header">応用画面遷移: アップロード系1-確認</h2>
 <div class="panel-body">
-	<s:hasBindErrors name="appliedEx90Form">
-		<div class="col-md-offset-2 col-md-10">
-			<div class="alert alert-danger" role="alert">
-				<f:errors path="appliedEx90Form" element="div" />
-				<s:nestedPath path="appliedEx90Form">
-					<f:errors path="file" element="div" />
-					<f:errors path="charset" element="div" />
-					<f:errors path="dt" element="div" />
-					<f:errors path="tm" element="div" />
-					<f:errors path="dtm" element="div" />
-				</s:nestedPath>
-			</div>
-		</div>
-	</s:hasBindErrors>
-	<f:form servletRelativeAction="/secure/applied/ex90/confirm" method="POST" modelAttribute="appliedEx90Form" cssClass="form-horizontal"
-		role="form" enctype="multipart/form-data">
+	<f:form servletRelativeAction="/secure/applied/ex90/execute" method="POST" modelAttribute="appliedEx90Form" cssClass="form-horizontal"
+		role="form">
+		<foundation:onetimetoken />
 		<div class="form-group">
-			<f:label path="file" cssClass="col-md-2 control-label">ファイル</f:label>
+			<f:label path="originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
 			<div class="col-md-10">
-				<f:input path="file" type="file" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="originalFilename" cssClass="form-control" readonly="true" />
+				<f:hidden path="dirname" />
+				<f:hidden path="filename" />
 			</div>
 		</div>
 		<div class="form-group">
 			<f:label path="charset" cssClass="col-md-2 control-label">文字コード</f:label>
 			<div class="col-md-10">
-				<f:input path="charset" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="charset" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
 			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
 			<div class="col-md-10">
-				<f:input path="dt" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="dt" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
 			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
 			<div class="col-md-10">
-				<f:input path="tm" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="tm" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
 			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
 			<div class="col-md-10">
-				<f:input path="dtm" cssClass="form-control" cssErrorClass="form-control has-error" />
+				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<f:button type="submit" class="btn btn-primary">登録確認</f:button>
+				<f:button type="submit" class="btn btn-primary">登録実行</f:button>
+				<f:button type="submit" class="btn btn-default" name="back">入力へ戻る</f:button>
 			</div>
 		</div>
 	</f:form>
