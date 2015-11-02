@@ -18,7 +18,7 @@
 			<div class="col-md-10">
 				<f:input path="originalFilename" cssClass="form-control" readonly="true" />
 				<f:hidden path="dirname" />
-				<f:hidden path="filename" />
+				<f:hidden path="numOfFile" />
 			</div>
 		</div>
 		<div class="form-group">

@@ -17,9 +17,10 @@
 package cherry.example.web.applied.ex90;
 
 import java.io.File;
+import java.util.List;
 
 public interface AppliedEx90Service {
 
-	AppliedEx90ResultDto load(AppliedEx90Form form, File file);
+	AppliedEx90ResultDto load(AppliedEx90Form form, List<File> file);
 
 }

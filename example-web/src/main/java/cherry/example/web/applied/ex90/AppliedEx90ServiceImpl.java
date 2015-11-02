@@ -63,76 +63,80 @@ public class AppliedEx90ServiceImpl implements AppliedEx90Service {
 
 	@Transactional
 	@Override
-	public AppliedEx90ResultDto load(AppliedEx90Form form, File file) {
+	public AppliedEx90ResultDto load(AppliedEx90Form form, List<File> file) {
 
-		try (InputStream in = new FileInputStream(file);
-				Reader r = new InputStreamReader(in, form.getCharset());
-				CsvParser csv = new CsvParser(r)) {
+		long totalCount = 0L;
+		long okCount = 0L;
+		long ngCount = 0L;
+		Map<Long, List<String>> ngInfo = new TreeMap<>();
 
-			String[] header = csv.read();
-			if (header == null) {
-				return new AppliedEx90ResultDto();
-			}
+		for (File f : file) {
+			try (InputStream in = new FileInputStream(f);
+					Reader r = new InputStreamReader(in, form.getCharset());
+					CsvParser csv = new CsvParser(r)) {
 
-			long totalCount = 0L;
-			long okCount = 0L;
-			long ngCount = 0L;
-			Map<Long, List<String>> ngInfo = new TreeMap<>();
-
-			String formName = UPPER_CAMEL.to(UPPER_CAMEL, AppliedEx90LoadForm.class.getSimpleName());
-			String[] field = createFieldName(header);
-			String[] record;
-			while ((record = csv.read()) != null) {
-
-				totalCount += 1L;
-
-				AppliedEx90LoadForm dto = new AppliedEx90LoadForm();
-				BindingResult binding = dataBinderHelper.bindAndValidate(dto, formName, new MutablePropertyValues(
-						createValueMap(field, record)));
-				if (binding.hasErrors()) {
-					ngInfo.put(totalCount, dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
-					ngCount += 1L;
+				String[] header = csv.read();
+				if (header == null) {
 					continue;
 				}
 
-				if (qf.from(et1).where(et1.text10.eq(dto.getText10())).exists()) {
-					LogicalErrorUtil.rejectValue(binding, Prop.Text10.getName(), LogicalError.AlreadyExists,
-							Prop.Text10.resolve());
-					ngInfo.put(totalCount, dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
-					ngCount += 1L;
-					continue;
-				}
+				String formName = UPPER_CAMEL.to(UPPER_CAMEL, AppliedEx90LoadForm.class.getSimpleName());
+				String[] field = createFieldName(header);
+				String[] record;
+				while ((record = csv.read()) != null) {
 
-				try {
+					totalCount += 1L;
 
-					SQLInsertClause insert = qf.insert(et1).populate(dto);
-					insert.set(et1.dt, form.getDt());
-					insert.set(et1.tm, form.getTm());
-					insert.set(et1.dtm, form.getDtm());
+					AppliedEx90LoadForm dto = new AppliedEx90LoadForm();
+					BindingResult binding = dataBinderHelper.bindAndValidate(dto, formName, new MutablePropertyValues(
+							createValueMap(field, record)));
+					if (binding.hasErrors()) {
+						ngInfo.put(totalCount,
+								dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
+						ngCount += 1L;
+						continue;
+					}
 
-					long count = insert.execute();
-					if (count == 1L) {
-						okCount += 1L;
-					} else {
-						ngInfo.put(totalCount, asList(form.toString()));
+					if (qf.from(et1).where(et1.text10.eq(dto.getText10())).exists()) {
+						LogicalErrorUtil.rejectValue(binding, Prop.Text10.getName(), LogicalError.AlreadyExists,
+								Prop.Text10.resolve());
+						ngInfo.put(totalCount,
+								dataBinderHelper.resolveAllMessage(binding, LocaleContextHolder.getLocale()));
+						ngCount += 1L;
+						continue;
+					}
+
+					try {
+
+						SQLInsertClause insert = qf.insert(et1).populate(dto);
+						insert.set(et1.dt, form.getDt());
+						insert.set(et1.tm, form.getTm());
+						insert.set(et1.dtm, form.getDtm());
+
+						long count = insert.execute();
+						if (count == 1L) {
+							okCount += 1L;
+						} else {
+							ngInfo.put(totalCount, asList(form.toString()));
+							ngCount += 1L;
+						}
+					} catch (DataIntegrityViolationException ex) {
+						ngInfo.put(totalCount, asList(ex.getMessage()));
 						ngCount += 1L;
 					}
-				} catch (DataIntegrityViolationException ex) {
-					ngInfo.put(totalCount, asList(ex.getMessage()));
-					ngCount += 1L;
 				}
+
+			} catch (IOException ex) {
+				throw new IllegalStateException(ex);
 			}
-
-			AppliedEx90ResultDto result = new AppliedEx90ResultDto();
-			result.setTotalCount(totalCount);
-			result.setOkCount(okCount);
-			result.setNgCount(ngCount);
-			result.setNgInfo(ngInfo);
-			return result;
-
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
 		}
+
+		AppliedEx90ResultDto result = new AppliedEx90ResultDto();
+		result.setTotalCount(totalCount);
+		result.setOkCount(okCount);
+		result.setNgCount(ngCount);
+		result.setNgInfo(ngInfo);
+		return result;
 	}
 
 	private String[] createFieldName(String[] h) {

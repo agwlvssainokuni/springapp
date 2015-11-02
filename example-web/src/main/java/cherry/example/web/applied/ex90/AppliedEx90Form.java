@@ -47,7 +47,7 @@ public class AppliedEx90Form extends AppliedEx90FormBase {
 	@NotEmpty(groups = { G2.class })
 	private String dirname;
 
-	@NotEmpty(groups = { G2.class })
-	private String filename;
+	@NotNull(groups = { G2.class })
+	private Integer numOfFile;
 
 }

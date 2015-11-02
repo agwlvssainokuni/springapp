@@ -19,6 +19,7 @@ package cherry.example.web.applied.ex90;
 import static cherry.example.web.util.ModelAndViewBuilder.redirect;
 import static cherry.example.web.util.ModelAndViewBuilder.withViewname;
 import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
+import static java.util.Arrays.asList;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -27,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +55,7 @@ import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 
 import com.google.common.io.ByteStreams;
+import com.ibm.icu.text.MessageFormat;
 
 @Controller
 public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
@@ -88,9 +92,9 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 			return withViewname(viewnameOfStart).build();
 		}
 
-		Pair<String, String> temp = createTempFile(form.getFile());
+		Pair<String, List<String>> temp = createTempFile(asList(form.getFile()));
 		form.setDirname(temp.getLeft());
-		form.setFilename(temp.getRight());
+		form.setNumOfFile(temp.getRight().size());
 		form.setOriginalFilename(form.getFile().getOriginalFilename());
 
 		return withoutView().build();
@@ -117,7 +121,7 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 				return withViewname(viewnameOfStart).build();
 			}
 
-			AppliedEx90ResultDto result = service.load(form, getTempFile(form.getDirname(), form.getFilename()));
+			AppliedEx90ResultDto result = service.load(form, getTempFile(form.getDirname(), form.getNumOfFile()));
 
 			return withoutView().addObject(result).build();
 
@@ -160,23 +164,39 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 		return false;
 	}
 
-	private Pair<String, String> createTempFile(MultipartFile file) {
+	private String createFilename(int num) {
+		return MessageFormat.format("ex90_{0}.file", num);
+	}
+
+	private Pair<String, List<String>> createTempFile(List<MultipartFile> file) {
 		try {
 
 			String dirname = tempDirRepository.createTempDir();
-			File f = File.createTempFile("ex90_", ".file", tempDirRepository.getTempDir(dirname));
-			try (InputStream in = file.getInputStream(); OutputStream out = new FileOutputStream(f)) {
-				ByteStreams.copy(in, out);
+			File dir = tempDirRepository.getTempDir(dirname);
+
+			List<String> list = new ArrayList<>();
+			for (int num = 0; num < file.size(); num++) {
+				String filename = createFilename(num);
+				try (InputStream in = file.get(num).getInputStream();
+						OutputStream out = new FileOutputStream(new File(dir, filename))) {
+					ByteStreams.copy(in, out);
+				}
+				list.add(filename);
 			}
-			return Pair.of(dirname, f.getName());
+
+			return Pair.of(dirname, list);
 
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
 
-	private File getTempFile(String dirname, String filename) {
-		return new File(tempDirRepository.getTempDir(dirname), filename);
+	private List<File> getTempFile(String dirname, int numOfFile) {
+		List<File> list = new ArrayList<>(numOfFile);
+		for (int num = 0; num < numOfFile; num++) {
+			list.add(new File(tempDirRepository.getTempDir(dirname), createFilename(num)));
+		}
+		return list;
 	}
 
 	private void deleteTempDir(String dirname) {
