@@ -1,4 +1,7 @@
 appliedEx90Form.file=ファイル
+appliedEx90Form.originalFilename=ファイル名
+appliedEx90Form.dirname=一時ディレクトリ名
+appliedEx90Form.numOfFile=一時ファイル数
 appliedEx90Form.charset=文字コード
 appliedEx90Form.dt=日付
 appliedEx90Form.tm=時刻

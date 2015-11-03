@@ -25,9 +25,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import cherry.foundation.validator.groups.G1;
 import cherry.foundation.validator.groups.G2;
 
@@ -41,13 +38,5 @@ public class AppliedEx90Form extends AppliedEx90FormBase {
 
 	@NotNull(groups = { G1.class, G2.class })
 	private Charset charset = StandardCharsets.UTF_8;
-
-	private String originalFilename;
-
-	@NotEmpty(groups = { G2.class })
-	private String dirname;
-
-	@NotNull(groups = { G2.class })
-	private Integer numOfFile;
 
 }

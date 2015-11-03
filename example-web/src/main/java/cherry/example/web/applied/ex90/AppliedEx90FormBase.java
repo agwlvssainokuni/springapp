@@ -26,7 +26,6 @@ import lombok.ToString;
 import org.springframework.context.MessageSourceResolvable;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
-import cherry.foundation.validator.groups.G1;
 
 @Getter
 @Setter
@@ -36,8 +35,18 @@ public abstract class AppliedEx90FormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class, G1.class })
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G1.class })
 	private org.springframework.web.multipart.MultipartFile file;
+
+	private String originalFilename;
+
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G2.class })
+	@cherry.foundation.validator.CharTypeBasicLatin(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G2.class })
+	private String dirname;
+
+	@javax.validation.constraints.NotNull(groups = { javax.validation.groups.Default.class, cherry.foundation.validator.groups.G2.class })
+	@cherry.foundation.type.format.CustomNumberFormat
+	private Integer numOfFile;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat()
 	private org.joda.time.LocalDate dt;
@@ -51,6 +60,9 @@ public abstract class AppliedEx90FormBase implements Serializable {
 	@Getter
 	public enum Prop {
 		File("file", "appliedEx90Form.file"), //
+		OriginalFilename("originalFilename", "appliedEx90Form.originalFilename"), //
+		Dirname("dirname", "appliedEx90Form.dirname"), //
+		NumOfFile("numOfFile", "appliedEx90Form.numOfFile"), //
 		Charset("charset", "appliedEx90Form.charset"), //
 		Dt("dt", "appliedEx90Form.dt"), //
 		Tm("tm", "appliedEx90Form.tm"), //
