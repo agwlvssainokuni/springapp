@@ -174,7 +174,7 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 			String dirname = tempDirRepository.createTempDir();
 			File dir = tempDirRepository.getTempDir(dirname);
 
-			List<String> list = new ArrayList<>();
+			List<String> list = new ArrayList<>(file.size());
 			for (int num = 0; num < file.size(); num++) {
 				String filename = createFilename(num);
 				try (InputStream in = file.get(num).getInputStream();
@@ -192,10 +192,15 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 	}
 
 	private List<File> getTempFile(String dirname, int numOfFile) {
+
+		File dir = tempDirRepository.getTempDir(dirname);
+
 		List<File> list = new ArrayList<>(numOfFile);
 		for (int num = 0; num < numOfFile; num++) {
-			list.add(new File(tempDirRepository.getTempDir(dirname), createFilename(num)));
+			String filename = createFilename(num);
+			list.add(new File(dir, filename));
 		}
+
 		return list;
 	}
 
