@@ -121,7 +121,7 @@ public class AppliedEx90ControllerImpl implements AppliedEx90Controller {
 				return withViewname(viewnameOfStart).build();
 			}
 
-			AppliedEx90ResultDto result = service.load(form, getTempFile(form.getDirname(), form.getNumOfFile()));
+			List<AppliedEx90ResultDto> result = service.load(form, getTempFile(form.getDirname(), form.getNumOfFile()));
 
 			return withoutView().addObject(result).build();
 

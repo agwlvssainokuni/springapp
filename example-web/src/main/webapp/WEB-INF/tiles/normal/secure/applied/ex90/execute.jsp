@@ -11,42 +11,45 @@
 <h2 class="page-header">応用画面遷移: アップロード系1-完了</h2>
 <div class="panel-body">
 	<div class="col-md-offset-2 col-md-10">
-		<c:choose>
-			<c:when test="${appliedEx90ResultDto.ngCount <= 0}">
-				<div class="alert alert-info" role="alert">
-					<s:nestedPath path="appliedEx90ResultDto">
-						<div>
-							<ex:out path="totalCount" />
-							登録しました。
-						</div>
-					</s:nestedPath>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-danger" role="alert">
-					<s:nestedPath path="appliedEx90ResultDto">
-						<div>
-							全
-							<ex:out path="totalCount" />
-							件中、
-							<ex:out path="okCount" />
-							件登録しました。不正
-							<ex:out path="ngCount" />
-							件。
-						</div>
-					</s:nestedPath>
-					<c:forEach var="entry" items="${appliedEx90ResultDto.ngInfo.entrySet()}">
-						<div>
-							<foundation:render value="${entry.key}" />
-							件目:
-							<c:forEach var="msg" items="${entry.value}">
-								<c:out value="${msg}" />
-							</c:forEach>
-						</div>
-					</c:forEach>
-				</div>
-			</c:otherwise>
-		</c:choose>
+		<c:forEach var="count" begin="1" end="${appliedEx90ResultDtoList.size()}">
+			<c:set var="appliedEx90ResultDto" value="${appliedEx90ResultDtoList.get(count-1)}" scope="request" />
+			<c:choose>
+				<c:when test="${appliedEx90ResultDto.ngCount <= 0}">
+					<div class="alert alert-info" role="alert">
+						<s:nestedPath path="appliedEx90ResultDto">
+							<div>
+								<ex:out path="totalCount" />
+								登録しました。
+							</div>
+						</s:nestedPath>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-danger" role="alert">
+						<s:nestedPath path="appliedEx90ResultDto">
+							<div>
+								全
+								<ex:out path="totalCount" />
+								件中、
+								<ex:out path="okCount" />
+								件登録しました。不正
+								<ex:out path="ngCount" />
+								件。
+							</div>
+						</s:nestedPath>
+						<c:forEach var="entry" items="${appliedEx90ResultDto.ngInfo.entrySet()}">
+							<div>
+								<foundation:render value="${entry.key}" />
+								件目:
+								<c:forEach var="msg" items="${entry.value}">
+									<c:out value="${msg}" />
+								</c:forEach>
+							</div>
+						</c:forEach>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 	</div>
 	<div class="form-horizontal">
 		<s:nestedPath path="appliedEx90Form">

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,13 +64,9 @@ public class AppliedEx90ServiceImpl implements AppliedEx90Service {
 
 	@Transactional
 	@Override
-	public AppliedEx90ResultDto load(AppliedEx90Form form, List<File> file) {
+	public List<AppliedEx90ResultDto> load(AppliedEx90Form form, List<File> file) {
 
-		long totalCount = 0L;
-		long okCount = 0L;
-		long ngCount = 0L;
-		Map<Long, List<String>> ngInfo = new TreeMap<>();
-
+		List<AppliedEx90ResultDto> list = new ArrayList<>(file.size());
 		for (File f : file) {
 			try (InputStream in = new FileInputStream(f);
 					Reader r = new InputStreamReader(in, form.getCharset());
@@ -77,8 +74,14 @@ public class AppliedEx90ServiceImpl implements AppliedEx90Service {
 
 				String[] header = csv.read();
 				if (header == null) {
+					list.add(new AppliedEx90ResultDto());
 					continue;
 				}
+
+				long totalCount = 0L;
+				long okCount = 0L;
+				long ngCount = 0L;
+				Map<Long, List<String>> ngInfo = new TreeMap<>();
 
 				String formName = UPPER_CAMEL.to(UPPER_CAMEL, AppliedEx90LoadForm.class.getSimpleName());
 				String[] field = createFieldName(header);
@@ -126,17 +129,19 @@ public class AppliedEx90ServiceImpl implements AppliedEx90Service {
 					}
 				}
 
+				AppliedEx90ResultDto result = new AppliedEx90ResultDto();
+				result.setTotalCount(totalCount);
+				result.setOkCount(okCount);
+				result.setNgCount(ngCount);
+				result.setNgInfo(ngInfo);
+				list.add(result);
+
 			} catch (IOException ex) {
 				throw new IllegalStateException(ex);
 			}
 		}
 
-		AppliedEx90ResultDto result = new AppliedEx90ResultDto();
-		result.setTotalCount(totalCount);
-		result.setOkCount(okCount);
-		result.setNgCount(ngCount);
-		result.setNgInfo(ngInfo);
-		return result;
+		return list;
 	}
 
 	private String[] createFieldName(String[] h) {

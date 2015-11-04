@@ -21,6 +21,6 @@ import java.util.List;
 
 public interface AppliedEx90Service {
 
-	AppliedEx90ResultDto load(AppliedEx90Form form, List<File> file);
+	List<AppliedEx90ResultDto> load(AppliedEx90Form form, List<File> file);
 
 }
