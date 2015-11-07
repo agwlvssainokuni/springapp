@@ -80,28 +80,28 @@ public class ValidationEx30Form {
 	@CustomDateTimeFormat(Range.TO)
 	private LocalTime ltmto;
 
-	@JodaTimeMin(value = "1900-01-01", inclusive = true)
-	private LocalDate ldtmin19000101in;
-
-	@JodaTimeMax(value = "3000-01-01", inclusive = true)
-	private LocalDate ldtmax30000101in;
-
 	@JodaTimeMin(value = "1900-01-01T00:00:00", inclusive = true)
 	private LocalDateTime ldtmmin19000101in;
 
 	@JodaTimeMax(value = "3000-01-01T00:00:00", inclusive = true)
 	private LocalDateTime ldtmmax30000101in;
 
-	@JodaTimeMin(value = "1900-01-01", inclusive = false)
-	private LocalDate ldtmin19000101ex;
-
-	@JodaTimeMax(value = "3000-01-01", inclusive = false)
-	private LocalDate ldtmax30000101ex;
-
 	@JodaTimeMin(value = "1900-01-01T00:00:00", inclusive = false)
 	private LocalDateTime ldtmmin19000101ex;
 
 	@JodaTimeMax(value = "3000-01-01T00:00:00", inclusive = false)
 	private LocalDateTime ldtmmax30000101ex;
+
+	@JodaTimeMin(value = "1900-01-01", inclusive = true)
+	private LocalDate ldtmin19000101in;
+
+	@JodaTimeMax(value = "3000-01-01", inclusive = true)
+	private LocalDate ldtmax30000101in;
+
+	@JodaTimeMin(value = "1900-01-01", inclusive = false)
+	private LocalDate ldtmin19000101ex;
+
+	@JodaTimeMax(value = "3000-01-01", inclusive = false)
+	private LocalDate ldtmax30000101ex;
 
 }
