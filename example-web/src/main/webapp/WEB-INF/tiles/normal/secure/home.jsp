@@ -58,6 +58,8 @@
 			<li><a href="${baseUri}/validation/ex10/" class="list-group-item">文字列項目</a></li>
 			<li><a href="${baseUri}/validation/ex20/" class="list-group-item">数値項目</a></li>
 			<li><a href="${baseUri}/validation/ex30/" class="list-group-item">日時項目</a></li>
+			<li><a href="${baseUri}/validation/ex40/" class="list-group-item">サブフォーム</a></li>
+			<li><a href="${baseUri}/validation/ex50/" class="list-group-item">グルーピング</a></li>
 		</ul>
 	</div>
 </div>

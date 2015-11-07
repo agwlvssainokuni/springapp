@@ -95,12 +95,16 @@ public class PathDef {
 	// 応用画面遷移: アップロード
 	public static final String URI_APPLIED_EX90 = "/secure/applied/ex90";
 
-	// 単項目チェック: 文字列型
+	// 単項目チェック: 文字列項目
 	public static final String URI_VALIDATION_EX10 = "/secure/validation/ex10";
-	// 単項目チェック: 数値型
+	// 単項目チェック: 数値項目
 	public static final String URI_VALIDATION_EX20 = "/secure/validation/ex20";
-	// 単項目チェック: 日時型
+	// 単項目チェック: 日時項目
 	public static final String URI_VALIDATION_EX30 = "/secure/validation/ex30";
+	// 単項目チェック: サブフォーム
+	public static final String URI_VALIDATION_EX40 = "/secure/validation/ex40";
+	// 単項目チェック: グルーピング
+	public static final String URI_VALIDATION_EX50 = "/secure/validation/ex50";
 
 	// サブURI
 	/** サブURI: /start */
