@@ -22,13 +22,16 @@ import static cherry.example.web.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -38,12 +41,23 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cherry.example.web.Config;
 import cherry.example.web.util.ViewNameUtil;
 import cherry.example.web.validation.ex40.ValidationEx40Form.List2Property;
 import cherry.example.web.validation.ex40.ValidationEx40Form.Map2Property;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
 public class ValidationEx40ControllerImpl implements ValidationEx40Controller {
+
+	@Autowired
+	private Config config;
+
+	@Autowired
+	@Qualifier("yamlObjectMapper")
+	private ObjectMapper objectMapper;
 
 	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(ValidationEx40Controller.class).start(null,
 			null, null, null, null, null));
@@ -100,41 +114,24 @@ public class ValidationEx40ControllerImpl implements ValidationEx40Controller {
 	}
 
 	private ValidationEx40Form createForm() {
-
 		ValidationEx40Form form = new ValidationEx40Form();
-		form.setList1(createSubFormList(3));
-
-		List<List2Property> list2 = new ArrayList<>();
-		list2.add(new List2Property(createSubFormList(3)));
-		list2.add(new List2Property(createSubFormList(1)));
-		list2.add(new List2Property(createSubFormList(2)));
-		form.setList2(list2);
-
-		form.setMap1(createSubFormMap(3));
-
-		Map<String, Map2Property> map2 = new LinkedHashMap<>();
-		map2.put("key0", new Map2Property(createSubFormMap(3)));
-		map2.put("key1", new Map2Property(createSubFormMap(1)));
-		map2.put("key2", new Map2Property(createSubFormMap(2)));
-		form.setMap2(map2);
-
+		form.setList1(readValue(config.getValidationEx40list1(), new TypeReference<List<ValidationEx40SubForm>>() {
+		}));
+		form.setList2(readValue(config.getValidationEx40list2(), new TypeReference<List<List2Property>>() {
+		}));
+		form.setMap1(readValue(config.getValidationEx40map1(), new TypeReference<Map<String, ValidationEx40SubForm>>() {
+		}));
+		form.setMap2(readValue(config.getValidationEx40map2(), new TypeReference<Map<String, Map2Property>>() {
+		}));
 		return form;
 	}
 
-	private List<ValidationEx40SubForm> createSubFormList(int count) {
-		List<ValidationEx40SubForm> list = new ArrayList<>(count);
-		for (int i = 0; i < count; i++) {
-			list.add(new ValidationEx40SubForm());
+	private <T> T readValue(Resource resource, TypeReference<T> typeRef) {
+		try (InputStream in = resource.getInputStream()) {
+			return objectMapper.readValue(in, typeRef);
+		} catch (IOException ex) {
+			throw new IllegalStateException(ex);
 		}
-		return list;
-	}
-
-	private Map<String, ValidationEx40SubForm> createSubFormMap(int count) {
-		Map<String, ValidationEx40SubForm> map = new LinkedHashMap<>();
-		for (int i = 0; i < count; i++) {
-			map.put("key" + i, new ValidationEx40SubForm());
-		}
-		return map;
 	}
 
 }

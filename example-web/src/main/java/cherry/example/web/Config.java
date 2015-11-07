@@ -19,6 +19,7 @@ package cherry.example.web;
 import lombok.Getter;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -30,5 +31,17 @@ public class Config {
 
 	@Value("${web.app.historySize}")
 	private int historySize;
+
+	@Value("${web.validation.ex40.list1}")
+	private Resource validationEx40list1;
+
+	@Value("${web.validation.ex40.list2}")
+	private Resource validationEx40list2;
+
+	@Value("${web.validation.ex40.map1}")
+	private Resource validationEx40map1;
+
+	@Value("${web.validation.ex40.map2}")
+	private Resource validationEx40map2;
 
 }
