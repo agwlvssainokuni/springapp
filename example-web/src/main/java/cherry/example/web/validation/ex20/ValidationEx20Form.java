@@ -19,6 +19,7 @@ package cherry.example.web.validation.ex20;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -54,6 +55,15 @@ public class ValidationEx20Form {
 	@NumberFormat(pattern = "###0")
 	private BigInteger bigint;
 
+	@NumberFormat(pattern = "###0.##########")
+	private Float floatnum;
+
+	@NumberFormat(pattern = "###0.##########")
+	private Double doublenum;
+
+	@NumberFormat(pattern = "###0.##########")
+	private BigDecimal bigdec;
+
 	@NumberFormat(pattern = "#,##0")
 	private Short shortnumWithComma;
 
@@ -65,15 +75,6 @@ public class ValidationEx20Form {
 
 	@NumberFormat(pattern = "#,##0")
 	private BigInteger bigintWithComma;
-
-	@NumberFormat(pattern = "###0.##########")
-	private Float floatnum;
-
-	@NumberFormat(pattern = "###0.##########")
-	private Double doublenum;
-
-	@NumberFormat(pattern = "###0.##########")
-	private BigDecimal bigdec;
 
 	@NumberFormat(pattern = "#,##0.##########")
 	private Float floatnumWithComma;
@@ -109,7 +110,7 @@ public class ValidationEx20Form {
 	private BigDecimal decmin10000000000in;
 
 	@NumberFormat(pattern = "###0.##########")
-	@DecimalMin(value = "10000000000", inclusive = true)
+	@DecimalMax(value = "10000000000", inclusive = true)
 	private BigDecimal decmax10000000000in;
 
 	@NumberFormat(pattern = "###0.##########")
@@ -117,7 +118,7 @@ public class ValidationEx20Form {
 	private BigDecimal decmin10000000000ex;
 
 	@NumberFormat(pattern = "###0.##########")
-	@DecimalMin(value = "10000000000", inclusive = false)
+	@DecimalMax(value = "10000000000", inclusive = false)
 	private BigDecimal decmax10000000000ex;
 
 }
