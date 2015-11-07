@@ -16,8 +16,10 @@
 
 package cherry.example.web.validation.ex10;
 
+import static cherry.example.web.ParamDef.REQ_BACK;
 import static cherry.example.web.ParamDef.REQ_TO;
 import static cherry.example.web.PathDef.SUBURI_CONFIRM;
+import static cherry.example.web.PathDef.SUBURI_EXECUTE;
 import static cherry.example.web.PathDef.SUBURI_START;
 import static cherry.example.web.PathDef.URI_VALIDATION_EX10;
 
@@ -47,6 +49,10 @@ public interface ValidationEx10Controller {
 
 	@RequestMapping(SUBURI_CONFIRM)
 	ModelAndView confirm(@Validated() ValidationEx10Form form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(value = SUBURI_EXECUTE, params = REQ_BACK)
+	ModelAndView back(@Validated(G9.class) ValidationEx10Form form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }

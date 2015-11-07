@@ -27,6 +27,7 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +36,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.example.web.util.ViewNameUtil;
 
+@Controller
 public class ValidationEx10ControllerImpl implements ValidationEx10Controller {
 
 	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(ValidationEx10Controller.class).start(null,
@@ -61,6 +63,12 @@ public class ValidationEx10ControllerImpl implements ValidationEx10Controller {
 		}
 
 		return withoutView().build();
+	}
+
+	@Override
+	public ModelAndView back(ValidationEx10Form form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		return withViewname(viewnameOfStart).build();
 	}
 
 	private UriComponents redirectOnInit(String redir) {

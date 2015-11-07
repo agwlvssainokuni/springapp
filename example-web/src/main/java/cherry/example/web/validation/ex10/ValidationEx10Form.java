@@ -36,6 +36,7 @@ import cherry.foundation.validator.CharTypeFullWidth;
 import cherry.foundation.validator.CharTypeHalfKatakana;
 import cherry.foundation.validator.CharTypeHalfWidth;
 import cherry.foundation.validator.CharTypeNumeric;
+import cherry.foundation.validator.MaxLength;
 import cherry.foundation.validator.MinLength;
 
 @Getter
@@ -50,7 +51,7 @@ public class ValidationEx10Form {
 	@MinLength(5)
 	private String minlength05;
 
-	@MinLength(10)
+	@MaxLength(10)
 	private String maxlength10;
 
 	@CharTypeBasicLatin()
