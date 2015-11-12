@@ -49,8 +49,11 @@
 	</div>
 	<div id="form" class="tab-pane" role="tabpanel">
 		<ul class="list-group list-unstyled">
-			<li><a href="${baseUri}/form/ex10/" class="list-group-item">単票入力</a></li>
-			<li><a href="${baseUri}/form/ex10/" class="list-group-item">一覧入力</a></li>
+			<li><a href="${baseUri}/form/ex10/" class="list-group-item">単票サブフォーム</a></li>
+			<li><a href="${baseUri}/form/ex20/" class="list-group-item">一覧サブフォーム</a></li>
+			<li><a href="${baseUri}/form/ex30/" class="list-group-item">多段サブフォーム(リストのリスト)</a></li>
+			<li><a href="${baseUri}/form/ex40/" class="list-group-item">多段サブフォーム(マップのマップ)</a></li>
+			<li><a href="${baseUri}/form/ex50/" class="list-group-item">行列型チェックボックス(多段行・多段列)</a></li>
 		</ul>
 	</div>
 	<div id="validation" class="tab-pane" role="tabpanel">
