@@ -106,6 +106,17 @@ public class PathDef {
 	// 単項目チェック: グルーピング
 	public static final String URI_VALIDATION_EX50 = "/secure/validation/ex50";
 
+	// 入力フォーム: 単票サブフォーム
+	public static final String URI_FORM_EX10 = "/secure/form/ex10";
+	// 入力フォーム: 一覧サブフォーム
+	public static final String URI_FORM_EX20 = "/secure/form/ex20";
+	// 入力フォーム: 多段サブフォーム(リスト)
+	public static final String URI_FORM_EX30 = "/secure/form/ex30";
+	// 入力フォーム: 多段サブフォーム(マップ)
+	public static final String URI_FORM_EX40 = "/secure/form/ex40";
+	// 入力フォーム: 行列型チェックボックス
+	public static final String URI_FORM_EX50 = "/secure/form/ex50";
+
 	// サブURI
 	/** サブURI: /start */
 	public static final String SUBURI_START = "start";
