@@ -17,7 +17,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <security:csrfMetaTags />
-<title><s:message code="base/common.title" /> / <s:message code="${name}.title" /></title>
+<title>SQL管理ツール / <s:message code="${name}.title" /></title>
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" media="screen" href="<c:url value="/normal/style/general.css"/>" />
@@ -34,21 +34,18 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<div class="navbar-brand">
-					<s:message code="base/common.title" />
-				</div>
+				<div class="navbar-brand">SQL管理ツール</div>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a hreF="<c:url value="/tool/" />"><span class="glyphicon glyphicon-home"></span> <s:message code="base/auth.menu.home" /></a></li>
+					<li><a hreF="<c:url value="/tool/" />"><span class="glyphicon glyphicon-home"></span>ホーム</a></li>
 					<security:authorize access="hasRole('ROLE_USER')">
-						<li><a hreF="<c:url value="/tool/password" />"><span class="glyphicon glyphicon-user"></span> <s:message
-									code="base/auth.menu.password" /></a></li>
+						<li><a hreF="<c:url value="/tool/password" />"><span class="glyphicon glyphicon-user"></span>パスワード変更</a></li>
 					</security:authorize>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value="/logout" />" onclick="JavaScript:$('#logout').submit(); return false;"><span
-							class="glyphicon glyphicon-off"></span> <s:message code="base/auth.logout" /></a>
+							class="glyphicon glyphicon-off"></span>ログアウト</a>
 						<form action="<c:url value="/logout" />" method="POST" id="logout">
 							<security:csrfInput />
 						</form></li>
@@ -60,9 +57,7 @@
 		<tiles:insertAttribute name="content" />
 	</div>
 	<div class="container" role="main">
-		<address class="text-center">
-			<s:message code="base/common.copyright" />
-		</address>
+		<address class="text-center">Copyright &copy;, 2015, agwlvssainokuni</address>
 	</div>
 </body>
 </html>

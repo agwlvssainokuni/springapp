@@ -6,41 +6,33 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2 class="page-header">
-	<s:message code="login/start.message.0" />
-</h2>
+<h2 class="page-header">SQL管理ツール ログイン</h2>
 <c:if test="${loginFailed != null && loginFailed}">
 	<div class="form-group has-error">
-		<div class="col-sm-10 col-sm-offset-2 alert alert-warning" role="alert">
-			<s:message code="login/start.message.1" />
-		</div>
+		<div class="col-sm-10 col-sm-offset-2 alert alert-warning" role="alert">ログインIDまたはパスワードが誤っています。</div>
 	</div>
 </c:if>
 <c:if test="${loggedOut != null && loggedOut}">
 	<div class="form-group has-success">
-		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">
-			<s:message code="login/start.message.2" />
-		</div>
+		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">ログアウトしました。</div>
 	</div>
 </c:if>
-<form id="loginForm" action="<c:url value="/login/execute" />" method="POST" role="form" class="form-horizontal">
+<f:form servletRelativeAction="/login/execute" modelAttribute="loginForm" role="form" cssClass="form-horizontal">
 	<div class="form-group">
-		<label for="loginId" class="col-sm-2 control-label"><s:message code="loginForm.loginId" /></label>
+		<f:label path="loginId" cssClass="col-sm-2 control-label">ログインID</f:label>
 		<div class="col-sm-10">
-			<input type="text" id="loginId" name="loginId" class="form-control" />
+			<f:input path="loginId" cssClass="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="password" class="col-sm-2 control-label"><s:message code="loginForm.password" /></label>
+		<f:label path="password" cssClass="col-sm-2 control-label">パスワード</f:label>
 		<div class="col-sm-10">
-			<input type="password" id="password" name="password" class="form-control" />
+			<f:password path="password" cssClass="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button class="btn btn-default btn-block" type="submit">
-				<s:message code="login/start.loginButton" />
-			</button>
+			<button type="submit" class="btn btn-default btn-block">ログイン</button>
 		</div>
 	</div>
-</form>
+</f:form>

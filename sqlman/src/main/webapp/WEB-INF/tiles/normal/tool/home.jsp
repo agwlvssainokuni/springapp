@@ -6,12 +6,11 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2 class="page-header">
-	<s:message code="tool/home.message.0" />
-</h2>
-<div class="list-group">
-	<a class="list-group-item" href="<c:url value="/tool/search" />"><s:message code="tool/home.menu.search" /></a> <a class="list-group-item"
-		href="<c:url value="/tool/clause" />"><s:message code="tool/home.menu.execClause" /></a> <a class="list-group-item"
-		href="<c:url value="/tool/statement" />"><s:message code="tool/home.menu.execStatement" /></a> <a class="list-group-item"
-		href="<c:url value="/tool/load" />"><s:message code="tool/home.menu.execLoad" /></a>
-</div>
+<h2 class="page-header">SQL管理ツール ホーム</h2>
+<c:url var="baseuri" value="/tool" />
+<ul class="list-group list-unstyled">
+	<li><a class="list-group-item" href="${baseuri}/search">登録済みSQL検索</a></li>
+	<li><a class="list-group-item" href="${baseuri}/clause">句指定SQL実行</a></li>
+	<li><a class="list-group-item" href="${baseuri}/statement">文指定SQL実行</a></li>
+	<li><a class="list-group-item" href="${baseuri}/load">CSV取込み</a></li>
+</ul>

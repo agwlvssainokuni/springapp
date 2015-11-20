@@ -35,6 +35,10 @@ public abstract class LoginFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private String loginId;
+
+	private String password;
+
 	@Getter
 	public enum Prop {
 		LoginId("loginId", "loginForm.loginId"), //

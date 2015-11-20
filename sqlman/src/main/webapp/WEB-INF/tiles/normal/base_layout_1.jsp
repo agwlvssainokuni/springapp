@@ -16,7 +16,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title><s:message code="base/common.title" /> / <s:message code="${name}.title" /></title>
+<title>SQL管理ツール / <s:message code="${name}.title" /></title>
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" media="screen" href="<c:url value="/normal/style/general.css"/>" />
@@ -30,9 +30,7 @@
 	<div class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="nav navbar-header">
-				<div class="navbar-brand">
-					<s:message code="base/common.title" />
-				</div>
+				<div class="navbar-brand">SQL管理ツール</div>
 			</div>
 		</div>
 	</div>
@@ -40,9 +38,7 @@
 		<tiles:insertAttribute name="content" />
 	</div>
 	<div class="container" role="main">
-		<address class="text-center">
-			<s:message code="base/common.copyright" />
-		</address>
+		<address class="text-center">Copyright &copy;, 2015, agwlvssainokuni</address>
 	</div>
 </body>
 </html>
