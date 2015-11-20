@@ -16,29 +16,36 @@
 
 package cherry.sqlman.login;
 
+import static cherry.sqlman.ParamDef.LOGGED_OUT;
+import static cherry.sqlman.ParamDef.LOGIN_FAILED;
+import static cherry.sqlman.PathDef.SUBURI_START;
+import static cherry.sqlman.PathDef.URI_LOGIN;
+
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_LOGIN)
+@RequestMapping(URI_LOGIN)
 public interface LoginController {
 
-	@RequestMapping()
-	ModelAndView start(Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(value = SUBURI_START)
+	ModelAndView start(@Validated(G9.class) LoginForm form, BindingResult binding, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
-	ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	@RequestMapping(value = SUBURI_START, params = LOGIN_FAILED)
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr);
 
-	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
-	ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	@RequestMapping(value = SUBURI_START, params = LOGGED_OUT)
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr);
 
 }

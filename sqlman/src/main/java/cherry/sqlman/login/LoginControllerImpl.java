@@ -16,54 +16,48 @@
 
 package cherry.sqlman.login;
 
+import static cherry.sqlman.ParamDef.LOGGED_OUT;
+import static cherry.sqlman.ParamDef.LOGIN_FAILED;
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withoutView;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
-
-import cherry.sqlman.PathDef;
 
 @Controller
 public class LoginControllerImpl implements LoginController {
 
 	@Override
-	public ModelAndView start(Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		return new ModelAndView();
+	public ModelAndView start(LoginForm form, BindingResult binding, Locale locale, SitePreference sitePref,
+			NativeWebRequest request) {
+		return withoutView().build();
 	}
 
 	@Override
-	public ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	public ModelAndView loggedOut(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr) {
-
-		redirAttr.addFlashAttribute(PathDef.METHOD_LOGGED_OUT, true);
-
-		UriComponents uc = fromMethodCall(on(LoginController.class).start(locale, sitePref, request)).build();
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		redirAttr.addFlashAttribute(LOGIN_FAILED, true);
+		return redirect(redirectToStart()).build();
 	}
 
 	@Override
-	public ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
+	public ModelAndView loginFailed(Locale locale, SitePreference sitePref, NativeWebRequest request,
 			RedirectAttributes redirAttr) {
+		redirAttr.addFlashAttribute(LOGGED_OUT, true);
+		return redirect(redirectToStart()).build();
+	}
 
-		redirAttr.addFlashAttribute(PathDef.METHOD_LOGIN_FAILED, true);
-
-		UriComponents uc = fromMethodCall(on(LoginController.class).start(locale, sitePref, request)).build();
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+	private UriComponents redirectToStart() {
+		return fromMethodCall(on(LoginController.class).start(null, null, null, null, null)).build();
 	}
 
 }

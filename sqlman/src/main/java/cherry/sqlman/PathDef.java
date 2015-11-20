@@ -19,8 +19,6 @@ package cherry.sqlman;
 public class PathDef {
 
 	// 利用者画面
-	public static final String URI_TOOL = "/tool/**";
-
 	public static final String URI_TOOL_HOME = "/tool";
 
 	public static final String URI_TOOL_PASSWORD = "/tool/password";
@@ -64,8 +62,6 @@ public class PathDef {
 	public static final String VIEW_TOOL_LOAD_ID_EDIT = "tool/load/editId";
 
 	// 管理者画面
-	public static final String URI_ADMIN = "/admin/**";
-
 	public static final String URI_ADMIN_HOME = "/admin";
 
 	public static final String URI_ADMIN_USER = "/admin/user";
@@ -106,11 +102,7 @@ public class PathDef {
 	public static final String PATHVAR_ID = "id";
 
 	// ログイン画面
-	public static final String URI_LOGIN = "/login/start";
-
-	public static final String METHOD_LOGIN_FAILED = "loginFailed";
-
-	public static final String METHOD_LOGGED_OUT = "loggedOut";
+	public static final String URI_LOGIN = "/login";
 
 	// パスワード発行画面
 	public static final String URI_PASSWORD = "/password";
