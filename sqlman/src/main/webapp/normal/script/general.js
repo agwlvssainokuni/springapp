@@ -12,6 +12,8 @@ $(function() {
 		});
 	});
 
-	$("input.has-error").wrap("<div class='has-error'></div>");
+	$("input.has-error").closest("div").addClass("has-error");
+	$("textarea.has-error").closest("div").addClass("has-error");
+	$("label.has-error").closest("div").addClass("has-error");
 
 });

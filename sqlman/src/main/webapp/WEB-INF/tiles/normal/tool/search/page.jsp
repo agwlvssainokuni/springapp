@@ -9,14 +9,12 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <c:set var="hasResultList" value="${pagedList != null && !pagedList.list.isEmpty()}" />
-<h2 class="page-header">
-	<s:message code="tool/search/page.message.0" />
-</h2>
+<h2 class="page-header">登録済みSQL検索</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#searchForm"><s:message code="tool/search/page.message.1" /></a>
+				<a href="#searchForm" data-toggle="collapse">検索条件</a>
 			</h3>
 		</div>
 		<div id="searchForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
@@ -35,27 +33,24 @@
 				</s:hasBindErrors>
 				<c:if test="${pagedList != null && pagedList.list.isEmpty()}">
 					<div class="col-sm-offset-2 col-sm-10">
-						<div class="alert alert-danger" role="alert">
-							<s:message code="tool/search/page.message.3" />
-						</div>
+						<div class="alert alert-danger" role="alert">条件に合致するSQLは登録されていません。</div>
 					</div>
 				</c:if>
 				<f:form servletRelativeAction="/tool/search/execute" method="POST" modelAttribute="sqlSearchForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="pageNo" value="0" />
 					<f:hidden path="pageSz" />
-					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="name" cssClass="col-sm-2 control-label">
-							<s:message code="sqlSearchForm.name" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="name" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL名称</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:input path="name" cssClass="form-control" />
+							<f:input path="name" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label"><s:message code="tool/search/page.form.type" /></label>
+						<div>
+							<label class="col-sm-2 control-label">SQL種別</label>
+						</div>
 						<div class="col-sm-10">
 							<c:forEach var="item" items="${foundation:getLabeledEnumList('cherry.sqlman.SqlType')}">
 								<div class="checkbox-inline">
@@ -65,7 +60,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label"><s:message code="tool/search/page.form.published" /></label>
+						<div>
+							<label class="col-sm-2 control-label">公開状況</label>
+						</div>
 						<div class="col-sm-10">
 							<c:forEach var="item" items="${foundation:getLabeledEnumList('cherry.sqlman.Published')}">
 								<div class="checkbox-inline">
@@ -74,45 +71,35 @@
 							</c:forEach>
 						</div>
 					</div>
-
-					<c:set var="hasErrorDt">
-						<s:bind path="registeredFromDt">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<c:set var="hasErrorTm">
-						<s:bind path="registeredFromTm">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
 					<div class="form-group">
-						<span class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label class="col-sm-2 control-label"><s:message
-									code="sqlSearchForm.registeredFrom" /></label></span>
-						<div class="col-sm-4 ${hasErrorDt}">
-							<f:input path="registeredFromDt" cssClass="form-control" />
+						<div>
+							<label class="col-sm-2 control-label">登録日時(FROM)</label>
+							<f:label path="registeredFromDt" cssClass="hidden" cssErrorClass="hidden has-error"></f:label>
+							<f:label path="registeredFromTm" cssClass="hidden" cssErrorClass="hidden has-error"></f:label>
 						</div>
-						<div class="col-sm-4 ${hasErrorTm}">
-							<f:input path="registeredFromTm" cssClass="form-control" />
+						<div class="col-sm-4">
+							<f:input path="registeredFromDt" cssClass="form-control" cssErrorClass="form-control has-error" />
+						</div>
+						<div class="col-sm-4">
+							<f:input path="registeredFromTm" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
-					<c:set var="hasErrorDt">
-						<s:bind path="registeredToDt">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<c:set var="hasErrorTm">
-						<s:bind path="registeredToTm">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
 					<div class="form-group">
-						<span class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label class="col-sm-2 control-label"><s:message
-									code="sqlSearchForm.registeredTo" /></label></span>
-						<div class="col-sm-4 ${hasErrorDt}">
-							<f:input path="registeredToDt" cssClass="form-control" />
+						<div>
+							<label class="col-sm-2 control-label">登録日時(TO)</label>
+							<f:label path="registeredToDt" cssClass="hidden" cssErrorClass="hidden has-error"></f:label>
+							<f:label path="registeredToTm" cssClass="hidden" cssErrorClass="hidden has-error"></f:label>
 						</div>
-						<div class="col-sm-4 ${hasErrorTm}">
-							<f:input path="registeredToTm" cssClass="form-control" />
+						<div class="col-sm-4">
+							<f:input path="registeredToDt" cssClass="form-control" cssErrorClass="form-control has-error" />
+						</div>
+						<div class="col-sm-4">
+							<f:input path="registeredToTm" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
-
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary btn-block">
-								<s:message code="tool/search/page.searchButton" />
-							</f:button>
+							<f:button type="submit" class="btn btn-primary btn-block">検索</f:button>
 						</div>
 					</div>
 				</f:form>
@@ -123,7 +110,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" href="#searchResult"><s:message code="tool/search/page.message.2" /></a>
+					<a data-toggle="collapse" href="#searchResult">検索結果</a>
 				</h3>
 			</div>
 			<div id="searchResult" class="panel-collapse collapse in">
@@ -139,24 +126,23 @@
 						<f:hidden id="registeredToDt2" path="registeredToDt" />
 						<f:hidden id="registeredToTm2" path="registeredToTm" />
 					</f:form>
-					<div>
-						<div class="app-pager-desc">
-							<s:message code="common/pager.message.0"
-								arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
+					<div class="row">
+						<div class="col-sm-offset-6 col-sm-6 text-right">
+							<app:pagerDesc pageSet="${pagedList.pageSet}" />
+							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
 						</div>
-						<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
 					</div>
 					<table id="searchResultList" class="table table-striped">
 						<thead>
 							<tr>
 								<th>#</th>
-								<th><s:message code="tool/search/page.column.name" /></th>
-								<th><s:message code="tool/search/page.column.sqlType" /></th>
-								<th><s:message code="tool/search/page.column.databaseName" /></th>
-								<th><s:message code="tool/search/page.column.registeredAt" /></th>
-								<th><s:message code="tool/search/page.column.publishedFlg" /></th>
-								<th><s:message code="tool/search/page.column.ownedBy" /></th>
-								<th><s:message code="tool/search/page.column.description" /></th>
+								<th>SQL名称</th>
+								<th>SQL種別</th>
+								<th>DB名称</th>
+								<th>登録日時</th>
+								<th>公開状況</th>
+								<th>所有者</th>
+								<th>内容説明</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -179,7 +165,10 @@
 										<td><app:out path="list[${count-1}][databaseName]" /></td>
 										<td><app:out path="list[${count-1}][registeredAt]" /></td>
 										<td><s:bind path="list[${count-1}][publishedFlg]">
-												<s:message code="tool/search/page.column.publishedFlg.${status.value}" />
+												<c:choose>
+													<c:when test="${status.actualValue == 0}">非公開</c:when>
+													<c:otherwise>公開</c:otherwise>
+												</c:choose>
 											</s:bind></td>
 										<td><app:out path="list[${count-1}][ownedBy]" /></td>
 										<td><app:out path="list[${count-1}][description]" /></td>
@@ -188,8 +177,10 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<div>
-						<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
+					<div class="row">
+						<div class="col-sm-offset-6 col-sm-6 text-right">
+							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
+						</div>
 					</div>
 				</div>
 			</div>
