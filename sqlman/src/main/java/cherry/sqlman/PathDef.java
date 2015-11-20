@@ -77,6 +77,10 @@ public class PathDef {
 	public static final String VIEW_ADMIN_USER_SEARCH = "admin/user/search";
 
 	// サブURI
+	public static final String SUBURI_START_NEW = "startNew";
+
+	public static final String SUBURI_EXECUTE_NEW = "executeNew";
+
 	public static final String SUBURI_START = "start";
 
 	public static final String SUBURI_EXECUTE = "execute";
@@ -87,20 +91,6 @@ public class PathDef {
 
 	public static final String SUBURI_METADATA = "metadata";
 
-	// メソッド識別パラメタ
-	public static final String METHOD_DOWNLOAD = "download";
-
-	public static final String METHOD_CREATE = "create";
-
-	public static final String METHOD_UPDATE = "update";
-
-	// リクエストパラメタ
-	public static final String PARAM_REF = "ref";
-
-	public static final String PARAM_ID = "id";
-
-	public static final String PATHVAR_ID = "id";
-
 	// ログイン画面
 	public static final String URI_LOGIN = "/login";
 
@@ -110,8 +100,5 @@ public class PathDef {
 	public static final String VIEW_PASSWORD_START = "password/start";
 
 	public static final String VIEW_PASSWORD_EDIT = "password/edit";
-
-	// リクエストパラメタ
-	public static final String PARAM_TOKEN = "token";
 
 }

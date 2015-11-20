@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G2;
 import cherry.foundation.validator.groups.G3;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
 
@@ -39,36 +40,36 @@ import cherry.sqlman.tool.metadata.SqlMetadataForm;
 public interface SqlClauseIdController {
 
 	@ModelAttribute()
-	SqlMetadataForm getMetadata(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth);
+	SqlMetadataForm getMetadata(@PathVariable(ParamDef.PATHVAR_ID) int id, Authentication auth);
 
 	@ModelAttribute()
-	SqlClauseForm getForm(@PathVariable(PathDef.PATHVAR_ID) int id);
+	SqlClauseForm getForm(@PathVariable(ParamDef.PATHVAR_ID) int id);
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
+	ModelAndView init(@PathVariable(ParamDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G3.class) SqlClauseForm form,
+	ModelAndView execute(@PathVariable(ParamDef.PATHVAR_ID) int id, @Validated(G3.class) SqlClauseForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G3.class) SqlClauseForm form,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_DOWNLOAD)
+	ModelAndView download(@PathVariable(ParamDef.PATHVAR_ID) int id, @Validated(G3.class) SqlClauseForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, HttpServletResponse response);
 
 	@RequestMapping(PathDef.SUBURI_EDIT)
-	ModelAndView edit(@PathVariable(PathDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
+	ModelAndView edit(@PathVariable(ParamDef.PATHVAR_ID) int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_UPDATE)
-	ModelAndView update(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated(G2.class) SqlClauseForm form,
+	ModelAndView update(@PathVariable(ParamDef.PATHVAR_ID) int id, @Validated(G2.class) SqlClauseForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_METADATA)
-	ModelAndView metadata(@PathVariable(PathDef.PATHVAR_ID) int id, @Validated SqlMetadataForm mdForm,
+	ModelAndView metadata(@PathVariable(ParamDef.PATHVAR_ID) int id, @Validated SqlMetadataForm mdForm,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 

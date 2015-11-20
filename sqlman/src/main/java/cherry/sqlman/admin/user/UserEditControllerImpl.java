@@ -32,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 
 @Controller
@@ -57,7 +58,7 @@ public class UserEditControllerImpl implements UserEditController {
 		Integer id = 0;
 
 		UriComponents uc = fromMethodCall(on(UserEditController.class).edit(id, auth, locale, sitePref, request))
-				.replaceQueryParam(PathDef.PARAM_ID, id).build();
+				.replaceQueryParam(ParamDef.REQ_ID, id).build();
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
@@ -83,7 +84,7 @@ public class UserEditControllerImpl implements UserEditController {
 		// TODO
 
 		UriComponents uc = fromMethodCall(on(UserEditController.class).edit(id, auth, locale, sitePref, request))
-				.replaceQueryParam(PathDef.PARAM_ID, id).build();
+				.replaceQueryParam(ParamDef.REQ_ID, id).build();
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;

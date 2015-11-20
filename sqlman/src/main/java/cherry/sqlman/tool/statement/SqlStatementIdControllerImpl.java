@@ -39,6 +39,7 @@ import org.springframework.web.util.UriComponents;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PageSet;
 import cherry.sqlman.LogicError;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.MetadataService;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
@@ -72,7 +73,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-		mav.addObject(PathDef.PATHVAR_ID, id);
+		mav.addObject(ParamDef.PATHVAR_ID, id);
 		return mav;
 	}
 
@@ -82,7 +83,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 
@@ -91,14 +92,14 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 			Pair<PageSet, ResultSet> pair = search(form);
 
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			mav.addObject(pair.getLeft());
 			mav.addObject(pair.getRight());
 			return mav;
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}
@@ -109,7 +110,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 
@@ -119,7 +120,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}
@@ -128,7 +129,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-		mav.addObject(PathDef.PATHVAR_ID, id);
+		mav.addObject(ParamDef.PATHVAR_ID, id);
 		return mav;
 	}
 
@@ -138,7 +139,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 
@@ -151,7 +152,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}
@@ -162,7 +163,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 
@@ -175,7 +176,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}

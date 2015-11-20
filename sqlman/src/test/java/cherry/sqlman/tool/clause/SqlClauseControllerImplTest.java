@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import cherry.goods.paginate.PageSet;
-import cherry.sqlman.PathDef;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.tool.clause.SqlClauseFormBase.Prop;
 import cherry.sqlman.tool.shared.ResultSet;
 import cherry.sqlman.tool.statement.SqlStatementForm;
@@ -218,7 +218,7 @@ public class SqlClauseControllerImplTest {
 
 		MvcResult result = mockMvc
 				.perform(
-						post("/tool/clause/execute").principal(createPrincipal()).param(PathDef.METHOD_DOWNLOAD, "")
+						post("/tool/clause/execute").principal(createPrincipal()).param(ParamDef.REQ_DOWNLOAD, "")
 								.param(Prop.DatabaseName.getName(), "db2").param(Prop.Select.getName(), "*")
 								.param(Prop.From.getName(), "dual")).andExpect(status().isOk()).andReturn();
 		assertEquals("\"X\"\r\n\"1\"\r\n", result.getResponse().getContentAsString());

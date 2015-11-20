@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 
 @RequestMapping(PathDef.URI_ADMIN_USER)
@@ -41,12 +42,12 @@ public interface UserEditController {
 	ModelAndView create(@Validated UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(value = PathDef.SUBURI_EDIT, params = PathDef.PARAM_ID)
-	ModelAndView edit(@RequestParam(PathDef.PARAM_ID) Integer id, Authentication auth, Locale locale,
+	@RequestMapping(value = PathDef.SUBURI_EDIT, params = ParamDef.REQ_ID)
+	ModelAndView edit(@RequestParam(ParamDef.REQ_ID) Integer id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_UPDATE, params = PathDef.PARAM_ID)
-	ModelAndView update(@RequestParam(PathDef.PARAM_ID) Integer id, @Validated UserEditForm form,
+	@RequestMapping(value = PathDef.SUBURI_UPDATE, params = ParamDef.REQ_ID)
+	ModelAndView update(@RequestParam(ParamDef.REQ_ID) Integer id, @Validated UserEditForm form,
 			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 

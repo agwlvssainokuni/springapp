@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G1;
 import cherry.foundation.validator.groups.G2;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 
 @RequestMapping(PathDef.URI_PASSWORD)
@@ -46,12 +47,12 @@ public interface PasswordRequestController {
 	ModelAndView execute(@Validated(G1.class) PasswordRequestForm form, BindingResult binding, Locale locale,
 			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(params = PathDef.PARAM_TOKEN)
-	ModelAndView edit(@RequestParam(PathDef.PARAM_TOKEN) String token, Locale locale, SitePreference sitePref,
+	@RequestMapping(params = ParamDef.REQ_TOKEN)
+	ModelAndView edit(@RequestParam(ParamDef.REQ_TOKEN) String token, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.PARAM_TOKEN)
-	ModelAndView update(@RequestParam(PathDef.PARAM_TOKEN) String token, @Validated(G2.class) PasswordRequestForm form,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_TOKEN)
+	ModelAndView update(@RequestParam(ParamDef.REQ_TOKEN) String token, @Validated(G2.class) PasswordRequestForm form,
 			BindingResult binding, Locale locale, SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 

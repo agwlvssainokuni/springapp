@@ -31,13 +31,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G1;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 
 @RequestMapping(PathDef.URI_TOOL_CLAUSE)
 public interface SqlClauseController {
 
 	@ModelAttribute()
-	SqlClauseForm getForm(@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref, Authentication auth);
+	SqlClauseForm getForm(@RequestParam(value = ParamDef.REQ_REF, required = false) Integer ref, Authentication auth);
 
 	@RequestMapping()
 	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
@@ -46,11 +47,11 @@ public interface SqlClauseController {
 	ModelAndView execute(@Validated(G1.class) SqlClauseForm form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_DOWNLOAD)
 	ModelAndView download(@Validated(G1.class) SqlClauseForm form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_CREATE)
 	ModelAndView create(@Validated(G1.class) SqlClauseForm form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
 

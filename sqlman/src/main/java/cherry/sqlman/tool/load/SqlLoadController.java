@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G1;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 
 @RequestMapping(PathDef.URI_TOOL_LOAD)
@@ -40,7 +41,7 @@ import cherry.sqlman.PathDef;
 public interface SqlLoadController {
 
 	@ModelAttribute()
-	SqlLoadForm getForm(@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref, Authentication auth);
+	SqlLoadForm getForm(@RequestParam(value = ParamDef.REQ_REF, required = false) Integer ref, Authentication auth);
 
 	@RequestMapping()
 	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
@@ -53,7 +54,7 @@ public interface SqlLoadController {
 	ModelAndView execute(@Validated(G1.class) SqlLoadForm form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_CREATE)
 	ModelAndView create(@Validated(G1.class) SqlLoadForm form, BindingResult binding, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request, SessionStatus status);
 

@@ -31,15 +31,21 @@ public class ParamDef {
 	/** 画面遷移制御: ダウンロード */
 	public static final String REQ_DOWNLOAD = "download";
 
-	/** 画面遷移制御: クリア */
-	public static final String REQ_CLEAR = "clear";
+	/** 画面遷移制御: 作成 */
+	public static final String REQ_CREATE = "create";
+
+	/** 画面遷移制御: 更新 */
+	public static final String REQ_UPDATE = "update";
 
 	// 画面引継項目
 	/** 画面引継項目: ID */
 	public static final String REQ_ID = "id";
 
-	/** 画面引継項目: 行番号 */
-	public static final String REQ_ROWNUM = "rownum";
+	/** 画面引継項目: 複製元指定 */
+	public static final String REQ_REF = "ref";
+
+	/** 画面引継項目: 識別トークン */
+	public static final String REQ_TOKEN = "token";
 
 	// フラッシュスコープ
 	/** フラッシュスコープ: 登録した */
@@ -54,5 +60,8 @@ public class ParamDef {
 
 	/** ログイン制御: ログアウト */
 	public static final String LOGGED_OUT = "loggedOut";
+
+	// リクエストパラメタ
+	public static final String PATHVAR_ID = "id";
 
 }

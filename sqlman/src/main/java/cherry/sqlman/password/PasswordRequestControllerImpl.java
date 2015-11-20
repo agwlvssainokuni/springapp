@@ -36,6 +36,7 @@ import org.springframework.web.util.UriComponents;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 import cherry.sqlman.LogicError;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.password.PasswordRequestService.UriComponentsSource;
 
@@ -73,7 +74,7 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 			public UriComponents buildUriComponents(UUID token) {
 				return fromMethodCall(
 						on(PasswordRequestController.class).edit(token.toString(), locale, sitePref, request))
-						.replaceQueryParam(PathDef.PARAM_TOKEN, token.toString()).build();
+						.replaceQueryParam(ParamDef.REQ_TOKEN, token.toString()).build();
 			}
 		};
 
@@ -128,7 +129,7 @@ public class PasswordRequestControllerImpl implements PasswordRequestController 
 		redirAttr.addFlashAttribute(PathDef.SUBURI_EXECUTE, Boolean.TRUE);
 
 		UriComponents uc = fromMethodCall(on(PasswordRequestController.class).edit(token, locale, sitePref, request))
-				.replaceQueryParam(PathDef.PARAM_TOKEN, token).build();
+				.replaceQueryParam(ParamDef.REQ_TOKEN, token).build();
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;

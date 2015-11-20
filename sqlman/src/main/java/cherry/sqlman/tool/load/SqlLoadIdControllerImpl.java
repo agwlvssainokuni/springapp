@@ -39,6 +39,7 @@ import org.springframework.web.util.UriComponents;
 import cherry.foundation.async.FileProcessResult;
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.sqlman.LogicError;
+import cherry.sqlman.ParamDef;
 import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.MetadataService;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
@@ -143,7 +144,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}
@@ -154,7 +155,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 
@@ -167,7 +168,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
-			mav.addObject(PathDef.PATHVAR_ID, id);
+			mav.addObject(ParamDef.PATHVAR_ID, id);
 			return mav;
 		}
 	}
