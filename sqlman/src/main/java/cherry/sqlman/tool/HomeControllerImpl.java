@@ -16,23 +16,23 @@
 
 package cherry.sqlman.tool;
 
-import java.util.Locale;
+import static cherry.sqlman.PathDef.VIEW_TOOL_HOME;
+import static cherry.sqlman.util.ModelAndViewBuilder.withViewname;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
-
-import cherry.sqlman.PathDef;
 
 @Controller
 public class HomeControllerImpl implements HomeController {
 
 	@Override
-	public ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		return new ModelAndView(PathDef.VIEW_TOOL_HOME);
+	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request) {
+		return withViewname(VIEW_TOOL_HOME).build();
 	}
 
 }

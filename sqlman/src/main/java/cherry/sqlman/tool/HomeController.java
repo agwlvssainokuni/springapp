@@ -18,11 +18,10 @@ package cherry.sqlman.tool;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.sqlman.PathDef;
@@ -31,6 +30,6 @@ import cherry.sqlman.PathDef;
 public interface HomeController {
 
 	@RequestMapping()
-	ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }
