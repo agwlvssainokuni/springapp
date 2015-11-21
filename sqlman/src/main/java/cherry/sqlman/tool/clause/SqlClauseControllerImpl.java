@@ -125,9 +125,9 @@ public class SqlClauseControllerImpl extends SqlClauseSupport implements SqlClau
 		return redirect(redirectOnCreate(id)).build();
 	}
 
-	private UriComponents redirectOnInit(String redir, Integer ref) {
-		if (StringUtils.isNotEmpty(redir)) {
-			return UriComponentsBuilder.fromPath(redir).build();
+	private UriComponents redirectOnInit(String redirTo, Integer ref) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
 		} else {
 			UriComponentsBuilder ucb = fromMethodCall(on(SqlClauseController.class).start(null, null, null, null, null,
 					null, null));
@@ -140,8 +140,8 @@ public class SqlClauseControllerImpl extends SqlClauseSupport implements SqlClau
 	}
 
 	private UriComponents redirectOnCreate(int id) {
-		return fromMethodCall(on(SqlClauseIdController.class).init(id, null, null, null, null)).replaceQueryParam(
-				REQ_ID, id).build();
+		return fromMethodCall(on(SqlClauseIdController.class).start(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
 	}
 
 	private void initializeForm(SqlClauseForm form, Integer ref, Authentication auth) {

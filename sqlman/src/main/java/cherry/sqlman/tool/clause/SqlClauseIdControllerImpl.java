@@ -17,14 +17,17 @@
 package cherry.sqlman.tool.clause;
 
 import static cherry.foundation.springmvc.Contract.shouldExist;
+import static cherry.sqlman.ParamDef.REQ_ID;
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withViewname;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -32,19 +35,19 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PageSet;
 import cherry.sqlman.LogicError;
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.MetadataService;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
 import cherry.sqlman.tool.shared.ResultSet;
 import cherry.sqlman.tool.util.Util;
+import cherry.sqlman.util.ViewNameUtil;
 
 @Controller
 public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlClauseIdController {
@@ -55,6 +58,12 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 	@Autowired
 	private ClauseService clauseService;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(SqlClauseIdController.class).start(0, null,
+			null, null, null, null, null));
+
+	private final String viewnameOfEdit = ViewNameUtil.fromMethodCall(on(SqlClauseIdController.class).edit(0, null,
+			null, null, null, null, null));
+
 	@Override
 	public SqlMetadataForm getMetadata(int id, Authentication auth) {
 		SqlMetadataForm mdForm = metadataService.findById(id, auth.getName());
@@ -63,55 +72,42 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 	}
 
 	@Override
-	public SqlClauseForm getForm(int id) {
-		SqlClauseForm form = clauseService.findById(id);
-		shouldExist(form, SqlClauseForm.class, id);
-		return form;
+	public ModelAndView init(String redirTo, int id, Authentication auth, Locale locale, SitePreference sitePref,
+			NativeWebRequest request) {
+		return redirect(redirectOnInit(redirTo, id)).build();
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-		mav.addObject(ParamDef.PATHVAR_ID, id);
-		return mav;
+	public ModelAndView start(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, id, auth);
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView execute(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
 		try {
-
+			initializeForm(form, id, auth);
 			Pair<PageSet, ResultSet> pair = search(form);
-
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			mav.addObject(pair.getLeft());
-			mav.addObject(pair.getRight());
-			return mav;
+			return withViewname(viewnameOfStart).addObject(pair.getLeft()).addObject(pair.getRight()).build();
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 	}
 
 	@Override
 	public ModelAndView download(int id, final SqlClauseForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
 		try {
@@ -119,66 +115,106 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 			return null;
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 	}
 
 	@Override
-	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
-		mav.addObject(ParamDef.PATHVAR_ID, id);
-		return mav;
+	public ModelAndView edit(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, id, auth);
+		return withViewname(viewnameOfEdit).build();
 	}
 
 	@Override
 	public ModelAndView update(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfEdit).build();
 		}
 
 		if (clauseService.update(id, form)) {
-			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).edit(id, auth, locale, sitePref, request))
-					.build();
-			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(uc.toUriString(), true));
-			return mav;
+			return redirect(redirectOnUpdate(id)).build();
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfEdit).build();
 		}
 	}
 
 	@Override
 	public ModelAndView metadata(int id, SqlMetadataForm mdForm, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasMdErrors(mdForm, binding)) {
+			SqlClauseForm form = new SqlClauseForm();
+			initializeForm(form, id, auth);
+			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 
 		if (metadataService.update(id, mdForm)) {
-			UriComponents uc = fromMethodCall(on(SqlClauseIdController.class).edit(id, auth, locale, sitePref, request))
-					.build();
-			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(uc.toUriString(), true));
-			return mav;
+			return redirect(redirectOnUpdate(id)).build();
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_CLAUSE_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			SqlClauseForm form = new SqlClauseForm();
+			initializeForm(form, id, auth);
+			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
+	}
+
+	private UriComponents redirectOnInit(String redirTo, int id) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
+		}
+		return fromMethodCall(on(SqlClauseIdController.class).start(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
+	}
+
+	private UriComponents redirectOnUpdate(int id) {
+		return fromMethodCall(on(SqlClauseIdController.class).edit(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
+	}
+
+	private void initializeForm(SqlClauseForm form, int id, Authentication auth) {
+		SqlClauseForm f = clauseService.findById(id);
+		shouldExist(f, SqlClauseForm.class, id);
+		form.setDatabaseName(f.getDatabaseName());
+		form.setSelect(f.getSelect());
+		form.setFrom(f.getFrom());
+		form.setWhere(f.getWhere());
+		form.setGroupBy(f.getGroupBy());
+		form.setHaving(f.getHaving());
+		form.setOrderBy(f.getOrderBy());
+		form.setParamMap(f.getParamMap());
+		form.setLockVersion(f.getLockVersion());
+	}
+
+	private boolean hasErrors(SqlClauseForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+
+		// 整合性チェック
+
+		return false;
+	}
+
+	private boolean hasMdErrors(SqlMetadataForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+
+		// 整合性チェック
+
+		return false;
 	}
 
 }
