@@ -1,5 +1,5 @@
 /*
- * Copyright 2014,2015 agwlvssainokuni
+ * Copyright 2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package cherry.sqlman.tool.search;
+package cherry.sqlman;
 
-import java.util.Map;
+import lombok.Getter;
 
-import cherry.goods.paginate.PagedList;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public interface SearchService {
+@Getter
+@Component()
+public class Config {
 
-	PagedList<Map<String, ?>> search(SqlSearchForm form, String loginId);
+	@Value("${sqlman.search.defaultFromDays}")
+	private Integer defaultFromDays;
+
+	@Value("${sqlman.paginator.pageSize}")
+	private int defaultPageSize;
 
 }

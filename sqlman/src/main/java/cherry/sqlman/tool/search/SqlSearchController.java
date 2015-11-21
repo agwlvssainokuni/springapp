@@ -16,38 +16,40 @@
 
 package cherry.sqlman.tool.search;
 
-import java.util.Locale;
+import static cherry.sqlman.ParamDef.REQ_TO;
+import static cherry.sqlman.PathDef.SUBURI_EXECUTE;
+import static cherry.sqlman.PathDef.SUBURI_START;
+import static cherry.sqlman.PathDef.URI_TOOL_SEARCH;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_TOOL_SEARCH)
+@RequestMapping(URI_TOOL_SEARCH)
 @SessionAttributes(types = SqlSearchForm.class)
 public interface SqlSearchController {
 
-	@ModelAttribute()
-	SqlSearchForm getForm();
-
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status);
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
-	@RequestMapping(PathDef.SUBURI_START)
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(SUBURI_START)
+	ModelAndView start(@Validated(G9.class) SqlSearchForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated SqlSearchForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(SUBURI_EXECUTE)
+	ModelAndView execute(@Validated() SqlSearchForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
 }
