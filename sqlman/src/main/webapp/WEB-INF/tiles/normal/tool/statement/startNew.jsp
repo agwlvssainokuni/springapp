@@ -34,7 +34,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/executeNew" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>

@@ -17,14 +17,17 @@
 package cherry.sqlman.tool.statement;
 
 import static cherry.foundation.springmvc.Contract.shouldExist;
+import static cherry.sqlman.ParamDef.REQ_ID;
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withViewname;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -32,19 +35,19 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.goods.paginate.PageSet;
 import cherry.sqlman.LogicError;
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
 import cherry.sqlman.tool.metadata.MetadataService;
 import cherry.sqlman.tool.metadata.SqlMetadataForm;
 import cherry.sqlman.tool.shared.ResultSet;
 import cherry.sqlman.tool.util.Util;
+import cherry.sqlman.util.ViewNameUtil;
 
 @Controller
 public class SqlStatementIdControllerImpl extends SqlStatementSupport implements SqlStatementIdController {
@@ -55,6 +58,12 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	@Autowired
 	private StatementService statementService;
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(SqlStatementIdController.class).start(0,
+			null, null, null, null, null, null));
+
+	private final String viewnameOfEdit = ViewNameUtil.fromMethodCall(on(SqlStatementIdController.class).edit(0, null,
+			null, null, null, null, null));
+
 	@Override
 	public SqlMetadataForm getMetadata(int id, Authentication auth) {
 		SqlMetadataForm mdForm = metadataService.findById(id, auth.getName());
@@ -63,55 +72,42 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	}
 
 	@Override
-	public SqlStatementForm getForm(int id) {
-		SqlStatementForm form = statementService.findById(id);
-		shouldExist(form, SqlStatementForm.class, id);
-		return form;
+	public ModelAndView init(String redirTo, int id, Authentication auth, Locale locale, SitePreference sitePref,
+			NativeWebRequest request) {
+		return redirect(redirectOnInit(redirTo, id)).build();
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-		mav.addObject(ParamDef.PATHVAR_ID, id);
-		return mav;
+	public ModelAndView start(int id, SqlStatementForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, id, auth);
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView execute(int id, SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
 		try {
-
+			initializeForm(form, id, auth);
 			Pair<PageSet, ResultSet> pair = search(form);
-
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			mav.addObject(pair.getLeft());
-			mav.addObject(pair.getRight());
-			return mav;
+			return withViewname(viewnameOfStart).addObject(pair.getLeft()).addObject(pair.getRight()).build();
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 	}
 
 	@Override
 	public ModelAndView download(int id, SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request, HttpServletResponse response) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
 		try {
@@ -119,66 +115,101 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 			return null;
 		} catch (BadSqlGrammarException ex) {
 			LogicalErrorUtil.reject(binding, LogicError.BadSqlGrammer, Util.getRootCause(ex).getMessage());
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 	}
 
 	@Override
-	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-		mav.addObject(ParamDef.PATHVAR_ID, id);
-		return mav;
+	public ModelAndView edit(int id, SqlStatementForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, id, auth);
+		return withViewname(viewnameOfEdit).build();
 	}
 
 	@Override
 	public ModelAndView update(int id, SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfEdit).build();
 		}
 
 		if (statementService.update(id, form)) {
-			UriComponents uc = fromMethodCall(
-					on(SqlStatementIdController.class).edit(id, auth, locale, sitePref, request)).build();
-			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(uc.toUriString(), true));
-			return mav;
+			return redirect(redirectOnUpdate(id)).build();
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			return withViewname(viewnameOfEdit).build();
 		}
 	}
 
 	@Override
 	public ModelAndView metadata(int id, SqlMetadataForm mdForm, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+		if (hasMdErrors(mdForm, binding)) {
+			SqlStatementForm form = new SqlStatementForm();
+			initializeForm(form, id, auth);
+			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 
 		if (metadataService.update(id, mdForm)) {
-			UriComponents uc = fromMethodCall(
-					on(SqlStatementIdController.class).edit(id, auth, locale, sitePref, request)).build();
-			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(uc.toUriString(), true));
-			return mav;
+			return redirect(redirectOnUpdate(id)).build();
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_STATEMENT_ID_EDIT);
-			mav.addObject(ParamDef.PATHVAR_ID, id);
-			return mav;
+			SqlStatementForm form = new SqlStatementForm();
+			initializeForm(form, id, auth);
+			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
+	}
+
+	private UriComponents redirectOnInit(String redirTo, int id) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
+		}
+		return fromMethodCall(on(SqlStatementIdController.class).start(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
+	}
+
+	private UriComponents redirectOnUpdate(int id) {
+		return fromMethodCall(on(SqlStatementIdController.class).edit(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
+	}
+
+	private void initializeForm(SqlStatementForm form, int id, Authentication auth) {
+		SqlStatementForm f = statementService.findById(id);
+		shouldExist(f, SqlStatementForm.class, id);
+		form.setDatabaseName(f.getDatabaseName());
+		form.setSql(f.getSql());
+		form.setParamMap(f.getParamMap());
+		form.setLockVersion(f.getLockVersion());
+	}
+
+	private boolean hasErrors(SqlStatementForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+
+		// 整合性チェック
+
+		return false;
+	}
+
+	private boolean hasMdErrors(SqlMetadataForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+
+		// 整合性チェック
+
+		return false;
 	}
 
 }

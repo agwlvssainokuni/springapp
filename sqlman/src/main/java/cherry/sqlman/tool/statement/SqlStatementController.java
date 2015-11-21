@@ -16,43 +16,53 @@
 
 package cherry.sqlman.tool.statement;
 
+import static cherry.sqlman.ParamDef.REQ_CREATE;
+import static cherry.sqlman.ParamDef.REQ_DOWNLOAD;
+import static cherry.sqlman.ParamDef.REQ_REF;
+import static cherry.sqlman.ParamDef.REQ_TO;
+import static cherry.sqlman.PathDef.SUBURI_EXECUTE_NEW;
+import static cherry.sqlman.PathDef.SUBURI_START_NEW;
+import static cherry.sqlman.PathDef.URI_TOOL_STATEMENT;
+
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.foundation.validator.groups.G1;
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_TOOL_STATEMENT)
+@RequestMapping(URI_TOOL_STATEMENT)
 public interface SqlStatementController {
 
-	@ModelAttribute()
-	SqlStatementForm getForm(@RequestParam(value = ParamDef.REQ_REF, required = false) Integer ref, Authentication auth);
-
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo,
+			@RequestParam(value = REQ_REF, required = false) Integer ref, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	@RequestMapping(value = SUBURI_START_NEW)
+	ModelAndView start(@RequestParam(value = REQ_REF, required = false) Integer ref,
+			@Validated(G9.class) SqlStatementForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(value = SUBURI_EXECUTE_NEW)
 	ModelAndView execute(@Validated(G1.class) SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_DOWNLOAD)
+	@RequestMapping(value = SUBURI_EXECUTE_NEW, params = REQ_DOWNLOAD)
 	ModelAndView download(@Validated(G1.class) SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
+			Locale locale, SitePreference sitePref, NativeWebRequest request, HttpServletResponse response);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_CREATE)
+	@RequestMapping(value = SUBURI_EXECUTE_NEW, params = REQ_CREATE)
 	ModelAndView create(@Validated(G1.class) SqlStatementForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }

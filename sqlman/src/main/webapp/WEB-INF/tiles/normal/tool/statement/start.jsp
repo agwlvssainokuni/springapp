@@ -8,9 +8,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<s:url var="baseUri" value="/tool/statement/{id}">
-	<s:param name="id" value="${id}" />
-</s:url>
+<s:url var="baseUri" value="/tool/statement" />
 <c:set var="hasResultList" value="${resultSet != null && pageSet != null}" />
 <foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
@@ -61,7 +59,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<a href="${baseUri}/edit" class="btn btn-default"><s:message code="tool/statement/page.editButton" /></a>
+								<a href="${baseUri}/edit?id=${param.id}" class="btn btn-default"><s:message code="tool/statement/page.editButton" /></a>
 							</div>
 						</div>
 					</div>
@@ -107,7 +105,8 @@
 						</div>
 					</div>
 				</s:nestedPath>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/execute?id=${param.id}" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
@@ -128,7 +127,7 @@
 							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="tool/statement/page.downloadButton" />
 							</f:button>
-							<a href="${baseUri}/edit" class="btn btn-default"><s:message code="tool/statement/page.editButton" /></a>
+							<a href="${baseUri}/edit?id=${param.id}" class="btn btn-default"><s:message code="tool/statement/page.editButton" /></a>
 						</div>
 					</div>
 				</f:form>
