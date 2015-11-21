@@ -111,6 +111,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 		}
 
 		try {
+			initializeForm(form, id, auth, false);
 			download(form, response);
 			return null;
 		} catch (BadSqlGrammarException ex) {

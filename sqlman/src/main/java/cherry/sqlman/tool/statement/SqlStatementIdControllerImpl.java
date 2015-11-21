@@ -111,6 +111,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		}
 
 		try {
+			initializeForm(form, id, auth, false);
 			download(form, response);
 			return null;
 		} catch (BadSqlGrammarException ex) {
