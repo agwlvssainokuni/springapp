@@ -80,7 +80,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 	@Override
 	public ModelAndView start(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		initializeForm(form, id, auth);
+		initializeForm(form, id, auth, true);
 		return withViewname(viewnameOfStart).build();
 	}
 
@@ -93,7 +93,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 		}
 
 		try {
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, false);
 			Pair<PageSet, ResultSet> pair = search(form);
 			return withViewname(viewnameOfStart).addObject(pair.getLeft()).addObject(pair.getRight()).build();
 		} catch (BadSqlGrammarException ex) {
@@ -122,7 +122,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 	@Override
 	public ModelAndView edit(int id, SqlClauseForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		initializeForm(form, id, auth);
+		initializeForm(form, id, auth, true);
 		return withViewname(viewnameOfEdit).build();
 	}
 
@@ -148,7 +148,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 
 		if (hasMdErrors(mdForm, binding)) {
 			SqlClauseForm form = new SqlClauseForm();
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, true);
 			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 
@@ -157,7 +157,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			SqlClauseForm form = new SqlClauseForm();
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, true);
 			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 	}
@@ -175,7 +175,7 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private void initializeForm(SqlClauseForm form, int id, Authentication auth) {
+	private void initializeForm(SqlClauseForm form, int id, Authentication auth, boolean includeParamMap) {
 		SqlClauseForm f = clauseService.findById(id);
 		shouldExist(f, SqlClauseForm.class, id);
 		form.setDatabaseName(f.getDatabaseName());
@@ -185,7 +185,9 @@ public class SqlClauseIdControllerImpl extends SqlClauseSupport implements SqlCl
 		form.setGroupBy(f.getGroupBy());
 		form.setHaving(f.getHaving());
 		form.setOrderBy(f.getOrderBy());
-		form.setParamMap(f.getParamMap());
+		if (includeParamMap) {
+			form.setParamMap(f.getParamMap());
+		}
 		form.setLockVersion(f.getLockVersion());
 	}
 

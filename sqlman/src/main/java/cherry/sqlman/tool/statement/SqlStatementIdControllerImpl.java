@@ -80,7 +80,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	@Override
 	public ModelAndView start(int id, SqlStatementForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		initializeForm(form, id, auth);
+		initializeForm(form, id, auth, true);
 		return withViewname(viewnameOfStart).build();
 	}
 
@@ -93,7 +93,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		}
 
 		try {
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, false);
 			Pair<PageSet, ResultSet> pair = search(form);
 			return withViewname(viewnameOfStart).addObject(pair.getLeft()).addObject(pair.getRight()).build();
 		} catch (BadSqlGrammarException ex) {
@@ -122,7 +122,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 	@Override
 	public ModelAndView edit(int id, SqlStatementForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, NativeWebRequest request) {
-		initializeForm(form, id, auth);
+		initializeForm(form, id, auth, true);
 		return withViewname(viewnameOfEdit).build();
 	}
 
@@ -148,7 +148,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 
 		if (hasMdErrors(mdForm, binding)) {
 			SqlStatementForm form = new SqlStatementForm();
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, true);
 			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 
@@ -157,7 +157,7 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 		} else {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
 			SqlStatementForm form = new SqlStatementForm();
-			initializeForm(form, id, auth);
+			initializeForm(form, id, auth, true);
 			return withViewname(viewnameOfEdit).addObject(form).build();
 		}
 	}
@@ -175,12 +175,14 @@ public class SqlStatementIdControllerImpl extends SqlStatementSupport implements
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 
-	private void initializeForm(SqlStatementForm form, int id, Authentication auth) {
+	private void initializeForm(SqlStatementForm form, int id, Authentication auth, boolean includeParamMap) {
 		SqlStatementForm f = statementService.findById(id);
 		shouldExist(f, SqlStatementForm.class, id);
 		form.setDatabaseName(f.getDatabaseName());
 		form.setSql(f.getSql());
-		form.setParamMap(f.getParamMap());
+		if (includeParamMap) {
+			form.setParamMap(f.getParamMap());
+		}
 		form.setLockVersion(f.getLockVersion());
 	}
 
