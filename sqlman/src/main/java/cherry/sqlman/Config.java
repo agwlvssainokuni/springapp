@@ -16,6 +16,8 @@
 
 package cherry.sqlman;
 
+import java.nio.charset.Charset;
+
 import lombok.Getter;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,15 @@ public class Config {
 	private Integer defaultFromDays;
 
 	@Value("${sqlman.paginator.pageSize}")
-	private int defaultPageSize;
+	private long defaultPageSize;
+
+	@Value("${sqlman.export.contentType}")
+	private String contentType;
+
+	@Value("${sqlman.export.charset}")
+	private Charset charset;
+
+	@Value("${sqlman.export.filename}")
+	private String filename;
 
 }

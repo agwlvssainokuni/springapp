@@ -20,20 +20,19 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.download.DownloadAction;
 import cherry.foundation.download.DownloadOperation;
 import cherry.foundation.etl.CsvConsumer;
 import cherry.goods.paginate.PageSet;
+import cherry.sqlman.Config;
 import cherry.sqlman.tool.shared.ExecQueryService;
 import cherry.sqlman.tool.shared.ParamParser;
 import cherry.sqlman.tool.shared.QueryBuilder;
@@ -41,17 +40,8 @@ import cherry.sqlman.tool.shared.ResultSet;
 
 public class SqlClauseSupport {
 
-	@Value("${sqlman.paginator.pageSize}")
-	private long defaultPageSize;
-
-	@Value("${sqlman.export.contentType}")
-	private String contentType;
-
-	@Value("${sqlman.export.charset}")
-	private Charset charset;
-
-	@Value("${sqlman.export.filename}")
-	private String filename;
+	@Autowired
+	private Config config;
 
 	@Autowired
 	private ParamParser paramParser;
@@ -69,11 +59,17 @@ public class SqlClauseSupport {
 		String databaseName = form.getDatabaseName();
 		QueryBuilder builder = getQueryBuilder(form);
 		Map<String, ?> paramMap = paramParser.parseMap(form.getParamMap());
-		long pageNo = form.getPageNo();
-		long pageSz = (form.getPageSz() <= 0L ? defaultPageSize : form.getPageSz());
+
+		if (form.getPageNo() <= 0L) {
+			form.setPageNo(0L);
+		}
+		if (form.getPageSz() <= 0L) {
+			form.setPageSz(config.getDefaultPageSize());
+		}
 
 		ResultSet resultSet = new ResultSet();
-		PageSet ps = execQueryService.query(databaseName, builder, paramMap, pageNo, pageSz, resultSet);
+		PageSet ps = execQueryService.query(databaseName, builder, paramMap, form.getPageNo(), form.getPageSz(),
+				resultSet);
 
 		return Pair.of(ps, resultSet);
 	}
@@ -84,15 +80,17 @@ public class SqlClauseSupport {
 		final QueryBuilder builder = getQueryBuilder(form);
 		final Map<String, ?> paramMap = paramParser.parseMap(form.getParamMap());
 
-		downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), new DownloadAction() {
-			@Override
-			public long doDownload(OutputStream out) throws IOException {
-				try (Writer writer = new OutputStreamWriter(out, charset)) {
-					PageSet ps = execQueryService.query(databaseName, builder, paramMap, new CsvConsumer(writer, true));
-					return ps.getLast().getTo() + 1L;
-				}
-			}
-		});
+		downloadOperation.download(response, config.getContentType(), config.getCharset(), config.getFilename(),
+				bizDateTime.now(), new DownloadAction() {
+					@Override
+					public long doDownload(OutputStream out) throws IOException {
+						try (Writer writer = new OutputStreamWriter(out, config.getCharset())) {
+							PageSet ps = execQueryService.query(databaseName, builder, paramMap, new CsvConsumer(
+									writer, true));
+							return ps.getLast().getTo() + 1L;
+						}
+					}
+				});
 	}
 
 	public QueryBuilder getQueryBuilder(SqlClauseForm form) {
