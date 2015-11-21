@@ -11,14 +11,12 @@
 <c:url var="baseUri" value="/tool/statement" />
 <c:set var="hasResultList" value="${resultSet != null && pageSet != null}" />
 <foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
-<h2 class="page-header">
-	<s:message code="tool/statement/page.message.0" />
-</h2>
+<h2 class="page-header">文指定SQL実行</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#statementForm"><s:message code="tool/statement/page.message.2" /></a>
+				<a data-toggle="collapse" href="#statementForm">SQL指定</a>
 			</h3>
 		</div>
 		<div id="statementForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
@@ -36,52 +34,37 @@
 				</s:hasBindErrors>
 				<f:form servletRelativeAction="${baseUri}/executeNew" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="databaseName" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.databaseName" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="databaseName" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">DB名称</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="form-control">
+							<f:select path="databaseName" cssClass="form-control" cssErrorClass="form-control has-error">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="sql">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="sql" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.sql" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="sql" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="form-control" />
+							<f:textarea path="sql" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="paramMap" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.paramMap" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="paramMap" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">埋込パラメタ</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:textarea path="paramMap" cssClass="form-control" />
+							<f:textarea path="paramMap" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/statement/page.execButton" />
-							</f:button>
-							<f:button type="submit" name="download" class="btn btn-default">
-								<s:message code="tool/statement/page.downloadButton" />
-							</f:button>
-							<f:button type="submit" name="create" class="btn btn-default">
-								<s:message code="tool/statement/page.createButton" />
-							</f:button>
+							<f:button type="submit" class="btn btn-primary">SQL実行</f:button>
+							<f:button type="submit" name="download" class="btn btn-default">ダウンロード</f:button>
+							<f:button type="submit" name="create" class="btn btn-default">SQL登録</f:button>
 						</div>
 					</div>
 				</f:form>
@@ -92,7 +75,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" href="#statementResult"><s:message code="tool/statement/page.message.3" /></a>
+					<a data-toggle="collapse" href="#statementResult">実行結果</a>
 				</h3>
 			</div>
 			<div id="statementResult" class="panel-collapse collapse in">

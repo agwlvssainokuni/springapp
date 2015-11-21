@@ -15,7 +15,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#metadataForm">SQL指定</a>
+				<a data-toggle="collapse" href="#metadataForm">登録情報</a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -61,7 +61,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<f:label path="publishedFlg" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">公開状況</f:label>
+						<div>
+							<f:label path="publishedFlg" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">公開状況</f:label>
+						</div>
 						<div class="col-sm-10">
 							<f:checkbox path="publishedFlg" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>

@@ -8,18 +8,14 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<s:url var="baseUri" value="/tool/statement/{id}">
-	<s:param name="id" value="${id}" />
-</s:url>
+<s:url var="baseUri" value="/tool/statement" />
 <foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
-<h2 class="page-header">
-	<s:message code="tool/statement/page.message.0" />
-</h2>
+<h2 class="page-header">文指定SQL実行</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#metadataForm"><s:message code="tool/statement/page.message.1" /></a>
+				<a data-toggle="collapse" href="#metadataForm">登録情報</a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -37,52 +33,45 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/metadata" method="POST" modelAttribute="sqlMetadataForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/metadata?id=${param.id}" method="POST" modelAttribute="sqlMetadataForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="name" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.name" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="name" cssClass="form-control" />
+					<div class="form-group">
+						<div>
+							<f:label path="name" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL名称</f:label>
 						</div>
-					</div>
-					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="description" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.description" />
-						</f:label>
 						<div class="col-sm-10">
-							<f:textarea path="description" cssClass="form-control" />
+							<f:input path="name" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
-						<f:label path="ownedBy" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.ownedBy" />
-						</f:label>
+						<div>
+							<f:label path="description" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">説明</f:label>
+						</div>
+						<div class="col-sm-10">
+							<f:textarea path="description" cssClass="form-control" cssErrorClass="form-control has-error" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div>
+							<f:label path="ownedBy" cssClass="col-sm-2 control-label">所有者</f:label>
+						</div>
 						<div class="col-sm-10">
 							<f:input path="ownedBy" cssClass="form-control" readonly="true" />
 						</div>
 					</div>
 					<div class="form-group">
-						<f:label path="publishedFlg" cssClass="col-sm-2 control-label">
-							<s:message code="sqlMetadataForm.publishedFlg" />
-						</f:label>
+						<div>
+							<f:label path="publishedFlg" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">公開状況</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:checkbox path="publishedFlg" cssClass="form-control" />
+							<f:checkbox path="publishedFlg" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/statement/page.updateButton" />
-							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/statement/page.finishButton" /></a>
+							<f:button type="submit" class="btn btn-primary">更新</f:button>
+							<a href="${baseUri}?id=${param.id}" class="btn btn-default">実行へ戻る</a>
 						</div>
 					</div>
 				</f:form>
@@ -92,7 +81,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#statementForm"><s:message code="tool/statement/page.message.2" /></a>
+				<a data-toggle="collapse" href="#statementForm">SQL指定</a>
 			</h3>
 		</div>
 		<div id="statementForm" class="panel-collapse collapse in">
@@ -108,49 +97,39 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/update" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/update?id=${param.id}" method="POST" modelAttribute="sqlStatementForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="databaseName" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.databaseName" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="databaseName" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">DB名称</f:label>
+						</div>
 						<div class="col-sm-10">
 							<f:select path="databaseName" cssClass="form-control">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="sql">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="sql" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.sql" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="sql" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="form-control" />
+							<f:textarea path="sql" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="paramMap" cssClass="col-sm-2 control-label">
-							<s:message code="sqlStatementForm.paramMap" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="paramMap" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">埋込パラメタ</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:textarea path="paramMap" cssClass="form-control" />
+							<f:textarea path="paramMap" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/statement/page.updateButton" />
-							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/statement/page.finishButton" /></a>
+							<f:button type="submit" class="btn btn-primary">更新</f:button>
+							<a href="${baseUri}?id=${param.id}" class="btn btn-default">実行へ戻る</a>
 						</div>
 					</div>
 				</f:form>
