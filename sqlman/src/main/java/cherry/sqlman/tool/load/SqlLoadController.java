@@ -16,9 +16,14 @@
 
 package cherry.sqlman.tool.load;
 
-import java.util.Locale;
+import static cherry.sqlman.ParamDef.REQ_CREATE;
+import static cherry.sqlman.ParamDef.REQ_REF;
+import static cherry.sqlman.ParamDef.REQ_TO;
+import static cherry.sqlman.PathDef.SUBURI_EXECUTE_NEW;
+import static cherry.sqlman.PathDef.SUBURI_START_NEW;
+import static cherry.sqlman.PathDef.URI_TOOL_LOAD;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -29,33 +34,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cherry.foundation.validator.groups.G1;
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_TOOL_LOAD)
+@RequestMapping(URI_TOOL_LOAD)
 @SessionAttributes(types = SqlLoadForm.class)
 public interface SqlLoadController {
 
 	@ModelAttribute()
-	SqlLoadForm getForm(@RequestParam(value = ParamDef.REQ_REF, required = false) Integer ref, Authentication auth);
+	SqlLoadForm getForm(@RequestParam(value = REQ_REF, required = false) Integer ref, Authentication auth);
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request,
-			SessionStatus status);
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo,
+			@RequestParam(value = REQ_REF, required = false) Integer ref, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
-	@RequestMapping(PathDef.SUBURI_START)
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(value = SUBURI_START_NEW)
+	ModelAndView start(@RequestParam(value = REQ_REF, required = false) Integer ref,
+			@Validated(G9.class) SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	@RequestMapping(value = SUBURI_EXECUTE_NEW)
 	ModelAndView execute(@Validated(G1.class) SqlLoadForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
+			Locale locale, SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = ParamDef.REQ_CREATE)
+	@RequestMapping(value = SUBURI_EXECUTE_NEW, params = REQ_CREATE)
 	ModelAndView create(@Validated(G1.class) SqlLoadForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, SessionStatus status);
+			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
 
 }

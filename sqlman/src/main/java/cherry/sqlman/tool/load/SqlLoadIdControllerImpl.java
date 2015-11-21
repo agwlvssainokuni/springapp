@@ -22,8 +22,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.mobile.device.site.SitePreference;
@@ -31,6 +29,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -73,12 +72,12 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, SessionStatus status) {
+	public ModelAndView init(String redirTo, int id, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 
 		status.setComplete();
 
-		UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, auth, locale, sitePref, request))
+		UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, null, null, auth, locale, sitePref, request))
 				.build();
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -86,15 +85,15 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 	}
 
 	@Override
-	public ModelAndView start(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public ModelAndView start(int id, SqlLoadForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView execute(int id, SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID);
@@ -106,7 +105,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 			FileProcessResult result = handleFile(form.getFile(), form.getDatabaseName(), form.getSql());
 			redirAttr.addFlashAttribute(result);
 
-			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).start(id, null, null, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
@@ -119,15 +118,15 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 	}
 
 	@Override
-	public ModelAndView edit(int id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public ModelAndView edit(int id, SqlLoadForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView update(int id, SqlLoadForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, SessionStatus status) {
+			SitePreference sitePref, NativeWebRequest request, SessionStatus status) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
@@ -136,7 +135,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 
 		if (loadService.update(id, form)) {
 			status.setComplete();
-			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, null, null, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
@@ -151,7 +150,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 
 	@Override
 	public ModelAndView metadata(int id, SqlMetadataForm mdForm, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			Locale locale, SitePreference sitePref, NativeWebRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_LOAD_ID_EDIT);
@@ -160,7 +159,7 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 		}
 
 		if (metadataService.update(id, mdForm)) {
-			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, auth, locale, sitePref, request))
+			UriComponents uc = fromMethodCall(on(SqlLoadIdController.class).edit(id, null, null, auth, locale, sitePref, request))
 					.build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));

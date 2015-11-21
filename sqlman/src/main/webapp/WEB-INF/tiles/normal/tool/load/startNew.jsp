@@ -41,7 +41,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/execute" method="POST" modelAttribute="sqlLoadForm" enctype="multipart/form-data"
+				<f:form servletRelativeAction="${baseUri}/executeNew" method="POST" modelAttribute="sqlLoadForm" enctype="multipart/form-data"
 					cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">

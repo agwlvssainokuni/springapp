@@ -8,9 +8,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<s:url var="baseUri" value="/tool/load/{id}">
-	<s:param name="id" value="${id}" />
-</s:url>
+<s:url var="baseUri" value="/tool/load" />
 <foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
 <h2 class="page-header">
 	<s:message code="tool/load/page.message.0" />
@@ -37,7 +35,8 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/metadata" method="POST" modelAttribute="sqlMetadataForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/metadata?id=${param.id}" method="POST" modelAttribute="sqlMetadataForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
@@ -82,7 +81,7 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
+							<a href="${baseUri}?id=${param.id}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
@@ -116,7 +115,8 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/update" method="POST" modelAttribute="sqlLoadForm" cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/update?id=${param.id}" method="POST" modelAttribute="sqlLoadForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
@@ -147,7 +147,7 @@
 							<f:button type="submit" class="btn btn-primary">
 								<s:message code="tool/load/page.updateButton" />
 							</f:button>
-							<a href="${baseUri}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
+							<a href="${baseUri}?id=${param.id}" class="btn btn-default"><s:message code="tool/load/page.finishButton" /></a>
 						</div>
 					</div>
 				</f:form>
