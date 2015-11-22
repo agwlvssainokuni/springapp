@@ -10,14 +10,12 @@
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <s:url var="baseUri" value="/tool/load" />
 <foundation:getBean var="dataSourceDef" beanTypeName="cherry.sqlman.tool.shared.DataSourceDef" />
-<h2 class="page-header">
-	<s:message code="tool/load/page.message.0" />
-</h2>
+<h2 class="page-header">CSV取込み</h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#loadForm"><s:message code="tool/load/page.message.2" /></a>
+				<a data-toggle="collapse" href="#loadForm">SQL指定</a>
 			</h3>
 		</div>
 		<div id="loadForm" class="panel-collapse collapse in">
@@ -25,7 +23,7 @@
 				<c:if test="${fileProcessResult != null}">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class=" alert alert-success" role="alert">
-							<s:message code="tool/load/page.message.3"
+							<s:message text="全 {0} 件、OK {1} 件、NG {2} 件を処理しました。"
 								arguments="${fileProcessResult.totalCount},${fileProcessResult.okCount},${fileProcessResult.ngCount}" />
 						</div>
 					</div>
@@ -44,49 +42,36 @@
 				<f:form servletRelativeAction="${baseUri}/executeNew" method="POST" modelAttribute="sqlLoadForm" enctype="multipart/form-data"
 					cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
-					<c:set var="hasError">
-						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="databaseName" cssClass="col-sm-2 control-label">
-							<s:message code="sqlLoadForm.databaseName" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="databaseName" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">DB名称</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:select path="databaseName" cssClass="form-control">
+							<f:select path="databaseName" cssClass="form-control" cssErrorClass="form-control has-error">
 								<f:options items="${dataSourceDef.names}" />
 							</f:select>
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="sql">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="sql" cssClass="col-sm-2 control-label">
-							<s:message code="sqlLoadForm.sql" />
-						</f:label>
+					<div class="form-group">
+						<div>
+							<f:label path="sql" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:textarea path="sql" cssClass="form-control" />
+							<f:textarea path="sql" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="file">${status.isError() ? "has-error" : ""}</s:bind>
-					</c:set>
 					<div class="form-group ${hasError}">
-						<f:label path="file" cssClass="col-sm-2 control-label">
-							<s:message code="sqlLoadForm.file" />
-						</f:label>
+						<div>
+							<f:label path="file" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">CSVファイル</f:label>
+						</div>
 						<div class="col-sm-10">
-							<f:input path="file" type="file" cssClass="form-control" />
+							<f:input path="file" type="file" cssClass="form-control" cssErrorClass="form-control has-error" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<f:button type="submit" class="btn btn-primary">
-								<s:message code="tool/load/page.execButton" />
-							</f:button>
-							<f:button type="submit" name="create" class="btn btn-default">
-								<s:message code="tool/load/page.createButton" />
-							</f:button>
+							<f:button type="submit" class="btn btn-primary">SQL実行</f:button>
+							<f:button type="submit" name="create" class="btn btn-default">登録</f:button>
 						</div>
 					</div>
 				</f:form>
