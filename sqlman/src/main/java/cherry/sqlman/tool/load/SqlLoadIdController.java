@@ -74,7 +74,7 @@ public interface SqlLoadIdController {
 
 	@RequestMapping(value = SUBURI_UPDATE)
 	ModelAndView update(@RequestParam(REQ_ID) int id, @Validated(G2.class) SqlLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 	@RequestMapping(value = SUBURI_METADATA)
 	ModelAndView metadata(@RequestParam(REQ_ID) int id, @Validated() SqlMetadataForm mdForm, BindingResult binding,

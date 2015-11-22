@@ -64,6 +64,6 @@ public interface SqlLoadController {
 
 	@RequestMapping(value = SUBURI_EXECUTE_NEW, params = REQ_CREATE)
 	ModelAndView create(@Validated(G1.class) SqlLoadForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }
