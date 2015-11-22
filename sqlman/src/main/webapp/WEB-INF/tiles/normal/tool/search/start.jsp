@@ -161,13 +161,21 @@
 										<td><s:bind path="list[${count-1}][name]">
 												<a href="${uri}" title="${status.value}"><c:out value="${status.value}" /></a>
 											</s:bind></td>
-										<td><app:out path="list[${count-1}][sqlType]" /></td>
+										<td><s:bind path="list[${count-1}][sqlType]">
+												<c:choose>
+													<c:when test="${status.value == 'clause'}">句指定</c:when>
+													<c:when test="${status.value == 'statement'}">文指定</c:when>
+													<c:when test="${status.value == 'load'}">CSV取込</c:when>
+													<c:otherwise>不明(${status.value})</c:otherwise>
+												</c:choose>
+											</s:bind></td>
 										<td><app:out path="list[${count-1}][databaseName]" /></td>
 										<td><app:out path="list[${count-1}][registeredAt]" /></td>
 										<td><s:bind path="list[${count-1}][publishedFlg]">
 												<c:choose>
-													<c:when test="${status.actualValue == 0}">非公開</c:when>
-													<c:otherwise>公開</c:otherwise>
+													<c:when test="${status.value == 0}">非公開</c:when>
+													<c:when test="${status.value == 1}">公開</c:when>
+													<c:otherwise>不明(${status.value})</c:otherwise>
 												</c:choose>
 											</s:bind></td>
 										<td><app:out path="list[${count-1}][ownedBy]" /></td>
