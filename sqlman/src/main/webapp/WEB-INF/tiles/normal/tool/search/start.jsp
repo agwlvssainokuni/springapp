@@ -148,7 +148,7 @@
 						<tbody>
 							<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
 								<s:nestedPath path="pagedList">
-									<s:url var="uri" value="/tool/{type}/{id}">
+									<s:url var="uri" value="/tool/{type}">
 										<s:param name="type">
 											<s:bind path="list[${count-1}][sqlType]">${status.value}</s:bind>
 										</s:param>
