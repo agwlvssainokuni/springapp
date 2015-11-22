@@ -59,6 +59,8 @@ public class PathDef {
 
 	public static final String SUBURI_EXECUTE = "execute";
 
+	public static final String SUBURI_CREATE = "create";
+
 	public static final String SUBURI_EDIT = "edit";
 
 	public static final String SUBURI_UPDATE = "update";

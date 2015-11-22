@@ -7,14 +7,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<h2 class="page-header">
-	<s:message code="password/edit.message.0" />
-</h2>
-<c:if test="${execute != null && execute}">
+<h2 class="page-header">パスワード発行</h2>
+<c:if test="${updated != null && updated}">
 	<div class="form-group has-success">
-		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">
-			<s:message code="password/edit.message.1" />
-		</div>
+		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">パスワードを更新しました。</div>
 	</div>
 </c:if>
 <s:hasBindErrors name="passwordRequestForm">
@@ -27,49 +23,38 @@
 		</div>
 	</div>
 </s:hasBindErrors>
-<c:url var="action" value="/password/execute">
+<c:url var="action" value="/password/update">
 	<c:param name="token" value="${param.token}" />
 </c:url>
 <f:form servletRelativeAction="${action}" method="POST" modelAttribute="passwordRequestForm" cssClass="form-horizontal" role="form">
 	<foundation:onetimetoken />
-	<c:set var="hasError">
-		<s:bind path="mailAddr">${status.isError() ? "has-error" : ""}</s:bind>
-	</c:set>
-	<div class="form-group ${hasError}">
-		<f:label path="mailAddr" cssClass="col-sm-2 control-label">
-			<s:message code="passwordRequestForm.mailAddr" />
-		</f:label>
+	<div class="form-group">
+		<div>
+			<f:label path="mailAddr" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">メールアドレス</f:label>
+		</div>
 		<div class="col-sm-10">
-			<f:input path="mailAddr" cssClass="form-control" />
+			<f:input path="mailAddr" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
-	<c:set var="hasError">
-		<s:bind path="password">${status.isError() ? "has-error" : ""}</s:bind>
-	</c:set>
-	<div class="form-group ${hasError}">
-		<f:label path="password" cssClass="col-sm-2 control-label">
-			<s:message code="passwordRequestForm.password" />
-		</f:label>
+	<div class="form-group">
+		<div>
+			<f:label path="password" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">パスワード</f:label>
+		</div>
 		<div class="col-sm-10">
-			<f:password path="password" cssClass="form-control" />
+			<f:password path="password" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
-	<c:set var="hasError">
-		<s:bind path="passwordConf">${status.isError() ? "has-error" : ""}</s:bind>
-	</c:set>
-	<div class="form-group ${hasError}">
-		<f:label path="passwordConf" cssClass="col-sm-2 control-label">
-			<s:message code="passwordRequestForm.passwordConf" />
-		</f:label>
+	<div class="form-group">
+		<div>
+			<f:label path="passwordConf" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">パスワード(確認)</f:label>
+		</div>
 		<div class="col-sm-10">
-			<f:password path="passwordConf" cssClass="form-control" />
+			<f:password path="passwordConf" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button class="btn btn-default btn-block" type="submit">
-				<s:message code="password/edit.requestButton" />
-			</button>
+			<button class="btn btn-default btn-block" type="submit">設定する</button>
 		</div>
 	</div>
 </f:form>
