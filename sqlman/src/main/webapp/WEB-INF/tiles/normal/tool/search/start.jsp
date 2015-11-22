@@ -37,8 +37,8 @@
 					</div>
 				</c:if>
 				<f:form servletRelativeAction="/tool/search/execute" method="POST" modelAttribute="sqlSearchForm" cssClass="form-horizontal" role="form">
-					<f:hidden path="pageNo" value="0" />
-					<f:hidden path="pageSz" />
+					<f:hidden path="pno" value="0" />
+					<f:hidden path="psz" />
 					<div class="form-group">
 						<div>
 							<f:label path="name" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">SQL名称</f:label>
@@ -116,8 +116,8 @@
 			<div id="searchResult" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<f:form servletRelativeAction="/tool/search/execute" method="POST" modelAttribute="sqlSearchForm" id="sqlSearchForm2">
-						<f:hidden id="pageNo2" path="pageNo" />
-						<f:hidden id="pageSz2" path="pageSz" />
+						<f:hidden id="pno2" path="pno" />
+						<f:hidden id="psz2" path="psz" />
 						<f:hidden id="name2" path="name" />
 						<f:hidden id="sqlType2" path="sqlType" />
 						<f:hidden id="published2" path="published" />
@@ -129,7 +129,7 @@
 					<div class="row">
 						<div class="col-sm-offset-6 col-sm-6 text-right">
 							<app:pagerDesc pageSet="${pagedList.pageSet}" />
-							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
+							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pno" />
 						</div>
 					</div>
 					<table id="searchResultList" class="table table-striped">
@@ -179,7 +179,7 @@
 					</table>
 					<div class="row">
 						<div class="col-sm-offset-6 col-sm-6 text-right">
-							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pageNo" />
+							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pno" />
 						</div>
 					</div>
 				</div>

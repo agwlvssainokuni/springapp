@@ -137,8 +137,8 @@
 				</s:nestedPath>
 				<f:form servletRelativeAction="${baseUri}/execute?id=${param.id}" method="POST" modelAttribute="sqlClauseForm" cssClass="form-horizontal"
 					role="form">
-					<f:hidden path="pageNo" value="0" />
-					<f:hidden path="pageSz" />
+					<f:hidden path="pno" value="0" />
+					<f:hidden path="psz" />
 					<f:hidden path="lockVersion" />
 					<div class="form-group">
 						<div>
@@ -168,8 +168,8 @@
 			</div>
 			<div id="clauseResult" class="panel-collapse collapse in">
 				<f:form servletRelativeAction="${baseUri}/execute?id=${param.id}" method="POST" modelAttribute="sqlClauseForm" id="sqlClause2">
-					<f:hidden id="pageNo2" path="pageNo" />
-					<f:hidden id="pageSz2" path="pageSz" />
+					<f:hidden id="pno2" path="pno" />
+					<f:hidden id="psz2" path="psz" />
 					<f:hidden id="lockVersion2" path="lockVersion" />
 					<f:hidden id="paramMap2" path="paramMap" />
 				</f:form>
@@ -177,13 +177,13 @@
 					<div class="row">
 						<div class="col-sm-offset-6 col-sm-6 text-right">
 							<app:pagerDesc pageSet="${pageSet}" />
-							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pageNo" />
+							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pno" />
 						</div>
 					</div>
 					<app:resultSet id="resultSetList" resultSet="${resultSet}" pageSet="${pageSet}" />
 					<div class="row">
 						<div class="col-sm-offset-6 col-sm-6 text-right">
-							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pageNo" />
+							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pno" />
 						</div>
 					</div>
 				</div>

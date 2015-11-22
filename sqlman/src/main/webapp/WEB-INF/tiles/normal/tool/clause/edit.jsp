@@ -104,8 +104,8 @@
 				</s:hasBindErrors>
 				<f:form servletRelativeAction="${baseUri}/update?id=${param.id}" method="POST" modelAttribute="sqlClauseForm" cssClass="form-horizontal"
 					role="form">
-					<f:hidden path="pageNo" value="0" />
-					<f:hidden path="pageSz" />
+					<f:hidden path="pno" value="0" />
+					<f:hidden path="psz" />
 					<f:hidden path="lockVersion" />
 					<div class="form-group">
 						<div>
