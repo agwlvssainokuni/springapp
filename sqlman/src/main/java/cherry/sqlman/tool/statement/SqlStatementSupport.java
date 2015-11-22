@@ -20,34 +20,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.download.DownloadAction;
 import cherry.foundation.download.DownloadOperation;
 import cherry.foundation.etl.CsvConsumer;
 import cherry.goods.paginate.PageSet;
+import cherry.sqlman.Config;
 import cherry.sqlman.tool.shared.ExecQueryService;
 import cherry.sqlman.tool.shared.ParamParser;
 import cherry.sqlman.tool.shared.ResultSet;
 
 public class SqlStatementSupport {
 
-	@Value("${sqlman.export.contentType}")
-	private String contentType;
-
-	@Value("${sqlman.export.charset}")
-	private Charset charset;
-
-	@Value("${sqlman.export.filename}")
-	private String filename;
+	@Autowired
+	private Config config;
 
 	@Autowired
 	private ParamParser paramParser;
@@ -78,15 +71,17 @@ public class SqlStatementSupport {
 		final String sql = form.getSql();
 		final Map<String, ?> paramMap = paramParser.parseMap(form.getParamMap());
 
-		downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), new DownloadAction() {
-			@Override
-			public long doDownload(OutputStream out) throws IOException {
-				try (Writer writer = new OutputStreamWriter(out, charset)) {
-					PageSet ps = execQueryService.query(databaseName, sql, paramMap, new CsvConsumer(writer, true));
-					return ps.getLast().getTo() + 1L;
-				}
-			}
-		});
+		downloadOperation.download(response, config.getExportContentType(), config.getExportCharset(),
+				config.getExportFilename(), bizDateTime.now(), new DownloadAction() {
+					@Override
+					public long doDownload(OutputStream out) throws IOException {
+						try (Writer writer = new OutputStreamWriter(out, config.getExportCharset())) {
+							PageSet ps = execQueryService.query(databaseName, sql, paramMap, new CsvConsumer(writer,
+									true));
+							return ps.getLast().getTo() + 1L;
+						}
+					}
+				});
 	}
 
 }

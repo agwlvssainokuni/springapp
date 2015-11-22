@@ -20,12 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.Charset;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -38,12 +36,13 @@ import cherry.foundation.etl.CsvProvider;
 import cherry.foundation.etl.LoadResult;
 import cherry.foundation.etl.Loader;
 import cherry.foundation.etl.NoneLimiter;
+import cherry.sqlman.Config;
 import cherry.sqlman.tool.shared.DataSourceDef;
 
 public class SqlLoadSupport {
 
-	@Value("${sqlman.import.charset}")
-	private Charset charset;
+	@Autowired
+	private Config config;
 
 	@Autowired
 	private DataSourceDef dataSourceDef;
@@ -57,7 +56,8 @@ public class SqlLoadSupport {
 		return txOp.execute(new TransactionCallback<FileProcessResult>() {
 			@Override
 			public FileProcessResult doInTransaction(TransactionStatus status) {
-				try (InputStream in = file.getInputStream(); Reader reader = new InputStreamReader(in, charset)) {
+				try (InputStream in = file.getInputStream();
+						Reader reader = new InputStreamReader(in, config.getImportCharset())) {
 
 					LoadResult r = loader.load(dataSource, sql, new CsvProvider(reader, true), new NoneLimiter());
 

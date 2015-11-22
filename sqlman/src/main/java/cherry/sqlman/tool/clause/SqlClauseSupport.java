@@ -64,7 +64,7 @@ public class SqlClauseSupport {
 			form.setPageNo(0L);
 		}
 		if (form.getPageSz() <= 0L) {
-			form.setPageSz(config.getDefaultPageSize());
+			form.setPageSz(config.getPaginatorDefaultPageSize());
 		}
 
 		ResultSet resultSet = new ResultSet();
@@ -80,11 +80,11 @@ public class SqlClauseSupport {
 		final QueryBuilder builder = getQueryBuilder(form);
 		final Map<String, ?> paramMap = paramParser.parseMap(form.getParamMap());
 
-		downloadOperation.download(response, config.getContentType(), config.getCharset(), config.getFilename(),
-				bizDateTime.now(), new DownloadAction() {
+		downloadOperation.download(response, config.getExportContentType(), config.getExportCharset(),
+				config.getExportFilename(), bizDateTime.now(), new DownloadAction() {
 					@Override
 					public long doDownload(OutputStream out) throws IOException {
-						try (Writer writer = new OutputStreamWriter(out, config.getCharset())) {
+						try (Writer writer = new OutputStreamWriter(out, config.getExportCharset())) {
 							PageSet ps = execQueryService.query(databaseName, builder, paramMap, new CsvConsumer(
 									writer, true));
 							return ps.getLast().getTo() + 1L;

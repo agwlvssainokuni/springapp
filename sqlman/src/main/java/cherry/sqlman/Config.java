@@ -27,19 +27,22 @@ import org.springframework.stereotype.Component;
 @Component()
 public class Config {
 
-	@Value("${sqlman.search.defaultFromDays}")
-	private Integer defaultFromDays;
-
 	@Value("${sqlman.paginator.pageSize}")
-	private long defaultPageSize;
+	private long paginatorDefaultPageSize;
+
+	@Value("${sqlman.search.defaultFromDays}")
+	private Integer searchDefaultFromDays;
 
 	@Value("${sqlman.export.contentType}")
-	private String contentType;
+	private String exportContentType;
 
 	@Value("${sqlman.export.charset}")
-	private Charset charset;
+	private Charset exportCharset;
 
 	@Value("${sqlman.export.filename}")
-	private String filename;
+	private String exportFilename;
+
+	@Value("${sqlman.import.charset}")
+	private Charset importCharset;
 
 }

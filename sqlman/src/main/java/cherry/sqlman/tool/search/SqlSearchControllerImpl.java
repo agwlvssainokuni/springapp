@@ -88,7 +88,7 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 			form.setPageNo(0L);
 		}
 		if (form.getPageSz() <= 0L) {
-			form.setPageSz(config.getDefaultPageSize());
+			form.setPageSz(config.getPaginatorDefaultPageSize());
 		}
 
 		PagedList<Map<String, ?>> result = searchService.search(form, auth.getName());
@@ -108,7 +108,7 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 
 		LocalDate today = bizDateTime.today();
 
-		LocalDateTime from = LocalDateTimeUtil.rangeFrom(today.minusDays(config.getDefaultFromDays()));
+		LocalDateTime from = LocalDateTimeUtil.rangeFrom(today.minusDays(config.getSearchDefaultFromDays()));
 		form.setRegisteredFromDt(from.toLocalDate());
 		form.setRegisteredFromTm(from.toLocalTime());
 
