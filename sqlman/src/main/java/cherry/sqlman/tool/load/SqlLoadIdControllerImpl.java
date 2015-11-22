@@ -74,13 +74,6 @@ public class SqlLoadIdControllerImpl extends SqlLoadSupport implements SqlLoadId
 	}
 
 	@Override
-	public SqlLoadForm getForm(int id) {
-		SqlLoadForm form = loadService.findById(id);
-		shouldExist(form, SqlLoadForm.class, id);
-		return form;
-	}
-
-	@Override
 	public ModelAndView init(String redirTo, int id, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
 		status.setComplete();

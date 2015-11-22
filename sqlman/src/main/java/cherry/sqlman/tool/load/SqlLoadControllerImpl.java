@@ -65,22 +65,6 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 			null, null, null, null, null));
 
 	@Override
-	public SqlLoadForm getForm(Integer ref, Authentication auth) {
-		if (ref != null) {
-			SqlMetadataForm mdForm = metadataService.findById(ref, auth.getName());
-			if (mdForm != null) {
-				SqlLoadForm form = loadService.findById(ref);
-				if (form != null) {
-					return form;
-				}
-			}
-		}
-		SqlLoadForm form = new SqlLoadForm();
-		form.setDatabaseName(dataSourceDef.getDefaultName());
-		return form;
-	}
-
-	@Override
 	public ModelAndView init(String redirTo, Integer ref, Authentication auth, Locale locale, SitePreference sitePref,
 			NativeWebRequest request, SessionStatus status) {
 		status.setComplete();

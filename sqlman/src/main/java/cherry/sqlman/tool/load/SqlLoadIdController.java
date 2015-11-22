@@ -52,9 +52,6 @@ public interface SqlLoadIdController {
 	@ModelAttribute()
 	SqlMetadataForm getMetadata(@RequestParam(REQ_ID) int id, Authentication auth);
 
-	@ModelAttribute()
-	SqlLoadForm getForm(@RequestParam(REQ_ID) int id);
-
 	@RequestMapping(params = { REQ_ID })
 	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, @RequestParam(REQ_ID) int id,
 			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request, SessionStatus status);
