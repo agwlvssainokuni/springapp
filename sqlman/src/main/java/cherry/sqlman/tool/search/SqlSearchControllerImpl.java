@@ -96,9 +96,9 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 		return withViewname(viewnameOfStart).addObject(result).build();
 	}
 
-	private UriComponents redirectOnInit(String redir) {
-		if (StringUtils.isNotEmpty(redir)) {
-			return UriComponentsBuilder.fromPath(redir).build();
+	private UriComponents redirectOnInit(String redirTo) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
 		} else {
 			return fromMethodCall(on(SqlSearchController.class).start(null, null, null, null, null, null)).build();
 		}

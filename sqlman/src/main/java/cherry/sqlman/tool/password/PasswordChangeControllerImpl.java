@@ -16,6 +16,9 @@
 
 package cherry.sqlman.tool.password;
 
+import static cherry.sqlman.ParamDef.FLASH_UPDATED;
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withViewname;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -23,21 +26,22 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.foundation.logicalerror.LogicalErrorUtil;
 import cherry.foundation.onetimetoken.OneTimeTokenValidator;
 import cherry.sqlman.LogicError;
-import cherry.sqlman.PathDef;
+import cherry.sqlman.util.ViewNameUtil;
 
 @Controller
 public class PasswordChangeControllerImpl implements PasswordChangeController {
@@ -48,54 +52,78 @@ public class PasswordChangeControllerImpl implements PasswordChangeController {
 	@Autowired
 	private PasswordChangeService passwordChangeService;
 
-	@ModelAttribute()
-	public PasswordChangeForm getForm(Authentication auth) {
-		PasswordChangeForm form = new PasswordChangeForm();
-		form.setLockVersion(passwordChangeService.getLockVersion(auth.getName()));
-		return form;
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(PasswordChangeController.class).start(null,
+			null, null, null, null, null));
+
+	@Override
+	public ModelAndView init(String redirTo, Authentication auth, Locale locale, SitePreference sitePref,
+			NativeWebRequest request) {
+		return redirect(redirectOnInit(redirTo)).build();
 	}
 
 	@Override
-	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_PASSWORD);
-		return mav;
+	public ModelAndView start(PasswordChangeForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, auth);
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView update(PasswordChangeForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_PASSWORD);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
-		if (!form.getPassword().equals(form.getPasswordConf())) {
-			LogicalErrorUtil.rejectValue(binding, PasswordChangeFormBase.Prop.PasswordConf.getName(),
-					LogicError.PasswordConfUnmatch);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_PASSWORD);
-			return mav;
-		}
-
-		if (!oneTimeTokenValidator.isValid(request)) {
+		if (!oneTimeTokenValidator.isValid(request.getNativeRequest(HttpServletRequest.class))) {
 			LogicalErrorUtil.rejectOnOneTimeTokenError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_PASSWORD);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 
 		if (!passwordChangeService.updatePassword(auth.getName(), form.getPassword(), form.getLockVersion())) {
 			LogicalErrorUtil.rejectOnOptimisticLockError(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_TOOL_PASSWORD);
-			return mav;
+			return withViewname(viewnameOfStart).build();
 		}
 
-		redirAttr.addFlashAttribute(PathDef.SUBURI_UPDATE, Boolean.TRUE);
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
 
-		UriComponents uc = fromMethodCall(on(PasswordChangeController.class).start(auth, locale, sitePref, request))
-				.build();
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		return redirect(redirectOnUpdate()).build();
+	}
+
+	private UriComponents redirectOnInit(String redirTo) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
+		} else {
+			return fromMethodCall(on(PasswordChangeController.class).start(null, null, null, null, null, null)).build();
+		}
+	}
+
+	private UriComponents redirectOnUpdate() {
+		return fromMethodCall(on(PasswordChangeController.class).start(null, null, null, null, null, null)).build();
+	}
+
+	private void initializeForm(PasswordChangeForm form, Authentication auth) {
+		form.setLockVersion(passwordChangeService.getLockVersion(auth.getName()));
+	}
+
+	private boolean hasErrors(PasswordChangeForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+		if (!StringUtils.equals(form.getPassword(), form.getPasswordConf())) {
+			LogicalErrorUtil.rejectValue(binding, PasswordChangeFormBase.Prop.PasswordConf.getName(),
+					LogicError.PasswordConfUnmatch);
+			return true;
+		}
+
+		// 整合性チェック
+
+		return false;
 	}
 
 }

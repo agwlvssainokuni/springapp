@@ -7,14 +7,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
-<h2 class="page-header">
-	<s:message code="tool/password/page.message.0" />
-</h2>
-<c:if test="${update != null && update}">
+<h2 class="page-header">パスワード変更</h2>
+<c:if test="${updated != null && updated}">
 	<div class="form-group has-success">
-		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">
-			<s:message code="tool/password/page.message.1" />
-		</div>
+		<div class="col-sm-offset-2 col-sm-10 alert alert-info" role="alert">パスワードを更新しました。</div>
 	</div>
 </c:if>
 <s:hasBindErrors name="passwordChangeForm">
@@ -30,33 +26,25 @@
 <f:form servletRelativeAction="${action}" method="POST" modelAttribute="passwordChangeForm" cssClass="form-horizontal" role="form">
 	<foundation:onetimetoken />
 	<f:hidden path="lockVersion" />
-	<c:set var="hasError">
-		<s:bind path="password">${status.isError() ? "has-error" : ""}</s:bind>
-	</c:set>
-	<div class="form-group ${hasError}">
-		<f:label path="password" cssClass="col-sm-2 control-label">
-			<s:message code="passwordChangeForm.password" />
-		</f:label>
+	<div class="form-group">
+		<div>
+			<f:label path="password" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">パスワード</f:label>
+		</div>
 		<div class="col-sm-10">
-			<f:password path="password" cssClass="form-control" />
+			<f:password path="password" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
-	<c:set var="hasError">
-		<s:bind path="passwordConf">${status.isError() ? "has-error" : ""}</s:bind>
-	</c:set>
-	<div class="form-group ${hasError}">
-		<f:label path="passwordConf" cssClass="col-sm-2 control-label">
-			<s:message code="passwordChangeForm.passwordConf" />
-		</f:label>
+	<div class="form-group">
+		<div>
+			<f:label path="passwordConf" cssClass="col-sm-2 control-label" cssErrorClass="col-sm-2 control-label has-error">パスワード(確認)</f:label>
+		</div>
 		<div class="col-sm-10">
-			<f:password path="passwordConf" cssClass="form-control" />
+			<f:password path="passwordConf" cssClass="form-control" cssErrorClass="form-control has-error" />
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-10 col-sm-offset-2">
-			<button class="btn btn-default btn-block" type="submit">
-				<s:message code="tool/password/page.updateButton" />
-			</button>
+			<button class="btn btn-default btn-block" type="submit">更新</button>
 		</div>
 	</div>
 </f:form>

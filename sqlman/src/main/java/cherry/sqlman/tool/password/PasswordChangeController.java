@@ -16,32 +16,38 @@
 
 package cherry.sqlman.tool.password;
 
-import java.util.Locale;
+import static cherry.sqlman.ParamDef.REQ_TO;
+import static cherry.sqlman.PathDef.SUBURI_START;
+import static cherry.sqlman.PathDef.SUBURI_UPDATE;
+import static cherry.sqlman.PathDef.URI_TOOL_PASSWORD;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_TOOL_PASSWORD)
+@RequestMapping(URI_TOOL_PASSWORD)
 public interface PasswordChangeController {
 
-	@ModelAttribute()
-	PasswordChangeForm getForm(Authentication auth);
-
 	@RequestMapping()
-	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(PathDef.SUBURI_UPDATE)
+	@RequestMapping(value = SUBURI_START)
+	ModelAndView start(@Validated(G9.class) PasswordChangeForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
+
+	@RequestMapping(value = SUBURI_UPDATE)
 	ModelAndView update(@Validated() PasswordChangeForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
+			Locale locale, SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
 }
