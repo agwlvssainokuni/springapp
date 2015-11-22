@@ -132,7 +132,7 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 	}
 
 	private UriComponents redirectOnCreate(int id) {
-		return fromMethodCall(on(SqlLoadIdController.class).start(0, null, null, null, null, null, null))
+		return fromMethodCall(on(SqlLoadIdController.class).init(null, 0, null, null, null, null, null))
 				.replaceQueryParam(REQ_ID, id).build();
 	}
 

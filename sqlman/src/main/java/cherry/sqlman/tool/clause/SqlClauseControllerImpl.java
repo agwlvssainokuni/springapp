@@ -140,8 +140,8 @@ public class SqlClauseControllerImpl extends SqlClauseSupport implements SqlClau
 	}
 
 	private UriComponents redirectOnCreate(int id) {
-		return fromMethodCall(on(SqlClauseIdController.class).start(0, null, null, null, null, null, null))
-				.replaceQueryParam(REQ_ID, id).build();
+		return fromMethodCall(on(SqlClauseIdController.class).init(null, 0, null, null, null, null)).replaceQueryParam(
+				REQ_ID, id).build();
 	}
 
 	private void initializeForm(SqlClauseForm form, Integer ref, Authentication auth) {
