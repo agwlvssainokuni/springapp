@@ -71,16 +71,16 @@ public class SqlClauseControllerImplTest {
 	}
 
 	@Test
-	public void testInit() throws Exception {
+	public void testStart() throws Exception {
 		SqlClauseForm form = new SqlClauseForm();
 		form.setDatabaseName("db1");
-		mockMvc.perform(get("/tool/clause").principal(createPrincipal())).andExpect(status().isOk())
+		mockMvc.perform(get("/tool/clause/startNew").principal(createPrincipal())).andExpect(status().isOk())
 				.andExpect(model().size(1)).andExpect(model().attribute("sqlClauseForm", form))
-				.andExpect(view().name("tool/clause/page")).andReturn();
+				.andExpect(view().name("tool/clause/startNew")).andReturn();
 	}
 
 	@Test
-	public void testInitWithExistingRef() throws Exception {
+	public void testStartWithExistingRef() throws Exception {
 
 		SqlClauseForm form0 = new SqlClauseForm();
 		form0.setDatabaseName("db2");
@@ -93,24 +93,24 @@ public class SqlClauseControllerImplTest {
 		form.setSelect("*");
 		form.setFrom("dual");
 		form.setLockVersion(1);
-		mockMvc.perform(get("/tool/clause").principal(createPrincipal()).param("ref", String.valueOf(id)))
+		mockMvc.perform(get("/tool/clause/startNew").principal(createPrincipal()).param("ref", String.valueOf(id)))
 				.andExpect(status().isOk()).andExpect(model().size(1))
-				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/page"))
+				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/startNew"))
 				.andReturn();
 	}
 
 	@Test
-	public void testInitWithMissingRef() throws Exception {
+	public void testStartWithMissingRef() throws Exception {
 		SqlClauseForm form = new SqlClauseForm();
 		form.setDatabaseName("db1");
-		mockMvc.perform(get("/tool/clause").principal(createPrincipal()).param("ref", String.valueOf(0)))
+		mockMvc.perform(get("/tool/clause/startNew").principal(createPrincipal()).param("ref", String.valueOf(0)))
 				.andExpect(status().isOk()).andExpect(model().size(1))
-				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/page"))
+				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/startNew"))
 				.andReturn();
 	}
 
 	@Test
-	public void testInitWithInvalidRef() throws Exception {
+	public void testStartWithInvalidRef() throws Exception {
 
 		SqlStatementForm form0 = new SqlStatementForm();
 		form0.setDatabaseName("db2");
@@ -119,9 +119,9 @@ public class SqlClauseControllerImplTest {
 
 		SqlClauseForm form = new SqlClauseForm();
 		form.setDatabaseName("db1");
-		mockMvc.perform(get("/tool/clause").principal(createPrincipal()).param("ref", String.valueOf(id)))
+		mockMvc.perform(get("/tool/clause/startNew").principal(createPrincipal()).param("ref", String.valueOf(id)))
 				.andExpect(status().isOk()).andExpect(model().size(1))
-				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/page"))
+				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(view().name("tool/clause/startNew"))
 				.andReturn();
 	}
 
@@ -132,15 +132,17 @@ public class SqlClauseControllerImplTest {
 		form.setDatabaseName("db2");
 		form.setSelect("*");
 		form.setFrom("dual");
+		form.setPageNo(0L);
+		form.setPageSz(20L);
 
 		MvcResult result = mockMvc
 				.perform(
-						post("/tool/clause/execute").principal(createPrincipal())
+						post("/tool/clause/executeNew").principal(createPrincipal())
 								.param(Prop.DatabaseName.getName(), "db2").param(Prop.Select.getName(), "*")
 								.param(Prop.From.getName(), "dual")).andExpect(status().isOk())
 				.andExpect(model().size(3)).andExpect(model().attribute("sqlClauseForm", form))
 				.andExpect(model().attributeExists("pageSet")).andExpect(model().attributeExists("resultSet"))
-				.andExpect(view().name("tool/clause/page")).andReturn();
+				.andExpect(view().name("tool/clause/startNew")).andReturn();
 		PageSet pageSet = (PageSet) result.getRequest().getAttribute("pageSet");
 		ResultSet resultSet = (ResultSet) result.getRequest().getAttribute("resultSet");
 
@@ -162,12 +164,13 @@ public class SqlClauseControllerImplTest {
 
 		MvcResult result = mockMvc
 				.perform(
-						post("/tool/clause/execute").principal(createPrincipal())
+						post("/tool/clause/executeNew").principal(createPrincipal())
 								.param(Prop.DatabaseName.getName(), "db2").param(Prop.Select.getName(), "*")
 								.param(Prop.From.getName(), "dual").param(Prop.PageSz.getName(), "10"))
 				.andExpect(status().isOk()).andExpect(model().size(3))
 				.andExpect(model().attribute("sqlClauseForm", form)).andExpect(model().attributeExists("pageSet"))
-				.andExpect(model().attributeExists("resultSet")).andExpect(view().name("tool/clause/page")).andReturn();
+				.andExpect(model().attributeExists("resultSet")).andExpect(view().name("tool/clause/startNew"))
+				.andReturn();
 		PageSet pageSet = (PageSet) result.getRequest().getAttribute("pageSet");
 		ResultSet resultSet = (ResultSet) result.getRequest().getAttribute("resultSet");
 
@@ -185,13 +188,13 @@ public class SqlClauseControllerImplTest {
 		form.setSelect("");
 		form.setFrom("");
 		mockMvc.perform(
-				post("/tool/clause/execute").principal(createPrincipal()).param(Prop.DatabaseName.getName(), "db2")
+				post("/tool/clause/executeNew").principal(createPrincipal()).param(Prop.DatabaseName.getName(), "db2")
 						.param(Prop.Select.getName(), "").param(Prop.From.getName(), ""))
 				.andExpect(status().isOk())
 				.andExpect(model().size(1))
 				.andExpect(model().attribute("sqlClauseForm", form))
 				.andExpect(model().attributeHasFieldErrors("sqlClauseForm", Prop.Select.getName(), Prop.From.getName()))
-				.andExpect(view().name("tool/clause/page"));
+				.andExpect(view().name("tool/clause/startNew"));
 	}
 
 	@Test
@@ -200,12 +203,14 @@ public class SqlClauseControllerImplTest {
 		form.setDatabaseName("db2");
 		form.setSelect("y");
 		form.setFrom("dual");
+		form.setPageNo(0L);
+		form.setPageSz(20L);
 		mockMvc.perform(
-				post("/tool/clause/execute").principal(createPrincipal()).param(Prop.DatabaseName.getName(), "db2")
+				post("/tool/clause/executeNew").principal(createPrincipal()).param(Prop.DatabaseName.getName(), "db2")
 						.param(Prop.Select.getName(), "y").param(Prop.From.getName(), "dual"))
 				.andExpect(status().isOk()).andExpect(model().size(1))
 				.andExpect(model().attribute("sqlClauseForm", form))
-				.andExpect(model().attributeHasErrors("sqlClauseForm")).andExpect(view().name("tool/clause/page"));
+				.andExpect(model().attributeHasErrors("sqlClauseForm")).andExpect(view().name("tool/clause/startNew"));
 	}
 
 	@Test
@@ -218,7 +223,7 @@ public class SqlClauseControllerImplTest {
 
 		MvcResult result = mockMvc
 				.perform(
-						post("/tool/clause/execute").principal(createPrincipal()).param(ParamDef.REQ_DOWNLOAD, "")
+						post("/tool/clause/executeNew").principal(createPrincipal()).param(ParamDef.REQ_DOWNLOAD, "")
 								.param(Prop.DatabaseName.getName(), "db2").param(Prop.Select.getName(), "*")
 								.param(Prop.From.getName(), "dual")).andExpect(status().isOk()).andReturn();
 		assertEquals("\"X\"\r\n\"1\"\r\n", result.getResponse().getContentAsString());

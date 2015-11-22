@@ -162,7 +162,7 @@ public class SqlSearchControllerImplTest {
 
 		mockMvc.perform(get("/tool/search/start").principal(createPrincipal())).andExpect(status().isOk())
 				.andExpect(model().size(1)).andExpect(model().attribute("sqlSearchForm", form))
-				.andExpect(view().name("tool/search/page"));
+				.andExpect(view().name("tool/search/start"));
 	}
 
 	@Test
@@ -172,6 +172,8 @@ public class SqlSearchControllerImplTest {
 		form.setName("");
 		form.setSqlType(new ArrayList<SqlType>());
 		form.setPublished(new ArrayList<Published>());
+		form.setPageNo(0L);
+		form.setPageSz(20L);
 
 		MvcResult result = mockMvc
 				.perform(
@@ -181,7 +183,7 @@ public class SqlSearchControllerImplTest {
 								.param(Prop.SqlType.getName(), "").param(Prop.Published.getName(), "")
 								.param(Prop.PageNo.getName(), "0").param(Prop.PageSz.getName(), "0"))
 				.andExpect(status().isOk()).andExpect(model().size(2))
-				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/page"))
+				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/start"))
 				.andReturn();
 
 		assertTrue(result.getRequest().getAttribute("pagedList") instanceof PagedList);
@@ -210,7 +212,7 @@ public class SqlSearchControllerImplTest {
 								.param(Prop.SqlType.getName(), "").param(Prop.Published.getName(), "PUBLIC")
 								.param(Prop.PageNo.getName(), "1").param(Prop.PageSz.getName(), "4"))
 				.andExpect(status().isOk()).andExpect(model().size(2))
-				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/page"))
+				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/start"))
 				.andReturn();
 
 		assertTrue(result.getRequest().getAttribute("pagedList") instanceof PagedList);
@@ -237,7 +239,7 @@ public class SqlSearchControllerImplTest {
 						.param(Prop.SqlType.getName(), "").param(Prop.Published.getName(), "")
 						.param(Prop.PageNo.getName(), "0").param(Prop.PageSz.getName(), "0"))
 				.andExpect(status().isOk()).andExpect(model().size(1))
-				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/page"));
+				.andExpect(model().attribute("sqlSearchForm", form)).andExpect(view().name("tool/search/start"));
 	}
 
 	private Principal createPrincipal() {

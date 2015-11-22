@@ -16,7 +16,6 @@
 
 package cherry.sqlman.tool.load;
 
-import static cherry.foundation.springmvc.Contract.shouldExist;
 import static cherry.sqlman.ParamDef.REQ_ID;
 import static cherry.sqlman.ParamDef.REQ_REF;
 import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
@@ -137,18 +136,19 @@ public class SqlLoadControllerImpl extends SqlLoadSupport implements SqlLoadCont
 	}
 
 	private void initializeForm(SqlLoadForm form, Integer ref, Authentication auth) {
-		if (ref == null) {
-			form.setDatabaseName(dataSourceDef.getDefaultName());
-			return;
+		if (ref != null) {
+			SqlMetadataForm mdForm = metadataService.findById(ref, auth.getName());
+			if (mdForm != null) {
+				SqlLoadForm f = loadService.findById(ref);
+				if (f != null) {
+					form.setDatabaseName(f.getDatabaseName());
+					form.setSql(f.getSql());
+					form.setLockVersion(f.getLockVersion());
+					return;
+				}
+			}
 		}
-		SqlMetadataForm mdForm = metadataService.findById(ref, auth.getName());
-		if (mdForm != null) {
-			SqlLoadForm f = loadService.findById(ref);
-			shouldExist(f, SqlLoadForm.class, ref);
-			form.setDatabaseName(f.getDatabaseName());
-			form.setSql(f.getSql());
-			form.setLockVersion(f.getLockVersion());
-		}
+		form.setDatabaseName(dataSourceDef.getDefaultName());
 	}
 
 	private boolean hasErrors(SqlLoadForm form, BindingResult binding) {

@@ -55,7 +55,8 @@ public class LoginControllerImplTest {
 	@Test
 	public void testStart() throws Exception {
 		mockMvc.perform(get("/login/start").principal(createPrincipal())).andExpect(status().isOk())
-				.andExpect(model().size(0)).andExpect(view().name("login/start"));
+				.andExpect(model().size(1)).andExpect(model().attributeExists("loginForm"))
+				.andExpect(view().name("login/start"));
 	}
 
 	@Test

@@ -122,6 +122,8 @@ public class SearchServiceImplTest {
 		SqlSearchForm form = new SqlSearchForm();
 		form.setPublished(new ArrayList<Published>());
 		form.setSqlType(new ArrayList<SqlType>());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(9, result.getPageSet().getTotalCount());
@@ -151,6 +153,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(9, result.getPageSet().getTotalCount());
@@ -181,6 +185,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(1, result.getPageSet().getTotalCount());
@@ -205,6 +211,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(3, result.getPageSet().getTotalCount());
@@ -232,6 +240,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(3, result.getPageSet().getTotalCount());
@@ -261,6 +271,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(0, result.getPageSet().getTotalCount());
@@ -282,6 +294,8 @@ public class SearchServiceImplTest {
 		form.setRegisteredFromTm(fromDtm.toLocalTime());
 		form.setRegisteredToDt(toDtm.toLocalDate());
 		form.setRegisteredToTm(toDtm.toLocalTime());
+		form.setPageNo(0L);
+		form.setPageSz(10L);
 
 		PagedList<Map<String, ?>> result = searchService.search(form, owner);
 		assertEquals(0, result.getPageSet().getTotalCount());

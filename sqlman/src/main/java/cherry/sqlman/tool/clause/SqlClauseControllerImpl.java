@@ -16,7 +16,6 @@
 
 package cherry.sqlman.tool.clause;
 
-import static cherry.foundation.springmvc.Contract.shouldExist;
 import static cherry.sqlman.ParamDef.REQ_ID;
 import static cherry.sqlman.ParamDef.REQ_REF;
 import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
@@ -145,24 +144,25 @@ public class SqlClauseControllerImpl extends SqlClauseSupport implements SqlClau
 	}
 
 	private void initializeForm(SqlClauseForm form, Integer ref, Authentication auth) {
-		if (ref == null) {
-			form.setDatabaseName(dataSourceDef.getDefaultName());
-			return;
+		if (ref != null) {
+			SqlMetadataForm mdForm = metadataService.findById(ref, auth.getName());
+			if (mdForm != null) {
+				SqlClauseForm f = clauseService.findById(ref);
+				if (f != null) {
+					form.setDatabaseName(f.getDatabaseName());
+					form.setSelect(f.getSelect());
+					form.setFrom(f.getFrom());
+					form.setWhere(f.getWhere());
+					form.setGroupBy(f.getGroupBy());
+					form.setHaving(f.getHaving());
+					form.setOrderBy(f.getOrderBy());
+					form.setParamMap(f.getParamMap());
+					form.setLockVersion(f.getLockVersion());
+					return;
+				}
+			}
 		}
-		SqlMetadataForm mdForm = metadataService.findById(ref, auth.getName());
-		if (mdForm != null) {
-			SqlClauseForm f = clauseService.findById(ref);
-			shouldExist(f, SqlClauseForm.class, ref);
-			form.setDatabaseName(f.getDatabaseName());
-			form.setSelect(f.getSelect());
-			form.setFrom(f.getFrom());
-			form.setWhere(f.getWhere());
-			form.setGroupBy(f.getGroupBy());
-			form.setHaving(f.getHaving());
-			form.setOrderBy(f.getOrderBy());
-			form.setParamMap(f.getParamMap());
-			form.setLockVersion(f.getLockVersion());
-		}
+		form.setDatabaseName(dataSourceDef.getDefaultName());
 	}
 
 	private boolean hasErrors(SqlClauseForm form, BindingResult binding) {
