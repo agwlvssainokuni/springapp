@@ -18,11 +18,10 @@ package cherry.sqlman.admin;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.sqlman.PathDef;
@@ -31,7 +30,7 @@ import cherry.sqlman.PathDef;
 public class AdminHomeControllerImpl implements AdminHomeController {
 
 	@Override
-	public ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request) {
 		return new ModelAndView(PathDef.VIEW_ADMIN_HOME);
 	}
 

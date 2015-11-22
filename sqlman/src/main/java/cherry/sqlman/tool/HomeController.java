@@ -16,6 +16,8 @@
 
 package cherry.sqlman.tool;
 
+import static cherry.sqlman.PathDef.URI_TOOL_HOME;
+
 import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
@@ -24,9 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlman.PathDef;
-
-@RequestMapping(PathDef.URI_TOOL_HOME)
+@RequestMapping(URI_TOOL_HOME)
 public interface HomeController {
 
 	@RequestMapping()

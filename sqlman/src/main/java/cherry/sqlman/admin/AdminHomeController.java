@@ -16,21 +16,20 @@
 
 package cherry.sqlman.admin;
 
-import java.util.Locale;
+import static cherry.sqlman.PathDef.URI_ADMIN_HOME;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlman.PathDef;
-
-@RequestMapping(PathDef.URI_ADMIN_HOME)
+@RequestMapping(URI_ADMIN_HOME)
 public interface AdminHomeController {
 
 	@RequestMapping()
-	ModelAndView home(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
 }
