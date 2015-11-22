@@ -1,4 +1,4 @@
-sqlStatementForm.databaseName=DATABASE
+sqlStatementForm.databaseName=DB名称
 sqlStatementForm.sql=SQL
-sqlStatementForm.paramMap=PARAM(YAML)
-sqlStatementForm.lockVersion=LOCK VERSION
+sqlStatementForm.paramMap=埋込パラメタ
+sqlStatementForm.lockVersion=lockVersion

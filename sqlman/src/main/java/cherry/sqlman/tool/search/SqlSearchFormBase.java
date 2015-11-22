@@ -38,11 +38,17 @@ public abstract class SqlSearchFormBase implements Serializable {
 	@cherry.foundation.validator.MaxLength(value = 50, groups = { javax.validation.groups.Default.class })
 	private String name;
 
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDateTime registeredFrom;
+
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalDate registeredFromDt;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalTime registeredFromTm;
+
+	@cherry.foundation.type.format.CustomDateTimeFormat()
+	private org.joda.time.LocalDateTime registeredTo;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
 	private org.joda.time.LocalDate registeredToDt;
@@ -54,9 +60,9 @@ public abstract class SqlSearchFormBase implements Serializable {
 
 	private java.util.List<cherry.sqlman.Published> published;
 
-	private long pageNo = 0L;
+	private long pno = 0L;
 
-	private long pageSz = 0L;
+	private long psz = 0L;
 
 	@Getter
 	public enum Prop {
@@ -69,8 +75,8 @@ public abstract class SqlSearchFormBase implements Serializable {
 		RegisteredToTm("registeredToTm", "sqlSearchForm.registeredToTm"), //
 		SqlType("sqlType", "sqlSearchForm.sqlType"), //
 		Published("published", "sqlSearchForm.published"), //
-		PageNo("pageNo", "sqlSearchForm.pageNo"), //
-		PageSz("pageSz", "sqlSearchForm.pageSz"), //
+		Pno("pno", "sqlSearchForm.pno"), //
+		Psz("psz", "sqlSearchForm.psz"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;

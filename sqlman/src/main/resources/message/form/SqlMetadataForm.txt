@@ -1,5 +1,5 @@
-sqlMetadataForm.name=NAME
-sqlMetadataForm.description=DESCRIPTION
-sqlMetadataForm.ownedBy=OWNER
-sqlMetadataForm.publishedFlg=PUBLIC
-sqlMetadataForm.lockVersion=LOCK VERSION
+sqlMetadataForm.name=SQL名称
+sqlMetadataForm.description=説明
+sqlMetadataForm.ownedBy=所有者
+sqlMetadataForm.publishedFlg=公開状況
+sqlMetadataForm.lockVersion=lockVersion

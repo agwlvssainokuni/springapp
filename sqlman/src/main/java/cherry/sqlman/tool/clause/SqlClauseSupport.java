@@ -60,16 +60,15 @@ public class SqlClauseSupport {
 		QueryBuilder builder = getQueryBuilder(form);
 		Map<String, ?> paramMap = paramParser.parseMap(form.getParamMap());
 
-		if (form.getPageNo() <= 0L) {
-			form.setPageNo(0L);
+		if (form.getPno() <= 0L) {
+			form.setPno(0L);
 		}
-		if (form.getPageSz() <= 0L) {
-			form.setPageSz(config.getPaginatorDefaultPageSize());
+		if (form.getPsz() <= 0L) {
+			form.setPsz(config.getPaginatorDefaultPageSize());
 		}
 
 		ResultSet resultSet = new ResultSet();
-		PageSet ps = execQueryService.query(databaseName, builder, paramMap, form.getPageNo(), form.getPageSz(),
-				resultSet);
+		PageSet ps = execQueryService.query(databaseName, builder, paramMap, form.getPno(), form.getPsz(), resultSet);
 
 		return Pair.of(ps, resultSet);
 	}

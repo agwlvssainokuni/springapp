@@ -1,11 +1,11 @@
-sqlClauseForm.databaseName=DATABASE
+sqlClauseForm.databaseName=DB名称
 sqlClauseForm.select=SELECT
 sqlClauseForm.from=FROM
 sqlClauseForm.where=WHERE
 sqlClauseForm.groupBy=GROUP BY
 sqlClauseForm.having=HAVING
 sqlClauseForm.orderBy=ORDER BY
-sqlClauseForm.paramMap=PARAM(YAML)
-sqlClauseForm.lockVersion=LOCK VERSION
-sqlClauseForm.pageNo=PAGE NO
-sqlClauseForm.pageSz=PAGE SZ
+sqlClauseForm.paramMap=埋込パラメタ
+sqlClauseForm.lockVersion=lockVersion
+sqlClauseForm.pno=pno
+sqlClauseForm.psz=psz

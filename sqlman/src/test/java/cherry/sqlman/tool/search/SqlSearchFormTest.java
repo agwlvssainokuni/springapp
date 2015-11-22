@@ -42,8 +42,8 @@ public class SqlSearchFormTest {
 		form0.setRegisteredFromTm(new LocalTime(0, 0, 0));
 		form0.setRegisteredToDt(new LocalDate(2015, 12, 31));
 		form0.setRegisteredToTm(new LocalTime(23, 59, 59));
-		form0.setPageNo(1);
-		form0.setPageSz(10);
+		form0.setPno(1);
+		form0.setPsz(10);
 
 		// 同じ
 		SqlSearchForm form1 = new SqlSearchForm();
@@ -54,8 +54,8 @@ public class SqlSearchFormTest {
 		form1.setRegisteredFromTm(new LocalTime(0, 0, 0));
 		form1.setRegisteredToDt(new LocalDate(2015, 12, 31));
 		form1.setRegisteredToTm(new LocalTime(23, 59, 59));
-		form1.setPageNo(1);
-		form1.setPageSz(10);
+		form1.setPno(1);
+		form1.setPsz(10);
 		assertEquals(form0, form1);
 		assertEquals(form0.hashCode(), form1.hashCode());
 
@@ -68,8 +68,8 @@ public class SqlSearchFormTest {
 		form2.setRegisteredFromTm(new LocalTime(0, 0, 0));
 		form2.setRegisteredToDt(new LocalDate(2015, 12, 31));
 		form2.setRegisteredToTm(new LocalTime(23, 59, 59));
-		form2.setPageNo(1);
-		form2.setPageSz(10);
+		form2.setPno(1);
+		form2.setPsz(10);
 		assertNotEquals(form0, form2);
 		assertNotEquals(form0.hashCode(), form2.hashCode());
 	}
@@ -84,10 +84,10 @@ public class SqlSearchFormTest {
 		form.setRegisteredFromTm(new LocalTime(0, 0, 0));
 		form.setRegisteredToDt(new LocalDate(2015, 12, 31));
 		form.setRegisteredToTm(new LocalTime(23, 59, 59));
-		form.setPageNo(1);
-		form.setPageSz(10);
+		form.setPno(1);
+		form.setPsz(10);
 		assertEquals(
-				"SqlSearchForm(super=SqlSearchFormBase(name=name, registeredFromDt=2015-01-01, registeredFromTm=00:00:00.000, registeredToDt=2015-12-31, registeredToTm=23:59:59.000, sqlType=[CLAUSE, STATEMENT, LOAD], published=[PRIVATE, PUBLIC], pageNo=1, pageSz=10))",
+				"SqlSearchForm(super=SqlSearchFormBase(name=name, registeredFromDt=2015-01-01, registeredFromTm=00:00:00.000, registeredToDt=2015-12-31, registeredToTm=23:59:59.000, sqlType=[CLAUSE, STATEMENT, LOAD], published=[PRIVATE, PUBLIC], pno=1, psz=10))",
 				form.toString());
 	}
 

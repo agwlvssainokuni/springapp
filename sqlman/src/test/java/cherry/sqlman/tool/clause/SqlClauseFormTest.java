@@ -35,8 +35,8 @@ public class SqlClauseFormTest {
 		form0.setOrderBy("orderBy");
 		form0.setParamMap("paramMap");
 		form0.setLockVersion(1);
-		form0.setPageNo(1);
-		form0.setPageSz(10);
+		form0.setPno(1);
+		form0.setPsz(10);
 
 		// 同じ
 		SqlClauseForm form1 = new SqlClauseForm();
@@ -49,8 +49,8 @@ public class SqlClauseFormTest {
 		form1.setOrderBy("orderBy");
 		form1.setParamMap("paramMap");
 		form1.setLockVersion(1);
-		form1.setPageNo(1);
-		form1.setPageSz(10);
+		form1.setPno(1);
+		form1.setPsz(10);
 		assertEquals(form0, form1);
 		assertEquals(form0.hashCode(), form1.hashCode());
 
@@ -65,8 +65,8 @@ public class SqlClauseFormTest {
 		form2.setOrderBy("orderBy");
 		form2.setParamMap("paramMap");
 		form2.setLockVersion(1);
-		form2.setPageNo(1);
-		form2.setPageSz(10);
+		form2.setPno(1);
+		form2.setPsz(10);
 		assertNotEquals(form0, form2);
 		assertNotEquals(form0.hashCode(), form2.hashCode());
 	}
@@ -83,10 +83,10 @@ public class SqlClauseFormTest {
 		form.setOrderBy("orderBy");
 		form.setParamMap("paramMap");
 		form.setLockVersion(1);
-		form.setPageNo(1);
-		form.setPageSz(10);
+		form.setPno(1);
+		form.setPsz(10);
 		assertEquals(
-				"SqlClauseForm(super=SqlClauseFormBase(databaseName=databaseName, select=select, from=from, where=where, groupBy=groupBy, having=having, orderBy=orderBy, paramMap=paramMap, lockVersion=1, pageNo=1, pageSz=10))",
+				"SqlClauseForm(super=SqlClauseFormBase(databaseName=databaseName, select=select, from=from, where=where, groupBy=groupBy, having=having, orderBy=orderBy, paramMap=paramMap, lockVersion=1, pno=1, psz=10))",
 				form.toString());
 	}
 

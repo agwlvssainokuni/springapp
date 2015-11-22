@@ -1,2 +1,2 @@
-loginForm.loginId=LOGIN ID
-loginForm.password=PASSWORD
+loginForm.loginId=ログインID
+loginForm.password=パスワード

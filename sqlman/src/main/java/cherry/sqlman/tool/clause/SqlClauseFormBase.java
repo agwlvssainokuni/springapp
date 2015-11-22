@@ -63,9 +63,9 @@ public abstract class SqlClauseFormBase implements Serializable {
 
 	private Integer lockVersion;
 
-	private long pageNo = 0L;
+	private long pno = 0L;
 
-	private long pageSz = 0L;
+	private long psz = 0L;
 
 	@Getter
 	public enum Prop {
@@ -78,8 +78,8 @@ public abstract class SqlClauseFormBase implements Serializable {
 		OrderBy("orderBy", "sqlClauseForm.orderBy"), //
 		ParamMap("paramMap", "sqlClauseForm.paramMap"), //
 		LockVersion("lockVersion", "sqlClauseForm.lockVersion"), //
-		PageNo("pageNo", "sqlClauseForm.pageNo"), //
-		PageSz("pageSz", "sqlClauseForm.pageSz"), //
+		Pno("pno", "sqlClauseForm.pno"), //
+		Psz("psz", "sqlClauseForm.psz"), //
 		DUMMY("dummy", "dummy");
 
 		private final String name;

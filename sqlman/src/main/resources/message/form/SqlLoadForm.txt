@@ -1,4 +1,4 @@
-sqlLoadForm.databaseName=DATABASE
+sqlLoadForm.databaseName=DB名称
 sqlLoadForm.sql=SQL
-sqlLoadForm.file=CSV FILE
-sqlLoadForm.lockVersion=LOCK VERSION
+sqlLoadForm.file=CSVファイル
+sqlLoadForm.lockVersion=lockVersion

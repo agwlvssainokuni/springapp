@@ -87,9 +87,8 @@ public class SearchServiceImpl implements SearchService, InitializingBean {
 	@Transactional
 	@Override
 	public PagedList<Map<String, ?>> search(SqlSearchForm form, String loginId) {
-		return tupleToMap(
-				queryDslSupport.search(commonClause(m, form, loginId), orderByClause(m, form, loginId),
-						form.getPageNo(), form.getPageSz(), new QTuple(expressions)), expressions);
+		return tupleToMap(queryDslSupport.search(commonClause(m, form, loginId), orderByClause(m, form, loginId),
+				form.getPno(), form.getPsz(), new QTuple(expressions)), expressions);
 	}
 
 	private QueryConfigurer commonClause(final QSqlMetadata m, final SqlSearchForm form, final String loginId) {

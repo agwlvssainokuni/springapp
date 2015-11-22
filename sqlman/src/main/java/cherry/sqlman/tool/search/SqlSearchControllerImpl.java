@@ -84,11 +84,11 @@ public class SqlSearchControllerImpl implements SqlSearchController {
 			return withViewname(viewnameOfStart).build();
 		}
 
-		if (form.getPageNo() <= 0L) {
-			form.setPageNo(0L);
+		if (form.getPno() <= 0L) {
+			form.setPno(0L);
 		}
-		if (form.getPageSz() <= 0L) {
-			form.setPageSz(config.getPaginatorDefaultPageSize());
+		if (form.getPsz() <= 0L) {
+			form.setPsz(config.getPaginatorDefaultPageSize());
 		}
 
 		PagedList<Map<String, ?>> result = searchService.search(form, auth.getName());
