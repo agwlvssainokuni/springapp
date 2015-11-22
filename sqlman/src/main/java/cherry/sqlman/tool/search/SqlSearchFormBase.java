@@ -38,17 +38,11 @@ public abstract class SqlSearchFormBase implements Serializable {
 	@cherry.foundation.validator.MaxLength(value = 50, groups = { javax.validation.groups.Default.class })
 	private String name;
 
-	@cherry.foundation.type.format.CustomDateTimeFormat()
-	private org.joda.time.LocalDateTime registeredFrom;
-
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalDate registeredFromDt;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalTime registeredFromTm;
-
-	@cherry.foundation.type.format.CustomDateTimeFormat()
-	private org.joda.time.LocalDateTime registeredTo;
 
 	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
 	private org.joda.time.LocalDate registeredToDt;
@@ -67,10 +61,8 @@ public abstract class SqlSearchFormBase implements Serializable {
 	@Getter
 	public enum Prop {
 		Name("name", "sqlSearchForm.name"), //
-		RegisteredFrom("registeredFrom", "sqlSearchForm.registeredFrom"), //
 		RegisteredFromDt("registeredFromDt", "sqlSearchForm.registeredFromDt"), //
 		RegisteredFromTm("registeredFromTm", "sqlSearchForm.registeredFromTm"), //
-		RegisteredTo("registeredTo", "sqlSearchForm.registeredTo"), //
 		RegisteredToDt("registeredToDt", "sqlSearchForm.registeredToDt"), //
 		RegisteredToTm("registeredToTm", "sqlSearchForm.registeredToTm"), //
 		SqlType("sqlType", "sqlSearchForm.sqlType"), //
