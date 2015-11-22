@@ -16,6 +16,11 @@
 
 package cherry.sqlman.admin.mailmgmt;
 
+import static cherry.sqlman.ParamDef.REQ_TO;
+import static cherry.sqlman.PathDef.SUBURI_EXECUTE;
+import static cherry.sqlman.PathDef.SUBURI_START;
+import static cherry.sqlman.PathDef.URI_ADMIN_MAILMGMT;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -28,18 +33,21 @@ import lombok.ToString;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlman.PathDef;
-
-@RequestMapping(PathDef.URI_ADMIN_MAILMGMT)
+@RequestMapping(URI_ADMIN_MAILMGMT)
 public interface MailmgmtController {
 
 	@RequestMapping()
+	ModelAndView init(@RequestParam(value = REQ_TO, required = false) String redirTo, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
+
+	@RequestMapping(value = SUBURI_START)
 	ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	@RequestMapping(value = SUBURI_EXECUTE)
 	@ResponseBody
 	SendResult execute(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 

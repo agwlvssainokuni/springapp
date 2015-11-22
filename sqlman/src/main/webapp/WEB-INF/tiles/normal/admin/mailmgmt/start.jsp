@@ -6,15 +6,11 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2 class="page-header">
-	<s:message code="admin/mailmgmt.message.0" />
-</h2>
+<h2 class="page-header">メール送信管理</h2>
 <div class="form-horizontal">
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-2">
-			<button id="sendBtn" class="btn btn-default btn-block" type="submit" data-action="<c:url value="/admin/mailmgmt/execute"/>">
-				<s:message code="admin/mailmgmt.sendButton" />
-			</button>
+			<button id="sendBtn" class="btn btn-default btn-block" type="submit" data-action="<c:url value="/admin/mailmgmt/execute"/>">メール送信</button>
 		</div>
 	</div>
 </div>
@@ -25,36 +21,26 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
-				<h4 class="modal-title" id="sendResultLabel">
-					<s:message code="admin/mailmgmt.modal.title" />
-				</h4>
+				<h4 class="modal-title" id="sendResultLabel">メール送信結果</h4>
 			</div>
 			<div class="modal-body">
 				<div class="form-horizontal">
 					<div class="form-group">
-						<div class="col-sm-2 col-sm-offset-4">
-							<s:message code="admin/mailmgmt.modal.label.total" />
-						</div>
+						<div class="col-sm-2 col-sm-offset-4">全件数</div>
 						<div class="col-sm-2 text-right" id="totalCount"></div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-2 col-sm-offset-4">
-							<s:message code="admin/mailmgmt.modal.label.total" />
-						</div>
+						<div class="col-sm-2 col-sm-offset-4">OK件数</div>
 						<div class="col-sm-2 text-right" id="okCount"></div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-2 col-sm-offset-4">
-							<s:message code="admin/mailmgmt.modal.label.total" />
-						</div>
+						<div class="col-sm-2 col-sm-offset-4">NG件数</div>
 						<div class="col-sm-2 text-right" id="ngCount"></div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal">
-					<s:message code="admin/mailmgmt.modal.closeButton" />
-				</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>
 			</div>
 		</div>
 	</div>

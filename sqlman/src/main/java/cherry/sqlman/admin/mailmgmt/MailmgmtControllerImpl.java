@@ -16,12 +16,18 @@
 
 package cherry.sqlman.admin.mailmgmt;
 
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withoutView;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -29,6 +35,8 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MailSendHandler;
@@ -43,8 +51,14 @@ public class MailmgmtControllerImpl implements MailmgmtController {
 	private MailSendHandler mailSendHandler;
 
 	@Override
+	public ModelAndView init(String redirTo, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
+		return redirect(redirectOnInit(redirTo)).build();
+	}
+
+	@Override
 	public ModelAndView start(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		return new ModelAndView();
+		return withoutView().build();
 	}
 
 	@Override
@@ -75,6 +89,14 @@ public class MailmgmtControllerImpl implements MailmgmtController {
 		result.setOkId(okId);
 		result.setNgId(ngId);
 		return result;
+	}
+
+	private UriComponents redirectOnInit(String redirTo) {
+		if (StringUtils.isNotEmpty(redirTo)) {
+			return UriComponentsBuilder.fromPath(redirTo).build();
+		} else {
+			return fromMethodCall(on(MailmgmtController.class).start(null, null, null, null)).build();
+		}
 	}
 
 }
