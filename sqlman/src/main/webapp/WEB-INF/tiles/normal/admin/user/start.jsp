@@ -6,6 +6,4 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h2 class="page-header">
-	<s:message code="admin/user/add.message.0" />
-</h2>
+<h2 class="page-header">ユーザ登録</h2>

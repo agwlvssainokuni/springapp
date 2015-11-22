@@ -16,9 +16,14 @@
 
 package cherry.sqlman.admin.user;
 
-import java.util.Locale;
+import static cherry.sqlman.ParamDef.REQ_ID;
+import static cherry.sqlman.PathDef.SUBURI_CREATE;
+import static cherry.sqlman.PathDef.SUBURI_EDIT;
+import static cherry.sqlman.PathDef.SUBURI_START;
+import static cherry.sqlman.PathDef.SUBURI_UPDATE;
+import static cherry.sqlman.PathDef.URI_ADMIN_USER;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -26,29 +31,30 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
+import cherry.foundation.validator.groups.G9;
 
-@RequestMapping(PathDef.URI_ADMIN_USER)
+@RequestMapping(URI_ADMIN_USER)
 public interface UserEditController {
 
-	@RequestMapping(PathDef.SUBURI_EDIT)
-	ModelAndView add(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(value = SUBURI_START)
+	ModelAndView start(@Validated(G9.class) UserEditForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(PathDef.SUBURI_UPDATE)
-	ModelAndView create(@Validated UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
+	@RequestMapping(value = SUBURI_CREATE)
+	ModelAndView create(@Validated() UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(value = PathDef.SUBURI_EDIT, params = ParamDef.REQ_ID)
-	ModelAndView edit(@RequestParam(ParamDef.REQ_ID) Integer id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(value = SUBURI_EDIT, params = { REQ_ID })
+	ModelAndView edit(@RequestParam(REQ_ID) int id, @Validated(G9.class) UserEditForm form, BindingResult binding,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request);
 
-	@RequestMapping(value = PathDef.SUBURI_UPDATE, params = ParamDef.REQ_ID)
-	ModelAndView update(@RequestParam(ParamDef.REQ_ID) Integer id, @Validated UserEditForm form,
-			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr);
+	@RequestMapping(value = SUBURI_UPDATE, params = { REQ_ID })
+	ModelAndView update(@RequestParam(REQ_ID) int id, @Validated() UserEditForm form, BindingResult binding,
+			Authentication auth, Locale locale, SitePreference sitePref, NativeWebRequest request,
+			RedirectAttributes redirAttr);
 
 }

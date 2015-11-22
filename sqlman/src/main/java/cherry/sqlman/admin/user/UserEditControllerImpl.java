@@ -16,78 +16,100 @@
 
 package cherry.sqlman.admin.user;
 
+import static cherry.sqlman.ParamDef.FLASH_CREATED;
+import static cherry.sqlman.ParamDef.FLASH_UPDATED;
+import static cherry.sqlman.ParamDef.REQ_ID;
+import static cherry.sqlman.util.ModelAndViewBuilder.redirect;
+import static cherry.sqlman.util.ModelAndViewBuilder.withViewname;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.sqlman.ParamDef;
-import cherry.sqlman.PathDef;
+import cherry.sqlman.util.ViewNameUtil;
 
 @Controller
 public class UserEditControllerImpl implements UserEditController {
 
+	private final String viewnameOfStart = ViewNameUtil.fromMethodCall(on(UserEditController.class).start(null, null,
+			null, null, null, null));
+
+	private final String viewnameOfEdit = ViewNameUtil.fromMethodCall(on(UserEditController.class).edit(0, null, null,
+			null, null, null, null));
+
 	@Override
-	public ModelAndView add(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_ADMIN_USER_ADD);
-		mav.addObject(new UserEditForm());
-		return mav;
+	public ModelAndView start(UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		return withViewname(viewnameOfStart).build();
 	}
 
 	@Override
 	public ModelAndView create(UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_ADMIN_USER_ADD);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfStart).build();
 		}
 
 		// TODO
 		Integer id = 0;
 
-		UriComponents uc = fromMethodCall(on(UserEditController.class).edit(id, auth, locale, sitePref, request))
-				.replaceQueryParam(ParamDef.REQ_ID, id).build();
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		redirAttr.addFlashAttribute(FLASH_CREATED, Boolean.TRUE);
+
+		return redirect(redirectToEdit(id)).build();
 	}
 
 	@Override
-	public ModelAndView edit(Integer id, Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_ADMIN_USER_EDIT);
-		mav.addObject(new UserEditForm());
-		return mav;
+	public ModelAndView edit(int id, UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request) {
+		initializeForm(form, id);
+		return withViewname(viewnameOfEdit).build();
 	}
 
 	@Override
-	public ModelAndView update(Integer id, UserEditForm form, BindingResult binding, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView update(int id, UserEditForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, NativeWebRequest request, RedirectAttributes redirAttr) {
 
-		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_ADMIN_USER_EDIT);
-			return mav;
+		if (hasErrors(form, binding)) {
+			return withViewname(viewnameOfEdit).build();
 		}
 
 		// TODO
 
-		UriComponents uc = fromMethodCall(on(UserEditController.class).edit(id, auth, locale, sitePref, request))
-				.replaceQueryParam(ParamDef.REQ_ID, id).build();
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(uc.toUriString(), true));
-		return mav;
+		redirAttr.addFlashAttribute(FLASH_UPDATED, Boolean.TRUE);
+
+		return redirect(redirectToEdit(id)).build();
+	}
+
+	private UriComponents redirectToEdit(int id) {
+		return fromMethodCall(on(UserEditController.class).edit(0, null, null, null, null, null, null))
+				.replaceQueryParam(REQ_ID, id).build();
+	}
+
+	private void initializeForm(UserEditForm form, int id) {
+	}
+
+	private boolean hasErrors(UserEditForm form, BindingResult binding) {
+
+		// 単項目チェック
+		if (binding.hasErrors()) {
+			return true;
+		}
+
+		// 項目間チェック
+
+		// 整合性チェック
+
+		return false;
 	}
 
 }
