@@ -139,14 +139,17 @@
 				</f:form>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-sm-offset-6 col-sm-6 text-right">
-							<app:pagerDesc pageSet="${pageSet}" />
+						<div class="col-sm-offset-5 col-sm-7 text-right">
+							<div>
+								<app:pagerDesc pageSet="${pagedList.pageSet}" />
+								<app:pageSize form="#sqlClause2" psz="psz" />
+							</div>
 							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pno" />
 						</div>
 					</div>
 					<app:resultSet id="resultSetList" resultSet="${resultSet}" pageSet="${pageSet}" />
 					<div class="row">
-						<div class="col-sm-offset-6 col-sm-6 text-right">
+						<div class="col-sm-offset-5 col-sm-7 text-right">
 							<app:pagerLink pageSet="${pageSet}" form="#sqlClause2" pno="pno" />
 						</div>
 					</div>

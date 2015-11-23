@@ -127,8 +127,11 @@
 						<f:hidden id="registeredToTm2" path="registeredToTm" />
 					</f:form>
 					<div class="row">
-						<div class="col-sm-offset-6 col-sm-6 text-right">
-							<app:pagerDesc pageSet="${pagedList.pageSet}" />
+						<div class="col-sm-offset-5 col-sm-7 text-right">
+							<div>
+								<app:pagerDesc pageSet="${pagedList.pageSet}" />
+								<app:pageSize form="#sqlSearchForm2" psz="psz" />
+							</div>
 							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pno" />
 						</div>
 					</div>
@@ -186,7 +189,7 @@
 						</tbody>
 					</table>
 					<div class="row">
-						<div class="col-sm-offset-6 col-sm-6 text-right">
+						<div class="col-sm-offset-5 col-sm-7 text-right">
 							<app:pagerLink pageSet="${pagedList.pageSet}" form="#sqlSearchForm2" pno="pno" />
 						</div>
 					</div>
