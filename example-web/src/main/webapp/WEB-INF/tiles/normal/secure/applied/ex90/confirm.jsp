@@ -14,7 +14,9 @@
 		role="form">
 		<foundation:onetimetoken />
 		<div class="form-group">
-			<f:label path="originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
+			<div>
+				<f:label path="originalFilename" cssClass="col-md-2 control-label">ファイル</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="originalFilename" cssClass="form-control" readonly="true" />
 				<f:hidden path="dirname" />
@@ -22,25 +24,33 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="charset" cssClass="col-md-2 control-label">文字コード</f:label>
+			<div>
+				<f:label path="charset" cssClass="col-md-2 control-label">文字コード</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="charset" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+			<div>
+				<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="dt" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+			<div>
+				<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="tm" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+			<div>
+				<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="dtm" cssClass="form-control" readonly="true" />
 			</div>

@@ -5,7 +5,9 @@ $(function() {
 	 * .has-error を適用する。 <br>
 	 * http://getbootstrap.com/css/#forms-control-validation
 	 */
-	$("input.has-error").wrap("<div class='has-error'></div>");
+	$("input.has-error").closest("div").addClass("has-error");
+	$("textarea.has-error").closest("div").addClass("has-error");
+	$("label.has-error").closest("div").addClass("has-error");
 
 	/**
 	 * JSP拡張タグ (pagerLink.tag) と連動し、Bootstrap標準スタイル Pagination

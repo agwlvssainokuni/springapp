@@ -25,19 +25,25 @@
 	<f:form servletRelativeAction="/secure/applied/ex52/confirm" method="POST" modelAttribute="appliedEx52Form" cssClass="form-horizontal"
 		role="form">
 		<div class="form-group">
-			<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+			<div>
+				<f:label path="dt" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">日付</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="dt" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+			<div>
+				<f:label path="tm" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">時刻</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="tm" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+			<div>
+				<f:label path="dtm" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">日時</f:label>
+			</div>
 			<div class="col-md-10">
 				<f:input path="dtm" cssClass="form-control" cssErrorClass="form-control has-error" />
 			</div>

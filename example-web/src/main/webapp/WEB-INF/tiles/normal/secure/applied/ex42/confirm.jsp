@@ -14,49 +14,65 @@
 		modelAttribute="appliedEx42Form" cssClass="form-horizontal" role="form">
 		<s:nestedPath path="item[${param.rownum}]">
 			<div class="form-group">
-				<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
+				<div>
+					<f:label path="text10" cssClass="col-md-2 control-label">文字列【10】</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="text10" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="text100" cssClass="col-md-2 control-label">文字列【100】</f:label>
+				<div>
+					<f:label path="text100" cssClass="col-md-2 control-label">文字列【100】</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:textarea path="text100" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="int64" cssClass="col-md-2 control-label">整数【64bit】</f:label>
+				<div>
+					<f:label path="int64" cssClass="col-md-2 control-label">整数【64bit】</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="int64" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="decimal1" cssClass="col-md-2 control-label">小数【1桁】</f:label>
+				<div>
+					<f:label path="decimal1" cssClass="col-md-2 control-label">小数【1桁】</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="decimal1" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="decimal3" cssClass="col-md-2 control-label">小数【3桁】</f:label>
+				<div>
+					<f:label path="decimal3" cssClass="col-md-2 control-label">小数【3桁】</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="decimal3" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+				<div>
+					<f:label path="dt" cssClass="col-md-2 control-label">日付</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="dt" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+				<div>
+					<f:label path="tm" cssClass="col-md-2 control-label">時刻</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="tm" cssClass="form-control" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+				<div>
+					<f:label path="dtm" cssClass="col-md-2 control-label">日時</f:label>
+				</div>
 				<div class="col-md-10">
 					<f:input path="dtm" cssClass="form-control" readonly="true" />
 				</div>
