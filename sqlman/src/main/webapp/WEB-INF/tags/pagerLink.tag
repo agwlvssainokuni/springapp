@@ -4,7 +4,7 @@
 <%@ attribute name="pageSet" required="true" rtexprvalue="true" type="cherry.goods.paginate.PageSet"%>
 <%@ attribute name="form" required="true" rtexprvalue="true"%>
 <%@ attribute name="pno" required="true" rtexprvalue="true"%>
-<ul class="pager-link pagination" data-form="${form}" data-pno="${pno}" data-current="${pageSet.current.no+1}">
+<ul class="app-pager-link pagination" data-form="${form}" data-pno="${pno}" data-current="${pageSet.current.no+1}">
 	<li class="edge"><a href="#" title="${pageSet.prev.no+1}">&laquo;</a></li>
 	<li class="edge"><a href="#" title="${pageSet.next.no+1}">&raquo;</a></li>
 	<c:choose>
