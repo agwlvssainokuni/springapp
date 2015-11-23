@@ -13,37 +13,49 @@
 	<f:form servletRelativeAction="/secure/validation/ex50/execute" method="POST" modelAttribute="validationEx50Form" cssClass="form-horizontal"
 		role="form">
 		<div class="form-group">
-			<f:label path="text" cssClass="col-md-3 control-label">テキスト</f:label>
+			<div>
+				<f:label path="text" cssClass="col-md-3 control-label">テキスト</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text1" cssClass="col-md-3 control-label">テキスト【1】</f:label>
+			<div>
+				<f:label path="text1" cssClass="col-md-3 control-label">テキスト【1】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text1" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text2" cssClass="col-md-3 control-label">テキスト【2】</f:label>
+			<div>
+				<f:label path="text2" cssClass="col-md-3 control-label">テキスト【2】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text2" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text3" cssClass="col-md-3 control-label">テキスト【3】</f:label>
+			<div>
+				<f:label path="text3" cssClass="col-md-3 control-label">テキスト【3】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text3" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text12" cssClass="col-md-3 control-label">テキスト【12】</f:label>
+			<div>
+				<f:label path="text12" cssClass="col-md-3 control-label">テキスト【12】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text12" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="text123" cssClass="col-md-3 control-label">テキスト【123】</f:label>
+			<div>
+				<f:label path="text123" cssClass="col-md-3 control-label">テキスト【123】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="text123" cssClass="form-control" readonly="true" />
 			</div>

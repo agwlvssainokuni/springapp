@@ -13,14 +13,18 @@
 	<f:form servletRelativeAction="/secure/validation/ex40/execute" method="POST" modelAttribute="validationEx40Form" cssClass="form-horizontal"
 		role="form">
 		<div class="form-group">
-			<f:label path="subform.text" cssClass="col-md-3 control-label">サブフォーム【直】</f:label>
+			<div>
+				<f:label path="subform.text" cssClass="col-md-3 control-label">サブフォーム【直】</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="subform.text" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<c:forEach var="count" begin="1" end="${validationEx40Form.list1.size()}">
 			<div class="form-group">
-				<f:label path="list1[${count-1}].text" cssClass="col-md-3 control-label">リスト１[${count-1}]</f:label>
+				<div>
+					<f:label path="list1[${count-1}].text" cssClass="col-md-3 control-label">リスト１[${count-1}]</f:label>
+				</div>
 				<div class="col-md-9">
 					<f:input path="list1[${count-1}].text" cssClass="form-control" readonly="true" />
 				</div>
@@ -29,7 +33,9 @@
 		<c:forEach var="count1" begin="1" end="${validationEx40Form.list2.size()}">
 			<c:forEach var="count2" begin="1" end="${validationEx40Form.list2.get(count1-1).v.size()}">
 				<div class="form-group">
-					<f:label path="list2[${count1-1}].v[${count2-1}].text" cssClass="col-md-3 control-label">リスト２[${count1-1}][${count2-1}]</f:label>
+					<div>
+						<f:label path="list2[${count1-1}].v[${count2-1}].text" cssClass="col-md-3 control-label">リスト２[${count1-1}][${count2-1}]</f:label>
+					</div>
 					<div class="col-md-9">
 						<f:input path="list2[${count1-1}].v[${count2-1}].text" cssClass="form-control" readonly="true" />
 					</div>
@@ -38,7 +44,9 @@
 		</c:forEach>
 		<c:forEach var="key" items="${validationEx40Form.map1.keySet()}">
 			<div class="form-group">
-				<f:label path="map1[${key}].text" cssClass="col-md-3 control-label">マップ１[${key}]</f:label>
+				<div>
+					<f:label path="map1[${key}].text" cssClass="col-md-3 control-label">マップ１[${key}]</f:label>
+				</div>
 				<div class="col-md-9">
 					<f:input path="map1[${key}].text" cssClass="form-control" readonly="true" />
 				</div>
@@ -47,7 +55,9 @@
 		<c:forEach var="key1" items="${validationEx40Form.map2.keySet()}">
 			<c:forEach var="key2" items="${validationEx40Form.map2.get(key1).v.keySet()}">
 				<div class="form-group">
-					<f:label path="map2[${key1}].v[${key2}].text" cssClass="col-md-3 control-label">マップ２[${key1}][${key2}]</f:label>
+					<div>
+						<f:label path="map2[${key1}].v[${key2}].text" cssClass="col-md-3 control-label">マップ２[${key1}][${key2}]</f:label>
+					</div>
 					<div class="col-md-9">
 						<f:input path="map2[${key1}].v[${key2}].text" cssClass="form-control" readonly="true" />
 					</div>
