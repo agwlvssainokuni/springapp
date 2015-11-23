@@ -52,8 +52,7 @@
 				<f:hidden path="psz" />
 				<div class="form-group">
 					<div>
-						<f:label path="text10" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error"
-							cssErrorClass="col-md-2 control-label has-error">文字列【10】</f:label>
+						<f:label path="text10" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">文字列【10】</f:label>
 					</div>
 					<div class="col-md-10">
 						<f:input path="text10" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -61,8 +60,8 @@
 				</div>
 				<div class="form-group">
 					<div>
-						<f:label path="int64From" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error"
-							cssErrorClass="col-md-2 control-label has-error">整数【64bit】</f:label>
+						<f:label path="int64From" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">整数【64bit】</f:label>
+						<f:label path="int64To" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="int64From" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -74,6 +73,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="decimal1From" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">小数【1桁】</f:label>
+						<f:label path="decimal1To" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="decimal1From" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -85,6 +85,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="decimal3From" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">小数【3桁】</f:label>
+						<f:label path="decimal3To" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="decimal3From" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -96,6 +97,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="dtFrom" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">日付</f:label>
+						<f:label path="dtTo" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="dtFrom" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -107,6 +109,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="tmFrom" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">時刻</f:label>
+						<f:label path="tmTo" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="tmFrom" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -118,6 +121,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="dtmFromD" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">日時(から)</f:label>
+						<f:label path="dtmFromT" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="dtmFromD" cssClass="form-control" cssErrorClass="form-control has-error" />
@@ -129,6 +133,7 @@
 				<div class="form-group">
 					<div>
 						<f:label path="dtmToD" cssClass="col-md-2 control-label" cssErrorClass="col-md-2 control-label has-error">日時(まで)</f:label>
+						<f:label path="dtmToT" cssClass="hidden" cssErrorClass="hidden has-error" />
 					</div>
 					<div class="col-md-3">
 						<f:input path="dtmToD" cssClass="form-control" cssErrorClass="form-control has-error" />
