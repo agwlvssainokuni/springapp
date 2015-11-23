@@ -12,31 +12,41 @@
 <div class="panel-body">
 	<f:form servletRelativeAction="/secure/form/ex10/execute" method="POST" modelAttribute="formEx10Form" cssClass="form-horizontal" role="form">
 		<div class="form-group">
-			<f:label path="item1" cssClass="col-md-3 control-label">項目1(親)</f:label>
+			<div>
+				<f:label path="item1" cssClass="col-md-3 control-label">項目1(親)</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="item1" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="item2" cssClass="col-md-3 control-label">項目2(親)</f:label>
+			<div>
+				<f:label path="item2" cssClass="col-md-3 control-label">項目2(親)</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="item2" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="item3.item1" cssClass="col-md-3 control-label">項目3-1</f:label>
+			<div>
+				<f:label path="item3.item1" cssClass="col-md-3 control-label">項目3-1</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="item3.item1" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="item3.item2" cssClass="col-md-3 control-label">項目3-2</f:label>
+			<div>
+				<f:label path="item3.item2" cssClass="col-md-3 control-label">項目3-2</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="item3.item2" cssClass="form-control" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
-			<f:label path="item3.item3" cssClass="col-md-3 control-label">項目3-3</f:label>
+			<div>
+				<f:label path="item3.item3" cssClass="col-md-3 control-label">項目3-3</f:label>
+			</div>
 			<div class="col-md-9">
 				<f:input path="item3.item3" cssClass="form-control" readonly="true" />
 			</div>
