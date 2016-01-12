@@ -5,4 +5,8 @@
 
 	<mybatis-spring:scan base-package="cherry.common.db" />
 
+	<bean class="cherry.foundation.mybatis.MapperLazyInitializingPostProcesssor">
+		<property name="enabled" value="true" />
+	</bean>
+
 </beans>
