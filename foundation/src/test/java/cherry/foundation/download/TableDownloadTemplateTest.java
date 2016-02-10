@@ -63,7 +63,8 @@ public class TableDownloadTemplateTest {
 		assertEquals("text/csv", response.getContentType());
 		assertEquals("UTF-8", response.getCharacterEncoding());
 		assertEquals("text/csv;charset=UTF-8", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.csv\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.csv\"; filename*=UTF-8''test_20150123123456.csv",
+				response.getHeader("Content-Disposition"));
 		assertEquals("\"TEST00\"\r\n", response.getContentAsString());
 	}
 
@@ -78,7 +79,8 @@ public class TableDownloadTemplateTest {
 		assertEquals("text/csv", response.getContentType());
 		assertEquals("UTF-8", response.getCharacterEncoding());
 		assertEquals("text/csv;charset=UTF-8", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.csv\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.csv\"; filename*=UTF-8''test_20150123123456.csv",
+				response.getHeader("Content-Disposition"));
 		assertEquals("\"HEAD0\"\r\n\"TEST00\"\r\n", response.getContentAsString());
 	}
 
@@ -92,7 +94,8 @@ public class TableDownloadTemplateTest {
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xls\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xls\"; filename*=UTF-8''test_20150123123456.xls",
+				response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {
@@ -114,7 +117,8 @@ public class TableDownloadTemplateTest {
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xls\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xls\"; filename*=UTF-8''test_20150123123456.xls",
+				response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {
@@ -139,7 +143,8 @@ public class TableDownloadTemplateTest {
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"; filename*=UTF-8''test_20150123123456.xlsx",
+				response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {
@@ -162,7 +167,8 @@ public class TableDownloadTemplateTest {
 		// 検証
 		assertEquals("application/vnd.ms-excel", response.getContentType());
 		assertEquals("application/vnd.ms-excel", response.getHeader("Content-Type"));
-		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"", response.getHeader("Content-Disposition"));
+		assertEquals("attachment; filename=\"test_20150123123456.xlsx\"; filename*=UTF-8''test_20150123123456.xlsx",
+				response.getHeader("Content-Disposition"));
 		try (InputStream in = new ByteArrayInputStream(response.getContentAsByteArray());
 				Workbook workbook = WorkbookFactory.create(in);
 				ExcelReader reader = new ExcelReader(workbook)) {

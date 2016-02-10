@@ -60,7 +60,8 @@ public class DownloadTemplateTest {
 		downloadOperation.download(response, "text/csv", StandardCharsets.UTF_8, "test_{0}.csv", timestamp, action);
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition",
+				"attachment; filename=\"test_" + ts + ".csv\"; filename*=UTF-8''test_" + ts + ".csv");
 	}
 
 	@Test
@@ -85,7 +86,8 @@ public class DownloadTemplateTest {
 		}
 		verify(response).setContentType("text/csv");
 		verify(response).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition",
+				"attachment; filename=\"test_" + ts + ".csv\"; filename*=UTF-8''test_" + ts + ".csv");
 	}
 
 	@Test
@@ -103,7 +105,8 @@ public class DownloadTemplateTest {
 		downloadOperation.download(response, "text/csv", null, "test_{0}.csv", timestamp, action);
 		verify(response).setContentType("text/csv");
 		verify(response, never()).setCharacterEncoding("UTF-8");
-		verify(response).setHeader("Content-Disposition", "attachment; filename=\"test_" + ts + ".csv\"");
+		verify(response).setHeader("Content-Disposition",
+				"attachment; filename=\"test_" + ts + ".csv\"; filename*=UTF-8''test_" + ts + ".csv");
 	}
 
 	private HttpServletResponse createMock() throws IOException {
