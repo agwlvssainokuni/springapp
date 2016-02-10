@@ -324,6 +324,26 @@
 		</property>
 	</bean>
 
+	<!-- 電子署名機能設定 -->
+	<bean id="rsaSignature0" class="cherry.foundation.crypto.RSASignatureSupport">
+		<property name="publicKeyResource" value="classpath:crypto/rsa/pubkey.der" />
+		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey.pk8" />
+	</bean>
+	<bean id="rsaSignature1" class="cherry.foundation.crypto.RSASignatureSupport">
+		<property name="publicKeyResource" value="classpath:crypto/rsa/pubkey1.der" />
+		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey1.pk8" />
+		<property name="privateKeyPassword" value="password" />
+	</bean>
+	<bean id="rsaSignature" class="cherry.goods.crypto.VersionedSignature">
+		<property name="defaultVersion" value="0" />
+		<property name="signatureMap">
+			<map key-type="java.lang.Integer" value-type="cherry.goods.crypto.Signature">
+				<entry key="0" value-ref="rsaSignature0" />
+				<entry key="1" value-ref="rsaSignature1" />
+			</map>
+		</property>
+	</bean>
+
 	<!-- 区分値管理機能 -->
 	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
 		<property name="valueTemplate" value="{0} - {1}" />
