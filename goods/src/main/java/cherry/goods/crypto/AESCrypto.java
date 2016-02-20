@@ -42,11 +42,11 @@ public class AESCrypto implements Crypto {
 	/** AES暗号アルゴリズムで使用する共通鍵を保持する。 */
 	private Key secretKey;
 
-	/** AES暗号アルゴリズムで使用する共通鍵の長さを保持する。 */
-	private int secretKeyLength;
-
 	/** AES暗号アルゴリズムで使用する初期化ベクタを生成する。 */
 	private Random random = new SecureRandom();
+
+	/** AES暗号アルゴリズムで使用する初期化ベクタの長さを保持する。 */
+	private final int initVectorLength = 128 / 8;
 
 	public void setAlgorithm(String algorithm) {
 		this.algorithm = algorithm;
@@ -59,7 +59,6 @@ public class AESCrypto implements Crypto {
 	public void setSecretKeyBytes(byte[] secretKeyBytes) {
 		byte[] keyBin = keyCrypto.decrypt(secretKeyBytes);
 		this.secretKey = KeyUtil.createAesSecretKey(keyBin);
-		this.secretKeyLength = keyBin.length;
 	}
 
 	public void setRandom(Random random) {
@@ -69,7 +68,7 @@ public class AESCrypto implements Crypto {
 	@Override
 	public byte[] encrypt(byte[] in) {
 		try {
-			byte[] iv = new byte[secretKeyLength];
+			byte[] iv = new byte[initVectorLength];
 			random.nextBytes(iv);
 			Cipher cipher = Cipher.getInstance(algorithm);
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey, KeyUtil.createAesInitVector(iv));
@@ -87,8 +86,8 @@ public class AESCrypto implements Crypto {
 	@Override
 	public byte[] decrypt(byte[] in) {
 		try {
-			byte[] iv = new byte[secretKeyLength];
-			byte[] crypto = new byte[in.length - secretKeyLength];
+			byte[] iv = new byte[initVectorLength];
+			byte[] crypto = new byte[in.length - initVectorLength];
 			System.arraycopy(in, 0, iv, 0, iv.length);
 			System.arraycopy(in, iv.length, crypto, 0, crypto.length);
 			Cipher cipher = Cipher.getInstance(algorithm);
