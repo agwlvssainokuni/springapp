@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
+@Ignore
 public class OneTimeTokenIssuerImplTest {
 
 	@Autowired
