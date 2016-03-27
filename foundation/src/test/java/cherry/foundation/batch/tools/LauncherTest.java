@@ -19,12 +19,10 @@ package cherry.foundation.batch.tools;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import cherry.foundation.batch.ExitStatus;
 
-@Ignore
 public class LauncherTest {
 
 	@Before
