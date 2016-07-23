@@ -29,7 +29,7 @@ import com.google.common.io.ByteStreams;
 /**
  * Hmacメッセージ認証の機能を提供する。
  */
-public class HmacSupport extends HmacSignature implements InitializingBean {
+public class HmacSignatureSupport extends HmacSignature implements InitializingBean {
 
 	/** Hmacメッセージ認証で使用する共通鍵が定義されたファイルのパスをを保持する。 */
 	private Resource secretKeyResource;
