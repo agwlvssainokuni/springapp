@@ -34,7 +34,7 @@ public interface Signature {
 	 * 
 	 * @param in 原文。
 	 * @param signed 電子。
-	 * @return 平文。
+	 * @return 検証結果。OKならばtrue、NGならばfalse。
 	 */
 	boolean verify(byte[] in, byte[] signed);
 
