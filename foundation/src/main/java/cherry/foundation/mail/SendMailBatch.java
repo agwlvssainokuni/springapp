@@ -1,5 +1,5 @@
 /*
- * Copyright 2014,2015 agwlvssainokuni
+ * Copyright 2014,2016 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import cherry.foundation.bizdtm.BizDateTime;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 
+import com.google.common.util.concurrent.RateLimiter;
+
 public class SendMailBatch implements IBatch {
 
 	private final Log log = LogFactory.getLog(getClass());
@@ -35,6 +37,8 @@ public class SendMailBatch implements IBatch {
 	private BizDateTime bizDateTime;
 
 	private MailSendHandler mailSendHandler;
+
+	private RateLimiter rateLimiter;
 
 	private long intervalMillis;
 
@@ -46,6 +50,10 @@ public class SendMailBatch implements IBatch {
 
 	public void setMailSendHandler(MailSendHandler mailSendHandler) {
 		this.mailSendHandler = mailSendHandler;
+	}
+
+	public void setRateLimiter(RateLimiter rateLimiter) {
+		this.rateLimiter = rateLimiter;
 	}
 
 	public void setIntervalMillis(long intervalMillis) {
@@ -69,8 +77,14 @@ public class SendMailBatch implements IBatch {
 
 	private void sendMail() {
 		try {
+
 			LocalDateTime now = bizDateTime.now();
 			for (long messageId : mailSendHandler.listMessage(now)) {
+
+				if (rateLimiter != null) {
+					rateLimiter.acquire();
+				}
+
 				mailSendHandler.sendMessage(messageId);
 			}
 		} catch (MailException | DataAccessException ex) {
