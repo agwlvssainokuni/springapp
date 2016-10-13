@@ -38,7 +38,7 @@ public class SendMailBatch implements IBatch {
 
 	private MailSendHandler mailSendHandler;
 
-	private RateLimiter rateLimiter;
+	private Double sendPerSecond;
 
 	private long intervalMillis;
 
@@ -52,8 +52,8 @@ public class SendMailBatch implements IBatch {
 		this.mailSendHandler = mailSendHandler;
 	}
 
-	public void setRateLimiter(RateLimiter rateLimiter) {
-		this.rateLimiter = rateLimiter;
+	public void setSendPerSecond(Double sendPerSecond) {
+		this.sendPerSecond = sendPerSecond;
 	}
 
 	public void setIntervalMillis(long intervalMillis) {
@@ -77,6 +77,11 @@ public class SendMailBatch implements IBatch {
 
 	private void sendMail() {
 		try {
+
+			RateLimiter rateLimiter = null;
+			if (sendPerSecond != null && sendPerSecond.doubleValue() > 0.0) {
+				rateLimiter = RateLimiter.create(sendPerSecond.doubleValue());
+			}
 
 			LocalDateTime now = bizDateTime.now();
 			for (long messageId : mailSendHandler.listMessage(now)) {
